@@ -89,6 +89,7 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 #define SIDBOX_API_BASE ((uintptr_t)&__sidbox_api_location)
 #define API ((volatile const struct API_Root *)SIDBOX_API_BASE)
 
+// example test
 void doPrintTest(){
     API->gui->console->printf(0, "APPLET TEST V3");
 }
