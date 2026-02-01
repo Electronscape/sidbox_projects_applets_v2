@@ -1,0 +1,17 @@
+syscalls.c:62:5:ExitCode	0	static
+syscalls.c:93:6:doPrintTest	0	static
+syscalls.c:97:6:doWriteTest	0	static
+syscalls.c:105:6:initMalloc	0	static
+syscalls.c:117:5:applet_entry	16	static
+syscalls.c:125:5:_write	24	static
+syscalls.c:143:5:_write_r	16	static
+syscalls.c:148:5:_read	8	static
+syscalls.c:153:5:_close	0	static
+syscalls.c:157:5:_fstat	0	static
+syscalls.c:162:5:_lseek	0	static
+syscalls.c:177:7:_sbrk	8	static
+syscalls.c:203:7:_sbrk_r	8	static
+syscalls.c:211:5:_isatty	0	static
+unistd.h:18:6:_exit	0	static
+syscalls.c:220:5:_getpid	0	static
+syscalls.c:224:5:_kill	0	static
