@@ -30,7 +30,7 @@ ASSERT(_applet_length > 0, "No RAM left for applet after reserving music/resourc
 /* Memory layout */
 /* if this memory becomes too small, you'll need to also update the applets.ld sizes too!! */
 /* these both must match on applets.ld and this one */
-_api_count = 256;
+_api_count = 512;
 
 _api_size  = (8 * _api_count);
 _api_location = 0x20020000 - _api_size;  /* some value that is calculated */
