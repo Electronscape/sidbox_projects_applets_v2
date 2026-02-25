@@ -37,6 +37,8 @@
 #include <unistd.h>
 #include "apis.h"
 
+
+
 #define HEAP_START   ((uintptr_t)&__app_end)
 #define HEAP_END     ((uintptr_t)(SDRAM_BASE + SDRAM_SIZE))
 
@@ -49,6 +51,29 @@ extern uint8_t   __app_end;
 #define SDRAM_BASE      0xD0000000
 #define SDRAM_SIZE      (6 * 1024 * 1024) // 6MB total 
 #define SDRAM_END       (SDRAM_BASE + SDRAM_SIZE)
+
+void disable_irq(void)
+{
+    __asm volatile ("cpsid i" : : : "memory");
+}
+
+void enable_irq(void)
+{
+    __asm volatile ("cpsie i" : : : "memory");
+}
+
+static inline uint32_t irq_save(void)
+{
+    uint32_t primask;
+    __asm volatile ("mrs %0, primask" : "=r"(primask) :: "memory");
+    __asm volatile ("cpsid i" : : : "memory");
+    return primask;
+}
+
+static inline void irq_restore(uint32_t primask)
+{
+    __asm volatile ("msr primask, %0" : : "r"(primask) : "memory");
+}
 
 extern int main(int argc, char *argv[]);    // our program entry point
 
@@ -63,31 +88,7 @@ int ExitCode(){
     return(0);
 }
 
-//// [ SODBOX STDLIB ] ////////////////////////////////////////////////////////
-// EXTREME BASICS                                                           ///
-///////////////////////////////////////////////////////////////////////////////
 
-typedef uint8_t CGWindow;
-
-// Minimal local view of your ABI (only what we need)
-/* ---- Minimal ABI view (must match OS headers) ---- */
-struct API_GUI_Console {
-    void (*printf)(CGWindow ownerWin, const char *fmt, ...);
-    void (*writec)(CGWindow ownerWin, const char *buf, uint32_t len);
-};
-
-struct API_GUI {
-    const struct API_GUI_Console *console;   
-};
-
-struct API_Root {
-    const struct API_GUI   *gui;    // always here
-};
-
-//// memory assignment ////////////////////////////////////////////////////////
-extern const char __sidbox_api_location;   // const char is the classic “linker symbol” type
-#define SIDBOX_API_BASE ((uintptr_t)&__sidbox_api_location)
-#define API ((volatile const struct API_Root *)SIDBOX_API_BASE)
 
 // example test
 void doPrintTest(){

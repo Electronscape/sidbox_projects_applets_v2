@@ -14,8 +14,15 @@ NM      := $(TOOLCHAIN)/arm-none-eabi-nm
 
 #switch off warnings
 WARNINGS := -w
-#INCLUDES := -I$(PROJECT_DIR)/_coreapi_
+INCLUDES := -I$(PROJECT_DIR)/../../../_coreapi_		
+#INCLUDES := 
 
 # Common flags
-CFLAGS   := -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -std=gnu99 -c -ffunction-sections -fdata-sections -Wall -fstack-usage --specs=nano.specs -mfloat-abi=hard $(WARNINGS)# $(INCLUDES)
+CFLAGS   := -mcpu=cortex-m7 -mthumb -mfpu=fpv5-d16 -std=gnu99 -c -ffunction-sections -fdata-sections -Wall -fstack-usage --specs=nano.specs -mfloat-abi=hard
+#CFLAGS   += mstackrealign 
+CFLAGS   += -mno-unaligned-access
+CFLAGS   += $(WARNINGS) 
+CFLAGS   += $(INCLUDES)
+
+
 LDFLAGS  := -mcpu=cortex-m7 --specs=nosys.specs -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group

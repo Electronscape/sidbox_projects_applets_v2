@@ -75,8 +75,8 @@ extern _largest_modfile;
 // boundaries compatible with DMA hardware and faster memory access.
 // Use them for large graphics buffers, tightly timed variables, and
 // anywhere unaligned memory access may cause issues or slowdowns.
-#define MEMALIGN4    __attribute__((aligned(4)))    // Align to 4-byte boundary (basic word alignment)
-#define MEMALIGN8    __attribute__((aligned(8)))    // Align to 8-byte boundary (often used for 64-bit types)
+#define MEMALIGN4    __attribute__((aligned(4)))    // Align to 4-byte  boundary (basic word alignment)
+#define MEMALIGN8    __attribute__((aligned(8)))    // Align to 8-byte  boundary (often used for 64-bit types)
 #define MEMALIGN16   __attribute__((aligned(16)))   // Align to 16-byte boundary (good for SIMD and cache lines)
 #define MEMALIGN32   __attribute__((aligned(32)))   // Align to 32-byte boundary (ideal for DMA transfers and large buffers)
 
@@ -97,3 +97,43 @@ extern _largest_modfile;
 	if(exiter) return(exiter);
 #endif
 
+
+
+//// [ SODBOX STDLIB ] ////////////////////////////////////////////////////////
+// EXTREME BASICS                                                           ///
+////////////////////////////////////////////////////////////////////////////////////////////////
+#include "graphics/graphics.h"
+#include "gui/console.h"
+#include "gui/window.h"
+
+
+
+//// # HARDWARE LEVEL # ///////#
+typedef struct {
+    void (*gamemode)        (void);  // fill rect
+    void (*exitgamemode)    (void);
+} API_HW ;
+
+
+
+//// # GUI INTERFACING # //////#
+typedef struct  {
+    const API_GUI_Console *console;
+	const API_GUI_Windows *windows;
+} API_GUI;
+
+
+//// # API ROOT DIRECTORY # ///#
+typedef struct __attribute__((aligned(4))) {
+	const API_HW    *hwl;	// hardware level flaps
+    const API_GUI   *gui;   // always here
+    const API_GFX   *gfx;   // graphics library system
+} API_Root;
+
+//// memory assignment /////////////////////////////////////////////////////////////////////////
+extern const char __sidbox_api_location;   // const char is the classic “linker symbol” type
+#define SIDBOX_API_BASE ((uintptr_t)&__sidbox_api_location)
+#define API ((volatile const API_Root *)SIDBOX_API_BASE)
+
+
+//// API CONTROL END ///////////////////////////////////////////////////////////////////////////
