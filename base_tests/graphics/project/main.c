@@ -230,7 +230,7 @@ int main(int argc, char *argv[]) {
     // display set up //
     API->gfx->gfx_hardware->setlcd(220, 60);    // base setup at 60hz
     API->gfx->gfx_hardware->setdisplaymode(480, 320, 480, 320, DISPFLAG_SINGLELAYER | DISPFLAG_NOSCROLLABLE);   // flags is zero really
-
+    API->gfx->gfx_primative->cls();
 
 
     volatile MEMALIGN4 uint8_t colindex = 0;
@@ -245,19 +245,9 @@ int main(int argc, char *argv[]) {
 
     //sbx_init_boxes(122, 4);
     sbx_init_worms(144, 80);
-    
-    API->gfx->gfx_hardware->usebuffer(bm1); 
-    //API->gfx->gfx_primative->cls();
-    API->gfx->gfx_primative->setcolour(29);
-    API->gfx->gfx_primative->rectf(30, 30, 64, 64);
 
-
-    API->gfx->gfx_hardware->usebuffer(bm2);
-    //API->gfx->gfx_primative->cls();
-    API->gfx->gfx_primative->setcolour(13);
-    API->gfx->gfx_primative->rectf(130, 60, 64, 64);
-
-    
+    API->audio->music->play("level1.mod", 0);
+       
     
     for(;;) {
         //
@@ -276,15 +266,17 @@ int main(int argc, char *argv[]) {
         gdb = 1 - gdb;
         if(gdb) {
             API->gfx->gfx_hardware->showbuffer(bm1);	// set the buffer to go to LCD output
-            API->gfx->gfx_hardware->usebuffer(bm2);
+            API->gfx->gfx_hardware->usebuffer (bm2);
         }
         else    {
             API->gfx->gfx_hardware->showbuffer(bm2);
-            API->gfx->gfx_hardware->usebuffer(bm1);
+            API->gfx->gfx_hardware->usebuffer (bm1);
         }
         
         API->gfx->gfx_primative->cls();
         sbx_update_draw_worms();
+        if(gdb) API->audio->music->CallMusicRoutine();
+
         API->gfx->gfx_hardware->displaynow();
             
         asm("nop");

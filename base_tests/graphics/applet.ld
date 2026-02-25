@@ -12,8 +12,8 @@ _offset            = 0xD0000000;   /* SDRAM base address */
 _maxramavail       = 0x600000;     /* 6 MB usable RAM for applets + resources */
 
 /* --- CHANGE THIS TO SUIT YOUR NEEDS ------------ */
-_largest_modfile   = 0;       /* 256 KB */
-_largest_resource  = 0;       /* 240k KB approx */
+_largest_modfile   = (128 * 1024);  /* 256 KB */
+_largest_resource  = 0;             /* 240k KB approx */
 
 /* Align resource+modfile space to 32-byte boundary */
 _startram          = ((_largest_modfile + _largest_resource + 31) & ~31);

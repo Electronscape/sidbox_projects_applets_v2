@@ -122,12 +122,18 @@ typedef struct  {
 	const API_GUI_Windows *windows;
 } API_GUI;
 
+#include "audio/music.h"
+typedef struct {
+	const API_MUSIC *music;
+	//const API_SOUND *sound;
+} API_AUDIO;
 
 //// # API ROOT DIRECTORY # ///#
 typedef struct __attribute__((aligned(4))) {
 	const API_HW    *hwl;	// hardware level flaps
     const API_GUI   *gui;   // always here
     const API_GFX   *gfx;   // graphics library system
+	const API_AUDIO *audio;
 } API_Root;
 
 //// memory assignment /////////////////////////////////////////////////////////////////////////
