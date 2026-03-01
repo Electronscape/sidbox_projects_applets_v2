@@ -12,8 +12,8 @@ _offset            = 0xD0000000;   /* SDRAM base address */
 _maxramavail       = 0x600000;     /* 6 MB usable RAM for applets + resources */
 
 /* --- CHANGE THIS TO SUIT YOUR NEEDS ------------ */
-_largest_modfile   = 0;       /* 256 KB */
-_largest_resource  = 0;       /* 240k KB approx */
+_largest_modfile   = (0 * 1024);  /* 256 KB */
+_largest_resource  = 0;             /* 240k KB approx */
 
 /* Align resource+modfile space to 32-byte boundary */
 _startram          = ((_largest_modfile + _largest_resource + 31) & ~31);
@@ -43,24 +43,24 @@ MEMORY {
 /* Define the start address for the applet */
 _appstart = ORIGIN(APPLET);
 
+_stack_size = 0x2000;   /* 8KB stack reserve (matches your old _estack idea) */
+PROVIDE(__app_start = _appstart);
+
 SECTIONS {
     PROVIDE(__sidbox_api_location = _api_location);
 
 
     /* Begin linking at applet start address */
     . = _appstart;
-    /* Applet header (8 bytes total) */
+    /* Header = 16 bytes total: magic(8) + loadAddr(4) + memLen(4) */
     .header _appstart : {
         . = ALIGN(4);
-        KEEP(*(.header))     /* Magic + optional metadata */
+        KEEP(*(.header))                 /* 8-byte magic */
+        . = ALIGN(4);
+        LONG(_appstart);                 /* loadAddr */
+        LONG(__stack_end__ - _appstart); /* memLen */
     } > APPLET
 
-    /* Load/entry address (next 8 bytes) */
-    .thestart (_appstart + 0x08) : {
-        . = ALIGN(4);
-        KEEP(*(.thestart))   /* Pointer to entry point or relocation address */
-        *(.thestart*)
-    } > APPLET
 
     /* Main code section, starts at offset 0x10 */
     .text (_appstart + 0x10) : {
@@ -77,14 +77,30 @@ SECTIONS {
 
     /* Uninitialized data */
     .bss : {
+        __bss_start__ = .;
         *(.bss*)
         *(COMMON)
+        __bss_end__ = .;
+    } > APPLET
+
+    /* Reserve stack space (not stored in file) */
+    .stack (NOLOAD) : {
+        . = ALIGN(8);
+        __stack_start__ = .;
+        . = . + _stack_size;
+        . = ALIGN(8);
+        __stack_end__ = .;     /* stack top */
     } > APPLET
 
     /* Read-only data (redundant but explicit) */
     .rodata : {
         *(.rodata*)
     } > APPLET
+
+    /* End of applet memory that must be cleared */
+    PROVIDE(__app_end_clear = __stack_end__);
+    /* Provide a conventional symbol too */
+    PROVIDE(_estack = __stack_end__);
 
     /* End of applet image — useful for heap/sbrk() */
     _end = .;

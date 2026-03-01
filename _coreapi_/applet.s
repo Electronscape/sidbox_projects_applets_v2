@@ -3,20 +3,23 @@
     .thumb
 
 	/* First 8 bytes: "SBAPX502" marker */
+    /* MAGIC */
 	.section .header, "a", %progbits
 	.align 2
 	.ascii "SBAPX502"    /* Exactly 8 bytes, no null terminator */
 
+
+    /* Optional vector table (kept if you want it) */
     .section .isr_vector, "a", %progbits
     .align  2
-    .word   _estack               /* Initial stack pointer */
-    .word   reset_handler         /* Reset handler */
+    .word   _estack
+    .word   reset_handler
 
-    /* you can add other exception vectors here */
-
+    /* additional vectors here */
     .section .text.reset_handler
     .global reset_handler
     .type reset_handler, %function
+
 
 reset_handler:
     /* Just branch to main */
@@ -25,6 +28,6 @@ reset_handler:
     .size reset_handler, .-reset_handler
 
     /* Reserve stack pointer symbol */
-    .global _estack
-    .equ _estack, 0xD0000000 + 0x2000 /* example stack top: 8KB stack */
+    //.global _estack
+    //.equ _estack, 0xD0000000 + 0x2000 /* example stack top: 8KB stack */
 

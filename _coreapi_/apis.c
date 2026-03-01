@@ -1,6 +1,6 @@
 #include <stdarg.h>
 #include <stdio.h>
-#include <stdint-gcc.h>
+#include <stdint.h>
 #include <string.h>
 #include <ctype.h>
 #include "apis.h"
@@ -15,8 +15,6 @@
 //#   systems:                                                                                        #//
 //#                                                                                                   #//
   #####################################################################################################
-
-
 */
 
 // Random Generator (crude but works)
@@ -30,6 +28,10 @@ int16_t randomi(unsigned short range){
 uint16_t urandomi(unsigned short range){
     _Randseed = _Randseed * 11 + 125;
     return ((uint16_t)(_Randseed >> 16) % range);
+}
+
+void urandomseed(long newseed){
+    _Randseed = newseed;
 }
 
 // Case-insensitive string compare up to 'n' characters

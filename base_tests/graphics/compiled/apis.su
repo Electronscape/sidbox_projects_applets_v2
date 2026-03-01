@@ -1,3 +1,0 @@
-apis.c:25:9:randomi	0	static
-apis.c:30:10:urandomi	0	static
-apis.c:36:5:stringcmp	4	static

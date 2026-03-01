@@ -56,6 +56,7 @@ typedef char TCHAR;
 extern long _Randseed;
 int16_t randomi(unsigned short range);		// random from -range to +range
 uint16_t urandomi(unsigned short range);	// random from 0 to range
+void urandomseed(long seed);
 
 #ifndef MAX
 #define MAX(a,b) (((a) > (b)) ? (a) : (b))
@@ -106,12 +107,24 @@ extern _largest_modfile;
 #include "gui/console.h"
 #include "gui/window.h"
 
-
+// USING THIS YOU open up an area of 1MB of CACHED and BUFFERED memory (SPEED)
+// and must follow an offset profile, ANY Music is loaded at 0xD0000000 (SDRAM) so if your program starts at 128k off set, use profile 1
+// eg. program uses 256k of mod music, your program would start at offset 256k, use profile 2...
+#define GAMEMODE_BANKSIZE		(128 * 1024)
+#define GAMEMODE_PROFILE_0		(0 * GAMEMODE_BANKSIZE)
+#define GAMEMODE_PROFILE_1		(1 * GAMEMODE_BANKSIZE)
+#define GAMEMODE_PROFILE_2		(2 * GAMEMODE_BANKSIZE)
+#define GAMEMODE_PROFILE_3		(3 * GAMEMODE_BANKSIZE)
+#define GAMEMODE_PROFILE_4		(4 * GAMEMODE_BANKSIZE)
+#define GAMEMODE_PROFILE_5		(5 * GAMEMODE_BANKSIZE)
+#define GAMEMODE_PROFILE_6		(6 * GAMEMODE_BANKSIZE)
+#define GAMEMODE_PROFILE_7		(7 * GAMEMODE_BANKSIZE)
 
 //// # HARDWARE LEVEL # ///////#
 typedef struct {
-    void (*gamemode)        (void);  // fill rect
+    void (*gamemode)        (uint32_t offset);  // fill rect
     void (*exitgamemode)    (void);
+	void (*dbug)			(char *string);
 } API_HW ;
 
 
@@ -120,20 +133,27 @@ typedef struct {
 typedef struct  {
     const API_GUI_Console *console;
 	const API_GUI_Windows *windows;
+	void (*osupdate) (void);
 } API_GUI;
 
-#include "audio/music.h"
+#include "audio/audio.h"
+
 typedef struct {
+	const API_AUDIO_HARDWARE *audhl;
 	const API_MUSIC *music;
-	//const API_SOUND *sound;
+	const API_SOUND *sound;
 } API_AUDIO;
+
+#include "sys/sys.h"
 
 //// # API ROOT DIRECTORY # ///#
 typedef struct __attribute__((aligned(4))) {
-	const API_HW    *hwl;	// hardware level flaps
-    const API_GUI   *gui;   // always here
-    const API_GFX   *gfx;   // graphics library system
-	const API_AUDIO *audio;
+	const API_HW 		*hwl;		// hardware level flaps
+	const API_SYSTEMS 	*system;	// operating system stuffs
+    const API_GUI     	*gui;   	// always here
+    const API_GFX     	*gfx;   	// graphics library system
+	const API_AUDIO   	*audio;		// audio systems
+	
 } API_Root;
 
 //// memory assignment /////////////////////////////////////////////////////////////////////////
@@ -141,5 +161,16 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 #define SIDBOX_API_BASE ((uintptr_t)&__sidbox_api_location)
 #define API ((volatile const API_Root *)SIDBOX_API_BASE)
 
+#include "gui/os.h"
+
 
 //// API CONTROL END ///////////////////////////////////////////////////////////////////////////
+
+///////////-------------- HELPERS -----------------//////
+/////////////////// hardware level stuff ################
+#define HWKERNAL	(API->hwl)
+
+// conf
+#define configure_runmode(profile)	(HWKERNAL->gamemode(profile))
+
+#define dbug(s) 				(API->hwl->dbug(s))

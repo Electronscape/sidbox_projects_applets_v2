@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>API Tree</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --line:#1f2b3d;
+      --text:#dbe7ff;
+      --muted:#93a6c7;
+
+      --root:#2d6cdf;
+      --cat:#7c3aed;
+      --group:#10b981;
+      --leaf:#f59e0b;
+
+      --commentBg:#0f1b2a;
+      --commentBd:#284160;
+
+      --codeBg:#0c1320;
+      --codeBd:#22324a;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:radial-gradient(1200px 800px at 15% 10%, #121b2a 0%, var(--bg) 60%);
+      color:var(--text);
+      font:14px/1.35 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      padding:24px;
+    }
+
+    .wrap{
+      max-width:1180px;
+      margin:0 auto;
+      display:grid;
+      gap:16px;
+    }
+
+    header{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius:2px;
+      padding:16px 18px;
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    header h1{
+      font-size:18px;
+      margin:0 0 6px 0;
+      letter-spacing:.2px;
+    }
+    header p{
+      margin:0;
+      color:var(--muted);
+    }
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+      align-items:center;
+    }
+    .btn{
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      color:var(--text);
+      border-radius:2px;
+      padding:8px 10px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{ background:rgba(255,255,255,.06); }
+    .hint{ color:var(--muted); margin-left:auto; padding:8px 0; }
+
+    .tree{
+      background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius:2px;
+      padding:14px;
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+      overflow:auto;
+    }
+
+    /* Tree layout */
+    ul{
+      list-style:none;
+      margin:0;
+      padding-left:20px;
+      position:relative;
+    }
+    li{
+      position:relative;
+      margin:10px 0;
+      padding-left:18px;
+    }
+
+    /* connector lines */
+    li::before{
+      content:"";
+      position:absolute;
+      left:2px;
+      top:-10px;
+      bottom:-10px;
+      width:1px;
+      background:linear-gradient(var(--line), rgba(31,43,61,.25));
+    }
+    li::after{
+      content:"";
+      position:absolute;
+      left:2px;
+      top:18px;
+      width:14px;
+      height:1px;
+      background:var(--line);
+    }
+    li:last-child::before{ bottom:18px; }
+
+    details{ width:100%; }
+    summary{
+      list-style:none;
+      cursor:pointer;
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:2px 0;
+    }
+    summary::-webkit-details-marker{ display:none; }
+
+    .twisty{
+      width:18px;
+      height:18px;
+      border-radius:2px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+      margin-top:2px;
+      color:var(--muted);
+      font-weight:700;
+      font-size:12px;
+    }
+    details[open] > summary .twisty{ color:var(--text); }
+
+    .box{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:2px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow:0 8px 20px rgba(0,0,0,.25);
+      width:100%;
+    }
+    .tag{
+      font-weight:700;
+      font-size:12px;
+      letter-spacing:.2px;
+      padding:3px 8px;
+      border-radius:2px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      flex:0 0 auto;
+    }
+    .sig{
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      color:var(--text);
+      font-size:13px;
+      overflow-wrap:anywhere;
+    }
+    .meta{
+      margin-left:auto;
+      color:var(--muted);
+      font-size:12px;
+      padding-left:10px;
+      text-align:right;
+      min-width:140px;
+    }
+
+    /* Type colors */
+    .root  .tag{ background:rgba(45,108,223,.15); border-color:rgba(45,108,223,.35); color:#bcd3ff; }
+    .cat   .tag{ background:rgba(124,58,237,.15); border-color:rgba(124,58,237,.35); color:#dac8ff; }
+    .group .tag{ background:rgba(16,185,129,.15); border-color:rgba(16,185,129,.35); color:#bdf3df; }
+    .leaf  .tag{ background:rgba(245,158,11,.14); border-color:rgba(245,158,11,.35); color:#ffe0a6; }
+
+    /* Comment boxes */
+    .comment{
+      margin-top:8px;
+      padding:10px 12px;
+      border-radius:2px;
+      border:1px dashed var(--commentBd);
+      background:linear-gradient(180deg, rgba(15,27,42,.95), rgba(15,27,42,.75));
+      color:var(--muted);
+    }
+    .comment strong{
+      color:#cfe3ff;
+      font-weight:700;
+    }
+
+    /* Code blocks */
+    .codebox{
+      margin-top:8px;
+      border-radius:2px;
+      border:1px solid var(--codeBd);
+      background:linear-gradient(180deg, rgba(12,19,32,.95), rgba(12,19,32,.75));
+      overflow:hidden;
+      box-shadow:0 8px 20px rgba(0,0,0,.22);
+    }
+    .codehead{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 10px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+      font-size:12px;
+    }
+    .pill{
+      font-weight:700;
+      padding:2px 8px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      border-radius:2px;
+      color:var(--text);
+    }
+    pre{
+      margin:0;
+      padding:10px 12px;
+      overflow:auto;
+      font:12.5px/1.35 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      color:var(--text);
+      white-space:pre;
+    }
+    code{ color:inherit; }
+
+    .leafrow{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      width:100%;
+    }
+    .spacer{
+      width:18px; height:18px; flex:0 0 auto;
+      opacity:.0;
+    }
+
+    /* Small screens */
+    @media (max-width: 700px){
+      .meta{ display:none; }
+      body{ padding:14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>API Tree View</h1>
+      <p>Collapsible ABI map + helper macros + quick examples.</p>
+      <div class="toolbar">
+        <button class="btn" id="expandAll">Expand all</button>
+        <button class="btn" id="collapseAll">Collapse all</button>
+        <div class="hint">Tip: click a node to open/close</div>
+      </div>
+    </header>
+
+    <div class="tree" role="tree">
+      <ul>
+        <li>
+          <details open>
+            <summary>
+              <div class="twisty">▸</div>
+              <div class="box root">
+                <span class="tag">ROOT</span>
+                <span class="sig">API_Root</span>
+                <span class="meta">// WHERE ALL THE API ABI sits</span>
+              </div>
+            </summary>
+
+            <ul>
+              <!-- MACROS / HELPERS -->
+              <li>
+                <details open>
+                  <summary>
+                    <div class="twisty">▸</div>
+                    <div class="box cat">
+                      <span class="tag">MACROS</span>
+                      <span class="sig">Helpers / Convenience Macros</span>
+                      <span class="meta">// C-side wrappers</span>
+                    </div>
+                  </summary>
+
+                  <div class="comment">
+                    These are the convenience macros that sit on top of the ABI pointers (so game code can look clean).
+                  </div>
+
+                  <div class="codebox">
+                    <div class="codehead"><span class="pill">macros.h</span> Helpers (as provided)</div>
+                    <pre><code>#define HWKERNAL    (API-&gt;hwl)
+
+// conf
+#define configure_runmode(profile)  (HWKERNAL-&gt;gamemode(profile))
+
+#define sysevents() (API-&gt;gui-&gt;osupdate()) // call this if you want OS background service feedback
+
+///////////-------------- HELPERS -----------------//////
+/////////////////// hardware level stuff ################
+#define GFXBase (API-&gt;gfx)
+#define GFXHW   (GFXBase-&gt;gfx_hardware)
+#define GFXP    (GFXBase-&gt;gfx_primative)
+
+#define gfx_getdrawbuffer()     (GFXHW-&gt;getdrawbuffer())
+#define gfx_getshowbuffer()     (GFXHW-&gt;getshowbuffer())
+#define gfx_showbuffer(buffer)  (GFXHW-&gt;showbuffer(buffer))
+#define gfx_usebuffer(buffer)   (GFXHW-&gt;usebuffer(buffer))
+#define gfx_setlcd(mode, rate)  (GFXHW-&gt;setlcd(mode, rate))
+#define gfx_mode(fgwidth, fgheight, bgwidth, bgheight, flags) (GFXHW-&gt;setdisplaymode(fgwidth, fgheight, bgwidth, bgheight, flags))
+#define gfx_displaynow()        (GFXHW-&gt;displaynow())
+#define gfx_lcdwait()           (GFXHW-&gt;lcdwait())
+
+#define gfx_cls()               (GFXP-&gt;cls())
+#define gfx_rectf(x, y, w, h)   (GFXP-&gt;rectf(x,y,w,h))
+#define gfx_setcolour(c)        (GFXP-&gt;setcolour((c)))
+
+///////////-------------- HELPERS -----------------//////
+/////////////////// audio level stuff ###################
+#define AUDIOBase   (API-&gt;audio)
+#define AUDIOMUSIC  (AUDIOBase-&gt;music)
+
+#define set_audio_dma(size)     (AUDIOBase-&gt;audhl-&gt;setbuffsize(size))
+#define set_music_dma           (*(AUDIOBase-&gt;audhl-&gt;musicdmaenable))
+
+#define music_play(filename, subsong) (AUDIOMUSIC-&gt;play(filename, subsong))
+#define music_update()               (AUDIOMUSIC-&gt;CallMusicRoutine())</code></pre>
+                  </div>
+
+                  <div class="codebox">
+                    <div class="codehead"><span class="pill">example.c</span> Tiny usage examples</div>
+                    <pre><code>// 1) Enter fast mode (RAM cacheable + bufferable) for games
+configure_runmode(1);
+
+// 2) Basic double-buffer style rendering
+gfx_bitmap_t *draw = gfx_getdrawbuffer();
+gfx_usebuffer(draw);
+gfx_cls();
+gfx_setcolour(3);
+gfx_rectf(10, 10, 120, 60);
+gfx_showbuffer(draw);
+gfx_displaynow();
+// optional if you need it:
+gfx_lcdwait();
+
+// 3) Let the OS process background events (call per frame / often)
+sysevents();
+
+// 4) Audio: set DMA buffer size + enable IRQ music sentinel
+set_audio_dma(1024);
+set_music_dma = 1;
+
+// 5) Start music, then either:
+//    A) rely on IRQ sentinel OR
+//    B) call music_update() per frame if sentinel disabled
+music_play("music.mod", 0);
+// music_update();</code></pre>
+                  </div>
+                </details>
+              </li>
+
+              <!-- API_HW -->
+              <li>
+                <details open>
+                  <summary>
+                    <div class="twisty">▸</div>
+                    <div class="box cat">
+                      <span class="tag">API</span>
+                      <span class="sig">API_HW — <b>*hwl</b></span>
+                      <span class="meta"></span>
+                    </div>
+                  </summary>
+
+                  <div class="comment">
+                    <strong>Hardware helpers</strong> — core “system mode” toggles + debug output.
+                  </div>
+
+                  <ul>
+                    <li>
+                      <div class="leafrow">
+                        <div class="spacer"></div>
+                        <div class="box leaf">
+                          <span class="tag">FN</span>
+                          <span class="sig">void gamemode()</span>
+                          <span class="meta"></span>
+                        </div>
+                      </div>
+                      <div class="comment">
+                        Puts executable RAM area into <strong>cacheable + bufferable</strong> mode (SPEEEEEEEED).
+                      </div>
+                      <div class="codebox">
+                        <div class="codehead"><span class="pill">macro</span> configure_runmode(profile)</div>
+                        <pre><code>#define configure_runmode(profile) (HWKERNAL-&gt;gamemode(profile))</code></pre>
+                      </div>
+                    </li>
+
+                    <li>
+                      <div class="leafrow">
+                        <div class="spacer"></div>
+                        <div class="box leaf">
+                          <span class="tag">FN</span>
+                          <span class="sig">void exitgamemode()</span>
+                          <span class="meta"></span>
+                        </div>
+                      </div>
+                      <div class="comment">
+                        Restores RAM back to <strong>cacheable only</strong> (regular SDRAM usage).
+                      </div>
+                    </li>
+
+                    <li>
+                      <div class="leafrow">
+                        <div class="spacer"></div>
+                        <div class="box leaf">
+                          <span class="tag">FN</span>
+                          <span class="sig">void dbug(char *string)</span>
+                          <span class="meta"></span>
+                        </div>
+                      </div>
+                      <div class="comment">Simple UART debug output.</div>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+
+              <!-- API_GUI -->
+              <li>
+                <details open>
+                  <summary>
+                    <div class="twisty">▸</div>
+                    <div class="box cat">
+                      <span class="tag">API</span>
+                      <span class="sig">API_GUI — <b>*gui</b></span>
+                      <span class="meta">// always here</span>
+                    </div>
+                  </summary>
+
+                  <ul>
+                    <li>
+                      <details open>
+                        <summary>
+                          <div class="twisty">▸</div>
+                          <div class="box group">
+                            <span class="tag">GROUP</span>
+                            <span class="sig">API_GUI_Console — <b>*console</b></span>
+                            <span class="meta"></span>
+                          </div>
+                        </summary>
+
+                        <ul>
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void printf(CGWindow ownerWin, const char *fmt, ...)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">Sends a printf to console window.</div>
+                          </li>
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void writec(CGWindow ownerWin, const char *buf, uint32_t len)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">Writes raw characters to console window.</div>
+                          </li>
+                        </ul>
+                      </details>
+                    </li>
+
+                    <li>
+                      <details open>
+                        <summary>
+                          <div class="twisty">▸</div>
+                          <div class="box group">
+                            <span class="tag">GROUP</span>
+                            <span class="sig">API_GUI_Windows — <b>*windows</b></span>
+                            <span class="meta"></span>
+                          </div>
+                        </summary>
+
+                        <ul>
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void window_create(void)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">Creates a test window.</div>
+                          </li>
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void window_close(CGWindow id)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">Closes a window by id.</div>
+                          </li>
+                        </ul>
+                      </details>
+                    </li>
+
+                    <li>
+                      <div class="leafrow">
+                        <div class="spacer"></div>
+                        <div class="box leaf">
+                          <span class="tag">FN</span>
+                          <span class="sig">void osupdate()</span>
+                          <span class="meta"></span>
+                        </div>
+                      </div>
+                      <div class="comment">Update OS events.</div>
+                      <div class="codebox">
+                        <div class="codehead"><span class="pill">macro</span> sysevents()</div>
+                        <pre><code>#define sysevents() (API-&gt;gui-&gt;osupdate())</code></pre>
+                      </div>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+
+              <!-- API_GFX -->
+              <li>
+                <details open>
+                  <summary>
+                    <div class="twisty">▸</div>
+                    <div class="box cat">
+                      <span class="tag">API</span>
+                      <span class="sig">API_GFX — <b>*gfx</b></span>
+                      <span class="meta">// graphics library system</span>
+                    </div>
+                  </summary>
+
+                  <div class="comment">
+                    Macro aliases: <strong>GFXBase</strong>, <strong>GFXHW</strong>, <strong>GFXP</strong>.
+                  </div>
+
+                  <ul>
+                    <li>
+                      <details open>
+                        <summary>
+                          <div class="twisty">▸</div>
+                          <div class="box group">
+                            <span class="tag">GROUP</span>
+                            <span class="sig">API_GFX_HARDWARE — <b>*gfx_hardware</b></span>
+                            <span class="meta"></span>
+                          </div>
+                        </summary>
+
+                        <ul>
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void displaynow(void)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">Push selected buffer to LCD output.</div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> gfx_displaynow()</div>
+                              <pre><code>#define gfx_displaynow() (GFXHW-&gt;displaynow())</code></pre>
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void vwait(void)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">Vertical wait / sync.</div>
+                          </li>
+
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void setlcd(uint16_t dat, uint8_t fps)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">Set LCD mode + frame rate (25/50/60Hz).</div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> gfx_setlcd(mode, rate)</div>
+                              <pre><code>#define gfx_setlcd(mode, rate) (GFXHW-&gt;setlcd(mode, rate))</code></pre>
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void setdisplaymode(int fgwidth, int fgheight, int bgwidth, int bgheight, int flags)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">Configure output + buffer sizes; use scrollable for oversized buffers.</div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> gfx_mode(...)</div>
+                              <pre><code>#define gfx_mode(fgwidth, fgheight, bgwidth, bgheight, flags) \
+  (GFXHW-&gt;setdisplaymode(fgwidth, fgheight, bgwidth, bgheight, flags))</code></pre>
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void usebuffer(gfx_bitmap_t *buffer)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">Choose draw buffer (everything draws here).</div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> gfx_usebuffer(buffer)</div>
+                              <pre><code>#define gfx_usebuffer(buffer) (GFXHW-&gt;usebuffer(buffer))</code></pre>
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void showbuffer(gfx_bitmap_t *buffer)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">Choose show buffer (sent to LCD output).</div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> gfx_showbuffer(buffer)</div>
+                              <pre><code>#define gfx_showbuffer(buffer) (GFXHW-&gt;showbuffer(buffer))</code></pre>
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">gfx_bitmap_t *getdrawbuffer(void)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> gfx_getdrawbuffer()</div>
+                              <pre><code>#define gfx_getdrawbuffer() (GFXHW-&gt;getdrawbuffer())</code></pre>
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">gfx_bitmap_t *getshowbuffer(void)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> gfx_getshowbuffer()</div>
+                              <pre><code>#define gfx_getshowbuffer() (GFXHW-&gt;getshowbuffer())</code></pre>
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void lcdwait(void)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">Wait for LCD push completion if needed to avoid half-render/corruption.</div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> gfx_lcdwait()</div>
+                              <pre><code>#define gfx_lcdwait() (GFXHW-&gt;lcdwait())</code></pre>
+                            </div>
+                          </li>
+                        </ul>
+                      </details>
+                    </li>
+
+                    <li>
+                      <details open>
+                        <summary>
+                          <div class="twisty">▸</div>
+                          <div class="box group">
+                            <span class="tag">GROUP</span>
+                            <span class="sig">API_GFX_PRIMATIVES — <b>*gfx_primative</b></span>
+                            <span class="meta"></span>
+                          </div>
+                        </summary>
+
+                        <ul>
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void cls()</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">Clear current drawbuffer.</div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> gfx_cls()</div>
+                              <pre><code>#define gfx_cls() (GFXP-&gt;cls())</code></pre>
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void rectf(int16_t x, int16_t y, int16_t w, int16_t h)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> gfx_rectf(x,y,w,h)</div>
+                              <pre><code>#define gfx_rectf(x, y, w, h) (GFXP-&gt;rectf(x,y,w,h))</code></pre>
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void setcolour(uint8_t colour)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> gfx_setcolour(c)</div>
+                              <pre><code>#define gfx_setcolour(c) (GFXP-&gt;setcolour((c)))</code></pre>
+                            </div>
+                          </li>
+                        </ul>
+                      </details>
+                    </li>
+
+                  </ul>
+                </details>
+              </li>
+
+              <!-- API_AUDIO -->
+              <li>
+                <details open>
+                  <summary>
+                    <div class="twisty">▸</div>
+                    <div class="box cat">
+                      <span class="tag">API</span>
+                      <span class="sig">API_AUDIO — <b>*audio</b></span>
+                      <span class="meta">// music system</span>
+                    </div>
+                  </summary>
+
+                  <div class="comment">
+                    Macro aliases: <strong>AUDIOBase</strong>, <strong>AUDIOMUSIC</strong>.
+                  </div>
+
+                  <ul>
+                    <li>
+                      <details open>
+                        <summary>
+                          <div class="twisty">▸</div>
+                          <div class="box group">
+                            <span class="tag">GROUP</span>
+                            <span class="sig">API_AUDIO_HARDWARE — <b>*audhl</b></span>
+                            <span class="meta"></span>
+                          </div>
+                        </summary>
+
+                        <ul>
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void setbuffsize(uint32_t dmaaudiosizebuffer)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> set_audio_dma(size)</div>
+                              <pre><code>#define set_audio_dma(size) (AUDIOBase-&gt;audhl-&gt;setbuffsize(size))</code></pre>
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">PTR</span>
+                                <span class="sig">uint32_t *musicdmaenable</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">
+                              Direct byte/word write control for IRQ music sentinel.
+                            </div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> set_music_dma</div>
+                              <pre><code>#define set_music_dma (*(AUDIOBase-&gt;audhl-&gt;musicdmaenable))
+
+// usage:
+set_music_dma = 1;   // enable sentinel
+set_music_dma = 0;   // disable sentinel</code></pre>
+                            </div>
+                          </li>
+                        </ul>
+                      </details>
+                    </li>
+
+                    <li>
+                      <details open>
+                        <summary>
+                          <div class="twisty">▸</div>
+                          <div class="box group">
+                            <span class="tag">GROUP</span>
+                            <span class="sig">API_MUSIC — <b>*music</b></span>
+                            <span class="meta"></span>
+                          </div>
+                        </summary>
+
+                        <ul>
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void play(char *filename, uint8_t subsong)</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> music_play(filename, subsong)</div>
+                              <pre><code>#define music_play(filename, subsong) (AUDIOMUSIC-&gt;play(filename, subsong))</code></pre>
+                            </div>
+                          </li>
+
+                          <li>
+                            <div class="leafrow">
+                              <div class="spacer"></div>
+                              <div class="box leaf">
+                                <span class="tag">FN</span>
+                                <span class="sig">void CallMusicRoutine()</span>
+                                <span class="meta"></span>
+                              </div>
+                            </div>
+                            <div class="comment">
+                              Use <strong>music_update()</strong> if the sentinel is disabled.
+                            </div>
+                            <div class="codebox">
+                              <div class="codehead"><span class="pill">macro</span> music_update()</div>
+                              <pre><code>#define music_update() (AUDIOMUSIC-&gt;CallMusicRoutine())</code></pre>
+                            </div>
+                          </li>
+                        </ul>
+                      </details>
+                    </li>
+
+                  </ul>
+                </details>
+              </li>
+
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Expand/collapse all <details> nodes
+    const all = () => Array.from(document.querySelectorAll("details"));
+    document.getElementById("expandAll").addEventListener("click", () => {
+      all().forEach(d => d.open = true);
+    });
+    document.getElementById("collapseAll").addEventListener("click", () => {
+      all().forEach(d => d.open = false);
+      const root = document.querySelector("details");
+      if(root) root.open = true;
+    });
+
+    // Make the twisty reflect open/closed (purely cosmetic)
+    function syncTwisties() {
+      document.querySelectorAll("details > summary .twisty").forEach(t => {
+        const det = t.closest("details");
+        t.textContent = det && det.open ? "▾" : "▸";
+      });
+    }
+    document.addEventListener("toggle", syncTwisties, true);
+    syncTwisties();
+  </script>
+</body>
+</html>
