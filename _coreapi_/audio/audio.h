@@ -88,13 +88,13 @@ uint32_t LoadSFX(char *filename, uint8_t **snddata);
 
 // SOUND INTERFACING //
 #define sound_assign(chan, data, samples, bitsize)  (AUDIOSound->assignsample(chan, data, samples, bitsize))    // void (*assignsample)  (uint8_t channel, void *sample, uint32_t samples, uint8_t bitsize);   // 0 = 8bits, 1 = 16bits
-#define sound_play(chan)              (AUDIOSound->playsample(chan))
-#define sound_stop(chan)              (AUDIOSound->stopsample(chan))
-#define sound_setfrequency(chan, hz)  (AUDIOSound->setsamplefreq(chan, hz)) 
-#define sound_setvolume(chan, vol)    (AUDIOSound->setsamplevol(chan, vol))  // 0 to 255
-#define sound_setpanning(chan, pan)   (AUDIOSound->setsamplepan(chan, pan))  // -127 to 127
-#define sound_setloop(chan, from, to) (AUDIOSound->setsampleloop(chan, from, to))   // set both to 0 to stop loop
-#define sound_enableloop(chan, en)    (AUDIOSound->setloopenable(chan, en))
+#define sound_play(chan)              (AUDIOSound->playsample    (chan))
+#define sound_stop(chan)              (AUDIOSound->stopsample    (chan))
+#define sound_setfrequency(chan, hz)  (AUDIOSound->setsamplefreq (chan, hz)) 
+#define sound_setvolume(chan, vol)    (AUDIOSound->setsamplevol  (chan, vol))  // 0 to 255
+#define sound_setpanning(chan, pan)   (AUDIOSound->setsamplepan  (chan, pan))  // -127 to 127
+#define sound_setloop(chan, from, to) (AUDIOSound->setsampleloop (chan, from, to))   // set both to 0 to stop loop
+#define sound_enableloop(chan, en)    (AUDIOSound->setloopenable (chan, en))
 
 
 #ifdef __cplusplus

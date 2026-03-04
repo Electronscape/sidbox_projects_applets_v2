@@ -50,7 +50,6 @@ typedef struct {
 } API_FILEIO;
 
 
-
 typedef struct  {
     const API_FILEIO   *sys_fileio;
 } API_SYSTEMS;

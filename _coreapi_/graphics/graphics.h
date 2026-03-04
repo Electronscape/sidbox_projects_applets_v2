@@ -58,15 +58,43 @@ typedef struct {
 	uint16_t	width;			// bitmap width
 	uint16_t	height;			// bitmap height
 
-	uint16_t	stride;			// pixels per column/ "scan line")
+	uint16_t	stride;			// pixels per column/ "scan line") (so usually the height)
 	uint16_t	_pad0;			// padding
 	uint32_t	memspacelen;	// the total ramspace length
 } gfx_bitmap_t;
 
 
+
+#define BLIT_FLAG_SOLIDCOLOUR   0x0001
+#define BLIT_FLAG_ALPHABLEND    0x0002
+
+
+typedef struct __attribute__((aligned(32))) {
+    const uint8_t *imgdat;
+    uint8_t     flags;          // flag
+    uint8_t     flagval[7];     // flag values
+
+    uint16_t    atlas_stride;   // usually the width of the whole sprite atlas
+    uint16_t    atlas_height;   // height
+
+    uint16_t    width;          // sprite width
+    uint16_t    height;         // sprite height
+
+    int16_t     drawx;          // inteded draw location x
+    int16_t     drawy;          // inteded draw location y
+
+    uint8_t     index;          // cell index
+    uint8_t     _pad0;
+    uint8_t     _pad1[4];       // trail padding :)
+
+} gfxbob_t;    // Blitter Objects
+
+
+
 typedef struct {
     void    (*displaynow)       (void);     // update screen (call to put what ever buffer is selected to the LCD)
     void    (*vidmem)           (uint32_t addr, uint8_t dat);   // set current buffer via memory location and data
+    void    (*ledbrightness)    (uint8_t level);    // set relative brightness from 0 to 100% of the user brightness setting
     void    (*lcdwait)          (void);     // waits here until the last displaynow is fully completed
     void    (*setlcd)           (uint16_t dat, uint8_t fps);    //[setlcd frame rate]//
     void    (*setdisplaymode)   (int fgwidth, int fgheight, int bgwidth, int bgheight, int flags);  // basic no background, front only, no scrolling DISPFLAG_SINGLELAYER | DISPFLAG_NOSCROLLABLE
@@ -77,6 +105,9 @@ typedef struct {
     void         (*showbbuffer)      (gfx_bitmap_t *buffer);  // set the current back  layer show buffer
     void         (*dispfbuffers)     (gfx_bitmap_t *sbuffer, gfx_bitmap_t *dbuffer);
     void         (*dispbbuffers)     (gfx_bitmap_t *sbuffer, gfx_bitmap_t *dbuffer);
+
+    void         (*scrollf)         (int x, int y);
+    void         (*scrollb)         (int x, int y);
     
     gfx_bitmap_t *(*getdrawbuffer)   (void);     // these SHOULD be default addresses, but can be changed.
     gfx_bitmap_t *(*getshowbuffer)   (void);     // these SHOULD be default addresses, but can be changed.
@@ -92,11 +123,19 @@ typedef struct {
 } API_GFX_HARDWARE;
 
 typedef struct  {
-    void (*cls)         (void);
-    void (*rectf)       (int16_t x, int16_t y, int16_t w, int16_t h);
-    void (*plot)        (int16_t x, int16_t y);
-    void (*setcolour)   (uint8_t colour);
-    void (*blitcell)    (uint8_t *src,  int16_t tx, int16_t ty,  uint16_t src_w, uint16_t src_h,  uint16_t cell_w, uint16_t cell_h,  uint8_t index);
+    void (*cls)           (void);
+    void (*rectf)         (int16_t x, int16_t y, int16_t w, int16_t h);
+    void (*plot)          (int16_t x, int16_t y);
+    void (*setcolour)     (uint8_t colour);
+
+    uint8_t *(*getsprite) (uint8_t *sheet, int sheet_w, int cell_w, int cell_h, int frame);
+    void (*blitcell)      (uint8_t *src,  int16_t tx, int16_t ty,  uint16_t src_w, uint16_t src_h,  uint16_t cell_w, uint16_t cell_h,  uint8_t index);
+    void (*blit)          (uint8_t *src, int16_t x, int16_t y, uint16_t w, uint16_t h);
+    void (*blitw)         (uint8_t *src, int16_t dx, int16_t dy, uint16_t w, uint16_t h, uint16_t src_stride);
+    uint8_t (*tcollide)   (const uint8_t *A, int Aw, int Ah, int AStride, int Ax, int Ay, const uint8_t *B, int Bw, int Bh, int BStride, int Bx, int By);
+
+    void (*drawbob)       (gfxbob_t *bob);    // process Blit object ;)
+    uint8_t (*bcollide)   (gfxbob_t *a, gfxbob_t *b);
 } API_GFX_PRIMATIVES;
 
 typedef struct  {
@@ -113,6 +152,8 @@ typedef struct  {
 #define GFXP    (GFXBase->gfx_primative)   
 /////////////////////////////////////////////////////////
 
+#define lcd_bright(uint8_t)     (GFXHW->ledbrightness(uint8_t))
+
 // get the current draw buffer
 #define gfx_getshowbuffer()     (GFXHW->getshowbuffer())
 #define gfx_getdrawbuffer()     (GFXHW->getdrawbuffer())
@@ -126,6 +167,11 @@ typedef struct  {
 
 // SET the show buffer - prepare the buffer for LCD output
 #define gfx_showfbuffer(p_buffer)  (GFXHW->showfbuffer(p_buffer))
+#define gfx_showbbuffer(p_buffer)  (GFXHW->showbbuffer(p_buffer))
+
+// SET scroll info
+#define gfx_scrollf(x, y)          (GFXHW->scrollf(x,y))
+#define gfx_scrollb(x, y)          (GFXHW->scrollb(x,y))
 
 // SET the draw buffer - use this buffer for ANY drawing! (including sprites)
 #define gfx_usebuffer(p_buffer)   (GFXHW->usebuffer(p_buffer))
@@ -160,12 +206,20 @@ typedef struct  {
 // set the current draw colour
 #define gfx_setcolour(c)        (GFXP->setcolour((c)))
 
+// direct blit system, messier but kept in just for directness
+#define gfx_getsprite(sheet, sheet_w, cell_w, cell_h, frame) (GFXP->getsprite(sheet, sheet_w, cell_w, cell_h, frame))
+#define gfx_blitcell(img, x, y, sx, sy, cx, cy, index)       (GFXP->blitcell(img, x, y, sx, sy, cx, cy, index))
+#define gfx_blit(img, x, y, w, h)                            (GFXP->blit(img, x, y, w, h))
+#define gfx_blitw(src, x, y, w, h, stride)                   (GFXP->blitw(src, x, y, w, h, stride))
+#define gfx_tcollide(A, Aw, Ah, AS, Ax, Ay,   B, Bw, Bh, BS, Bx, By) (GFXP->tcollide(A, Aw, Ah, AS, Ax, Ay,  B, Bw, Bh, BS, Bx, By))
 
-#define gfx_blitcell(img, x, y, sx, sy, cx, cy, index) (GFXP->blitcell(img, x, y, sx, sy, cx, cy, index))
+// BOBS blitter objects!!
+#define gfx_drawbob(bob)     (GFXP->drawbob(bob))
+#define gfx_bcollide(a, b)   (GFXP->bcollide(a, b))
 
-
-#define gfx_usefpalette(pal)    (GFXHW->usepalettef(pal))
-#define gfx_usebpalette(pal)    (GFXHW->usepaletteb(pal))
+// PALETTE use
+#define gfx_usefpalette(pal) (GFXHW->usepalettef(pal))
+#define gfx_usebpalette(pal) (GFXHW->usepaletteb(pal))
 
 
 
@@ -173,3 +227,42 @@ typedef struct  {
 }
 #endif
 #endif
+
+/*
+//////////////////// DOCUMENTING /////////////////////////
+
+BOBS (Blit Objects:)    // these are easier to setup and use
+    setup:
+    gfxbob_t image;
+    // setup
+    image.imgdat = point to the image atlas or a single image
+    // set and forget (unless special effects ;)
+    image.atlas_height = 128;   // sprite atlas height  
+    image.atlas_stride = 128;   // sprite atlas width
+    image.height = 32;          // the size of a sprite cell size
+    image.width = 32;           // the size of the sprite cell width
+
+    // updatables for animations, locations
+    image.index = 0;            // if using atlas spritesheet, index to the cell
+    image.drawx = 0;            // to be blitted at location (draw x)
+    image.drawy = 0;            // to be blitted at location (draw y)
+    LoadPPB("res/shiprs.ppb", image.imgdat);    // simply load a bitmap format
+
+    drawx, drawy are live updatable so moving the bob anywhere on screen ;)
+
+
+BOBS (Collision Testing:)
+    gfx_bcollide(gfxbob_t a, gfxbob_t b); returns 1 when its a rectangle hit, returns 2 if the hit is pixel perfect (2 over rides 1)
+
+
+
+
+
+
+
+
+
+
+
+
+*/

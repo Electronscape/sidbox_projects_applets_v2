@@ -120,11 +120,24 @@ extern _largest_modfile;
 #define GAMEMODE_PROFILE_6		(6 * GAMEMODE_BANKSIZE)
 #define GAMEMODE_PROFILE_7		(7 * GAMEMODE_BANKSIZE)
 
+//// # JOYSTICK PORT # ////
+#define BTN_NULL	0x00
+#define BTN_FIRE 	0x01
+#define BTN_FIRE2 	0x02
+#define BTN_UP 		0x04
+#define BTN_DOWN 	0x08
+#define BTN_LEFT 	0x10
+#define BTN_RIGHT 	0x20
+
+
+
 //// # HARDWARE LEVEL # ///////#
 typedef struct {
-    void (*gamemode)        (uint32_t offset);  // fill rect
-    void (*exitgamemode)    (void);
-	void (*dbug)			(char *string);
+    void     (*gamemode)     (uint32_t offset);  // fill rect
+    void     (*exitgamemode) (void);
+	void     (*dbug)		 (char *string);
+	uint8_t  (*getmouse)     (int16_t *mx, int16_t *my);
+	uint8_t  (*getjoyport)	 (void);
 } API_HW ;
 
 
@@ -173,4 +186,6 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 // conf
 #define configure_runmode(profile)	(HWKERNAL->gamemode(profile))
 
-#define dbug(s) 				(API->hwl->dbug(s))
+#define dbug(s) 	   (API->hwl->dbug(s))
+#define getmouse(x, y) (HWKERNAL->getmouse(x,y))
+#define getjoyport     HWKERNAL->getjoyport
