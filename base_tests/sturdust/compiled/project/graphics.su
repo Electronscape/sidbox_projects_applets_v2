@@ -1,0 +1,10 @@
+graphics.c:18:6:drawText	48	static
+graphics.c:52:6:initFlames	16	static
+graphics.c:58:6:initExplodes	16	static
+graphics.c:65:6:spawnFlame	56	static
+graphics.c:101:6:doFlames	32	static
+graphics.c:131:6:spawnExplode	16	static
+graphics.c:149:6:doExplodes	24	static
+graphics.c:168:6:LoadGraphics	24	static
+graphics.c:210:6:LoadShipGfx	16	static
+graphics.c:241:6:LoadCommonGameGraphics	16	static

@@ -58,7 +58,7 @@ typedef struct {
     void (*stopsample)    (uint8_t channel);
     void (*assignsample)  (uint8_t channel, void *sample, uint32_t samples, uint8_t bitsize);   // 0 = 8bits, 1 = 16bits
     void (*setsamplefreq) (uint8_t channel, uint16_t hz);
-    void (*setsamplevol)  (uint8_t channel, uint8_t vol);
+    void (*setsamplevol)  (uint8_t channel, uint16_t vol);
     void (*setsamplepan)  (uint8_t channel, int8_t pan); // -127 to 127
     void (*setsampleloop) (uint8_t channel, uint32_t from, uint32_t length);
     void (*setloopenable) (uint8_t channel, uint8_t enable);

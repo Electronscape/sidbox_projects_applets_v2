@@ -1,0 +1,6 @@
+player.c:17:6:WrapRot	0	static
+player.c:23:6:initShip	8	static
+player.c:32:6:ShipUpdate	0	static
+player.c:94:6:initBullets	0	static
+player.c:102:6:fireBullet	40	static
+player.c:158:6:doBullets	32	static

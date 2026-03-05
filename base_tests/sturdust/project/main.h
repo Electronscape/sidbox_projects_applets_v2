@@ -11,4 +11,9 @@
 #include <stdlib.h>
 
 
+#include "apis.h"
+#include "graphics/graphics.h"
+#include "audio/audio.h"
+
+
 #endif

@@ -4,6 +4,8 @@
     reserved for music data (e.g., MOD files) at the beginning.
  
     Adjust `_startram` below based on the maximum expected size of your music files.
+    Adjust "_largest_modfile" to ensure the largest music file will fit BEFORE the program start
+    Adjust "_largest_resource" to ensure your resources doesnt corrupt your program (leave this to zero if you plan to use malloc)
 */
 
 
