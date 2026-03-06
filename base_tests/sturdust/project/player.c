@@ -148,15 +148,17 @@ void ShowShield(){
 void ShieldON(){
     
     if(shieldActive == 0){
-        int16_t cx = shipmain.drawx + (shipcellsize >> 1); // use ship center
-        int16_t pan1 = (cx - 240) * 127 / 240;  // convert 0..480 -> -127..127
-        if(pan1 < -127) pan1 = -127;
-        if(pan1 > 127)  pan1 = 127;
-        sound_setpanning(3, pan1);
+        
         sound_play(3);
     }
     shieldActive = 1;
+    int16_t cx = shipmain.drawx + (shipcellsize >> 1); // use ship center
+    int16_t pan1 = (cx - 240) * 127 / 240;  // convert 0..480 -> -127..127
+    if(pan1 < -127) pan1 = -127;
+    if(pan1 > 127)  pan1 = 127;
+    sound_setpanning(3, pan1);
     ShowShield();
+    
 }
 
 void ShieldOFF(){

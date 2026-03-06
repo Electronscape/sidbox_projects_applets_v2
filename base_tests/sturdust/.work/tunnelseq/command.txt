@@ -1,0 +1,2 @@
+feh -F -Z -Y -D 0.04 *.png
+feh -F -D 0.04 *.png

@@ -11,6 +11,8 @@
 volatile gfx_bitmap_t *bm1, *bm2;               // front Buffers 1 and 2
 MEMALIGN32 volatile gfx_bitmap_t backbitmap;    // background image
 
+MEMALIGN32 volatile gfx_bitmap_t tunnelbg[8];   // CRAP idea, but no choice if we want speed!
+
 volatile uint8_t gdb = 0;   // Buffer index
 
 float backscreenx, backscreeny; // background scroll offsets
@@ -20,6 +22,11 @@ uint32_t SCORE_VAL = 0;
 uint8_t  LIVES_VAL = 0;
 uint8_t  WAVES_VAL = 0;
 char vstring[64];
+
+
+
+gfxbob_t tunnelsect[8];
+
 
 int main(int argc, char *argv[]) {
     //DIVZEROOFF;
@@ -46,9 +53,123 @@ int main(int argc, char *argv[]) {
     lcd_bright(100);
 
     loadSounds();
-
-
     MusicPlay(0);
+
+
+          // astroid LARGE ROCKY // 
+    astroid_bob[0].imgdat = malloc(480 * 480);//ast0;
+    astroid_bob[0].atlas_stride = 480;
+    astroid_bob[0].atlas_height = 480;
+    astroid_bob[0].width  = 96;
+    astroid_bob[0].height = 96;
+    astroid_bob[0].drawx = 0;   // these can be changed and the blitbob will handle the rest
+    astroid_bob[0].drawy = 0;
+    LoadPPB("res/astroid_large_1.ppb", astroid_bob[0].imgdat);
+
+    char tfname[64];
+// Tunnel Sequence Test;
+    // load the tunnel data
+    dbug("\nLoading Tunnel data...\n");
+    for(uint8_t tl = 0; tl < 8; tl++){
+        tunnelsect[tl].imgdat = malloc( 320 * 240 );
+        tunnelsect[tl].atlas_height = 240;
+        tunnelsect[tl].atlas_stride = 320;
+        tunnelsect[tl].height = 240;
+        tunnelsect[tl].width  = 320;
+        tunnelsect[tl].drawx = 0;
+        tunnelsect[tl].drawy = 0;
+        sprintf(tfname, "res/t%u.ppb\n", tl+1);
+        LoadPPB(tfname, tunnelsect[tl].imgdat);
+        dbug(tfname);
+
+        tunnelbg[tl].memspacelen = (640 * 480);
+        tunnelbg[tl].width = 640;
+        tunnelbg[tl].height = 480;
+        tunnelbg[tl].stride = 480u;
+        tunnelbg[tl].bitmap = malloc(640 * 480);
+
+
+
+        gfx_usebuffer(&tunnelbg[tl]);
+        gfx_cls();
+
+        tunnelsect[tl].flags = 0;
+        tunnelsect[tl].drawx = 0;
+        tunnelsect[tl].drawy = 0;
+        gfx_drawbob(&tunnelsect[tl]);
+
+        tunnelsect[tl].flags = BLIT_FLAG_FLIP_X;
+        tunnelsect[tl].drawx = 320;
+        tunnelsect[tl].drawy = 0;
+        gfx_drawbob(&tunnelsect[tl]);
+
+
+        tunnelsect[tl].flags = BLIT_FLAG_FLIP_Y;
+        tunnelsect[tl].drawx = 0;
+        tunnelsect[tl].drawy = 240;
+        gfx_drawbob(&tunnelsect[tl]);
+
+        tunnelsect[tl].flags = BLIT_FLAG_FLIP_Y | BLIT_FLAG_FLIP_X;
+        tunnelsect[tl].drawx = 320;
+        tunnelsect[tl].drawy = 240;
+        gfx_drawbob(&tunnelsect[tl]);
+
+    }
+
+
+    frontclut[0] = 0x00000000;  // ensure front palette index 0 is black and transparent
+
+    gfx_usefpalette(frontclut);
+    gfx_usebpalette(tunnelClut);
+
+    gfx_showbbuffer(&tunnelbg[0]);   // show the background buffer (assigns the buffer to the lcd)
+    gfx_showfbuffer(bm1);           // initial buffers
+    gfx_usebuffer(bm1);
+
+
+
+    uint8_t tunnelFrame = 0;
+    gdb = 0;
+
+    #if(0)
+    for(;;){
+
+        if(gdb)
+        tunnelFrame++;
+        if(tunnelFrame > 7) tunnelFrame = 0;
+        
+
+        { //// Prepare Screen buffers ;)
+            gfx_lcdwait();  // here if the lcd hasnt finished rendering to the screen
+
+
+
+            gfx_showbbuffer(&tunnelbg[tunnelFrame]);   // show the background buffer (assigns the buffer to the lcd)
+            gdb = 1 - gdb;
+            if(gdb) gfx_dispfbuffer(bm1, bm2);
+            else    gfx_dispfbuffer(bm2, bm1);
+            
+            gfx_cls();
+
+            if(gdb)
+            gfx_drawbob(&astroid_bob[0]);
+
+
+
+
+            gfx_scrollb(0, 0);       
+            gfx_displaynow();
+        }
+    }
+#endif
+
+
+
+
+
+/////////////////////////
+
+
 
     LoadGraphics();
     LoadShipGfx();
@@ -70,7 +191,9 @@ int main(int argc, char *argv[]) {
 
     frontclut[0] = 0x00000000;  // ensure front palette index 0 is black and transparent
     gfx_usefpalette(frontclut);
-    gfx_usebpalette(backclut);
+    //gfx_usebpalette(backclut);
+    //gfx_usebpalette(tunnelClut);
+    gfx_usebpalette(tunnelClutGold);
     
     gfx_showbbuffer(&backbitmap);   // show the background buffer (assigns the buffer to the lcd)
     gfx_showfbuffer(bm1);           // initial buffers
@@ -130,7 +253,12 @@ int main(int argc, char *argv[]) {
             }
         }
 
+
         if(gdb == 0){
+            tunnelFrame++;
+            if(tunnelFrame > 7) tunnelFrame = 0;
+            gfx_showbbuffer(&tunnelbg[tunnelFrame]);   // show the background buffer (assigns the buffer to the lcd)
+
             if(joyb & BTN_UP){
                 spawnFlame();
                 if(thrustOn==0){

@@ -52,8 +52,7 @@ typedef struct {
 #pragma pack(pop)
 
 
-__attribute__((aligned(32)))
-typedef struct {
+typedef struct __attribute__((aligned(32))) {
 	uint8_t		*bitmap;		// base pointer to video memory area
 	uint16_t	width;			// bitmap width
 	uint16_t	height;			// bitmap height
@@ -67,7 +66,8 @@ typedef struct {
 
 #define BLIT_FLAG_SOLIDCOLOUR   0x0001
 #define BLIT_FLAG_ALPHABLEND    0x0002
-
+#define BLIT_FLAG_FLIP_X        0x0004
+#define BLIT_FLAG_FLIP_Y        0x0008
 
 typedef struct __attribute__((aligned(32))) {
     const uint8_t *imgdat;

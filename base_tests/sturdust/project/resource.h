@@ -11,6 +11,9 @@
 extern volatile uint32_t MEMALIGN32 frontclut[256];
 extern volatile uint32_t MEMALIGN32 backclut[256];
 
+extern volatile uint32_t MEMALIGN32 tunnelClut[256];
+extern volatile uint32_t MEMALIGN32 tunnelClutGold[256];
+
 extern const float dirTable[SHIP_ROTATION_FRAMES][2];
 
 
