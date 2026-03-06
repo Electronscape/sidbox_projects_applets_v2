@@ -63,6 +63,8 @@ typedef struct __attribute__((aligned(32))) {
 } gfx_bitmap_t;
 
 
+#define BLIT_FLAG_TYPE_TINT_VALUE   0
+#define BLIT_FLAG_TYPE_FADE_VALUE   1
 
 #define BLIT_FLAG_SOLIDCOLOUR   0x0001
 #define BLIT_FLAG_ALPHABLEND    0x0002
@@ -86,18 +88,16 @@ typedef struct __attribute__((aligned(32))) {
     uint8_t     index;          // cell index
     uint8_t     _pad0;
     uint8_t     _pad1[4];       // trail padding :)
-
 } gfxbob_t;    // Blitter Objects
 
 
-
-typedef struct {
-    void    (*displaynow)       (void);     // update screen (call to put what ever buffer is selected to the LCD)
-    void    (*vidmem)           (uint32_t addr, uint8_t dat);   // set current buffer via memory location and data
-    void    (*ledbrightness)    (uint8_t level);    // set relative brightness from 0 to 100% of the user brightness setting
-    void    (*lcdwait)          (void);     // waits here until the last displaynow is fully completed
-    void    (*setlcd)           (uint16_t dat, uint8_t fps);    //[setlcd frame rate]//
-    void    (*setdisplaymode)   (int fgwidth, int fgheight, int bgwidth, int bgheight, int flags);  // basic no background, front only, no scrolling DISPFLAG_SINGLELAYER | DISPFLAG_NOSCROLLABLE
+typedef struct __attribute__((aligned(32))) {
+    void         (*displaynow)       (void);     // update screen (call to put what ever buffer is selected to the LCD)
+    void         (*vidmem)           (uint32_t addr, uint8_t dat);   // set current buffer via memory location and data
+    void         (*ledbrightness)    (uint8_t level);    // set relative brightness from 0 to 100% of the user brightness setting
+    void         (*lcdwait)          (void);     // waits here until the last displaynow is fully completed
+    void         (*setlcd)           (uint16_t dat, uint8_t fps);    //[setlcd frame rate]//
+    void         (*setdisplaymode)   (int fgwidth, int fgheight, int bgwidth, int bgheight, int flags);  // basic no background, front only, no scrolling DISPFLAG_SINGLELAYER | DISPFLAG_NOSCROLLABLE
 
     // draw buffer ranges! -- some buffer controls, MANY but mostly will use dispfbuffer, dispbbuffer
     void         (*usebuffer)        (gfx_bitmap_t *buffer);  // set the current draw buffer
@@ -106,8 +106,8 @@ typedef struct {
     void         (*dispfbuffers)     (gfx_bitmap_t *sbuffer, gfx_bitmap_t *dbuffer);
     void         (*dispbbuffers)     (gfx_bitmap_t *sbuffer, gfx_bitmap_t *dbuffer);
 
-    void         (*scrollf)         (int x, int y);
-    void         (*scrollb)         (int x, int y);
+    void         (*scrollf)          (int x, int y);
+    void         (*scrollb)          (int x, int y);
     
     gfx_bitmap_t *(*getdrawbuffer)   (void);     // these SHOULD be default addresses, but can be changed.
     gfx_bitmap_t *(*getshowbuffer)   (void);     // these SHOULD be default addresses, but can be changed.
