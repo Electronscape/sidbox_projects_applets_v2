@@ -28,15 +28,16 @@ typedef struct MEMALIGN4 {
     uint8_t flagval[3];
 } bullets_t;
 
-extern volatile bullets_t MEMALIGN4 bullet[MAXBULLETS];  // shouldnt really ever see more than 3 but never know
-extern volatile MEMALIGN32 gfxbob_t shipbullet;
-extern volatile MEMALIGN32 gfxbob_t shipmain;
-
+extern volatile bullets_t MEMALIGN4  bullet[MAXBULLETS];  // shouldnt really ever see more than 3 but never know
+extern volatile gfxbob_t  MEMALIGN32 shipbullet;
+extern volatile gfxbob_t  MEMALIGN32 shipmain;
+extern volatile gfxbob_t  MEMALIGN32 shipshield;
 
 extern float shipX, shipY;
 extern float shipVX, shipVY;
 extern int   shipRot; // 0..35, 0 = up
 extern int8_t shipRotTmr;
+extern uint8_t shipInvincible;
 
 
 

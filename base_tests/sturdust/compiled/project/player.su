@@ -1,6 +1,10 @@
-player.c:17:6:WrapRot	0	static
-player.c:23:6:initShip	8	static
-player.c:32:6:ShipUpdate	0	static
-player.c:94:6:initBullets	0	static
-player.c:102:6:fireBullet	40	static
-player.c:158:6:doBullets	32	static
+player.c:32:6:ShieldBounceAsteroid	48	static
+player.c:131:6:ShowShield	0	static
+player.c:148:6:ShieldON	24	static
+player.c:162:6:ShieldOFF	16	static
+player.c:170:6:WrapRot	0	static
+player.c:176:6:initShip	8	static
+player.c:185:6:ShipUpdate	0	static
+player.c:247:6:initBullets	0	static
+player.c:255:6:fireBullet	40	static
+player.c:302:6:doBullets	32	static

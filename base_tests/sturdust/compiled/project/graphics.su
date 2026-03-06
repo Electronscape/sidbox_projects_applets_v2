@@ -7,4 +7,4 @@ graphics.c:131:6:spawnExplode	16	static
 graphics.c:149:6:doExplodes	24	static
 graphics.c:168:6:LoadGraphics	24	static
 graphics.c:210:6:LoadShipGfx	16	static
-graphics.c:241:6:LoadCommonGameGraphics	16	static
+graphics.c:250:6:LoadCommonGameGraphics	16	static

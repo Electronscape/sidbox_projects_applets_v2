@@ -1,3 +1,4 @@
-astroids.c:9:6:SpawnAstroid	0	static
-astroids.c:13:6:initAstroids	32	static
-astroids.c:68:6:proc_astroids	48	static
+astroids.c:34:6:SpawnAstroid.part.0	32	static
+astroids.c:34:6:SpawnAstroid	0	static
+astroids.c:70:6:initAstroids	0	static
+astroids.c:76:6:proc_astroids	80	static

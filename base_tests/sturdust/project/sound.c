@@ -4,6 +4,10 @@
 uint8_t MEMALIGN32 *snd1Test;
 uint8_t MEMALIGN32 *snd2firem;
 uint8_t MEMALIGN32 *sndThrust;
+uint8_t MEMALIGN32 *sndShield;
+uint8_t MEMALIGN32 *sndExplodeBig;
+uint8_t MEMALIGN32 *sndExplodeSmall;
+uint8_t MEMALIGN32 *sndCollide;
 
 
 void loadSounds(){
@@ -26,14 +30,46 @@ void loadSounds(){
     sound_setloop(1, 200, 4433);
     sound_enableloop(1, 0);
 
-
+    // these will need to be combined COMBINE 1
     samplelen = LoadSFX("res/thrust2.wav", &sndThrust);
     sound_assign(2, sndThrust, samplelen, 0);
     sound_setfrequency(2, 44100);
     sound_setvolume(2, 380);    // 255 is max volume, but can push it more
     sound_setpanning(2, 0);
     sound_setloop(2, 200, samplelen-44);
-    sound_enableloop(2, 1);  
+    sound_enableloop(2, 1);
+
+    // these will need to be combined COMBINE 2
+    samplelen = LoadSFX("res/shields2.wav", &sndShield);
+    sound_assign(3, sndShield, samplelen, 0);
+    sound_setfrequency(3, 28000);
+    sound_setvolume(3, 140);    // 255 is max volume, but can push it more
+    sound_setpanning(3, 0);
+    sound_setloop(3, 444, 11803-44);
+    sound_enableloop(3, 1);
+
+    samplelen = LoadSFX("res/explode_big.wav", &sndExplodeBig);
+    sound_assign(4, sndExplodeBig, samplelen, 0);
+    sound_setfrequency(4, 28000);
+    sound_setvolume(4, 350);    // 255 is max volume, but can push it more
+    sound_setpanning(4, 0);
+    sound_enableloop(4, 0);
+
+    samplelen = LoadSFX("res/explode_small.wav", &sndExplodeSmall);
+    sound_assign(5, sndExplodeSmall, samplelen, 0);
+    sound_setfrequency(5, 32000);
+    sound_setvolume(5, 450);    // 255 is max volume, but can push it more
+    sound_setpanning(5, 0);
+    sound_enableloop(5, 0);
+
+    samplelen = LoadSFX("res/collide.wav", &sndCollide);
+    sound_assign(6, sndCollide, samplelen, 0);
+    sound_setfrequency(6, 28000);
+    sound_setvolume(6, 450);    // 255 is max volume, but can push it more
+    sound_setpanning(6, 0);
+    sound_enableloop(6, 0);
+
+
 }
 
 void MusicPlay(uint8_t music){

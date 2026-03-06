@@ -92,6 +92,11 @@ int main(int argc, char *argv[]) {
     LIVES_VAL = 3;
     WAVES_VAL = 1;
 
+    shipInvincible = 100;
+
+    SpawnAstroid(200, 200, 0);
+    //SpawnAstroid(100, 100, 0);
+
 
     for(;;) {
 
@@ -110,6 +115,7 @@ int main(int argc, char *argv[]) {
         if(FireState2 != lastFireState2){
             if(FireState2){
                 tmExpld = 32;
+                SpawnAstroid(200, 200, 0);
             }
         }
         lastFireState2 = FireState2;
@@ -146,6 +152,10 @@ int main(int argc, char *argv[]) {
                     sound_stop(2);
                 }
             }
+
+            if(joyb & BTN_DOWN) ShieldON();
+            else                ShieldOFF();
+
         }
 
         shipmain.index = shipRot;
@@ -185,7 +195,12 @@ int main(int argc, char *argv[]) {
             doFlames();
             doExplodes();
 
-            gfx_drawbob(&shipmain);
+            if(!(shipInvincible & 0b01)){
+                gfx_drawbob(&shipmain);
+            }
+            if(shipInvincible > 0){
+                shipInvincible --;
+            }
 
             sprintf(vstring, "SCORE: %06lu", SCORE_VAL);
             drawText(vstring, 10, 10);

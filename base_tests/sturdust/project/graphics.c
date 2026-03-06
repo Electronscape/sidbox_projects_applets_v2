@@ -236,6 +236,15 @@ void LoadShipGfx(){
     flames_bob.width = 20;
     flames_bob.index = 0;
     LoadPPB("res/flames.ppb", flames_bob.imgdat);
+
+
+    shipshield.imgdat = malloc(320 * 160);
+    shipshield.atlas_height = 160;
+    shipshield.atlas_stride = 320;
+    shipshield.width  = 80;
+    shipshield.height = 80;
+    shipshield.index  = 0;
+    LoadPPB("res/shield.ppb", shipshield.imgdat);
 }
 
 void LoadCommonGameGraphics(){
