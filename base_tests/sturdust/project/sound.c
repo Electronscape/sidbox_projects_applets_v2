@@ -15,7 +15,7 @@ void loadSounds(){
     samplelen = LoadSFX("res/extralife.wav", &snd1Test);
     sound_assign(0, snd1Test, samplelen, 0);
     sound_setfrequency(0, 44100);
-    sound_play(0);
+    //sound_play(0);
     sound_setvolume(0, 240);
     sound_setpanning(0, 0);
     sound_setloop(0, 200, 4433);
@@ -68,14 +68,14 @@ void loadSounds(){
     sound_setvolume(6, 450);    // 255 is max volume, but can push it more
     sound_setpanning(6, 0);
     sound_enableloop(6, 0);
-
-
 }
 
 void MusicPlay(uint8_t music){
 
+    if(music == 0) music_play("res/sdlev1.mod", 0);
+    if(music == 1) music_play("res/tunnel1.mod", 0);
     //music_play("music/1_67YT-Turrican_III_Remix.sid", 0);
-    music_play("res/sdlev1.mod", 0);
+    
     //music_play("/music/s3m.testmain5.s3m", 0);
     //music_play("/music/wavs/games/dhero32/05 - Level 2.wav", 0);
 

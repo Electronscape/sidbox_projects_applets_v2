@@ -34,3 +34,7 @@ uint32_t LoadSFX(char *filename, uint8_t **snddata){
     sfclose(0);
     return head.subchunk2_size;
 }
+
+void freeSFX(uint8_t **snddata){
+    free(*snddata);
+}

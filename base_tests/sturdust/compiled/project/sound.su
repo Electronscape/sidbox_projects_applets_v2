@@ -1,2 +1,2 @@
 sound.c:13:6:loadSounds	32	static
-sound.c:75:6:MusicPlay	8	static
+sound.c:73:6:MusicPlay	8	static

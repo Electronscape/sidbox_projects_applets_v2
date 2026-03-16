@@ -1,4 +1,8 @@
-astroids.c:34:6:SpawnAstroid.part.0	32	static
-astroids.c:34:6:SpawnAstroid	0	static
-astroids.c:70:6:initAstroids	0	static
-astroids.c:76:6:proc_astroids	80	static
+astroids.c:35:6:SpawnAstroid.part.0	32	static
+astroids.c:202:6:SpawnAstroid3D.part.0	32	static
+astroids.c:35:6:SpawnAstroid	0	static
+astroids.c:71:6:initAstroids	0	static
+astroids.c:77:6:proc_astroids	80	static
+astroids.c:202:6:SpawnAstroid3D	0	static
+astroids.c:241:6:initAstroids3D	8	static
+astroids.c:249:6:proc_astroids3D	64	static

@@ -62,14 +62,25 @@ typedef struct __attribute__((aligned(32))) {
 	uint32_t	memspacelen;	// the total ramspace length
 } gfx_bitmap_t;
 
-
+// flagval[]
 #define BLIT_FLAG_TYPE_TINT_VALUE   0
 #define BLIT_FLAG_TYPE_FADE_VALUE   1
 
-#define BLIT_FLAG_SOLIDCOLOUR   0x0001
+// flags
+#define BLIT_FLAG_SOLIDCOLOUR   0x0001  // set tint value flagval[0] for colour palette
 #define BLIT_FLAG_ALPHABLEND    0x0002
 #define BLIT_FLAG_FLIP_X        0x0004
 #define BLIT_FLAG_FLIP_Y        0x0008
+
+#define BLIT_HANDLE_TOP_LEFT       0
+#define BLIT_HANDLE_TOP_CENTER     1
+#define BLIT_HANDLE_TOP_RIGHT      2
+#define BLIT_HANDLE_MIDDLE_LEFT    3
+#define BLIT_HANDLE_CENTER         4
+#define BLIT_HANDLE_MIDDLE_RIGHT   5
+#define BLIT_HANDLE_BOTTOM_LEFT    6
+#define BLIT_HANDLE_BOTTOM_CENTER  7
+#define BLIT_HANDLE_BOTTOM_RIGHT   8
 
 typedef struct __attribute__((aligned(32))) {
     const uint8_t *imgdat;
@@ -85,11 +96,14 @@ typedef struct __attribute__((aligned(32))) {
     int16_t     drawx;          // inteded draw location x
     int16_t     drawy;          // inteded draw location y
 
+    uint16_t    scale;   // 100 = normal, 50 = half, 200 = double
+    uint8_t     handle;
     uint8_t     index;          // cell index
-    uint8_t     _pad0;
+    //uint8_t     _pad0;
     uint8_t     _pad1[4];       // trail padding :)
 } gfxbob_t;    // Blitter Objects
 
+_Static_assert(sizeof(gfxbob_t) == 32, "gfxbob_t must be 32 bytes");
 
 typedef struct __attribute__((aligned(32))) {
     void         (*displaynow)       (void);     // update screen (call to put what ever buffer is selected to the LCD)

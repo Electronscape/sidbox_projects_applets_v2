@@ -4,8 +4,13 @@
 #include "main.h"
 
 
-#define ASTROID_TYPES   4
-#define max_astroids    32
+#define ASTROID_TYPES    4
+#define max_astroids     32
+
+
+#define MAX_ASTROIDS_3D  14
+#define ASTROID_TYPES    4
+
 
 
 
@@ -29,8 +34,34 @@ typedef struct MEMALIGN4 {
 } stroids;
 
 
-extern volatile stroids MEMALIGN4 astroids[max_astroids];
-extern volatile MEMALIGN32 gfxbob_t astroid_bob[ASTROID_TYPES];
+typedef struct MEMALIGN4 {
+    float x, y, z;
+    float sx, sy, sz;
+
+    int16_t  drawx, drawy;
+    int16_t  radius;
+    uint16_t scale;
+
+    int16_t  cellw, cellh;
+
+    uint8_t  type;
+    uint8_t  health;
+    int8_t   framed;
+    uint8_t  score;
+
+    int8_t   frame;
+    uint8_t  frames;
+    uint8_t  framei;
+    uint8_t  frames_max;
+
+    uint8_t  flags;
+    uint8_t  flagval[3];
+} stroids3d;
+
+
+extern volatile stroids   MEMALIGN4  astroids[max_astroids];
+extern volatile stroids3d MEMALIGN4  astroids3d[MAX_ASTROIDS_3D];
+extern volatile gfxbob_t  MEMALIGN32 astroid_bob[ASTROID_TYPES];
 
 extern uint32_t SCORE_VAL;
 //extern uint8_t  LIVES_VAL;

@@ -1,1 +1,2 @@
 audio.c:6:10:LoadSFX	80	static
+audio.c:38:6:freeSFX	0	static

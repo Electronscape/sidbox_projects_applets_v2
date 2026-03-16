@@ -18,14 +18,17 @@ volatile uint8_t gdb = 0;   // Buffer index
 float backscreenx, backscreeny; // background scroll offsets
 
 
-uint32_t SCORE_VAL = 0;
-uint8_t  LIVES_VAL = 0;
-uint8_t  WAVES_VAL = 0;
-char vstring[64];
 
 
+uint8_t FireState = 0;
+uint8_t lastFireState = 0;
 
 gfxbob_t tunnelsect[8];
+
+int8_t pillrt = 0;
+int8_t pilltmr = 0;
+
+#define TUNNEL_DEMO 1
 
 
 int main(int argc, char *argv[]) {
@@ -53,23 +56,45 @@ int main(int argc, char *argv[]) {
     lcd_bright(100);
 
     loadSounds();
-    MusicPlay(0);
+    
 
+    SetPlayerLives(3);
 
-          // astroid LARGE ROCKY // 
-    astroid_bob[0].imgdat = malloc(480 * 480);//ast0;
-    astroid_bob[0].atlas_stride = 480;
-    astroid_bob[0].atlas_height = 480;
-    astroid_bob[0].width  = 96;
-    astroid_bob[0].height = 96;
-    astroid_bob[0].drawx = 0;   // these can be changed and the blitbob will handle the rest
-    astroid_bob[0].drawy = 0;
-    LoadPPB("res/astroid_large_1.ppb", astroid_bob[0].imgdat);
 
     char tfname[64];
-// Tunnel Sequence Test;
+    frontclut[0] = 0x00000000;  // ensure front palette index 0 is black and transparent
+
+    LoadGraphics();
+    LoadCommonGameGraphics();
+    LoadShipGfx();
+
+
+
+#if(TUNNEL_DEMO)
+    // Tunnel Sequence Test;
     // load the tunnel data
     dbug("\nLoading Tunnel data...\n");
+
+
+
+    gfx_lcdwait();  // here if the lcd hasnt finished rendering to the screen
+    gfx_usefpalette(frontclut);
+    gfx_lcdwait();  // here if the lcd hasnt finished rendering to the screen
+    gfx_usebpalette(tunnelClut);
+    gfx_lcdwait();  // here if the lcd hasnt finished rendering to the screen
+
+
+    // tunnel system
+    freeSFX(&snd2firem);
+    uint32_t samplelen = LoadSFX("res/photon.wav", &snd2firem);
+    sound_assign(1, snd2firem, samplelen, 0);
+    sound_setfrequency(1, 22000);
+    sound_setvolume(1, 355);
+    sound_setpanning(1, 0);
+    sound_setloop(1, 200, 4433);
+    sound_enableloop(1, 0);
+
+
     for(uint8_t tl = 0; tl < 8; tl++){
         tunnelsect[tl].imgdat = malloc( 320 * 240 );
         tunnelsect[tl].atlas_height = 240;
@@ -116,12 +141,9 @@ int main(int argc, char *argv[]) {
 
     }
 
+    MusicPlay(1);
 
-    frontclut[0] = 0x00000000;  // ensure front palette index 0 is black and transparent
-
-    gfx_usefpalette(frontclut);
-    gfx_usebpalette(tunnelClut);
-
+    
     gfx_showbbuffer(&tunnelbg[0]);   // show the background buffer (assigns the buffer to the lcd)
     gfx_showfbuffer(bm1);           // initial buffers
     gfx_usebuffer(bm1);
@@ -129,20 +151,92 @@ int main(int argc, char *argv[]) {
 
 
     uint8_t tunnelFrame = 0;
+    int16_t tunnelSX, tunnelSY;
+    int16_t shipTX, shipTY, tscrx, tscry;
+    float tDX, tDY;
+
+    
     gdb = 0;
 
-    #if(0)
+
+    
+    #define SCROLL_RANGE_TUNNEL_X   (640 - 480)
+    #define SCROLL_RANGE_TUNNEL_Y   (480 - 320)
+
+    int16_t DTSWidth  = 480 - shiptunnel.width;
+    int16_t DTSHeight = 320 - (shiptunnel.height - 32);
+
+    shipTX = (480/2) - (shiptunnel.width  / 2);  // starting x
+    shipTY = (320/2) - (shiptunnel.height / 2);  // starting y
+
+    initTorpedos3D();
+    initAstroids3D();
+    initPills3D();
+
+    uint8_t altCannon = 0;
+    uint8_t fireTimer = 0;
+    uint8_t jitterT = 0;
+    
     for(;;){
 
-        if(gdb)
-        tunnelFrame++;
-        if(tunnelFrame > 7) tunnelFrame = 0;
-        
+        jitterT++;
+        if(jitterT > 2){
+            jitterT = 0;
+        }
+        if(gdb){// || (jitterT==1)){
+            tunnelFrame++;
+            if(tunnelFrame > 7) tunnelFrame = 0;
+        }
+
+        joyb = getjoyport();
+        FireState = (joyb & BTN_FIRE);                
+        if(FireState){   // only works when Pressed down
+            if(++fireTimer > 7){
+                fireTimer = 0;
+                altCannon = 1 - altCannon;
+                if(altCannon) spawnTorpedo(shiptunnel.drawx - (32 + 20), shiptunnel.drawy-12);
+                else          spawnTorpedo(shiptunnel.drawx - (32 - 20), shiptunnel.drawy-12);
+            }
+        } else 
+        FireState = 16;
+
+        if (joyb & BTN_UP)    shipTY -= 8;
+        if (joyb & BTN_DOWN)  shipTY += 8;
+        if (joyb & BTN_LEFT)  shipTX -= 8;
+        if (joyb & BTN_RIGHT) shipTX += 8;
+
+        if (shipTX < 0) shipTX = 0;
+        if (shipTX > (480-shiptunnel.width)) shipTX = (480-shiptunnel.width);
+        if (shipTY < -24) shipTY = -24;
+        if (shipTY > (320-(shiptunnel.height-24))) shipTY = (320-(shiptunnel.height-24));
+
+        tunnelSX = shipTX / 80;
+        tunnelSY = shipTY / 48;
+
+        if (tunnelSX < 0) tunnelSX = 0;
+        if (tunnelSX > 4) tunnelSX = 4;
+        if (tunnelSY < 0) tunnelSY = 0;
+        if (tunnelSY > 4) tunnelSY = 4;
+
+        uint8_t shipIndex;
+
+        shipIndex = shipframetunnel[tunnelSY][tunnelSX];
+
+        float shipCX = shipTX + 32.0f;
+        float shipCY = shipTY + 32.0f;
+
+        shiptunnel.drawx = shipTX;
+        shiptunnel.drawy = shipTY;
+        shiptunnel.index = shipIndex;
+
+        tDX = shipTX * ((float)SCROLL_RANGE_TUNNEL_X / (float)DTSWidth);
+        tDY = shipTY * ((float)SCROLL_RANGE_TUNNEL_Y / (float)DTSHeight);
+        tscrx = tDX;
+        tscry = tDY;
+       
 
         { //// Prepare Screen buffers ;)
             gfx_lcdwait();  // here if the lcd hasnt finished rendering to the screen
-
-
 
             gfx_showbbuffer(&tunnelbg[tunnelFrame]);   // show the background buffer (assigns the buffer to the lcd)
             gdb = 1 - gdb;
@@ -151,30 +245,38 @@ int main(int argc, char *argv[]) {
             
             gfx_cls();
 
-            if(gdb)
-            gfx_drawbob(&astroid_bob[0]);
+            proc_astroids3D(tscrx, tscry);
+            proc_photo_torps(tscrx, tscry);
+            procExplodes3d(tscrx, tscry);
+            procPills3D(tscrx, tscry);
+
+            render3Dstuff();
+
+            gfx_drawbob(&shiptunnel);
+            gfx_scrollb(tscrx, tscry+16);       
 
 
 
-
-            gfx_scrollb(0, 0);       
+            DrawHUD();
             gfx_displaynow();
         }
     }
+
+
+
 #endif
 
 
-
+    MusicPlay(0);
 
 
 /////////////////////////
 
 
 
-    LoadGraphics();
-    LoadShipGfx();
+    
+    
 
-    LoadCommonGameGraphics();
    
     backbitmap.memspacelen = (640 * 480);
     backbitmap.width = 640;
@@ -191,16 +293,11 @@ int main(int argc, char *argv[]) {
 
     frontclut[0] = 0x00000000;  // ensure front palette index 0 is black and transparent
     gfx_usefpalette(frontclut);
-    //gfx_usebpalette(backclut);
-    //gfx_usebpalette(tunnelClut);
-    gfx_usebpalette(tunnelClutGold);
+    gfx_usebpalette(backclut);
     
     gfx_showbbuffer(&backbitmap);   // show the background buffer (assigns the buffer to the lcd)
     gfx_showfbuffer(bm1);           // initial buffers
     gfx_usebuffer(bm1);
-
-    uint8_t FireState = 0;
-    uint8_t lastFireState = 0;
 
     uint8_t FireState2 = 0;
     uint8_t lastFireState2 = 0;
@@ -218,8 +315,50 @@ int main(int argc, char *argv[]) {
     shipInvincible = 100;
 
     SpawnAstroid(200, 200, 0);
-    //SpawnAstroid(100, 100, 0);
 
+#if(0)
+    
+    //SpawnAstroid(100, 100, 0);
+    for(;;)
+    {
+        int16_t mx, my;
+        getmouse(&mx, &my);
+
+        if(mx < 0) mx = 0;
+        if(my < 0) my = 0;
+        if(mx > 480) mx = 480;
+        if(my > 320) my = 320;
+
+        shipmain.handle = 0;//BLIT_HANDLE_CENTER;
+        shipmain.drawx = (int)mx;
+        shipmain.drawy = (int)my;
+
+        astroid_bob[0].handle = 0;//BLIT_HANDLE_CENTER;   // these can be changed and the blitbob will handle the rest
+        astroid_bob[0].drawx  = 240;   // these can be changed and the blitbob will handle the rest
+        astroid_bob[0].drawy  = 160;
+
+        {   // ALL the graphics ready stuff
+            gfx_lcdwait();  // here if the lcd hasnt finished rendering to the screen
+            
+            gdb = 1 - gdb;
+            if(gdb) gfx_dispfbuffer(bm1, bm2);
+            else    gfx_dispfbuffer(bm2, bm1);
+            
+            gfx_cls();
+
+            uint8_t col = gfx_bcollide(&shipmain, &astroid_bob[0]);
+            
+            gfx_drawbob(&astroid_bob[0]);
+            
+            shipmain.flags = 0;
+            if(col==2) shipmain.flags = 1;
+            shipmain.flagval[0] = 3;
+            gfx_drawbob(&shipmain);
+            
+            gfx_displaynow();
+        }
+    }
+#endif
 
     for(;;) {
 
@@ -255,9 +394,6 @@ int main(int argc, char *argv[]) {
 
 
         if(gdb == 0){
-            tunnelFrame++;
-            if(tunnelFrame > 7) tunnelFrame = 0;
-            gfx_showbbuffer(&tunnelbg[tunnelFrame]);   // show the background buffer (assigns the buffer to the lcd)
 
             if(joyb & BTN_UP){
                 spawnFlame();
@@ -321,7 +457,7 @@ int main(int argc, char *argv[]) {
             
             doBullets();
             doFlames();
-            doExplodes();
+            //doExplodes();
 
             if(!(shipInvincible & 0b01)){
                 gfx_drawbob(&shipmain);
@@ -330,15 +466,7 @@ int main(int argc, char *argv[]) {
                 shipInvincible --;
             }
 
-            sprintf(vstring, "SCORE: %06lu", SCORE_VAL);
-            drawText(vstring, 10, 10);
-
-            sprintf(vstring, "LIVES: %lu", LIVES_VAL);
-            drawText(vstring, 340, 10);
-
-            sprintf(vstring, "WAVES: %lu", WAVES_VAL);
-            drawText(vstring, 10, 294);
-           
+            DrawHUD();
 
             shipmain.flags = 0x0;       // back to normal colour
             

@@ -10,9 +10,17 @@
 volatile gfxbob_t MEMALIGN32 flames_bob;
 volatile gfxbob_t MEMALIGN32 explode_bob;
 volatile gfxbob_t MEMALIGN32 font1616_bob;
+volatile gfxbob_t MEMALIGN32 photons_bob;       // photon blast
+volatile gfxbob_t MEMALIGN32 pills_bob;         // pills
+volatile gfxbob_t MEMALIGN32 powerhealth_bob;   // the power and health bar
 
 volatile flames_t MEMALIGN4  flames[MAX_FLAMES];
-volatile flames_t MEMALIGN4  explodes[MAX_EXPLODES];
+volatile flames_t MEMALIGN4  explodes[MAX_EXPLODES];    // works in 3D too
+
+
+
+render3d_t render3dList[MAX_RENDER3D];
+uint8_t render3dCount = 0;
 
 
 void drawText(const char *text, int16_t x, int16_t y)
@@ -146,6 +154,111 @@ void spawnExplode(int16_t x, int16_t y){
     }
 }
 
+
+void spawnExplode3d(stroids3d *src)
+{
+    if(!src) return;
+
+    for(uint8_t e = 0; e < MAX_EXPLODES; e++){
+        if(explodes[e].timeout == 0){
+            memset((void*)&explodes[e], 0, sizeof(flames_t));
+
+            explodes[e].timeout  = 20;   // total lifetime
+            explodes[e].rotation = 0;    // explosion frame index
+            explodes[e].fadeout  = 0;
+
+            // copy 3D tunnel-space position directly
+            explodes[e].fx = src->x;
+            explodes[e].fy = src->y;
+            explodes[e].fz = src->z;
+
+            explodes[e].x = 0;
+            explodes[e].y = 0;
+            explodes[e].z = 0;
+            explodes[e].scale = 100;
+
+            break;
+        }
+    }
+}
+
+void procExplodes3d(int16_t scroffx, int16_t scroffy)
+{
+    const float focal     = 260.0f;
+    const float scale_mul = 420.0f;
+    const float z_far_kill = 2020.0f;
+
+    uint8_t drawList[MAX_EXPLODES];
+    uint8_t drawCount = 0;
+
+    // -----------------------------
+    // update + project
+    // -----------------------------
+    for(uint8_t i = 0; i < MAX_EXPLODES; i++){
+        if(explodes[i].timeout == 0) continue;
+
+        // countdown
+        explodes[i].timeout--;
+
+        // kill if z is nonsense
+        if(explodes[i].fz <= 1.0f || explodes[i].fz >= z_far_kill){
+            explodes[i].timeout = 0;
+            continue;
+        }
+
+        // animate explosion frame
+        // total 20 ticks, frame changes every 2 ticks => 10 frame steps
+        explodes[i].rotation = (int8_t)((20 - explodes[i].timeout) / 2);
+        if(explodes[i].rotation > 9) explodes[i].rotation = 9;
+
+        // project
+
+        explodes[i].fz -= 30.0f;
+        float iz = 1.0f / explodes[i].fz;
+
+        float fx = 320.0f + (explodes[i].fx * focal * iz);
+        float fy = 240.0f + (explodes[i].fy * focal * iz);
+
+        uint16_t scale = (uint16_t)(scale_mul * iz * 200.0f);
+        if(scale < 16)  scale = 16;
+        if(scale > 400) scale = 400;
+
+        explodes[i].x = (int16_t)fx - scroffx;
+        explodes[i].y = (int16_t)fy - scroffy;
+        explodes[i].scale = (int16_t)scale;
+
+        // fade out near the end
+        if(explodes[i].timeout < 8){
+            uint8_t fadepower = (uint8_t)((8 - explodes[i].timeout) * 12);
+            if(fadepower > 95) fadepower = 95;
+
+            explodes[i].flags = BLIT_FLAG_ALPHABLEND;
+            explodes[i].flagval[BLIT_FLAG_TYPE_FADE_VALUE] = fadepower;
+        } else {
+            explodes[i].flags = 0;
+            explodes[i].flagval[BLIT_FLAG_TYPE_FADE_VALUE] = 0;
+        }
+
+        // cull if off screen
+        {
+            int16_t draww = (int16_t)((64u * scale) / 100u);
+            int16_t drawh = (int16_t)((64u * scale) / 100u);
+
+            if(explodes[i].x < -draww || explodes[i].x > (640 + draww) ||
+               explodes[i].y < -drawh || explodes[i].y > (480 + drawh))
+            {
+                explodes[i].timeout = 0;
+                continue;
+            }
+        }
+
+        drawList[drawCount++] = i;
+    }
+
+}
+
+
+
 void doExplodes(){
     for(uint8_t e = 0; e < MAX_EXPLODES; e++){
         if(explodes[e].timeout > 0){
@@ -220,6 +333,20 @@ void LoadShipGfx(){
     LoadPPB("res/shiprs.ppb", shipmain.imgdat);
 
 
+
+    
+    shiptunnel.imgdat = malloc( (tunnelShipCellSize * 5) * (tunnelShipCellSize * 5) );
+    shiptunnel.atlas_height = (tunnelShipCellSize * 5);
+    shiptunnel.atlas_stride = (tunnelShipCellSize * 5);
+    shiptunnel.height = tunnelShipCellSize;
+    shiptunnel.width  = tunnelShipCellSize;
+    shiptunnel.index  = 12;
+    shiptunnel.drawx  = 10;
+    shiptunnel.drawy  = 10;
+    LoadPPB("res/tunnelship.ppb", shiptunnel.imgdat);
+    
+
+
     shipbullet.imgdat = malloc(96 * 96);    // bullets Type1
     shipbullet.atlas_height = 96;
     shipbullet.atlas_stride = 96;
@@ -245,6 +372,15 @@ void LoadShipGfx(){
     shipshield.height = 80;
     shipshield.index  = 0;
     LoadPPB("res/shield.ppb", shipshield.imgdat);
+
+    photons_bob.imgdat = malloc(384 * 192);
+    photons_bob.atlas_height = 192;
+    photons_bob.atlas_stride = 384;
+    photons_bob.handle = BLIT_HANDLE_CENTER;
+    photons_bob.width  = 64;
+    photons_bob.height = 64;
+    photons_bob.index  = 0;
+    LoadPPB("res/photont.ppb", photons_bob.imgdat);
 }
 
 void LoadCommonGameGraphics(){
@@ -265,4 +401,283 @@ void LoadCommonGameGraphics(){
     font1616_bob.index  = 0;
     LoadPPB("res/font1616.ppb", font1616_bob.imgdat);
 
+    pills_bob.imgdat = malloc(192 * 192);
+    pills_bob.atlas_stride = 192;
+    pills_bob.atlas_height = 192;
+    pills_bob.height = 32;
+    pills_bob.width  = 32;
+    LoadPPB("res/pill_health.ppb", pills_bob.imgdat);
+
+    powerhealth_bob.imgdat = malloc(48 * 16);
+    powerhealth_bob.atlas_height = 16;
+    powerhealth_bob.atlas_stride = 48;
+    powerhealth_bob.height = 16;
+    powerhealth_bob.width  = 8;
+    LoadPPB("res/powerhealth.ppb", powerhealth_bob.imgdat);
 }
+
+
+void render3Dstuff(void)
+{
+    render3dCount = 0;
+
+    // collect asteroids
+    for(uint8_t i = 0; i < MAX_ASTROIDS_3D; i++){
+        if(astroids3d[i].health == 0) continue;
+
+        render3dList[render3dCount].z     = astroids3d[i].z;
+        render3dList[render3dCount].kind  = RENDER3D_ASTEROID;
+        render3dList[render3dCount].index = i;
+        render3dCount++;
+    }
+
+    // collect torpedos
+    for(uint8_t i = 0; i < MAX_TORPEDOS; i++){
+        if(bullet3d[i].health == 0) continue;
+
+        render3dList[render3dCount].z     = bullet3d[i].z;
+        render3dList[render3dCount].kind  = RENDER3D_TORPEDO;
+        render3dList[render3dCount].index = i;
+        render3dCount++;
+    }
+
+    // collect explodes
+    for(uint8_t i = 0; i < MAX_EXPLODES; i++){
+        if(explodes[i].timeout == 0) continue;
+        
+        render3dList[render3dCount].z     = explodes[i].fz;
+        render3dList[render3dCount].kind  = RENDER3D_EXPLODES;
+        render3dList[render3dCount].index = i;
+        render3dCount++;
+    }
+
+    for(uint8_t i = 0; i < MAX_PILLS; i++){
+        if(pills[i].health == 0) continue;  // we will use HEALTH as a PILL TYPE
+
+        render3dList[render3dCount].z     = pills[i].z;
+        render3dList[render3dCount].kind  = RENDER3D_PILLS;
+        render3dList[render3dCount].index = i;
+        render3dCount++;
+    }
+
+    // sort far -> near
+    for(uint8_t a = 0; a < render3dCount; a++){
+        for(uint8_t b = a + 1; b < render3dCount; b++){
+            if(render3dList[a].z < render3dList[b].z){
+                render3d_t t   = render3dList[a];
+                render3dList[a] = render3dList[b];
+                render3dList[b] = t;
+            }
+        }
+    }
+
+    // draw far -> near
+    for(uint8_t n = 0; n < render3dCount; n++){
+        uint8_t i = render3dList[n].index;
+
+        if(render3dList[n].kind == RENDER3D_ASTEROID){
+            uint8_t t = astroids3d[i].type;
+
+            astroid_bob[t].index  = astroids3d[i].frame;
+            astroid_bob[t].drawx  = astroids3d[i].drawx;
+            astroid_bob[t].drawy  = astroids3d[i].drawy;
+            astroid_bob[t].scale  = astroids3d[i].scale;
+            astroid_bob[t].handle = BLIT_HANDLE_CENTER;
+
+            astroid_bob[t].flags      = astroids3d[i].flags;
+            astroid_bob[t].flagval[0] = astroids3d[i].flagval[0];
+            astroid_bob[t].flagval[1] = astroids3d[i].flagval[1];
+
+            // ship collision time
+            if(astroids3d[i].z < 210.0f){
+                uint8_t bcol = gfx_bcollide(&astroid_bob[t], &shiptunnel);
+                if(bcol == 2){
+                    sound_stop(6);
+                    int16_t cx = shiptunnel.drawx + (shipcellsize >> 1); // use ship center
+                    int16_t pan1 = (cx - 240) * 127 / 240;  // convert 0..480 -> -127..127
+                    if(pan1 < -127) pan1 = -127;
+                    if(pan1 > 127)  pan1 = 127;
+                    sound_setpanning(6, pan1);
+                    sound_play(6);
+
+                    UpdateHealth(-5);
+                    astroids3d[i].health = 0;
+                    SpawnAstroid3D(i, sbx_rng_range(0, ASTROID_TYPES - 1));
+                    astroid_bob[t].flags = BLIT_FLAG_SOLIDCOLOUR;
+                    astroid_bob[t].flagval[BLIT_FLAG_TYPE_TINT_VALUE] = 7;
+                }
+            }
+
+            gfx_drawbob(&astroid_bob[t]);
+            astroid_bob[t].flags = 0;
+        }
+        else if(render3dList[n].kind == RENDER3D_TORPEDO){
+            photons_bob.index  = bullet3d[i].framei;
+            photons_bob.drawx  = bullet3d[i].drawx;
+            photons_bob.drawy  = bullet3d[i].drawy;
+            photons_bob.scale  = bullet3d[i].scale;
+            photons_bob.handle = BLIT_HANDLE_CENTER;
+            photons_bob.flags  = 0;
+
+            gfx_drawbob(&photons_bob);
+        } 
+        else if(render3dList[n].kind == RENDER3D_EXPLODES){
+            if(explodes[i].timeout > 0){
+                explode_bob.drawx = explodes[i].x;
+                explode_bob.drawy = explodes[i].y;
+    
+                explode_bob.handle = BLIT_HANDLE_CENTER;
+                explode_bob.scale = explodes[i].scale;
+                explode_bob.index = (uint8_t)explodes[i].rotation;
+
+                gfx_drawbob(&explode_bob);
+            }
+        }
+        else if(render3dList[n].kind == RENDER3D_PILLS){
+            pills_bob.index = pills[i].framei;  // frame index
+            pills_bob.drawx = pills[i].drawx;
+            pills_bob.drawy = pills[i].drawy;
+            pills_bob.handle = BLIT_HANDLE_CENTER;
+            pills_bob.scale = pills[i].scale;
+            if(pills[i].z < 210.0f){
+                uint8_t bcol = gfx_bcollide(&pills_bob, &shiptunnel);
+                if(bcol == 2){
+                    sound_stop(6);
+                    int16_t cx = shiptunnel.drawx + (shipcellsize >> 1); // use ship center
+                    int16_t pan1 = (cx - 240) * 127 / 240;  // convert 0..480 -> -127..127
+                    if(pan1 < -127) pan1 = -127;
+                    if(pan1 > 127)  pan1 = 127;
+                    sound_setpanning(6, pan1);
+                    sound_play(6);
+
+                    pills_bob.flags = BLIT_FLAG_SOLIDCOLOUR;
+                    pills_bob.flagval[BLIT_FLAG_TYPE_TINT_VALUE] = 7;
+
+                    AddScore(1000);
+                    UpdateHealth(15);
+
+                    pills[i].health = 0;
+                }
+            }
+            gfx_drawbob(&pills_bob);
+            pills_bob.flags = 0;
+
+        }
+    }
+}
+
+
+
+
+char vstring[64];
+//volatile gfxbob_t MEMALIGN32 powerhealth_bob;   // the power and health bar
+
+int8_t targHealth, targSheild;
+uint8_t statusTmr= 0;
+
+void drawPowerHealthBar(uint8_t health)
+{
+    const int16_t barX = 212;
+    const int16_t barY = 294;
+
+    // health_VAL is the actual value of the health status
+    // targHealth is the target health status to slowly show up here
+    if(statusTmr == 0){
+        if(targHealth < health) targHealth++;
+        else if(targHealth > health) targHealth--;
+    }
+    
+
+    // 22 middle cells * 8 pixels = 88 pixels of fill
+    uint16_t fillPx = ((uint16_t)targHealth * 88) / 100;
+
+    uint8_t midCount = fillPx / 8;
+    uint8_t remPx    = fillPx % 8;
+
+
+    // middle pieces
+    powerhealth_bob.index = 1;
+    for(uint8_t x = 0; x < midCount; x++){
+        powerhealth_bob.drawx = barX + (x * 8) + remPx;
+        powerhealth_bob.drawy = barY;
+        gfx_drawbob(&powerhealth_bob);
+    }
+
+    // left cap
+    powerhealth_bob.index = 0;
+    powerhealth_bob.drawx = barX;
+    powerhealth_bob.drawy = barY;
+    gfx_drawbob(&powerhealth_bob);
+
+    // right cap follows end of filled middle
+    powerhealth_bob.index = 2;
+    powerhealth_bob.drawx = barX + (midCount * 8) + remPx;
+    powerhealth_bob.drawy = barY;
+    gfx_drawbob(&powerhealth_bob);
+}
+
+
+void drawPowerShieldBar(uint8_t health)
+{
+    const int16_t barX = 366;
+    const int16_t barY = 294;
+
+    if(statusTmr == 0){
+        if(targSheild < health) targSheild++;
+        else if(targSheild > health) targSheild--;
+    }
+
+    // 22 middle cells * 8 pixels = 88 pixels of fill
+    uint16_t fillPx = ((uint16_t)targSheild * 88) / 100;
+
+    uint8_t midCount = fillPx / 8;
+    uint8_t remPx    = fillPx % 8;
+
+
+    // middle pieces
+    powerhealth_bob.index = 4;
+    for(uint8_t x = 0; x < midCount; x++){
+        powerhealth_bob.drawx = barX + (x * 8) + remPx;
+        powerhealth_bob.drawy = barY;
+        gfx_drawbob(&powerhealth_bob);
+    }
+
+    // left cap
+    powerhealth_bob.index = 3;
+    powerhealth_bob.drawx = barX;
+    powerhealth_bob.drawy = barY;
+    gfx_drawbob(&powerhealth_bob);
+
+    // right cap follows end of filled middle
+    powerhealth_bob.index = 5;
+    powerhealth_bob.drawx = barX + (midCount * 8) + remPx;
+    powerhealth_bob.drawy = barY;
+    gfx_drawbob(&powerhealth_bob);
+}
+
+
+
+void DrawHUD(){
+    
+    sprintf(vstring, "SCORE: %07lu", SCORE_VAL);
+    drawText(vstring, 10, 10);
+
+    sprintf(vstring, "LIVES: %lu", LIVES_VAL);
+    drawText(vstring, 340, 10);
+
+    sprintf(vstring, "WAVES: %lu", WAVES_VAL);
+    drawText(vstring, 10, 294);
+
+    sprintf(vstring, "H:");
+    drawText(vstring, 180, 294);
+
+    sprintf(vstring, "S:");
+    drawText(vstring, 334, 294);
+
+    statusTmr ++;
+    if(statusTmr> 1) statusTmr = 0;
+
+    drawPowerHealthBar(health_VAL);
+    drawPowerShieldBar(shields_VAL);           
+}
+

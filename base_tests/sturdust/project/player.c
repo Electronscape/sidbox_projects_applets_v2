@@ -1,6 +1,7 @@
 #include "main.h"
 
 #include "resource.h"
+#include "graphics.h"
 #include "player.h"
 #include "astroids.h"
 
@@ -12,12 +13,31 @@ int8_t shipRotTmr = 0;
 uint8_t shipInvincible;
 uint8_t shieldActive = 0;
 
+uint32_t SCORE_VAL = 0;
+uint8_t  LIVES_VAL = 0;
+uint8_t  WAVES_VAL = 0;
+int8_t   health_VAL  = 100;
+int8_t   shields_VAL = 100;
 
-volatile bullets_t MEMALIGN4  bullet[MAXBULLETS];  // shouldnt really ever see more than 3 but never know
+
+volatile bullets_t   MEMALIGN4 bullet  [MAXBULLETS];  // shouldnt really ever see more than 3 but never know
+volatile bullets3d_t MEMALIGN4 bullet3d[MAX_TORPEDOS];  // 3D bullet
+
+volatile bullets3d_t MEMALIGN4 pills[MAX_PILLS]; // can use these as upgrade pills
+
 volatile gfxbob_t  MEMALIGN32 shipbullet;
 volatile gfxbob_t  MEMALIGN32 shipmain;
+volatile gfxbob_t  MEMALIGN32 shiptunnel;
 volatile gfxbob_t  MEMALIGN32 shipshield;
 volatile uint8_t  shieldStep = 0;
+
+const uint8_t shipframetunnel[5][5] = {
+    0, 1, 2, 3, 4,
+    5, 6, 7, 8, 9,
+    10,11,12,13,14,
+    15,16,17,18,19,
+    20,21,22,23,24
+};
 
 
 static inline float clampf(float v, float lo, float hi)
@@ -323,4 +343,301 @@ void doBullets(){
             gfx_drawbob(&shipbullet);
         }
     }
+}
+
+
+
+void spawnTorpedo(int16_t startx, int16_t starty)
+{
+    const float focal = 260.0f;
+    const float z0    = 80.0f;
+
+    startx *= 2.0f;
+    starty *= 2.2f;
+
+    for(uint8_t i = 0; i < MAX_TORPEDOS; i++){
+        if(bullet3d[i].health == 0){
+            memset((void*)&bullet3d[i], 0, sizeof(bullets3d_t));
+
+            bullet3d[i].health = 1;
+            bullet3d[i].type   = 0;
+
+
+            // startx/starty are assumed to already be in the 640x480 tunnel space
+            // inverse of:
+            // fx = 320 + (x * focal / z)
+            // fy = 240 + (y * focal / z)
+            bullet3d[i].z = z0;
+            bullet3d[i].x = ((float)(startx - 320) * z0) / focal;
+            bullet3d[i].y = ((float)(starty - 240) * z0) / focal;
+
+            bullet3d[i].sx = 0.0f;
+            bullet3d[i].sy = 0.0f;
+            bullet3d[i].sz = 16.0f;   // speed away into tunnel
+
+            bullet3d[i].cellw = 64;
+            bullet3d[i].cellh = 64;
+
+            bullet3d[i].framet = 0;  // frame timer 0
+            bullet3d[i].framei = 4; // index
+            bullet3d[i].frames = (sbx_rng_range(1, 4) & 1) ? -1 : 1;
+            bullet3d[i].frames_max = 18;
+
+            bullet3d[i].scale  = 100;
+            bullet3d[i].radius = 6;
+
+            sound_stop(1);
+            int16_t cx = shiptunnel.drawx + (shipcellsize >> 1); // use ship center
+            int16_t pan1 = (cx - 240) * 127 / 240;  // convert 0..480 -> -127..127
+            if(pan1 < -127) pan1 = -127;
+            if(pan1 > 127)  pan1 = 127;
+            sound_setpanning(1, pan1);
+            sound_play(1);
+            return;
+        }
+    }
+}
+
+void initTorpedos3D(void){
+    memset((void*)bullet3d, 0, sizeof(bullets3d_t) * MAX_TORPEDOS);
+}
+
+void initPills3D(void){
+    memset((void*)pills, 0, sizeof(bullets3d_t) * MAX_PILLS);
+}
+
+void proc_photo_torps(int16_t scroffx, int16_t scroffy)
+{
+    const float focal      = 260.0f;
+    const float scale_mul  = 220.0f;
+    const float z_far_kill = 2020.0f;
+
+    uint8_t drawList[MAX_TORPEDOS];
+    uint8_t drawCount = 0;
+
+    // -----------------------------
+    // update + project
+    // -----------------------------
+    for(uint8_t i = 0; i < MAX_TORPEDOS; i++){
+        if(bullet3d[i].health == 0) continue;
+
+        // move away down tunnel
+        bullet3d[i].x += bullet3d[i].sx;
+        bullet3d[i].y += bullet3d[i].sy;
+        bullet3d[i].z += bullet3d[i].sz;
+
+        // frames ;)
+        bullet3d[i].framet++;
+        if(bullet3d[i].framet > 2){
+            bullet3d[i].framet = 0;
+            int8_t nextframe = bullet3d[i].framei + bullet3d[i].frames;
+            if(nextframe >= bullet3d[i].frames_max) nextframe = 0;
+            else if(nextframe < 0) nextframe = bullet3d[i].frames_max - 1;
+            bullet3d[i].framei = nextframe;
+        }
+
+        // kill when too far
+        if(bullet3d[i].z >= z_far_kill){
+            bullet3d[i].health = 0;
+            continue;
+        }
+
+        // perspective project
+        float iz = 1.0f / bullet3d[i].z;
+
+        float fx = 320.0f + (bullet3d[i].x * focal * iz);
+        float fy = 240.0f + (bullet3d[i].y * focal * iz);
+
+        uint16_t scale = (uint16_t)(scale_mul * iz * 100.0f);
+        if(scale < 8)  scale = 8;
+        if(scale > 80) scale = 80;   // torpedos should stay smaller than rocks
+
+        bullet3d[i].drawx = (int16_t)fx - scroffx;
+        bullet3d[i].drawy = (int16_t)fy - scroffy;
+        bullet3d[i].scale = scale;
+
+        // collision radius in screen space
+        bullet3d[i].radius = (int16_t)(((uint32_t)bullet3d[i].cellw * scale) / 100u / 2);
+        if(bullet3d[i].radius < 2) bullet3d[i].radius = 2;
+
+        // cull if off screen
+        {
+            int16_t draww = (int16_t)(((uint32_t)bullet3d[i].cellw * scale) / 100u);
+            int16_t drawh = (int16_t)(((uint32_t)bullet3d[i].cellh * scale) / 100u);
+
+            if(bullet3d[i].drawx < -draww || bullet3d[i].drawx > (640 + draww) ||
+               bullet3d[i].drawy < -drawh || bullet3d[i].drawy > (480 + drawh))
+            {
+                bullet3d[i].health = 0;
+                continue;
+            }
+        }
+
+        // collide against asteroids // bullet collide
+        for(uint8_t a = 0; a < MAX_ASTROIDS_3D; a++){
+            if(astroids3d[a].health == 0) continue;
+
+            // only test if somewhat near same depth
+            float dz = astroids3d[a].z - bullet3d[i].z;
+            if(dz < -120.0f || dz > 120.0f) continue;
+
+            float dx = (float)(astroids3d[a].drawx - bullet3d[i].drawx);
+            float dy = (float)(astroids3d[a].drawy - bullet3d[i].drawy);
+
+            float rr = (float)(astroids3d[a].radius + bullet3d[i].radius);
+            if((dx * dx + dy * dy) <= (rr * rr)){
+                astroids3d[a].health--;
+                bullet3d[i].health = 0;
+
+
+                if(astroids3d[a].health == 0){
+                    sound_stop(5);
+                    sound_play(5);
+
+                    int16_t cx = astroids3d[a].drawx + (shipcellsize >> 1); // use ship center
+                    int16_t pan1 = (cx - 240) * 127 / 240;  // convert 0..480 -> -127..127
+                    if(pan1 < -127) pan1 = -127;
+                    if(pan1 > 127)  pan1 = 127;
+                    sound_setpanning(5, pan1);
+                    AddScore(astroids3d[a].score);
+                    if(sbx_rng_range(0, 4) == 1)
+                        spawnPill(&astroids3d[a]);
+
+                    spawnExplode3d(&astroids3d[a]); // <-- tis isnt really doin the placin right, i cannot see the spawn
+                    SpawnAstroid3D(a, sbx_rng_range(0, ASTROID_TYPES - 1));
+                }
+                break;
+            }
+        }
+        
+
+        if(bullet3d[i].health)
+            drawList[drawCount++] = i;
+    }
+}
+
+
+//////////// UPGRADE PILLS ////////////
+void spawnPill(stroids3d *src)
+{
+    if(!src) return;
+    for(uint8_t i = 0; i < MAX_PILLS; i++){
+        if(pills[i].health == 0){
+            memset((void*)&pills[i], 0, sizeof(bullets3d_t));
+
+            pills[i].health = 1;
+            pills[i].type   = 0;
+            pills[i].z = src->z;
+            pills[i].x = src->x;
+            pills[i].y = src->y;
+
+            pills[i].sx = 0.0f;
+            pills[i].sy = 0.0f;
+            pills[i].sz = 16.0f;   // speed away into tunnel
+
+            pills[i].cellw = 64;
+            pills[i].cellh = 64;
+
+            pills[i].framet = 0;  // frame timer 0
+            pills[i].framei = 4; // index
+            pills[i].frames = (sbx_rng_range(1, 4) & 1) ? -1 : 1;
+            pills[i].frames_max = 36;
+
+            pills[i].scale  = 100;
+            pills[i].radius = 6;
+            return;
+        }
+    }
+}
+
+void procPills3D(int16_t scroffx, int16_t scroffy)
+{
+    const float focal       = 260.0f;
+    const float scale_mul   = 320.0f;
+    const float z_near_kill = 90.0f;
+
+    for(uint8_t i = 0; i < MAX_PILLS; i++){
+        if(pills[i].health == 0) continue;
+
+        // move toward player
+        pills[i].x += pills[i].sx;
+        pills[i].y += pills[i].sy;
+        pills[i].z -= pills[i].sz;
+
+        // frames
+        pills[i].framet++;
+        if(pills[i].framet > 1){
+            pills[i].framet = 0;
+
+            int16_t nextframe = (int16_t)pills[i].framei + (int16_t)pills[i].frames;
+
+            while(nextframe >= pills[i].frames_max)
+                nextframe -= pills[i].frames_max;
+
+            while(nextframe < 0)
+                nextframe += pills[i].frames_max;
+
+            pills[i].framei = (uint8_t)nextframe;
+        }
+
+        // kill when too near
+        if(pills[i].z <= z_near_kill){
+            pills[i].health = 0;
+            continue;
+        }
+
+        // perspective project
+        float iz = 1.0f / pills[i].z;
+
+        float fx = 320.0f + (pills[i].x * focal * iz);
+        float fy = 240.0f + (pills[i].y * focal * iz);
+
+        uint16_t scale = (uint16_t)(scale_mul * iz * 100.0f);
+        if(scale < 4)   scale = 4;
+        if(scale > scale_mul) scale = scale_mul;   // pills can grow a bit bigger
+
+        pills[i].drawx = (int16_t)fx - scroffx;
+        pills[i].drawy = (int16_t)fy - scroffy;
+        pills[i].scale = scale * 2.5f;// * 3.2f;
+
+        // collision radius in screen space
+        pills[i].radius = (int16_t)(((uint32_t)pills[i].cellw * scale) / 100u / 3);
+        if(pills[i].radius < 4) pills[i].radius = 4;
+
+        // cull if off screen
+        {
+            int16_t draww = (int16_t)(((uint32_t)pills[i].cellw * scale) / 100u);
+            int16_t drawh = (int16_t)(((uint32_t)pills[i].cellh * scale) / 100u);
+
+            if(pills[i].drawx < -draww || pills[i].drawx > (640 + draww) ||
+               pills[i].drawy < -drawh || pills[i].drawy > (480 + drawh))
+            {
+                pills[i].health = 0;
+                continue;
+            }
+        }
+    }
+}
+
+uint8_t UpdateHealth(int8_t healthload){
+    health_VAL +=healthload;
+    if(health_VAL < 0) {
+        health_VAL = 0;
+        return 0;   // no more health left!
+    }
+    if(health_VAL > 100) health_VAL = 100;
+
+    return 1;  // some health left
+}
+
+void SetPlayerLives(uint8_t newlive){
+    LIVES_VAL = newlive;
+}
+
+void AddScore(uint8_t scoreadd){
+    SCORE_VAL += scoreadd;
+}
+
+void SetWaves(uint8_t newWave){
+    WAVES_VAL = newWave;
 }
