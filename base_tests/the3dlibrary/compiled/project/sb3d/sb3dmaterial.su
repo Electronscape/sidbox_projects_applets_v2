@@ -1,0 +1,2 @@
+sb3dmaterial.c:12:6:meshSetDefaultMaterial	0	static
+sb3dmaterial.c:23:6:meshSetMaterial	0	static

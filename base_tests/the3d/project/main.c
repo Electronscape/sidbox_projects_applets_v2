@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
 
 
 
-    //music_play("myglamor.mod", 0);
+    music_play("afp.mod", 0);
 
 
     // setup scene

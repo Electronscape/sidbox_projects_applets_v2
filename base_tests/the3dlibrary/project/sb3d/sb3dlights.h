@@ -1,0 +1,43 @@
+#ifndef LIGHTS_H
+#define LIGHTS_H
+
+#include "memalign.h"
+#include "sb3dworld.h"
+#include "sb3dmath.h"
+
+typedef struct align32 {
+    LightType type;
+    Vec3  pos;
+    Vec3  dir;
+    float intensity;
+    float near, far, beyond;
+    int   enabled;
+} Light;
+
+
+
+extern int g_lightCount;
+
+Light *lightsGet(void);
+int lightsGetCount(void);
+void lightsClear(void);
+
+
+void lightEnable(uint8_t lightIndex, uint8_t enable);
+
+
+int addPointLight(Vec3 pos, float intensity, int enabled);
+int addDirectionalLight(Vec3 dir, float intensity, int enabled);
+
+
+void lightSetPosition(int index, Vec3 pos);
+void lightSetDirection(int index, Vec3 dir);
+void lightSetIntensity(int index, float bright);
+void lightSetRanges(int lightId, float near, float far, float beyond);
+
+float brightnessToShadeF(float brightness);
+
+// controls
+void buildLightingCLUT(uint32_t *clut, uint32_t *baseColors, int numColors, uint32_t target, float shades[5]);
+
+#endif

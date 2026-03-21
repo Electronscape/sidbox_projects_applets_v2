@@ -1,9 +1,11 @@
 #ifndef _SIDBOX_3D_LIB_H_
 #define _SIDBOX_3D_LIB_H_
 
+
 #include "sb3dmath.h"
 #include "sb3dcamera.h"
 
+#include "sb3dgfx.h"
 #include "sb3dmaterial.h"
 
 #include "sb3dworld.h"
