@@ -43,10 +43,10 @@ typedef enum {
 
 
 typedef struct {
-    FRESULT (*sbopen) (uint8_t filenum, char *filename, uint8_t filemode);
+    FRESULT (*sbopen)     (uint8_t filenum, char *filename, uint8_t filemode);
     uint32_t (*sbfilelen) (uint8_t filenum);
-    void (*sbread)    (uint8_t filename, void *buffer, uint32_t length, uint32_t *bytesread);
-    void (*sbclose)   (uint8_t filenum);
+    FRESULT (*sbread)     (uint8_t filename, void *buffer, uint32_t length, uint32_t *bytesread);
+    void (*sbclose)       (uint8_t filenum);
 } API_FILEIO;
 
 

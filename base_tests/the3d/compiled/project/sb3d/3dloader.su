@@ -1,0 +1,3 @@
+3dloader.c:14:5:loadMeshOBJ	728	static
+3dloader.c:166:5:loadMeshSB3D	80	static
+3dloader.c:323:6:freeMesh	8	static

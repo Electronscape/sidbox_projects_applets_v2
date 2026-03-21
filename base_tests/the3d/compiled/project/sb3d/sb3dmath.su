@@ -1,0 +1,14 @@
+sb3dmath.c:6:6:vec3Add	56	static
+sb3dmath.c:15:6:vec3Sub	56	static
+sb3dmath.c:24:6:vec3Scale	48	static
+sb3dmath.c:33:7:vec3Dot	24	static
+sb3dmath.c:41:6:vec3Cross	56	static
+sb3dmath.c:50:7:fastRecipf	0	static
+sb3dmath.c:70:6:vec3Normalize	48	static
+sb3dmath.c:109:6:rotateAroundAxis	112	static
+sb3dmath.c:129:7:triangleCenter	72	static
+sb3dmath.c:140:6:vec3	32	static
+sb3dmath.c:145:7:degrees	0	static
+sb3dmath.c:149:7:degToRad	0	static
+sb3dmath.c:154:7:radToDeg	0	static
+math.h:365:14:powf	16	static

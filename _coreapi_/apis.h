@@ -133,11 +133,18 @@ extern _largest_modfile;
 
 //// # HARDWARE LEVEL # ///////#
 typedef struct {
-    void     (*gamemode)     (uint32_t offset);  // fill rect
-    void     (*exitgamemode) (void);
-	void     (*dbug)		 (char *string);
-	uint8_t  (*getmouse)     (int16_t *mx, int16_t *my);
-	uint8_t  (*getjoyport)	 (void);
+    void     (*gamemode)      (uint32_t offset);  // fill rect
+    void     (*exitgamemode)  (void);
+	uint32_t (*getTicks)      (void);			// get system ticks
+	void     (*dbug)		  (char *string);
+
+
+	uint8_t  (*getmousepos)   (int16_t *mx, int16_t *my);
+	void     (*setmousepos)   (int16_t  mx, int16_t  my);
+	void     (*getmousedelta) (int32_t *dx, int32_t *dy);
+	void     (*clrmousedelta) (void);
+	
+	uint8_t  (*getjoyport)	  (void);
 } API_HW ;
 
 
@@ -157,7 +164,17 @@ typedef struct {
 	const API_SOUND *sound;
 } API_AUDIO;
 
+
+
+//#include "sb3dengine/sb3d.h"
+
+
+
+
+
 #include "sys/sys.h"
+
+#define alignmem4 __attribute__((aligned(4)))
 
 //// # API ROOT DIRECTORY # ///#
 typedef struct __attribute__((aligned(4))) {
@@ -165,6 +182,7 @@ typedef struct __attribute__((aligned(4))) {
 	const API_SYSTEMS 	*system;	// operating system stuffs
     const API_GUI     	*gui;   	// always here
     const API_GFX     	*gfx;   	// graphics library system
+	//const API_3D        *sb3d;		// the 3D graphics system
 	const API_AUDIO   	*audio;		// audio systems
 	
 } API_Root;
@@ -186,6 +204,17 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 // conf
 #define configure_runmode(profile)	(HWKERNAL->gamemode(profile))
 
-#define dbug(s) 	   (API->hwl->dbug(s))
-#define getmouse(x, y) (HWKERNAL->getmouse(x,y))
+#define dbug(s) 	        (API->hwl->dbug(s))
+
+// Mouse interfacing
+#define getmousepos(x, y)   (HWKERNAL->getmousepos(x,y))
+#define setmousepos(x, y)   (HWKERNAL->setmousepos(x,y))
+#define getmousedelta(x, y) (HWKERNAL->getmousedelta(x,y))
+#define clrmousedelta()	    (HWKERNAL->clrmousedelta())
+
+#define CPU_HZ 480000000.0f
+#define TICK_TO_SECONDS     (1.0f / CPU_HZ)
+#define getTicks()			(HWKERNAL->getTicks())
+
+// joy stick interfacing (usually just for the port Y1, Y2, X1, X2, BTn1, BTn2, up/down/left/right/fire1/fire2)
 #define getjoyport     HWKERNAL->getjoyport

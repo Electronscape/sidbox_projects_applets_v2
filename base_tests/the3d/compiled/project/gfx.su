@@ -1,0 +1,10 @@
+gfx.c:68:6:set3DRenderBuffer	0	static
+gfx.c:98:6:putPixel	0	static
+gfx.c:105:6:drawLine	56	static
+gfx.c:155:6:resetRand	0	static
+gfx.c:165:9:shadeColor	0	static
+gfx.c:235:6:fillTriangleFlat	136	static
+gfx.c:592:6:fillTriangleDitherBayer	160	static
+gfx.c:966:6:fillTriangleDitherBayer2Mode	152	static
+gfx.c:1348:10:darken	16	static
+gfx.c:1361:6:drawRect	40	static

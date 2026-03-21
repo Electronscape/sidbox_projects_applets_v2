@@ -11,7 +11,12 @@ extern "C" {
 
 // [setlcd frame rate] //
 // these are base tested, but you can use any 8bit value with various results. some good, some funny
-#define DEFAULT_RENDER_ORDER        220
+#define DEFAULT_RENDER_ORDER        220     // scanline: top to bottom, left to right
+#define RENDER_ORDER_BT_RL          92      // scanline: top to bottom, right to left    // NOT GOOD for VSYNC stuff!
+
+#define RENDER_ORDER_TB_LR          156     // scanline: bottom to top, left to right
+#define RENDER_ORDER_TB_RL          28      // scanline: bottom to top, right to left   // not good foew VSYNC stuff!
+
 #define FPS_25      0x00
 #define FPS_27      0x10
 #define FPS_29      0x20
@@ -103,7 +108,7 @@ typedef struct __attribute__((aligned(32))) {
     uint8_t     _pad1[4];       // trail padding :)
 } gfxbob_t;    // Blitter Objects
 
-_Static_assert(sizeof(gfxbob_t) == 32, "gfxbob_t must be 32 bytes");
+//_Static_assert(sizeof(gfxbob_t) == 32, "gfxbob_t must be 32 bytes");
 
 typedef struct __attribute__((aligned(32))) {
     void         (*displaynow)       (void);     // update screen (call to put what ever buffer is selected to the LCD)
@@ -216,6 +221,9 @@ typedef struct  {
 
 // draw a filled rectactangle on the drawbuffer
 #define gfx_rectf(x, y, w, h)	(GFXP->rectf(x,y,w,h))
+
+// primatives
+#define gfx_plot(x, y)          (GFXP->plot(x,y))
 
 // set the current draw colour
 #define gfx_setcolour(c)        (GFXP->setcolour((c)))

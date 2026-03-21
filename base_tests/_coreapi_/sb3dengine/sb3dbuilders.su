@@ -1,0 +1,9 @@
+sb3dbuilders.c:51:6:createBox	376	static
+sb3dbuilders.c:116:6:createSphere	144	static
+sb3dbuilders.c:163:6:createPlane	112	static
+sb3dbuilders.c:217:6:createCylinder	128	static
+sb3dbuilders.c:300:6:createCone	120	static
+sb3dbuilders.c:360:6:createPyramid	88	static
+sb3dbuilders.c:408:6:createTorus	144	static
+sb3dbuilders.c:472:5:loadMeshSB3D	88	static
+sb3dbuilders.c:629:6:freeMesh	8	static

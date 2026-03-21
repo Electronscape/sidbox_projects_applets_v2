@@ -25,4 +25,5 @@ CFLAGS   += $(WARNINGS)
 CFLAGS   += $(INCLUDES)
 
 
-LDFLAGS  := -mcpu=cortex-m7 --specs=nosys.specs -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+LDFLAGS  := -mcpu=cortex-m7 --specs=nosys.specs -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb
+LDLIBS   := -Wl,--start-group -lc -lm -Wl,--end-group

@@ -1,0 +1,10 @@
+sb3dparticles.c:10:6:sb3dParticlesClear	8	static
+sb3dparticles.c:25:5:sb3dParticleSpawnQuad	24	static
+sb3dparticles.c:60:6:sb3dParticleSetPosition	16	static
+sb3dparticles.c:67:6:sb3dParticleSetSize	0	static
+sb3dparticles.c:75:6:sb3dParticleSetLightStrength	0	static
+sb3dparticles.c:86:6:sb3dParticleSetShade	0	static
+sb3dparticles.c:97:6:sb3dParticleSetColor	0	static
+sb3dparticles.c:104:6:sb3dParticleSetEmission	0	static
+sb3dparticles.c:111:6:sb3dParticleEnable	0	static
+sb3dparticles.c:117:6:sb3dParticlesRender	384	static
