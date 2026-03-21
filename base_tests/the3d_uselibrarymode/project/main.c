@@ -104,7 +104,6 @@ int main(int argc, char *argv[]) {
     loadMeshSB3D("suzanne.sb3d", &SuzanneMesh, 100.0f);
     int suzzie0 = entityWorldSpawn(&SuzanneMesh, vec3(00, 200, 2300));
     meshSetMaterial(&SuzanneMesh, 0.00f, 0.55f, 0.00f, 3.40f, 64.0f);
-    //meshSetMaterial(&SuzanneMesh, 0.06f, 0.90f, 0.00f, 0.55f, 16.0f);
 
     enableFlatMode(0);  // sidbox display doesnt like the floyd effect yet
 
@@ -126,23 +125,6 @@ int main(int argc, char *argv[]) {
     uint32_t lastTicks = getTicks();
 
     char testout[32];
-
-    /* DELTA TIME CHECK 
-    set3DRenderBuffer(bm2->bitmap);
-    for(;;) {
-        uint32_t nowTicks = getTicks();
-        uint32_t tickDelta = nowTicks - lastTicks;
-
-
-        Render3D(&cam);
-
-        lastTicks = nowTicks;
-        float dt = (float)tickDelta * TICK_TO_SECONDS;
-
-        sprintf(testout, "tickDelta : %lu, MS: %ld\n", tickDelta, (int)(dt * 1000));
-        dbug(testout);
-    }
-    */
 
     for (;;) {
         uint32_t nowTicks = getTicks();
