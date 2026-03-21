@@ -214,7 +214,6 @@ typedef enum {
     Maths API
 ==============================================================================*/
 
-float fastRecipf(float x);
 void sb3dInitTrigTable(void);
 
 float sbsinf(float radians);

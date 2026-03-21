@@ -2,6 +2,8 @@
 #include "graphics.h"
 #include "apis.h"
 
+// a custom Pixel-Pixel-Buffer image. 
+// sidbox's graphics system uses some of the header parts, but if you just want the raw pixel colour index, skip the first header and palette data
 
 void LoadPPB(char *filename, uint8_t *img){
     // [0] configbits
