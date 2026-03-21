@@ -102,6 +102,13 @@ int main(int argc, char *argv[]) {
 
     enableFlatMode(0);  // sidbox display doesnt like the floyd effect yet
 
+    Mesh SuzanneMesh;
+    //loadMeshSB3D("suzanne.sb3d", &SuzanneMesh, 50.0f);
+    loadMeshSB3D("text.sb3d", &SuzanneMesh, 50.0f);
+    int suzzie0 = entityWorldSpawn(&SuzanneMesh, vec3(-100, 100, 200));
+    //meshSetMaterial(&SuzanneMesh, 0.00f, 0.55f, 0.00f, 0.4f, 0.00f);
+    meshSetMaterial(&SuzanneMesh, 0.00f, 0.55f, 1.50f, 64.0f, 0.00f);
+
     
     gfx_showfbuffer(bm1);           // initial buffers
     gfx_usebuffer(bm1);
@@ -181,6 +188,8 @@ int main(int argc, char *argv[]) {
         
         entityTurnLocal(carrier0, -0.003f * speed, 0, 0);
         entityMoveForward(carrier0, 6.8f * speed);//vec3(0,0,0.7f));
+
+        entityTurnLocal(suzzie0, 0.2 * dt, 0, 0);
 
         clrmousedelta();
 

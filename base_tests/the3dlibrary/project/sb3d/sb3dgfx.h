@@ -26,7 +26,7 @@ typedef enum {
 #define PALETTE_SHADE_OFFSETS    32
 #define BLACK_SHADE_PALETTE      16
 
-extern uint16_t align32 g_depthBuffer[SCREEN_W * SCREEN_H];
+
 void resetDepthBufferBand(void);
 
 void putPixel(int32_t x, int32_t y, uint8_t colIndex);
@@ -46,9 +46,6 @@ void fillTriangleFlat(int x0, int y0,  int x1, int y1,  int x2, int y2, uint16_t
 void fillTriangleDitherBayer( int x0, int y0, int x1, int y1, int x2, int y2, uint16_t z0, uint16_t z1, uint16_t z2, float camz0, float camz1, float camz2, uint8_t baseColor, float shadeF);
 void fillTriangleDitherBayer2Mode(int x0, int y0, int x1, int y1, int x2, int y2, uint16_t z0, uint16_t z1, uint16_t z2, float camz0, float camz1, float camz2, uint8_t baseColor, float shadeF);
 
-
-
-uint32_t darken(uint32_t c, float f);
 void resetRand();
 
 #endif

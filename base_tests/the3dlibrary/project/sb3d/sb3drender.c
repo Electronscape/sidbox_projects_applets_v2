@@ -28,7 +28,7 @@ static int g_renderTriCount = 0;
 
 // 480 x 320 * 2
 //uint16_t g_depthBufferBand[SCREEN_W * ZBUF_BAND_H];
-uint16_t align32 g_depthBuffer[SCREEN_W * SCREEN_H];
+//uint16_t align32 g_depthBuffer[SCREEN_W * SCREEN_H];
 
 //static int g_enableZOrdering = 0;
 static int g_flatMode        = 0;
@@ -54,10 +54,6 @@ static inline Vec3 lerpVec3(Vec3 a, Vec3 b, float t)
 
 
 
-
-void resetDepthBuffer(void){
-    memset(g_depthBuffer, 0xFF, sizeof(g_depthBuffer));
-}
 
 
 static inline uint16_t encodeZ(float z, const Camera *cam)

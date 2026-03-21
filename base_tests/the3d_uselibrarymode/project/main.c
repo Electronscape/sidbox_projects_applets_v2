@@ -21,7 +21,7 @@ void initSystem(){
     initMalloc();   // go memory!! yey
 
     // hardware preps //
-    gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_25);
+    gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_40);
     lcd_bright(0);
     gfx_mode(480, 320, 480, 320, DISPFLAG_SINGLELAYER | DISPFLAG_NOSCROLLABLE);
     set_audio_dma(512); // a few ms about 7ms enough for a full frame.
@@ -99,6 +99,12 @@ int main(int argc, char *argv[]) {
     Mesh carrierMesh;
     loadMeshSB3D("carrier.sb3d", &carrierMesh, 50.0f);
     int carrier0 = entityWorldSpawn(&carrierMesh, vec3(1950, 0, -100));
+
+    Mesh SuzanneMesh;
+    loadMeshSB3D("suzanne.sb3d", &SuzanneMesh, 100.0f);
+    int suzzie0 = entityWorldSpawn(&SuzanneMesh, vec3(00, 200, 2300));
+    meshSetMaterial(&SuzanneMesh, 0.00f, 0.55f, 0.00f, 3.40f, 64.0f);
+    //meshSetMaterial(&SuzanneMesh, 0.06f, 0.90f, 0.00f, 0.55f, 16.0f);
 
     enableFlatMode(0);  // sidbox display doesnt like the floyd effect yet
 
@@ -181,6 +187,8 @@ int main(int argc, char *argv[]) {
         
         entityTurnLocal(carrier0, -0.003f * speed, 0, 0);
         entityMoveForward(carrier0, 6.8f * speed);//vec3(0,0,0.7f));
+
+        entityTurnLocal(suzzie0, 1.0f * dt, 0, 0);
 
         clrmousedelta();
 

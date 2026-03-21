@@ -3,6 +3,17 @@
 
 #include "sb3d.h"
 
+void cameraNormalize(Camera *cam)
+{
+    cam->forward = vec3Normalize(cam->forward);
+    cam->right   = vec3Normalize(cam->right);
+
+    cam->up = vec3Cross(cam->forward, cam->right);
+    cam->up = vec3Normalize(cam->up);
+
+    cam->right = vec3Cross(cam->up, cam->forward);
+    cam->right = vec3Normalize(cam->right);
+}
 
 
 static void rebuildCameraBasis(Camera *cam)
@@ -120,17 +131,6 @@ void cameraTurn(Camera *cam, float x, float y, float z, uint8_t global)
     cameraNormalize(cam);
 }
 
-void cameraNormalize(Camera *cam)
-{
-    cam->forward = vec3Normalize(cam->forward);
-    cam->right   = vec3Normalize(cam->right);
-
-    cam->up = vec3Cross(cam->forward, cam->right);
-    cam->up = vec3Normalize(cam->up);
-
-    cam->right = vec3Cross(cam->up, cam->forward);
-    cam->right = vec3Normalize(cam->right);
-}
 
 
 Vec3 worldToCamera(Vec3 p, Camera cam)

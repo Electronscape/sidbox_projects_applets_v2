@@ -1,8 +1,8 @@
-sb3dcamera.c:50:8:cameraCreate	8	static
-sb3dcamera.c:67:6:cameraSetPosition	16	static
-sb3dcamera.c:123:6:cameraNormalize	8	static
-sb3dcamera.c:73:6:cameraRotate	40	static
-sb3dcamera.c:84:6:cameraTurn	72	static
+sb3dcamera.c:6:6:cameraNormalize	8	static
+sb3dcamera.c:61:8:cameraCreate	8	static
+sb3dcamera.c:78:6:cameraSetPosition	16	static
+sb3dcamera.c:84:6:cameraRotate	40	static
+sb3dcamera.c:95:6:cameraTurn	72	static
 sb3dcamera.c:136:6:worldToCamera	192	static
 sb3dcamera.c:152:6:cameraSetRange	0	static
 sb3dcamera.c:171:6:cameraMove	0	static

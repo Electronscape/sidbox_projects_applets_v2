@@ -4,7 +4,7 @@
 #include "sb3d.h"
 
 static Light align32 g_lights[MAX_LIGHTS];
-int g_lightCount = 0;
+static int g_lightCount = 0;
 
 // linearly interpolate between two colors
 // linearly interpolate between two colors in AARRGGBB format

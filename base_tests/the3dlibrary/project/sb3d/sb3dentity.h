@@ -61,7 +61,7 @@ typedef struct align32 {
 
 
 
-extern Entity align32 worldEntities[WORLD_MAX];
+extern Entity worldEntities[WORLD_MAX];
 
 
 /* -------------------------------------------------------------------------- */

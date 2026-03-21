@@ -16,7 +16,7 @@ typedef struct align32 {
 
 
 
-extern int g_lightCount;
+//extern int g_lightCount;
 
 Light *lightsGet(void);
 int lightsGetCount(void);

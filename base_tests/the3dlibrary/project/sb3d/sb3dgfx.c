@@ -27,7 +27,15 @@ static const uint8_t bayer4x4[4][4] = {
 /* keep your existing font[][] here */
 
 //uint8_t fb[SCREEN_W * SCREEN_H] = {0};
+
 uint8_t *drawbuffer;
+static uint16_t align32 g_depthBuffer[SCREEN_W * SCREEN_H];
+
+
+
+void resetDepthBuffer(void){
+    memset(g_depthBuffer, 0xFF, sizeof(g_depthBuffer));
+}
 
 void set3DRenderBuffer(uint8_t *buffer){
     drawbuffer = buffer;
@@ -58,6 +66,7 @@ static inline int clampi(int v, int lo, int hi)
 /* ========================================================================= */
 /* basic framebuffer ops                                                     */
 /* ========================================================================= */
+
 
 void putPixel(int32_t x, int32_t y, uint8_t colIndex)
 {
@@ -1304,20 +1313,3 @@ void fillTriangleDitherBayer2Mode(
 }
 
 
-
-/* ========================================================================= */
-/* misc drawing                                                              */
-/* ========================================================================= */
-
-uint32_t darken(uint32_t c, float f)
-{
-    uint8_t r = (c >> 16) & 0xFF;
-    uint8_t g = (c >> 8)  & 0xFF;
-    uint8_t b = (c >> 0)  & 0xFF;
-
-    r = (uint8_t)(r * f);
-    g = (uint8_t)(g * f);
-    b = (uint8_t)(b * f);
-
-    return (0xFFu << 24) | ((uint32_t)r << 16) | ((uint32_t)g << 8) | b;
-}
