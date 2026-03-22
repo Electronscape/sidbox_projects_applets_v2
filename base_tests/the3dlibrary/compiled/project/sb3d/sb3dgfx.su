@@ -5,5 +5,5 @@ sb3dgfx.c:78:6:drawLine	56	static
 sb3dgfx.c:128:6:resetRand	0	static
 sb3dgfx.c:138:9:shadeColor	0	static
 sb3dgfx.c:208:6:fillTriangleFlat	136	static
-sb3dgfx.c:565:6:fillTriangleDitherBayer	160	static
-sb3dgfx.c:939:6:fillTriangleDitherBayer2Mode	152	static
+sb3dgfx.c:566:6:fillTriangleDitherBayer	160	static
+sb3dgfx.c:940:6:fillTriangleDitherBayer2Mode	152	static

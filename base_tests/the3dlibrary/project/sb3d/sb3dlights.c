@@ -1,3 +1,5 @@
+// FILES: lights.c
+
 #include <stdint.h>
 #include <math.h>
 

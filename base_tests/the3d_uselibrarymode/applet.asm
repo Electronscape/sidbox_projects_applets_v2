@@ -12,16 +12,16 @@ d0040016:	4604      	mov	r4, r0
 d0040018:	2100      	movs	r1, #0
 d004001a:	6833      	ldr	r3, [r6, #0]
 d004001c:	6898      	ldr	r0, [r3, #8]
-d004001e:	f006 f87d 	bl	d004611c <setbuf>
+d004001e:	f006 fed3 	bl	d0046dc8 <setbuf>
 d0040022:	6833      	ldr	r3, [r6, #0]
 d0040024:	2100      	movs	r1, #0
 d0040026:	68d8      	ldr	r0, [r3, #12]
-d0040028:	f006 f878 	bl	d004611c <setbuf>
+d0040028:	f006 fece 	bl	d0046dc8 <setbuf>
 d004002c:	4629      	mov	r1, r5
 d004002e:	4620      	mov	r0, r4
 d0040030:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
-d0040034:	f000 b90c 	b.w	d0040250 <main>
-d0040038:	d00475d8 	.word	0xd00475d8
+d0040034:	f000 baae 	b.w	d0040594 <main>
+d0040038:	d00482a0 	.word	0xd00482a0
 
 d004003c <initMalloc>:
 d004003c:	4902      	ldr	r1, [pc, #8]	; (d0040048 <initMalloc+0xc>)
@@ -30,9 +30,9 @@ d0040040:	4a03      	ldr	r2, [pc, #12]	; (d0040050 <initMalloc+0x14>)
 d0040042:	1a5b      	subs	r3, r3, r1
 d0040044:	6013      	str	r3, [r2, #0]
 d0040046:	4770      	bx	lr
-d0040048:	d0134d70 	.word	0xd0134d70
+d0040048:	d0135a90 	.word	0xd0135a90
 d004004c:	d0600000 	.word	0xd0600000
-d0040050:	d012ccc8 	.word	0xd012ccc8
+d0040050:	d012d9c8 	.word	0xd012d9c8
 
 d0040054 <_write_r>:
 d0040054:	3901      	subs	r1, #1
@@ -66,18 +66,18 @@ d0040094:	4620      	mov	r0, r4
 d0040096:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
 d0040098:	2000      	movs	r0, #0
 d004009a:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
-d004009c:	f005 fd14 	bl	d0045ac8 <__errno>
+d004009c:	f006 fb6a 	bl	d0046774 <__errno>
 d00400a0:	2209      	movs	r2, #9
 d00400a2:	4603      	mov	r3, r0
 d00400a4:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
 d00400a8:	601a      	str	r2, [r3, #0]
 d00400aa:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
-d00400ac:	d0047644 	.word	0xd0047644
+d00400ac:	d0048324 	.word	0xd0048324
 d00400b0:	2001f000 	.word	0x2001f000
 
 d00400b4 <_read>:
 d00400b4:	b508      	push	{r3, lr}
-d00400b6:	f005 fd07 	bl	d0045ac8 <__errno>
+d00400b6:	f006 fb5d 	bl	d0046774 <__errno>
 d00400ba:	2258      	movs	r2, #88	; 0x58
 d00400bc:	4603      	mov	r3, r0
 d00400be:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
@@ -118,15 +118,15 @@ d00400fa:	4291      	cmp	r1, r2
 d00400fc:	d301      	bcc.n	d0040102 <_sbrk_r+0x22>
 d00400fe:	6019      	str	r1, [r3, #0]
 d0040100:	bd10      	pop	{r4, pc}
-d0040102:	f005 fce1 	bl	d0045ac8 <__errno>
+d0040102:	f006 fb37 	bl	d0046774 <__errno>
 d0040106:	220c      	movs	r2, #12
 d0040108:	4603      	mov	r3, r0
 d004010a:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
 d004010e:	601a      	str	r2, [r3, #0]
 d0040110:	bd10      	pop	{r4, pc}
 d0040112:	bf00      	nop
-d0040114:	d0047640 	.word	0xd0047640
-d0040118:	d0134d70 	.word	0xd0134d70
+d0040114:	d0048320 	.word	0xd0048320
+d0040118:	d0135a90 	.word	0xd0135a90
 d004011c:	d0600000 	.word	0xd0600000
 
 d0040120 <initSystem>:
@@ -147,7 +147,7 @@ d0040142:	4798      	blx	r3
 d0040144:	f7ff ff7a 	bl	d004003c <initMalloc>
 d0040148:	7b23      	ldrb	r3, [r4, #12]
 d004014a:	7b62      	ldrb	r2, [r4, #13]
-d004014c:	2170      	movs	r1, #112	; 0x70
+d004014c:	2190      	movs	r1, #144	; 0x90
 d004014e:	7ba5      	ldrb	r5, [r4, #14]
 d0040150:	20dc      	movs	r0, #220	; 0xdc
 d0040152:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
@@ -244,8660 +244,9663 @@ d004023c:	b002      	add	sp, #8
 d004023e:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
 d0040242:	4718      	bx	r3
 d0040244:	2001f000 	.word	0x2001f000
-d0040248:	d012cd40 	.word	0xd012cd40
-d004024c:	d012cd20 	.word	0xd012cd20
+d0040248:	d012da60 	.word	0xd012da60
+d004024c:	d012da40 	.word	0xd012da40
 
-d0040250 <main>:
-d0040250:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d0040254:	ed2d 8b0c 	vpush	{d8-d13}
-d0040258:	b0fb      	sub	sp, #492	; 0x1ec
-d004025a:	4db6      	ldr	r5, [pc, #728]	; (d0040534 <main+0x2e4>)
-d004025c:	f7ff ff60 	bl	d0040120 <initSystem>
-d0040260:	4fb5      	ldr	r7, [pc, #724]	; (d0040538 <main+0x2e8>)
-d0040262:	f10d 06cf 	add.w	r6, sp, #207	; 0xcf
-d0040266:	f002 fde5 	bl	d0042e34 <worldClear>
-d004026a:	f003 fc67 	bl	d0043b3c <lightsClear>
-d004026e:	f04f 4a7f 	mov.w	sl, #4278190080	; 0xff000000
-d0040272:	f026 061f 	bic.w	r6, r6, #31
-d0040276:	4cb1      	ldr	r4, [pc, #708]	; (d004053c <main+0x2ec>)
-d0040278:	ed9f 9ab1 	vldr	s18, [pc, #708]	; d0040540 <main+0x2f0>
-d004027c:	f106 03e0 	add.w	r3, r6, #224	; 0xe0
-d0040280:	f106 09a0 	add.w	r9, r6, #160	; 0xa0
-d0040284:	ed9f baaf 	vldr	s22, [pc, #700]	; d0040544 <main+0x2f4>
-d0040288:	9303      	str	r3, [sp, #12]
-d004028a:	f002 fad7 	bl	d004283c <sb3dParticlesClear>
-d004028e:	f003 fc8b 	bl	d0043ba8 <setDefaultRenderMode>
-d0040292:	4630      	mov	r0, r6
-d0040294:	f002 fdd6 	bl	d0042e44 <cameraCreate>
-d0040298:	4630      	mov	r0, r6
-d004029a:	eddf 0aab 	vldr	s1, [pc, #684]	; d0040548 <main+0x2f8>
-d004029e:	ed9f 0aab 	vldr	s0, [pc, #684]	; d004054c <main+0x2fc>
-d00402a2:	f002 ffef 	bl	d0043284 <cameraSetRange>
-d00402a6:	ed9f 1ac7 	vldr	s2, [pc, #796]	; d00405c4 <main+0x374>
-d00402aa:	eddf 0aa9 	vldr	s1, [pc, #676]	; d0040550 <main+0x300>
-d00402ae:	eeb0 0a41 	vmov.f32	s0, s2
-d00402b2:	eddf aaa8 	vldr	s21, [pc, #672]	; d0040554 <main+0x304>
-d00402b6:	f002 fa21 	bl	d00426fc <vec3>
-d00402ba:	4630      	mov	r0, r6
-d00402bc:	edcd 0a0c 	vstr	s1, [sp, #48]	; 0x30
-d00402c0:	ed8d 0a0b 	vstr	s0, [sp, #44]	; 0x2c
-d00402c4:	ed8d 1a0d 	vstr	s2, [sp, #52]	; 0x34
-d00402c8:	f002 fdc6 	bl	d0042e58 <cameraSetPosition>
-d00402cc:	4630      	mov	r0, r6
-d00402ce:	ed9f aaa2 	vldr	s20, [pc, #648]	; d0040558 <main+0x308>
-d00402d2:	f002 fdd1 	bl	d0042e78 <cameraNormalize>
-d00402d6:	f10d 0c70 	add.w	ip, sp, #112	; 0x70
-d00402da:	f10d 0e5c 	add.w	lr, sp, #92	; 0x5c
-d00402de:	eddf 9a9f 	vldr	s19, [pc, #636]	; d004055c <main+0x30c>
-d00402e2:	f8df 82bc 	ldr.w	r8, [pc, #700]	; d00405a0 <main+0x350>
-d00402e6:	f8df b2bc 	ldr.w	fp, [pc, #700]	; d00405a4 <main+0x354>
-d00402ea:	eddf 8ab6 	vldr	s17, [pc, #728]	; d00405c4 <main+0x374>
-d00402ee:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
-d00402f0:	e8ac 000f 	stmia.w	ip!, {r0, r1, r2, r3}
-d00402f4:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
-d00402f6:	e8ac 000f 	stmia.w	ip!, {r0, r1, r2, r3}
-d00402fa:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
-d00402fc:	e8ac 000f 	stmia.w	ip!, {r0, r1, r2, r3}
-d0040300:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
-d0040304:	e88c 000f 	stmia.w	ip, {r0, r1, r2, r3}
-d0040308:	f105 0c10 	add.w	ip, r5, #16
-d004030c:	f8c7 a000 	str.w	sl, [r7]
-d0040310:	f8cd e000 	str.w	lr, [sp]
-d0040314:	3524      	adds	r5, #36	; 0x24
-d0040316:	f8c7 a040 	str.w	sl, [r7, #64]	; 0x40
-d004031a:	e8bc 000f 	ldmia.w	ip!, {r0, r1, r2, r3}
-d004031e:	f8dc c000 	ldr.w	ip, [ip]
-d0040322:	e8ae 000f 	stmia.w	lr!, {r0, r1, r2, r3}
-d0040326:	4653      	mov	r3, sl
-d0040328:	f8ce c000 	str.w	ip, [lr]
-d004032c:	4638      	mov	r0, r7
-d004032e:	a91c      	add	r1, sp, #112	; 0x70
-d0040330:	2210      	movs	r2, #16
-d0040332:	f8df a274 	ldr.w	sl, [pc, #628]	; d00405a8 <main+0x358>
-d0040336:	f003 f9c1 	bl	d00436bc <buildLightingCLUT>
-d004033a:	7b22      	ldrb	r2, [r4, #12]
-d004033c:	7b61      	ldrb	r1, [r4, #13]
-d004033e:	4638      	mov	r0, r7
-d0040340:	f894 c00e 	ldrb.w	ip, [r4, #14]
-d0040344:	f106 0760 	add.w	r7, r6, #96	; 0x60
-d0040348:	ea42 2201 	orr.w	r2, r2, r1, lsl #8
-d004034c:	7be1      	ldrb	r1, [r4, #15]
-d004034e:	ea42 420c 	orr.w	r2, r2, ip, lsl #16
-d0040352:	ea42 6201 	orr.w	r2, r2, r1, lsl #24
-d0040356:	6812      	ldr	r2, [r2, #0]
-d0040358:	6cd2      	ldr	r2, [r2, #76]	; 0x4c
-d004035a:	4790      	blx	r2
-d004035c:	7c22      	ldrb	r2, [r4, #16]
-d004035e:	7c60      	ldrb	r0, [r4, #17]
-d0040360:	2100      	movs	r1, #0
-d0040362:	ea42 2200 	orr.w	r2, r2, r0, lsl #8
-d0040366:	7ca0      	ldrb	r0, [r4, #18]
-d0040368:	ea42 4200 	orr.w	r2, r2, r0, lsl #16
-d004036c:	7ce0      	ldrb	r0, [r4, #19]
-d004036e:	ea42 6200 	orr.w	r2, r2, r0, lsl #24
-d0040372:	487b      	ldr	r0, [pc, #492]	; (d0040560 <main+0x310>)
-d0040374:	6852      	ldr	r2, [r2, #4]
-d0040376:	6812      	ldr	r2, [r2, #0]
-d0040378:	4790      	blx	r2
-d004037a:	f10d 0c20 	add.w	ip, sp, #32
-d004037e:	eef7 1a00 	vmov.f32	s3, #112	; 0x3f800000  1.0
-d0040382:	e895 0007 	ldmia.w	r5, {r0, r1, r2}
-d0040386:	e88c 0007 	stmia.w	ip, {r0, r1, r2}
-d004038a:	2001      	movs	r0, #1
-d004038c:	ed9c 0a00 	vldr	s0, [ip]
-d0040390:	eddc 0a01 	vldr	s1, [ip, #4]
-d0040394:	252b      	movs	r5, #43	; 0x2b
-d0040396:	ed9c 1a02 	vldr	s2, [ip, #8]
-d004039a:	f003 fbd5 	bl	d0043b48 <addDirectionalLight>
-d004039e:	2209      	movs	r2, #9
-d00403a0:	4b70      	ldr	r3, [pc, #448]	; (d0040564 <main+0x314>)
-d00403a2:	203b      	movs	r0, #59	; 0x3b
-d00403a4:	ed9d 8a03 	vldr	s16, [sp, #12]
-d00403a8:	701a      	strb	r2, [r3, #0]
-d00403aa:	2202      	movs	r2, #2
-d00403ac:	4b6e      	ldr	r3, [pc, #440]	; (d0040568 <main+0x318>)
-d00403ae:	ee18 1a10 	vmov	r1, s16
-d00403b2:	ed9f 0a6e 	vldr	s0, [pc, #440]	; d004056c <main+0x31c>
-d00403b6:	7018      	strb	r0, [r3, #0]
-d00403b8:	4b6d      	ldr	r3, [pc, #436]	; (d0040570 <main+0x320>)
-d00403ba:	486e      	ldr	r0, [pc, #440]	; (d0040574 <main+0x324>)
-d00403bc:	701d      	strb	r5, [r3, #0]
-d00403be:	4b6e      	ldr	r3, [pc, #440]	; (d0040578 <main+0x328>)
-d00403c0:	701a      	strb	r2, [r3, #0]
-d00403c2:	f005 f9ed 	bl	d00457a0 <loadMeshSB3D>
-d00403c6:	ed9f 1a7f 	vldr	s2, [pc, #508]	; d00405c4 <main+0x374>
-d00403ca:	eef0 0a41 	vmov.f32	s1, s2
-d00403ce:	eeb0 0a41 	vmov.f32	s0, s2
-d00403d2:	f002 f993 	bl	d00426fc <vec3>
-d00403d6:	ee18 0a10 	vmov	r0, s16
-d00403da:	edcd 0a0f 	vstr	s1, [sp, #60]	; 0x3c
-d00403de:	ed8d 1a10 	vstr	s2, [sp, #64]	; 0x40
-d00403e2:	ed8d 0a0e 	vstr	s0, [sp, #56]	; 0x38
-d00403e6:	f003 f81f 	bl	d0043428 <entityWorldSpawn>
-d00403ea:	4649      	mov	r1, r9
-d00403ec:	ed9f 0a58 	vldr	s0, [pc, #352]	; d0040550 <main+0x300>
-d00403f0:	4862      	ldr	r0, [pc, #392]	; (d004057c <main+0x32c>)
-d00403f2:	f005 f9d5 	bl	d00457a0 <loadMeshSB3D>
-d00403f6:	ed9f 1a62 	vldr	s2, [pc, #392]	; d0040580 <main+0x330>
-d00403fa:	eddf 0a72 	vldr	s1, [pc, #456]	; d00405c4 <main+0x374>
-d00403fe:	ed9f 0a61 	vldr	s0, [pc, #388]	; d0040584 <main+0x334>
-d0040402:	f002 f97b 	bl	d00426fc <vec3>
-d0040406:	4648      	mov	r0, r9
-d0040408:	edcd 0a12 	vstr	s1, [sp, #72]	; 0x48
-d004040c:	ed8d 1a13 	vstr	s2, [sp, #76]	; 0x4c
-d0040410:	ed8d 0a11 	vstr	s0, [sp, #68]	; 0x44
-d0040414:	f003 f808 	bl	d0043428 <entityWorldSpawn>
-d0040418:	4639      	mov	r1, r7
-d004041a:	ed9f 0a5b 	vldr	s0, [pc, #364]	; d0040588 <main+0x338>
-d004041e:	4681      	mov	r9, r0
-d0040420:	485a      	ldr	r0, [pc, #360]	; (d004058c <main+0x33c>)
-d0040422:	f005 f9bd 	bl	d00457a0 <loadMeshSB3D>
-d0040426:	ed9f 1a5a 	vldr	s2, [pc, #360]	; d0040590 <main+0x340>
-d004042a:	eddf 0a50 	vldr	s1, [pc, #320]	; d004056c <main+0x31c>
-d004042e:	ed9f 0a65 	vldr	s0, [pc, #404]	; d00405c4 <main+0x374>
-d0040432:	f002 f963 	bl	d00426fc <vec3>
-d0040436:	4638      	mov	r0, r7
-d0040438:	ed8d 0a14 	vstr	s0, [sp, #80]	; 0x50
-d004043c:	edcd 0a15 	vstr	s1, [sp, #84]	; 0x54
-d0040440:	ed8d 1a16 	vstr	s2, [sp, #88]	; 0x58
-d0040444:	f002 fff0 	bl	d0043428 <entityWorldSpawn>
-d0040448:	ed9f 1a5e 	vldr	s2, [pc, #376]	; d00405c4 <main+0x374>
-d004044c:	4602      	mov	r2, r0
-d004044e:	ed9f 2a51 	vldr	s4, [pc, #324]	; d0040594 <main+0x344>
-d0040452:	4638      	mov	r0, r7
-d0040454:	eeb0 0a41 	vmov.f32	s0, s2
-d0040458:	eddf 1a4f 	vldr	s3, [pc, #316]	; d0040598 <main+0x348>
-d004045c:	eddf 0a4f 	vldr	s1, [pc, #316]	; d004059c <main+0x34c>
-d0040460:	ee0d 2a10 	vmov	s26, r2
-d0040464:	f000 f9ee 	bl	d0040844 <meshSetMaterial>
-d0040468:	2000      	movs	r0, #0
-d004046a:	f003 fbab 	bl	d0043bc4 <enableFlatMode>
-d004046e:	7b23      	ldrb	r3, [r4, #12]
-d0040470:	7b62      	ldrb	r2, [r4, #13]
-d0040472:	7ba1      	ldrb	r1, [r4, #14]
-d0040474:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
-d0040478:	7be2      	ldrb	r2, [r4, #15]
-d004047a:	f8da 0000 	ldr.w	r0, [sl]
-d004047e:	ea43 4301 	orr.w	r3, r3, r1, lsl #16
-d0040482:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
-d0040486:	681b      	ldr	r3, [r3, #0]
-d0040488:	69db      	ldr	r3, [r3, #28]
-d004048a:	4798      	blx	r3
-d004048c:	7b23      	ldrb	r3, [r4, #12]
-d004048e:	7b62      	ldrb	r2, [r4, #13]
-d0040490:	7ba1      	ldrb	r1, [r4, #14]
-d0040492:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
-d0040496:	7be2      	ldrb	r2, [r4, #15]
-d0040498:	f8da 0000 	ldr.w	r0, [sl]
-d004049c:	ea43 4301 	orr.w	r3, r3, r1, lsl #16
-d00404a0:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
-d00404a4:	681b      	ldr	r3, [r3, #0]
-d00404a6:	699b      	ldr	r3, [r3, #24]
-d00404a8:	4798      	blx	r3
-d00404aa:	7b23      	ldrb	r3, [r4, #12]
-d00404ac:	7b62      	ldrb	r2, [r4, #13]
-d00404ae:	2001      	movs	r0, #1
-d00404b0:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
-d00404b4:	7ba2      	ldrb	r2, [r4, #14]
-d00404b6:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
-d00404ba:	7be2      	ldrb	r2, [r4, #15]
-d00404bc:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
-d00404c0:	685b      	ldr	r3, [r3, #4]
-d00404c2:	68db      	ldr	r3, [r3, #12]
-d00404c4:	4798      	blx	r3
-d00404c6:	7b23      	ldrb	r3, [r4, #12]
-d00404c8:	7b62      	ldrb	r2, [r4, #13]
-d00404ca:	211e      	movs	r1, #30
-d00404cc:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
-d00404d0:	7ba2      	ldrb	r2, [r4, #14]
-d00404d2:	4608      	mov	r0, r1
-d00404d4:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
-d00404d8:	7be2      	ldrb	r2, [r4, #15]
-d00404da:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
-d00404de:	685b      	ldr	r3, [r3, #4]
-d00404e0:	689b      	ldr	r3, [r3, #8]
-d00404e2:	4798      	blx	r3
-d00404e4:	7823      	ldrb	r3, [r4, #0]
-d00404e6:	7862      	ldrb	r2, [r4, #1]
-d00404e8:	a905      	add	r1, sp, #20
-d00404ea:	a804      	add	r0, sp, #16
-d00404ec:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
-d00404f0:	78a2      	ldrb	r2, [r4, #2]
-d00404f2:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
-d00404f6:	78e2      	ldrb	r2, [r4, #3]
-d00404f8:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
-d00404fc:	691b      	ldr	r3, [r3, #16]
-d00404fe:	4798      	blx	r3
-d0040500:	7823      	ldrb	r3, [r4, #0]
-d0040502:	7862      	ldrb	r2, [r4, #1]
-d0040504:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
-d0040508:	78a2      	ldrb	r2, [r4, #2]
-d004050a:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
-d004050e:	78e2      	ldrb	r2, [r4, #3]
-d0040510:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
-d0040514:	69db      	ldr	r3, [r3, #28]
-d0040516:	4798      	blx	r3
-d0040518:	7823      	ldrb	r3, [r4, #0]
-d004051a:	7862      	ldrb	r2, [r4, #1]
-d004051c:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
-d0040520:	78a2      	ldrb	r2, [r4, #2]
-d0040522:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
-d0040526:	78e2      	ldrb	r2, [r4, #3]
-d0040528:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
-d004052c:	689b      	ldr	r3, [r3, #8]
-d004052e:	4798      	blx	r3
-d0040530:	4605      	mov	r5, r0
-d0040532:	e11e      	b.n	d0040772 <main+0x522>
-d0040534:	d0046cf0 	.word	0xd0046cf0
-d0040538:	d00471d8 	.word	0xd00471d8
-d004053c:	2001f000 	.word	0x2001f000
-d0040540:	4c895441 	.word	0x4c895441
-d0040544:	42040000 	.word	0x42040000
-d0040548:	459c4000 	.word	0x459c4000
-d004054c:	3c23d70a 	.word	0x3c23d70a
-d0040550:	42480000 	.word	0x42480000
-d0040554:	41233334 	.word	0x41233334
-d0040558:	bb9374bc 	.word	0xbb9374bc
-d004055c:	3e19999a 	.word	0x3e19999a
-d0040560:	d0046cb8 	.word	0xd0046cb8
-d0040564:	d012cd24 	.word	0xd012cd24
-d0040568:	d012cd25 	.word	0xd012cd25
-d004056c:	43480000 	.word	0x43480000
-d0040570:	d012cd00 	.word	0xd012cd00
-d0040574:	d0046cc0 	.word	0xd0046cc0
-d0040578:	d012cd01 	.word	0xd012cd01
-d004057c:	d0046cd0 	.word	0xd0046cd0
-d0040580:	c2c80000 	.word	0xc2c80000
-d0040584:	44f3c000 	.word	0x44f3c000
-d0040588:	42c80000 	.word	0x42c80000
-d004058c:	d0046ce0 	.word	0xd0046ce0
-d0040590:	450fc000 	.word	0x450fc000
-d0040594:	42800000 	.word	0x42800000
-d0040598:	4059999a 	.word	0x4059999a
-d004059c:	3f0ccccd 	.word	0x3f0ccccd
-d00405a0:	d0047648 	.word	0xd0047648
-d00405a4:	d012cd20 	.word	0xd012cd20
-d00405a8:	d012cd40 	.word	0xd012cd40
-d00405ac:	310f2a63 	.word	0x310f2a63
-d00405b0:	bb449ba6 	.word	0xbb449ba6
-d00405b4:	435c0000 	.word	0x435c0000
-d00405b8:	40d9999a 	.word	0x40d9999a
-d00405bc:	3c088889 	.word	0x3c088889
-d00405c0:	3ba3d70a 	.word	0x3ba3d70a
-d00405c4:	00000000 	.word	0x00000000
-d00405c8:	ed5f 7a08 	vldr	s15, [pc, #-32]	; d00405ac <main+0x35c>
-d00405cc:	eef2 ba04 	vmov.f32	s23, #36	; 0x41200000  10.0
-d00405d0:	ed5f ca09 	vldr	s25, [pc, #-36]	; d00405b0 <main+0x360>
-d00405d4:	ee28 8a27 	vmul.f32	s16, s16, s15
-d00405d8:	ed1f ca0a 	vldr	s24, [pc, #-40]	; d00405b4 <main+0x364>
-d00405dc:	ed5f 7a0a 	vldr	s15, [pc, #-40]	; d00405b8 <main+0x368>
-d00405e0:	ee68 ba2b 	vmul.f32	s23, s16, s23
-d00405e4:	ee28 ca0c 	vmul.f32	s24, s16, s24
-d00405e8:	ee6b caac 	vmul.f32	s25, s23, s25
-d00405ec:	ee6b baa7 	vmul.f32	s23, s23, s15
-d00405f0:	7820      	ldrb	r0, [r4, #0]
-d00405f2:	7861      	ldrb	r1, [r4, #1]
-d00405f4:	78a2      	ldrb	r2, [r4, #2]
-d00405f6:	ea40 2101 	orr.w	r1, r0, r1, lsl #8
-d00405fa:	78e3      	ldrb	r3, [r4, #3]
-d00405fc:	ea41 4202 	orr.w	r2, r1, r2, lsl #16
-d0040600:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
-d0040604:	6a1b      	ldr	r3, [r3, #32]
-d0040606:	4798      	blx	r3
-d0040608:	f894 c000 	ldrb.w	ip, [r4]
-d004060c:	7863      	ldrb	r3, [r4, #1]
-d004060e:	a907      	add	r1, sp, #28
-d0040610:	78a2      	ldrb	r2, [r4, #2]
-d0040612:	4605      	mov	r5, r0
-d0040614:	ea4c 2c03 	orr.w	ip, ip, r3, lsl #8
-d0040618:	78e3      	ldrb	r3, [r4, #3]
-d004061a:	a806      	add	r0, sp, #24
-d004061c:	ea4c 4202 	orr.w	r2, ip, r2, lsl #16
-d0040620:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
-d0040624:	699b      	ldr	r3, [r3, #24]
-d0040626:	4798      	blx	r3
-d0040628:	ed5f 7a1c 	vldr	s15, [pc, #-112]	; d00405bc <main+0x36c>
-d004062c:	ed1f 7a1c 	vldr	s14, [pc, #-112]	; d00405c0 <main+0x370>
-d0040630:	eef0 0a68 	vmov.f32	s1, s17
-d0040634:	2100      	movs	r1, #0
-d0040636:	4630      	mov	r0, r6
-d0040638:	e9dd 2306 	ldrd	r2, r3, [sp, #24]
-d004063c:	4252      	negs	r2, r2
-d004063e:	425b      	negs	r3, r3
-d0040640:	ee06 2a90 	vmov	s13, r2
-d0040644:	eeb8 1ae6 	vcvt.f32.s32	s2, s13
-d0040648:	ee06 3a90 	vmov	s13, r3
-d004064c:	eeb8 0ae6 	vcvt.f32.s32	s0, s13
-d0040650:	ee21 1a07 	vmul.f32	s2, s2, s14
-d0040654:	ee20 0a27 	vmul.f32	s0, s0, s15
-d0040658:	f002 fc64 	bl	d0042f24 <cameraTurn>
-d004065c:	eef0 7a04 	vmov.f32	s15, #4	; 0x40200000  2.5
-d0040660:	edd6 0a07 	vldr	s1, [r6, #28]
-d0040664:	ee60 0aa7 	vmul.f32	s1, s1, s15
-d0040668:	ee60 0a88 	vmul.f32	s1, s1, s16
-d004066c:	eef5 0a40 	vcmp.f32	s1, #0.0
-d0040670:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040674:	f040 80c4 	bne.w	d0040800 <main+0x5b0>
-d0040678:	eeb0 1a68 	vmov.f32	s2, s17
-d004067c:	ed5f 0a2f 	vldr	s1, [pc, #-188]	; d00405c4 <main+0x374>
-d0040680:	eeb0 0a6c 	vmov.f32	s0, s25
-d0040684:	4648      	mov	r0, r9
-d0040686:	f002 ff47 	bl	d0043518 <entityTurnLocal>
-d004068a:	eeb0 0a6b 	vmov.f32	s0, s23
-d004068e:	4648      	mov	r0, r9
-d0040690:	f002 ff10 	bl	d00434b4 <entityMoveForward>
-d0040694:	eeb0 1a68 	vmov.f32	s2, s17
-d0040698:	eeb0 0a48 	vmov.f32	s0, s16
-d004069c:	ed5f 0a37 	vldr	s1, [pc, #-220]	; d00405c4 <main+0x374>
-d00406a0:	ee1d 0a10 	vmov	r0, s26
-d00406a4:	f002 ff38 	bl	d0043518 <entityTurnLocal>
-d00406a8:	7820      	ldrb	r0, [r4, #0]
-d00406aa:	7861      	ldrb	r1, [r4, #1]
-d00406ac:	78a2      	ldrb	r2, [r4, #2]
-d00406ae:	ea40 2101 	orr.w	r1, r0, r1, lsl #8
-d00406b2:	78e3      	ldrb	r3, [r4, #3]
-d00406b4:	ea41 4202 	orr.w	r2, r1, r2, lsl #16
-d00406b8:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
-d00406bc:	69db      	ldr	r3, [r3, #28]
-d00406be:	4798      	blx	r3
-d00406c0:	07ea      	lsls	r2, r5, #31
-d00406c2:	f100 8093 	bmi.w	d00407ec <main+0x59c>
-d00406c6:	07ab      	lsls	r3, r5, #30
-d00406c8:	f100 8086 	bmi.w	d00407d8 <main+0x588>
-d00406cc:	7b20      	ldrb	r0, [r4, #12]
-d00406ce:	7b61      	ldrb	r1, [r4, #13]
-d00406d0:	7ba2      	ldrb	r2, [r4, #14]
-d00406d2:	ea40 2101 	orr.w	r1, r0, r1, lsl #8
-d00406d6:	7be3      	ldrb	r3, [r4, #15]
-d00406d8:	ea41 4202 	orr.w	r2, r1, r2, lsl #16
-d00406dc:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
-d00406e0:	681b      	ldr	r3, [r3, #0]
-d00406e2:	68db      	ldr	r3, [r3, #12]
-d00406e4:	4798      	blx	r3
-d00406e6:	f898 3000 	ldrb.w	r3, [r8]
-d00406ea:	f1c3 0301 	rsb	r3, r3, #1
-d00406ee:	b2db      	uxtb	r3, r3
-d00406f0:	f888 3000 	strb.w	r3, [r8]
-d00406f4:	f898 3000 	ldrb.w	r3, [r8]
-d00406f8:	7b21      	ldrb	r1, [r4, #12]
-d00406fa:	7b60      	ldrb	r0, [r4, #13]
-d00406fc:	7ba2      	ldrb	r2, [r4, #14]
-d00406fe:	ea41 2000 	orr.w	r0, r1, r0, lsl #8
-d0040702:	2b00      	cmp	r3, #0
-d0040704:	d056      	beq.n	d00407b4 <main+0x564>
-d0040706:	ea40 4202 	orr.w	r2, r0, r2, lsl #16
-d004070a:	7be3      	ldrb	r3, [r4, #15]
-d004070c:	f8da 0000 	ldr.w	r0, [sl]
-d0040710:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
-d0040714:	f8db 1000 	ldr.w	r1, [fp]
-d0040718:	681b      	ldr	r3, [r3, #0]
-d004071a:	6a5b      	ldr	r3, [r3, #36]	; 0x24
-d004071c:	4798      	blx	r3
-d004071e:	f8db 3000 	ldr.w	r3, [fp]
-d0040722:	6818      	ldr	r0, [r3, #0]
-d0040724:	f000 f8a2 	bl	d004086c <set3DRenderBuffer>
-d0040728:	4b3b      	ldr	r3, [pc, #236]	; (d0040818 <main+0x5c8>)
-d004072a:	eeb0 0a68 	vmov.f32	s0, s17
-d004072e:	4a3b      	ldr	r2, [pc, #236]	; (d004081c <main+0x5cc>)
-d0040730:	4630      	mov	r0, r6
-d0040732:	493b      	ldr	r1, [pc, #236]	; (d0040820 <main+0x5d0>)
-d0040734:	463d      	mov	r5, r7
-d0040736:	781b      	ldrb	r3, [r3, #0]
-d0040738:	7812      	ldrb	r2, [r2, #0]
-d004073a:	7809      	ldrb	r1, [r1, #0]
-d004073c:	f004 f8ac 	bl	d0044898 <drawFakeHorizon>
-d0040740:	4938      	ldr	r1, [pc, #224]	; (d0040824 <main+0x5d4>)
-d0040742:	236e      	movs	r3, #110	; 0x6e
-d0040744:	2280      	movs	r2, #128	; 0x80
-d0040746:	7809      	ldrb	r1, [r1, #0]
-d0040748:	eeb0 0a68 	vmov.f32	s0, s17
-d004074c:	4630      	mov	r0, r6
-d004074e:	f003 ff95 	bl	d004467c <drawFakeHorizonDots>
-d0040752:	4630      	mov	r0, r6
-d0040754:	f004 ff3a 	bl	d00455cc <Render3D>
-d0040758:	7b20      	ldrb	r0, [r4, #12]
-d004075a:	7b61      	ldrb	r1, [r4, #13]
-d004075c:	7ba2      	ldrb	r2, [r4, #14]
-d004075e:	ea40 2101 	orr.w	r1, r0, r1, lsl #8
-d0040762:	7be3      	ldrb	r3, [r4, #15]
-d0040764:	ea41 4202 	orr.w	r2, r1, r2, lsl #16
-d0040768:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
-d004076c:	681b      	ldr	r3, [r3, #0]
-d004076e:	681b      	ldr	r3, [r3, #0]
-d0040770:	4798      	blx	r3
-d0040772:	7820      	ldrb	r0, [r4, #0]
-d0040774:	7861      	ldrb	r1, [r4, #1]
-d0040776:	78a2      	ldrb	r2, [r4, #2]
-d0040778:	ea40 2101 	orr.w	r1, r0, r1, lsl #8
-d004077c:	78e3      	ldrb	r3, [r4, #3]
-d004077e:	ea41 4202 	orr.w	r2, r1, r2, lsl #16
-d0040782:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
-d0040786:	689b      	ldr	r3, [r3, #8]
-d0040788:	4798      	blx	r3
-d004078a:	1b43      	subs	r3, r0, r5
-d004078c:	4607      	mov	r7, r0
-d004078e:	ee08 3a10 	vmov	s16, r3
-d0040792:	eeb8 8a48 	vcvt.f32.u32	s16, s16
-d0040796:	eeb4 8ac9 	vcmpe.f32	s16, s18
-d004079a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004079e:	f77f af13 	ble.w	d00405c8 <main+0x378>
-d00407a2:	eeb0 ca4b 	vmov.f32	s24, s22
-d00407a6:	eef0 ba6a 	vmov.f32	s23, s21
-d00407aa:	eef0 ca4a 	vmov.f32	s25, s20
-d00407ae:	eeb0 8a69 	vmov.f32	s16, s19
-d00407b2:	e71d      	b.n	d00405f0 <main+0x3a0>
-d00407b4:	ea40 4202 	orr.w	r2, r0, r2, lsl #16
-d00407b8:	7be3      	ldrb	r3, [r4, #15]
-d00407ba:	f8db 0000 	ldr.w	r0, [fp]
-d00407be:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
-d00407c2:	f8da 1000 	ldr.w	r1, [sl]
-d00407c6:	681b      	ldr	r3, [r3, #0]
-d00407c8:	6a5b      	ldr	r3, [r3, #36]	; 0x24
-d00407ca:	4798      	blx	r3
-d00407cc:	f8da 3000 	ldr.w	r3, [sl]
-d00407d0:	6818      	ldr	r0, [r3, #0]
-d00407d2:	f000 f84b 	bl	d004086c <set3DRenderBuffer>
-d00407d6:	e7a7      	b.n	d0040728 <main+0x4d8>
-d00407d8:	eeb1 1a4c 	vneg.f32	s2, s24
-d00407dc:	ed9f 0a12 	vldr	s0, [pc, #72]	; d0040828 <main+0x5d8>
-d00407e0:	eef0 0a68 	vmov.f32	s1, s17
-d00407e4:	4630      	mov	r0, r6
-d00407e6:	f002 fd6b 	bl	d00432c0 <cameraMove>
-d00407ea:	e76f      	b.n	d00406cc <main+0x47c>
-d00407ec:	eeb0 1a4c 	vmov.f32	s2, s24
-d00407f0:	ed9f 0a0d 	vldr	s0, [pc, #52]	; d0040828 <main+0x5d8>
-d00407f4:	eef0 0a68 	vmov.f32	s1, s17
-d00407f8:	4630      	mov	r0, r6
-d00407fa:	f002 fd61 	bl	d00432c0 <cameraMove>
-d00407fe:	e762      	b.n	d00406c6 <main+0x476>
-d0040800:	eef1 0a60 	vneg.f32	s1, s1
-d0040804:	2101      	movs	r1, #1
-d0040806:	eeb0 1a68 	vmov.f32	s2, s17
-d004080a:	ed9f 0a07 	vldr	s0, [pc, #28]	; d0040828 <main+0x5d8>
-d004080e:	4630      	mov	r0, r6
-d0040810:	f002 fb88 	bl	d0042f24 <cameraTurn>
-d0040814:	e730      	b.n	d0040678 <main+0x428>
-d0040816:	bf00      	nop
-d0040818:	d012cd00 	.word	0xd012cd00
-d004081c:	d012cd25 	.word	0xd012cd25
-d0040820:	d012cd24 	.word	0xd012cd24
-d0040824:	d012cd01 	.word	0xd012cd01
-d0040828:	00000000 	.word	0x00000000
+d0040250 <weatherLightning>:
+d0040250:	eeb5 0ac0 	vcmpe.f32	s0, #0.0
+d0040254:	e92d 4ff8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d0040258:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004025c:	4605      	mov	r5, r0
+d004025e:	d930      	bls.n	d00402c2 <weatherLightning+0x72>
+d0040260:	eddf 7ab6 	vldr	s15, [pc, #728]	; d004053c <weatherLightning+0x2ec>
+d0040264:	fe80 0a67 	vminnm.f32	s0, s0, s15
+d0040268:	4eb5      	ldr	r6, [pc, #724]	; (d0040540 <weatherLightning+0x2f0>)
+d004026a:	4fb6      	ldr	r7, [pc, #728]	; (d0040544 <weatherLightning+0x2f4>)
+d004026c:	6833      	ldr	r3, [r6, #0]
+d004026e:	683a      	ldr	r2, [r7, #0]
+d0040270:	ea83 3343 	eor.w	r3, r3, r3, lsl #13
+d0040274:	2a01      	cmp	r2, #1
+d0040276:	ea83 4353 	eor.w	r3, r3, r3, lsr #17
+d004027a:	ea83 1343 	eor.w	r3, r3, r3, lsl #5
+d004027e:	6033      	str	r3, [r6, #0]
+d0040280:	d022      	beq.n	d00402c8 <weatherLightning+0x78>
+d0040282:	2a02      	cmp	r2, #2
+d0040284:	f000 8087 	beq.w	d0040396 <weatherLightning+0x146>
+d0040288:	4caf      	ldr	r4, [pc, #700]	; (d0040548 <weatherLightning+0x2f8>)
+d004028a:	2100      	movs	r1, #0
+d004028c:	b2e8      	uxtb	r0, r5
+d004028e:	edd4 7a00 	vldr	s15, [r4]
+d0040292:	ee37 0ac0 	vsub.f32	s0, s15, s0
+d0040296:	ed84 0a00 	vstr	s0, [r4]
+d004029a:	f004 fa2d 	bl	d00446f8 <lightEnable>
+d004029e:	4628      	mov	r0, r5
+d00402a0:	ed9f 0aaa 	vldr	s0, [pc, #680]	; d004054c <weatherLightning+0x2fc>
+d00402a4:	f004 fabe 	bl	d0044824 <lightSetIntensity>
+d00402a8:	edd4 7a00 	vldr	s15, [r4]
+d00402ac:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+d00402b0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00402b4:	f240 80d6 	bls.w	d0040464 <weatherLightning+0x214>
+d00402b8:	f04f 0800 	mov.w	r8, #0
+d00402bc:	4640      	mov	r0, r8
+d00402be:	e8bd 8ff8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d00402c2:	ed9f 0aa3 	vldr	s0, [pc, #652]	; d0040550 <weatherLightning+0x300>
+d00402c6:	e7cf      	b.n	d0040268 <weatherLightning+0x18>
+d00402c8:	4aa2      	ldr	r2, [pc, #648]	; (d0040554 <weatherLightning+0x304>)
+d00402ca:	eef2 6a04 	vmov.f32	s13, #36	; 0x41200000  10.0
+d00402ce:	f8df a2b4 	ldr.w	sl, [pc, #692]	; d0040584 <weatherLightning+0x334>
+d00402d2:	ed92 7a00 	vldr	s14, [r2]
+d00402d6:	2200      	movs	r2, #0
+d00402d8:	edda 7a00 	vldr	s15, [sl]
+d00402dc:	ee66 6ac7 	vnmul.f32	s13, s13, s14
+d00402e0:	f8df 9284 	ldr.w	r9, [pc, #644]	; d0040568 <weatherLightning+0x318>
+d00402e4:	ed99 7a00 	vldr	s14, [r9]
+d00402e8:	eee6 7a80 	vfma.f32	s15, s13, s0
+d00402ec:	ee37 0a40 	vsub.f32	s0, s14, s0
+d00402f0:	ed89 0a00 	vstr	s0, [r9]
+d00402f4:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+d00402f8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00402fc:	f100 80ad 	bmi.w	d004045a <weatherLightning+0x20a>
+d0040300:	bfcc      	ite	gt
+d0040302:	f04f 0801 	movgt.w	r8, #1
+d0040306:	f04f 0800 	movle.w	r8, #0
+d004030a:	edca 7a00 	vstr	s15, [sl]
+d004030e:	ea83 3343 	eor.w	r3, r3, r3, lsl #13
+d0040312:	2101      	movs	r1, #1
+d0040314:	fa5f fb85 	uxtb.w	fp, r5
+d0040318:	ea83 4453 	eor.w	r4, r3, r3, lsr #17
+d004031c:	4658      	mov	r0, fp
+d004031e:	ea84 1444 	eor.w	r4, r4, r4, lsl #5
+d0040322:	6034      	str	r4, [r6, #0]
+d0040324:	b2e4      	uxtb	r4, r4
+d0040326:	f004 f9e7 	bl	d00446f8 <lightEnable>
+d004032a:	ed9f 7a8b 	vldr	s14, [pc, #556]	; d0040558 <weatherLightning+0x308>
+d004032e:	ee07 4a90 	vmov	s15, r4
+d0040332:	ed9a 0a00 	vldr	s0, [sl]
+d0040336:	4628      	mov	r0, r5
+d0040338:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d004033c:	eea7 0a87 	vfma.f32	s0, s15, s14
+d0040340:	f004 fa70 	bl	d0044824 <lightSetIntensity>
+d0040344:	edd9 7a00 	vldr	s15, [r9]
+d0040348:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+d004034c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0040350:	d8b4      	bhi.n	d00402bc <weatherLightning+0x6c>
+d0040352:	4a82      	ldr	r2, [pc, #520]	; (d004055c <weatherLightning+0x30c>)
+d0040354:	6813      	ldr	r3, [r2, #0]
+d0040356:	3b01      	subs	r3, #1
+d0040358:	2b00      	cmp	r3, #0
+d004035a:	6013      	str	r3, [r2, #0]
+d004035c:	6833      	ldr	r3, [r6, #0]
+d004035e:	f340 80ca 	ble.w	d00404f6 <weatherLightning+0x2a6>
+d0040362:	ea83 3343 	eor.w	r3, r3, r3, lsl #13
+d0040366:	2202      	movs	r2, #2
+d0040368:	eddf 6a7d 	vldr	s13, [pc, #500]	; d0040560 <weatherLightning+0x310>
+d004036c:	4640      	mov	r0, r8
+d004036e:	ea83 4353 	eor.w	r3, r3, r3, lsr #17
+d0040372:	603a      	str	r2, [r7, #0]
+d0040374:	eddf 7a7b 	vldr	s15, [pc, #492]	; d0040564 <weatherLightning+0x314>
+d0040378:	ea83 1343 	eor.w	r3, r3, r3, lsl #5
+d004037c:	f3c3 0209 	ubfx	r2, r3, #0, #10
+d0040380:	6033      	str	r3, [r6, #0]
+d0040382:	ee07 2a10 	vmov	s14, r2
+d0040386:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
+d004038a:	eee7 7a26 	vfma.f32	s15, s14, s13
+d004038e:	edc9 7a00 	vstr	s15, [r9]
+d0040392:	e8bd 8ff8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d0040396:	4c74      	ldr	r4, [pc, #464]	; (d0040568 <weatherLightning+0x318>)
+d0040398:	2100      	movs	r1, #0
+d004039a:	b2e8      	uxtb	r0, r5
+d004039c:	edd4 7a00 	vldr	s15, [r4]
+d00403a0:	ee37 0ac0 	vsub.f32	s0, s15, s0
+d00403a4:	ed84 0a00 	vstr	s0, [r4]
+d00403a8:	f004 f9a6 	bl	d00446f8 <lightEnable>
+d00403ac:	4628      	mov	r0, r5
+d00403ae:	ed9f 0a67 	vldr	s0, [pc, #412]	; d004054c <weatherLightning+0x2fc>
+d00403b2:	f004 fa37 	bl	d0044824 <lightSetIntensity>
+d00403b6:	edd4 7a00 	vldr	s15, [r4]
+d00403ba:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+d00403be:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00403c2:	f63f af79 	bhi.w	d00402b8 <weatherLightning+0x68>
+d00403c6:	6833      	ldr	r3, [r6, #0]
+d00403c8:	2201      	movs	r2, #1
+d00403ca:	eddf 4a68 	vldr	s9, [pc, #416]	; d004056c <weatherLightning+0x31c>
+d00403ce:	f04f 0800 	mov.w	r8, #0
+d00403d2:	ea83 3343 	eor.w	r3, r3, r3, lsl #13
+d00403d6:	603a      	str	r2, [r7, #0]
+d00403d8:	ed9f 7a65 	vldr	s14, [pc, #404]	; d0040570 <weatherLightning+0x320>
+d00403dc:	ea83 4353 	eor.w	r3, r3, r3, lsr #17
+d00403e0:	ed9f 5a64 	vldr	s10, [pc, #400]	; d0040574 <weatherLightning+0x324>
+d00403e4:	ed9f 6a64 	vldr	s12, [pc, #400]	; d0040578 <weatherLightning+0x328>
+d00403e8:	ea83 1343 	eor.w	r3, r3, r3, lsl #5
+d00403ec:	eddf 5a63 	vldr	s11, [pc, #396]	; d004057c <weatherLightning+0x32c>
+d00403f0:	eddf 6a63 	vldr	s13, [pc, #396]	; d0040580 <weatherLightning+0x330>
+d00403f4:	ea83 3243 	eor.w	r2, r3, r3, lsl #13
+d00403f8:	f3c3 0309 	ubfx	r3, r3, #0, #10
+d00403fc:	4855      	ldr	r0, [pc, #340]	; (d0040554 <weatherLightning+0x304>)
+d00403fe:	ea82 4252 	eor.w	r2, r2, r2, lsr #17
+d0040402:	ee07 3a90 	vmov	s15, r3
+d0040406:	495f      	ldr	r1, [pc, #380]	; (d0040584 <weatherLightning+0x334>)
+d0040408:	ea82 1342 	eor.w	r3, r2, r2, lsl #5
+d004040c:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0040410:	ea83 3243 	eor.w	r2, r3, r3, lsl #13
+d0040414:	b2db      	uxtb	r3, r3
+d0040416:	eea7 7aa4 	vfma.f32	s14, s15, s9
+d004041a:	ea82 4252 	eor.w	r2, r2, r2, lsr #17
+d004041e:	ee07 3a90 	vmov	s15, r3
+d0040422:	ea82 1342 	eor.w	r3, r2, r2, lsl #5
+d0040426:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d004042a:	f3c3 0209 	ubfx	r2, r3, #0, #10
+d004042e:	6033      	str	r3, [r6, #0]
+d0040430:	eea7 6a85 	vfma.f32	s12, s15, s10
+d0040434:	eef0 7a46 	vmov.f32	s15, s12
+d0040438:	ee06 2a10 	vmov	s12, r2
+d004043c:	eeb8 6ac6 	vcvt.f32.s32	s12, s12
+d0040440:	ee67 7a27 	vmul.f32	s15, s14, s15
+d0040444:	eee6 6a25 	vfma.f32	s13, s12, s11
+d0040448:	edc0 7a00 	vstr	s15, [r0]
+d004044c:	4640      	mov	r0, r8
+d004044e:	edc1 7a00 	vstr	s15, [r1]
+d0040452:	edc4 6a00 	vstr	s13, [r4]
+d0040456:	e8bd 8ff8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d004045a:	f04f 0800 	mov.w	r8, #0
+d004045e:	f8ca 2000 	str.w	r2, [sl]
+d0040462:	e754      	b.n	d004030e <weatherLightning+0xbe>
+d0040464:	6833      	ldr	r3, [r6, #0]
+d0040466:	2201      	movs	r2, #1
+d0040468:	4947      	ldr	r1, [pc, #284]	; (d0040588 <weatherLightning+0x338>)
+d004046a:	f04f 0800 	mov.w	r8, #0
+d004046e:	ea83 3343 	eor.w	r3, r3, r3, lsl #13
+d0040472:	603a      	str	r2, [r7, #0]
+d0040474:	eddf 5a3d 	vldr	s11, [pc, #244]	; d004056c <weatherLightning+0x31c>
+d0040478:	ea83 4353 	eor.w	r3, r3, r3, lsr #17
+d004047c:	ed9f 7a3c 	vldr	s14, [pc, #240]	; d0040570 <weatherLightning+0x320>
+d0040480:	ed9f 6a3e 	vldr	s12, [pc, #248]	; d004057c <weatherLightning+0x32c>
+d0040484:	ea83 1343 	eor.w	r3, r3, r3, lsl #5
+d0040488:	eddf 6a3d 	vldr	s13, [pc, #244]	; d0040580 <weatherLightning+0x330>
+d004048c:	4c31      	ldr	r4, [pc, #196]	; (d0040554 <weatherLightning+0x304>)
+d004048e:	ea83 3243 	eor.w	r2, r3, r3, lsl #13
+d0040492:	fba1 0103 	umull	r0, r1, r1, r3
+d0040496:	ea82 4252 	eor.w	r2, r2, r2, lsr #17
+d004049a:	f021 0003 	bic.w	r0, r1, #3
+d004049e:	ea82 1242 	eor.w	r2, r2, r2, lsl #5
+d00404a2:	eb00 0091 	add.w	r0, r0, r1, lsr #2
+d00404a6:	ea82 3142 	eor.w	r1, r2, r2, lsl #13
+d00404aa:	f3c2 0209 	ubfx	r2, r2, #0, #10
+d00404ae:	1a1b      	subs	r3, r3, r0
+d00404b0:	482d      	ldr	r0, [pc, #180]	; (d0040568 <weatherLightning+0x318>)
+d00404b2:	ee07 2a90 	vmov	s15, r2
+d00404b6:	ea81 4151 	eor.w	r1, r1, r1, lsr #17
+d00404ba:	3302      	adds	r3, #2
+d00404bc:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d00404c0:	ea81 1241 	eor.w	r2, r1, r1, lsl #5
+d00404c4:	492f      	ldr	r1, [pc, #188]	; (d0040584 <weatherLightning+0x334>)
+d00404c6:	f3c2 0509 	ubfx	r5, r2, #0, #10
+d00404ca:	6032      	str	r2, [r6, #0]
+d00404cc:	eea7 7aa5 	vfma.f32	s14, s15, s11
+d00404d0:	4a22      	ldr	r2, [pc, #136]	; (d004055c <weatherLightning+0x30c>)
+d00404d2:	6013      	str	r3, [r2, #0]
+d00404d4:	eef0 7a47 	vmov.f32	s15, s14
+d00404d8:	ee07 5a10 	vmov	s14, r5
+d00404dc:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
+d00404e0:	edc4 7a00 	vstr	s15, [r4]
+d00404e4:	edc1 7a00 	vstr	s15, [r1]
+d00404e8:	eee7 6a06 	vfma.f32	s13, s14, s12
+d00404ec:	edc0 6a00 	vstr	s13, [r0]
+d00404f0:	4640      	mov	r0, r8
+d00404f2:	e8bd 8ff8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d00404f6:	ea83 3343 	eor.w	r3, r3, r3, lsl #13
+d00404fa:	eddf 6a24 	vldr	s13, [pc, #144]	; d004058c <weatherLightning+0x33c>
+d00404fe:	eddf 7a24 	vldr	s15, [pc, #144]	; d0040590 <weatherLightning+0x340>
+d0040502:	4658      	mov	r0, fp
+d0040504:	ea83 4353 	eor.w	r3, r3, r3, lsr #17
+d0040508:	4a0f      	ldr	r2, [pc, #60]	; (d0040548 <weatherLightning+0x2f8>)
+d004050a:	2100      	movs	r1, #0
+d004050c:	ea83 1343 	eor.w	r3, r3, r3, lsl #5
+d0040510:	f3c3 040a 	ubfx	r4, r3, #0, #11
+d0040514:	6033      	str	r3, [r6, #0]
+d0040516:	ee07 4a10 	vmov	s14, r4
+d004051a:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
+d004051e:	eee7 7a26 	vfma.f32	s15, s14, s13
+d0040522:	edc2 7a00 	vstr	s15, [r2]
+d0040526:	f004 f8e7 	bl	d00446f8 <lightEnable>
+d004052a:	4628      	mov	r0, r5
+d004052c:	ed9f 0a07 	vldr	s0, [pc, #28]	; d004054c <weatherLightning+0x2fc>
+d0040530:	f004 f978 	bl	d0044824 <lightSetIntensity>
+d0040534:	2300      	movs	r3, #0
+d0040536:	603b      	str	r3, [r7, #0]
+d0040538:	e6c0      	b.n	d00402bc <weatherLightning+0x6c>
+d004053a:	bf00      	nop
+d004053c:	3dcccccd 	.word	0x3dcccccd
+d0040540:	d004829c 	.word	0xd004829c
+d0040544:	d004833c 	.word	0xd004833c
+d0040548:	d0048298 	.word	0xd0048298
+d004054c:	00000000 	.word	0x00000000
+d0040550:	3c83126f 	.word	0x3c83126f
+d0040554:	d0048330 	.word	0xd0048330
+d0040558:	3ab3e71b 	.word	0x3ab3e71b
+d004055c:	d0048334 	.word	0xd0048334
+d0040560:	38cd000c 	.word	0x38cd000c
+d0040564:	3ca3d70a 	.word	0x3ca3d70a
+d0040568:	d0048340 	.word	0xd0048340
+d004056c:	3ad9d00e 	.word	0x3ad9d00e
+d0040570:	3e99999a 	.word	0x3e99999a
+d0040574:	3b33e71b 	.word	0x3b33e71b
+d0040578:	3f266666 	.word	0x3f266666
+d004057c:	3776000e 	.word	0x3776000e
+d0040580:	3ccccccd 	.word	0x3ccccccd
+d0040584:	d0048328 	.word	0xd0048328
+d0040588:	cccccccd 	.word	0xcccccccd
+d004058c:	3aace269 	.word	0x3aace269
+d0040590:	3f4ccccd 	.word	0x3f4ccccd
 
-d004082c <meshSetDefaultMaterial>:
-d004082c:	b148      	cbz	r0, d0040842 <meshSetDefaultMaterial+0x16>
-d004082e:	2300      	movs	r3, #0
-d0040830:	f04f 517e 	mov.w	r1, #1065353216	; 0x3f800000
-d0040834:	f04f 4282 	mov.w	r2, #1090519040	; 0x41000000
-d0040838:	6203      	str	r3, [r0, #32]
-d004083a:	6241      	str	r1, [r0, #36]	; 0x24
-d004083c:	62c2      	str	r2, [r0, #44]	; 0x2c
-d004083e:	6303      	str	r3, [r0, #48]	; 0x30
-d0040840:	6283      	str	r3, [r0, #40]	; 0x28
-d0040842:	4770      	bx	lr
-
-d0040844 <meshSetMaterial>:
-d0040844:	b148      	cbz	r0, d004085a <meshSetMaterial+0x16>
-d0040846:	ed80 0a08 	vstr	s0, [r0, #32]
-d004084a:	edc0 0a09 	vstr	s1, [r0, #36]	; 0x24
-d004084e:	ed80 1a0c 	vstr	s2, [r0, #48]	; 0x30
-d0040852:	edc0 1a0a 	vstr	s3, [r0, #40]	; 0x28
-d0040856:	ed80 2a0b 	vstr	s4, [r0, #44]	; 0x2c
-d004085a:	4770      	bx	lr
-
-d004085c <resetDepthBuffer>:
-d004085c:	f44f 2296 	mov.w	r2, #307200	; 0x4b000
-d0040860:	21ff      	movs	r1, #255	; 0xff
-d0040862:	4801      	ldr	r0, [pc, #4]	; (d0040868 <resetDepthBuffer+0xc>)
-d0040864:	f005 bba8 	b.w	d0045fb8 <memset>
-d0040868:	d0047660 	.word	0xd0047660
-
-d004086c <set3DRenderBuffer>:
-d004086c:	4b01      	ldr	r3, [pc, #4]	; (d0040874 <set3DRenderBuffer+0x8>)
-d004086e:	6018      	str	r0, [r3, #0]
-d0040870:	4770      	bx	lr
-d0040872:	bf00      	nop
-d0040874:	d012cd44 	.word	0xd012cd44
-
-d0040878 <putPixel>:
-d0040878:	f5b0 7ff0 	cmp.w	r0, #480	; 0x1e0
-d004087c:	d209      	bcs.n	d0040892 <putPixel+0x1a>
-d004087e:	f5b1 7fa0 	cmp.w	r1, #320	; 0x140
-d0040882:	d206      	bcs.n	d0040892 <putPixel+0x1a>
-d0040884:	4b03      	ldr	r3, [pc, #12]	; (d0040894 <putPixel+0x1c>)
-d0040886:	eb00 0080 	add.w	r0, r0, r0, lsl #2
-d004088a:	681b      	ldr	r3, [r3, #0]
-d004088c:	eb03 1080 	add.w	r0, r3, r0, lsl #6
-d0040890:	5442      	strb	r2, [r0, r1]
-d0040892:	4770      	bx	lr
-d0040894:	d012cd44 	.word	0xd012cd44
-
-d0040898 <drawLine>:
-d0040898:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d004089c:	b085      	sub	sp, #20
-d004089e:	eba2 0c00 	sub.w	ip, r2, r0
-d00408a2:	eba3 0901 	sub.w	r9, r3, r1
-d00408a6:	f240 1edf 	movw	lr, #479	; 0x1df
-d00408aa:	f89d 4038 	ldrb.w	r4, [sp, #56]	; 0x38
-d00408ae:	f240 1a3f 	movw	sl, #319	; 0x13f
-d00408b2:	f8df b07c 	ldr.w	fp, [pc, #124]	; d0040930 <drawLine+0x98>
-d00408b6:	9401      	str	r4, [sp, #4]
-d00408b8:	4282      	cmp	r2, r0
-d00408ba:	bfcc      	ite	gt
-d00408bc:	2401      	movgt	r4, #1
-d00408be:	f04f 34ff 	movle.w	r4, #4294967295	; 0xffffffff
-d00408c2:	9402      	str	r4, [sp, #8]
-d00408c4:	428b      	cmp	r3, r1
-d00408c6:	bfcc      	ite	gt
-d00408c8:	2401      	movgt	r4, #1
-d00408ca:	f04f 34ff 	movle.w	r4, #4294967295	; 0xffffffff
-d00408ce:	f1bc 0f00 	cmp.w	ip, #0
-d00408d2:	9403      	str	r4, [sp, #12]
-d00408d4:	bfb8      	it	lt
-d00408d6:	f1cc 0c00 	rsblt	ip, ip, #0
-d00408da:	f1b9 0f00 	cmp.w	r9, #0
-d00408de:	bfb8      	it	lt
-d00408e0:	f1c9 0900 	rsblt	r9, r9, #0
-d00408e4:	ebac 0409 	sub.w	r4, ip, r9
-d00408e8:	f1c9 0800 	rsb	r8, r9, #0
-d00408ec:	4570      	cmp	r0, lr
-d00408ee:	eb00 0780 	add.w	r7, r0, r0, lsl #2
-d00408f2:	ea4f 0644 	mov.w	r6, r4, lsl #1
-d00408f6:	d807      	bhi.n	d0040908 <drawLine+0x70>
-d00408f8:	4551      	cmp	r1, sl
-d00408fa:	d805      	bhi.n	d0040908 <drawLine+0x70>
-d00408fc:	f8db 5000 	ldr.w	r5, [fp]
-d0040900:	eb05 1587 	add.w	r5, r5, r7, lsl #6
-d0040904:	9f01      	ldr	r7, [sp, #4]
-d0040906:	546f      	strb	r7, [r5, r1]
-d0040908:	4290      	cmp	r0, r2
-d004090a:	d101      	bne.n	d0040910 <drawLine+0x78>
-d004090c:	4299      	cmp	r1, r3
-d004090e:	d00c      	beq.n	d004092a <drawLine+0x92>
-d0040910:	ebb8 0f44 	cmp.w	r8, r4, lsl #1
-d0040914:	dc05      	bgt.n	d0040922 <drawLine+0x8a>
-d0040916:	9d02      	ldr	r5, [sp, #8]
-d0040918:	45b4      	cmp	ip, r6
-d004091a:	eba4 0409 	sub.w	r4, r4, r9
-d004091e:	4428      	add	r0, r5
-d0040920:	dbe4      	blt.n	d00408ec <drawLine+0x54>
-d0040922:	9d03      	ldr	r5, [sp, #12]
-d0040924:	4464      	add	r4, ip
-d0040926:	4429      	add	r1, r5
-d0040928:	e7e0      	b.n	d00408ec <drawLine+0x54>
-d004092a:	b005      	add	sp, #20
-d004092c:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-d0040930:	d012cd44 	.word	0xd012cd44
-
-d0040934 <shadeColor>:
-d0040934:	2900      	cmp	r1, #0
-d0040936:	db09      	blt.n	d004094c <shadeColor+0x18>
-d0040938:	2904      	cmp	r1, #4
-d004093a:	dc09      	bgt.n	d0040950 <shadeColor+0x1c>
-d004093c:	0109      	lsls	r1, r1, #4
-d004093e:	b2c9      	uxtb	r1, r1
-d0040940:	f000 000f 	and.w	r0, r0, #15
-d0040944:	3020      	adds	r0, #32
-d0040946:	4408      	add	r0, r1
-d0040948:	b2c0      	uxtb	r0, r0
-d004094a:	4770      	bx	lr
-d004094c:	2100      	movs	r1, #0
-d004094e:	e7f7      	b.n	d0040940 <shadeColor+0xc>
-d0040950:	2010      	movs	r0, #16
-d0040952:	4770      	bx	lr
-
-d0040954 <fillTriangleFlat>:
-d0040954:	eddf 7ad1 	vldr	s15, [pc, #836]	; d0040c9c <fillTriangleFlat+0x348>
-d0040958:	eef4 0ae7 	vcmpe.f32	s1, s15
-d004095c:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d0040960:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040964:	eeb4 1ae7 	vcmpe.f32	s2, s15
-d0040968:	ed2d 8b10 	vpush	{d8-d15}
-d004096c:	b089      	sub	sp, #36	; 0x24
-d004096e:	9304      	str	r3, [sp, #16]
-d0040970:	bf94      	ite	ls
-d0040972:	2301      	movls	r3, #1
-d0040974:	2300      	movhi	r3, #0
-d0040976:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004097a:	9001      	str	r0, [sp, #4]
-d004097c:	9102      	str	r1, [sp, #8]
-d004097e:	bf98      	it	ls
-d0040980:	f043 0301 	orrls.w	r3, r3, #1
-d0040984:	9203      	str	r2, [sp, #12]
-d0040986:	f8bd 4090 	ldrh.w	r4, [sp, #144]	; 0x90
-d004098a:	f8bd 0094 	ldrh.w	r0, [sp, #148]	; 0x94
-d004098e:	f8bd 1098 	ldrh.w	r1, [sp, #152]	; 0x98
-d0040992:	f89d 209c 	ldrb.w	r2, [sp, #156]	; 0x9c
-d0040996:	2b00      	cmp	r3, #0
-d0040998:	f040 8154 	bne.w	d0040c44 <fillTriangleFlat+0x2f0>
-d004099c:	eeb4 0ae7 	vcmpe.f32	s0, s15
-d00409a0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00409a4:	bf94      	ite	ls
-d00409a6:	2701      	movls	r7, #1
-d00409a8:	2700      	movhi	r7, #0
-d00409aa:	f240 814b 	bls.w	d0040c44 <fillTriangleFlat+0x2f0>
-d00409ae:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
-d00409b2:	ee07 4a10 	vmov	s14, r4
-d00409b6:	eef6 6a00 	vmov.f32	s13, #96	; 0x3f000000  0.5
-d00409ba:	eeb8 7a47 	vcvt.f32.u32	s14, s14
-d00409be:	ee87 8a80 	vdiv.f32	s16, s15, s0
-d00409c2:	ee87 2a81 	vdiv.f32	s4, s15, s2
-d00409c6:	ee87 0aa0 	vdiv.f32	s0, s15, s1
-d00409ca:	ee07 0a90 	vmov	s15, r0
-d00409ce:	ee71 1aa6 	vadd.f32	s3, s3, s13
-d00409d2:	eef8 5a67 	vcvt.f32.u32	s11, s15
-d00409d6:	ee07 1a90 	vmov	s15, r1
-d00409da:	ee27 7a08 	vmul.f32	s14, s14, s16
-d00409de:	eeb8 3a67 	vcvt.f32.u32	s6, s15
-d00409e2:	eefd 7ae1 	vcvt.s32.f32	s15, s3
-d00409e6:	ee23 3a02 	vmul.f32	s6, s6, s4
-d00409ea:	ee17 3a90 	vmov	r3, s15
-d00409ee:	2b00      	cmp	r3, #0
-d00409f0:	ee65 5a80 	vmul.f32	s11, s11, s0
-d00409f4:	f2c0 812d 	blt.w	d0040c52 <fillTriangleFlat+0x2fe>
-d00409f8:	2b04      	cmp	r3, #4
-d00409fa:	f340 8128 	ble.w	d0040c4e <fillTriangleFlat+0x2fa>
-d00409fe:	2710      	movs	r7, #16
-d0040a00:	eddd 7a02 	vldr	s15, [sp, #8]
-d0040a04:	eddd 6a23 	vldr	s13, [sp, #140]	; 0x8c
-d0040a08:	eeb8 5ae7 	vcvt.f32.s32	s10, s15
-d0040a0c:	eddd 7a04 	vldr	s15, [sp, #16]
-d0040a10:	eef8 6ae6 	vcvt.f32.s32	s13, s13
-d0040a14:	eef8 3ae7 	vcvt.f32.s32	s7, s15
-d0040a18:	eddd 7a01 	vldr	s15, [sp, #4]
-d0040a1c:	eeb8 6ae7 	vcvt.f32.s32	s12, s15
-d0040a20:	eddd 7a03 	vldr	s15, [sp, #12]
-d0040a24:	eeb4 5ae3 	vcmpe.f32	s10, s7
-d0040a28:	eef8 4ae7 	vcvt.f32.s32	s9, s15
-d0040a2c:	eddd 7a22 	vldr	s15, [sp, #136]	; 0x88
-d0040a30:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040a34:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0040a38:	f300 8111 	bgt.w	d0040c5e <fillTriangleFlat+0x30a>
-d0040a3c:	eeb4 5ae6 	vcmpe.f32	s10, s13
-d0040a40:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040a44:	f300 81ee 	bgt.w	d0040e24 <fillTriangleFlat+0x4d0>
-d0040a48:	eef4 3ae6 	vcmpe.f32	s7, s13
-d0040a4c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040a50:	dd17      	ble.n	d0040a82 <fillTriangleFlat+0x12e>
-d0040a52:	eeb0 1a65 	vmov.f32	s2, s11
-d0040a56:	eef0 1a40 	vmov.f32	s3, s0
-d0040a5a:	eef0 2a63 	vmov.f32	s5, s7
-d0040a5e:	eeb0 4a64 	vmov.f32	s8, s9
-d0040a62:	eef0 5a43 	vmov.f32	s11, s6
-d0040a66:	eeb0 0a42 	vmov.f32	s0, s4
-d0040a6a:	eef0 3a66 	vmov.f32	s7, s13
-d0040a6e:	eef0 4a67 	vmov.f32	s9, s15
-d0040a72:	eeb0 3a41 	vmov.f32	s6, s2
-d0040a76:	eeb0 2a61 	vmov.f32	s4, s3
-d0040a7a:	eef0 6a62 	vmov.f32	s13, s5
-d0040a7e:	eef0 7a44 	vmov.f32	s15, s8
-d0040a82:	eeb6 4a00 	vmov.f32	s8, #96	; 0x3f000000  0.5
-d0040a86:	ee75 2a04 	vadd.f32	s5, s10, s8
-d0040a8a:	ee36 4a84 	vadd.f32	s8, s13, s8
-d0040a8e:	eefd 2ae2 	vcvt.s32.f32	s5, s5
-d0040a92:	eebd 4ac4 	vcvt.s32.f32	s8, s8
-d0040a96:	ee12 3a90 	vmov	r3, s5
-d0040a9a:	ee14 2a10 	vmov	r2, s8
-d0040a9e:	4293      	cmp	r3, r2
-d0040aa0:	f000 80d0 	beq.w	d0040c44 <fillTriangleFlat+0x2f0>
-d0040aa4:	ee76 2ac5 	vsub.f32	s5, s13, s10
-d0040aa8:	ed9f 9a7c 	vldr	s18, [pc, #496]	; d0040c9c <fillTriangleFlat+0x348>
-d0040aac:	eef4 2ac9 	vcmpe.f32	s5, s18
-d0040ab0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040ab4:	f240 80c6 	bls.w	d0040c44 <fillTriangleFlat+0x2f0>
-d0040ab8:	eef7 1a00 	vmov.f32	s3, #112	; 0x3f800000  1.0
-d0040abc:	ee37 1ac6 	vsub.f32	s2, s15, s12
-d0040ac0:	ee72 0a48 	vsub.f32	s1, s4, s16
-d0040ac4:	ee81 4aa2 	vdiv.f32	s8, s3, s5
-d0040ac8:	ee73 2ac5 	vsub.f32	s5, s7, s10
-d0040acc:	ee73 8a47 	vsub.f32	s17, s6, s14
-d0040ad0:	eef4 2ac9 	vcmpe.f32	s5, s18
-d0040ad4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040ad8:	ee21 1a04 	vmul.f32	s2, s2, s8
-d0040adc:	ee60 0a84 	vmul.f32	s1, s1, s8
-d0040ae0:	ee68 8a84 	vmul.f32	s17, s17, s8
-d0040ae4:	f300 80e2 	bgt.w	d0040cac <fillTriangleFlat+0x358>
-d0040ae8:	ee36 4ae3 	vsub.f32	s8, s13, s7
-d0040aec:	eeb4 4ac9 	vcmpe.f32	s8, s18
-d0040af0:	ed8d 4a01 	vstr	s8, [sp, #4]
-d0040af4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040af8:	f340 80a4 	ble.w	d0040c44 <fillTriangleFlat+0x2f0>
-d0040afc:	eec1 9a84 	vdiv.f32	s19, s3, s8
-d0040b00:	eef4 2ac9 	vcmpe.f32	s5, s18
-d0040b04:	ee77 7ae4 	vsub.f32	s15, s15, s9
-d0040b08:	ee32 4a40 	vsub.f32	s8, s4, s0
-d0040b0c:	ee33 3a65 	vsub.f32	s6, s6, s11
-d0040b10:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040b14:	ee67 eaa9 	vmul.f32	s29, s15, s19
-d0040b18:	ee64 fa29 	vmul.f32	s31, s8, s19
-d0040b1c:	ee23 fa29 	vmul.f32	s30, s6, s19
-d0040b20:	f300 8315 	bgt.w	d004114e <fillTriangleFlat+0x7fa>
-d0040b24:	eefd 7ae3 	vcvt.s32.f32	s15, s7
-d0040b28:	edcd 7a02 	vstr	s15, [sp, #8]
-d0040b2c:	eefd 7ae6 	vcvt.s32.f32	s15, s13
-d0040b30:	f240 133f 	movw	r3, #319	; 0x13f
-d0040b34:	9a02      	ldr	r2, [sp, #8]
-d0040b36:	ee17 ea90 	vmov	lr, s15
-d0040b3a:	ea22 7be2 	bic.w	fp, r2, r2, asr #31
-d0040b3e:	f10e 3eff 	add.w	lr, lr, #4294967295	; 0xffffffff
-d0040b42:	459e      	cmp	lr, r3
-d0040b44:	bfa8      	it	ge
-d0040b46:	469e      	movge	lr, r3
-d0040b48:	45f3      	cmp	fp, lr
-d0040b4a:	dc7b      	bgt.n	d0040c44 <fillTriangleFlat+0x2f0>
-d0040b4c:	ee07 ba90 	vmov	s15, fp
-d0040b50:	eef6 6a00 	vmov.f32	s13, #96	; 0x3f000000  0.5
-d0040b54:	f10e 0e01 	add.w	lr, lr, #1
-d0040b58:	ed9f 9a50 	vldr	s18, [pc, #320]	; d0040c9c <fillTriangleFlat+0x348>
-d0040b5c:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0040b60:	eddf 1a4f 	vldr	s3, [pc, #316]	; d0040ca0 <fillTriangleFlat+0x34c>
-d0040b64:	ed9f 2a4f 	vldr	s4, [pc, #316]	; d0040ca4 <fillTriangleFlat+0x350>
-d0040b68:	eddf 9a4f 	vldr	s19, [pc, #316]	; d0040ca8 <fillTriangleFlat+0x354>
-d0040b6c:	ee77 7aa6 	vadd.f32	s15, s15, s13
-d0040b70:	ee37 5ac5 	vsub.f32	s10, s15, s10
-d0040b74:	ee77 3ae3 	vsub.f32	s7, s15, s7
-d0040b78:	eea1 6a05 	vfma.f32	s12, s2, s10
-d0040b7c:	eea0 8a85 	vfma.f32	s16, s1, s10
-d0040b80:	eea8 7a85 	vfma.f32	s14, s17, s10
-d0040b84:	eee3 4aae 	vfma.f32	s9, s7, s29
-d0040b88:	eea3 0aaf 	vfma.f32	s0, s7, s31
-d0040b8c:	eeef 5a23 	vfma.f32	s11, s30, s7
-d0040b90:	e032      	b.n	d0040bf8 <fillTriangleFlat+0x2a4>
-d0040b92:	eef0 3a47 	vmov.f32	s7, s14
-d0040b96:	eef0 2a48 	vmov.f32	s5, s16
-d0040b9a:	eef0 6a46 	vmov.f32	s13, s12
-d0040b9e:	eeb0 3a65 	vmov.f32	s6, s11
-d0040ba2:	eeb0 5a40 	vmov.f32	s10, s0
-d0040ba6:	eeb0 4a64 	vmov.f32	s8, s9
-d0040baa:	fefa 7a66 	vrintp.f32	s15, s13
-d0040bae:	eefd 7ae7 	vcvt.s32.f32	s15, s15
-d0040bb2:	f240 13df 	movw	r3, #479	; 0x1df
-d0040bb6:	ee17 6a90 	vmov	r6, s15
-d0040bba:	fefa 7a44 	vrintp.f32	s15, s8
-d0040bbe:	eefd 7ae7 	vcvt.s32.f32	s15, s15
-d0040bc2:	3e01      	subs	r6, #1
-d0040bc4:	ee17 4a90 	vmov	r4, s15
-d0040bc8:	429e      	cmp	r6, r3
-d0040bca:	ea24 74e4 	bic.w	r4, r4, r4, asr #31
-d0040bce:	bfa8      	it	ge
-d0040bd0:	461e      	movge	r6, r3
-d0040bd2:	42a6      	cmp	r6, r4
-d0040bd4:	f280 8158 	bge.w	d0040e88 <fillTriangleFlat+0x534>
-d0040bd8:	f10b 0b01 	add.w	fp, fp, #1
-d0040bdc:	ee36 6a01 	vadd.f32	s12, s12, s2
-d0040be0:	ee38 8a20 	vadd.f32	s16, s16, s1
-d0040be4:	45f3      	cmp	fp, lr
-d0040be6:	ee37 7a28 	vadd.f32	s14, s14, s17
-d0040bea:	ee74 4aae 	vadd.f32	s9, s9, s29
-d0040bee:	ee30 0a2f 	vadd.f32	s0, s0, s31
-d0040bf2:	ee75 5a8f 	vadd.f32	s11, s11, s30
-d0040bf6:	d025      	beq.n	d0040c44 <fillTriangleFlat+0x2f0>
-d0040bf8:	eeb4 6ae4 	vcmpe.f32	s12, s9
-d0040bfc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040c00:	dcc7      	bgt.n	d0040b92 <fillTriangleFlat+0x23e>
-d0040c02:	eef0 3a65 	vmov.f32	s7, s11
-d0040c06:	eef0 2a40 	vmov.f32	s5, s0
-d0040c0a:	eef0 6a64 	vmov.f32	s13, s9
-d0040c0e:	eeb0 3a47 	vmov.f32	s6, s14
-d0040c12:	eeb0 5a48 	vmov.f32	s10, s16
-d0040c16:	eeb0 4a46 	vmov.f32	s8, s12
-d0040c1a:	e7c6      	b.n	d0040baa <fillTriangleFlat+0x256>
-d0040c1c:	eddd 6a03 	vldr	s13, [sp, #12]
-d0040c20:	eddd 4a04 	vldr	s9, [sp, #16]
-d0040c24:	ed9d 7a05 	vldr	s14, [sp, #20]
-d0040c28:	ed9d 8a06 	vldr	s16, [sp, #24]
-d0040c2c:	ed9d 5a07 	vldr	s10, [sp, #28]
-d0040c30:	eddf 7a1a 	vldr	s15, [pc, #104]	; d0040c9c <fillTriangleFlat+0x348>
-d0040c34:	ed9d 4a01 	vldr	s8, [sp, #4]
-d0040c38:	eeb4 4ae7 	vcmpe.f32	s8, s15
-d0040c3c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040c40:	f73f af74 	bgt.w	d0040b2c <fillTriangleFlat+0x1d8>
-d0040c44:	b009      	add	sp, #36	; 0x24
-d0040c46:	ecbd 8b10 	vpop	{d8-d15}
-d0040c4a:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-d0040c4e:	011b      	lsls	r3, r3, #4
-d0040c50:	b2df      	uxtb	r7, r3
-d0040c52:	f002 020f 	and.w	r2, r2, #15
-d0040c56:	3220      	adds	r2, #32
-d0040c58:	4417      	add	r7, r2
-d0040c5a:	b2ff      	uxtb	r7, r7
-d0040c5c:	e6d0      	b.n	d0040a00 <fillTriangleFlat+0xac>
-d0040c5e:	eef4 3ae6 	vcmpe.f32	s7, s13
-d0040c62:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040c66:	f340 80f6 	ble.w	d0040e56 <fillTriangleFlat+0x502>
-d0040c6a:	eeb0 1a43 	vmov.f32	s2, s6
-d0040c6e:	eef0 1a42 	vmov.f32	s3, s4
-d0040c72:	eef0 2a66 	vmov.f32	s5, s13
-d0040c76:	eeb0 4a67 	vmov.f32	s8, s15
-d0040c7a:	eeb0 3a47 	vmov.f32	s6, s14
-d0040c7e:	eeb0 2a48 	vmov.f32	s4, s16
-d0040c82:	eef0 6a45 	vmov.f32	s13, s10
-d0040c86:	eef0 7a46 	vmov.f32	s15, s12
-d0040c8a:	eeb0 7a41 	vmov.f32	s14, s2
-d0040c8e:	eeb0 8a61 	vmov.f32	s16, s3
-d0040c92:	eeb0 5a62 	vmov.f32	s10, s5
-d0040c96:	eeb0 6a44 	vmov.f32	s12, s8
-d0040c9a:	e6f2      	b.n	d0040a82 <fillTriangleFlat+0x12e>
-d0040c9c:	38d1b717 	.word	0x38d1b717
-d0040ca0:	33d6bf95 	.word	0x33d6bf95
-d0040ca4:	00000000 	.word	0x00000000
-d0040ca8:	477fff00 	.word	0x477fff00
-d0040cac:	ee81 4aa2 	vdiv.f32	s8, s3, s5
-d0040cb0:	ee76 aae3 	vsub.f32	s21, s13, s7
-d0040cb4:	ee34 aac6 	vsub.f32	s20, s9, s12
-d0040cb8:	ee70 9a48 	vsub.f32	s19, s0, s16
-d0040cbc:	ee75 2ac7 	vsub.f32	s5, s11, s14
-d0040cc0:	edcd aa01 	vstr	s21, [sp, #4]
-d0040cc4:	eef4 aac9 	vcmpe.f32	s21, s18
+d0040594 <main>:
+d0040594:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d0040598:	ed2d 8b0e 	vpush	{d8-d14}
+d004059c:	f5ad 7d65 	sub.w	sp, sp, #916	; 0x394
+d00405a0:	f8df 9400 	ldr.w	r9, [pc, #1024]	; d00409a4 <main+0x410>
+d00405a4:	f7ff fdbc 	bl	d0040120 <initSystem>
+d00405a8:	f8df b3fc 	ldr.w	fp, [pc, #1020]	; d00409a8 <main+0x414>
+d00405ac:	f20d 1877 	addw	r8, sp, #375	; 0x177
+d00405b0:	f002 fef6 	bl	d00433a0 <worldClear>
+d00405b4:	f004 f89a 	bl	d00446ec <lightsClear>
+d00405b8:	ad20      	add	r5, sp, #128	; 0x80
+d00405ba:	f028 081f 	bic.w	r8, r8, #31
+d00405be:	f002 fbf3 	bl	d0042da8 <sb3dParticlesClear>
+d00405c2:	ae41      	add	r6, sp, #260	; 0x104
+d00405c4:	4cdb      	ldr	r4, [pc, #876]	; (d0040934 <main+0x3a0>)
+d00405c6:	f508 73f0 	add.w	r3, r8, #480	; 0x1e0
+d00405ca:	f108 07c0 	add.w	r7, r8, #192	; 0xc0
+d00405ce:	ed9f 8ada 	vldr	s16, [pc, #872]	; d0040938 <main+0x3a4>
+d00405d2:	f508 7ab0 	add.w	sl, r8, #352	; 0x160
+d00405d6:	9305      	str	r3, [sp, #20]
+d00405d8:	f004 f934 	bl	d0044844 <setDefaultRenderMode>
+d00405dc:	4638      	mov	r0, r7
+d00405de:	eddf 9ad7 	vldr	s19, [pc, #860]	; d004093c <main+0x3a8>
+d00405e2:	f002 ff3b 	bl	d004345c <cameraCreate>
+d00405e6:	f508 72d0 	add.w	r2, r8, #416	; 0x1a0
+d00405ea:	4638      	mov	r0, r7
+d00405ec:	eddf 0ad4 	vldr	s1, [pc, #848]	; d0040940 <main+0x3ac>
+d00405f0:	ed9f 0ad4 	vldr	s0, [pc, #848]	; d0040944 <main+0x3b0>
+d00405f4:	9206      	str	r2, [sp, #24]
+d00405f6:	f003 f8fb 	bl	d00437f0 <cameraSetRange>
+d00405fa:	ed9f 1acf 	vldr	s2, [pc, #828]	; d0040938 <main+0x3a4>
+d00405fe:	f508 7190 	add.w	r1, r8, #288	; 0x120
+d0040602:	eddf 0ad1 	vldr	s1, [pc, #836]	; d0040948 <main+0x3b4>
+d0040606:	eeb0 0a41 	vmov.f32	s0, s2
+d004060a:	9107      	str	r1, [sp, #28]
+d004060c:	f002 fb24 	bl	d0042c58 <vec3>
+d0040610:	9502      	str	r5, [sp, #8]
+d0040612:	2500      	movs	r5, #0
+d0040614:	4638      	mov	r0, r7
+d0040616:	ed8d 0a26 	vstr	s0, [sp, #152]	; 0x98
+d004061a:	edcd 0a27 	vstr	s1, [sp, #156]	; 0x9c
+d004061e:	ed8d 1a28 	vstr	s2, [sp, #160]	; 0xa0
+d0040622:	f8cd 800c 	str.w	r8, [sp, #12]
+d0040626:	9504      	str	r5, [sp, #16]
+d0040628:	f002 ff22 	bl	d0043470 <cameraSetPosition>
+d004062c:	4638      	mov	r0, r7
+d004062e:	ed9f 9ac7 	vldr	s18, [pc, #796]	; d004094c <main+0x3b8>
+d0040632:	f002 febd 	bl	d00433b0 <cameraNormalize>
+d0040636:	a846      	add	r0, sp, #280	; 0x118
+d0040638:	f04f 4c7f 	mov.w	ip, #4278190080	; 0xff000000
+d004063c:	eddf 8ac4 	vldr	s17, [pc, #784]	; d0040950 <main+0x3bc>
+d0040640:	4605      	mov	r5, r0
+d0040642:	e8b9 000f 	ldmia.w	r9!, {r0, r1, r2, r3}
+d0040646:	c50f      	stmia	r5!, {r0, r1, r2, r3}
+d0040648:	e8b9 000f 	ldmia.w	r9!, {r0, r1, r2, r3}
+d004064c:	c50f      	stmia	r5!, {r0, r1, r2, r3}
+d004064e:	e8b9 000f 	ldmia.w	r9!, {r0, r1, r2, r3}
+d0040652:	c50f      	stmia	r5!, {r0, r1, r2, r3}
+d0040654:	e899 000f 	ldmia.w	r9, {r0, r1, r2, r3}
+d0040658:	e885 000f 	stmia.w	r5, {r0, r1, r2, r3}
+d004065c:	f109 0510 	add.w	r5, r9, #16
+d0040660:	f8cb c000 	str.w	ip, [fp]
+d0040664:	9600      	str	r6, [sp, #0]
+d0040666:	f109 0924 	add.w	r9, r9, #36	; 0x24
+d004066a:	f8cb c040 	str.w	ip, [fp, #64]	; 0x40
+d004066e:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
+d0040670:	682d      	ldr	r5, [r5, #0]
+d0040672:	c60f      	stmia	r6!, {r0, r1, r2, r3}
+d0040674:	4663      	mov	r3, ip
+d0040676:	4658      	mov	r0, fp
+d0040678:	6035      	str	r5, [r6, #0]
+d004067a:	a946      	add	r1, sp, #280	; 0x118
+d004067c:	2210      	movs	r2, #16
+d004067e:	f003 fde1 	bl	d0044244 <buildLightingCLUT>
+d0040682:	7b23      	ldrb	r3, [r4, #12]
+d0040684:	7b62      	ldrb	r2, [r4, #13]
+d0040686:	4658      	mov	r0, fp
+d0040688:	7ba1      	ldrb	r1, [r4, #14]
+d004068a:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d004068e:	7be2      	ldrb	r2, [r4, #15]
+d0040690:	ea43 4301 	orr.w	r3, r3, r1, lsl #16
+d0040694:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d0040698:	681b      	ldr	r3, [r3, #0]
+d004069a:	6cdb      	ldr	r3, [r3, #76]	; 0x4c
+d004069c:	4798      	blx	r3
+d004069e:	7c23      	ldrb	r3, [r4, #16]
+d00406a0:	7c62      	ldrb	r2, [r4, #17]
+d00406a2:	2100      	movs	r1, #0
+d00406a4:	7ca0      	ldrb	r0, [r4, #18]
+d00406a6:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d00406aa:	7ce2      	ldrb	r2, [r4, #19]
+d00406ac:	ea43 4300 	orr.w	r3, r3, r0, lsl #16
+d00406b0:	48a8      	ldr	r0, [pc, #672]	; (d0040954 <main+0x3c0>)
+d00406b2:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d00406b6:	685b      	ldr	r3, [r3, #4]
+d00406b8:	681b      	ldr	r3, [r3, #0]
+d00406ba:	4798      	blx	r3
+d00406bc:	ed9f 1a9e 	vldr	s2, [pc, #632]	; d0040938 <main+0x3a4>
+d00406c0:	eef0 0a41 	vmov.f32	s1, s2
+d00406c4:	eeb0 0a41 	vmov.f32	s0, s2
+d00406c8:	f002 fac6 	bl	d0042c58 <vec3>
+d00406cc:	eddf 1a9d 	vldr	s3, [pc, #628]	; d0040944 <main+0x3b0>
+d00406d0:	2001      	movs	r0, #1
+d00406d2:	edcd 0a2a 	vstr	s1, [sp, #168]	; 0xa8
+d00406d6:	ed8d 0a29 	vstr	s0, [sp, #164]	; 0xa4
+d00406da:	ed8d 1a2b 	vstr	s2, [sp, #172]	; 0xac
+d00406de:	f004 f819 	bl	d0044714 <addPointLight>
+d00406e2:	ab1d      	add	r3, sp, #116	; 0x74
+d00406e4:	4606      	mov	r6, r0
+d00406e6:	eef7 1a00 	vmov.f32	s3, #112	; 0x3f800000  1.0
+d00406ea:	e899 0007 	ldmia.w	r9, {r0, r1, r2}
+d00406ee:	e883 0007 	stmia.w	r3, {r0, r1, r2}
+d00406f2:	2001      	movs	r0, #1
+d00406f4:	edd3 0a01 	vldr	s1, [r3, #4]
+d00406f8:	ed93 1a02 	vldr	s2, [r3, #8]
+d00406fc:	ed93 0a00 	vldr	s0, [r3]
+d0040700:	f004 f844 	bl	d004478c <addDirectionalLight>
+d0040704:	eeb7 0a00 	vmov.f32	s0, #112	; 0x3f800000  1.0
+d0040708:	b2c3      	uxtb	r3, r0
+d004070a:	ee0e 3a10 	vmov	s28, r3
+d004070e:	4618      	mov	r0, r3
+d0040710:	f004 f888 	bl	d0044824 <lightSetIntensity>
+d0040714:	2100      	movs	r1, #0
+d0040716:	ee1e 0a10 	vmov	r0, s28
+d004071a:	f003 ffed 	bl	d00446f8 <lightEnable>
+d004071e:	2313      	movs	r3, #19
+d0040720:	4a8d      	ldr	r2, [pc, #564]	; (d0040958 <main+0x3c4>)
+d0040722:	488e      	ldr	r0, [pc, #568]	; (d004095c <main+0x3c8>)
+d0040724:	7013      	strb	r3, [r2, #0]
+d0040726:	2312      	movs	r3, #18
+d0040728:	2215      	movs	r2, #21
+d004072a:	eddd aa05 	vldr	s21, [sp, #20]
+d004072e:	7003      	strb	r3, [r0, #0]
+d0040730:	2317      	movs	r3, #23
+d0040732:	488b      	ldr	r0, [pc, #556]	; (d0040960 <main+0x3cc>)
+d0040734:	ee1a 1a90 	vmov	r1, s21
+d0040738:	ed9f 0a8a 	vldr	s0, [pc, #552]	; d0040964 <main+0x3d0>
+d004073c:	7002      	strb	r2, [r0, #0]
+d004073e:	4a8a      	ldr	r2, [pc, #552]	; (d0040968 <main+0x3d4>)
+d0040740:	488a      	ldr	r0, [pc, #552]	; (d004096c <main+0x3d8>)
+d0040742:	7013      	strb	r3, [r2, #0]
+d0040744:	f005 fe7a 	bl	d004643c <loadMeshSB3D>
+d0040748:	eeb0 1a48 	vmov.f32	s2, s16
+d004074c:	eef0 0a48 	vmov.f32	s1, s16
+d0040750:	eeb0 0a48 	vmov.f32	s0, s16
+d0040754:	f002 fa80 	bl	d0042c58 <vec3>
+d0040758:	ee1a 0a90 	vmov	r0, s21
+d004075c:	edcd 0a2d 	vstr	s1, [sp, #180]	; 0xb4
+d0040760:	ed8d 1a2e 	vstr	s2, [sp, #184]	; 0xb8
+d0040764:	ed8d 0a2c 	vstr	s0, [sp, #176]	; 0xb0
+d0040768:	f003 fb44 	bl	d0043df4 <entityWorldSpawn>
+d004076c:	ed9d aa06 	vldr	s20, [sp, #24]
+d0040770:	ed9f 0a75 	vldr	s0, [pc, #468]	; d0040948 <main+0x3b4>
+d0040774:	ee1a 1a10 	vmov	r1, s20
+d0040778:	487d      	ldr	r0, [pc, #500]	; (d0040970 <main+0x3dc>)
+d004077a:	f005 fe5f 	bl	d004643c <loadMeshSB3D>
+d004077e:	eef0 0a48 	vmov.f32	s1, s16
+d0040782:	ed9f 1a7c 	vldr	s2, [pc, #496]	; d0040974 <main+0x3e0>
+d0040786:	ed9f 0a7c 	vldr	s0, [pc, #496]	; d0040978 <main+0x3e4>
+d004078a:	f002 fa65 	bl	d0042c58 <vec3>
+d004078e:	ee1a 0a10 	vmov	r0, s20
+d0040792:	edcd 0a30 	vstr	s1, [sp, #192]	; 0xc0
+d0040796:	ed8d 1a31 	vstr	s2, [sp, #196]	; 0xc4
+d004079a:	ed8d 0a2f 	vstr	s0, [sp, #188]	; 0xbc
+d004079e:	f003 fb29 	bl	d0043df4 <entityWorldSpawn>
+d00407a2:	eeb2 0a04 	vmov.f32	s0, #36	; 0x41200000  10.0
+d00407a6:	4605      	mov	r5, r0
+d00407a8:	4651      	mov	r1, sl
+d00407aa:	4874      	ldr	r0, [pc, #464]	; (d004097c <main+0x3e8>)
+d00407ac:	f005 fe46 	bl	d004643c <loadMeshSB3D>
+d00407b0:	f8dd b01c 	ldr.w	fp, [sp, #28]
+d00407b4:	4651      	mov	r1, sl
+d00407b6:	ee0a 5a10 	vmov	s20, r5
+d00407ba:	4658      	mov	r0, fp
+d00407bc:	4645      	mov	r5, r8
+d00407be:	f003 fcb1 	bl	d0044124 <copyMesh>
+d00407c2:	ed9f 1a6f 	vldr	s2, [pc, #444]	; d0040980 <main+0x3ec>
+d00407c6:	eddf 0a60 	vldr	s1, [pc, #384]	; d0040948 <main+0x3b4>
+d00407ca:	46b0      	mov	r8, r6
+d00407cc:	ed9f 0a6d 	vldr	s0, [pc, #436]	; d0040984 <main+0x3f0>
+d00407d0:	f002 fa42 	bl	d0042c58 <vec3>
+d00407d4:	4658      	mov	r0, fp
+d00407d6:	ed8d 0a32 	vstr	s0, [sp, #200]	; 0xc8
+d00407da:	edcd 0a33 	vstr	s1, [sp, #204]	; 0xcc
+d00407de:	ed8d 1a34 	vstr	s2, [sp, #208]	; 0xd0
+d00407e2:	f003 fb07 	bl	d0043df4 <entityWorldSpawn>
+d00407e6:	eeb0 1a48 	vmov.f32	s2, s16
+d00407ea:	4683      	mov	fp, r0
+d00407ec:	eef0 0a48 	vmov.f32	s1, s16
+d00407f0:	eeb0 0a48 	vmov.f32	s0, s16
+d00407f4:	f002 fa30 	bl	d0042c58 <vec3>
+d00407f8:	eef7 1a00 	vmov.f32	s3, #112	; 0x3f800000  1.0
+d00407fc:	2001      	movs	r0, #1
+d00407fe:	edcd 0a36 	vstr	s1, [sp, #216]	; 0xd8
+d0040802:	ed8d 0a35 	vstr	s0, [sp, #212]	; 0xd4
+d0040806:	ed8d 1a37 	vstr	s2, [sp, #220]	; 0xdc
+d004080a:	f003 ff83 	bl	d0044714 <addPointLight>
+d004080e:	b2c3      	uxtb	r3, r0
+d0040810:	ed9f 1a70 	vldr	s2, [pc, #448]	; d00409d4 <main+0x440>
+d0040814:	eddf 0a70 	vldr	s1, [pc, #448]	; d00409d8 <main+0x444>
+d0040818:	ed9f 0a70 	vldr	s0, [pc, #448]	; d00409dc <main+0x448>
+d004081c:	4618      	mov	r0, r3
+d004081e:	ee0d 3a90 	vmov	s27, r3
+d0040822:	f003 ff45 	bl	d00446b0 <lightSetRanges>
+d0040826:	f8dd 9010 	ldr.w	r9, [sp, #16]
+d004082a:	4651      	mov	r1, sl
+d004082c:	a808      	add	r0, sp, #32
+d004082e:	f003 fc79 	bl	d0044124 <copyMesh>
+d0040832:	2364      	movs	r3, #100	; 0x64
+d0040834:	eb05 1c89 	add.w	ip, r5, r9, lsl #6
+d0040838:	f109 0901 	add.w	r9, r9, #1
+d004083c:	ae08      	add	r6, sp, #32
+d004083e:	eef0 0a69 	vmov.f32	s1, s19
+d0040842:	fb03 f309 	mul.w	r3, r3, r9
+d0040846:	eeb0 0a49 	vmov.f32	s0, s18
+d004084a:	ee01 3a10 	vmov	s2, r3
+d004084e:	ce0f      	ldmia	r6!, {r0, r1, r2, r3}
+d0040850:	e8ac 000f 	stmia.w	ip!, {r0, r1, r2, r3}
+d0040854:	ce0f      	ldmia	r6!, {r0, r1, r2, r3}
+d0040856:	e8ac 000f 	stmia.w	ip!, {r0, r1, r2, r3}
+d004085a:	ce0f      	ldmia	r6!, {r0, r1, r2, r3}
+d004085c:	e8ac 000f 	stmia.w	ip!, {r0, r1, r2, r3}
+d0040860:	e896 000f 	ldmia.w	r6, {r0, r1, r2, r3}
+d0040864:	eeb8 1ac1 	vcvt.f32.s32	s2, s2
+d0040868:	e88c 000f 	stmia.w	ip, {r0, r1, r2, r3}
+d004086c:	f002 f9f4 	bl	d0042c58 <vec3>
+d0040870:	9b03      	ldr	r3, [sp, #12]
+d0040872:	edcd 0a39 	vstr	s1, [sp, #228]	; 0xe4
+d0040876:	4618      	mov	r0, r3
+d0040878:	3340      	adds	r3, #64	; 0x40
+d004087a:	ed8d 1a3a 	vstr	s2, [sp, #232]	; 0xe8
+d004087e:	ed8d 0a38 	vstr	s0, [sp, #224]	; 0xe0
+d0040882:	9303      	str	r3, [sp, #12]
+d0040884:	f003 fab6 	bl	d0043df4 <entityWorldSpawn>
+d0040888:	9b02      	ldr	r3, [sp, #8]
+d004088a:	4606      	mov	r6, r0
+d004088c:	eeb0 0a68 	vmov.f32	s0, s17
+d0040890:	f843 0b04 	str.w	r0, [r3], #4
+d0040894:	9302      	str	r3, [sp, #8]
+d0040896:	f002 f9e3 	bl	d0042c60 <degrees>
+d004089a:	eeb0 1a48 	vmov.f32	s2, s16
+d004089e:	4630      	mov	r0, r6
+d00408a0:	2101      	movs	r1, #1
+d00408a2:	eddf 0a25 	vldr	s1, [pc, #148]	; d0040938 <main+0x3a4>
+d00408a6:	f003 fc2b 	bl	d0044100 <entityRotation>
+d00408aa:	f1b9 0f03 	cmp.w	r9, #3
+d00408ae:	d1bc      	bne.n	d004082a <main+0x296>
+d00408b0:	9821      	ldr	r0, [sp, #132]	; 0x84
+d00408b2:	4646      	mov	r6, r8
+d00408b4:	ed9f 1a2b 	vldr	s2, [pc, #172]	; d0040964 <main+0x3d0>
+d00408b8:	46a8      	mov	r8, r5
+d00408ba:	eddf 0a33 	vldr	s1, [pc, #204]	; d0040988 <main+0x3f4>
+d00408be:	fa5f fa86 	uxtb.w	sl, r6
+d00408c2:	ed9f 0a22 	vldr	s0, [pc, #136]	; d004094c <main+0x3b8>
+d00408c6:	ee1a 5a10 	vmov	r5, s20
+d00408ca:	9002      	str	r0, [sp, #8]
+d00408cc:	f002 f9c4 	bl	d0042c58 <vec3>
+d00408d0:	9802      	ldr	r0, [sp, #8]
+d00408d2:	ed8d 0a3b 	vstr	s0, [sp, #236]	; 0xec
+d00408d6:	edcd 0a3c 	vstr	s1, [sp, #240]	; 0xf0
+d00408da:	ed8d 1a3d 	vstr	s2, [sp, #244]	; 0xf4
+d00408de:	f003 facf 	bl	d0043e80 <entitySetPosition>
+d00408e2:	2000      	movs	r0, #0
+d00408e4:	4e29      	ldr	r6, [pc, #164]	; (d004098c <main+0x3f8>)
+d00408e6:	f003 ffbb 	bl	d0044860 <enableFlatMode>
+d00408ea:	7b23      	ldrb	r3, [r4, #12]
+d00408ec:	7b62      	ldrb	r2, [r4, #13]
+d00408ee:	7ba1      	ldrb	r1, [r4, #14]
+d00408f0:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d00408f4:	7be2      	ldrb	r2, [r4, #15]
+d00408f6:	6830      	ldr	r0, [r6, #0]
+d00408f8:	ea43 4301 	orr.w	r3, r3, r1, lsl #16
+d00408fc:	f8df 90ac 	ldr.w	r9, [pc, #172]	; d00409ac <main+0x418>
+d0040900:	eddf aa23 	vldr	s21, [pc, #140]	; d0040990 <main+0x3fc>
+d0040904:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d0040908:	eddf ca22 	vldr	s25, [pc, #136]	; d0040994 <main+0x400>
+d004090c:	ed9f ca22 	vldr	s24, [pc, #136]	; d0040998 <main+0x404>
+d0040910:	681b      	ldr	r3, [r3, #0]
+d0040912:	eddf ba22 	vldr	s23, [pc, #136]	; d004099c <main+0x408>
+d0040916:	69db      	ldr	r3, [r3, #28]
+d0040918:	4798      	blx	r3
+d004091a:	7b23      	ldrb	r3, [r4, #12]
+d004091c:	7b62      	ldrb	r2, [r4, #13]
+d004091e:	7ba1      	ldrb	r1, [r4, #14]
+d0040920:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d0040924:	7be2      	ldrb	r2, [r4, #15]
+d0040926:	6830      	ldr	r0, [r6, #0]
+d0040928:	ea43 4301 	orr.w	r3, r3, r1, lsl #16
+d004092c:	ed9f ba1c 	vldr	s22, [pc, #112]	; d00409a0 <main+0x40c>
+d0040930:	e056      	b.n	d00409e0 <main+0x44c>
+d0040932:	bf00      	nop
+d0040934:	2001f000 	.word	0x2001f000
+d0040938:	00000000 	.word	0x00000000
+d004093c:	42280000 	.word	0x42280000
+d0040940:	459c4000 	.word	0x459c4000
+d0040944:	3c23d70a 	.word	0x3c23d70a
+d0040948:	42480000 	.word	0x42480000
+d004094c:	c3750000 	.word	0xc3750000
+d0040950:	42b40000 	.word	0x42b40000
+d0040954:	d0047968 	.word	0xd0047968
+d0040958:	d012da21 	.word	0xd012da21
+d004095c:	d012d9e0 	.word	0xd012d9e0
+d0040960:	d012da22 	.word	0xd012da22
+d0040964:	43480000 	.word	0x43480000
+d0040968:	d012da20 	.word	0xd012da20
+d004096c:	d0047970 	.word	0xd0047970
+d0040970:	d0047980 	.word	0xd0047980
+d0040974:	c2c80000 	.word	0xc2c80000
+d0040978:	44f3c000 	.word	0x44f3c000
+d004097c:	d0047990 	.word	0xd0047990
+d0040980:	c3480000 	.word	0xc3480000
+d0040984:	c3070000 	.word	0xc3070000
+d0040988:	42a40000 	.word	0x42a40000
+d004098c:	d012da60 	.word	0xd012da60
+d0040990:	4d7bc521 	.word	0x4d7bc521
+d0040994:	42f20000 	.word	0x42f20000
+d0040998:	42b6ee15 	.word	0x42b6ee15
+d004099c:	4215999a 	.word	0x4215999a
+d00409a0:	bc872b02 	.word	0xbc872b02
+d00409a4:	d004799c 	.word	0xd004799c
+d00409a8:	d0047e98 	.word	0xd0047e98
+d00409ac:	d0048338 	.word	0xd0048338
+d00409b0:	310f2a63 	.word	0x310f2a63
+d00409b4:	bb449ba6 	.word	0xbb449ba6
+d00409b8:	43264ccd 	.word	0x43264ccd
+d00409bc:	40d9999a 	.word	0x40d9999a
+d00409c0:	435c0000 	.word	0x435c0000
+d00409c4:	3c088889 	.word	0x3c088889
+d00409c8:	3ba3d70a 	.word	0x3ba3d70a
+d00409cc:	00000000 	.word	0x00000000
+d00409d0:	451c4000 	.word	0x451c4000
+d00409d4:	44048000 	.word	0x44048000
+d00409d8:	43a00000 	.word	0x43a00000
+d00409dc:	42c80000 	.word	0x42c80000
+d00409e0:	ed5f 8a06 	vldr	s17, [pc, #-24]	; d00409cc <main+0x438>
+d00409e4:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d00409e8:	681b      	ldr	r3, [r3, #0]
+d00409ea:	699b      	ldr	r3, [r3, #24]
+d00409ec:	4798      	blx	r3
+d00409ee:	7b23      	ldrb	r3, [r4, #12]
+d00409f0:	7b62      	ldrb	r2, [r4, #13]
+d00409f2:	2001      	movs	r0, #1
+d00409f4:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d00409f8:	7ba2      	ldrb	r2, [r4, #14]
+d00409fa:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
+d00409fe:	7be2      	ldrb	r2, [r4, #15]
+d0040a00:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d0040a04:	685b      	ldr	r3, [r3, #4]
+d0040a06:	68db      	ldr	r3, [r3, #12]
+d0040a08:	4798      	blx	r3
+d0040a0a:	7b23      	ldrb	r3, [r4, #12]
+d0040a0c:	7b62      	ldrb	r2, [r4, #13]
+d0040a0e:	211e      	movs	r1, #30
+d0040a10:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d0040a14:	7ba2      	ldrb	r2, [r4, #14]
+d0040a16:	4608      	mov	r0, r1
+d0040a18:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
+d0040a1c:	7be2      	ldrb	r2, [r4, #15]
+d0040a1e:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d0040a22:	685b      	ldr	r3, [r3, #4]
+d0040a24:	689b      	ldr	r3, [r3, #8]
+d0040a26:	4798      	blx	r3
+d0040a28:	7823      	ldrb	r3, [r4, #0]
+d0040a2a:	7862      	ldrb	r2, [r4, #1]
+d0040a2c:	a91a      	add	r1, sp, #104	; 0x68
+d0040a2e:	a819      	add	r0, sp, #100	; 0x64
+d0040a30:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d0040a34:	78a2      	ldrb	r2, [r4, #2]
+d0040a36:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
+d0040a3a:	78e2      	ldrb	r2, [r4, #3]
+d0040a3c:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d0040a40:	691b      	ldr	r3, [r3, #16]
+d0040a42:	4798      	blx	r3
+d0040a44:	7823      	ldrb	r3, [r4, #0]
+d0040a46:	7862      	ldrb	r2, [r4, #1]
+d0040a48:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d0040a4c:	78a2      	ldrb	r2, [r4, #2]
+d0040a4e:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
+d0040a52:	78e2      	ldrb	r2, [r4, #3]
+d0040a54:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d0040a58:	69db      	ldr	r3, [r3, #28]
+d0040a5a:	4798      	blx	r3
+d0040a5c:	7823      	ldrb	r3, [r4, #0]
+d0040a5e:	7862      	ldrb	r2, [r4, #1]
+d0040a60:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d0040a64:	78a2      	ldrb	r2, [r4, #2]
+d0040a66:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
+d0040a6a:	78e2      	ldrb	r2, [r4, #3]
+d0040a6c:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d0040a70:	689b      	ldr	r3, [r3, #8]
+d0040a72:	4798      	blx	r3
+d0040a74:	4606      	mov	r6, r0
+d0040a76:	e113      	b.n	d0040ca0 <main+0x70c>
+d0040a78:	ed5f 7a33 	vldr	s15, [pc, #-204]	; d00409b0 <main+0x41c>
+d0040a7c:	eeb2 9a04 	vmov.f32	s18, #36	; 0x41200000  10.0
+d0040a80:	ed1f da34 	vldr	s26, [pc, #-208]	; d00409b4 <main+0x420>
+d0040a84:	ee28 8a27 	vmul.f32	s16, s16, s15
+d0040a88:	ed5f 9a35 	vldr	s19, [pc, #-212]	; d00409b8 <main+0x424>
+d0040a8c:	ed5f 7a35 	vldr	s15, [pc, #-212]	; d00409bc <main+0x428>
+d0040a90:	ed1f aa35 	vldr	s20, [pc, #-212]	; d00409c0 <main+0x42c>
+d0040a94:	ee28 9a09 	vmul.f32	s18, s16, s18
+d0040a98:	ee68 9a29 	vmul.f32	s19, s16, s19
+d0040a9c:	ee28 aa0a 	vmul.f32	s20, s16, s20
+d0040aa0:	ee29 da0d 	vmul.f32	s26, s18, s26
+d0040aa4:	ee29 9a27 	vmul.f32	s18, s18, s15
+d0040aa8:	7820      	ldrb	r0, [r4, #0]
+d0040aaa:	7861      	ldrb	r1, [r4, #1]
+d0040aac:	78a2      	ldrb	r2, [r4, #2]
+d0040aae:	ea40 2101 	orr.w	r1, r0, r1, lsl #8
+d0040ab2:	78e3      	ldrb	r3, [r4, #3]
+d0040ab4:	ea41 4202 	orr.w	r2, r1, r2, lsl #16
+d0040ab8:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
+d0040abc:	6a1b      	ldr	r3, [r3, #32]
+d0040abe:	4798      	blx	r3
+d0040ac0:	7826      	ldrb	r6, [r4, #0]
+d0040ac2:	7863      	ldrb	r3, [r4, #1]
+d0040ac4:	a91c      	add	r1, sp, #112	; 0x70
+d0040ac6:	78a2      	ldrb	r2, [r4, #2]
+d0040ac8:	ea46 2603 	orr.w	r6, r6, r3, lsl #8
+d0040acc:	78e3      	ldrb	r3, [r4, #3]
+d0040ace:	9002      	str	r0, [sp, #8]
+d0040ad0:	a81b      	add	r0, sp, #108	; 0x6c
+d0040ad2:	ea46 4202 	orr.w	r2, r6, r2, lsl #16
+d0040ad6:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
+d0040ada:	699b      	ldr	r3, [r3, #24]
+d0040adc:	4798      	blx	r3
+d0040ade:	9a1b      	ldr	r2, [sp, #108]	; 0x6c
+d0040ae0:	9b1c      	ldr	r3, [sp, #112]	; 0x70
+d0040ae2:	eef0 0a68 	vmov.f32	s1, s17
+d0040ae6:	4252      	negs	r2, r2
+d0040ae8:	ed5f 7a4a 	vldr	s15, [pc, #-296]	; d00409c4 <main+0x430>
+d0040aec:	425b      	negs	r3, r3
+d0040aee:	ed1f 7a4a 	vldr	s14, [pc, #-296]	; d00409c8 <main+0x434>
+d0040af2:	ee06 2a90 	vmov	s13, r2
+d0040af6:	2100      	movs	r1, #0
+d0040af8:	4638      	mov	r0, r7
+d0040afa:	eeb8 1ae6 	vcvt.f32.s32	s2, s13
+d0040afe:	ee06 3a90 	vmov	s13, r3
+d0040b02:	eeb8 0ae6 	vcvt.f32.s32	s0, s13
+d0040b06:	ee21 1a07 	vmul.f32	s2, s2, s14
+d0040b0a:	ee20 0a27 	vmul.f32	s0, s0, s15
+d0040b0e:	f002 fcbf 	bl	d0043490 <cameraTurn>
+d0040b12:	eef0 7a04 	vmov.f32	s15, #4	; 0x40200000  2.5
+d0040b16:	edd8 0a37 	vldr	s1, [r8, #220]	; 0xdc
+d0040b1a:	ee60 0aa7 	vmul.f32	s1, s1, s15
+d0040b1e:	ee60 0a88 	vmul.f32	s1, s1, s16
+d0040b22:	eef5 0a40 	vcmp.f32	s1, #0.0
+d0040b26:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0040b2a:	f040 8121 	bne.w	d0040d70 <main+0x7dc>
+d0040b2e:	eeb0 1a68 	vmov.f32	s2, s17
+d0040b32:	ed5f 0a5a 	vldr	s1, [pc, #-360]	; d00409cc <main+0x438>
+d0040b36:	eeb0 0a4d 	vmov.f32	s0, s26
+d0040b3a:	4628      	mov	r0, r5
+d0040b3c:	f003 fa0e 	bl	d0043f5c <entityTurnLocal>
+d0040b40:	eeb0 0a49 	vmov.f32	s0, s18
+d0040b44:	4628      	mov	r0, r5
+d0040b46:	f003 f9d7 	bl	d0043ef8 <entityMoveForward>
+d0040b4a:	eeb0 0a69 	vmov.f32	s0, s19
+d0040b4e:	4658      	mov	r0, fp
+d0040b50:	f003 f9d2 	bl	d0043ef8 <entityMoveForward>
+d0040b54:	4658      	mov	r0, fp
+d0040b56:	f003 f9af 	bl	d0043eb8 <entityGetPosition>
+d0040b5a:	ed5f 7a63 	vldr	s15, [pc, #-396]	; d00409d0 <main+0x43c>
+d0040b5e:	ed8d 0a23 	vstr	s0, [sp, #140]	; 0x8c
+d0040b62:	eeb4 1ae7 	vcmpe.f32	s2, s15
+d0040b66:	edcd 0a24 	vstr	s1, [sp, #144]	; 0x90
+d0040b6a:	ed8d 1a25 	vstr	s2, [sp, #148]	; 0x94
+d0040b6e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0040b72:	f300 80eb 	bgt.w	d0040d4c <main+0x7b8>
+d0040b76:	ed9d 0a23 	vldr	s0, [sp, #140]	; 0x8c
+d0040b7a:	ee1d 0a90 	vmov	r0, s27
+d0040b7e:	eddd 0a24 	vldr	s1, [sp, #144]	; 0x90
+d0040b82:	ed9d 1a25 	vldr	s2, [sp, #148]	; 0x94
+d0040b86:	f003 fe31 	bl	d00447ec <lightSetPosition>
+d0040b8a:	edd8 0a31 	vldr	s1, [r8, #196]	; 0xc4
+d0040b8e:	ed98 1a32 	vldr	s2, [r8, #200]	; 0xc8
+d0040b92:	4650      	mov	r0, sl
+d0040b94:	ed98 0a30 	vldr	s0, [r8, #192]	; 0xc0
+d0040b98:	f003 fe28 	bl	d00447ec <lightSetPosition>
+d0040b9c:	eeb0 0a00 	vmov.f32	s0, #0	; 0x40000000  2.0
+d0040ba0:	4650      	mov	r0, sl
+d0040ba2:	f003 fe3f 	bl	d0044824 <lightSetIntensity>
+d0040ba6:	ed1f 1a75 	vldr	s2, [pc, #-468]	; d00409d4 <main+0x440>
+d0040baa:	ed5f 0a75 	vldr	s1, [pc, #-468]	; d00409d8 <main+0x444>
+d0040bae:	4650      	mov	r0, sl
+d0040bb0:	ed1f 0a76 	vldr	s0, [pc, #-472]	; d00409dc <main+0x448>
+d0040bb4:	f003 fd7c 	bl	d00446b0 <lightSetRanges>
+d0040bb8:	eeb0 0a48 	vmov.f32	s0, s16
+d0040bbc:	ee1e 0a10 	vmov	r0, s28
+d0040bc0:	f7ff fb46 	bl	d0040250 <weatherLightning>
+d0040bc4:	7823      	ldrb	r3, [r4, #0]
+d0040bc6:	7861      	ldrb	r1, [r4, #1]
+d0040bc8:	4606      	mov	r6, r0
+d0040bca:	78a2      	ldrb	r2, [r4, #2]
+d0040bcc:	ea43 2101 	orr.w	r1, r3, r1, lsl #8
+d0040bd0:	78e3      	ldrb	r3, [r4, #3]
+d0040bd2:	ea41 4202 	orr.w	r2, r1, r2, lsl #16
+d0040bd6:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
+d0040bda:	69db      	ldr	r3, [r3, #28]
+d0040bdc:	4798      	blx	r3
+d0040bde:	9b02      	ldr	r3, [sp, #8]
+d0040be0:	07da      	lsls	r2, r3, #31
+d0040be2:	f100 80a9 	bmi.w	d0040d38 <main+0x7a4>
+d0040be6:	9b02      	ldr	r3, [sp, #8]
+d0040be8:	079b      	lsls	r3, r3, #30
+d0040bea:	f100 809b 	bmi.w	d0040d24 <main+0x790>
+d0040bee:	7b20      	ldrb	r0, [r4, #12]
+d0040bf0:	7b61      	ldrb	r1, [r4, #13]
+d0040bf2:	7ba2      	ldrb	r2, [r4, #14]
+d0040bf4:	ea40 2101 	orr.w	r1, r0, r1, lsl #8
+d0040bf8:	7be3      	ldrb	r3, [r4, #15]
+d0040bfa:	ea41 4202 	orr.w	r2, r1, r2, lsl #16
+d0040bfe:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
+d0040c02:	681b      	ldr	r3, [r3, #0]
+d0040c04:	68db      	ldr	r3, [r3, #12]
+d0040c06:	4798      	blx	r3
+d0040c08:	f899 3000 	ldrb.w	r3, [r9]
+d0040c0c:	f1c3 0301 	rsb	r3, r3, #1
+d0040c10:	b2db      	uxtb	r3, r3
+d0040c12:	f889 3000 	strb.w	r3, [r9]
+d0040c16:	f899 3000 	ldrb.w	r3, [r9]
+d0040c1a:	7b21      	ldrb	r1, [r4, #12]
+d0040c1c:	7b60      	ldrb	r0, [r4, #13]
+d0040c1e:	7ba2      	ldrb	r2, [r4, #14]
+d0040c20:	ea41 2000 	orr.w	r0, r1, r0, lsl #8
+d0040c24:	2b00      	cmp	r3, #0
+d0040c26:	d05e      	beq.n	d0040ce6 <main+0x752>
+d0040c28:	ea40 4202 	orr.w	r2, r0, r2, lsl #16
+d0040c2c:	7be3      	ldrb	r3, [r4, #15]
+d0040c2e:	4956      	ldr	r1, [pc, #344]	; (d0040d88 <main+0x7f4>)
+d0040c30:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
+d0040c34:	4855      	ldr	r0, [pc, #340]	; (d0040d8c <main+0x7f8>)
+d0040c36:	6809      	ldr	r1, [r1, #0]
+d0040c38:	681b      	ldr	r3, [r3, #0]
+d0040c3a:	6800      	ldr	r0, [r0, #0]
+d0040c3c:	6a5b      	ldr	r3, [r3, #36]	; 0x24
+d0040c3e:	4798      	blx	r3
+d0040c40:	4951      	ldr	r1, [pc, #324]	; (d0040d88 <main+0x7f4>)
+d0040c42:	680b      	ldr	r3, [r1, #0]
+d0040c44:	6818      	ldr	r0, [r3, #0]
+d0040c46:	f000 f8bf 	bl	d0040dc8 <set3DRenderBuffer>
+d0040c4a:	eeb0 0a68 	vmov.f32	s0, s17
+d0040c4e:	2e00      	cmp	r6, #0
+d0040c50:	d05e      	beq.n	d0040d10 <main+0x77c>
+d0040c52:	494f      	ldr	r1, [pc, #316]	; (d0040d90 <main+0x7fc>)
+d0040c54:	2305      	movs	r3, #5
+d0040c56:	2215      	movs	r2, #21
+d0040c58:	4638      	mov	r0, r7
+d0040c5a:	7809      	ldrb	r1, [r1, #0]
+d0040c5c:	f004 fc6a 	bl	d0045534 <drawFakeHorizon>
+d0040c60:	494c      	ldr	r1, [pc, #304]	; (d0040d94 <main+0x800>)
+d0040c62:	236e      	movs	r3, #110	; 0x6e
+d0040c64:	2280      	movs	r2, #128	; 0x80
+d0040c66:	eeb0 0a68 	vmov.f32	s0, s17
+d0040c6a:	7809      	ldrb	r1, [r1, #0]
+d0040c6c:	4638      	mov	r0, r7
+d0040c6e:	9e03      	ldr	r6, [sp, #12]
+d0040c70:	f004 fb52 	bl	d0045318 <drawFakeHorizonDots>
+d0040c74:	4638      	mov	r0, r7
+d0040c76:	f005 faf7 	bl	d0046268 <Render3D>
+d0040c7a:	7b20      	ldrb	r0, [r4, #12]
+d0040c7c:	7b61      	ldrb	r1, [r4, #13]
+d0040c7e:	7ba2      	ldrb	r2, [r4, #14]
+d0040c80:	ea40 2101 	orr.w	r1, r0, r1, lsl #8
+d0040c84:	7be3      	ldrb	r3, [r4, #15]
+d0040c86:	4844      	ldr	r0, [pc, #272]	; (d0040d98 <main+0x804>)
+d0040c88:	ea41 4202 	orr.w	r2, r1, r2, lsl #16
+d0040c8c:	7800      	ldrb	r0, [r0, #0]
+d0040c8e:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
+d0040c92:	f1c0 0101 	rsb	r1, r0, #1
+d0040c96:	4840      	ldr	r0, [pc, #256]	; (d0040d98 <main+0x804>)
+d0040c98:	681b      	ldr	r3, [r3, #0]
+d0040c9a:	7001      	strb	r1, [r0, #0]
+d0040c9c:	681b      	ldr	r3, [r3, #0]
+d0040c9e:	4798      	blx	r3
+d0040ca0:	7820      	ldrb	r0, [r4, #0]
+d0040ca2:	7861      	ldrb	r1, [r4, #1]
+d0040ca4:	78a2      	ldrb	r2, [r4, #2]
+d0040ca6:	ea40 2101 	orr.w	r1, r0, r1, lsl #8
+d0040caa:	78e3      	ldrb	r3, [r4, #3]
+d0040cac:	ea41 4202 	orr.w	r2, r1, r2, lsl #16
+d0040cb0:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
+d0040cb4:	689b      	ldr	r3, [r3, #8]
+d0040cb6:	4798      	blx	r3
+d0040cb8:	1b83      	subs	r3, r0, r6
+d0040cba:	9003      	str	r0, [sp, #12]
+d0040cbc:	ee08 3a10 	vmov	s16, r3
+d0040cc0:	eeb8 8a48 	vcvt.f32.u32	s16, s16
+d0040cc4:	eeb4 8aea 	vcmpe.f32	s16, s21
 d0040cc8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040ccc:	ee2a aa04 	vmul.f32	s20, s20, s8
-d0040cd0:	ee69 9a84 	vmul.f32	s19, s19, s8
-d0040cd4:	ee22 4a84 	vmul.f32	s8, s5, s8
-d0040cd8:	eeb0 ba4a 	vmov.f32	s22, s20
-d0040cdc:	eef0 da44 	vmov.f32	s27, s8
-d0040ce0:	f340 822e 	ble.w	d0041140 <fillTriangleFlat+0x7ec>
-d0040ce4:	eec1 2aaa 	vdiv.f32	s5, s3, s21
-d0040ce8:	ee77 7ae4 	vsub.f32	s15, s15, s9
-d0040cec:	ee32 4a40 	vsub.f32	s8, s4, s0
-d0040cf0:	ee33 3a65 	vsub.f32	s6, s6, s11
-d0040cf4:	ee67 eaa2 	vmul.f32	s29, s15, s5
-d0040cf8:	ee64 fa22 	vmul.f32	s31, s8, s5
-d0040cfc:	ee23 fa22 	vmul.f32	s30, s6, s5
-d0040d00:	eefd 7ae3 	vcvt.s32.f32	s15, s7
-d0040d04:	f240 133f 	movw	r3, #319	; 0x13f
-d0040d08:	ee17 2a90 	vmov	r2, s15
-d0040d0c:	edcd 7a02 	vstr	s15, [sp, #8]
-d0040d10:	eefd 7ac5 	vcvt.s32.f32	s15, s10
-d0040d14:	f102 3bff 	add.w	fp, r2, #4294967295	; 0xffffffff
-d0040d18:	ee17 aa90 	vmov	sl, s15
-d0040d1c:	459b      	cmp	fp, r3
-d0040d1e:	ea2a 7aea 	bic.w	sl, sl, sl, asr #31
-d0040d22:	bfa8      	it	ge
-d0040d24:	469b      	movge	fp, r3
-d0040d26:	45d3      	cmp	fp, sl
-d0040d28:	db82      	blt.n	d0040c30 <fillTriangleFlat+0x2dc>
-d0040d2a:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
-d0040d2e:	f10b 0b01 	add.w	fp, fp, #1
-d0040d32:	eeb0 aa46 	vmov.f32	s20, s12
-d0040d36:	ed1f da26 	vldr	s26, [pc, #-152]	; d0040ca0 <fillTriangleFlat+0x34c>
-d0040d3a:	eef0 aa46 	vmov.f32	s21, s12
-d0040d3e:	ed1f 3a27 	vldr	s6, [pc, #-156]	; d0040ca4 <fillTriangleFlat+0x350>
-d0040d42:	ee37 4ac5 	vsub.f32	s8, s15, s10
-d0040d46:	ee07 aa90 	vmov	s15, sl
-d0040d4a:	eef0 ca48 	vmov.f32	s25, s16
-d0040d4e:	ed1f 2a2a 	vldr	s4, [pc, #-168]	; d0040ca8 <fillTriangleFlat+0x354>
-d0040d52:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0040d56:	edcd 6a03 	vstr	s13, [sp, #12]
-d0040d5a:	eeb0 ca47 	vmov.f32	s24, s14
-d0040d5e:	edcd 4a04 	vstr	s9, [sp, #16]
-d0040d62:	eeb0 9a4b 	vmov.f32	s18, s22
-d0040d66:	ed8d 7a05 	vstr	s14, [sp, #20]
-d0040d6a:	ee77 7a84 	vadd.f32	s15, s15, s8
-d0040d6e:	ed8d 8a06 	vstr	s16, [sp, #24]
-d0040d72:	eef0 ba48 	vmov.f32	s23, s16
-d0040d76:	ed8d 5a07 	vstr	s10, [sp, #28]
-d0040d7a:	eea7 aa8b 	vfma.f32	s20, s15, s22
-d0040d7e:	eeb0 ba47 	vmov.f32	s22, s14
-d0040d82:	eee1 aa27 	vfma.f32	s21, s2, s15
-d0040d86:	eee0 caa7 	vfma.f32	s25, s1, s15
-d0040d8a:	eea8 caa7 	vfma.f32	s24, s17, s15
-d0040d8e:	eee7 baa9 	vfma.f32	s23, s15, s19
-d0040d92:	eea7 baad 	vfma.f32	s22, s15, s27
-d0040d96:	e033      	b.n	d0040e00 <fillTriangleFlat+0x4ac>
-d0040d98:	eeb0 4a4c 	vmov.f32	s8, s24
-d0040d9c:	eef0 4a6c 	vmov.f32	s9, s25
-d0040da0:	eef0 7a6a 	vmov.f32	s15, s21
-d0040da4:	eeb0 5a4b 	vmov.f32	s10, s22
-d0040da8:	eeb0 7a6b 	vmov.f32	s14, s23
-d0040dac:	eef0 6a4a 	vmov.f32	s13, s20
-d0040db0:	fefa 2a67 	vrintp.f32	s5, s15
-d0040db4:	eefd 2ae2 	vcvt.s32.f32	s5, s5
-d0040db8:	f240 13df 	movw	r3, #479	; 0x1df
-d0040dbc:	ee12 6a90 	vmov	r6, s5
-d0040dc0:	fefa 2a66 	vrintp.f32	s5, s13
-d0040dc4:	eefd 2ae2 	vcvt.s32.f32	s5, s5
-d0040dc8:	3e01      	subs	r6, #1
-d0040dca:	ee12 4a90 	vmov	r4, s5
-d0040dce:	429e      	cmp	r6, r3
-d0040dd0:	ea24 74e4 	bic.w	r4, r4, r4, asr #31
-d0040dd4:	bfa8      	it	ge
-d0040dd6:	461e      	movge	r6, r3
-d0040dd8:	42a6      	cmp	r6, r4
-d0040dda:	f280 80fd 	bge.w	d0040fd8 <fillTriangleFlat+0x684>
-d0040dde:	f10a 0a01 	add.w	sl, sl, #1
-d0040de2:	ee7a aa81 	vadd.f32	s21, s21, s2
-d0040de6:	ee7c caa0 	vadd.f32	s25, s25, s1
-d0040dea:	45da      	cmp	sl, fp
-d0040dec:	ee3c ca28 	vadd.f32	s24, s24, s17
-d0040df0:	ee3a aa09 	vadd.f32	s20, s20, s18
-d0040df4:	ee7b baa9 	vadd.f32	s23, s23, s19
-d0040df8:	ee3b ba2d 	vadd.f32	s22, s22, s27
-d0040dfc:	f43f af0e 	beq.w	d0040c1c <fillTriangleFlat+0x2c8>
-d0040e00:	eef4 aaca 	vcmpe.f32	s21, s20
-d0040e04:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040e08:	dcc6      	bgt.n	d0040d98 <fillTriangleFlat+0x444>
-d0040e0a:	eeb0 4a4b 	vmov.f32	s8, s22
-d0040e0e:	eef0 4a6b 	vmov.f32	s9, s23
-d0040e12:	eef0 7a4a 	vmov.f32	s15, s20
-d0040e16:	eeb0 5a4c 	vmov.f32	s10, s24
-d0040e1a:	eeb0 7a6c 	vmov.f32	s14, s25
-d0040e1e:	eef0 6a6a 	vmov.f32	s13, s21
-d0040e22:	e7c5      	b.n	d0040db0 <fillTriangleFlat+0x45c>
-d0040e24:	eeb0 1a47 	vmov.f32	s2, s14
-d0040e28:	eef0 1a48 	vmov.f32	s3, s16
-d0040e2c:	eef0 2a45 	vmov.f32	s5, s10
-d0040e30:	eeb0 4a46 	vmov.f32	s8, s12
-d0040e34:	eeb0 7a43 	vmov.f32	s14, s6
-d0040e38:	eeb0 8a42 	vmov.f32	s16, s4
-d0040e3c:	eeb0 5a66 	vmov.f32	s10, s13
-d0040e40:	eeb0 6a67 	vmov.f32	s12, s15
-d0040e44:	eeb0 3a41 	vmov.f32	s6, s2
-d0040e48:	eeb0 2a61 	vmov.f32	s4, s3
-d0040e4c:	eef0 6a62 	vmov.f32	s13, s5
-d0040e50:	eef0 7a44 	vmov.f32	s15, s8
-d0040e54:	e5f8      	b.n	d0040a48 <fillTriangleFlat+0xf4>
-d0040e56:	eeb0 1a47 	vmov.f32	s2, s14
-d0040e5a:	eef0 1a48 	vmov.f32	s3, s16
-d0040e5e:	eef0 2a45 	vmov.f32	s5, s10
-d0040e62:	eeb0 4a46 	vmov.f32	s8, s12
-d0040e66:	eeb0 7a65 	vmov.f32	s14, s11
-d0040e6a:	eeb0 8a40 	vmov.f32	s16, s0
-d0040e6e:	eeb0 5a63 	vmov.f32	s10, s7
-d0040e72:	eeb0 6a64 	vmov.f32	s12, s9
-d0040e76:	eef0 5a41 	vmov.f32	s11, s2
-d0040e7a:	eeb0 0a61 	vmov.f32	s0, s3
-d0040e7e:	eef0 3a62 	vmov.f32	s7, s5
-d0040e82:	eef0 4a44 	vmov.f32	s9, s8
-d0040e86:	e5df      	b.n	d0040a48 <fillTriangleFlat+0xf4>
-d0040e88:	ee76 6ac4 	vsub.f32	s13, s13, s8
-d0040e8c:	eef4 6ac9 	vcmpe.f32	s13, s18
-d0040e90:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040e94:	f340 814f 	ble.w	d0041136 <fillTriangleFlat+0x7e2>
-d0040e98:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
-d0040e9c:	ee72 2ac5 	vsub.f32	s5, s5, s10
-d0040ea0:	ee73 3ac3 	vsub.f32	s7, s7, s6
-d0040ea4:	ee87 aaa6 	vdiv.f32	s20, s15, s13
-d0040ea8:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
-d0040eac:	ee37 4ac4 	vsub.f32	s8, s15, s8
-d0040eb0:	ee07 4a90 	vmov	s15, r4
-d0040eb4:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0040eb8:	ee77 7a84 	vadd.f32	s15, s15, s8
-d0040ebc:	ee62 2a8a 	vmul.f32	s5, s5, s20
-d0040ec0:	ee23 aa8a 	vmul.f32	s20, s7, s20
-d0040ec4:	eea7 5aa2 	vfma.f32	s10, s15, s5
-d0040ec8:	eea7 3a8a 	vfma.f32	s6, s15, s20
-d0040ecc:	ebcb 180b 	rsb	r8, fp, fp, lsl #4
-d0040ed0:	4ba3      	ldr	r3, [pc, #652]	; (d0041160 <fillTriangleFlat+0x80c>)
-d0040ed2:	eb04 0c84 	add.w	ip, r4, r4, lsl #2
-d0040ed6:	4aa3      	ldr	r2, [pc, #652]	; (d0041164 <fillTriangleFlat+0x810>)
-d0040ed8:	681b      	ldr	r3, [r3, #0]
-d0040eda:	eb04 1848 	add.w	r8, r4, r8, lsl #5
-d0040ede:	eb0b 1c8c 	add.w	ip, fp, ip, lsl #6
-d0040ee2:	eef6 3a00 	vmov.f32	s7, #96	; 0x3f000000  0.5
-d0040ee6:	eb02 0848 	add.w	r8, r2, r8, lsl #1
-d0040eea:	449c      	add	ip, r3
-d0040eec:	e011      	b.n	d0040f12 <fillTriangleFlat+0x5be>
-d0040eee:	ee07 1a90 	vmov	s15, r1
-d0040ef2:	eb01 0381 	add.w	r3, r1, r1, lsl #2
-d0040ef6:	eb08 0841 	add.w	r8, r8, r1, lsl #1
-d0040efa:	440c      	add	r4, r1
-d0040efc:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0040f00:	eb0c 1c83 	add.w	ip, ip, r3, lsl #6
-d0040f04:	eea7 5aa2 	vfma.f32	s10, s15, s5
-d0040f08:	eea7 3a8a 	vfma.f32	s6, s15, s20
-d0040f0c:	42a6      	cmp	r6, r4
-d0040f0e:	f6ff ae63 	blt.w	d0040bd8 <fillTriangleFlat+0x284>
-d0040f12:	eba6 0904 	sub.w	r9, r6, r4
-d0040f16:	eeb4 5ae1 	vcmpe.f32	s10, s3
-d0040f1a:	f109 0101 	add.w	r1, r9, #1
-d0040f1e:	2930      	cmp	r1, #48	; 0x30
-d0040f20:	bfa8      	it	ge
-d0040f22:	2130      	movge	r1, #48	; 0x30
-d0040f24:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040f28:	d9e1      	bls.n	d0040eee <fillTriangleFlat+0x59a>
-d0040f2a:	f1b9 0f00 	cmp.w	r9, #0
-d0040f2e:	eec3 6a05 	vdiv.f32	s13, s6, s10
-d0040f32:	dd4d      	ble.n	d0040fd0 <fillTriangleFlat+0x67c>
-d0040f34:	1e4b      	subs	r3, r1, #1
-d0040f36:	ee07 3a90 	vmov	s15, r3
-d0040f3a:	eeb0 4a45 	vmov.f32	s8, s10
-d0040f3e:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0040f42:	eea7 4aa2 	vfma.f32	s8, s15, s5
-d0040f46:	eeb4 4ae1 	vcmpe.f32	s8, s3
-d0040f4a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040f4e:	dd40      	ble.n	d0040fd2 <fillTriangleFlat+0x67e>
-d0040f50:	eeb0 ba43 	vmov.f32	s22, s6
-d0040f54:	eea7 ba8a 	vfma.f32	s22, s15, s20
-d0040f58:	eecb aa04 	vdiv.f32	s21, s22, s8
-d0040f5c:	ee7a aae6 	vsub.f32	s21, s21, s13
-d0040f60:	ee8a 4aa7 	vdiv.f32	s8, s21, s15
-d0040f64:	f1a8 0002 	sub.w	r0, r8, #2
-d0040f68:	2300      	movs	r3, #0
-d0040f6a:	fec6 7a82 	vmaxnm.f32	s15, s13, s4
-d0040f6e:	fec7 7ae9 	vminnm.f32	s15, s15, s19
-d0040f72:	eb03 0283 	add.w	r2, r3, r3, lsl #2
-d0040f76:	f830 5f02 	ldrh.w	r5, [r0, #2]!
-d0040f7a:	3301      	adds	r3, #1
-d0040f7c:	ee77 7aa3 	vadd.f32	s15, s15, s7
-d0040f80:	ea4f 1a82 	mov.w	sl, r2, lsl #6
-d0040f84:	ee76 6a84 	vadd.f32	s13, s13, s8
-d0040f88:	eefc 7ae7 	vcvt.u32.f32	s15, s15
-d0040f8c:	ee17 2a90 	vmov	r2, s15
-d0040f90:	b292      	uxth	r2, r2
-d0040f92:	4295      	cmp	r5, r2
-d0040f94:	d902      	bls.n	d0040f9c <fillTriangleFlat+0x648>
-d0040f96:	8002      	strh	r2, [r0, #0]
-d0040f98:	f80c 700a 	strb.w	r7, [ip, sl]
-d0040f9c:	4299      	cmp	r1, r3
-d0040f9e:	dce4      	bgt.n	d0040f6a <fillTriangleFlat+0x616>
-d0040fa0:	f1b9 0f00 	cmp.w	r9, #0
-d0040fa4:	eb01 0381 	add.w	r3, r1, r1, lsl #2
-d0040fa8:	ea4f 0241 	mov.w	r2, r1, lsl #1
-d0040fac:	ea4f 1383 	mov.w	r3, r3, lsl #6
-d0040fb0:	bfbc      	itt	lt
-d0040fb2:	2202      	movlt	r2, #2
-d0040fb4:	f44f 73a0 	movlt.w	r3, #320	; 0x140
-d0040fb8:	4490      	add	r8, r2
-d0040fba:	449c      	add	ip, r3
-d0040fbc:	ee07 1a90 	vmov	s15, r1
-d0040fc0:	440c      	add	r4, r1
-d0040fc2:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0040fc6:	eea7 5aa2 	vfma.f32	s10, s15, s5
-d0040fca:	eea7 3a8a 	vfma.f32	s6, s15, s20
-d0040fce:	e79d      	b.n	d0040f0c <fillTriangleFlat+0x5b8>
-d0040fd0:	d1f4      	bne.n	d0040fbc <fillTriangleFlat+0x668>
-d0040fd2:	eeb0 4a42 	vmov.f32	s8, s4
-d0040fd6:	e7c5      	b.n	d0040f64 <fillTriangleFlat+0x610>
-d0040fd8:	ee77 7ae6 	vsub.f32	s15, s15, s13
-d0040fdc:	eddf 2a62 	vldr	s5, [pc, #392]	; d0041168 <fillTriangleFlat+0x814>
-d0040fe0:	eef4 7ae2 	vcmpe.f32	s15, s5
-d0040fe4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0040fe8:	f340 80a0 	ble.w	d004112c <fillTriangleFlat+0x7d8>
-d0040fec:	eef7 1a00 	vmov.f32	s3, #112	; 0x3f800000  1.0
-d0040ff0:	ee74 4ac7 	vsub.f32	s9, s9, s14
-d0040ff4:	ee34 4a45 	vsub.f32	s8, s8, s10
-d0040ff8:	eec1 2aa7 	vdiv.f32	s5, s3, s15
-d0040ffc:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
-d0041000:	ee77 6ae6 	vsub.f32	s13, s15, s13
-d0041004:	ee07 4a90 	vmov	s15, r4
-d0041008:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d004100c:	ee77 7aa6 	vadd.f32	s15, s15, s13
-d0041010:	ee64 4aa2 	vmul.f32	s9, s9, s5
-d0041014:	ee24 4a22 	vmul.f32	s8, s8, s5
-d0041018:	eea7 7aa4 	vfma.f32	s14, s15, s9
-d004101c:	eea7 5a84 	vfma.f32	s10, s15, s8
-d0041020:	ebca 1e0a 	rsb	lr, sl, sl, lsl #4
-d0041024:	4b4e      	ldr	r3, [pc, #312]	; (d0041160 <fillTriangleFlat+0x80c>)
-d0041026:	eb04 0c84 	add.w	ip, r4, r4, lsl #2
-d004102a:	4a4e      	ldr	r2, [pc, #312]	; (d0041164 <fillTriangleFlat+0x810>)
-d004102c:	681b      	ldr	r3, [r3, #0]
-d004102e:	eb04 1e4e 	add.w	lr, r4, lr, lsl #5
-d0041032:	eb0a 1c8c 	add.w	ip, sl, ip, lsl #6
-d0041036:	eef6 6a00 	vmov.f32	s13, #96	; 0x3f000000  0.5
-d004103a:	eb02 0e4e 	add.w	lr, r2, lr, lsl #1
-d004103e:	449c      	add	ip, r3
-d0041040:	e011      	b.n	d0041066 <fillTriangleFlat+0x712>
-d0041042:	ee07 1a90 	vmov	s15, r1
-d0041046:	eb01 0381 	add.w	r3, r1, r1, lsl #2
-d004104a:	eb0e 0e41 	add.w	lr, lr, r1, lsl #1
-d004104e:	440c      	add	r4, r1
-d0041050:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0041054:	eb0c 1c83 	add.w	ip, ip, r3, lsl #6
-d0041058:	eea7 7aa4 	vfma.f32	s14, s15, s9
-d004105c:	eea7 5a84 	vfma.f32	s10, s15, s8
-d0041060:	42b4      	cmp	r4, r6
-d0041062:	f73f aebc 	bgt.w	d0040dde <fillTriangleFlat+0x48a>
-d0041066:	eba6 0804 	sub.w	r8, r6, r4
-d004106a:	eeb4 7acd 	vcmpe.f32	s14, s26
-d004106e:	f108 0101 	add.w	r1, r8, #1
-d0041072:	2930      	cmp	r1, #48	; 0x30
-d0041074:	bfa8      	it	ge
-d0041076:	2130      	movge	r1, #48	; 0x30
-d0041078:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004107c:	d9e1      	bls.n	d0041042 <fillTriangleFlat+0x6ee>
-d004107e:	f1b8 0f00 	cmp.w	r8, #0
-d0041082:	eec5 2a07 	vdiv.f32	s5, s10, s14
-d0041086:	dd4d      	ble.n	d0041124 <fillTriangleFlat+0x7d0>
-d0041088:	1e4b      	subs	r3, r1, #1
-d004108a:	ee07 3a90 	vmov	s15, r3
-d004108e:	eef0 1a47 	vmov.f32	s3, s14
-d0041092:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0041096:	eee7 1aa4 	vfma.f32	s3, s15, s9
-d004109a:	eef4 1acd 	vcmpe.f32	s3, s26
-d004109e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00410a2:	dd40      	ble.n	d0041126 <fillTriangleFlat+0x7d2>
-d00410a4:	eeb0 ea45 	vmov.f32	s28, s10
-d00410a8:	eea7 ea84 	vfma.f32	s28, s15, s8
-d00410ac:	ee8e 8a21 	vdiv.f32	s16, s28, s3
-d00410b0:	ee38 8a62 	vsub.f32	s16, s16, s5
-d00410b4:	eec8 1a27 	vdiv.f32	s3, s16, s15
-d00410b8:	f1ae 0002 	sub.w	r0, lr, #2
-d00410bc:	2200      	movs	r2, #0
-d00410be:	fec2 7a83 	vmaxnm.f32	s15, s5, s6
-d00410c2:	fec7 7ac2 	vminnm.f32	s15, s15, s4
-d00410c6:	eb02 0382 	add.w	r3, r2, r2, lsl #2
-d00410ca:	f830 5f02 	ldrh.w	r5, [r0, #2]!
-d00410ce:	3201      	adds	r2, #1
-d00410d0:	ee77 7aa6 	vadd.f32	s15, s15, s13
-d00410d4:	ea4f 1983 	mov.w	r9, r3, lsl #6
-d00410d8:	ee72 2aa1 	vadd.f32	s5, s5, s3
-d00410dc:	eefc 7ae7 	vcvt.u32.f32	s15, s15
-d00410e0:	ee17 3a90 	vmov	r3, s15
-d00410e4:	b29b      	uxth	r3, r3
-d00410e6:	429d      	cmp	r5, r3
-d00410e8:	d902      	bls.n	d00410f0 <fillTriangleFlat+0x79c>
-d00410ea:	8003      	strh	r3, [r0, #0]
-d00410ec:	f80c 7009 	strb.w	r7, [ip, r9]
-d00410f0:	428a      	cmp	r2, r1
-d00410f2:	dbe4      	blt.n	d00410be <fillTriangleFlat+0x76a>
-d00410f4:	f1b8 0f00 	cmp.w	r8, #0
-d00410f8:	eb01 0381 	add.w	r3, r1, r1, lsl #2
-d00410fc:	ea4f 0241 	mov.w	r2, r1, lsl #1
-d0041100:	ea4f 1383 	mov.w	r3, r3, lsl #6
-d0041104:	bfbc      	itt	lt
-d0041106:	2202      	movlt	r2, #2
-d0041108:	f44f 73a0 	movlt.w	r3, #320	; 0x140
-d004110c:	4496      	add	lr, r2
-d004110e:	449c      	add	ip, r3
-d0041110:	ee07 1a90 	vmov	s15, r1
-d0041114:	440c      	add	r4, r1
-d0041116:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d004111a:	eea7 7aa4 	vfma.f32	s14, s15, s9
-d004111e:	eea7 5a84 	vfma.f32	s10, s15, s8
-d0041122:	e79d      	b.n	d0041060 <fillTriangleFlat+0x70c>
-d0041124:	d1f4      	bne.n	d0041110 <fillTriangleFlat+0x7bc>
-d0041126:	eef0 1a43 	vmov.f32	s3, s6
-d004112a:	e7c5      	b.n	d00410b8 <fillTriangleFlat+0x764>
-d004112c:	eeb0 4a43 	vmov.f32	s8, s6
-d0041130:	eef0 4a43 	vmov.f32	s9, s6
-d0041134:	e774      	b.n	d0041020 <fillTriangleFlat+0x6cc>
-d0041136:	eeb0 aa42 	vmov.f32	s20, s4
-d004113a:	eef0 2a42 	vmov.f32	s5, s4
-d004113e:	e6c5      	b.n	d0040ecc <fillTriangleFlat+0x578>
-d0041140:	ed9f fa0a 	vldr	s30, [pc, #40]	; d004116c <fillTriangleFlat+0x818>
-d0041144:	eef0 fa4f 	vmov.f32	s31, s30
-d0041148:	eef0 ea4f 	vmov.f32	s29, s30
-d004114c:	e5d8      	b.n	d0040d00 <fillTriangleFlat+0x3ac>
-d004114e:	eddf 7a07 	vldr	s15, [pc, #28]	; d004116c <fillTriangleFlat+0x818>
-d0041152:	eef0 da67 	vmov.f32	s27, s15
-d0041156:	eef0 9a67 	vmov.f32	s19, s15
-d004115a:	eeb0 ba67 	vmov.f32	s22, s15
-d004115e:	e5cf      	b.n	d0040d00 <fillTriangleFlat+0x3ac>
-d0041160:	d012cd44 	.word	0xd012cd44
-d0041164:	d0047660 	.word	0xd0047660
-d0041168:	38d1b717 	.word	0x38d1b717
-d004116c:	00000000 	.word	0x00000000
+d0040ccc:	f77f aed4 	ble.w	d0040a78 <main+0x4e4>
+d0040cd0:	eeb0 aa6c 	vmov.f32	s20, s25
+d0040cd4:	ed9f 8a31 	vldr	s16, [pc, #196]	; d0040d9c <main+0x808>
+d0040cd8:	eef0 9a4c 	vmov.f32	s19, s24
+d0040cdc:	eeb0 9a6b 	vmov.f32	s18, s23
+d0040ce0:	eeb0 da4b 	vmov.f32	s26, s22
+d0040ce4:	e6e0      	b.n	d0040aa8 <main+0x514>
+d0040ce6:	ea40 4202 	orr.w	r2, r0, r2, lsl #16
+d0040cea:	7be3      	ldrb	r3, [r4, #15]
+d0040cec:	4927      	ldr	r1, [pc, #156]	; (d0040d8c <main+0x7f8>)
+d0040cee:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
+d0040cf2:	4825      	ldr	r0, [pc, #148]	; (d0040d88 <main+0x7f4>)
+d0040cf4:	6809      	ldr	r1, [r1, #0]
+d0040cf6:	681b      	ldr	r3, [r3, #0]
+d0040cf8:	6800      	ldr	r0, [r0, #0]
+d0040cfa:	6a5b      	ldr	r3, [r3, #36]	; 0x24
+d0040cfc:	4798      	blx	r3
+d0040cfe:	4923      	ldr	r1, [pc, #140]	; (d0040d8c <main+0x7f8>)
+d0040d00:	680b      	ldr	r3, [r1, #0]
+d0040d02:	6818      	ldr	r0, [r3, #0]
+d0040d04:	f000 f860 	bl	d0040dc8 <set3DRenderBuffer>
+d0040d08:	eeb0 0a68 	vmov.f32	s0, s17
+d0040d0c:	2e00      	cmp	r6, #0
+d0040d0e:	d1a0      	bne.n	d0040c52 <main+0x6be>
+d0040d10:	4b23      	ldr	r3, [pc, #140]	; (d0040da0 <main+0x80c>)
+d0040d12:	4638      	mov	r0, r7
+d0040d14:	4a23      	ldr	r2, [pc, #140]	; (d0040da4 <main+0x810>)
+d0040d16:	491e      	ldr	r1, [pc, #120]	; (d0040d90 <main+0x7fc>)
+d0040d18:	781b      	ldrb	r3, [r3, #0]
+d0040d1a:	7812      	ldrb	r2, [r2, #0]
+d0040d1c:	7809      	ldrb	r1, [r1, #0]
+d0040d1e:	f004 fc09 	bl	d0045534 <drawFakeHorizon>
+d0040d22:	e79d      	b.n	d0040c60 <main+0x6cc>
+d0040d24:	eeb1 1a4a 	vneg.f32	s2, s20
+d0040d28:	ed9f 0a1f 	vldr	s0, [pc, #124]	; d0040da8 <main+0x814>
+d0040d2c:	eef0 0a68 	vmov.f32	s1, s17
+d0040d30:	4638      	mov	r0, r7
+d0040d32:	f002 fd7b 	bl	d004382c <cameraMove>
+d0040d36:	e75a      	b.n	d0040bee <main+0x65a>
+d0040d38:	eeb0 1a4a 	vmov.f32	s2, s20
+d0040d3c:	ed9f 0a1a 	vldr	s0, [pc, #104]	; d0040da8 <main+0x814>
+d0040d40:	eef0 0a68 	vmov.f32	s1, s17
+d0040d44:	4638      	mov	r0, r7
+d0040d46:	f002 fd71 	bl	d004382c <cameraMove>
+d0040d4a:	e74c      	b.n	d0040be6 <main+0x652>
+d0040d4c:	ed9f 1a17 	vldr	s2, [pc, #92]	; d0040dac <main+0x818>
+d0040d50:	eddf 0a17 	vldr	s1, [pc, #92]	; d0040db0 <main+0x81c>
+d0040d54:	ed9f 0a17 	vldr	s0, [pc, #92]	; d0040db4 <main+0x820>
+d0040d58:	f001 ff7e 	bl	d0042c58 <vec3>
+d0040d5c:	4658      	mov	r0, fp
+d0040d5e:	ed8d 0a3e 	vstr	s0, [sp, #248]	; 0xf8
+d0040d62:	edcd 0a3f 	vstr	s1, [sp, #252]	; 0xfc
+d0040d66:	ed8d 1a40 	vstr	s2, [sp, #256]	; 0x100
+d0040d6a:	f003 f889 	bl	d0043e80 <entitySetPosition>
+d0040d6e:	e702      	b.n	d0040b76 <main+0x5e2>
+d0040d70:	eef1 0a60 	vneg.f32	s1, s1
+d0040d74:	2101      	movs	r1, #1
+d0040d76:	eeb0 1a68 	vmov.f32	s2, s17
+d0040d7a:	ed9f 0a0b 	vldr	s0, [pc, #44]	; d0040da8 <main+0x814>
+d0040d7e:	4638      	mov	r0, r7
+d0040d80:	f002 fb86 	bl	d0043490 <cameraTurn>
+d0040d84:	e6d3      	b.n	d0040b2e <main+0x59a>
+d0040d86:	bf00      	nop
+d0040d88:	d012da40 	.word	0xd012da40
+d0040d8c:	d012da60 	.word	0xd012da60
+d0040d90:	d012da21 	.word	0xd012da21
+d0040d94:	d012da20 	.word	0xd012da20
+d0040d98:	d004832c 	.word	0xd004832c
+d0040d9c:	3f0ccccd 	.word	0x3f0ccccd
+d0040da0:	d012da22 	.word	0xd012da22
+d0040da4:	d012d9e0 	.word	0xd012d9e0
+d0040da8:	00000000 	.word	0x00000000
+d0040dac:	c3c80000 	.word	0xc3c80000
+d0040db0:	42480000 	.word	0x42480000
+d0040db4:	c3070000 	.word	0xc3070000
 
-d0041170 <fillTriangleDitherBayer>:
-d0041170:	eddf 7ae7 	vldr	s15, [pc, #924]	; d0041510 <fillTriangleDitherBayer+0x3a0>
-d0041174:	eef4 0ae7 	vcmpe.f32	s1, s15
-d0041178:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d004117c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041180:	eeb4 1ae7 	vcmpe.f32	s2, s15
-d0041184:	ed2d 8b10 	vpush	{d8-d15}
-d0041188:	b08f      	sub	sp, #60	; 0x3c
-d004118a:	9202      	str	r2, [sp, #8]
-d004118c:	bf94      	ite	ls
-d004118e:	2201      	movls	r2, #1
-d0041190:	2200      	movhi	r2, #0
-d0041192:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041196:	9303      	str	r3, [sp, #12]
-d0041198:	f8bd 40a8 	ldrh.w	r4, [sp, #168]	; 0xa8
-d004119c:	bf98      	it	ls
-d004119e:	f042 0201 	orrls.w	r2, r2, #1
-d00411a2:	f89d 30b4 	ldrb.w	r3, [sp, #180]	; 0xb4
-d00411a6:	e9cd 0100 	strd	r0, r1, [sp]
-d00411aa:	f8bd 00ac 	ldrh.w	r0, [sp, #172]	; 0xac
-d00411ae:	f8bd 10b0 	ldrh.w	r1, [sp, #176]	; 0xb0
-d00411b2:	2a00      	cmp	r2, #0
-d00411b4:	f040 8187 	bne.w	d00414c6 <fillTriangleDitherBayer+0x356>
-d00411b8:	eeb4 0a67 	vcmp.f32	s0, s15
-d00411bc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00411c0:	f240 8181 	bls.w	d00414c6 <fillTriangleDitherBayer+0x356>
-d00411c4:	eef7 6a00 	vmov.f32	s13, #112	; 0x3f800000  1.0
-d00411c8:	eddf 7ad3 	vldr	s15, [pc, #844]	; d0041518 <fillTriangleDitherBayer+0x3a8>
-d00411cc:	eeb1 6a04 	vmov.f32	s12, #20	; 0x40a00000  5.0
-d00411d0:	ee07 4a10 	vmov	s14, r4
-d00411d4:	fec1 7aa7 	vmaxnm.f32	s15, s3, s15
-d00411d8:	ee86 3a81 	vdiv.f32	s6, s13, s2
-d00411dc:	fec7 7ac6 	vminnm.f32	s15, s15, s12
-d00411e0:	eec6 1a80 	vdiv.f32	s3, s13, s0
-d00411e4:	ee86 0aa0 	vdiv.f32	s0, s13, s1
-d00411e8:	eefd 6ae7 	vcvt.s32.f32	s13, s15
-d00411ec:	eeb8 7a47 	vcvt.f32.u32	s14, s14
-d00411f0:	ee16 2a90 	vmov	r2, s13
-d00411f4:	ee06 0a90 	vmov	s13, r0
-d00411f8:	eef8 5a66 	vcvt.f32.u32	s11, s13
-d00411fc:	ee06 1a90 	vmov	s13, r1
-d0041200:	1c51      	adds	r1, r2, #1
-d0041202:	ee27 7a21 	vmul.f32	s14, s14, s3
-d0041206:	eef8 6a66 	vcvt.f32.u32	s13, s13
-d004120a:	2905      	cmp	r1, #5
-d004120c:	bfa8      	it	ge
-d004120e:	2105      	movge	r1, #5
-d0041210:	2a04      	cmp	r2, #4
-d0041212:	ee65 5a80 	vmul.f32	s11, s11, s0
-d0041216:	ee26 2a83 	vmul.f32	s4, s13, s6
-d004121a:	f300 8457 	bgt.w	d0041acc <fillTriangleDitherBayer+0x95c>
-d004121e:	f003 030f 	and.w	r3, r3, #15
-d0041222:	2a03      	cmp	r2, #3
-d0041224:	f103 0320 	add.w	r3, r3, #32
-d0041228:	eb03 1002 	add.w	r0, r3, r2, lsl #4
-d004122c:	fa5f fa80 	uxtb.w	sl, r0
-d0041230:	f300 844e 	bgt.w	d0041ad0 <fillTriangleDitherBayer+0x960>
-d0041234:	eb03 1301 	add.w	r3, r3, r1, lsl #4
-d0041238:	b2db      	uxtb	r3, r3
-d004123a:	9304      	str	r3, [sp, #16]
-d004123c:	eddd 6a01 	vldr	s13, [sp, #4]
-d0041240:	eeb8 5ae6 	vcvt.f32.s32	s10, s13
-d0041244:	eddd 6a03 	vldr	s13, [sp, #12]
-d0041248:	eef8 3ae6 	vcvt.f32.s32	s7, s13
-d004124c:	eddd 6a00 	vldr	s13, [sp]
-d0041250:	eeb8 6ae6 	vcvt.f32.s32	s12, s13
-d0041254:	eddd 6a02 	vldr	s13, [sp, #8]
-d0041258:	eeb4 5ae3 	vcmpe.f32	s10, s7
-d004125c:	eef8 4ae6 	vcvt.f32.s32	s9, s13
-d0041260:	eddd 6a28 	vldr	s13, [sp, #160]	; 0xa0
-d0041264:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041268:	eeb8 1ae6 	vcvt.f32.s32	s2, s13
-d004126c:	eddd 6a29 	vldr	s13, [sp, #164]	; 0xa4
-d0041270:	eef8 6ae6 	vcvt.f32.s32	s13, s13
-d0041274:	f300 812c 	bgt.w	d00414d0 <fillTriangleDitherBayer+0x360>
-d0041278:	eeb4 5ae6 	vcmpe.f32	s10, s13
-d004127c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041280:	f300 8231 	bgt.w	d00416e6 <fillTriangleDitherBayer+0x576>
-d0041284:	eef4 3ae6 	vcmpe.f32	s7, s13
-d0041288:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004128c:	dd17      	ble.n	d00412be <fillTriangleDitherBayer+0x14e>
-d004128e:	eeb0 8a65 	vmov.f32	s16, s11
-d0041292:	eef0 0a40 	vmov.f32	s1, s0
-d0041296:	eef0 2a63 	vmov.f32	s5, s7
-d004129a:	eeb0 4a64 	vmov.f32	s8, s9
-d004129e:	eef0 5a42 	vmov.f32	s11, s4
-d00412a2:	eeb0 0a43 	vmov.f32	s0, s6
-d00412a6:	eef0 3a66 	vmov.f32	s7, s13
-d00412aa:	eef0 4a41 	vmov.f32	s9, s2
-d00412ae:	eeb0 2a48 	vmov.f32	s4, s16
-d00412b2:	eeb0 3a60 	vmov.f32	s6, s1
-d00412b6:	eef0 6a62 	vmov.f32	s13, s5
-d00412ba:	eeb0 1a44 	vmov.f32	s2, s8
-d00412be:	eeb6 4a00 	vmov.f32	s8, #96	; 0x3f000000  0.5
-d00412c2:	ee75 2a04 	vadd.f32	s5, s10, s8
-d00412c6:	ee36 4a84 	vadd.f32	s8, s13, s8
-d00412ca:	eefd 2ae2 	vcvt.s32.f32	s5, s5
-d00412ce:	eebd 4ac4 	vcvt.s32.f32	s8, s8
-d00412d2:	ee12 3a90 	vmov	r3, s5
-d00412d6:	ee14 1a10 	vmov	r1, s8
-d00412da:	428b      	cmp	r3, r1
-d00412dc:	f000 80f3 	beq.w	d00414c6 <fillTriangleDitherBayer+0x356>
-d00412e0:	ee76 8ac5 	vsub.f32	s17, s13, s10
-d00412e4:	eddf 2a8a 	vldr	s5, [pc, #552]	; d0041510 <fillTriangleDitherBayer+0x3a0>
-d00412e8:	eef4 8ae2 	vcmpe.f32	s17, s5
-d00412ec:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00412f0:	f240 80e9 	bls.w	d00414c6 <fillTriangleDitherBayer+0x356>
-d00412f4:	eef7 9a00 	vmov.f32	s19, #112	; 0x3f800000  1.0
-d00412f8:	ee33 9ac5 	vsub.f32	s18, s7, s10
-d00412fc:	ee71 0a46 	vsub.f32	s1, s2, s12
-d0041300:	ee89 4aa8 	vdiv.f32	s8, s19, s17
-d0041304:	eeb4 9ae2 	vcmpe.f32	s18, s5
-d0041308:	ee33 8a61 	vsub.f32	s16, s6, s3
-d004130c:	ee72 8a47 	vsub.f32	s17, s4, s14
-d0041310:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041314:	ee60 0a84 	vmul.f32	s1, s1, s8
-d0041318:	ee28 8a04 	vmul.f32	s16, s16, s8
-d004131c:	ee68 8a84 	vmul.f32	s17, s17, s8
-d0041320:	f300 80fe 	bgt.w	d0041520 <fillTriangleDitherBayer+0x3b0>
-d0041324:	ee04 2a10 	vmov	s8, r2
-d0041328:	ee76 fae3 	vsub.f32	s31, s13, s7
-d004132c:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
-d0041330:	eef4 fae2 	vcmpe.f32	s31, s5
-d0041334:	ee77 7ac4 	vsub.f32	s15, s15, s8
-d0041338:	eeb0 4a67 	vmov.f32	s8, s15
-d004133c:	eebe 4ace 	vcvt.s32.f32	s8, s8, #4
-d0041340:	ee14 3a10 	vmov	r3, s8
-d0041344:	f383 0204 	usat	r2, #4, r3
-d0041348:	9201      	str	r2, [sp, #4]
-d004134a:	9a04      	ldr	r2, [sp, #16]
-d004134c:	4592      	cmp	sl, r2
-d004134e:	bf18      	it	ne
-d0041350:	2b00      	cmpne	r3, #0
-d0041352:	bfd4      	ite	le
-d0041354:	2301      	movle	r3, #1
-d0041356:	2300      	movgt	r3, #0
-d0041358:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004135c:	9300      	str	r3, [sp, #0]
-d004135e:	f340 80b2 	ble.w	d00414c6 <fillTriangleDitherBayer+0x356>
-d0041362:	ed9f ea6d 	vldr	s28, [pc, #436]	; d0041518 <fillTriangleDitherBayer+0x3a8>
-d0041366:	eef0 9a4e 	vmov.f32	s19, s28
-d004136a:	eeb0 ba4e 	vmov.f32	s22, s28
-d004136e:	eef7 2a00 	vmov.f32	s5, #112	; 0x3f800000  1.0
-d0041372:	ed9f 4a67 	vldr	s8, [pc, #412]	; d0041510 <fillTriangleDitherBayer+0x3a0>
-d0041376:	ee31 1a64 	vsub.f32	s2, s2, s9
-d004137a:	ee33 3a40 	vsub.f32	s6, s6, s0
-d004137e:	eec2 7aaf 	vdiv.f32	s15, s5, s31
-d0041382:	eeb4 9ac4 	vcmpe.f32	s18, s8
-d0041386:	ee32 2a65 	vsub.f32	s4, s4, s11
-d004138a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004138e:	ee61 2a27 	vmul.f32	s5, s2, s15
-d0041392:	ee23 3a27 	vmul.f32	s6, s6, s15
-d0041396:	ee22 fa27 	vmul.f32	s30, s4, s15
-d004139a:	edcd 2a09 	vstr	s5, [sp, #36]	; 0x24
-d004139e:	ed8d 3a08 	vstr	s6, [sp, #32]
-d00413a2:	f300 80f4 	bgt.w	d004158e <fillTriangleDitherBayer+0x41e>
-d00413a6:	eefd 7ae3 	vcvt.s32.f32	s15, s7
-d00413aa:	edcd 7a06 	vstr	s15, [sp, #24]
-d00413ae:	eefd 7ae6 	vcvt.s32.f32	s15, s13
-d00413b2:	f240 123f 	movw	r2, #319	; 0x13f
-d00413b6:	9906      	ldr	r1, [sp, #24]
-d00413b8:	ee17 3a90 	vmov	r3, s15
-d00413bc:	ea21 7be1 	bic.w	fp, r1, r1, asr #31
-d00413c0:	3b01      	subs	r3, #1
-d00413c2:	4293      	cmp	r3, r2
-d00413c4:	bfa8      	it	ge
-d00413c6:	4613      	movge	r3, r2
-d00413c8:	459b      	cmp	fp, r3
-d00413ca:	dc7c      	bgt.n	d00414c6 <fillTriangleDitherBayer+0x356>
-d00413cc:	ee07 ba90 	vmov	s15, fp
-d00413d0:	eef6 6a00 	vmov.f32	s13, #96	; 0x3f000000  0.5
-d00413d4:	3301      	adds	r3, #1
-d00413d6:	eddd aa09 	vldr	s21, [sp, #36]	; 0x24
-d00413da:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d00413de:	ed9d aa08 	vldr	s20, [sp, #32]
-d00413e2:	ed9f 1a4b 	vldr	s2, [pc, #300]	; d0041510 <fillTriangleDitherBayer+0x3a0>
-d00413e6:	ed9f 2a4b 	vldr	s4, [pc, #300]	; d0041514 <fillTriangleDitherBayer+0x3a4>
-d00413ea:	ee77 7aa6 	vadd.f32	s15, s15, s13
-d00413ee:	ed9f 3a4a 	vldr	s6, [pc, #296]	; d0041518 <fillTriangleDitherBayer+0x3a8>
-d00413f2:	9302      	str	r3, [sp, #8]
-d00413f4:	ee37 5ac5 	vsub.f32	s10, s15, s10
-d00413f8:	ee77 7ae3 	vsub.f32	s15, s15, s7
-d00413fc:	eddf 3a47 	vldr	s7, [pc, #284]	; d004151c <fillTriangleDitherBayer+0x3ac>
-d0041400:	eea0 6a85 	vfma.f32	s12, s1, s10
-d0041404:	eee8 1a05 	vfma.f32	s3, s16, s10
-d0041408:	eea8 7a85 	vfma.f32	s14, s17, s10
-d004140c:	eeea 4aa7 	vfma.f32	s9, s21, s15
-d0041410:	eeaa 0a27 	vfma.f32	s0, s20, s15
-d0041414:	eeef 5a27 	vfma.f32	s11, s30, s15
-d0041418:	e033      	b.n	d0041482 <fillTriangleDitherBayer+0x312>
-d004141a:	eef0 2a47 	vmov.f32	s5, s14
-d004141e:	eef0 9a61 	vmov.f32	s19, s3
-d0041422:	eef0 6a46 	vmov.f32	s13, s12
-d0041426:	eeb0 9a65 	vmov.f32	s18, s11
-d004142a:	eeb0 5a40 	vmov.f32	s10, s0
-d004142e:	eeb0 4a64 	vmov.f32	s8, s9
-d0041432:	fefa 7a66 	vrintp.f32	s15, s13
-d0041436:	eefd 7ae7 	vcvt.s32.f32	s15, s15
-d004143a:	f240 13df 	movw	r3, #479	; 0x1df
-d004143e:	ee17 6a90 	vmov	r6, s15
-d0041442:	fefa 7a44 	vrintp.f32	s15, s8
-d0041446:	eefd 7ae7 	vcvt.s32.f32	s15, s15
-d004144a:	3e01      	subs	r6, #1
-d004144c:	ee17 0a90 	vmov	r0, s15
-d0041450:	429e      	cmp	r6, r3
-d0041452:	ea20 70e0 	bic.w	r0, r0, r0, asr #31
-d0041456:	bfa8      	it	ge
-d0041458:	461e      	movge	r6, r3
-d004145a:	4286      	cmp	r6, r0
-d004145c:	f280 815c 	bge.w	d0041718 <fillTriangleDitherBayer+0x5a8>
-d0041460:	f10b 0b01 	add.w	fp, fp, #1
-d0041464:	9b02      	ldr	r3, [sp, #8]
-d0041466:	ee36 6a20 	vadd.f32	s12, s12, s1
-d004146a:	459b      	cmp	fp, r3
-d004146c:	ee71 1a88 	vadd.f32	s3, s3, s16
-d0041470:	ee37 7a28 	vadd.f32	s14, s14, s17
-d0041474:	ee74 4aaa 	vadd.f32	s9, s9, s21
-d0041478:	ee30 0a0a 	vadd.f32	s0, s0, s20
-d004147c:	ee75 5a8f 	vadd.f32	s11, s11, s30
-d0041480:	d021      	beq.n	d00414c6 <fillTriangleDitherBayer+0x356>
-d0041482:	eeb4 6ae4 	vcmpe.f32	s12, s9
-d0041486:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004148a:	dcc6      	bgt.n	d004141a <fillTriangleDitherBayer+0x2aa>
-d004148c:	eef0 2a65 	vmov.f32	s5, s11
-d0041490:	eef0 9a40 	vmov.f32	s19, s0
-d0041494:	eef0 6a64 	vmov.f32	s13, s9
-d0041498:	eeb0 9a47 	vmov.f32	s18, s14
-d004149c:	eeb0 5a61 	vmov.f32	s10, s3
-d00414a0:	eeb0 4a46 	vmov.f32	s8, s12
-d00414a4:	e7c5      	b.n	d0041432 <fillTriangleDitherBayer+0x2c2>
-d00414a6:	eddd 6a0a 	vldr	s13, [sp, #40]	; 0x28
-d00414aa:	ed9d 5a0b 	vldr	s10, [sp, #44]	; 0x2c
-d00414ae:	ed9d 6a0c 	vldr	s12, [sp, #48]	; 0x30
-d00414b2:	ed9d fa0d 	vldr	s30, [sp, #52]	; 0x34
-d00414b6:	eddf 7a16 	vldr	s15, [pc, #88]	; d0041510 <fillTriangleDitherBayer+0x3a0>
-d00414ba:	eef4 fae7 	vcmpe.f32	s31, s15
-d00414be:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00414c2:	f73f af74 	bgt.w	d00413ae <fillTriangleDitherBayer+0x23e>
-d00414c6:	b00f      	add	sp, #60	; 0x3c
-d00414c8:	ecbd 8b10 	vpop	{d8-d15}
-d00414cc:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-d00414d0:	eef4 3ae6 	vcmpe.f32	s7, s13
-d00414d4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00414d8:	f340 80ec 	ble.w	d00416b4 <fillTriangleDitherBayer+0x544>
-d00414dc:	eeb0 8a42 	vmov.f32	s16, s4
-d00414e0:	eef0 0a43 	vmov.f32	s1, s6
-d00414e4:	eef0 2a66 	vmov.f32	s5, s13
-d00414e8:	eeb0 4a41 	vmov.f32	s8, s2
-d00414ec:	eeb0 2a47 	vmov.f32	s4, s14
-d00414f0:	eeb0 3a61 	vmov.f32	s6, s3
-d00414f4:	eef0 6a45 	vmov.f32	s13, s10
-d00414f8:	eeb0 1a46 	vmov.f32	s2, s12
-d00414fc:	eeb0 7a48 	vmov.f32	s14, s16
-d0041500:	eef0 1a60 	vmov.f32	s3, s1
-d0041504:	eeb0 5a62 	vmov.f32	s10, s5
-d0041508:	eeb0 6a44 	vmov.f32	s12, s8
-d004150c:	e6d7      	b.n	d00412be <fillTriangleDitherBayer+0x14e>
-d004150e:	bf00      	nop
-d0041510:	38d1b717 	.word	0x38d1b717
-d0041514:	33d6bf95 	.word	0x33d6bf95
-d0041518:	00000000 	.word	0x00000000
-d004151c:	477fff00 	.word	0x477fff00
-d0041520:	ee04 2a10 	vmov	s8, r2
-d0041524:	ee89 aa89 	vdiv.f32	s20, s19, s18
-d0041528:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
-d004152c:	ee74 aac6 	vsub.f32	s21, s9, s12
-d0041530:	ee76 fae3 	vsub.f32	s31, s13, s7
-d0041534:	ee77 7ac4 	vsub.f32	s15, s15, s8
-d0041538:	ee70 9a61 	vsub.f32	s19, s0, s3
-d004153c:	eef4 fae2 	vcmpe.f32	s31, s5
-d0041540:	eeb0 4a67 	vmov.f32	s8, s15
-d0041544:	ee35 eac7 	vsub.f32	s28, s11, s14
-d0041548:	eebe 4ace 	vcvt.s32.f32	s8, s8, #4
-d004154c:	ee6a 7a8a 	vmul.f32	s15, s21, s20
-d0041550:	ee14 3a10 	vmov	r3, s8
-d0041554:	ee2e ea0a 	vmul.f32	s28, s28, s20
-d0041558:	f383 0204 	usat	r2, #4, r3
-d004155c:	eeb0 ba67 	vmov.f32	s22, s15
-d0041560:	ee69 7a8a 	vmul.f32	s15, s19, s20
-d0041564:	9201      	str	r2, [sp, #4]
-d0041566:	9a04      	ldr	r2, [sp, #16]
-d0041568:	eef0 9a67 	vmov.f32	s19, s15
-d004156c:	4592      	cmp	sl, r2
-d004156e:	bf18      	it	ne
-d0041570:	2b00      	cmpne	r3, #0
-d0041572:	bfd4      	ite	le
-d0041574:	2301      	movle	r3, #1
-d0041576:	2300      	movgt	r3, #0
-d0041578:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004157c:	9300      	str	r3, [sp, #0]
-d004157e:	f73f aef6 	bgt.w	d004136e <fillTriangleDitherBayer+0x1fe>
-d0041582:	ed1f fa1b 	vldr	s30, [pc, #-108]	; d0041518 <fillTriangleDitherBayer+0x3a8>
-d0041586:	ed8d fa08 	vstr	s30, [sp, #32]
-d004158a:	ed8d fa09 	vstr	s30, [sp, #36]	; 0x24
-d004158e:	eefd 7ae3 	vcvt.s32.f32	s15, s7
-d0041592:	f240 123f 	movw	r2, #319	; 0x13f
-d0041596:	ee17 3a90 	vmov	r3, s15
-d004159a:	edcd 7a06 	vstr	s15, [sp, #24]
-d004159e:	eefd 7ac5 	vcvt.s32.f32	s15, s10
-d00415a2:	3b01      	subs	r3, #1
-d00415a4:	ee17 ba90 	vmov	fp, s15
-d00415a8:	4293      	cmp	r3, r2
-d00415aa:	ea2b 7beb 	bic.w	fp, fp, fp, asr #31
-d00415ae:	bfa8      	it	ge
-d00415b0:	4613      	movge	r3, r2
-d00415b2:	455b      	cmp	r3, fp
-d00415b4:	f6ff af7f 	blt.w	d00414b6 <fillTriangleDitherBayer+0x346>
-d00415b8:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
-d00415bc:	3301      	adds	r3, #1
-d00415be:	eeb0 aa46 	vmov.f32	s20, s12
-d00415c2:	ed1f da2c 	vldr	s26, [pc, #-176]	; d0041514 <fillTriangleDitherBayer+0x3a4>
-d00415c6:	eef0 aa46 	vmov.f32	s21, s12
-d00415ca:	ed1f 3a2d 	vldr	s6, [pc, #-180]	; d0041518 <fillTriangleDitherBayer+0x3a8>
-d00415ce:	ee37 4ac5 	vsub.f32	s8, s15, s10
-d00415d2:	ee07 ba90 	vmov	s15, fp
-d00415d6:	eef0 ca61 	vmov.f32	s25, s3
-d00415da:	ed1f 2a30 	vldr	s4, [pc, #-192]	; d004151c <fillTriangleDitherBayer+0x3ac>
-d00415de:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d00415e2:	9302      	str	r3, [sp, #8]
-d00415e4:	eeb0 ca47 	vmov.f32	s24, s14
-d00415e8:	edcd 6a0a 	vstr	s13, [sp, #40]	; 0x28
-d00415ec:	eef0 da4b 	vmov.f32	s27, s22
-d00415f0:	ed8d 5a0b 	vstr	s10, [sp, #44]	; 0x2c
-d00415f4:	ee77 7a84 	vadd.f32	s15, s15, s8
-d00415f8:	ed8d 6a0c 	vstr	s12, [sp, #48]	; 0x30
-d00415fc:	eef0 ba61 	vmov.f32	s23, s3
-d0041600:	ed8d fa0d 	vstr	s30, [sp, #52]	; 0x34
-d0041604:	eef0 ea69 	vmov.f32	s29, s19
-d0041608:	eea7 aa8b 	vfma.f32	s20, s15, s22
-d004160c:	eeb0 ba47 	vmov.f32	s22, s14
-d0041610:	eee0 aaa7 	vfma.f32	s21, s1, s15
-d0041614:	eee8 ca27 	vfma.f32	s25, s16, s15
-d0041618:	eea8 caa7 	vfma.f32	s24, s17, s15
-d004161c:	eee7 baa9 	vfma.f32	s23, s15, s19
-d0041620:	eea7 ba8e 	vfma.f32	s22, s15, s28
-d0041624:	e034      	b.n	d0041690 <fillTriangleDitherBayer+0x520>
-d0041626:	eef0 2a4c 	vmov.f32	s5, s24
-d004162a:	eeb0 4a6c 	vmov.f32	s8, s25
-d004162e:	eef0 7a6a 	vmov.f32	s15, s21
-d0041632:	eeb0 5a4b 	vmov.f32	s10, s22
-d0041636:	eef0 6a6b 	vmov.f32	s13, s23
-d004163a:	eeb0 6a4a 	vmov.f32	s12, s20
-d004163e:	feba 1a67 	vrintp.f32	s2, s15
-d0041642:	eebd 1ac1 	vcvt.s32.f32	s2, s2
-d0041646:	feba 9a46 	vrintp.f32	s18, s12
-d004164a:	f240 13df 	movw	r3, #479	; 0x1df
-d004164e:	ee11 6a10 	vmov	r6, s2
-d0041652:	eebd 1ac9 	vcvt.s32.f32	s2, s18
-d0041656:	3e01      	subs	r6, #1
-d0041658:	ee11 0a10 	vmov	r0, s2
-d004165c:	429e      	cmp	r6, r3
-d004165e:	ea20 70e0 	bic.w	r0, r0, r0, asr #31
-d0041662:	bfa8      	it	ge
-d0041664:	461e      	movge	r6, r3
-d0041666:	4286      	cmp	r6, r0
-d0041668:	f280 813e 	bge.w	d00418e8 <fillTriangleDitherBayer+0x778>
-d004166c:	f10b 0b01 	add.w	fp, fp, #1
-d0041670:	9b02      	ldr	r3, [sp, #8]
-d0041672:	ee7a aaa0 	vadd.f32	s21, s21, s1
-d0041676:	459b      	cmp	fp, r3
-d0041678:	ee7c ca88 	vadd.f32	s25, s25, s16
-d004167c:	ee3c ca28 	vadd.f32	s24, s24, s17
-d0041680:	ee3a aa2d 	vadd.f32	s20, s20, s27
-d0041684:	ee7b baae 	vadd.f32	s23, s23, s29
-d0041688:	ee3b ba0e 	vadd.f32	s22, s22, s28
-d004168c:	f43f af0b 	beq.w	d00414a6 <fillTriangleDitherBayer+0x336>
-d0041690:	eef4 aaca 	vcmpe.f32	s21, s20
-d0041694:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041698:	dcc5      	bgt.n	d0041626 <fillTriangleDitherBayer+0x4b6>
-d004169a:	eef0 2a4b 	vmov.f32	s5, s22
-d004169e:	eeb0 4a6b 	vmov.f32	s8, s23
-d00416a2:	eef0 7a4a 	vmov.f32	s15, s20
-d00416a6:	eeb0 5a4c 	vmov.f32	s10, s24
-d00416aa:	eef0 6a6c 	vmov.f32	s13, s25
-d00416ae:	eeb0 6a6a 	vmov.f32	s12, s21
-d00416b2:	e7c4      	b.n	d004163e <fillTriangleDitherBayer+0x4ce>
-d00416b4:	eeb0 8a47 	vmov.f32	s16, s14
-d00416b8:	eef0 0a61 	vmov.f32	s1, s3
-d00416bc:	eef0 2a45 	vmov.f32	s5, s10
-d00416c0:	eeb0 4a46 	vmov.f32	s8, s12
-d00416c4:	eeb0 7a65 	vmov.f32	s14, s11
-d00416c8:	eef0 1a40 	vmov.f32	s3, s0
-d00416cc:	eeb0 5a63 	vmov.f32	s10, s7
-d00416d0:	eeb0 6a64 	vmov.f32	s12, s9
-d00416d4:	eef0 5a48 	vmov.f32	s11, s16
-d00416d8:	eeb0 0a60 	vmov.f32	s0, s1
-d00416dc:	eef0 3a62 	vmov.f32	s7, s5
-d00416e0:	eef0 4a44 	vmov.f32	s9, s8
-d00416e4:	e5ce      	b.n	d0041284 <fillTriangleDitherBayer+0x114>
-d00416e6:	eeb0 8a47 	vmov.f32	s16, s14
-d00416ea:	eef0 0a61 	vmov.f32	s1, s3
-d00416ee:	eef0 2a45 	vmov.f32	s5, s10
-d00416f2:	eeb0 4a46 	vmov.f32	s8, s12
-d00416f6:	eeb0 7a42 	vmov.f32	s14, s4
-d00416fa:	eef0 1a43 	vmov.f32	s3, s6
-d00416fe:	eeb0 5a66 	vmov.f32	s10, s13
-d0041702:	eeb0 6a41 	vmov.f32	s12, s2
-d0041706:	eeb0 2a48 	vmov.f32	s4, s16
-d004170a:	eeb0 3a60 	vmov.f32	s6, s1
-d004170e:	eef0 6a62 	vmov.f32	s13, s5
-d0041712:	eeb0 1a44 	vmov.f32	s2, s8
-d0041716:	e5b5      	b.n	d0041284 <fillTriangleDitherBayer+0x114>
-d0041718:	ee76 6ac4 	vsub.f32	s13, s13, s8
-d004171c:	eef4 6ac1 	vcmpe.f32	s13, s2
-d0041720:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041724:	f340 81d8 	ble.w	d0041ad8 <fillTriangleDitherBayer+0x968>
-d0041728:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
-d004172c:	ee79 9ac5 	vsub.f32	s19, s19, s10
-d0041730:	ee72 2ac9 	vsub.f32	s5, s5, s18
-d0041734:	ee87 baa6 	vdiv.f32	s22, s15, s13
-d0041738:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
-d004173c:	ee37 4ac4 	vsub.f32	s8, s15, s8
-d0041740:	ee07 0a90 	vmov	s15, r0
-d0041744:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0041748:	ee77 7a84 	vadd.f32	s15, s15, s8
-d004174c:	ee69 9a8b 	vmul.f32	s19, s19, s22
-d0041750:	ee22 ba8b 	vmul.f32	s22, s5, s22
-d0041754:	eea7 5aa9 	vfma.f32	s10, s15, s19
-d0041758:	eea7 9a8b 	vfma.f32	s18, s15, s22
-d004175c:	ebcb 190b 	rsb	r9, fp, fp, lsl #4
-d0041760:	49d6      	ldr	r1, [pc, #856]	; (d0041abc <fillTriangleDitherBayer+0x94c>)
-d0041762:	eb00 0380 	add.w	r3, r0, r0, lsl #2
-d0041766:	4cd6      	ldr	r4, [pc, #856]	; (d0041ac0 <fillTriangleDitherBayer+0x950>)
-d0041768:	eb00 1249 	add.w	r2, r0, r9, lsl #5
-d004176c:	6809      	ldr	r1, [r1, #0]
-d004176e:	eb0b 1383 	add.w	r3, fp, r3, lsl #6
-d0041772:	f8cd b018 	str.w	fp, [sp, #24]
-d0041776:	eb04 0942 	add.w	r9, r4, r2, lsl #1
-d004177a:	f00b 0203 	and.w	r2, fp, #3
-d004177e:	eb01 0c03 	add.w	ip, r1, r3
-d0041782:	eef6 2a00 	vmov.f32	s5, #96	; 0x3f000000  0.5
-d0041786:	4613      	mov	r3, r2
-d0041788:	4ace      	ldr	r2, [pc, #824]	; (d0041ac4 <fillTriangleDitherBayer+0x954>)
-d004178a:	eb02 0383 	add.w	r3, r2, r3, lsl #2
-d004178e:	469b      	mov	fp, r3
-d0041790:	e010      	b.n	d00417b4 <fillTriangleDitherBayer+0x644>
-d0041792:	ee07 3a90 	vmov	s15, r3
-d0041796:	4418      	add	r0, r3
-d0041798:	eb03 0283 	add.w	r2, r3, r3, lsl #2
-d004179c:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d00417a0:	42b0      	cmp	r0, r6
-d00417a2:	eb09 0943 	add.w	r9, r9, r3, lsl #1
-d00417a6:	eb0c 1c82 	add.w	ip, ip, r2, lsl #6
-d00417aa:	eea7 5aa9 	vfma.f32	s10, s15, s19
-d00417ae:	eea7 9a8b 	vfma.f32	s18, s15, s22
-d00417b2:	dc72      	bgt.n	d004189a <fillTriangleDitherBayer+0x72a>
-d00417b4:	eba6 0800 	sub.w	r8, r6, r0
-d00417b8:	eeb4 5ac2 	vcmpe.f32	s10, s4
-d00417bc:	f108 0301 	add.w	r3, r8, #1
-d00417c0:	2b30      	cmp	r3, #48	; 0x30
-d00417c2:	bfa8      	it	ge
-d00417c4:	2330      	movge	r3, #48	; 0x30
-d00417c6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00417ca:	d9e2      	bls.n	d0041792 <fillTriangleDitherBayer+0x622>
-d00417cc:	f1b8 0f00 	cmp.w	r8, #0
-d00417d0:	eec9 6a05 	vdiv.f32	s13, s18, s10
-d00417d4:	dd64      	ble.n	d00418a0 <fillTriangleDitherBayer+0x730>
-d00417d6:	1e5a      	subs	r2, r3, #1
-d00417d8:	ee07 2a90 	vmov	s15, r2
-d00417dc:	eeb0 4a45 	vmov.f32	s8, s10
-d00417e0:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d00417e4:	eea7 4aa9 	vfma.f32	s8, s15, s19
-d00417e8:	eeb4 4ac2 	vcmpe.f32	s8, s4
-d00417ec:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00417f0:	dd57      	ble.n	d00418a2 <fillTriangleDitherBayer+0x732>
-d00417f2:	eeb0 ca49 	vmov.f32	s24, s18
-d00417f6:	9a00      	ldr	r2, [sp, #0]
-d00417f8:	eea7 ca8b 	vfma.f32	s24, s15, s22
-d00417fc:	eecc ba04 	vdiv.f32	s23, s24, s8
-d0041800:	ee7b bae6 	vsub.f32	s23, s23, s13
-d0041804:	ee8b 4aa7 	vdiv.f32	s8, s23, s15
-d0041808:	2a00      	cmp	r2, #0
-d004180a:	d14f      	bne.n	d00418ac <fillTriangleDitherBayer+0x73c>
-d004180c:	f8cd 800c 	str.w	r8, [sp, #12]
-d0041810:	f1a9 0702 	sub.w	r7, r9, #2
-d0041814:	9605      	str	r6, [sp, #20]
-d0041816:	f8dd 8004 	ldr.w	r8, [sp, #4]
-d004181a:	9e04      	ldr	r6, [sp, #16]
-d004181c:	fec6 7a83 	vmaxnm.f32	s15, s13, s6
-d0041820:	fec7 7ae3 	vminnm.f32	s15, s15, s7
-d0041824:	ee77 7aa2 	vadd.f32	s15, s15, s5
-d0041828:	f837 ef02 	ldrh.w	lr, [r7, #2]!
-d004182c:	1885      	adds	r5, r0, r2
-d004182e:	eb02 0482 	add.w	r4, r2, r2, lsl #2
-d0041832:	ee76 6a84 	vadd.f32	s13, s13, s8
-d0041836:	3201      	adds	r2, #1
-d0041838:	eefc 7ae7 	vcvt.u32.f32	s15, s15
-d004183c:	f005 0503 	and.w	r5, r5, #3
-d0041840:	01a4      	lsls	r4, r4, #6
-d0041842:	ee17 1a90 	vmov	r1, s15
-d0041846:	b289      	uxth	r1, r1
-d0041848:	458e      	cmp	lr, r1
-d004184a:	d908      	bls.n	d004185e <fillTriangleDitherBayer+0x6ee>
-d004184c:	f81b 5005 	ldrb.w	r5, [fp, r5]
-d0041850:	8039      	strh	r1, [r7, #0]
-d0041852:	45a8      	cmp	r8, r5
-d0041854:	bfd4      	ite	le
-d0041856:	4655      	movle	r5, sl
-d0041858:	4635      	movgt	r5, r6
-d004185a:	f80c 5004 	strb.w	r5, [ip, r4]
-d004185e:	4293      	cmp	r3, r2
-d0041860:	dcdc      	bgt.n	d004181c <fillTriangleDitherBayer+0x6ac>
-d0041862:	f8dd 800c 	ldr.w	r8, [sp, #12]
-d0041866:	9e05      	ldr	r6, [sp, #20]
-d0041868:	f1b8 0f00 	cmp.w	r8, #0
-d004186c:	eb03 0283 	add.w	r2, r3, r3, lsl #2
-d0041870:	ea4f 0143 	mov.w	r1, r3, lsl #1
-d0041874:	ea4f 1282 	mov.w	r2, r2, lsl #6
-d0041878:	bfbc      	itt	lt
-d004187a:	2102      	movlt	r1, #2
-d004187c:	f44f 72a0 	movlt.w	r2, #320	; 0x140
-d0041880:	4489      	add	r9, r1
-d0041882:	4494      	add	ip, r2
-d0041884:	ee07 3a90 	vmov	s15, r3
-d0041888:	4418      	add	r0, r3
-d004188a:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d004188e:	42b0      	cmp	r0, r6
-d0041890:	eea7 5aa9 	vfma.f32	s10, s15, s19
-d0041894:	eea7 9a8b 	vfma.f32	s18, s15, s22
-d0041898:	dd8c      	ble.n	d00417b4 <fillTriangleDitherBayer+0x644>
-d004189a:	f8dd b018 	ldr.w	fp, [sp, #24]
-d004189e:	e5df      	b.n	d0041460 <fillTriangleDitherBayer+0x2f0>
-d00418a0:	d1f0      	bne.n	d0041884 <fillTriangleDitherBayer+0x714>
-d00418a2:	9a00      	ldr	r2, [sp, #0]
-d00418a4:	eeb0 4a43 	vmov.f32	s8, s6
-d00418a8:	2a00      	cmp	r2, #0
-d00418aa:	d0af      	beq.n	d004180c <fillTriangleDitherBayer+0x69c>
-d00418ac:	f1a9 0502 	sub.w	r5, r9, #2
-d00418b0:	2200      	movs	r2, #0
-d00418b2:	fec6 7a83 	vmaxnm.f32	s15, s13, s6
-d00418b6:	fec7 7ae3 	vminnm.f32	s15, s15, s7
-d00418ba:	ee77 7aa2 	vadd.f32	s15, s15, s5
-d00418be:	eb02 0182 	add.w	r1, r2, r2, lsl #2
-d00418c2:	f835 7f02 	ldrh.w	r7, [r5, #2]!
-d00418c6:	ee76 6a84 	vadd.f32	s13, s13, s8
-d00418ca:	018c      	lsls	r4, r1, #6
-d00418cc:	3201      	adds	r2, #1
-d00418ce:	eefc 7ae7 	vcvt.u32.f32	s15, s15
-d00418d2:	ee17 1a90 	vmov	r1, s15
-d00418d6:	b289      	uxth	r1, r1
-d00418d8:	428f      	cmp	r7, r1
-d00418da:	d902      	bls.n	d00418e2 <fillTriangleDitherBayer+0x772>
-d00418dc:	8029      	strh	r1, [r5, #0]
-d00418de:	f80c a004 	strb.w	sl, [ip, r4]
-d00418e2:	4293      	cmp	r3, r2
-d00418e4:	dce5      	bgt.n	d00418b2 <fillTriangleDitherBayer+0x742>
-d00418e6:	e7bf      	b.n	d0041868 <fillTriangleDitherBayer+0x6f8>
-d00418e8:	ee77 7ac6 	vsub.f32	s15, s15, s12
-d00418ec:	ed9f 1a76 	vldr	s2, [pc, #472]	; d0041ac8 <fillTriangleDitherBayer+0x958>
-d00418f0:	eef4 7ac1 	vcmpe.f32	s15, s2
-d00418f4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00418f8:	f340 80f3 	ble.w	d0041ae2 <fillTriangleDitherBayer+0x972>
-d00418fc:	eeb7 9a00 	vmov.f32	s18, #112	; 0x3f800000  1.0
-d0041900:	ee34 4a66 	vsub.f32	s8, s8, s13
-d0041904:	ee72 2ac5 	vsub.f32	s5, s5, s10
-d0041908:	ee89 1a27 	vdiv.f32	s2, s18, s15
-d004190c:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
-d0041910:	ee37 6ac6 	vsub.f32	s12, s15, s12
-d0041914:	ee07 0a90 	vmov	s15, r0
-d0041918:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d004191c:	ee77 7a86 	vadd.f32	s15, s15, s12
-d0041920:	ee24 4a01 	vmul.f32	s8, s8, s2
-d0041924:	ee62 2a81 	vmul.f32	s5, s5, s2
-d0041928:	eee7 6a84 	vfma.f32	s13, s15, s8
-d004192c:	eea7 5aa2 	vfma.f32	s10, s15, s5
-d0041930:	ebcb 190b 	rsb	r9, fp, fp, lsl #4
-d0041934:	4961      	ldr	r1, [pc, #388]	; (d0041abc <fillTriangleDitherBayer+0x94c>)
-d0041936:	eb00 0380 	add.w	r3, r0, r0, lsl #2
-d004193a:	4c61      	ldr	r4, [pc, #388]	; (d0041ac0 <fillTriangleDitherBayer+0x950>)
-d004193c:	eb00 1249 	add.w	r2, r0, r9, lsl #5
-d0041940:	6809      	ldr	r1, [r1, #0]
-d0041942:	eb0b 1383 	add.w	r3, fp, r3, lsl #6
-d0041946:	f8cd b01c 	str.w	fp, [sp, #28]
-d004194a:	eb04 0942 	add.w	r9, r4, r2, lsl #1
-d004194e:	f00b 0203 	and.w	r2, fp, #3
-d0041952:	eb01 0c03 	add.w	ip, r1, r3
-d0041956:	eeb6 6a00 	vmov.f32	s12, #96	; 0x3f000000  0.5
-d004195a:	4613      	mov	r3, r2
-d004195c:	4a59      	ldr	r2, [pc, #356]	; (d0041ac4 <fillTriangleDitherBayer+0x954>)
-d004195e:	eb02 0383 	add.w	r3, r2, r3, lsl #2
-d0041962:	469b      	mov	fp, r3
-d0041964:	e010      	b.n	d0041988 <fillTriangleDitherBayer+0x818>
-d0041966:	ee07 2a90 	vmov	s15, r2
-d004196a:	4410      	add	r0, r2
-d004196c:	eb02 0382 	add.w	r3, r2, r2, lsl #2
-d0041970:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0041974:	42b0      	cmp	r0, r6
-d0041976:	eb09 0942 	add.w	r9, r9, r2, lsl #1
-d004197a:	eb0c 1c83 	add.w	ip, ip, r3, lsl #6
-d004197e:	eee7 6a84 	vfma.f32	s13, s15, s8
-d0041982:	eea7 5aa2 	vfma.f32	s10, s15, s5
-d0041986:	dc72      	bgt.n	d0041a6e <fillTriangleDitherBayer+0x8fe>
-d0041988:	eba6 0800 	sub.w	r8, r6, r0
-d004198c:	eef4 6acd 	vcmpe.f32	s13, s26
-d0041990:	f108 0201 	add.w	r2, r8, #1
-d0041994:	2a30      	cmp	r2, #48	; 0x30
-d0041996:	bfa8      	it	ge
-d0041998:	2230      	movge	r2, #48	; 0x30
-d004199a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004199e:	d9e2      	bls.n	d0041966 <fillTriangleDitherBayer+0x7f6>
-d00419a0:	f1b8 0f00 	cmp.w	r8, #0
-d00419a4:	ee85 1a26 	vdiv.f32	s2, s10, s13
-d00419a8:	dd64      	ble.n	d0041a74 <fillTriangleDitherBayer+0x904>
-d00419aa:	1e53      	subs	r3, r2, #1
-d00419ac:	ee07 3a90 	vmov	s15, r3
-d00419b0:	eeb0 9a66 	vmov.f32	s18, s13
-d00419b4:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d00419b8:	eea7 9a84 	vfma.f32	s18, s15, s8
-d00419bc:	eeb4 9acd 	vcmpe.f32	s18, s26
-d00419c0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00419c4:	dd57      	ble.n	d0041a76 <fillTriangleDitherBayer+0x906>
-d00419c6:	eeb0 fa45 	vmov.f32	s30, s10
-d00419ca:	9900      	ldr	r1, [sp, #0]
-d00419cc:	eea7 faa2 	vfma.f32	s30, s15, s5
-d00419d0:	eecf 9a09 	vdiv.f32	s19, s30, s18
-d00419d4:	ee79 9ac1 	vsub.f32	s19, s19, s2
-d00419d8:	ee89 9aa7 	vdiv.f32	s18, s19, s15
-d00419dc:	2900      	cmp	r1, #0
-d00419de:	d14f      	bne.n	d0041a80 <fillTriangleDitherBayer+0x910>
-d00419e0:	9603      	str	r6, [sp, #12]
-d00419e2:	f1a9 0702 	sub.w	r7, r9, #2
-d00419e6:	f8cd 8014 	str.w	r8, [sp, #20]
-d00419ea:	9e04      	ldr	r6, [sp, #16]
-d00419ec:	f8dd 8004 	ldr.w	r8, [sp, #4]
-d00419f0:	fec1 7a03 	vmaxnm.f32	s15, s2, s6
-d00419f4:	fec7 7ac2 	vminnm.f32	s15, s15, s4
-d00419f8:	ee77 7a86 	vadd.f32	s15, s15, s12
-d00419fc:	f837 ef02 	ldrh.w	lr, [r7, #2]!
-d0041a00:	1845      	adds	r5, r0, r1
-d0041a02:	eb01 0481 	add.w	r4, r1, r1, lsl #2
-d0041a06:	ee31 1a09 	vadd.f32	s2, s2, s18
-d0041a0a:	3101      	adds	r1, #1
-d0041a0c:	eefc 7ae7 	vcvt.u32.f32	s15, s15
-d0041a10:	f005 0503 	and.w	r5, r5, #3
-d0041a14:	01a4      	lsls	r4, r4, #6
-d0041a16:	ee17 3a90 	vmov	r3, s15
-d0041a1a:	b29b      	uxth	r3, r3
-d0041a1c:	459e      	cmp	lr, r3
-d0041a1e:	d908      	bls.n	d0041a32 <fillTriangleDitherBayer+0x8c2>
-d0041a20:	f81b 5005 	ldrb.w	r5, [fp, r5]
-d0041a24:	803b      	strh	r3, [r7, #0]
-d0041a26:	45a8      	cmp	r8, r5
-d0041a28:	bfcc      	ite	gt
-d0041a2a:	4635      	movgt	r5, r6
-d0041a2c:	4655      	movle	r5, sl
-d0041a2e:	f80c 5004 	strb.w	r5, [ip, r4]
-d0041a32:	428a      	cmp	r2, r1
-d0041a34:	dcdc      	bgt.n	d00419f0 <fillTriangleDitherBayer+0x880>
-d0041a36:	9e03      	ldr	r6, [sp, #12]
-d0041a38:	f8dd 8014 	ldr.w	r8, [sp, #20]
-d0041a3c:	f1b8 0f00 	cmp.w	r8, #0
-d0041a40:	eb02 0382 	add.w	r3, r2, r2, lsl #2
-d0041a44:	ea4f 0142 	mov.w	r1, r2, lsl #1
-d0041a48:	ea4f 1383 	mov.w	r3, r3, lsl #6
-d0041a4c:	bfbc      	itt	lt
-d0041a4e:	2102      	movlt	r1, #2
-d0041a50:	f44f 73a0 	movlt.w	r3, #320	; 0x140
-d0041a54:	4489      	add	r9, r1
-d0041a56:	449c      	add	ip, r3
-d0041a58:	ee07 2a90 	vmov	s15, r2
-d0041a5c:	4410      	add	r0, r2
-d0041a5e:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0041a62:	42b0      	cmp	r0, r6
-d0041a64:	eee7 6a84 	vfma.f32	s13, s15, s8
-d0041a68:	eea7 5aa2 	vfma.f32	s10, s15, s5
-d0041a6c:	dd8c      	ble.n	d0041988 <fillTriangleDitherBayer+0x818>
-d0041a6e:	f8dd b01c 	ldr.w	fp, [sp, #28]
-d0041a72:	e5fb      	b.n	d004166c <fillTriangleDitherBayer+0x4fc>
-d0041a74:	d1f0      	bne.n	d0041a58 <fillTriangleDitherBayer+0x8e8>
-d0041a76:	9900      	ldr	r1, [sp, #0]
-d0041a78:	eeb0 9a43 	vmov.f32	s18, s6
-d0041a7c:	2900      	cmp	r1, #0
-d0041a7e:	d0af      	beq.n	d00419e0 <fillTriangleDitherBayer+0x870>
-d0041a80:	f1a9 0502 	sub.w	r5, r9, #2
-d0041a84:	2100      	movs	r1, #0
-d0041a86:	fec1 7a03 	vmaxnm.f32	s15, s2, s6
-d0041a8a:	fec7 7ac2 	vminnm.f32	s15, s15, s4
-d0041a8e:	ee77 7a86 	vadd.f32	s15, s15, s12
-d0041a92:	eb01 0381 	add.w	r3, r1, r1, lsl #2
-d0041a96:	f835 7f02 	ldrh.w	r7, [r5, #2]!
-d0041a9a:	ee31 1a09 	vadd.f32	s2, s2, s18
-d0041a9e:	019c      	lsls	r4, r3, #6
-d0041aa0:	3101      	adds	r1, #1
-d0041aa2:	eefc 7ae7 	vcvt.u32.f32	s15, s15
-d0041aa6:	ee17 3a90 	vmov	r3, s15
-d0041aaa:	b29b      	uxth	r3, r3
-d0041aac:	429f      	cmp	r7, r3
-d0041aae:	d902      	bls.n	d0041ab6 <fillTriangleDitherBayer+0x946>
-d0041ab0:	802b      	strh	r3, [r5, #0]
-d0041ab2:	f80c a004 	strb.w	sl, [ip, r4]
-d0041ab6:	428a      	cmp	r2, r1
-d0041ab8:	dce5      	bgt.n	d0041a86 <fillTriangleDitherBayer+0x916>
-d0041aba:	e7bf      	b.n	d0041a3c <fillTriangleDitherBayer+0x8cc>
-d0041abc:	d012cd44 	.word	0xd012cd44
-d0041ac0:	d0047660 	.word	0xd0047660
-d0041ac4:	d0046d50 	.word	0xd0046d50
-d0041ac8:	38d1b717 	.word	0x38d1b717
-d0041acc:	f04f 0a10 	mov.w	sl, #16
-d0041ad0:	2310      	movs	r3, #16
-d0041ad2:	9304      	str	r3, [sp, #16]
-d0041ad4:	f7ff bbb2 	b.w	d004123c <fillTriangleDitherBayer+0xcc>
-d0041ad8:	eeb0 ba43 	vmov.f32	s22, s6
-d0041adc:	eef0 9a43 	vmov.f32	s19, s6
-d0041ae0:	e63c      	b.n	d004175c <fillTriangleDitherBayer+0x5ec>
-d0041ae2:	eef0 2a43 	vmov.f32	s5, s6
-d0041ae6:	eeb0 4a43 	vmov.f32	s8, s6
-d0041aea:	e721      	b.n	d0041930 <fillTriangleDitherBayer+0x7c0>
+d0040db8 <resetDepthBuffer>:
+d0040db8:	f44f 2296 	mov.w	r2, #307200	; 0x4b000
+d0040dbc:	21ff      	movs	r1, #255	; 0xff
+d0040dbe:	4801      	ldr	r0, [pc, #4]	; (d0040dc4 <resetDepthBuffer+0xc>)
+d0040dc0:	f005 bf50 	b.w	d0046c64 <memset>
+d0040dc4:	d0048360 	.word	0xd0048360
 
-d0041aec <fillTriangleDitherBayer2Mode>:
-d0041aec:	eddf 7aca 	vldr	s15, [pc, #808]	; d0041e18 <fillTriangleDitherBayer2Mode+0x32c>
-d0041af0:	eef4 0ae7 	vcmpe.f32	s1, s15
-d0041af4:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d0041af8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041afc:	eeb4 1ae7 	vcmpe.f32	s2, s15
-d0041b00:	ed2d 8b10 	vpush	{d8-d15}
-d0041b04:	b08d      	sub	sp, #52	; 0x34
-d0041b06:	9303      	str	r3, [sp, #12]
-d0041b08:	bf94      	ite	ls
-d0041b0a:	2301      	movls	r3, #1
-d0041b0c:	2300      	movhi	r3, #0
-d0041b0e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041b12:	9202      	str	r2, [sp, #8]
-d0041b14:	f89d b0ac 	ldrb.w	fp, [sp, #172]	; 0xac
-d0041b18:	bf98      	it	ls
-d0041b1a:	f043 0301 	orrls.w	r3, r3, #1
-d0041b1e:	f8bd 20a8 	ldrh.w	r2, [sp, #168]	; 0xa8
-d0041b22:	e9cd 0100 	strd	r0, r1, [sp]
-d0041b26:	f8bd 00a0 	ldrh.w	r0, [sp, #160]	; 0xa0
-d0041b2a:	f8bd 10a4 	ldrh.w	r1, [sp, #164]	; 0xa4
-d0041b2e:	2b00      	cmp	r3, #0
-d0041b30:	f040 814d 	bne.w	d0041dce <fillTriangleDitherBayer2Mode+0x2e2>
-d0041b34:	eeb4 0a67 	vcmp.f32	s0, s15
-d0041b38:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041b3c:	f240 8147 	bls.w	d0041dce <fillTriangleDitherBayer2Mode+0x2e2>
-d0041b40:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
-d0041b44:	ee06 1a90 	vmov	s13, r1
-d0041b48:	ee07 0a10 	vmov	s14, r0
-d0041b4c:	eef8 5a66 	vcvt.f32.u32	s11, s13
-d0041b50:	ee87 3a80 	vdiv.f32	s6, s15, s0
-d0041b54:	ee87 2a81 	vdiv.f32	s4, s15, s2
-d0041b58:	ee87 0aa0 	vdiv.f32	s0, s15, s1
-d0041b5c:	ee07 2a90 	vmov	s15, r2
-d0041b60:	eeb8 4a67 	vcvt.f32.u32	s8, s15
-d0041b64:	eddd 7a01 	vldr	s15, [sp, #4]
-d0041b68:	eeb8 7a47 	vcvt.f32.u32	s14, s14
-d0041b6c:	eeb8 5ae7 	vcvt.f32.s32	s10, s15
-d0041b70:	eddd 7a03 	vldr	s15, [sp, #12]
-d0041b74:	eef8 3ae7 	vcvt.f32.s32	s7, s15
-d0041b78:	eddd 7a00 	vldr	s15, [sp]
-d0041b7c:	ee27 7a03 	vmul.f32	s14, s14, s6
-d0041b80:	eeb8 6ae7 	vcvt.f32.s32	s12, s15
-d0041b84:	eddd 7a02 	vldr	s15, [sp, #8]
-d0041b88:	eeb4 5ae3 	vcmpe.f32	s10, s7
-d0041b8c:	eef8 4ae7 	vcvt.f32.s32	s9, s15
-d0041b90:	eddd 7a26 	vldr	s15, [sp, #152]	; 0x98
-d0041b94:	ee24 4a02 	vmul.f32	s8, s8, s4
-d0041b98:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041b9c:	eef8 2ae7 	vcvt.f32.s32	s5, s15
-d0041ba0:	eddd 7a27 	vldr	s15, [sp, #156]	; 0x9c
-d0041ba4:	ee65 5a80 	vmul.f32	s11, s11, s0
-d0041ba8:	eef8 6ae7 	vcvt.f32.s32	s13, s15
-d0041bac:	f300 8114 	bgt.w	d0041dd8 <fillTriangleDitherBayer2Mode+0x2ec>
-d0041bb0:	eeb4 5ae6 	vcmpe.f32	s10, s13
-d0041bb4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041bb8:	f300 8201 	bgt.w	d0041fbe <fillTriangleDitherBayer2Mode+0x4d2>
-d0041bbc:	eef4 3ae6 	vcmpe.f32	s7, s13
-d0041bc0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041bc4:	f300 8219 	bgt.w	d0041ffa <fillTriangleDitherBayer2Mode+0x50e>
-d0041bc8:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
-d0041bcc:	ee35 1a27 	vadd.f32	s2, s10, s15
-d0041bd0:	ee76 7aa7 	vadd.f32	s15, s13, s15
-d0041bd4:	eebd 1ac1 	vcvt.s32.f32	s2, s2
-d0041bd8:	eefd 7ae7 	vcvt.s32.f32	s15, s15
-d0041bdc:	ee11 3a10 	vmov	r3, s2
-d0041be0:	ee17 2a90 	vmov	r2, s15
-d0041be4:	4293      	cmp	r3, r2
-d0041be6:	f000 80f2 	beq.w	d0041dce <fillTriangleDitherBayer2Mode+0x2e2>
-d0041bea:	ee76 8ac5 	vsub.f32	s17, s13, s10
-d0041bee:	ed9f 1a8a 	vldr	s2, [pc, #552]	; d0041e18 <fillTriangleDitherBayer2Mode+0x32c>
-d0041bf2:	eef4 8ac1 	vcmpe.f32	s17, s2
-d0041bf6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041bfa:	f240 80e8 	bls.w	d0041dce <fillTriangleDitherBayer2Mode+0x2e2>
-d0041bfe:	eef7 9a00 	vmov.f32	s19, #112	; 0x3f800000  1.0
-d0041c02:	ee33 9ac5 	vsub.f32	s18, s7, s10
-d0041c06:	ee72 0ac6 	vsub.f32	s1, s5, s12
-d0041c0a:	eec9 7aa8 	vdiv.f32	s15, s19, s17
-d0041c0e:	eeb4 9ac1 	vcmpe.f32	s18, s2
-d0041c12:	ee32 8a43 	vsub.f32	s16, s4, s6
-d0041c16:	ee74 8a47 	vsub.f32	s17, s8, s14
-d0041c1a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041c1e:	ee60 0aa7 	vmul.f32	s1, s1, s15
-d0041c22:	ee28 8a27 	vmul.f32	s16, s16, s15
-d0041c26:	ee68 8aa7 	vmul.f32	s17, s17, s15
-d0041c2a:	f300 80ff 	bgt.w	d0041e2c <fillTriangleDitherBayer2Mode+0x340>
-d0041c2e:	eef1 7a04 	vmov.f32	s15, #20	; 0x40a00000  5.0
-d0041c32:	ed9f ba7c 	vldr	s22, [pc, #496]	; d0041e24 <fillTriangleDitherBayer2Mode+0x338>
-d0041c36:	eddf 9a79 	vldr	s19, [pc, #484]	; d0041e1c <fillTriangleDitherBayer2Mode+0x330>
-d0041c3a:	ee76 fae3 	vsub.f32	s31, s13, s7
-d0041c3e:	fec1 1a8b 	vmaxnm.f32	s3, s3, s22
-d0041c42:	fec1 7ae7 	vminnm.f32	s15, s3, s15
-d0041c46:	ee67 7aa9 	vmul.f32	s15, s15, s19
-d0041c4a:	eef4 fac1 	vcmpe.f32	s31, s2
-d0041c4e:	eefd 7ae7 	vcvt.s32.f32	s15, s15
-d0041c52:	ee17 3a90 	vmov	r3, s15
-d0041c56:	edcd 7a00 	vstr	s15, [sp]
-d0041c5a:	2b10      	cmp	r3, #16
-d0041c5c:	bfa8      	it	ge
-d0041c5e:	2310      	movge	r3, #16
-d0041c60:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041c64:	ea23 73e3 	bic.w	r3, r3, r3, asr #31
-d0041c68:	9302      	str	r3, [sp, #8]
-d0041c6a:	f340 80b0 	ble.w	d0041dce <fillTriangleDitherBayer2Mode+0x2e2>
-d0041c6e:	eef0 ea4b 	vmov.f32	s29, s22
-d0041c72:	eef0 ba4b 	vmov.f32	s23, s22
-d0041c76:	eeb7 1a00 	vmov.f32	s2, #112	; 0x3f800000  1.0
-d0041c7a:	eddf 1a67 	vldr	s3, [pc, #412]	; d0041e18 <fillTriangleDitherBayer2Mode+0x32c>
-d0041c7e:	ee72 2ae4 	vsub.f32	s5, s5, s9
-d0041c82:	ee32 2a40 	vsub.f32	s4, s4, s0
-d0041c86:	eec1 7a2f 	vdiv.f32	s15, s2, s31
-d0041c8a:	eeb4 9ae1 	vcmpe.f32	s18, s3
-d0041c8e:	ee34 4a65 	vsub.f32	s8, s8, s11
-d0041c92:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041c96:	ee62 2aa7 	vmul.f32	s5, s5, s15
-d0041c9a:	ee24 fa27 	vmul.f32	s30, s8, s15
-d0041c9e:	edcd 2a06 	vstr	s5, [sp, #24]
-d0041ca2:	ee62 2a27 	vmul.f32	s5, s4, s15
-d0041ca6:	edcd 2a05 	vstr	s5, [sp, #20]
-d0041caa:	f300 80f7 	bgt.w	d0041e9c <fillTriangleDitherBayer2Mode+0x3b0>
-d0041cae:	eefd 7ae3 	vcvt.s32.f32	s15, s7
-d0041cb2:	edcd 7a03 	vstr	s15, [sp, #12]
-d0041cb6:	eefd 7ae6 	vcvt.s32.f32	s15, s13
-d0041cba:	f240 123f 	movw	r2, #319	; 0x13f
-d0041cbe:	9903      	ldr	r1, [sp, #12]
-d0041cc0:	ee17 3a90 	vmov	r3, s15
-d0041cc4:	ea21 78e1 	bic.w	r8, r1, r1, asr #31
-d0041cc8:	3b01      	subs	r3, #1
-d0041cca:	4293      	cmp	r3, r2
-d0041ccc:	bfa8      	it	ge
-d0041cce:	4613      	movge	r3, r2
-d0041cd0:	4543      	cmp	r3, r8
-d0041cd2:	db7c      	blt.n	d0041dce <fillTriangleDitherBayer2Mode+0x2e2>
-d0041cd4:	ee07 8a90 	vmov	s15, r8
-d0041cd8:	eef6 6a00 	vmov.f32	s13, #96	; 0x3f000000  0.5
-d0041cdc:	3301      	adds	r3, #1
-d0041cde:	ed9d ba06 	vldr	s22, [sp, #24]
-d0041ce2:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0041ce6:	eddd aa05 	vldr	s21, [sp, #20]
-d0041cea:	ed9f 9a4b 	vldr	s18, [pc, #300]	; d0041e18 <fillTriangleDitherBayer2Mode+0x32c>
-d0041cee:	ed9f 1a4c 	vldr	s2, [pc, #304]	; d0041e20 <fillTriangleDitherBayer2Mode+0x334>
-d0041cf2:	ee77 7aa6 	vadd.f32	s15, s15, s13
-d0041cf6:	ed9f 4a4b 	vldr	s8, [pc, #300]	; d0041e24 <fillTriangleDitherBayer2Mode+0x338>
-d0041cfa:	eddf 1a4b 	vldr	s3, [pc, #300]	; d0041e28 <fillTriangleDitherBayer2Mode+0x33c>
-d0041cfe:	9301      	str	r3, [sp, #4]
-d0041d00:	ee37 5ac5 	vsub.f32	s10, s15, s10
-d0041d04:	ee77 3ae3 	vsub.f32	s7, s15, s7
-d0041d08:	eea0 6a85 	vfma.f32	s12, s1, s10
-d0041d0c:	eea8 3a05 	vfma.f32	s6, s16, s10
-d0041d10:	eea8 7a85 	vfma.f32	s14, s17, s10
-d0041d14:	eeeb 4a23 	vfma.f32	s9, s22, s7
-d0041d18:	eeaa 0aa3 	vfma.f32	s0, s21, s7
-d0041d1c:	eeef 5a23 	vfma.f32	s11, s30, s7
-d0041d20:	e033      	b.n	d0041d8a <fillTriangleDitherBayer2Mode+0x29e>
-d0041d22:	eeb0 2a47 	vmov.f32	s4, s14
-d0041d26:	eef0 9a43 	vmov.f32	s19, s6
-d0041d2a:	eef0 6a46 	vmov.f32	s13, s12
-d0041d2e:	eef0 3a65 	vmov.f32	s7, s11
-d0041d32:	eeb0 5a40 	vmov.f32	s10, s0
-d0041d36:	eef0 2a64 	vmov.f32	s5, s9
-d0041d3a:	fefa 7a66 	vrintp.f32	s15, s13
-d0041d3e:	eefd 7ae7 	vcvt.s32.f32	s15, s15
-d0041d42:	f240 13df 	movw	r3, #479	; 0x1df
-d0041d46:	ee17 4a90 	vmov	r4, s15
-d0041d4a:	fefa 7a62 	vrintp.f32	s15, s5
-d0041d4e:	eefd 7ae7 	vcvt.s32.f32	s15, s15
-d0041d52:	3c01      	subs	r4, #1
-d0041d54:	ee17 1a90 	vmov	r1, s15
-d0041d58:	429c      	cmp	r4, r3
-d0041d5a:	ea21 71e1 	bic.w	r1, r1, r1, asr #31
-d0041d5e:	bfa8      	it	ge
-d0041d60:	461c      	movge	r4, r3
-d0041d62:	42a1      	cmp	r1, r4
-d0041d64:	f340 817b 	ble.w	d004205e <fillTriangleDitherBayer2Mode+0x572>
-d0041d68:	f108 0801 	add.w	r8, r8, #1
-d0041d6c:	9b01      	ldr	r3, [sp, #4]
-d0041d6e:	ee36 6a20 	vadd.f32	s12, s12, s1
-d0041d72:	4598      	cmp	r8, r3
-d0041d74:	ee33 3a08 	vadd.f32	s6, s6, s16
-d0041d78:	ee37 7a28 	vadd.f32	s14, s14, s17
-d0041d7c:	ee74 4a8b 	vadd.f32	s9, s9, s22
-d0041d80:	ee30 0a2a 	vadd.f32	s0, s0, s21
-d0041d84:	ee75 5a8f 	vadd.f32	s11, s11, s30
-d0041d88:	d021      	beq.n	d0041dce <fillTriangleDitherBayer2Mode+0x2e2>
-d0041d8a:	eeb4 6ae4 	vcmpe.f32	s12, s9
-d0041d8e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041d92:	dcc6      	bgt.n	d0041d22 <fillTriangleDitherBayer2Mode+0x236>
-d0041d94:	eeb0 2a65 	vmov.f32	s4, s11
-d0041d98:	eef0 9a40 	vmov.f32	s19, s0
-d0041d9c:	eef0 6a64 	vmov.f32	s13, s9
-d0041da0:	eef0 3a47 	vmov.f32	s7, s14
-d0041da4:	eeb0 5a43 	vmov.f32	s10, s6
-d0041da8:	eef0 2a46 	vmov.f32	s5, s12
-d0041dac:	e7c5      	b.n	d0041d3a <fillTriangleDitherBayer2Mode+0x24e>
-d0041dae:	eddd 6a08 	vldr	s13, [sp, #32]
-d0041db2:	ed9d 6a09 	vldr	s12, [sp, #36]	; 0x24
-d0041db6:	ed9d fa0a 	vldr	s30, [sp, #40]	; 0x28
-d0041dba:	ed9d 0a0b 	vldr	s0, [sp, #44]	; 0x2c
-d0041dbe:	eddf 7a16 	vldr	s15, [pc, #88]	; d0041e18 <fillTriangleDitherBayer2Mode+0x32c>
-d0041dc2:	eef4 fae7 	vcmpe.f32	s31, s15
-d0041dc6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041dca:	f73f af74 	bgt.w	d0041cb6 <fillTriangleDitherBayer2Mode+0x1ca>
-d0041dce:	b00d      	add	sp, #52	; 0x34
-d0041dd0:	ecbd 8b10 	vpop	{d8-d15}
-d0041dd4:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-d0041dd8:	eef4 3ae6 	vcmpe.f32	s7, s13
-d0041ddc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041de0:	f340 8124 	ble.w	d004202c <fillTriangleDitherBayer2Mode+0x540>
-d0041de4:	eeb0 8a44 	vmov.f32	s16, s8
-d0041de8:	eef0 0a42 	vmov.f32	s1, s4
-d0041dec:	eeb0 1a66 	vmov.f32	s2, s13
-d0041df0:	eef0 7a62 	vmov.f32	s15, s5
-d0041df4:	eeb0 4a47 	vmov.f32	s8, s14
-d0041df8:	eeb0 2a43 	vmov.f32	s4, s6
-d0041dfc:	eef0 6a45 	vmov.f32	s13, s10
-d0041e00:	eef0 2a46 	vmov.f32	s5, s12
-d0041e04:	eeb0 7a48 	vmov.f32	s14, s16
-d0041e08:	eeb0 3a60 	vmov.f32	s6, s1
-d0041e0c:	eeb0 5a41 	vmov.f32	s10, s2
-d0041e10:	eeb0 6a67 	vmov.f32	s12, s15
-d0041e14:	e6d8      	b.n	d0041bc8 <fillTriangleDitherBayer2Mode+0xdc>
-d0041e16:	bf00      	nop
-d0041e18:	38d1b717 	.word	0x38d1b717
-d0041e1c:	404ccccd 	.word	0x404ccccd
-d0041e20:	33d6bf95 	.word	0x33d6bf95
-d0041e24:	00000000 	.word	0x00000000
-d0041e28:	477fff00 	.word	0x477fff00
-d0041e2c:	ee89 aa89 	vdiv.f32	s20, s19, s18
-d0041e30:	ed1f ba06 	vldr	s22, [pc, #-24]	; d0041e1c <fillTriangleDitherBayer2Mode+0x330>
-d0041e34:	ed5f 9a05 	vldr	s19, [pc, #-20]	; d0041e24 <fillTriangleDitherBayer2Mode+0x338>
-d0041e38:	fec1 1aa9 	vmaxnm.f32	s3, s3, s19
-d0041e3c:	eef1 7a04 	vmov.f32	s15, #20	; 0x40a00000  5.0
-d0041e40:	ee74 aac6 	vsub.f32	s21, s9, s12
-d0041e44:	ee76 fae3 	vsub.f32	s31, s13, s7
-d0041e48:	fec1 7ae7 	vminnm.f32	s15, s3, s15
-d0041e4c:	ee67 7a8b 	vmul.f32	s15, s15, s22
-d0041e50:	ee70 1a43 	vsub.f32	s3, s0, s6
-d0041e54:	eef4 fac1 	vcmpe.f32	s31, s2
-d0041e58:	eefd 7ae7 	vcvt.s32.f32	s15, s15
-d0041e5c:	ee35 bac7 	vsub.f32	s22, s11, s14
-d0041e60:	ee17 3a90 	vmov	r3, s15
-d0041e64:	edcd 7a00 	vstr	s15, [sp]
-d0041e68:	2b10      	cmp	r3, #16
-d0041e6a:	ee6a 7a8a 	vmul.f32	s15, s21, s20
-d0041e6e:	ee2b ba0a 	vmul.f32	s22, s22, s20
-d0041e72:	bfa8      	it	ge
-d0041e74:	2310      	movge	r3, #16
-d0041e76:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041e7a:	eef0 ba67 	vmov.f32	s23, s15
-d0041e7e:	ee61 7a8a 	vmul.f32	s15, s3, s20
-d0041e82:	ea23 73e3 	bic.w	r3, r3, r3, asr #31
-d0041e86:	9302      	str	r3, [sp, #8]
-d0041e88:	eef0 ea67 	vmov.f32	s29, s15
-d0041e8c:	f73f aef3 	bgt.w	d0041c76 <fillTriangleDitherBayer2Mode+0x18a>
-d0041e90:	eeb0 fa69 	vmov.f32	s30, s19
-d0041e94:	edcd 9a05 	vstr	s19, [sp, #20]
-d0041e98:	edcd 9a06 	vstr	s19, [sp, #24]
-d0041e9c:	eefd 7ae3 	vcvt.s32.f32	s15, s7
-d0041ea0:	f240 123f 	movw	r2, #319	; 0x13f
-d0041ea4:	ee17 3a90 	vmov	r3, s15
-d0041ea8:	edcd 7a03 	vstr	s15, [sp, #12]
-d0041eac:	eefd 7ac5 	vcvt.s32.f32	s15, s10
-d0041eb0:	3b01      	subs	r3, #1
-d0041eb2:	ee17 8a90 	vmov	r8, s15
-d0041eb6:	4293      	cmp	r3, r2
-d0041eb8:	ea28 78e8 	bic.w	r8, r8, r8, asr #31
-d0041ebc:	bfa8      	it	ge
-d0041ebe:	4613      	movge	r3, r2
-d0041ec0:	4543      	cmp	r3, r8
-d0041ec2:	f6ff af7c 	blt.w	d0041dbe <fillTriangleDitherBayer2Mode+0x2d2>
-d0041ec6:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
-d0041eca:	3301      	adds	r3, #1
-d0041ecc:	eeb0 aa46 	vmov.f32	s20, s12
-d0041ed0:	ed5f da2d 	vldr	s27, [pc, #-180]	; d0041e20 <fillTriangleDitherBayer2Mode+0x334>
-d0041ed4:	eef0 aa46 	vmov.f32	s21, s12
-d0041ed8:	ed5f 2a2e 	vldr	s5, [pc, #-184]	; d0041e24 <fillTriangleDitherBayer2Mode+0x338>
-d0041edc:	ee37 4ac5 	vsub.f32	s8, s15, s10
-d0041ee0:	ee07 8a90 	vmov	s15, r8
-d0041ee4:	eeb0 da43 	vmov.f32	s26, s6
-d0041ee8:	ed1f 1a31 	vldr	s2, [pc, #-196]	; d0041e28 <fillTriangleDitherBayer2Mode+0x33c>
-d0041eec:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0041ef0:	9301      	str	r3, [sp, #4]
-d0041ef2:	eef0 ca47 	vmov.f32	s25, s14
-d0041ef6:	edcd 6a08 	vstr	s13, [sp, #32]
-d0041efa:	eeb0 ea6b 	vmov.f32	s28, s23
-d0041efe:	ed8d 6a09 	vstr	s12, [sp, #36]	; 0x24
-d0041f02:	ee77 7a84 	vadd.f32	s15, s15, s8
-d0041f06:	ed8d fa0a 	vstr	s30, [sp, #40]	; 0x28
-d0041f0a:	eeb0 ca43 	vmov.f32	s24, s6
-d0041f0e:	ed8d 0a0b 	vstr	s0, [sp, #44]	; 0x2c
-d0041f12:	eea7 aaab 	vfma.f32	s20, s15, s23
-d0041f16:	eef0 ba47 	vmov.f32	s23, s14
-d0041f1a:	eee0 aaa7 	vfma.f32	s21, s1, s15
-d0041f1e:	eea8 da27 	vfma.f32	s26, s16, s15
-d0041f22:	eee8 caa7 	vfma.f32	s25, s17, s15
-d0041f26:	eea7 caae 	vfma.f32	s24, s15, s29
-d0041f2a:	eee7 ba8b 	vfma.f32	s23, s15, s22
-d0041f2e:	e034      	b.n	d0041f9a <fillTriangleDitherBayer2Mode+0x4ae>
-d0041f30:	eef0 1a6c 	vmov.f32	s3, s25
-d0041f34:	eeb0 2a4d 	vmov.f32	s4, s26
-d0041f38:	eef0 7a6a 	vmov.f32	s15, s21
-d0041f3c:	eeb0 6a6b 	vmov.f32	s12, s23
-d0041f40:	eef0 6a4c 	vmov.f32	s13, s24
-d0041f44:	eeb0 4a4a 	vmov.f32	s8, s20
-d0041f48:	feba 0a67 	vrintp.f32	s0, s15
-d0041f4c:	eebd 0ac0 	vcvt.s32.f32	s0, s0
-d0041f50:	feba 9a44 	vrintp.f32	s18, s8
-d0041f54:	f240 13df 	movw	r3, #479	; 0x1df
-d0041f58:	ee10 4a10 	vmov	r4, s0
-d0041f5c:	eebd 0ac9 	vcvt.s32.f32	s0, s18
-d0041f60:	3c01      	subs	r4, #1
-d0041f62:	ee10 1a10 	vmov	r1, s0
-d0041f66:	429c      	cmp	r4, r3
-d0041f68:	ea21 71e1 	bic.w	r1, r1, r1, asr #31
-d0041f6c:	bfa8      	it	ge
-d0041f6e:	461c      	movge	r4, r3
-d0041f70:	428c      	cmp	r4, r1
-d0041f72:	f280 8159 	bge.w	d0042228 <fillTriangleDitherBayer2Mode+0x73c>
-d0041f76:	f108 0801 	add.w	r8, r8, #1
-d0041f7a:	9b01      	ldr	r3, [sp, #4]
-d0041f7c:	ee7a aaa0 	vadd.f32	s21, s21, s1
-d0041f80:	4598      	cmp	r8, r3
-d0041f82:	ee3d da08 	vadd.f32	s26, s26, s16
-d0041f86:	ee7c caa8 	vadd.f32	s25, s25, s17
-d0041f8a:	ee3a aa0e 	vadd.f32	s20, s20, s28
-d0041f8e:	ee3c ca2e 	vadd.f32	s24, s24, s29
-d0041f92:	ee7b ba8b 	vadd.f32	s23, s23, s22
-d0041f96:	f43f af0a 	beq.w	d0041dae <fillTriangleDitherBayer2Mode+0x2c2>
-d0041f9a:	eef4 aaca 	vcmpe.f32	s21, s20
-d0041f9e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041fa2:	dcc5      	bgt.n	d0041f30 <fillTriangleDitherBayer2Mode+0x444>
-d0041fa4:	eef0 1a6b 	vmov.f32	s3, s23
-d0041fa8:	eeb0 2a4c 	vmov.f32	s4, s24
-d0041fac:	eef0 7a4a 	vmov.f32	s15, s20
-d0041fb0:	eeb0 6a6c 	vmov.f32	s12, s25
-d0041fb4:	eef0 6a4d 	vmov.f32	s13, s26
-d0041fb8:	eeb0 4a6a 	vmov.f32	s8, s21
-d0041fbc:	e7c4      	b.n	d0041f48 <fillTriangleDitherBayer2Mode+0x45c>
-d0041fbe:	eeb0 1a45 	vmov.f32	s2, s10
-d0041fc2:	eeb0 5a66 	vmov.f32	s10, s13
-d0041fc6:	eeb0 8a47 	vmov.f32	s16, s14
-d0041fca:	eef0 6a41 	vmov.f32	s13, s2
-d0041fce:	eef0 0a43 	vmov.f32	s1, s6
-d0041fd2:	eef0 7a46 	vmov.f32	s15, s12
-d0041fd6:	eef4 3ae6 	vcmpe.f32	s7, s13
-d0041fda:	eeb0 7a44 	vmov.f32	s14, s8
-d0041fde:	eeb0 3a42 	vmov.f32	s6, s4
-d0041fe2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0041fe6:	eeb0 6a62 	vmov.f32	s12, s5
-d0041fea:	eeb0 4a48 	vmov.f32	s8, s16
-d0041fee:	eeb0 2a60 	vmov.f32	s4, s1
-d0041ff2:	eef0 2a67 	vmov.f32	s5, s15
-d0041ff6:	f77f ade7 	ble.w	d0041bc8 <fillTriangleDitherBayer2Mode+0xdc>
-d0041ffa:	eeb0 8a65 	vmov.f32	s16, s11
-d0041ffe:	eef0 0a40 	vmov.f32	s1, s0
-d0042002:	eeb0 1a63 	vmov.f32	s2, s7
-d0042006:	eef0 7a64 	vmov.f32	s15, s9
-d004200a:	eef0 5a44 	vmov.f32	s11, s8
-d004200e:	eeb0 0a42 	vmov.f32	s0, s4
-d0042012:	eef0 3a66 	vmov.f32	s7, s13
-d0042016:	eef0 4a62 	vmov.f32	s9, s5
-d004201a:	eeb0 4a48 	vmov.f32	s8, s16
-d004201e:	eeb0 2a60 	vmov.f32	s4, s1
-d0042022:	eef0 6a41 	vmov.f32	s13, s2
-d0042026:	eef0 2a67 	vmov.f32	s5, s15
-d004202a:	e5cd      	b.n	d0041bc8 <fillTriangleDitherBayer2Mode+0xdc>
-d004202c:	eeb0 8a47 	vmov.f32	s16, s14
-d0042030:	eef0 0a43 	vmov.f32	s1, s6
-d0042034:	eeb0 1a45 	vmov.f32	s2, s10
-d0042038:	eef0 7a46 	vmov.f32	s15, s12
-d004203c:	eeb0 7a65 	vmov.f32	s14, s11
-d0042040:	eeb0 3a40 	vmov.f32	s6, s0
-d0042044:	eeb0 5a63 	vmov.f32	s10, s7
-d0042048:	eeb0 6a64 	vmov.f32	s12, s9
-d004204c:	eef0 5a48 	vmov.f32	s11, s16
-d0042050:	eeb0 0a60 	vmov.f32	s0, s1
-d0042054:	eef0 3a41 	vmov.f32	s7, s2
-d0042058:	eef0 4a67 	vmov.f32	s9, s15
-d004205c:	e5ae      	b.n	d0041bbc <fillTriangleDitherBayer2Mode+0xd0>
-d004205e:	ee76 6ae2 	vsub.f32	s13, s13, s5
-d0042062:	eef4 6ac9 	vcmpe.f32	s13, s18
-d0042066:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004206a:	f340 8207 	ble.w	d004247c <fillTriangleDitherBayer2Mode+0x990>
-d004206e:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
-d0042072:	ee79 9ac5 	vsub.f32	s19, s19, s10
-d0042076:	ee32 2a63 	vsub.f32	s4, s4, s7
-d004207a:	ee87 aaa6 	vdiv.f32	s20, s15, s13
-d004207e:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
-d0042082:	ee77 2ae2 	vsub.f32	s5, s15, s5
-d0042086:	ee07 1a90 	vmov	s15, r1
-d004208a:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d004208e:	ee77 7aa2 	vadd.f32	s15, s15, s5
-d0042092:	ee69 9a8a 	vmul.f32	s19, s19, s20
-d0042096:	ee22 aa0a 	vmul.f32	s20, s4, s20
-d004209a:	eea7 5aa9 	vfma.f32	s10, s15, s19
-d004209e:	eee7 3a8a 	vfma.f32	s7, s15, s20
-d00420a2:	ebc8 1208 	rsb	r2, r8, r8, lsl #4
-d00420a6:	4dd3      	ldr	r5, [pc, #844]	; (d00423f4 <fillTriangleDitherBayer2Mode+0x908>)
-d00420a8:	eb01 0381 	add.w	r3, r1, r1, lsl #2
-d00420ac:	48d2      	ldr	r0, [pc, #840]	; (d00423f8 <fillTriangleDitherBayer2Mode+0x90c>)
-d00420ae:	eb01 1242 	add.w	r2, r1, r2, lsl #5
-d00420b2:	682f      	ldr	r7, [r5, #0]
-d00420b4:	eb08 1383 	add.w	r3, r8, r3, lsl #6
-d00420b8:	f008 0503 	and.w	r5, r8, #3
-d00420bc:	eb00 0942 	add.w	r9, r0, r2, lsl #1
-d00420c0:	4ace      	ldr	r2, [pc, #824]	; (d00423fc <fillTriangleDitherBayer2Mode+0x910>)
-d00420c2:	441f      	add	r7, r3
-d00420c4:	f8cd 800c 	str.w	r8, [sp, #12]
-d00420c8:	eb02 0385 	add.w	r3, r2, r5, lsl #2
-d00420cc:	eeb6 2a00 	vmov.f32	s4, #96	; 0x3f000000  0.5
-d00420d0:	4698      	mov	r8, r3
-d00420d2:	e010      	b.n	d00420f6 <fillTriangleDitherBayer2Mode+0x60a>
-d00420d4:	ee07 3a90 	vmov	s15, r3
-d00420d8:	4419      	add	r1, r3
-d00420da:	eb03 0283 	add.w	r2, r3, r3, lsl #2
-d00420de:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d00420e2:	428c      	cmp	r4, r1
-d00420e4:	eb09 0943 	add.w	r9, r9, r3, lsl #1
-d00420e8:	eb07 1782 	add.w	r7, r7, r2, lsl #6
-d00420ec:	eea7 5aa9 	vfma.f32	s10, s15, s19
-d00420f0:	eee7 3a8a 	vfma.f32	s7, s15, s20
-d00420f4:	db62      	blt.n	d00421bc <fillTriangleDitherBayer2Mode+0x6d0>
-d00420f6:	eba4 0c01 	sub.w	ip, r4, r1
-d00420fa:	eeb4 5ac1 	vcmpe.f32	s10, s2
-d00420fe:	f10c 0301 	add.w	r3, ip, #1
-d0042102:	2b30      	cmp	r3, #48	; 0x30
-d0042104:	bfa8      	it	ge
-d0042106:	2330      	movge	r3, #48	; 0x30
-d0042108:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004210c:	d9e2      	bls.n	d00420d4 <fillTriangleDitherBayer2Mode+0x5e8>
-d004210e:	f1bc 0f00 	cmp.w	ip, #0
-d0042112:	eec3 7a85 	vdiv.f32	s15, s7, s10
-d0042116:	dd54      	ble.n	d00421c2 <fillTriangleDitherBayer2Mode+0x6d6>
-d0042118:	1e5a      	subs	r2, r3, #1
-d004211a:	ee06 2a90 	vmov	s13, r2
-d004211e:	eef0 2a45 	vmov.f32	s5, s10
-d0042122:	eef8 6ae6 	vcvt.f32.s32	s13, s13
-d0042126:	eee6 2aa9 	vfma.f32	s5, s13, s19
-d004212a:	eef4 2ac1 	vcmpe.f32	s5, s2
-d004212e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042132:	dd47      	ble.n	d00421c4 <fillTriangleDitherBayer2Mode+0x6d8>
-d0042134:	eeb0 ca63 	vmov.f32	s24, s7
-d0042138:	9a00      	ldr	r2, [sp, #0]
-d004213a:	2a0f      	cmp	r2, #15
-d004213c:	eea6 ca8a 	vfma.f32	s24, s13, s20
-d0042140:	eecc ba22 	vdiv.f32	s23, s24, s5
-d0042144:	ee7b bae7 	vsub.f32	s23, s23, s15
-d0042148:	eecb 2aa6 	vdiv.f32	s5, s23, s13
-d004214c:	dd3f      	ble.n	d00421ce <fillTriangleDitherBayer2Mode+0x6e2>
-d004214e:	f1a9 0602 	sub.w	r6, r9, #2
-d0042152:	2200      	movs	r2, #0
-d0042154:	fec7 6a84 	vmaxnm.f32	s13, s15, s8
-d0042158:	fec6 6ae1 	vminnm.f32	s13, s13, s3
-d004215c:	eb02 0082 	add.w	r0, r2, r2, lsl #2
-d0042160:	f836 ef02 	ldrh.w	lr, [r6, #2]!
-d0042164:	3201      	adds	r2, #1
-d0042166:	ee76 6a82 	vadd.f32	s13, s13, s4
-d004216a:	0185      	lsls	r5, r0, #6
-d004216c:	ee77 7aa2 	vadd.f32	s15, s15, s5
-d0042170:	eefc 6ae6 	vcvt.u32.f32	s13, s13
-d0042174:	ee16 0a90 	vmov	r0, s13
-d0042178:	b280      	uxth	r0, r0
-d004217a:	4586      	cmp	lr, r0
-d004217c:	d903      	bls.n	d0042186 <fillTriangleDitherBayer2Mode+0x69a>
-d004217e:	8030      	strh	r0, [r6, #0]
-d0042180:	f04f 0010 	mov.w	r0, #16
-d0042184:	5578      	strb	r0, [r7, r5]
-d0042186:	4293      	cmp	r3, r2
-d0042188:	dce4      	bgt.n	d0042154 <fillTriangleDitherBayer2Mode+0x668>
-d004218a:	f1bc 0f00 	cmp.w	ip, #0
-d004218e:	eb03 0283 	add.w	r2, r3, r3, lsl #2
-d0042192:	ea4f 0043 	mov.w	r0, r3, lsl #1
-d0042196:	ea4f 1282 	mov.w	r2, r2, lsl #6
-d004219a:	bfbc      	itt	lt
-d004219c:	2002      	movlt	r0, #2
-d004219e:	f44f 72a0 	movlt.w	r2, #320	; 0x140
-d00421a2:	4481      	add	r9, r0
-d00421a4:	4417      	add	r7, r2
-d00421a6:	ee07 3a90 	vmov	s15, r3
-d00421aa:	4419      	add	r1, r3
-d00421ac:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d00421b0:	428c      	cmp	r4, r1
-d00421b2:	eea7 5aa9 	vfma.f32	s10, s15, s19
-d00421b6:	eee7 3a8a 	vfma.f32	s7, s15, s20
-d00421ba:	da9c      	bge.n	d00420f6 <fillTriangleDitherBayer2Mode+0x60a>
-d00421bc:	f8dd 800c 	ldr.w	r8, [sp, #12]
-d00421c0:	e5d2      	b.n	d0041d68 <fillTriangleDitherBayer2Mode+0x27c>
-d00421c2:	d1f0      	bne.n	d00421a6 <fillTriangleDitherBayer2Mode+0x6ba>
-d00421c4:	9a00      	ldr	r2, [sp, #0]
-d00421c6:	eef0 2a44 	vmov.f32	s5, s8
-d00421ca:	2a0f      	cmp	r2, #15
-d00421cc:	dcbf      	bgt.n	d004214e <fillTriangleDitherBayer2Mode+0x662>
-d00421ce:	2a00      	cmp	r2, #0
-d00421d0:	f340 8136 	ble.w	d0042440 <fillTriangleDitherBayer2Mode+0x954>
-d00421d4:	9404      	str	r4, [sp, #16]
-d00421d6:	f1a9 0e02 	sub.w	lr, r9, #2
-d00421da:	2200      	movs	r2, #0
-d00421dc:	9c02      	ldr	r4, [sp, #8]
-d00421de:	fec7 6a84 	vmaxnm.f32	s13, s15, s8
-d00421e2:	fec6 6ae1 	vminnm.f32	s13, s13, s3
-d00421e6:	ee76 6a82 	vadd.f32	s13, s13, s4
-d00421ea:	f83e af02 	ldrh.w	sl, [lr, #2]!
-d00421ee:	188e      	adds	r6, r1, r2
-d00421f0:	eb02 0582 	add.w	r5, r2, r2, lsl #2
-d00421f4:	ee77 7aa2 	vadd.f32	s15, s15, s5
-d00421f8:	3201      	adds	r2, #1
-d00421fa:	eefc 6ae6 	vcvt.u32.f32	s13, s13
-d00421fe:	f006 0603 	and.w	r6, r6, #3
-d0042202:	01ad      	lsls	r5, r5, #6
-d0042204:	ee16 0a90 	vmov	r0, s13
-d0042208:	b280      	uxth	r0, r0
-d004220a:	4582      	cmp	sl, r0
-d004220c:	d908      	bls.n	d0042220 <fillTriangleDitherBayer2Mode+0x734>
-d004220e:	f818 6006 	ldrb.w	r6, [r8, r6]
-d0042212:	f8ae 0000 	strh.w	r0, [lr]
-d0042216:	42a6      	cmp	r6, r4
-d0042218:	bfac      	ite	ge
-d004221a:	4658      	movge	r0, fp
-d004221c:	2010      	movlt	r0, #16
-d004221e:	5578      	strb	r0, [r7, r5]
-d0042220:	4293      	cmp	r3, r2
-d0042222:	dcdc      	bgt.n	d00421de <fillTriangleDitherBayer2Mode+0x6f2>
-d0042224:	9c04      	ldr	r4, [sp, #16]
-d0042226:	e7b0      	b.n	d004218a <fillTriangleDitherBayer2Mode+0x69e>
-d0042228:	ee77 7ac4 	vsub.f32	s15, s15, s8
-d004222c:	ed9f 0a74 	vldr	s0, [pc, #464]	; d0042400 <fillTriangleDitherBayer2Mode+0x914>
-d0042230:	eef4 7ac0 	vcmpe.f32	s15, s0
-d0042234:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042238:	f340 8125 	ble.w	d0042486 <fillTriangleDitherBayer2Mode+0x99a>
-d004223c:	eeb7 9a00 	vmov.f32	s18, #112	; 0x3f800000  1.0
-d0042240:	ee32 2a66 	vsub.f32	s4, s4, s13
-d0042244:	ee71 1ac6 	vsub.f32	s3, s3, s12
-d0042248:	ee89 0a27 	vdiv.f32	s0, s18, s15
-d004224c:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
-d0042250:	ee37 4ac4 	vsub.f32	s8, s15, s8
-d0042254:	ee07 1a90 	vmov	s15, r1
-d0042258:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d004225c:	ee77 7a84 	vadd.f32	s15, s15, s8
-d0042260:	ee22 2a00 	vmul.f32	s4, s4, s0
-d0042264:	ee61 1a80 	vmul.f32	s3, s3, s0
-d0042268:	eee7 6a82 	vfma.f32	s13, s15, s4
-d004226c:	eea7 6aa1 	vfma.f32	s12, s15, s3
-d0042270:	ebc8 1208 	rsb	r2, r8, r8, lsl #4
-d0042274:	4d5f      	ldr	r5, [pc, #380]	; (d00423f4 <fillTriangleDitherBayer2Mode+0x908>)
-d0042276:	eb01 0381 	add.w	r3, r1, r1, lsl #2
-d004227a:	485f      	ldr	r0, [pc, #380]	; (d00423f8 <fillTriangleDitherBayer2Mode+0x90c>)
-d004227c:	eb01 1242 	add.w	r2, r1, r2, lsl #5
-d0042280:	682f      	ldr	r7, [r5, #0]
-d0042282:	eb08 1383 	add.w	r3, r8, r3, lsl #6
-d0042286:	f008 0503 	and.w	r5, r8, #3
-d004228a:	eb00 0942 	add.w	r9, r0, r2, lsl #1
-d004228e:	4a5b      	ldr	r2, [pc, #364]	; (d00423fc <fillTriangleDitherBayer2Mode+0x910>)
-d0042290:	441f      	add	r7, r3
-d0042292:	f8cd 8010 	str.w	r8, [sp, #16]
-d0042296:	eb02 0385 	add.w	r3, r2, r5, lsl #2
-d004229a:	eeb6 4a00 	vmov.f32	s8, #96	; 0x3f000000  0.5
-d004229e:	4698      	mov	r8, r3
-d00422a0:	e010      	b.n	d00422c4 <fillTriangleDitherBayer2Mode+0x7d8>
-d00422a2:	ee07 2a90 	vmov	s15, r2
-d00422a6:	4411      	add	r1, r2
-d00422a8:	eb02 0382 	add.w	r3, r2, r2, lsl #2
-d00422ac:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d00422b0:	428c      	cmp	r4, r1
-d00422b2:	eb09 0942 	add.w	r9, r9, r2, lsl #1
-d00422b6:	eb07 1783 	add.w	r7, r7, r3, lsl #6
-d00422ba:	eee7 6a82 	vfma.f32	s13, s15, s4
-d00422be:	eea7 6aa1 	vfma.f32	s12, s15, s3
-d00422c2:	db62      	blt.n	d004238a <fillTriangleDitherBayer2Mode+0x89e>
-d00422c4:	eba4 0c01 	sub.w	ip, r4, r1
-d00422c8:	eef4 6aed 	vcmpe.f32	s13, s27
-d00422cc:	f10c 0201 	add.w	r2, ip, #1
-d00422d0:	2a30      	cmp	r2, #48	; 0x30
-d00422d2:	bfa8      	it	ge
-d00422d4:	2230      	movge	r2, #48	; 0x30
-d00422d6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00422da:	d9e2      	bls.n	d00422a2 <fillTriangleDitherBayer2Mode+0x7b6>
-d00422dc:	f1bc 0f00 	cmp.w	ip, #0
-d00422e0:	eec6 7a26 	vdiv.f32	s15, s12, s13
-d00422e4:	dd54      	ble.n	d0042390 <fillTriangleDitherBayer2Mode+0x8a4>
-d00422e6:	1e53      	subs	r3, r2, #1
-d00422e8:	ee00 3a10 	vmov	s0, r3
-d00422ec:	eeb0 9a66 	vmov.f32	s18, s13
-d00422f0:	eeb8 0ac0 	vcvt.f32.s32	s0, s0
-d00422f4:	eea0 9a02 	vfma.f32	s18, s0, s4
-d00422f8:	eeb4 9aed 	vcmpe.f32	s18, s27
-d00422fc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042300:	dd47      	ble.n	d0042392 <fillTriangleDitherBayer2Mode+0x8a6>
-d0042302:	eeb0 fa46 	vmov.f32	s30, s12
-d0042306:	9b00      	ldr	r3, [sp, #0]
-d0042308:	2b0f      	cmp	r3, #15
-d004230a:	eea0 fa21 	vfma.f32	s30, s0, s3
-d004230e:	eecf 9a09 	vdiv.f32	s19, s30, s18
-d0042312:	ee79 9ae7 	vsub.f32	s19, s19, s15
-d0042316:	ee89 9a80 	vdiv.f32	s18, s19, s0
-d004231a:	dd3f      	ble.n	d004239c <fillTriangleDitherBayer2Mode+0x8b0>
-d004231c:	f1a9 0602 	sub.w	r6, r9, #2
-d0042320:	2000      	movs	r0, #0
-d0042322:	fe87 0aa2 	vmaxnm.f32	s0, s15, s5
-d0042326:	fe80 0a41 	vminnm.f32	s0, s0, s2
-d004232a:	eb00 0380 	add.w	r3, r0, r0, lsl #2
-d004232e:	f836 ef02 	ldrh.w	lr, [r6, #2]!
-d0042332:	3001      	adds	r0, #1
-d0042334:	ee30 0a04 	vadd.f32	s0, s0, s8
-d0042338:	019d      	lsls	r5, r3, #6
-d004233a:	ee77 7a89 	vadd.f32	s15, s15, s18
-d004233e:	eebc 0ac0 	vcvt.u32.f32	s0, s0
-d0042342:	ee10 3a10 	vmov	r3, s0
-d0042346:	b29b      	uxth	r3, r3
-d0042348:	459e      	cmp	lr, r3
-d004234a:	d903      	bls.n	d0042354 <fillTriangleDitherBayer2Mode+0x868>
-d004234c:	8033      	strh	r3, [r6, #0]
-d004234e:	f04f 0310 	mov.w	r3, #16
-d0042352:	557b      	strb	r3, [r7, r5]
-d0042354:	4282      	cmp	r2, r0
-d0042356:	dce4      	bgt.n	d0042322 <fillTriangleDitherBayer2Mode+0x836>
-d0042358:	f1bc 0f00 	cmp.w	ip, #0
-d004235c:	eb02 0382 	add.w	r3, r2, r2, lsl #2
-d0042360:	ea4f 0042 	mov.w	r0, r2, lsl #1
-d0042364:	ea4f 1383 	mov.w	r3, r3, lsl #6
-d0042368:	bfbc      	itt	lt
-d004236a:	2002      	movlt	r0, #2
-d004236c:	f44f 73a0 	movlt.w	r3, #320	; 0x140
-d0042370:	4481      	add	r9, r0
-d0042372:	441f      	add	r7, r3
-d0042374:	ee07 2a90 	vmov	s15, r2
-d0042378:	4411      	add	r1, r2
-d004237a:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d004237e:	428c      	cmp	r4, r1
-d0042380:	eee7 6a82 	vfma.f32	s13, s15, s4
-d0042384:	eea7 6aa1 	vfma.f32	s12, s15, s3
-d0042388:	da9c      	bge.n	d00422c4 <fillTriangleDitherBayer2Mode+0x7d8>
-d004238a:	f8dd 8010 	ldr.w	r8, [sp, #16]
-d004238e:	e5f2      	b.n	d0041f76 <fillTriangleDitherBayer2Mode+0x48a>
-d0042390:	d1f0      	bne.n	d0042374 <fillTriangleDitherBayer2Mode+0x888>
-d0042392:	9b00      	ldr	r3, [sp, #0]
-d0042394:	eeb0 9a62 	vmov.f32	s18, s5
-d0042398:	2b0f      	cmp	r3, #15
-d004239a:	dcbf      	bgt.n	d004231c <fillTriangleDitherBayer2Mode+0x830>
-d004239c:	2b00      	cmp	r3, #0
-d004239e:	dd31      	ble.n	d0042404 <fillTriangleDitherBayer2Mode+0x918>
-d00423a0:	9407      	str	r4, [sp, #28]
-d00423a2:	f1a9 0e02 	sub.w	lr, r9, #2
-d00423a6:	2000      	movs	r0, #0
-d00423a8:	9c02      	ldr	r4, [sp, #8]
-d00423aa:	fe87 0aa2 	vmaxnm.f32	s0, s15, s5
-d00423ae:	fe80 0a41 	vminnm.f32	s0, s0, s2
-d00423b2:	ee30 0a04 	vadd.f32	s0, s0, s8
-d00423b6:	f83e af02 	ldrh.w	sl, [lr, #2]!
-d00423ba:	180e      	adds	r6, r1, r0
-d00423bc:	eb00 0580 	add.w	r5, r0, r0, lsl #2
-d00423c0:	ee77 7a89 	vadd.f32	s15, s15, s18
-d00423c4:	3001      	adds	r0, #1
-d00423c6:	eebc 0ac0 	vcvt.u32.f32	s0, s0
-d00423ca:	f006 0603 	and.w	r6, r6, #3
-d00423ce:	01ad      	lsls	r5, r5, #6
-d00423d0:	ee10 3a10 	vmov	r3, s0
-d00423d4:	b29b      	uxth	r3, r3
-d00423d6:	459a      	cmp	sl, r3
-d00423d8:	d908      	bls.n	d00423ec <fillTriangleDitherBayer2Mode+0x900>
-d00423da:	f818 6006 	ldrb.w	r6, [r8, r6]
-d00423de:	f8ae 3000 	strh.w	r3, [lr]
-d00423e2:	42a6      	cmp	r6, r4
-d00423e4:	bfac      	ite	ge
-d00423e6:	465b      	movge	r3, fp
-d00423e8:	2310      	movlt	r3, #16
-d00423ea:	557b      	strb	r3, [r7, r5]
-d00423ec:	4282      	cmp	r2, r0
-d00423ee:	dcdc      	bgt.n	d00423aa <fillTriangleDitherBayer2Mode+0x8be>
-d00423f0:	9c07      	ldr	r4, [sp, #28]
-d00423f2:	e7b1      	b.n	d0042358 <fillTriangleDitherBayer2Mode+0x86c>
-d00423f4:	d012cd44 	.word	0xd012cd44
-d00423f8:	d0047660 	.word	0xd0047660
-d00423fc:	d0046d50 	.word	0xd0046d50
-d0042400:	38d1b717 	.word	0x38d1b717
-d0042404:	f1a9 0602 	sub.w	r6, r9, #2
-d0042408:	2000      	movs	r0, #0
-d004240a:	fe87 0aa2 	vmaxnm.f32	s0, s15, s5
-d004240e:	fe80 0a41 	vminnm.f32	s0, s0, s2
-d0042412:	ee30 0a04 	vadd.f32	s0, s0, s8
-d0042416:	eb00 0380 	add.w	r3, r0, r0, lsl #2
-d004241a:	f836 ef02 	ldrh.w	lr, [r6, #2]!
-d004241e:	ee77 7a89 	vadd.f32	s15, s15, s18
-d0042422:	019d      	lsls	r5, r3, #6
-d0042424:	3001      	adds	r0, #1
-d0042426:	eebc 0ac0 	vcvt.u32.f32	s0, s0
-d004242a:	ee10 3a10 	vmov	r3, s0
-d004242e:	b29b      	uxth	r3, r3
-d0042430:	459e      	cmp	lr, r3
-d0042432:	d902      	bls.n	d004243a <fillTriangleDitherBayer2Mode+0x94e>
-d0042434:	8033      	strh	r3, [r6, #0]
-d0042436:	f807 b005 	strb.w	fp, [r7, r5]
-d004243a:	4282      	cmp	r2, r0
-d004243c:	dce5      	bgt.n	d004240a <fillTriangleDitherBayer2Mode+0x91e>
-d004243e:	e78b      	b.n	d0042358 <fillTriangleDitherBayer2Mode+0x86c>
-d0042440:	f1a9 0602 	sub.w	r6, r9, #2
-d0042444:	2200      	movs	r2, #0
-d0042446:	fec7 6a84 	vmaxnm.f32	s13, s15, s8
-d004244a:	fec6 6ae1 	vminnm.f32	s13, s13, s3
-d004244e:	ee76 6a82 	vadd.f32	s13, s13, s4
-d0042452:	eb02 0082 	add.w	r0, r2, r2, lsl #2
-d0042456:	f836 ef02 	ldrh.w	lr, [r6, #2]!
-d004245a:	ee77 7aa2 	vadd.f32	s15, s15, s5
-d004245e:	0185      	lsls	r5, r0, #6
-d0042460:	3201      	adds	r2, #1
-d0042462:	eefc 6ae6 	vcvt.u32.f32	s13, s13
-d0042466:	ee16 0a90 	vmov	r0, s13
-d004246a:	b280      	uxth	r0, r0
-d004246c:	4586      	cmp	lr, r0
-d004246e:	d902      	bls.n	d0042476 <fillTriangleDitherBayer2Mode+0x98a>
-d0042470:	8030      	strh	r0, [r6, #0]
-d0042472:	f807 b005 	strb.w	fp, [r7, r5]
-d0042476:	4293      	cmp	r3, r2
-d0042478:	dce5      	bgt.n	d0042446 <fillTriangleDitherBayer2Mode+0x95a>
-d004247a:	e686      	b.n	d004218a <fillTriangleDitherBayer2Mode+0x69e>
-d004247c:	eeb0 aa44 	vmov.f32	s20, s8
-d0042480:	eef0 9a44 	vmov.f32	s19, s8
-d0042484:	e60d      	b.n	d00420a2 <fillTriangleDitherBayer2Mode+0x5b6>
-d0042486:	eef0 1a62 	vmov.f32	s3, s5
-d004248a:	eeb0 2a62 	vmov.f32	s4, s5
-d004248e:	e6ef      	b.n	d0042270 <fillTriangleDitherBayer2Mode+0x784>
+d0040dc8 <set3DRenderBuffer>:
+d0040dc8:	4b01      	ldr	r3, [pc, #4]	; (d0040dd0 <set3DRenderBuffer+0x8>)
+d0040dca:	6018      	str	r0, [r3, #0]
+d0040dcc:	4770      	bx	lr
+d0040dce:	bf00      	nop
+d0040dd0:	d012da64 	.word	0xd012da64
 
-d0042490 <vec3Add>:
-d0042490:	ee30 0a21 	vadd.f32	s0, s0, s3
-d0042494:	b08e      	sub	sp, #56	; 0x38
-d0042496:	ee70 0a82 	vadd.f32	s1, s1, s4
-d004249a:	ee31 1a22 	vadd.f32	s2, s2, s5
-d004249e:	b00e      	add	sp, #56	; 0x38
-d00424a0:	4770      	bx	lr
-d00424a2:	bf00      	nop
+d0040dd4 <putPixel>:
+d0040dd4:	f5b0 7ff0 	cmp.w	r0, #480	; 0x1e0
+d0040dd8:	d209      	bcs.n	d0040dee <putPixel+0x1a>
+d0040dda:	f5b1 7fa0 	cmp.w	r1, #320	; 0x140
+d0040dde:	d206      	bcs.n	d0040dee <putPixel+0x1a>
+d0040de0:	4b03      	ldr	r3, [pc, #12]	; (d0040df0 <putPixel+0x1c>)
+d0040de2:	eb00 0080 	add.w	r0, r0, r0, lsl #2
+d0040de6:	681b      	ldr	r3, [r3, #0]
+d0040de8:	eb03 1080 	add.w	r0, r3, r0, lsl #6
+d0040dec:	5442      	strb	r2, [r0, r1]
+d0040dee:	4770      	bx	lr
+d0040df0:	d012da64 	.word	0xd012da64
 
-d00424a4 <vec3Scale>:
-d00424a4:	ee20 0a21 	vmul.f32	s0, s0, s3
-d00424a8:	b08c      	sub	sp, #48	; 0x30
-d00424aa:	ee61 0aa0 	vmul.f32	s1, s3, s1
-d00424ae:	ee21 1a81 	vmul.f32	s2, s3, s2
-d00424b2:	b00c      	add	sp, #48	; 0x30
-d00424b4:	4770      	bx	lr
-d00424b6:	bf00      	nop
+d0040df4 <drawLine>:
+d0040df4:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d0040df8:	b085      	sub	sp, #20
+d0040dfa:	eba2 0c00 	sub.w	ip, r2, r0
+d0040dfe:	eba3 0901 	sub.w	r9, r3, r1
+d0040e02:	f240 1edf 	movw	lr, #479	; 0x1df
+d0040e06:	f89d 4038 	ldrb.w	r4, [sp, #56]	; 0x38
+d0040e0a:	f240 1a3f 	movw	sl, #319	; 0x13f
+d0040e0e:	f8df b07c 	ldr.w	fp, [pc, #124]	; d0040e8c <drawLine+0x98>
+d0040e12:	9401      	str	r4, [sp, #4]
+d0040e14:	4282      	cmp	r2, r0
+d0040e16:	bfcc      	ite	gt
+d0040e18:	2401      	movgt	r4, #1
+d0040e1a:	f04f 34ff 	movle.w	r4, #4294967295	; 0xffffffff
+d0040e1e:	9402      	str	r4, [sp, #8]
+d0040e20:	428b      	cmp	r3, r1
+d0040e22:	bfcc      	ite	gt
+d0040e24:	2401      	movgt	r4, #1
+d0040e26:	f04f 34ff 	movle.w	r4, #4294967295	; 0xffffffff
+d0040e2a:	f1bc 0f00 	cmp.w	ip, #0
+d0040e2e:	9403      	str	r4, [sp, #12]
+d0040e30:	bfb8      	it	lt
+d0040e32:	f1cc 0c00 	rsblt	ip, ip, #0
+d0040e36:	f1b9 0f00 	cmp.w	r9, #0
+d0040e3a:	bfb8      	it	lt
+d0040e3c:	f1c9 0900 	rsblt	r9, r9, #0
+d0040e40:	ebac 0409 	sub.w	r4, ip, r9
+d0040e44:	f1c9 0800 	rsb	r8, r9, #0
+d0040e48:	4570      	cmp	r0, lr
+d0040e4a:	eb00 0780 	add.w	r7, r0, r0, lsl #2
+d0040e4e:	ea4f 0644 	mov.w	r6, r4, lsl #1
+d0040e52:	d807      	bhi.n	d0040e64 <drawLine+0x70>
+d0040e54:	4551      	cmp	r1, sl
+d0040e56:	d805      	bhi.n	d0040e64 <drawLine+0x70>
+d0040e58:	f8db 5000 	ldr.w	r5, [fp]
+d0040e5c:	eb05 1587 	add.w	r5, r5, r7, lsl #6
+d0040e60:	9f01      	ldr	r7, [sp, #4]
+d0040e62:	546f      	strb	r7, [r5, r1]
+d0040e64:	4290      	cmp	r0, r2
+d0040e66:	d101      	bne.n	d0040e6c <drawLine+0x78>
+d0040e68:	4299      	cmp	r1, r3
+d0040e6a:	d00c      	beq.n	d0040e86 <drawLine+0x92>
+d0040e6c:	ebb8 0f44 	cmp.w	r8, r4, lsl #1
+d0040e70:	dc05      	bgt.n	d0040e7e <drawLine+0x8a>
+d0040e72:	9d02      	ldr	r5, [sp, #8]
+d0040e74:	45b4      	cmp	ip, r6
+d0040e76:	eba4 0409 	sub.w	r4, r4, r9
+d0040e7a:	4428      	add	r0, r5
+d0040e7c:	dbe4      	blt.n	d0040e48 <drawLine+0x54>
+d0040e7e:	9d03      	ldr	r5, [sp, #12]
+d0040e80:	4464      	add	r4, ip
+d0040e82:	4429      	add	r1, r5
+d0040e84:	e7e0      	b.n	d0040e48 <drawLine+0x54>
+d0040e86:	b005      	add	sp, #20
+d0040e88:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d0040e8c:	d012da64 	.word	0xd012da64
 
-d00424b8 <vec3Dot>:
-d00424b8:	ee20 2a82 	vmul.f32	s4, s1, s4
-d00424bc:	b086      	sub	sp, #24
-d00424be:	eea0 2a21 	vfma.f32	s4, s0, s3
-d00424c2:	eea1 2a22 	vfma.f32	s4, s2, s5
-d00424c6:	eeb0 0a42 	vmov.f32	s0, s4
-d00424ca:	b006      	add	sp, #24
-d00424cc:	4770      	bx	lr
-d00424ce:	bf00      	nop
+d0040e90 <shadeColor>:
+d0040e90:	2900      	cmp	r1, #0
+d0040e92:	db09      	blt.n	d0040ea8 <shadeColor+0x18>
+d0040e94:	2904      	cmp	r1, #4
+d0040e96:	dc09      	bgt.n	d0040eac <shadeColor+0x1c>
+d0040e98:	0109      	lsls	r1, r1, #4
+d0040e9a:	b2c9      	uxtb	r1, r1
+d0040e9c:	f000 000f 	and.w	r0, r0, #15
+d0040ea0:	3020      	adds	r0, #32
+d0040ea2:	4408      	add	r0, r1
+d0040ea4:	b2c0      	uxtb	r0, r0
+d0040ea6:	4770      	bx	lr
+d0040ea8:	2100      	movs	r1, #0
+d0040eaa:	e7f7      	b.n	d0040e9c <shadeColor+0xc>
+d0040eac:	2010      	movs	r0, #16
+d0040eae:	4770      	bx	lr
 
-d00424d0 <vec3Cross>:
-d00424d0:	eeb0 7a60 	vmov.f32	s14, s1
-d00424d4:	b08e      	sub	sp, #56	; 0x38
-d00424d6:	eef0 7a40 	vmov.f32	s15, s0
-d00424da:	ee62 0ac0 	vnmul.f32	s1, s5, s0
-d00424de:	ee61 6ac7 	vnmul.f32	s13, s3, s14
-d00424e2:	ee22 0a41 	vnmul.f32	s0, s4, s2
-d00424e6:	eee1 0a21 	vfma.f32	s1, s2, s3
-d00424ea:	eee7 6a82 	vfma.f32	s13, s15, s4
-d00424ee:	eea7 0a22 	vfma.f32	s0, s14, s5
-d00424f2:	eeb0 1a66 	vmov.f32	s2, s13
-d00424f6:	b00e      	add	sp, #56	; 0x38
-d00424f8:	4770      	bx	lr
-d00424fa:	bf00      	nop
+d0040eb0 <fillTriangleFlat>:
+d0040eb0:	eddf 7ad1 	vldr	s15, [pc, #836]	; d00411f8 <fillTriangleFlat+0x348>
+d0040eb4:	eef4 0ae7 	vcmpe.f32	s1, s15
+d0040eb8:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d0040ebc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0040ec0:	eeb4 1ae7 	vcmpe.f32	s2, s15
+d0040ec4:	ed2d 8b10 	vpush	{d8-d15}
+d0040ec8:	b089      	sub	sp, #36	; 0x24
+d0040eca:	9304      	str	r3, [sp, #16]
+d0040ecc:	bf94      	ite	ls
+d0040ece:	2301      	movls	r3, #1
+d0040ed0:	2300      	movhi	r3, #0
+d0040ed2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0040ed6:	9001      	str	r0, [sp, #4]
+d0040ed8:	9102      	str	r1, [sp, #8]
+d0040eda:	bf98      	it	ls
+d0040edc:	f043 0301 	orrls.w	r3, r3, #1
+d0040ee0:	9203      	str	r2, [sp, #12]
+d0040ee2:	f8bd 4090 	ldrh.w	r4, [sp, #144]	; 0x90
+d0040ee6:	f8bd 0094 	ldrh.w	r0, [sp, #148]	; 0x94
+d0040eea:	f8bd 1098 	ldrh.w	r1, [sp, #152]	; 0x98
+d0040eee:	f89d 209c 	ldrb.w	r2, [sp, #156]	; 0x9c
+d0040ef2:	2b00      	cmp	r3, #0
+d0040ef4:	f040 8154 	bne.w	d00411a0 <fillTriangleFlat+0x2f0>
+d0040ef8:	eeb4 0ae7 	vcmpe.f32	s0, s15
+d0040efc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0040f00:	bf94      	ite	ls
+d0040f02:	2701      	movls	r7, #1
+d0040f04:	2700      	movhi	r7, #0
+d0040f06:	f240 814b 	bls.w	d00411a0 <fillTriangleFlat+0x2f0>
+d0040f0a:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
+d0040f0e:	ee07 4a10 	vmov	s14, r4
+d0040f12:	eef6 6a00 	vmov.f32	s13, #96	; 0x3f000000  0.5
+d0040f16:	eeb8 7a47 	vcvt.f32.u32	s14, s14
+d0040f1a:	ee87 8a80 	vdiv.f32	s16, s15, s0
+d0040f1e:	ee87 2a81 	vdiv.f32	s4, s15, s2
+d0040f22:	ee87 0aa0 	vdiv.f32	s0, s15, s1
+d0040f26:	ee07 0a90 	vmov	s15, r0
+d0040f2a:	ee71 1aa6 	vadd.f32	s3, s3, s13
+d0040f2e:	eef8 5a67 	vcvt.f32.u32	s11, s15
+d0040f32:	ee07 1a90 	vmov	s15, r1
+d0040f36:	ee27 7a08 	vmul.f32	s14, s14, s16
+d0040f3a:	eeb8 3a67 	vcvt.f32.u32	s6, s15
+d0040f3e:	eefd 7ae1 	vcvt.s32.f32	s15, s3
+d0040f42:	ee23 3a02 	vmul.f32	s6, s6, s4
+d0040f46:	ee17 3a90 	vmov	r3, s15
+d0040f4a:	2b00      	cmp	r3, #0
+d0040f4c:	ee65 5a80 	vmul.f32	s11, s11, s0
+d0040f50:	f2c0 812d 	blt.w	d00411ae <fillTriangleFlat+0x2fe>
+d0040f54:	2b04      	cmp	r3, #4
+d0040f56:	f340 8128 	ble.w	d00411aa <fillTriangleFlat+0x2fa>
+d0040f5a:	2710      	movs	r7, #16
+d0040f5c:	eddd 7a02 	vldr	s15, [sp, #8]
+d0040f60:	eddd 6a23 	vldr	s13, [sp, #140]	; 0x8c
+d0040f64:	eeb8 5ae7 	vcvt.f32.s32	s10, s15
+d0040f68:	eddd 7a04 	vldr	s15, [sp, #16]
+d0040f6c:	eef8 6ae6 	vcvt.f32.s32	s13, s13
+d0040f70:	eef8 3ae7 	vcvt.f32.s32	s7, s15
+d0040f74:	eddd 7a01 	vldr	s15, [sp, #4]
+d0040f78:	eeb8 6ae7 	vcvt.f32.s32	s12, s15
+d0040f7c:	eddd 7a03 	vldr	s15, [sp, #12]
+d0040f80:	eeb4 5ae3 	vcmpe.f32	s10, s7
+d0040f84:	eef8 4ae7 	vcvt.f32.s32	s9, s15
+d0040f88:	eddd 7a22 	vldr	s15, [sp, #136]	; 0x88
+d0040f8c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0040f90:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0040f94:	f300 8111 	bgt.w	d00411ba <fillTriangleFlat+0x30a>
+d0040f98:	eeb4 5ae6 	vcmpe.f32	s10, s13
+d0040f9c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0040fa0:	f300 81ee 	bgt.w	d0041380 <fillTriangleFlat+0x4d0>
+d0040fa4:	eef4 3ae6 	vcmpe.f32	s7, s13
+d0040fa8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0040fac:	dd17      	ble.n	d0040fde <fillTriangleFlat+0x12e>
+d0040fae:	eeb0 1a65 	vmov.f32	s2, s11
+d0040fb2:	eef0 1a40 	vmov.f32	s3, s0
+d0040fb6:	eef0 2a63 	vmov.f32	s5, s7
+d0040fba:	eeb0 4a64 	vmov.f32	s8, s9
+d0040fbe:	eef0 5a43 	vmov.f32	s11, s6
+d0040fc2:	eeb0 0a42 	vmov.f32	s0, s4
+d0040fc6:	eef0 3a66 	vmov.f32	s7, s13
+d0040fca:	eef0 4a67 	vmov.f32	s9, s15
+d0040fce:	eeb0 3a41 	vmov.f32	s6, s2
+d0040fd2:	eeb0 2a61 	vmov.f32	s4, s3
+d0040fd6:	eef0 6a62 	vmov.f32	s13, s5
+d0040fda:	eef0 7a44 	vmov.f32	s15, s8
+d0040fde:	eeb6 4a00 	vmov.f32	s8, #96	; 0x3f000000  0.5
+d0040fe2:	ee75 2a04 	vadd.f32	s5, s10, s8
+d0040fe6:	ee36 4a84 	vadd.f32	s8, s13, s8
+d0040fea:	eefd 2ae2 	vcvt.s32.f32	s5, s5
+d0040fee:	eebd 4ac4 	vcvt.s32.f32	s8, s8
+d0040ff2:	ee12 3a90 	vmov	r3, s5
+d0040ff6:	ee14 2a10 	vmov	r2, s8
+d0040ffa:	4293      	cmp	r3, r2
+d0040ffc:	f000 80d0 	beq.w	d00411a0 <fillTriangleFlat+0x2f0>
+d0041000:	ee76 2ac5 	vsub.f32	s5, s13, s10
+d0041004:	ed9f 9a7c 	vldr	s18, [pc, #496]	; d00411f8 <fillTriangleFlat+0x348>
+d0041008:	eef4 2ac9 	vcmpe.f32	s5, s18
+d004100c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041010:	f240 80c6 	bls.w	d00411a0 <fillTriangleFlat+0x2f0>
+d0041014:	eef7 1a00 	vmov.f32	s3, #112	; 0x3f800000  1.0
+d0041018:	ee37 1ac6 	vsub.f32	s2, s15, s12
+d004101c:	ee72 0a48 	vsub.f32	s1, s4, s16
+d0041020:	ee81 4aa2 	vdiv.f32	s8, s3, s5
+d0041024:	ee73 2ac5 	vsub.f32	s5, s7, s10
+d0041028:	ee73 8a47 	vsub.f32	s17, s6, s14
+d004102c:	eef4 2ac9 	vcmpe.f32	s5, s18
+d0041030:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041034:	ee21 1a04 	vmul.f32	s2, s2, s8
+d0041038:	ee60 0a84 	vmul.f32	s1, s1, s8
+d004103c:	ee68 8a84 	vmul.f32	s17, s17, s8
+d0041040:	f300 80e2 	bgt.w	d0041208 <fillTriangleFlat+0x358>
+d0041044:	ee36 4ae3 	vsub.f32	s8, s13, s7
+d0041048:	eeb4 4ac9 	vcmpe.f32	s8, s18
+d004104c:	ed8d 4a01 	vstr	s8, [sp, #4]
+d0041050:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041054:	f340 80a4 	ble.w	d00411a0 <fillTriangleFlat+0x2f0>
+d0041058:	eec1 9a84 	vdiv.f32	s19, s3, s8
+d004105c:	eef4 2ac9 	vcmpe.f32	s5, s18
+d0041060:	ee77 7ae4 	vsub.f32	s15, s15, s9
+d0041064:	ee32 4a40 	vsub.f32	s8, s4, s0
+d0041068:	ee33 3a65 	vsub.f32	s6, s6, s11
+d004106c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041070:	ee67 eaa9 	vmul.f32	s29, s15, s19
+d0041074:	ee64 fa29 	vmul.f32	s31, s8, s19
+d0041078:	ee23 fa29 	vmul.f32	s30, s6, s19
+d004107c:	f300 8315 	bgt.w	d00416aa <fillTriangleFlat+0x7fa>
+d0041080:	eefd 7ae3 	vcvt.s32.f32	s15, s7
+d0041084:	edcd 7a02 	vstr	s15, [sp, #8]
+d0041088:	eefd 7ae6 	vcvt.s32.f32	s15, s13
+d004108c:	f240 133f 	movw	r3, #319	; 0x13f
+d0041090:	9a02      	ldr	r2, [sp, #8]
+d0041092:	ee17 ea90 	vmov	lr, s15
+d0041096:	ea22 7be2 	bic.w	fp, r2, r2, asr #31
+d004109a:	f10e 3eff 	add.w	lr, lr, #4294967295	; 0xffffffff
+d004109e:	459e      	cmp	lr, r3
+d00410a0:	bfa8      	it	ge
+d00410a2:	469e      	movge	lr, r3
+d00410a4:	45f3      	cmp	fp, lr
+d00410a6:	dc7b      	bgt.n	d00411a0 <fillTriangleFlat+0x2f0>
+d00410a8:	ee07 ba90 	vmov	s15, fp
+d00410ac:	eef6 6a00 	vmov.f32	s13, #96	; 0x3f000000  0.5
+d00410b0:	f10e 0e01 	add.w	lr, lr, #1
+d00410b4:	ed9f 9a50 	vldr	s18, [pc, #320]	; d00411f8 <fillTriangleFlat+0x348>
+d00410b8:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d00410bc:	eddf 1a4f 	vldr	s3, [pc, #316]	; d00411fc <fillTriangleFlat+0x34c>
+d00410c0:	ed9f 2a4f 	vldr	s4, [pc, #316]	; d0041200 <fillTriangleFlat+0x350>
+d00410c4:	eddf 9a4f 	vldr	s19, [pc, #316]	; d0041204 <fillTriangleFlat+0x354>
+d00410c8:	ee77 7aa6 	vadd.f32	s15, s15, s13
+d00410cc:	ee37 5ac5 	vsub.f32	s10, s15, s10
+d00410d0:	ee77 3ae3 	vsub.f32	s7, s15, s7
+d00410d4:	eea1 6a05 	vfma.f32	s12, s2, s10
+d00410d8:	eea0 8a85 	vfma.f32	s16, s1, s10
+d00410dc:	eea8 7a85 	vfma.f32	s14, s17, s10
+d00410e0:	eee3 4aae 	vfma.f32	s9, s7, s29
+d00410e4:	eea3 0aaf 	vfma.f32	s0, s7, s31
+d00410e8:	eeef 5a23 	vfma.f32	s11, s30, s7
+d00410ec:	e032      	b.n	d0041154 <fillTriangleFlat+0x2a4>
+d00410ee:	eef0 3a47 	vmov.f32	s7, s14
+d00410f2:	eef0 2a48 	vmov.f32	s5, s16
+d00410f6:	eef0 6a46 	vmov.f32	s13, s12
+d00410fa:	eeb0 3a65 	vmov.f32	s6, s11
+d00410fe:	eeb0 5a40 	vmov.f32	s10, s0
+d0041102:	eeb0 4a64 	vmov.f32	s8, s9
+d0041106:	fefa 7a66 	vrintp.f32	s15, s13
+d004110a:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+d004110e:	f240 13df 	movw	r3, #479	; 0x1df
+d0041112:	ee17 6a90 	vmov	r6, s15
+d0041116:	fefa 7a44 	vrintp.f32	s15, s8
+d004111a:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+d004111e:	3e01      	subs	r6, #1
+d0041120:	ee17 4a90 	vmov	r4, s15
+d0041124:	429e      	cmp	r6, r3
+d0041126:	ea24 74e4 	bic.w	r4, r4, r4, asr #31
+d004112a:	bfa8      	it	ge
+d004112c:	461e      	movge	r6, r3
+d004112e:	42a6      	cmp	r6, r4
+d0041130:	f280 8158 	bge.w	d00413e4 <fillTriangleFlat+0x534>
+d0041134:	f10b 0b01 	add.w	fp, fp, #1
+d0041138:	ee36 6a01 	vadd.f32	s12, s12, s2
+d004113c:	ee38 8a20 	vadd.f32	s16, s16, s1
+d0041140:	45f3      	cmp	fp, lr
+d0041142:	ee37 7a28 	vadd.f32	s14, s14, s17
+d0041146:	ee74 4aae 	vadd.f32	s9, s9, s29
+d004114a:	ee30 0a2f 	vadd.f32	s0, s0, s31
+d004114e:	ee75 5a8f 	vadd.f32	s11, s11, s30
+d0041152:	d025      	beq.n	d00411a0 <fillTriangleFlat+0x2f0>
+d0041154:	eeb4 6ae4 	vcmpe.f32	s12, s9
+d0041158:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004115c:	dcc7      	bgt.n	d00410ee <fillTriangleFlat+0x23e>
+d004115e:	eef0 3a65 	vmov.f32	s7, s11
+d0041162:	eef0 2a40 	vmov.f32	s5, s0
+d0041166:	eef0 6a64 	vmov.f32	s13, s9
+d004116a:	eeb0 3a47 	vmov.f32	s6, s14
+d004116e:	eeb0 5a48 	vmov.f32	s10, s16
+d0041172:	eeb0 4a46 	vmov.f32	s8, s12
+d0041176:	e7c6      	b.n	d0041106 <fillTriangleFlat+0x256>
+d0041178:	eddd 6a03 	vldr	s13, [sp, #12]
+d004117c:	eddd 4a04 	vldr	s9, [sp, #16]
+d0041180:	ed9d 7a05 	vldr	s14, [sp, #20]
+d0041184:	ed9d 8a06 	vldr	s16, [sp, #24]
+d0041188:	ed9d 5a07 	vldr	s10, [sp, #28]
+d004118c:	eddf 7a1a 	vldr	s15, [pc, #104]	; d00411f8 <fillTriangleFlat+0x348>
+d0041190:	ed9d 4a01 	vldr	s8, [sp, #4]
+d0041194:	eeb4 4ae7 	vcmpe.f32	s8, s15
+d0041198:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004119c:	f73f af74 	bgt.w	d0041088 <fillTriangleFlat+0x1d8>
+d00411a0:	b009      	add	sp, #36	; 0x24
+d00411a2:	ecbd 8b10 	vpop	{d8-d15}
+d00411a6:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d00411aa:	011b      	lsls	r3, r3, #4
+d00411ac:	b2df      	uxtb	r7, r3
+d00411ae:	f002 020f 	and.w	r2, r2, #15
+d00411b2:	3220      	adds	r2, #32
+d00411b4:	4417      	add	r7, r2
+d00411b6:	b2ff      	uxtb	r7, r7
+d00411b8:	e6d0      	b.n	d0040f5c <fillTriangleFlat+0xac>
+d00411ba:	eef4 3ae6 	vcmpe.f32	s7, s13
+d00411be:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00411c2:	f340 80f6 	ble.w	d00413b2 <fillTriangleFlat+0x502>
+d00411c6:	eeb0 1a43 	vmov.f32	s2, s6
+d00411ca:	eef0 1a42 	vmov.f32	s3, s4
+d00411ce:	eef0 2a66 	vmov.f32	s5, s13
+d00411d2:	eeb0 4a67 	vmov.f32	s8, s15
+d00411d6:	eeb0 3a47 	vmov.f32	s6, s14
+d00411da:	eeb0 2a48 	vmov.f32	s4, s16
+d00411de:	eef0 6a45 	vmov.f32	s13, s10
+d00411e2:	eef0 7a46 	vmov.f32	s15, s12
+d00411e6:	eeb0 7a41 	vmov.f32	s14, s2
+d00411ea:	eeb0 8a61 	vmov.f32	s16, s3
+d00411ee:	eeb0 5a62 	vmov.f32	s10, s5
+d00411f2:	eeb0 6a44 	vmov.f32	s12, s8
+d00411f6:	e6f2      	b.n	d0040fde <fillTriangleFlat+0x12e>
+d00411f8:	38d1b717 	.word	0x38d1b717
+d00411fc:	33d6bf95 	.word	0x33d6bf95
+d0041200:	00000000 	.word	0x00000000
+d0041204:	477fff00 	.word	0x477fff00
+d0041208:	ee81 4aa2 	vdiv.f32	s8, s3, s5
+d004120c:	ee76 aae3 	vsub.f32	s21, s13, s7
+d0041210:	ee34 aac6 	vsub.f32	s20, s9, s12
+d0041214:	ee70 9a48 	vsub.f32	s19, s0, s16
+d0041218:	ee75 2ac7 	vsub.f32	s5, s11, s14
+d004121c:	edcd aa01 	vstr	s21, [sp, #4]
+d0041220:	eef4 aac9 	vcmpe.f32	s21, s18
+d0041224:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041228:	ee2a aa04 	vmul.f32	s20, s20, s8
+d004122c:	ee69 9a84 	vmul.f32	s19, s19, s8
+d0041230:	ee22 4a84 	vmul.f32	s8, s5, s8
+d0041234:	eeb0 ba4a 	vmov.f32	s22, s20
+d0041238:	eef0 da44 	vmov.f32	s27, s8
+d004123c:	f340 822e 	ble.w	d004169c <fillTriangleFlat+0x7ec>
+d0041240:	eec1 2aaa 	vdiv.f32	s5, s3, s21
+d0041244:	ee77 7ae4 	vsub.f32	s15, s15, s9
+d0041248:	ee32 4a40 	vsub.f32	s8, s4, s0
+d004124c:	ee33 3a65 	vsub.f32	s6, s6, s11
+d0041250:	ee67 eaa2 	vmul.f32	s29, s15, s5
+d0041254:	ee64 fa22 	vmul.f32	s31, s8, s5
+d0041258:	ee23 fa22 	vmul.f32	s30, s6, s5
+d004125c:	eefd 7ae3 	vcvt.s32.f32	s15, s7
+d0041260:	f240 133f 	movw	r3, #319	; 0x13f
+d0041264:	ee17 2a90 	vmov	r2, s15
+d0041268:	edcd 7a02 	vstr	s15, [sp, #8]
+d004126c:	eefd 7ac5 	vcvt.s32.f32	s15, s10
+d0041270:	f102 3bff 	add.w	fp, r2, #4294967295	; 0xffffffff
+d0041274:	ee17 aa90 	vmov	sl, s15
+d0041278:	459b      	cmp	fp, r3
+d004127a:	ea2a 7aea 	bic.w	sl, sl, sl, asr #31
+d004127e:	bfa8      	it	ge
+d0041280:	469b      	movge	fp, r3
+d0041282:	45d3      	cmp	fp, sl
+d0041284:	db82      	blt.n	d004118c <fillTriangleFlat+0x2dc>
+d0041286:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
+d004128a:	f10b 0b01 	add.w	fp, fp, #1
+d004128e:	eeb0 aa46 	vmov.f32	s20, s12
+d0041292:	ed1f da26 	vldr	s26, [pc, #-152]	; d00411fc <fillTriangleFlat+0x34c>
+d0041296:	eef0 aa46 	vmov.f32	s21, s12
+d004129a:	ed1f 3a27 	vldr	s6, [pc, #-156]	; d0041200 <fillTriangleFlat+0x350>
+d004129e:	ee37 4ac5 	vsub.f32	s8, s15, s10
+d00412a2:	ee07 aa90 	vmov	s15, sl
+d00412a6:	eef0 ca48 	vmov.f32	s25, s16
+d00412aa:	ed1f 2a2a 	vldr	s4, [pc, #-168]	; d0041204 <fillTriangleFlat+0x354>
+d00412ae:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d00412b2:	edcd 6a03 	vstr	s13, [sp, #12]
+d00412b6:	eeb0 ca47 	vmov.f32	s24, s14
+d00412ba:	edcd 4a04 	vstr	s9, [sp, #16]
+d00412be:	eeb0 9a4b 	vmov.f32	s18, s22
+d00412c2:	ed8d 7a05 	vstr	s14, [sp, #20]
+d00412c6:	ee77 7a84 	vadd.f32	s15, s15, s8
+d00412ca:	ed8d 8a06 	vstr	s16, [sp, #24]
+d00412ce:	eef0 ba48 	vmov.f32	s23, s16
+d00412d2:	ed8d 5a07 	vstr	s10, [sp, #28]
+d00412d6:	eea7 aa8b 	vfma.f32	s20, s15, s22
+d00412da:	eeb0 ba47 	vmov.f32	s22, s14
+d00412de:	eee1 aa27 	vfma.f32	s21, s2, s15
+d00412e2:	eee0 caa7 	vfma.f32	s25, s1, s15
+d00412e6:	eea8 caa7 	vfma.f32	s24, s17, s15
+d00412ea:	eee7 baa9 	vfma.f32	s23, s15, s19
+d00412ee:	eea7 baad 	vfma.f32	s22, s15, s27
+d00412f2:	e033      	b.n	d004135c <fillTriangleFlat+0x4ac>
+d00412f4:	eeb0 4a4c 	vmov.f32	s8, s24
+d00412f8:	eef0 4a6c 	vmov.f32	s9, s25
+d00412fc:	eef0 7a6a 	vmov.f32	s15, s21
+d0041300:	eeb0 5a4b 	vmov.f32	s10, s22
+d0041304:	eeb0 7a6b 	vmov.f32	s14, s23
+d0041308:	eef0 6a4a 	vmov.f32	s13, s20
+d004130c:	fefa 2a67 	vrintp.f32	s5, s15
+d0041310:	eefd 2ae2 	vcvt.s32.f32	s5, s5
+d0041314:	f240 13df 	movw	r3, #479	; 0x1df
+d0041318:	ee12 6a90 	vmov	r6, s5
+d004131c:	fefa 2a66 	vrintp.f32	s5, s13
+d0041320:	eefd 2ae2 	vcvt.s32.f32	s5, s5
+d0041324:	3e01      	subs	r6, #1
+d0041326:	ee12 4a90 	vmov	r4, s5
+d004132a:	429e      	cmp	r6, r3
+d004132c:	ea24 74e4 	bic.w	r4, r4, r4, asr #31
+d0041330:	bfa8      	it	ge
+d0041332:	461e      	movge	r6, r3
+d0041334:	42a6      	cmp	r6, r4
+d0041336:	f280 80fd 	bge.w	d0041534 <fillTriangleFlat+0x684>
+d004133a:	f10a 0a01 	add.w	sl, sl, #1
+d004133e:	ee7a aa81 	vadd.f32	s21, s21, s2
+d0041342:	ee7c caa0 	vadd.f32	s25, s25, s1
+d0041346:	45da      	cmp	sl, fp
+d0041348:	ee3c ca28 	vadd.f32	s24, s24, s17
+d004134c:	ee3a aa09 	vadd.f32	s20, s20, s18
+d0041350:	ee7b baa9 	vadd.f32	s23, s23, s19
+d0041354:	ee3b ba2d 	vadd.f32	s22, s22, s27
+d0041358:	f43f af0e 	beq.w	d0041178 <fillTriangleFlat+0x2c8>
+d004135c:	eef4 aaca 	vcmpe.f32	s21, s20
+d0041360:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041364:	dcc6      	bgt.n	d00412f4 <fillTriangleFlat+0x444>
+d0041366:	eeb0 4a4b 	vmov.f32	s8, s22
+d004136a:	eef0 4a6b 	vmov.f32	s9, s23
+d004136e:	eef0 7a4a 	vmov.f32	s15, s20
+d0041372:	eeb0 5a4c 	vmov.f32	s10, s24
+d0041376:	eeb0 7a6c 	vmov.f32	s14, s25
+d004137a:	eef0 6a6a 	vmov.f32	s13, s21
+d004137e:	e7c5      	b.n	d004130c <fillTriangleFlat+0x45c>
+d0041380:	eeb0 1a47 	vmov.f32	s2, s14
+d0041384:	eef0 1a48 	vmov.f32	s3, s16
+d0041388:	eef0 2a45 	vmov.f32	s5, s10
+d004138c:	eeb0 4a46 	vmov.f32	s8, s12
+d0041390:	eeb0 7a43 	vmov.f32	s14, s6
+d0041394:	eeb0 8a42 	vmov.f32	s16, s4
+d0041398:	eeb0 5a66 	vmov.f32	s10, s13
+d004139c:	eeb0 6a67 	vmov.f32	s12, s15
+d00413a0:	eeb0 3a41 	vmov.f32	s6, s2
+d00413a4:	eeb0 2a61 	vmov.f32	s4, s3
+d00413a8:	eef0 6a62 	vmov.f32	s13, s5
+d00413ac:	eef0 7a44 	vmov.f32	s15, s8
+d00413b0:	e5f8      	b.n	d0040fa4 <fillTriangleFlat+0xf4>
+d00413b2:	eeb0 1a47 	vmov.f32	s2, s14
+d00413b6:	eef0 1a48 	vmov.f32	s3, s16
+d00413ba:	eef0 2a45 	vmov.f32	s5, s10
+d00413be:	eeb0 4a46 	vmov.f32	s8, s12
+d00413c2:	eeb0 7a65 	vmov.f32	s14, s11
+d00413c6:	eeb0 8a40 	vmov.f32	s16, s0
+d00413ca:	eeb0 5a63 	vmov.f32	s10, s7
+d00413ce:	eeb0 6a64 	vmov.f32	s12, s9
+d00413d2:	eef0 5a41 	vmov.f32	s11, s2
+d00413d6:	eeb0 0a61 	vmov.f32	s0, s3
+d00413da:	eef0 3a62 	vmov.f32	s7, s5
+d00413de:	eef0 4a44 	vmov.f32	s9, s8
+d00413e2:	e5df      	b.n	d0040fa4 <fillTriangleFlat+0xf4>
+d00413e4:	ee76 6ac4 	vsub.f32	s13, s13, s8
+d00413e8:	eef4 6ac9 	vcmpe.f32	s13, s18
+d00413ec:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00413f0:	f340 814f 	ble.w	d0041692 <fillTriangleFlat+0x7e2>
+d00413f4:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
+d00413f8:	ee72 2ac5 	vsub.f32	s5, s5, s10
+d00413fc:	ee73 3ac3 	vsub.f32	s7, s7, s6
+d0041400:	ee87 aaa6 	vdiv.f32	s20, s15, s13
+d0041404:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
+d0041408:	ee37 4ac4 	vsub.f32	s8, s15, s8
+d004140c:	ee07 4a90 	vmov	s15, r4
+d0041410:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0041414:	ee77 7a84 	vadd.f32	s15, s15, s8
+d0041418:	ee62 2a8a 	vmul.f32	s5, s5, s20
+d004141c:	ee23 aa8a 	vmul.f32	s20, s7, s20
+d0041420:	eea7 5aa2 	vfma.f32	s10, s15, s5
+d0041424:	eea7 3a8a 	vfma.f32	s6, s15, s20
+d0041428:	ebcb 180b 	rsb	r8, fp, fp, lsl #4
+d004142c:	4ba3      	ldr	r3, [pc, #652]	; (d00416bc <fillTriangleFlat+0x80c>)
+d004142e:	eb04 0c84 	add.w	ip, r4, r4, lsl #2
+d0041432:	4aa3      	ldr	r2, [pc, #652]	; (d00416c0 <fillTriangleFlat+0x810>)
+d0041434:	681b      	ldr	r3, [r3, #0]
+d0041436:	eb04 1848 	add.w	r8, r4, r8, lsl #5
+d004143a:	eb0b 1c8c 	add.w	ip, fp, ip, lsl #6
+d004143e:	eef6 3a00 	vmov.f32	s7, #96	; 0x3f000000  0.5
+d0041442:	eb02 0848 	add.w	r8, r2, r8, lsl #1
+d0041446:	449c      	add	ip, r3
+d0041448:	e011      	b.n	d004146e <fillTriangleFlat+0x5be>
+d004144a:	ee07 1a90 	vmov	s15, r1
+d004144e:	eb01 0381 	add.w	r3, r1, r1, lsl #2
+d0041452:	eb08 0841 	add.w	r8, r8, r1, lsl #1
+d0041456:	440c      	add	r4, r1
+d0041458:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d004145c:	eb0c 1c83 	add.w	ip, ip, r3, lsl #6
+d0041460:	eea7 5aa2 	vfma.f32	s10, s15, s5
+d0041464:	eea7 3a8a 	vfma.f32	s6, s15, s20
+d0041468:	42a6      	cmp	r6, r4
+d004146a:	f6ff ae63 	blt.w	d0041134 <fillTriangleFlat+0x284>
+d004146e:	eba6 0904 	sub.w	r9, r6, r4
+d0041472:	eeb4 5ae1 	vcmpe.f32	s10, s3
+d0041476:	f109 0101 	add.w	r1, r9, #1
+d004147a:	2930      	cmp	r1, #48	; 0x30
+d004147c:	bfa8      	it	ge
+d004147e:	2130      	movge	r1, #48	; 0x30
+d0041480:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041484:	d9e1      	bls.n	d004144a <fillTriangleFlat+0x59a>
+d0041486:	f1b9 0f00 	cmp.w	r9, #0
+d004148a:	eec3 6a05 	vdiv.f32	s13, s6, s10
+d004148e:	dd4d      	ble.n	d004152c <fillTriangleFlat+0x67c>
+d0041490:	1e4b      	subs	r3, r1, #1
+d0041492:	ee07 3a90 	vmov	s15, r3
+d0041496:	eeb0 4a45 	vmov.f32	s8, s10
+d004149a:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d004149e:	eea7 4aa2 	vfma.f32	s8, s15, s5
+d00414a2:	eeb4 4ae1 	vcmpe.f32	s8, s3
+d00414a6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00414aa:	dd40      	ble.n	d004152e <fillTriangleFlat+0x67e>
+d00414ac:	eeb0 ba43 	vmov.f32	s22, s6
+d00414b0:	eea7 ba8a 	vfma.f32	s22, s15, s20
+d00414b4:	eecb aa04 	vdiv.f32	s21, s22, s8
+d00414b8:	ee7a aae6 	vsub.f32	s21, s21, s13
+d00414bc:	ee8a 4aa7 	vdiv.f32	s8, s21, s15
+d00414c0:	f1a8 0002 	sub.w	r0, r8, #2
+d00414c4:	2300      	movs	r3, #0
+d00414c6:	fec6 7a82 	vmaxnm.f32	s15, s13, s4
+d00414ca:	fec7 7ae9 	vminnm.f32	s15, s15, s19
+d00414ce:	eb03 0283 	add.w	r2, r3, r3, lsl #2
+d00414d2:	f830 5f02 	ldrh.w	r5, [r0, #2]!
+d00414d6:	3301      	adds	r3, #1
+d00414d8:	ee77 7aa3 	vadd.f32	s15, s15, s7
+d00414dc:	ea4f 1a82 	mov.w	sl, r2, lsl #6
+d00414e0:	ee76 6a84 	vadd.f32	s13, s13, s8
+d00414e4:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+d00414e8:	ee17 2a90 	vmov	r2, s15
+d00414ec:	b292      	uxth	r2, r2
+d00414ee:	4295      	cmp	r5, r2
+d00414f0:	d902      	bls.n	d00414f8 <fillTriangleFlat+0x648>
+d00414f2:	8002      	strh	r2, [r0, #0]
+d00414f4:	f80c 700a 	strb.w	r7, [ip, sl]
+d00414f8:	4299      	cmp	r1, r3
+d00414fa:	dce4      	bgt.n	d00414c6 <fillTriangleFlat+0x616>
+d00414fc:	f1b9 0f00 	cmp.w	r9, #0
+d0041500:	eb01 0381 	add.w	r3, r1, r1, lsl #2
+d0041504:	ea4f 0241 	mov.w	r2, r1, lsl #1
+d0041508:	ea4f 1383 	mov.w	r3, r3, lsl #6
+d004150c:	bfbc      	itt	lt
+d004150e:	2202      	movlt	r2, #2
+d0041510:	f44f 73a0 	movlt.w	r3, #320	; 0x140
+d0041514:	4490      	add	r8, r2
+d0041516:	449c      	add	ip, r3
+d0041518:	ee07 1a90 	vmov	s15, r1
+d004151c:	440c      	add	r4, r1
+d004151e:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0041522:	eea7 5aa2 	vfma.f32	s10, s15, s5
+d0041526:	eea7 3a8a 	vfma.f32	s6, s15, s20
+d004152a:	e79d      	b.n	d0041468 <fillTriangleFlat+0x5b8>
+d004152c:	d1f4      	bne.n	d0041518 <fillTriangleFlat+0x668>
+d004152e:	eeb0 4a42 	vmov.f32	s8, s4
+d0041532:	e7c5      	b.n	d00414c0 <fillTriangleFlat+0x610>
+d0041534:	ee77 7ae6 	vsub.f32	s15, s15, s13
+d0041538:	eddf 2a62 	vldr	s5, [pc, #392]	; d00416c4 <fillTriangleFlat+0x814>
+d004153c:	eef4 7ae2 	vcmpe.f32	s15, s5
+d0041540:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041544:	f340 80a0 	ble.w	d0041688 <fillTriangleFlat+0x7d8>
+d0041548:	eef7 1a00 	vmov.f32	s3, #112	; 0x3f800000  1.0
+d004154c:	ee74 4ac7 	vsub.f32	s9, s9, s14
+d0041550:	ee34 4a45 	vsub.f32	s8, s8, s10
+d0041554:	eec1 2aa7 	vdiv.f32	s5, s3, s15
+d0041558:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
+d004155c:	ee77 6ae6 	vsub.f32	s13, s15, s13
+d0041560:	ee07 4a90 	vmov	s15, r4
+d0041564:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0041568:	ee77 7aa6 	vadd.f32	s15, s15, s13
+d004156c:	ee64 4aa2 	vmul.f32	s9, s9, s5
+d0041570:	ee24 4a22 	vmul.f32	s8, s8, s5
+d0041574:	eea7 7aa4 	vfma.f32	s14, s15, s9
+d0041578:	eea7 5a84 	vfma.f32	s10, s15, s8
+d004157c:	ebca 1e0a 	rsb	lr, sl, sl, lsl #4
+d0041580:	4b4e      	ldr	r3, [pc, #312]	; (d00416bc <fillTriangleFlat+0x80c>)
+d0041582:	eb04 0c84 	add.w	ip, r4, r4, lsl #2
+d0041586:	4a4e      	ldr	r2, [pc, #312]	; (d00416c0 <fillTriangleFlat+0x810>)
+d0041588:	681b      	ldr	r3, [r3, #0]
+d004158a:	eb04 1e4e 	add.w	lr, r4, lr, lsl #5
+d004158e:	eb0a 1c8c 	add.w	ip, sl, ip, lsl #6
+d0041592:	eef6 6a00 	vmov.f32	s13, #96	; 0x3f000000  0.5
+d0041596:	eb02 0e4e 	add.w	lr, r2, lr, lsl #1
+d004159a:	449c      	add	ip, r3
+d004159c:	e011      	b.n	d00415c2 <fillTriangleFlat+0x712>
+d004159e:	ee07 1a90 	vmov	s15, r1
+d00415a2:	eb01 0381 	add.w	r3, r1, r1, lsl #2
+d00415a6:	eb0e 0e41 	add.w	lr, lr, r1, lsl #1
+d00415aa:	440c      	add	r4, r1
+d00415ac:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d00415b0:	eb0c 1c83 	add.w	ip, ip, r3, lsl #6
+d00415b4:	eea7 7aa4 	vfma.f32	s14, s15, s9
+d00415b8:	eea7 5a84 	vfma.f32	s10, s15, s8
+d00415bc:	42b4      	cmp	r4, r6
+d00415be:	f73f aebc 	bgt.w	d004133a <fillTriangleFlat+0x48a>
+d00415c2:	eba6 0804 	sub.w	r8, r6, r4
+d00415c6:	eeb4 7acd 	vcmpe.f32	s14, s26
+d00415ca:	f108 0101 	add.w	r1, r8, #1
+d00415ce:	2930      	cmp	r1, #48	; 0x30
+d00415d0:	bfa8      	it	ge
+d00415d2:	2130      	movge	r1, #48	; 0x30
+d00415d4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00415d8:	d9e1      	bls.n	d004159e <fillTriangleFlat+0x6ee>
+d00415da:	f1b8 0f00 	cmp.w	r8, #0
+d00415de:	eec5 2a07 	vdiv.f32	s5, s10, s14
+d00415e2:	dd4d      	ble.n	d0041680 <fillTriangleFlat+0x7d0>
+d00415e4:	1e4b      	subs	r3, r1, #1
+d00415e6:	ee07 3a90 	vmov	s15, r3
+d00415ea:	eef0 1a47 	vmov.f32	s3, s14
+d00415ee:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d00415f2:	eee7 1aa4 	vfma.f32	s3, s15, s9
+d00415f6:	eef4 1acd 	vcmpe.f32	s3, s26
+d00415fa:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00415fe:	dd40      	ble.n	d0041682 <fillTriangleFlat+0x7d2>
+d0041600:	eeb0 ea45 	vmov.f32	s28, s10
+d0041604:	eea7 ea84 	vfma.f32	s28, s15, s8
+d0041608:	ee8e 8a21 	vdiv.f32	s16, s28, s3
+d004160c:	ee38 8a62 	vsub.f32	s16, s16, s5
+d0041610:	eec8 1a27 	vdiv.f32	s3, s16, s15
+d0041614:	f1ae 0002 	sub.w	r0, lr, #2
+d0041618:	2200      	movs	r2, #0
+d004161a:	fec2 7a83 	vmaxnm.f32	s15, s5, s6
+d004161e:	fec7 7ac2 	vminnm.f32	s15, s15, s4
+d0041622:	eb02 0382 	add.w	r3, r2, r2, lsl #2
+d0041626:	f830 5f02 	ldrh.w	r5, [r0, #2]!
+d004162a:	3201      	adds	r2, #1
+d004162c:	ee77 7aa6 	vadd.f32	s15, s15, s13
+d0041630:	ea4f 1983 	mov.w	r9, r3, lsl #6
+d0041634:	ee72 2aa1 	vadd.f32	s5, s5, s3
+d0041638:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+d004163c:	ee17 3a90 	vmov	r3, s15
+d0041640:	b29b      	uxth	r3, r3
+d0041642:	429d      	cmp	r5, r3
+d0041644:	d902      	bls.n	d004164c <fillTriangleFlat+0x79c>
+d0041646:	8003      	strh	r3, [r0, #0]
+d0041648:	f80c 7009 	strb.w	r7, [ip, r9]
+d004164c:	428a      	cmp	r2, r1
+d004164e:	dbe4      	blt.n	d004161a <fillTriangleFlat+0x76a>
+d0041650:	f1b8 0f00 	cmp.w	r8, #0
+d0041654:	eb01 0381 	add.w	r3, r1, r1, lsl #2
+d0041658:	ea4f 0241 	mov.w	r2, r1, lsl #1
+d004165c:	ea4f 1383 	mov.w	r3, r3, lsl #6
+d0041660:	bfbc      	itt	lt
+d0041662:	2202      	movlt	r2, #2
+d0041664:	f44f 73a0 	movlt.w	r3, #320	; 0x140
+d0041668:	4496      	add	lr, r2
+d004166a:	449c      	add	ip, r3
+d004166c:	ee07 1a90 	vmov	s15, r1
+d0041670:	440c      	add	r4, r1
+d0041672:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0041676:	eea7 7aa4 	vfma.f32	s14, s15, s9
+d004167a:	eea7 5a84 	vfma.f32	s10, s15, s8
+d004167e:	e79d      	b.n	d00415bc <fillTriangleFlat+0x70c>
+d0041680:	d1f4      	bne.n	d004166c <fillTriangleFlat+0x7bc>
+d0041682:	eef0 1a43 	vmov.f32	s3, s6
+d0041686:	e7c5      	b.n	d0041614 <fillTriangleFlat+0x764>
+d0041688:	eeb0 4a43 	vmov.f32	s8, s6
+d004168c:	eef0 4a43 	vmov.f32	s9, s6
+d0041690:	e774      	b.n	d004157c <fillTriangleFlat+0x6cc>
+d0041692:	eeb0 aa42 	vmov.f32	s20, s4
+d0041696:	eef0 2a42 	vmov.f32	s5, s4
+d004169a:	e6c5      	b.n	d0041428 <fillTriangleFlat+0x578>
+d004169c:	ed9f fa0a 	vldr	s30, [pc, #40]	; d00416c8 <fillTriangleFlat+0x818>
+d00416a0:	eef0 fa4f 	vmov.f32	s31, s30
+d00416a4:	eef0 ea4f 	vmov.f32	s29, s30
+d00416a8:	e5d8      	b.n	d004125c <fillTriangleFlat+0x3ac>
+d00416aa:	eddf 7a07 	vldr	s15, [pc, #28]	; d00416c8 <fillTriangleFlat+0x818>
+d00416ae:	eef0 da67 	vmov.f32	s27, s15
+d00416b2:	eef0 9a67 	vmov.f32	s19, s15
+d00416b6:	eeb0 ba67 	vmov.f32	s22, s15
+d00416ba:	e5cf      	b.n	d004125c <fillTriangleFlat+0x3ac>
+d00416bc:	d012da64 	.word	0xd012da64
+d00416c0:	d0048360 	.word	0xd0048360
+d00416c4:	38d1b717 	.word	0x38d1b717
+d00416c8:	00000000 	.word	0x00000000
 
-d00424fc <vec3Normalize>:
-d00424fc:	ee60 7aa0 	vmul.f32	s15, s1, s1
-d0042500:	ed9f 7a22 	vldr	s14, [pc, #136]	; d004258c <vec3Normalize+0x90>
-d0042504:	b08c      	sub	sp, #48	; 0x30
-d0042506:	eee0 7a00 	vfma.f32	s15, s0, s0
-d004250a:	eee1 7a01 	vfma.f32	s15, s2, s2
-d004250e:	eef4 7ac7 	vcmpe.f32	s15, s14
-d0042512:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042516:	d934      	bls.n	d0042582 <vec3Normalize+0x86>
-d0042518:	ed9f 7a1d 	vldr	s14, [pc, #116]	; d0042590 <vec3Normalize+0x94>
-d004251c:	eef4 7a47 	vcmp.f32	s15, s14
-d0042520:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042524:	dd06      	ble.n	d0042534 <vec3Normalize+0x38>
-d0042526:	ed9f 7a1b 	vldr	s14, [pc, #108]	; d0042594 <vec3Normalize+0x98>
-d004252a:	eef4 7a47 	vcmp.f32	s15, s14
-d004252e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042532:	d418      	bmi.n	d0042566 <vec3Normalize+0x6a>
-d0042534:	ee17 2a90 	vmov	r2, s15
-d0042538:	eeb6 6a00 	vmov.f32	s12, #96	; 0x3f000000  0.5
-d004253c:	4b16      	ldr	r3, [pc, #88]	; (d0042598 <vec3Normalize+0x9c>)
-d004253e:	eeb7 7a08 	vmov.f32	s14, #120	; 0x3fc00000  1.5
-d0042542:	eba3 0352 	sub.w	r3, r3, r2, lsr #1
-d0042546:	ee67 7a86 	vmul.f32	s15, s15, s12
-d004254a:	ee06 3a90 	vmov	s13, r3
-d004254e:	ee67 7aa6 	vmul.f32	s15, s15, s13
-d0042552:	eea6 7ae7 	vfms.f32	s14, s13, s15
-d0042556:	ee67 7a26 	vmul.f32	s15, s14, s13
-d004255a:	ee27 0a80 	vmul.f32	s0, s15, s0
-d004255e:	ee67 0aa0 	vmul.f32	s1, s15, s1
-d0042562:	ee27 1a81 	vmul.f32	s2, s15, s2
-d0042566:	ed8d 0a09 	vstr	s0, [sp, #36]	; 0x24
-d004256a:	edcd 0a0a 	vstr	s1, [sp, #40]	; 0x28
-d004256e:	ed8d 1a0b 	vstr	s2, [sp, #44]	; 0x2c
-d0042572:	ed9d 0a09 	vldr	s0, [sp, #36]	; 0x24
-d0042576:	eddd 0a0a 	vldr	s1, [sp, #40]	; 0x28
-d004257a:	ed9d 1a0b 	vldr	s2, [sp, #44]	; 0x2c
-d004257e:	b00c      	add	sp, #48	; 0x30
-d0042580:	4770      	bx	lr
-d0042582:	2300      	movs	r3, #0
-d0042584:	9309      	str	r3, [sp, #36]	; 0x24
-d0042586:	930a      	str	r3, [sp, #40]	; 0x28
-d0042588:	930b      	str	r3, [sp, #44]	; 0x2c
-d004258a:	e7f2      	b.n	d0042572 <vec3Normalize+0x76>
-d004258c:	358637bd 	.word	0x358637bd
-d0042590:	3f7fbe77 	.word	0x3f7fbe77
-d0042594:	3f8020c5 	.word	0x3f8020c5
-d0042598:	5f3759df 	.word	0x5f3759df
+d00416cc <fillTriangleDitherBayer>:
+d00416cc:	eddf 7ae7 	vldr	s15, [pc, #924]	; d0041a6c <fillTriangleDitherBayer+0x3a0>
+d00416d0:	eef4 0ae7 	vcmpe.f32	s1, s15
+d00416d4:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d00416d8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00416dc:	eeb4 1ae7 	vcmpe.f32	s2, s15
+d00416e0:	ed2d 8b10 	vpush	{d8-d15}
+d00416e4:	b08f      	sub	sp, #60	; 0x3c
+d00416e6:	9202      	str	r2, [sp, #8]
+d00416e8:	bf94      	ite	ls
+d00416ea:	2201      	movls	r2, #1
+d00416ec:	2200      	movhi	r2, #0
+d00416ee:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00416f2:	9303      	str	r3, [sp, #12]
+d00416f4:	f8bd 40a8 	ldrh.w	r4, [sp, #168]	; 0xa8
+d00416f8:	bf98      	it	ls
+d00416fa:	f042 0201 	orrls.w	r2, r2, #1
+d00416fe:	f89d 30b4 	ldrb.w	r3, [sp, #180]	; 0xb4
+d0041702:	e9cd 0100 	strd	r0, r1, [sp]
+d0041706:	f8bd 00ac 	ldrh.w	r0, [sp, #172]	; 0xac
+d004170a:	f8bd 10b0 	ldrh.w	r1, [sp, #176]	; 0xb0
+d004170e:	2a00      	cmp	r2, #0
+d0041710:	f040 8187 	bne.w	d0041a22 <fillTriangleDitherBayer+0x356>
+d0041714:	eeb4 0a67 	vcmp.f32	s0, s15
+d0041718:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004171c:	f240 8181 	bls.w	d0041a22 <fillTriangleDitherBayer+0x356>
+d0041720:	eef7 6a00 	vmov.f32	s13, #112	; 0x3f800000  1.0
+d0041724:	eddf 7ad3 	vldr	s15, [pc, #844]	; d0041a74 <fillTriangleDitherBayer+0x3a8>
+d0041728:	eeb1 6a04 	vmov.f32	s12, #20	; 0x40a00000  5.0
+d004172c:	ee07 4a10 	vmov	s14, r4
+d0041730:	fec1 7aa7 	vmaxnm.f32	s15, s3, s15
+d0041734:	ee86 3a81 	vdiv.f32	s6, s13, s2
+d0041738:	fec7 7ac6 	vminnm.f32	s15, s15, s12
+d004173c:	eec6 1a80 	vdiv.f32	s3, s13, s0
+d0041740:	ee86 0aa0 	vdiv.f32	s0, s13, s1
+d0041744:	eefd 6ae7 	vcvt.s32.f32	s13, s15
+d0041748:	eeb8 7a47 	vcvt.f32.u32	s14, s14
+d004174c:	ee16 2a90 	vmov	r2, s13
+d0041750:	ee06 0a90 	vmov	s13, r0
+d0041754:	eef8 5a66 	vcvt.f32.u32	s11, s13
+d0041758:	ee06 1a90 	vmov	s13, r1
+d004175c:	1c51      	adds	r1, r2, #1
+d004175e:	ee27 7a21 	vmul.f32	s14, s14, s3
+d0041762:	eef8 6a66 	vcvt.f32.u32	s13, s13
+d0041766:	2905      	cmp	r1, #5
+d0041768:	bfa8      	it	ge
+d004176a:	2105      	movge	r1, #5
+d004176c:	2a04      	cmp	r2, #4
+d004176e:	ee65 5a80 	vmul.f32	s11, s11, s0
+d0041772:	ee26 2a83 	vmul.f32	s4, s13, s6
+d0041776:	f300 8457 	bgt.w	d0042028 <fillTriangleDitherBayer+0x95c>
+d004177a:	f003 030f 	and.w	r3, r3, #15
+d004177e:	2a03      	cmp	r2, #3
+d0041780:	f103 0320 	add.w	r3, r3, #32
+d0041784:	eb03 1002 	add.w	r0, r3, r2, lsl #4
+d0041788:	fa5f fa80 	uxtb.w	sl, r0
+d004178c:	f300 844e 	bgt.w	d004202c <fillTriangleDitherBayer+0x960>
+d0041790:	eb03 1301 	add.w	r3, r3, r1, lsl #4
+d0041794:	b2db      	uxtb	r3, r3
+d0041796:	9304      	str	r3, [sp, #16]
+d0041798:	eddd 6a01 	vldr	s13, [sp, #4]
+d004179c:	eeb8 5ae6 	vcvt.f32.s32	s10, s13
+d00417a0:	eddd 6a03 	vldr	s13, [sp, #12]
+d00417a4:	eef8 3ae6 	vcvt.f32.s32	s7, s13
+d00417a8:	eddd 6a00 	vldr	s13, [sp]
+d00417ac:	eeb8 6ae6 	vcvt.f32.s32	s12, s13
+d00417b0:	eddd 6a02 	vldr	s13, [sp, #8]
+d00417b4:	eeb4 5ae3 	vcmpe.f32	s10, s7
+d00417b8:	eef8 4ae6 	vcvt.f32.s32	s9, s13
+d00417bc:	eddd 6a28 	vldr	s13, [sp, #160]	; 0xa0
+d00417c0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00417c4:	eeb8 1ae6 	vcvt.f32.s32	s2, s13
+d00417c8:	eddd 6a29 	vldr	s13, [sp, #164]	; 0xa4
+d00417cc:	eef8 6ae6 	vcvt.f32.s32	s13, s13
+d00417d0:	f300 812c 	bgt.w	d0041a2c <fillTriangleDitherBayer+0x360>
+d00417d4:	eeb4 5ae6 	vcmpe.f32	s10, s13
+d00417d8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00417dc:	f300 8231 	bgt.w	d0041c42 <fillTriangleDitherBayer+0x576>
+d00417e0:	eef4 3ae6 	vcmpe.f32	s7, s13
+d00417e4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00417e8:	dd17      	ble.n	d004181a <fillTriangleDitherBayer+0x14e>
+d00417ea:	eeb0 8a65 	vmov.f32	s16, s11
+d00417ee:	eef0 0a40 	vmov.f32	s1, s0
+d00417f2:	eef0 2a63 	vmov.f32	s5, s7
+d00417f6:	eeb0 4a64 	vmov.f32	s8, s9
+d00417fa:	eef0 5a42 	vmov.f32	s11, s4
+d00417fe:	eeb0 0a43 	vmov.f32	s0, s6
+d0041802:	eef0 3a66 	vmov.f32	s7, s13
+d0041806:	eef0 4a41 	vmov.f32	s9, s2
+d004180a:	eeb0 2a48 	vmov.f32	s4, s16
+d004180e:	eeb0 3a60 	vmov.f32	s6, s1
+d0041812:	eef0 6a62 	vmov.f32	s13, s5
+d0041816:	eeb0 1a44 	vmov.f32	s2, s8
+d004181a:	eeb6 4a00 	vmov.f32	s8, #96	; 0x3f000000  0.5
+d004181e:	ee75 2a04 	vadd.f32	s5, s10, s8
+d0041822:	ee36 4a84 	vadd.f32	s8, s13, s8
+d0041826:	eefd 2ae2 	vcvt.s32.f32	s5, s5
+d004182a:	eebd 4ac4 	vcvt.s32.f32	s8, s8
+d004182e:	ee12 3a90 	vmov	r3, s5
+d0041832:	ee14 1a10 	vmov	r1, s8
+d0041836:	428b      	cmp	r3, r1
+d0041838:	f000 80f3 	beq.w	d0041a22 <fillTriangleDitherBayer+0x356>
+d004183c:	ee76 8ac5 	vsub.f32	s17, s13, s10
+d0041840:	eddf 2a8a 	vldr	s5, [pc, #552]	; d0041a6c <fillTriangleDitherBayer+0x3a0>
+d0041844:	eef4 8ae2 	vcmpe.f32	s17, s5
+d0041848:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004184c:	f240 80e9 	bls.w	d0041a22 <fillTriangleDitherBayer+0x356>
+d0041850:	eef7 9a00 	vmov.f32	s19, #112	; 0x3f800000  1.0
+d0041854:	ee33 9ac5 	vsub.f32	s18, s7, s10
+d0041858:	ee71 0a46 	vsub.f32	s1, s2, s12
+d004185c:	ee89 4aa8 	vdiv.f32	s8, s19, s17
+d0041860:	eeb4 9ae2 	vcmpe.f32	s18, s5
+d0041864:	ee33 8a61 	vsub.f32	s16, s6, s3
+d0041868:	ee72 8a47 	vsub.f32	s17, s4, s14
+d004186c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041870:	ee60 0a84 	vmul.f32	s1, s1, s8
+d0041874:	ee28 8a04 	vmul.f32	s16, s16, s8
+d0041878:	ee68 8a84 	vmul.f32	s17, s17, s8
+d004187c:	f300 80fe 	bgt.w	d0041a7c <fillTriangleDitherBayer+0x3b0>
+d0041880:	ee04 2a10 	vmov	s8, r2
+d0041884:	ee76 fae3 	vsub.f32	s31, s13, s7
+d0041888:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
+d004188c:	eef4 fae2 	vcmpe.f32	s31, s5
+d0041890:	ee77 7ac4 	vsub.f32	s15, s15, s8
+d0041894:	eeb0 4a67 	vmov.f32	s8, s15
+d0041898:	eebe 4ace 	vcvt.s32.f32	s8, s8, #4
+d004189c:	ee14 3a10 	vmov	r3, s8
+d00418a0:	f383 0204 	usat	r2, #4, r3
+d00418a4:	9201      	str	r2, [sp, #4]
+d00418a6:	9a04      	ldr	r2, [sp, #16]
+d00418a8:	4592      	cmp	sl, r2
+d00418aa:	bf18      	it	ne
+d00418ac:	2b00      	cmpne	r3, #0
+d00418ae:	bfd4      	ite	le
+d00418b0:	2301      	movle	r3, #1
+d00418b2:	2300      	movgt	r3, #0
+d00418b4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00418b8:	9300      	str	r3, [sp, #0]
+d00418ba:	f340 80b2 	ble.w	d0041a22 <fillTriangleDitherBayer+0x356>
+d00418be:	ed9f ea6d 	vldr	s28, [pc, #436]	; d0041a74 <fillTriangleDitherBayer+0x3a8>
+d00418c2:	eef0 9a4e 	vmov.f32	s19, s28
+d00418c6:	eeb0 ba4e 	vmov.f32	s22, s28
+d00418ca:	eef7 2a00 	vmov.f32	s5, #112	; 0x3f800000  1.0
+d00418ce:	ed9f 4a67 	vldr	s8, [pc, #412]	; d0041a6c <fillTriangleDitherBayer+0x3a0>
+d00418d2:	ee31 1a64 	vsub.f32	s2, s2, s9
+d00418d6:	ee33 3a40 	vsub.f32	s6, s6, s0
+d00418da:	eec2 7aaf 	vdiv.f32	s15, s5, s31
+d00418de:	eeb4 9ac4 	vcmpe.f32	s18, s8
+d00418e2:	ee32 2a65 	vsub.f32	s4, s4, s11
+d00418e6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00418ea:	ee61 2a27 	vmul.f32	s5, s2, s15
+d00418ee:	ee23 3a27 	vmul.f32	s6, s6, s15
+d00418f2:	ee22 fa27 	vmul.f32	s30, s4, s15
+d00418f6:	edcd 2a09 	vstr	s5, [sp, #36]	; 0x24
+d00418fa:	ed8d 3a08 	vstr	s6, [sp, #32]
+d00418fe:	f300 80f4 	bgt.w	d0041aea <fillTriangleDitherBayer+0x41e>
+d0041902:	eefd 7ae3 	vcvt.s32.f32	s15, s7
+d0041906:	edcd 7a06 	vstr	s15, [sp, #24]
+d004190a:	eefd 7ae6 	vcvt.s32.f32	s15, s13
+d004190e:	f240 123f 	movw	r2, #319	; 0x13f
+d0041912:	9906      	ldr	r1, [sp, #24]
+d0041914:	ee17 3a90 	vmov	r3, s15
+d0041918:	ea21 7be1 	bic.w	fp, r1, r1, asr #31
+d004191c:	3b01      	subs	r3, #1
+d004191e:	4293      	cmp	r3, r2
+d0041920:	bfa8      	it	ge
+d0041922:	4613      	movge	r3, r2
+d0041924:	459b      	cmp	fp, r3
+d0041926:	dc7c      	bgt.n	d0041a22 <fillTriangleDitherBayer+0x356>
+d0041928:	ee07 ba90 	vmov	s15, fp
+d004192c:	eef6 6a00 	vmov.f32	s13, #96	; 0x3f000000  0.5
+d0041930:	3301      	adds	r3, #1
+d0041932:	eddd aa09 	vldr	s21, [sp, #36]	; 0x24
+d0041936:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d004193a:	ed9d aa08 	vldr	s20, [sp, #32]
+d004193e:	ed9f 1a4b 	vldr	s2, [pc, #300]	; d0041a6c <fillTriangleDitherBayer+0x3a0>
+d0041942:	ed9f 2a4b 	vldr	s4, [pc, #300]	; d0041a70 <fillTriangleDitherBayer+0x3a4>
+d0041946:	ee77 7aa6 	vadd.f32	s15, s15, s13
+d004194a:	ed9f 3a4a 	vldr	s6, [pc, #296]	; d0041a74 <fillTriangleDitherBayer+0x3a8>
+d004194e:	9302      	str	r3, [sp, #8]
+d0041950:	ee37 5ac5 	vsub.f32	s10, s15, s10
+d0041954:	ee77 7ae3 	vsub.f32	s15, s15, s7
+d0041958:	eddf 3a47 	vldr	s7, [pc, #284]	; d0041a78 <fillTriangleDitherBayer+0x3ac>
+d004195c:	eea0 6a85 	vfma.f32	s12, s1, s10
+d0041960:	eee8 1a05 	vfma.f32	s3, s16, s10
+d0041964:	eea8 7a85 	vfma.f32	s14, s17, s10
+d0041968:	eeea 4aa7 	vfma.f32	s9, s21, s15
+d004196c:	eeaa 0a27 	vfma.f32	s0, s20, s15
+d0041970:	eeef 5a27 	vfma.f32	s11, s30, s15
+d0041974:	e033      	b.n	d00419de <fillTriangleDitherBayer+0x312>
+d0041976:	eef0 2a47 	vmov.f32	s5, s14
+d004197a:	eef0 9a61 	vmov.f32	s19, s3
+d004197e:	eef0 6a46 	vmov.f32	s13, s12
+d0041982:	eeb0 9a65 	vmov.f32	s18, s11
+d0041986:	eeb0 5a40 	vmov.f32	s10, s0
+d004198a:	eeb0 4a64 	vmov.f32	s8, s9
+d004198e:	fefa 7a66 	vrintp.f32	s15, s13
+d0041992:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+d0041996:	f240 13df 	movw	r3, #479	; 0x1df
+d004199a:	ee17 6a90 	vmov	r6, s15
+d004199e:	fefa 7a44 	vrintp.f32	s15, s8
+d00419a2:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+d00419a6:	3e01      	subs	r6, #1
+d00419a8:	ee17 0a90 	vmov	r0, s15
+d00419ac:	429e      	cmp	r6, r3
+d00419ae:	ea20 70e0 	bic.w	r0, r0, r0, asr #31
+d00419b2:	bfa8      	it	ge
+d00419b4:	461e      	movge	r6, r3
+d00419b6:	4286      	cmp	r6, r0
+d00419b8:	f280 815c 	bge.w	d0041c74 <fillTriangleDitherBayer+0x5a8>
+d00419bc:	f10b 0b01 	add.w	fp, fp, #1
+d00419c0:	9b02      	ldr	r3, [sp, #8]
+d00419c2:	ee36 6a20 	vadd.f32	s12, s12, s1
+d00419c6:	459b      	cmp	fp, r3
+d00419c8:	ee71 1a88 	vadd.f32	s3, s3, s16
+d00419cc:	ee37 7a28 	vadd.f32	s14, s14, s17
+d00419d0:	ee74 4aaa 	vadd.f32	s9, s9, s21
+d00419d4:	ee30 0a0a 	vadd.f32	s0, s0, s20
+d00419d8:	ee75 5a8f 	vadd.f32	s11, s11, s30
+d00419dc:	d021      	beq.n	d0041a22 <fillTriangleDitherBayer+0x356>
+d00419de:	eeb4 6ae4 	vcmpe.f32	s12, s9
+d00419e2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00419e6:	dcc6      	bgt.n	d0041976 <fillTriangleDitherBayer+0x2aa>
+d00419e8:	eef0 2a65 	vmov.f32	s5, s11
+d00419ec:	eef0 9a40 	vmov.f32	s19, s0
+d00419f0:	eef0 6a64 	vmov.f32	s13, s9
+d00419f4:	eeb0 9a47 	vmov.f32	s18, s14
+d00419f8:	eeb0 5a61 	vmov.f32	s10, s3
+d00419fc:	eeb0 4a46 	vmov.f32	s8, s12
+d0041a00:	e7c5      	b.n	d004198e <fillTriangleDitherBayer+0x2c2>
+d0041a02:	eddd 6a0a 	vldr	s13, [sp, #40]	; 0x28
+d0041a06:	ed9d 5a0b 	vldr	s10, [sp, #44]	; 0x2c
+d0041a0a:	ed9d 6a0c 	vldr	s12, [sp, #48]	; 0x30
+d0041a0e:	ed9d fa0d 	vldr	s30, [sp, #52]	; 0x34
+d0041a12:	eddf 7a16 	vldr	s15, [pc, #88]	; d0041a6c <fillTriangleDitherBayer+0x3a0>
+d0041a16:	eef4 fae7 	vcmpe.f32	s31, s15
+d0041a1a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041a1e:	f73f af74 	bgt.w	d004190a <fillTriangleDitherBayer+0x23e>
+d0041a22:	b00f      	add	sp, #60	; 0x3c
+d0041a24:	ecbd 8b10 	vpop	{d8-d15}
+d0041a28:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d0041a2c:	eef4 3ae6 	vcmpe.f32	s7, s13
+d0041a30:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041a34:	f340 80ec 	ble.w	d0041c10 <fillTriangleDitherBayer+0x544>
+d0041a38:	eeb0 8a42 	vmov.f32	s16, s4
+d0041a3c:	eef0 0a43 	vmov.f32	s1, s6
+d0041a40:	eef0 2a66 	vmov.f32	s5, s13
+d0041a44:	eeb0 4a41 	vmov.f32	s8, s2
+d0041a48:	eeb0 2a47 	vmov.f32	s4, s14
+d0041a4c:	eeb0 3a61 	vmov.f32	s6, s3
+d0041a50:	eef0 6a45 	vmov.f32	s13, s10
+d0041a54:	eeb0 1a46 	vmov.f32	s2, s12
+d0041a58:	eeb0 7a48 	vmov.f32	s14, s16
+d0041a5c:	eef0 1a60 	vmov.f32	s3, s1
+d0041a60:	eeb0 5a62 	vmov.f32	s10, s5
+d0041a64:	eeb0 6a44 	vmov.f32	s12, s8
+d0041a68:	e6d7      	b.n	d004181a <fillTriangleDitherBayer+0x14e>
+d0041a6a:	bf00      	nop
+d0041a6c:	38d1b717 	.word	0x38d1b717
+d0041a70:	33d6bf95 	.word	0x33d6bf95
+d0041a74:	00000000 	.word	0x00000000
+d0041a78:	477fff00 	.word	0x477fff00
+d0041a7c:	ee04 2a10 	vmov	s8, r2
+d0041a80:	ee89 aa89 	vdiv.f32	s20, s19, s18
+d0041a84:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
+d0041a88:	ee74 aac6 	vsub.f32	s21, s9, s12
+d0041a8c:	ee76 fae3 	vsub.f32	s31, s13, s7
+d0041a90:	ee77 7ac4 	vsub.f32	s15, s15, s8
+d0041a94:	ee70 9a61 	vsub.f32	s19, s0, s3
+d0041a98:	eef4 fae2 	vcmpe.f32	s31, s5
+d0041a9c:	eeb0 4a67 	vmov.f32	s8, s15
+d0041aa0:	ee35 eac7 	vsub.f32	s28, s11, s14
+d0041aa4:	eebe 4ace 	vcvt.s32.f32	s8, s8, #4
+d0041aa8:	ee6a 7a8a 	vmul.f32	s15, s21, s20
+d0041aac:	ee14 3a10 	vmov	r3, s8
+d0041ab0:	ee2e ea0a 	vmul.f32	s28, s28, s20
+d0041ab4:	f383 0204 	usat	r2, #4, r3
+d0041ab8:	eeb0 ba67 	vmov.f32	s22, s15
+d0041abc:	ee69 7a8a 	vmul.f32	s15, s19, s20
+d0041ac0:	9201      	str	r2, [sp, #4]
+d0041ac2:	9a04      	ldr	r2, [sp, #16]
+d0041ac4:	eef0 9a67 	vmov.f32	s19, s15
+d0041ac8:	4592      	cmp	sl, r2
+d0041aca:	bf18      	it	ne
+d0041acc:	2b00      	cmpne	r3, #0
+d0041ace:	bfd4      	ite	le
+d0041ad0:	2301      	movle	r3, #1
+d0041ad2:	2300      	movgt	r3, #0
+d0041ad4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041ad8:	9300      	str	r3, [sp, #0]
+d0041ada:	f73f aef6 	bgt.w	d00418ca <fillTriangleDitherBayer+0x1fe>
+d0041ade:	ed1f fa1b 	vldr	s30, [pc, #-108]	; d0041a74 <fillTriangleDitherBayer+0x3a8>
+d0041ae2:	ed8d fa08 	vstr	s30, [sp, #32]
+d0041ae6:	ed8d fa09 	vstr	s30, [sp, #36]	; 0x24
+d0041aea:	eefd 7ae3 	vcvt.s32.f32	s15, s7
+d0041aee:	f240 123f 	movw	r2, #319	; 0x13f
+d0041af2:	ee17 3a90 	vmov	r3, s15
+d0041af6:	edcd 7a06 	vstr	s15, [sp, #24]
+d0041afa:	eefd 7ac5 	vcvt.s32.f32	s15, s10
+d0041afe:	3b01      	subs	r3, #1
+d0041b00:	ee17 ba90 	vmov	fp, s15
+d0041b04:	4293      	cmp	r3, r2
+d0041b06:	ea2b 7beb 	bic.w	fp, fp, fp, asr #31
+d0041b0a:	bfa8      	it	ge
+d0041b0c:	4613      	movge	r3, r2
+d0041b0e:	455b      	cmp	r3, fp
+d0041b10:	f6ff af7f 	blt.w	d0041a12 <fillTriangleDitherBayer+0x346>
+d0041b14:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
+d0041b18:	3301      	adds	r3, #1
+d0041b1a:	eeb0 aa46 	vmov.f32	s20, s12
+d0041b1e:	ed1f da2c 	vldr	s26, [pc, #-176]	; d0041a70 <fillTriangleDitherBayer+0x3a4>
+d0041b22:	eef0 aa46 	vmov.f32	s21, s12
+d0041b26:	ed1f 3a2d 	vldr	s6, [pc, #-180]	; d0041a74 <fillTriangleDitherBayer+0x3a8>
+d0041b2a:	ee37 4ac5 	vsub.f32	s8, s15, s10
+d0041b2e:	ee07 ba90 	vmov	s15, fp
+d0041b32:	eef0 ca61 	vmov.f32	s25, s3
+d0041b36:	ed1f 2a30 	vldr	s4, [pc, #-192]	; d0041a78 <fillTriangleDitherBayer+0x3ac>
+d0041b3a:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0041b3e:	9302      	str	r3, [sp, #8]
+d0041b40:	eeb0 ca47 	vmov.f32	s24, s14
+d0041b44:	edcd 6a0a 	vstr	s13, [sp, #40]	; 0x28
+d0041b48:	eef0 da4b 	vmov.f32	s27, s22
+d0041b4c:	ed8d 5a0b 	vstr	s10, [sp, #44]	; 0x2c
+d0041b50:	ee77 7a84 	vadd.f32	s15, s15, s8
+d0041b54:	ed8d 6a0c 	vstr	s12, [sp, #48]	; 0x30
+d0041b58:	eef0 ba61 	vmov.f32	s23, s3
+d0041b5c:	ed8d fa0d 	vstr	s30, [sp, #52]	; 0x34
+d0041b60:	eef0 ea69 	vmov.f32	s29, s19
+d0041b64:	eea7 aa8b 	vfma.f32	s20, s15, s22
+d0041b68:	eeb0 ba47 	vmov.f32	s22, s14
+d0041b6c:	eee0 aaa7 	vfma.f32	s21, s1, s15
+d0041b70:	eee8 ca27 	vfma.f32	s25, s16, s15
+d0041b74:	eea8 caa7 	vfma.f32	s24, s17, s15
+d0041b78:	eee7 baa9 	vfma.f32	s23, s15, s19
+d0041b7c:	eea7 ba8e 	vfma.f32	s22, s15, s28
+d0041b80:	e034      	b.n	d0041bec <fillTriangleDitherBayer+0x520>
+d0041b82:	eef0 2a4c 	vmov.f32	s5, s24
+d0041b86:	eeb0 4a6c 	vmov.f32	s8, s25
+d0041b8a:	eef0 7a6a 	vmov.f32	s15, s21
+d0041b8e:	eeb0 5a4b 	vmov.f32	s10, s22
+d0041b92:	eef0 6a6b 	vmov.f32	s13, s23
+d0041b96:	eeb0 6a4a 	vmov.f32	s12, s20
+d0041b9a:	feba 1a67 	vrintp.f32	s2, s15
+d0041b9e:	eebd 1ac1 	vcvt.s32.f32	s2, s2
+d0041ba2:	feba 9a46 	vrintp.f32	s18, s12
+d0041ba6:	f240 13df 	movw	r3, #479	; 0x1df
+d0041baa:	ee11 6a10 	vmov	r6, s2
+d0041bae:	eebd 1ac9 	vcvt.s32.f32	s2, s18
+d0041bb2:	3e01      	subs	r6, #1
+d0041bb4:	ee11 0a10 	vmov	r0, s2
+d0041bb8:	429e      	cmp	r6, r3
+d0041bba:	ea20 70e0 	bic.w	r0, r0, r0, asr #31
+d0041bbe:	bfa8      	it	ge
+d0041bc0:	461e      	movge	r6, r3
+d0041bc2:	4286      	cmp	r6, r0
+d0041bc4:	f280 813e 	bge.w	d0041e44 <fillTriangleDitherBayer+0x778>
+d0041bc8:	f10b 0b01 	add.w	fp, fp, #1
+d0041bcc:	9b02      	ldr	r3, [sp, #8]
+d0041bce:	ee7a aaa0 	vadd.f32	s21, s21, s1
+d0041bd2:	459b      	cmp	fp, r3
+d0041bd4:	ee7c ca88 	vadd.f32	s25, s25, s16
+d0041bd8:	ee3c ca28 	vadd.f32	s24, s24, s17
+d0041bdc:	ee3a aa2d 	vadd.f32	s20, s20, s27
+d0041be0:	ee7b baae 	vadd.f32	s23, s23, s29
+d0041be4:	ee3b ba0e 	vadd.f32	s22, s22, s28
+d0041be8:	f43f af0b 	beq.w	d0041a02 <fillTriangleDitherBayer+0x336>
+d0041bec:	eef4 aaca 	vcmpe.f32	s21, s20
+d0041bf0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041bf4:	dcc5      	bgt.n	d0041b82 <fillTriangleDitherBayer+0x4b6>
+d0041bf6:	eef0 2a4b 	vmov.f32	s5, s22
+d0041bfa:	eeb0 4a6b 	vmov.f32	s8, s23
+d0041bfe:	eef0 7a4a 	vmov.f32	s15, s20
+d0041c02:	eeb0 5a4c 	vmov.f32	s10, s24
+d0041c06:	eef0 6a6c 	vmov.f32	s13, s25
+d0041c0a:	eeb0 6a6a 	vmov.f32	s12, s21
+d0041c0e:	e7c4      	b.n	d0041b9a <fillTriangleDitherBayer+0x4ce>
+d0041c10:	eeb0 8a47 	vmov.f32	s16, s14
+d0041c14:	eef0 0a61 	vmov.f32	s1, s3
+d0041c18:	eef0 2a45 	vmov.f32	s5, s10
+d0041c1c:	eeb0 4a46 	vmov.f32	s8, s12
+d0041c20:	eeb0 7a65 	vmov.f32	s14, s11
+d0041c24:	eef0 1a40 	vmov.f32	s3, s0
+d0041c28:	eeb0 5a63 	vmov.f32	s10, s7
+d0041c2c:	eeb0 6a64 	vmov.f32	s12, s9
+d0041c30:	eef0 5a48 	vmov.f32	s11, s16
+d0041c34:	eeb0 0a60 	vmov.f32	s0, s1
+d0041c38:	eef0 3a62 	vmov.f32	s7, s5
+d0041c3c:	eef0 4a44 	vmov.f32	s9, s8
+d0041c40:	e5ce      	b.n	d00417e0 <fillTriangleDitherBayer+0x114>
+d0041c42:	eeb0 8a47 	vmov.f32	s16, s14
+d0041c46:	eef0 0a61 	vmov.f32	s1, s3
+d0041c4a:	eef0 2a45 	vmov.f32	s5, s10
+d0041c4e:	eeb0 4a46 	vmov.f32	s8, s12
+d0041c52:	eeb0 7a42 	vmov.f32	s14, s4
+d0041c56:	eef0 1a43 	vmov.f32	s3, s6
+d0041c5a:	eeb0 5a66 	vmov.f32	s10, s13
+d0041c5e:	eeb0 6a41 	vmov.f32	s12, s2
+d0041c62:	eeb0 2a48 	vmov.f32	s4, s16
+d0041c66:	eeb0 3a60 	vmov.f32	s6, s1
+d0041c6a:	eef0 6a62 	vmov.f32	s13, s5
+d0041c6e:	eeb0 1a44 	vmov.f32	s2, s8
+d0041c72:	e5b5      	b.n	d00417e0 <fillTriangleDitherBayer+0x114>
+d0041c74:	ee76 6ac4 	vsub.f32	s13, s13, s8
+d0041c78:	eef4 6ac1 	vcmpe.f32	s13, s2
+d0041c7c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041c80:	f340 81d8 	ble.w	d0042034 <fillTriangleDitherBayer+0x968>
+d0041c84:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
+d0041c88:	ee79 9ac5 	vsub.f32	s19, s19, s10
+d0041c8c:	ee72 2ac9 	vsub.f32	s5, s5, s18
+d0041c90:	ee87 baa6 	vdiv.f32	s22, s15, s13
+d0041c94:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
+d0041c98:	ee37 4ac4 	vsub.f32	s8, s15, s8
+d0041c9c:	ee07 0a90 	vmov	s15, r0
+d0041ca0:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0041ca4:	ee77 7a84 	vadd.f32	s15, s15, s8
+d0041ca8:	ee69 9a8b 	vmul.f32	s19, s19, s22
+d0041cac:	ee22 ba8b 	vmul.f32	s22, s5, s22
+d0041cb0:	eea7 5aa9 	vfma.f32	s10, s15, s19
+d0041cb4:	eea7 9a8b 	vfma.f32	s18, s15, s22
+d0041cb8:	ebcb 190b 	rsb	r9, fp, fp, lsl #4
+d0041cbc:	49d6      	ldr	r1, [pc, #856]	; (d0042018 <fillTriangleDitherBayer+0x94c>)
+d0041cbe:	eb00 0380 	add.w	r3, r0, r0, lsl #2
+d0041cc2:	4cd6      	ldr	r4, [pc, #856]	; (d004201c <fillTriangleDitherBayer+0x950>)
+d0041cc4:	eb00 1249 	add.w	r2, r0, r9, lsl #5
+d0041cc8:	6809      	ldr	r1, [r1, #0]
+d0041cca:	eb0b 1383 	add.w	r3, fp, r3, lsl #6
+d0041cce:	f8cd b018 	str.w	fp, [sp, #24]
+d0041cd2:	eb04 0942 	add.w	r9, r4, r2, lsl #1
+d0041cd6:	f00b 0203 	and.w	r2, fp, #3
+d0041cda:	eb01 0c03 	add.w	ip, r1, r3
+d0041cde:	eef6 2a00 	vmov.f32	s5, #96	; 0x3f000000  0.5
+d0041ce2:	4613      	mov	r3, r2
+d0041ce4:	4ace      	ldr	r2, [pc, #824]	; (d0042020 <fillTriangleDitherBayer+0x954>)
+d0041ce6:	eb02 0383 	add.w	r3, r2, r3, lsl #2
+d0041cea:	469b      	mov	fp, r3
+d0041cec:	e010      	b.n	d0041d10 <fillTriangleDitherBayer+0x644>
+d0041cee:	ee07 3a90 	vmov	s15, r3
+d0041cf2:	4418      	add	r0, r3
+d0041cf4:	eb03 0283 	add.w	r2, r3, r3, lsl #2
+d0041cf8:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0041cfc:	42b0      	cmp	r0, r6
+d0041cfe:	eb09 0943 	add.w	r9, r9, r3, lsl #1
+d0041d02:	eb0c 1c82 	add.w	ip, ip, r2, lsl #6
+d0041d06:	eea7 5aa9 	vfma.f32	s10, s15, s19
+d0041d0a:	eea7 9a8b 	vfma.f32	s18, s15, s22
+d0041d0e:	dc72      	bgt.n	d0041df6 <fillTriangleDitherBayer+0x72a>
+d0041d10:	eba6 0800 	sub.w	r8, r6, r0
+d0041d14:	eeb4 5ac2 	vcmpe.f32	s10, s4
+d0041d18:	f108 0301 	add.w	r3, r8, #1
+d0041d1c:	2b30      	cmp	r3, #48	; 0x30
+d0041d1e:	bfa8      	it	ge
+d0041d20:	2330      	movge	r3, #48	; 0x30
+d0041d22:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041d26:	d9e2      	bls.n	d0041cee <fillTriangleDitherBayer+0x622>
+d0041d28:	f1b8 0f00 	cmp.w	r8, #0
+d0041d2c:	eec9 6a05 	vdiv.f32	s13, s18, s10
+d0041d30:	dd64      	ble.n	d0041dfc <fillTriangleDitherBayer+0x730>
+d0041d32:	1e5a      	subs	r2, r3, #1
+d0041d34:	ee07 2a90 	vmov	s15, r2
+d0041d38:	eeb0 4a45 	vmov.f32	s8, s10
+d0041d3c:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0041d40:	eea7 4aa9 	vfma.f32	s8, s15, s19
+d0041d44:	eeb4 4ac2 	vcmpe.f32	s8, s4
+d0041d48:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041d4c:	dd57      	ble.n	d0041dfe <fillTriangleDitherBayer+0x732>
+d0041d4e:	eeb0 ca49 	vmov.f32	s24, s18
+d0041d52:	9a00      	ldr	r2, [sp, #0]
+d0041d54:	eea7 ca8b 	vfma.f32	s24, s15, s22
+d0041d58:	eecc ba04 	vdiv.f32	s23, s24, s8
+d0041d5c:	ee7b bae6 	vsub.f32	s23, s23, s13
+d0041d60:	ee8b 4aa7 	vdiv.f32	s8, s23, s15
+d0041d64:	2a00      	cmp	r2, #0
+d0041d66:	d14f      	bne.n	d0041e08 <fillTriangleDitherBayer+0x73c>
+d0041d68:	f8cd 800c 	str.w	r8, [sp, #12]
+d0041d6c:	f1a9 0702 	sub.w	r7, r9, #2
+d0041d70:	9605      	str	r6, [sp, #20]
+d0041d72:	f8dd 8004 	ldr.w	r8, [sp, #4]
+d0041d76:	9e04      	ldr	r6, [sp, #16]
+d0041d78:	fec6 7a83 	vmaxnm.f32	s15, s13, s6
+d0041d7c:	fec7 7ae3 	vminnm.f32	s15, s15, s7
+d0041d80:	ee77 7aa2 	vadd.f32	s15, s15, s5
+d0041d84:	f837 ef02 	ldrh.w	lr, [r7, #2]!
+d0041d88:	1885      	adds	r5, r0, r2
+d0041d8a:	eb02 0482 	add.w	r4, r2, r2, lsl #2
+d0041d8e:	ee76 6a84 	vadd.f32	s13, s13, s8
+d0041d92:	3201      	adds	r2, #1
+d0041d94:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+d0041d98:	f005 0503 	and.w	r5, r5, #3
+d0041d9c:	01a4      	lsls	r4, r4, #6
+d0041d9e:	ee17 1a90 	vmov	r1, s15
+d0041da2:	b289      	uxth	r1, r1
+d0041da4:	458e      	cmp	lr, r1
+d0041da6:	d908      	bls.n	d0041dba <fillTriangleDitherBayer+0x6ee>
+d0041da8:	f81b 5005 	ldrb.w	r5, [fp, r5]
+d0041dac:	8039      	strh	r1, [r7, #0]
+d0041dae:	45a8      	cmp	r8, r5
+d0041db0:	bfd4      	ite	le
+d0041db2:	4655      	movle	r5, sl
+d0041db4:	4635      	movgt	r5, r6
+d0041db6:	f80c 5004 	strb.w	r5, [ip, r4]
+d0041dba:	4293      	cmp	r3, r2
+d0041dbc:	dcdc      	bgt.n	d0041d78 <fillTriangleDitherBayer+0x6ac>
+d0041dbe:	f8dd 800c 	ldr.w	r8, [sp, #12]
+d0041dc2:	9e05      	ldr	r6, [sp, #20]
+d0041dc4:	f1b8 0f00 	cmp.w	r8, #0
+d0041dc8:	eb03 0283 	add.w	r2, r3, r3, lsl #2
+d0041dcc:	ea4f 0143 	mov.w	r1, r3, lsl #1
+d0041dd0:	ea4f 1282 	mov.w	r2, r2, lsl #6
+d0041dd4:	bfbc      	itt	lt
+d0041dd6:	2102      	movlt	r1, #2
+d0041dd8:	f44f 72a0 	movlt.w	r2, #320	; 0x140
+d0041ddc:	4489      	add	r9, r1
+d0041dde:	4494      	add	ip, r2
+d0041de0:	ee07 3a90 	vmov	s15, r3
+d0041de4:	4418      	add	r0, r3
+d0041de6:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0041dea:	42b0      	cmp	r0, r6
+d0041dec:	eea7 5aa9 	vfma.f32	s10, s15, s19
+d0041df0:	eea7 9a8b 	vfma.f32	s18, s15, s22
+d0041df4:	dd8c      	ble.n	d0041d10 <fillTriangleDitherBayer+0x644>
+d0041df6:	f8dd b018 	ldr.w	fp, [sp, #24]
+d0041dfa:	e5df      	b.n	d00419bc <fillTriangleDitherBayer+0x2f0>
+d0041dfc:	d1f0      	bne.n	d0041de0 <fillTriangleDitherBayer+0x714>
+d0041dfe:	9a00      	ldr	r2, [sp, #0]
+d0041e00:	eeb0 4a43 	vmov.f32	s8, s6
+d0041e04:	2a00      	cmp	r2, #0
+d0041e06:	d0af      	beq.n	d0041d68 <fillTriangleDitherBayer+0x69c>
+d0041e08:	f1a9 0502 	sub.w	r5, r9, #2
+d0041e0c:	2200      	movs	r2, #0
+d0041e0e:	fec6 7a83 	vmaxnm.f32	s15, s13, s6
+d0041e12:	fec7 7ae3 	vminnm.f32	s15, s15, s7
+d0041e16:	ee77 7aa2 	vadd.f32	s15, s15, s5
+d0041e1a:	eb02 0182 	add.w	r1, r2, r2, lsl #2
+d0041e1e:	f835 7f02 	ldrh.w	r7, [r5, #2]!
+d0041e22:	ee76 6a84 	vadd.f32	s13, s13, s8
+d0041e26:	018c      	lsls	r4, r1, #6
+d0041e28:	3201      	adds	r2, #1
+d0041e2a:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+d0041e2e:	ee17 1a90 	vmov	r1, s15
+d0041e32:	b289      	uxth	r1, r1
+d0041e34:	428f      	cmp	r7, r1
+d0041e36:	d902      	bls.n	d0041e3e <fillTriangleDitherBayer+0x772>
+d0041e38:	8029      	strh	r1, [r5, #0]
+d0041e3a:	f80c a004 	strb.w	sl, [ip, r4]
+d0041e3e:	4293      	cmp	r3, r2
+d0041e40:	dce5      	bgt.n	d0041e0e <fillTriangleDitherBayer+0x742>
+d0041e42:	e7bf      	b.n	d0041dc4 <fillTriangleDitherBayer+0x6f8>
+d0041e44:	ee77 7ac6 	vsub.f32	s15, s15, s12
+d0041e48:	ed9f 1a76 	vldr	s2, [pc, #472]	; d0042024 <fillTriangleDitherBayer+0x958>
+d0041e4c:	eef4 7ac1 	vcmpe.f32	s15, s2
+d0041e50:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041e54:	f340 80f3 	ble.w	d004203e <fillTriangleDitherBayer+0x972>
+d0041e58:	eeb7 9a00 	vmov.f32	s18, #112	; 0x3f800000  1.0
+d0041e5c:	ee34 4a66 	vsub.f32	s8, s8, s13
+d0041e60:	ee72 2ac5 	vsub.f32	s5, s5, s10
+d0041e64:	ee89 1a27 	vdiv.f32	s2, s18, s15
+d0041e68:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
+d0041e6c:	ee37 6ac6 	vsub.f32	s12, s15, s12
+d0041e70:	ee07 0a90 	vmov	s15, r0
+d0041e74:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0041e78:	ee77 7a86 	vadd.f32	s15, s15, s12
+d0041e7c:	ee24 4a01 	vmul.f32	s8, s8, s2
+d0041e80:	ee62 2a81 	vmul.f32	s5, s5, s2
+d0041e84:	eee7 6a84 	vfma.f32	s13, s15, s8
+d0041e88:	eea7 5aa2 	vfma.f32	s10, s15, s5
+d0041e8c:	ebcb 190b 	rsb	r9, fp, fp, lsl #4
+d0041e90:	4961      	ldr	r1, [pc, #388]	; (d0042018 <fillTriangleDitherBayer+0x94c>)
+d0041e92:	eb00 0380 	add.w	r3, r0, r0, lsl #2
+d0041e96:	4c61      	ldr	r4, [pc, #388]	; (d004201c <fillTriangleDitherBayer+0x950>)
+d0041e98:	eb00 1249 	add.w	r2, r0, r9, lsl #5
+d0041e9c:	6809      	ldr	r1, [r1, #0]
+d0041e9e:	eb0b 1383 	add.w	r3, fp, r3, lsl #6
+d0041ea2:	f8cd b01c 	str.w	fp, [sp, #28]
+d0041ea6:	eb04 0942 	add.w	r9, r4, r2, lsl #1
+d0041eaa:	f00b 0203 	and.w	r2, fp, #3
+d0041eae:	eb01 0c03 	add.w	ip, r1, r3
+d0041eb2:	eeb6 6a00 	vmov.f32	s12, #96	; 0x3f000000  0.5
+d0041eb6:	4613      	mov	r3, r2
+d0041eb8:	4a59      	ldr	r2, [pc, #356]	; (d0042020 <fillTriangleDitherBayer+0x954>)
+d0041eba:	eb02 0383 	add.w	r3, r2, r3, lsl #2
+d0041ebe:	469b      	mov	fp, r3
+d0041ec0:	e010      	b.n	d0041ee4 <fillTriangleDitherBayer+0x818>
+d0041ec2:	ee07 2a90 	vmov	s15, r2
+d0041ec6:	4410      	add	r0, r2
+d0041ec8:	eb02 0382 	add.w	r3, r2, r2, lsl #2
+d0041ecc:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0041ed0:	42b0      	cmp	r0, r6
+d0041ed2:	eb09 0942 	add.w	r9, r9, r2, lsl #1
+d0041ed6:	eb0c 1c83 	add.w	ip, ip, r3, lsl #6
+d0041eda:	eee7 6a84 	vfma.f32	s13, s15, s8
+d0041ede:	eea7 5aa2 	vfma.f32	s10, s15, s5
+d0041ee2:	dc72      	bgt.n	d0041fca <fillTriangleDitherBayer+0x8fe>
+d0041ee4:	eba6 0800 	sub.w	r8, r6, r0
+d0041ee8:	eef4 6acd 	vcmpe.f32	s13, s26
+d0041eec:	f108 0201 	add.w	r2, r8, #1
+d0041ef0:	2a30      	cmp	r2, #48	; 0x30
+d0041ef2:	bfa8      	it	ge
+d0041ef4:	2230      	movge	r2, #48	; 0x30
+d0041ef6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041efa:	d9e2      	bls.n	d0041ec2 <fillTriangleDitherBayer+0x7f6>
+d0041efc:	f1b8 0f00 	cmp.w	r8, #0
+d0041f00:	ee85 1a26 	vdiv.f32	s2, s10, s13
+d0041f04:	dd64      	ble.n	d0041fd0 <fillTriangleDitherBayer+0x904>
+d0041f06:	1e53      	subs	r3, r2, #1
+d0041f08:	ee07 3a90 	vmov	s15, r3
+d0041f0c:	eeb0 9a66 	vmov.f32	s18, s13
+d0041f10:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0041f14:	eea7 9a84 	vfma.f32	s18, s15, s8
+d0041f18:	eeb4 9acd 	vcmpe.f32	s18, s26
+d0041f1c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0041f20:	dd57      	ble.n	d0041fd2 <fillTriangleDitherBayer+0x906>
+d0041f22:	eeb0 fa45 	vmov.f32	s30, s10
+d0041f26:	9900      	ldr	r1, [sp, #0]
+d0041f28:	eea7 faa2 	vfma.f32	s30, s15, s5
+d0041f2c:	eecf 9a09 	vdiv.f32	s19, s30, s18
+d0041f30:	ee79 9ac1 	vsub.f32	s19, s19, s2
+d0041f34:	ee89 9aa7 	vdiv.f32	s18, s19, s15
+d0041f38:	2900      	cmp	r1, #0
+d0041f3a:	d14f      	bne.n	d0041fdc <fillTriangleDitherBayer+0x910>
+d0041f3c:	9603      	str	r6, [sp, #12]
+d0041f3e:	f1a9 0702 	sub.w	r7, r9, #2
+d0041f42:	f8cd 8014 	str.w	r8, [sp, #20]
+d0041f46:	9e04      	ldr	r6, [sp, #16]
+d0041f48:	f8dd 8004 	ldr.w	r8, [sp, #4]
+d0041f4c:	fec1 7a03 	vmaxnm.f32	s15, s2, s6
+d0041f50:	fec7 7ac2 	vminnm.f32	s15, s15, s4
+d0041f54:	ee77 7a86 	vadd.f32	s15, s15, s12
+d0041f58:	f837 ef02 	ldrh.w	lr, [r7, #2]!
+d0041f5c:	1845      	adds	r5, r0, r1
+d0041f5e:	eb01 0481 	add.w	r4, r1, r1, lsl #2
+d0041f62:	ee31 1a09 	vadd.f32	s2, s2, s18
+d0041f66:	3101      	adds	r1, #1
+d0041f68:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+d0041f6c:	f005 0503 	and.w	r5, r5, #3
+d0041f70:	01a4      	lsls	r4, r4, #6
+d0041f72:	ee17 3a90 	vmov	r3, s15
+d0041f76:	b29b      	uxth	r3, r3
+d0041f78:	459e      	cmp	lr, r3
+d0041f7a:	d908      	bls.n	d0041f8e <fillTriangleDitherBayer+0x8c2>
+d0041f7c:	f81b 5005 	ldrb.w	r5, [fp, r5]
+d0041f80:	803b      	strh	r3, [r7, #0]
+d0041f82:	45a8      	cmp	r8, r5
+d0041f84:	bfcc      	ite	gt
+d0041f86:	4635      	movgt	r5, r6
+d0041f88:	4655      	movle	r5, sl
+d0041f8a:	f80c 5004 	strb.w	r5, [ip, r4]
+d0041f8e:	428a      	cmp	r2, r1
+d0041f90:	dcdc      	bgt.n	d0041f4c <fillTriangleDitherBayer+0x880>
+d0041f92:	9e03      	ldr	r6, [sp, #12]
+d0041f94:	f8dd 8014 	ldr.w	r8, [sp, #20]
+d0041f98:	f1b8 0f00 	cmp.w	r8, #0
+d0041f9c:	eb02 0382 	add.w	r3, r2, r2, lsl #2
+d0041fa0:	ea4f 0142 	mov.w	r1, r2, lsl #1
+d0041fa4:	ea4f 1383 	mov.w	r3, r3, lsl #6
+d0041fa8:	bfbc      	itt	lt
+d0041faa:	2102      	movlt	r1, #2
+d0041fac:	f44f 73a0 	movlt.w	r3, #320	; 0x140
+d0041fb0:	4489      	add	r9, r1
+d0041fb2:	449c      	add	ip, r3
+d0041fb4:	ee07 2a90 	vmov	s15, r2
+d0041fb8:	4410      	add	r0, r2
+d0041fba:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0041fbe:	42b0      	cmp	r0, r6
+d0041fc0:	eee7 6a84 	vfma.f32	s13, s15, s8
+d0041fc4:	eea7 5aa2 	vfma.f32	s10, s15, s5
+d0041fc8:	dd8c      	ble.n	d0041ee4 <fillTriangleDitherBayer+0x818>
+d0041fca:	f8dd b01c 	ldr.w	fp, [sp, #28]
+d0041fce:	e5fb      	b.n	d0041bc8 <fillTriangleDitherBayer+0x4fc>
+d0041fd0:	d1f0      	bne.n	d0041fb4 <fillTriangleDitherBayer+0x8e8>
+d0041fd2:	9900      	ldr	r1, [sp, #0]
+d0041fd4:	eeb0 9a43 	vmov.f32	s18, s6
+d0041fd8:	2900      	cmp	r1, #0
+d0041fda:	d0af      	beq.n	d0041f3c <fillTriangleDitherBayer+0x870>
+d0041fdc:	f1a9 0502 	sub.w	r5, r9, #2
+d0041fe0:	2100      	movs	r1, #0
+d0041fe2:	fec1 7a03 	vmaxnm.f32	s15, s2, s6
+d0041fe6:	fec7 7ac2 	vminnm.f32	s15, s15, s4
+d0041fea:	ee77 7a86 	vadd.f32	s15, s15, s12
+d0041fee:	eb01 0381 	add.w	r3, r1, r1, lsl #2
+d0041ff2:	f835 7f02 	ldrh.w	r7, [r5, #2]!
+d0041ff6:	ee31 1a09 	vadd.f32	s2, s2, s18
+d0041ffa:	019c      	lsls	r4, r3, #6
+d0041ffc:	3101      	adds	r1, #1
+d0041ffe:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+d0042002:	ee17 3a90 	vmov	r3, s15
+d0042006:	b29b      	uxth	r3, r3
+d0042008:	429f      	cmp	r7, r3
+d004200a:	d902      	bls.n	d0042012 <fillTriangleDitherBayer+0x946>
+d004200c:	802b      	strh	r3, [r5, #0]
+d004200e:	f80c a004 	strb.w	sl, [ip, r4]
+d0042012:	428a      	cmp	r2, r1
+d0042014:	dce5      	bgt.n	d0041fe2 <fillTriangleDitherBayer+0x916>
+d0042016:	e7bf      	b.n	d0041f98 <fillTriangleDitherBayer+0x8cc>
+d0042018:	d012da64 	.word	0xd012da64
+d004201c:	d0048360 	.word	0xd0048360
+d0042020:	d00479fc 	.word	0xd00479fc
+d0042024:	38d1b717 	.word	0x38d1b717
+d0042028:	f04f 0a10 	mov.w	sl, #16
+d004202c:	2310      	movs	r3, #16
+d004202e:	9304      	str	r3, [sp, #16]
+d0042030:	f7ff bbb2 	b.w	d0041798 <fillTriangleDitherBayer+0xcc>
+d0042034:	eeb0 ba43 	vmov.f32	s22, s6
+d0042038:	eef0 9a43 	vmov.f32	s19, s6
+d004203c:	e63c      	b.n	d0041cb8 <fillTriangleDitherBayer+0x5ec>
+d004203e:	eef0 2a43 	vmov.f32	s5, s6
+d0042042:	eeb0 4a43 	vmov.f32	s8, s6
+d0042046:	e721      	b.n	d0041e8c <fillTriangleDitherBayer+0x7c0>
 
-d004259c <rotateAroundAxis>:
-d004259c:	ee62 7a02 	vmul.f32	s15, s4, s4
-d00425a0:	ed9f 7a51 	vldr	s14, [pc, #324]	; d00426e8 <rotateAroundAxis+0x14c>
-d00425a4:	b500      	push	{lr}
-d00425a6:	eee1 7aa1 	vfma.f32	s15, s3, s3
-d00425aa:	ed2d 8b0c 	vpush	{d8-d13}
-d00425ae:	eef0 ca40 	vmov.f32	s25, s0
-d00425b2:	b08f      	sub	sp, #60	; 0x3c
-d00425b4:	eeb0 ca60 	vmov.f32	s24, s1
-d00425b8:	eef0 ba41 	vmov.f32	s23, s2
-d00425bc:	eee2 7aa2 	vfma.f32	s15, s5, s5
-d00425c0:	eeb0 da43 	vmov.f32	s26, s6
-d00425c4:	eef4 7ac7 	vcmpe.f32	s15, s14
-d00425c8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00425cc:	d97c      	bls.n	d00426c8 <rotateAroundAxis+0x12c>
-d00425ce:	ed9f 7a47 	vldr	s14, [pc, #284]	; d00426ec <rotateAroundAxis+0x150>
-d00425d2:	eef4 7a47 	vcmp.f32	s15, s14
-d00425d6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00425da:	dd55      	ble.n	d0042688 <rotateAroundAxis+0xec>
-d00425dc:	ed9f 7a44 	vldr	s14, [pc, #272]	; d00426f0 <rotateAroundAxis+0x154>
-d00425e0:	eef4 7a47 	vcmp.f32	s15, s14
-d00425e4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00425e8:	d54e      	bpl.n	d0042688 <rotateAroundAxis+0xec>
-d00425ea:	eef0 da42 	vmov.f32	s27, s4
-d00425ee:	eeb0 9a61 	vmov.f32	s18, s3
-d00425f2:	eeb0 8a62 	vmov.f32	s16, s5
-d00425f6:	ee60 8a82 	vmul.f32	s17, s1, s4
-d00425fa:	ee62 5ae0 	vnmul.f32	s11, s5, s1
-d00425fe:	ee21 6ac1 	vnmul.f32	s12, s3, s2
-d0042602:	eeec 8a89 	vfma.f32	s17, s25, s18
-d0042606:	ee6d 7aec 	vnmul.f32	s15, s27, s25
-d004260a:	eeeb 5aad 	vfma.f32	s11, s23, s27
-d004260e:	eeac 6a88 	vfma.f32	s12, s25, s16
-d0042612:	eeec 7a09 	vfma.f32	s15, s24, s18
-d0042616:	eeeb 8a88 	vfma.f32	s17, s23, s16
-d004261a:	eeb0 ba65 	vmov.f32	s22, s11
-d004261e:	eeb0 aa46 	vmov.f32	s20, s12
-d0042622:	eef0 aa67 	vmov.f32	s21, s15
-d0042626:	eeb0 0a4d 	vmov.f32	s0, s26
-d004262a:	f003 ff05 	bl	d0046438 <cosf>
-d004262e:	eef0 9a40 	vmov.f32	s19, s0
-d0042632:	eeb0 0a4d 	vmov.f32	s0, s26
-d0042636:	f004 f8e3 	bl	d0046800 <sinf>
-d004263a:	ee60 5a0b 	vmul.f32	s11, s0, s22
-d004263e:	ee20 6a0a 	vmul.f32	s12, s0, s20
-d0042642:	ee60 7a2a 	vmul.f32	s15, s0, s21
-d0042646:	eee9 5aac 	vfma.f32	s11, s19, s25
-d004264a:	eea9 6a8c 	vfma.f32	s12, s19, s24
-d004264e:	eee9 7aab 	vfma.f32	s15, s19, s23
-d0042652:	eef7 6a00 	vmov.f32	s13, #112	; 0x3f800000  1.0
-d0042656:	ee29 9a28 	vmul.f32	s18, s18, s17
-d004265a:	ee2d 7aa8 	vmul.f32	s14, s27, s17
-d004265e:	ee76 9ae9 	vsub.f32	s19, s13, s19
-d0042662:	ee28 8a28 	vmul.f32	s16, s16, s17
-d0042666:	eeb0 0a65 	vmov.f32	s0, s11
-d004266a:	eef0 0a46 	vmov.f32	s1, s12
-d004266e:	eeb0 1a67 	vmov.f32	s2, s15
-d0042672:	eea9 0a89 	vfma.f32	s0, s19, s18
-d0042676:	eee9 0a87 	vfma.f32	s1, s19, s14
-d004267a:	eea9 1a88 	vfma.f32	s2, s19, s16
-d004267e:	b00f      	add	sp, #60	; 0x3c
-d0042680:	ecbd 8b0c 	vpop	{d8-d13}
-d0042684:	f85d fb04 	ldr.w	pc, [sp], #4
-d0042688:	ee17 2a90 	vmov	r2, s15
-d004268c:	eef6 6a00 	vmov.f32	s13, #96	; 0x3f000000  0.5
-d0042690:	4b18      	ldr	r3, [pc, #96]	; (d00426f4 <rotateAroundAxis+0x158>)
-d0042692:	eeb7 8a08 	vmov.f32	s16, #120	; 0x3fc00000  1.5
-d0042696:	eba3 0352 	sub.w	r3, r3, r2, lsr #1
-d004269a:	ee67 7aa6 	vmul.f32	s15, s15, s13
-d004269e:	ee07 3a10 	vmov	s14, r3
-d00426a2:	ee67 7a87 	vmul.f32	s15, s15, s14
-d00426a6:	eea7 8a67 	vfms.f32	s16, s14, s15
-d00426aa:	ee27 8a08 	vmul.f32	s16, s14, s16
-d00426ae:	ee62 da08 	vmul.f32	s27, s4, s16
-d00426b2:	ee21 9a88 	vmul.f32	s18, s3, s16
-d00426b6:	ee22 8a88 	vmul.f32	s16, s5, s16
-d00426ba:	ee6c 8a2d 	vmul.f32	s17, s24, s27
-d00426be:	ee29 6a6b 	vnmul.f32	s12, s18, s23
-d00426c2:	ee68 5a4c 	vnmul.f32	s11, s16, s24
-d00426c6:	e79c      	b.n	d0042602 <rotateAroundAxis+0x66>
-d00426c8:	eddf 8a0b 	vldr	s17, [pc, #44]	; d00426f8 <rotateAroundAxis+0x15c>
-d00426cc:	eef0 aa68 	vmov.f32	s21, s17
-d00426d0:	eeb0 aa68 	vmov.f32	s20, s17
-d00426d4:	eeb0 ba68 	vmov.f32	s22, s17
-d00426d8:	eeb0 8a68 	vmov.f32	s16, s17
-d00426dc:	eef0 da68 	vmov.f32	s27, s17
-d00426e0:	eeb0 9a68 	vmov.f32	s18, s17
-d00426e4:	e79f      	b.n	d0042626 <rotateAroundAxis+0x8a>
-d00426e6:	bf00      	nop
-d00426e8:	358637bd 	.word	0x358637bd
-d00426ec:	3f7fbe77 	.word	0x3f7fbe77
-d00426f0:	3f8020c5 	.word	0x3f8020c5
-d00426f4:	5f3759df 	.word	0x5f3759df
-d00426f8:	00000000 	.word	0x00000000
+d0042048 <fillTriangleDitherBayer2Mode>:
+d0042048:	eddf 7aca 	vldr	s15, [pc, #808]	; d0042374 <fillTriangleDitherBayer2Mode+0x32c>
+d004204c:	eef4 0ae7 	vcmpe.f32	s1, s15
+d0042050:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d0042054:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042058:	eeb4 1ae7 	vcmpe.f32	s2, s15
+d004205c:	ed2d 8b10 	vpush	{d8-d15}
+d0042060:	b08d      	sub	sp, #52	; 0x34
+d0042062:	9303      	str	r3, [sp, #12]
+d0042064:	bf94      	ite	ls
+d0042066:	2301      	movls	r3, #1
+d0042068:	2300      	movhi	r3, #0
+d004206a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004206e:	9202      	str	r2, [sp, #8]
+d0042070:	f89d b0ac 	ldrb.w	fp, [sp, #172]	; 0xac
+d0042074:	bf98      	it	ls
+d0042076:	f043 0301 	orrls.w	r3, r3, #1
+d004207a:	f8bd 20a8 	ldrh.w	r2, [sp, #168]	; 0xa8
+d004207e:	e9cd 0100 	strd	r0, r1, [sp]
+d0042082:	f8bd 00a0 	ldrh.w	r0, [sp, #160]	; 0xa0
+d0042086:	f8bd 10a4 	ldrh.w	r1, [sp, #164]	; 0xa4
+d004208a:	2b00      	cmp	r3, #0
+d004208c:	f040 814d 	bne.w	d004232a <fillTriangleDitherBayer2Mode+0x2e2>
+d0042090:	eeb4 0a67 	vcmp.f32	s0, s15
+d0042094:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042098:	f240 8147 	bls.w	d004232a <fillTriangleDitherBayer2Mode+0x2e2>
+d004209c:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
+d00420a0:	ee06 1a90 	vmov	s13, r1
+d00420a4:	ee07 0a10 	vmov	s14, r0
+d00420a8:	eef8 5a66 	vcvt.f32.u32	s11, s13
+d00420ac:	ee87 3a80 	vdiv.f32	s6, s15, s0
+d00420b0:	ee87 2a81 	vdiv.f32	s4, s15, s2
+d00420b4:	ee87 0aa0 	vdiv.f32	s0, s15, s1
+d00420b8:	ee07 2a90 	vmov	s15, r2
+d00420bc:	eeb8 4a67 	vcvt.f32.u32	s8, s15
+d00420c0:	eddd 7a01 	vldr	s15, [sp, #4]
+d00420c4:	eeb8 7a47 	vcvt.f32.u32	s14, s14
+d00420c8:	eeb8 5ae7 	vcvt.f32.s32	s10, s15
+d00420cc:	eddd 7a03 	vldr	s15, [sp, #12]
+d00420d0:	eef8 3ae7 	vcvt.f32.s32	s7, s15
+d00420d4:	eddd 7a00 	vldr	s15, [sp]
+d00420d8:	ee27 7a03 	vmul.f32	s14, s14, s6
+d00420dc:	eeb8 6ae7 	vcvt.f32.s32	s12, s15
+d00420e0:	eddd 7a02 	vldr	s15, [sp, #8]
+d00420e4:	eeb4 5ae3 	vcmpe.f32	s10, s7
+d00420e8:	eef8 4ae7 	vcvt.f32.s32	s9, s15
+d00420ec:	eddd 7a26 	vldr	s15, [sp, #152]	; 0x98
+d00420f0:	ee24 4a02 	vmul.f32	s8, s8, s4
+d00420f4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00420f8:	eef8 2ae7 	vcvt.f32.s32	s5, s15
+d00420fc:	eddd 7a27 	vldr	s15, [sp, #156]	; 0x9c
+d0042100:	ee65 5a80 	vmul.f32	s11, s11, s0
+d0042104:	eef8 6ae7 	vcvt.f32.s32	s13, s15
+d0042108:	f300 8114 	bgt.w	d0042334 <fillTriangleDitherBayer2Mode+0x2ec>
+d004210c:	eeb4 5ae6 	vcmpe.f32	s10, s13
+d0042110:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042114:	f300 8201 	bgt.w	d004251a <fillTriangleDitherBayer2Mode+0x4d2>
+d0042118:	eef4 3ae6 	vcmpe.f32	s7, s13
+d004211c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042120:	f300 8219 	bgt.w	d0042556 <fillTriangleDitherBayer2Mode+0x50e>
+d0042124:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
+d0042128:	ee35 1a27 	vadd.f32	s2, s10, s15
+d004212c:	ee76 7aa7 	vadd.f32	s15, s13, s15
+d0042130:	eebd 1ac1 	vcvt.s32.f32	s2, s2
+d0042134:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+d0042138:	ee11 3a10 	vmov	r3, s2
+d004213c:	ee17 2a90 	vmov	r2, s15
+d0042140:	4293      	cmp	r3, r2
+d0042142:	f000 80f2 	beq.w	d004232a <fillTriangleDitherBayer2Mode+0x2e2>
+d0042146:	ee76 8ac5 	vsub.f32	s17, s13, s10
+d004214a:	ed9f 1a8a 	vldr	s2, [pc, #552]	; d0042374 <fillTriangleDitherBayer2Mode+0x32c>
+d004214e:	eef4 8ac1 	vcmpe.f32	s17, s2
+d0042152:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042156:	f240 80e8 	bls.w	d004232a <fillTriangleDitherBayer2Mode+0x2e2>
+d004215a:	eef7 9a00 	vmov.f32	s19, #112	; 0x3f800000  1.0
+d004215e:	ee33 9ac5 	vsub.f32	s18, s7, s10
+d0042162:	ee72 0ac6 	vsub.f32	s1, s5, s12
+d0042166:	eec9 7aa8 	vdiv.f32	s15, s19, s17
+d004216a:	eeb4 9ac1 	vcmpe.f32	s18, s2
+d004216e:	ee32 8a43 	vsub.f32	s16, s4, s6
+d0042172:	ee74 8a47 	vsub.f32	s17, s8, s14
+d0042176:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004217a:	ee60 0aa7 	vmul.f32	s1, s1, s15
+d004217e:	ee28 8a27 	vmul.f32	s16, s16, s15
+d0042182:	ee68 8aa7 	vmul.f32	s17, s17, s15
+d0042186:	f300 80ff 	bgt.w	d0042388 <fillTriangleDitherBayer2Mode+0x340>
+d004218a:	eef1 7a04 	vmov.f32	s15, #20	; 0x40a00000  5.0
+d004218e:	ed9f ba7c 	vldr	s22, [pc, #496]	; d0042380 <fillTriangleDitherBayer2Mode+0x338>
+d0042192:	eddf 9a79 	vldr	s19, [pc, #484]	; d0042378 <fillTriangleDitherBayer2Mode+0x330>
+d0042196:	ee76 fae3 	vsub.f32	s31, s13, s7
+d004219a:	fec1 1a8b 	vmaxnm.f32	s3, s3, s22
+d004219e:	fec1 7ae7 	vminnm.f32	s15, s3, s15
+d00421a2:	ee67 7aa9 	vmul.f32	s15, s15, s19
+d00421a6:	eef4 fac1 	vcmpe.f32	s31, s2
+d00421aa:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+d00421ae:	ee17 3a90 	vmov	r3, s15
+d00421b2:	edcd 7a00 	vstr	s15, [sp]
+d00421b6:	2b10      	cmp	r3, #16
+d00421b8:	bfa8      	it	ge
+d00421ba:	2310      	movge	r3, #16
+d00421bc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00421c0:	ea23 73e3 	bic.w	r3, r3, r3, asr #31
+d00421c4:	9302      	str	r3, [sp, #8]
+d00421c6:	f340 80b0 	ble.w	d004232a <fillTriangleDitherBayer2Mode+0x2e2>
+d00421ca:	eef0 ea4b 	vmov.f32	s29, s22
+d00421ce:	eef0 ba4b 	vmov.f32	s23, s22
+d00421d2:	eeb7 1a00 	vmov.f32	s2, #112	; 0x3f800000  1.0
+d00421d6:	eddf 1a67 	vldr	s3, [pc, #412]	; d0042374 <fillTriangleDitherBayer2Mode+0x32c>
+d00421da:	ee72 2ae4 	vsub.f32	s5, s5, s9
+d00421de:	ee32 2a40 	vsub.f32	s4, s4, s0
+d00421e2:	eec1 7a2f 	vdiv.f32	s15, s2, s31
+d00421e6:	eeb4 9ae1 	vcmpe.f32	s18, s3
+d00421ea:	ee34 4a65 	vsub.f32	s8, s8, s11
+d00421ee:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00421f2:	ee62 2aa7 	vmul.f32	s5, s5, s15
+d00421f6:	ee24 fa27 	vmul.f32	s30, s8, s15
+d00421fa:	edcd 2a06 	vstr	s5, [sp, #24]
+d00421fe:	ee62 2a27 	vmul.f32	s5, s4, s15
+d0042202:	edcd 2a05 	vstr	s5, [sp, #20]
+d0042206:	f300 80f7 	bgt.w	d00423f8 <fillTriangleDitherBayer2Mode+0x3b0>
+d004220a:	eefd 7ae3 	vcvt.s32.f32	s15, s7
+d004220e:	edcd 7a03 	vstr	s15, [sp, #12]
+d0042212:	eefd 7ae6 	vcvt.s32.f32	s15, s13
+d0042216:	f240 123f 	movw	r2, #319	; 0x13f
+d004221a:	9903      	ldr	r1, [sp, #12]
+d004221c:	ee17 3a90 	vmov	r3, s15
+d0042220:	ea21 78e1 	bic.w	r8, r1, r1, asr #31
+d0042224:	3b01      	subs	r3, #1
+d0042226:	4293      	cmp	r3, r2
+d0042228:	bfa8      	it	ge
+d004222a:	4613      	movge	r3, r2
+d004222c:	4543      	cmp	r3, r8
+d004222e:	db7c      	blt.n	d004232a <fillTriangleDitherBayer2Mode+0x2e2>
+d0042230:	ee07 8a90 	vmov	s15, r8
+d0042234:	eef6 6a00 	vmov.f32	s13, #96	; 0x3f000000  0.5
+d0042238:	3301      	adds	r3, #1
+d004223a:	ed9d ba06 	vldr	s22, [sp, #24]
+d004223e:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0042242:	eddd aa05 	vldr	s21, [sp, #20]
+d0042246:	ed9f 9a4b 	vldr	s18, [pc, #300]	; d0042374 <fillTriangleDitherBayer2Mode+0x32c>
+d004224a:	ed9f 1a4c 	vldr	s2, [pc, #304]	; d004237c <fillTriangleDitherBayer2Mode+0x334>
+d004224e:	ee77 7aa6 	vadd.f32	s15, s15, s13
+d0042252:	ed9f 4a4b 	vldr	s8, [pc, #300]	; d0042380 <fillTriangleDitherBayer2Mode+0x338>
+d0042256:	eddf 1a4b 	vldr	s3, [pc, #300]	; d0042384 <fillTriangleDitherBayer2Mode+0x33c>
+d004225a:	9301      	str	r3, [sp, #4]
+d004225c:	ee37 5ac5 	vsub.f32	s10, s15, s10
+d0042260:	ee77 3ae3 	vsub.f32	s7, s15, s7
+d0042264:	eea0 6a85 	vfma.f32	s12, s1, s10
+d0042268:	eea8 3a05 	vfma.f32	s6, s16, s10
+d004226c:	eea8 7a85 	vfma.f32	s14, s17, s10
+d0042270:	eeeb 4a23 	vfma.f32	s9, s22, s7
+d0042274:	eeaa 0aa3 	vfma.f32	s0, s21, s7
+d0042278:	eeef 5a23 	vfma.f32	s11, s30, s7
+d004227c:	e033      	b.n	d00422e6 <fillTriangleDitherBayer2Mode+0x29e>
+d004227e:	eeb0 2a47 	vmov.f32	s4, s14
+d0042282:	eef0 9a43 	vmov.f32	s19, s6
+d0042286:	eef0 6a46 	vmov.f32	s13, s12
+d004228a:	eef0 3a65 	vmov.f32	s7, s11
+d004228e:	eeb0 5a40 	vmov.f32	s10, s0
+d0042292:	eef0 2a64 	vmov.f32	s5, s9
+d0042296:	fefa 7a66 	vrintp.f32	s15, s13
+d004229a:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+d004229e:	f240 13df 	movw	r3, #479	; 0x1df
+d00422a2:	ee17 4a90 	vmov	r4, s15
+d00422a6:	fefa 7a62 	vrintp.f32	s15, s5
+d00422aa:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+d00422ae:	3c01      	subs	r4, #1
+d00422b0:	ee17 1a90 	vmov	r1, s15
+d00422b4:	429c      	cmp	r4, r3
+d00422b6:	ea21 71e1 	bic.w	r1, r1, r1, asr #31
+d00422ba:	bfa8      	it	ge
+d00422bc:	461c      	movge	r4, r3
+d00422be:	42a1      	cmp	r1, r4
+d00422c0:	f340 817b 	ble.w	d00425ba <fillTriangleDitherBayer2Mode+0x572>
+d00422c4:	f108 0801 	add.w	r8, r8, #1
+d00422c8:	9b01      	ldr	r3, [sp, #4]
+d00422ca:	ee36 6a20 	vadd.f32	s12, s12, s1
+d00422ce:	4598      	cmp	r8, r3
+d00422d0:	ee33 3a08 	vadd.f32	s6, s6, s16
+d00422d4:	ee37 7a28 	vadd.f32	s14, s14, s17
+d00422d8:	ee74 4a8b 	vadd.f32	s9, s9, s22
+d00422dc:	ee30 0a2a 	vadd.f32	s0, s0, s21
+d00422e0:	ee75 5a8f 	vadd.f32	s11, s11, s30
+d00422e4:	d021      	beq.n	d004232a <fillTriangleDitherBayer2Mode+0x2e2>
+d00422e6:	eeb4 6ae4 	vcmpe.f32	s12, s9
+d00422ea:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00422ee:	dcc6      	bgt.n	d004227e <fillTriangleDitherBayer2Mode+0x236>
+d00422f0:	eeb0 2a65 	vmov.f32	s4, s11
+d00422f4:	eef0 9a40 	vmov.f32	s19, s0
+d00422f8:	eef0 6a64 	vmov.f32	s13, s9
+d00422fc:	eef0 3a47 	vmov.f32	s7, s14
+d0042300:	eeb0 5a43 	vmov.f32	s10, s6
+d0042304:	eef0 2a46 	vmov.f32	s5, s12
+d0042308:	e7c5      	b.n	d0042296 <fillTriangleDitherBayer2Mode+0x24e>
+d004230a:	eddd 6a08 	vldr	s13, [sp, #32]
+d004230e:	ed9d 6a09 	vldr	s12, [sp, #36]	; 0x24
+d0042312:	ed9d fa0a 	vldr	s30, [sp, #40]	; 0x28
+d0042316:	ed9d 0a0b 	vldr	s0, [sp, #44]	; 0x2c
+d004231a:	eddf 7a16 	vldr	s15, [pc, #88]	; d0042374 <fillTriangleDitherBayer2Mode+0x32c>
+d004231e:	eef4 fae7 	vcmpe.f32	s31, s15
+d0042322:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042326:	f73f af74 	bgt.w	d0042212 <fillTriangleDitherBayer2Mode+0x1ca>
+d004232a:	b00d      	add	sp, #52	; 0x34
+d004232c:	ecbd 8b10 	vpop	{d8-d15}
+d0042330:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d0042334:	eef4 3ae6 	vcmpe.f32	s7, s13
+d0042338:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004233c:	f340 8124 	ble.w	d0042588 <fillTriangleDitherBayer2Mode+0x540>
+d0042340:	eeb0 8a44 	vmov.f32	s16, s8
+d0042344:	eef0 0a42 	vmov.f32	s1, s4
+d0042348:	eeb0 1a66 	vmov.f32	s2, s13
+d004234c:	eef0 7a62 	vmov.f32	s15, s5
+d0042350:	eeb0 4a47 	vmov.f32	s8, s14
+d0042354:	eeb0 2a43 	vmov.f32	s4, s6
+d0042358:	eef0 6a45 	vmov.f32	s13, s10
+d004235c:	eef0 2a46 	vmov.f32	s5, s12
+d0042360:	eeb0 7a48 	vmov.f32	s14, s16
+d0042364:	eeb0 3a60 	vmov.f32	s6, s1
+d0042368:	eeb0 5a41 	vmov.f32	s10, s2
+d004236c:	eeb0 6a67 	vmov.f32	s12, s15
+d0042370:	e6d8      	b.n	d0042124 <fillTriangleDitherBayer2Mode+0xdc>
+d0042372:	bf00      	nop
+d0042374:	38d1b717 	.word	0x38d1b717
+d0042378:	404ccccd 	.word	0x404ccccd
+d004237c:	33d6bf95 	.word	0x33d6bf95
+d0042380:	00000000 	.word	0x00000000
+d0042384:	477fff00 	.word	0x477fff00
+d0042388:	ee89 aa89 	vdiv.f32	s20, s19, s18
+d004238c:	ed1f ba06 	vldr	s22, [pc, #-24]	; d0042378 <fillTriangleDitherBayer2Mode+0x330>
+d0042390:	ed5f 9a05 	vldr	s19, [pc, #-20]	; d0042380 <fillTriangleDitherBayer2Mode+0x338>
+d0042394:	fec1 1aa9 	vmaxnm.f32	s3, s3, s19
+d0042398:	eef1 7a04 	vmov.f32	s15, #20	; 0x40a00000  5.0
+d004239c:	ee74 aac6 	vsub.f32	s21, s9, s12
+d00423a0:	ee76 fae3 	vsub.f32	s31, s13, s7
+d00423a4:	fec1 7ae7 	vminnm.f32	s15, s3, s15
+d00423a8:	ee67 7a8b 	vmul.f32	s15, s15, s22
+d00423ac:	ee70 1a43 	vsub.f32	s3, s0, s6
+d00423b0:	eef4 fac1 	vcmpe.f32	s31, s2
+d00423b4:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+d00423b8:	ee35 bac7 	vsub.f32	s22, s11, s14
+d00423bc:	ee17 3a90 	vmov	r3, s15
+d00423c0:	edcd 7a00 	vstr	s15, [sp]
+d00423c4:	2b10      	cmp	r3, #16
+d00423c6:	ee6a 7a8a 	vmul.f32	s15, s21, s20
+d00423ca:	ee2b ba0a 	vmul.f32	s22, s22, s20
+d00423ce:	bfa8      	it	ge
+d00423d0:	2310      	movge	r3, #16
+d00423d2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00423d6:	eef0 ba67 	vmov.f32	s23, s15
+d00423da:	ee61 7a8a 	vmul.f32	s15, s3, s20
+d00423de:	ea23 73e3 	bic.w	r3, r3, r3, asr #31
+d00423e2:	9302      	str	r3, [sp, #8]
+d00423e4:	eef0 ea67 	vmov.f32	s29, s15
+d00423e8:	f73f aef3 	bgt.w	d00421d2 <fillTriangleDitherBayer2Mode+0x18a>
+d00423ec:	eeb0 fa69 	vmov.f32	s30, s19
+d00423f0:	edcd 9a05 	vstr	s19, [sp, #20]
+d00423f4:	edcd 9a06 	vstr	s19, [sp, #24]
+d00423f8:	eefd 7ae3 	vcvt.s32.f32	s15, s7
+d00423fc:	f240 123f 	movw	r2, #319	; 0x13f
+d0042400:	ee17 3a90 	vmov	r3, s15
+d0042404:	edcd 7a03 	vstr	s15, [sp, #12]
+d0042408:	eefd 7ac5 	vcvt.s32.f32	s15, s10
+d004240c:	3b01      	subs	r3, #1
+d004240e:	ee17 8a90 	vmov	r8, s15
+d0042412:	4293      	cmp	r3, r2
+d0042414:	ea28 78e8 	bic.w	r8, r8, r8, asr #31
+d0042418:	bfa8      	it	ge
+d004241a:	4613      	movge	r3, r2
+d004241c:	4543      	cmp	r3, r8
+d004241e:	f6ff af7c 	blt.w	d004231a <fillTriangleDitherBayer2Mode+0x2d2>
+d0042422:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
+d0042426:	3301      	adds	r3, #1
+d0042428:	eeb0 aa46 	vmov.f32	s20, s12
+d004242c:	ed5f da2d 	vldr	s27, [pc, #-180]	; d004237c <fillTriangleDitherBayer2Mode+0x334>
+d0042430:	eef0 aa46 	vmov.f32	s21, s12
+d0042434:	ed5f 2a2e 	vldr	s5, [pc, #-184]	; d0042380 <fillTriangleDitherBayer2Mode+0x338>
+d0042438:	ee37 4ac5 	vsub.f32	s8, s15, s10
+d004243c:	ee07 8a90 	vmov	s15, r8
+d0042440:	eeb0 da43 	vmov.f32	s26, s6
+d0042444:	ed1f 1a31 	vldr	s2, [pc, #-196]	; d0042384 <fillTriangleDitherBayer2Mode+0x33c>
+d0042448:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d004244c:	9301      	str	r3, [sp, #4]
+d004244e:	eef0 ca47 	vmov.f32	s25, s14
+d0042452:	edcd 6a08 	vstr	s13, [sp, #32]
+d0042456:	eeb0 ea6b 	vmov.f32	s28, s23
+d004245a:	ed8d 6a09 	vstr	s12, [sp, #36]	; 0x24
+d004245e:	ee77 7a84 	vadd.f32	s15, s15, s8
+d0042462:	ed8d fa0a 	vstr	s30, [sp, #40]	; 0x28
+d0042466:	eeb0 ca43 	vmov.f32	s24, s6
+d004246a:	ed8d 0a0b 	vstr	s0, [sp, #44]	; 0x2c
+d004246e:	eea7 aaab 	vfma.f32	s20, s15, s23
+d0042472:	eef0 ba47 	vmov.f32	s23, s14
+d0042476:	eee0 aaa7 	vfma.f32	s21, s1, s15
+d004247a:	eea8 da27 	vfma.f32	s26, s16, s15
+d004247e:	eee8 caa7 	vfma.f32	s25, s17, s15
+d0042482:	eea7 caae 	vfma.f32	s24, s15, s29
+d0042486:	eee7 ba8b 	vfma.f32	s23, s15, s22
+d004248a:	e034      	b.n	d00424f6 <fillTriangleDitherBayer2Mode+0x4ae>
+d004248c:	eef0 1a6c 	vmov.f32	s3, s25
+d0042490:	eeb0 2a4d 	vmov.f32	s4, s26
+d0042494:	eef0 7a6a 	vmov.f32	s15, s21
+d0042498:	eeb0 6a6b 	vmov.f32	s12, s23
+d004249c:	eef0 6a4c 	vmov.f32	s13, s24
+d00424a0:	eeb0 4a4a 	vmov.f32	s8, s20
+d00424a4:	feba 0a67 	vrintp.f32	s0, s15
+d00424a8:	eebd 0ac0 	vcvt.s32.f32	s0, s0
+d00424ac:	feba 9a44 	vrintp.f32	s18, s8
+d00424b0:	f240 13df 	movw	r3, #479	; 0x1df
+d00424b4:	ee10 4a10 	vmov	r4, s0
+d00424b8:	eebd 0ac9 	vcvt.s32.f32	s0, s18
+d00424bc:	3c01      	subs	r4, #1
+d00424be:	ee10 1a10 	vmov	r1, s0
+d00424c2:	429c      	cmp	r4, r3
+d00424c4:	ea21 71e1 	bic.w	r1, r1, r1, asr #31
+d00424c8:	bfa8      	it	ge
+d00424ca:	461c      	movge	r4, r3
+d00424cc:	428c      	cmp	r4, r1
+d00424ce:	f280 8159 	bge.w	d0042784 <fillTriangleDitherBayer2Mode+0x73c>
+d00424d2:	f108 0801 	add.w	r8, r8, #1
+d00424d6:	9b01      	ldr	r3, [sp, #4]
+d00424d8:	ee7a aaa0 	vadd.f32	s21, s21, s1
+d00424dc:	4598      	cmp	r8, r3
+d00424de:	ee3d da08 	vadd.f32	s26, s26, s16
+d00424e2:	ee7c caa8 	vadd.f32	s25, s25, s17
+d00424e6:	ee3a aa0e 	vadd.f32	s20, s20, s28
+d00424ea:	ee3c ca2e 	vadd.f32	s24, s24, s29
+d00424ee:	ee7b ba8b 	vadd.f32	s23, s23, s22
+d00424f2:	f43f af0a 	beq.w	d004230a <fillTriangleDitherBayer2Mode+0x2c2>
+d00424f6:	eef4 aaca 	vcmpe.f32	s21, s20
+d00424fa:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00424fe:	dcc5      	bgt.n	d004248c <fillTriangleDitherBayer2Mode+0x444>
+d0042500:	eef0 1a6b 	vmov.f32	s3, s23
+d0042504:	eeb0 2a4c 	vmov.f32	s4, s24
+d0042508:	eef0 7a4a 	vmov.f32	s15, s20
+d004250c:	eeb0 6a6c 	vmov.f32	s12, s25
+d0042510:	eef0 6a4d 	vmov.f32	s13, s26
+d0042514:	eeb0 4a6a 	vmov.f32	s8, s21
+d0042518:	e7c4      	b.n	d00424a4 <fillTriangleDitherBayer2Mode+0x45c>
+d004251a:	eeb0 1a45 	vmov.f32	s2, s10
+d004251e:	eeb0 5a66 	vmov.f32	s10, s13
+d0042522:	eeb0 8a47 	vmov.f32	s16, s14
+d0042526:	eef0 6a41 	vmov.f32	s13, s2
+d004252a:	eef0 0a43 	vmov.f32	s1, s6
+d004252e:	eef0 7a46 	vmov.f32	s15, s12
+d0042532:	eef4 3ae6 	vcmpe.f32	s7, s13
+d0042536:	eeb0 7a44 	vmov.f32	s14, s8
+d004253a:	eeb0 3a42 	vmov.f32	s6, s4
+d004253e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042542:	eeb0 6a62 	vmov.f32	s12, s5
+d0042546:	eeb0 4a48 	vmov.f32	s8, s16
+d004254a:	eeb0 2a60 	vmov.f32	s4, s1
+d004254e:	eef0 2a67 	vmov.f32	s5, s15
+d0042552:	f77f ade7 	ble.w	d0042124 <fillTriangleDitherBayer2Mode+0xdc>
+d0042556:	eeb0 8a65 	vmov.f32	s16, s11
+d004255a:	eef0 0a40 	vmov.f32	s1, s0
+d004255e:	eeb0 1a63 	vmov.f32	s2, s7
+d0042562:	eef0 7a64 	vmov.f32	s15, s9
+d0042566:	eef0 5a44 	vmov.f32	s11, s8
+d004256a:	eeb0 0a42 	vmov.f32	s0, s4
+d004256e:	eef0 3a66 	vmov.f32	s7, s13
+d0042572:	eef0 4a62 	vmov.f32	s9, s5
+d0042576:	eeb0 4a48 	vmov.f32	s8, s16
+d004257a:	eeb0 2a60 	vmov.f32	s4, s1
+d004257e:	eef0 6a41 	vmov.f32	s13, s2
+d0042582:	eef0 2a67 	vmov.f32	s5, s15
+d0042586:	e5cd      	b.n	d0042124 <fillTriangleDitherBayer2Mode+0xdc>
+d0042588:	eeb0 8a47 	vmov.f32	s16, s14
+d004258c:	eef0 0a43 	vmov.f32	s1, s6
+d0042590:	eeb0 1a45 	vmov.f32	s2, s10
+d0042594:	eef0 7a46 	vmov.f32	s15, s12
+d0042598:	eeb0 7a65 	vmov.f32	s14, s11
+d004259c:	eeb0 3a40 	vmov.f32	s6, s0
+d00425a0:	eeb0 5a63 	vmov.f32	s10, s7
+d00425a4:	eeb0 6a64 	vmov.f32	s12, s9
+d00425a8:	eef0 5a48 	vmov.f32	s11, s16
+d00425ac:	eeb0 0a60 	vmov.f32	s0, s1
+d00425b0:	eef0 3a41 	vmov.f32	s7, s2
+d00425b4:	eef0 4a67 	vmov.f32	s9, s15
+d00425b8:	e5ae      	b.n	d0042118 <fillTriangleDitherBayer2Mode+0xd0>
+d00425ba:	ee76 6ae2 	vsub.f32	s13, s13, s5
+d00425be:	eef4 6ac9 	vcmpe.f32	s13, s18
+d00425c2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00425c6:	f340 8207 	ble.w	d00429d8 <fillTriangleDitherBayer2Mode+0x990>
+d00425ca:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
+d00425ce:	ee79 9ac5 	vsub.f32	s19, s19, s10
+d00425d2:	ee32 2a63 	vsub.f32	s4, s4, s7
+d00425d6:	ee87 aaa6 	vdiv.f32	s20, s15, s13
+d00425da:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
+d00425de:	ee77 2ae2 	vsub.f32	s5, s15, s5
+d00425e2:	ee07 1a90 	vmov	s15, r1
+d00425e6:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d00425ea:	ee77 7aa2 	vadd.f32	s15, s15, s5
+d00425ee:	ee69 9a8a 	vmul.f32	s19, s19, s20
+d00425f2:	ee22 aa0a 	vmul.f32	s20, s4, s20
+d00425f6:	eea7 5aa9 	vfma.f32	s10, s15, s19
+d00425fa:	eee7 3a8a 	vfma.f32	s7, s15, s20
+d00425fe:	ebc8 1208 	rsb	r2, r8, r8, lsl #4
+d0042602:	4dd3      	ldr	r5, [pc, #844]	; (d0042950 <fillTriangleDitherBayer2Mode+0x908>)
+d0042604:	eb01 0381 	add.w	r3, r1, r1, lsl #2
+d0042608:	48d2      	ldr	r0, [pc, #840]	; (d0042954 <fillTriangleDitherBayer2Mode+0x90c>)
+d004260a:	eb01 1242 	add.w	r2, r1, r2, lsl #5
+d004260e:	682f      	ldr	r7, [r5, #0]
+d0042610:	eb08 1383 	add.w	r3, r8, r3, lsl #6
+d0042614:	f008 0503 	and.w	r5, r8, #3
+d0042618:	eb00 0942 	add.w	r9, r0, r2, lsl #1
+d004261c:	4ace      	ldr	r2, [pc, #824]	; (d0042958 <fillTriangleDitherBayer2Mode+0x910>)
+d004261e:	441f      	add	r7, r3
+d0042620:	f8cd 800c 	str.w	r8, [sp, #12]
+d0042624:	eb02 0385 	add.w	r3, r2, r5, lsl #2
+d0042628:	eeb6 2a00 	vmov.f32	s4, #96	; 0x3f000000  0.5
+d004262c:	4698      	mov	r8, r3
+d004262e:	e010      	b.n	d0042652 <fillTriangleDitherBayer2Mode+0x60a>
+d0042630:	ee07 3a90 	vmov	s15, r3
+d0042634:	4419      	add	r1, r3
+d0042636:	eb03 0283 	add.w	r2, r3, r3, lsl #2
+d004263a:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d004263e:	428c      	cmp	r4, r1
+d0042640:	eb09 0943 	add.w	r9, r9, r3, lsl #1
+d0042644:	eb07 1782 	add.w	r7, r7, r2, lsl #6
+d0042648:	eea7 5aa9 	vfma.f32	s10, s15, s19
+d004264c:	eee7 3a8a 	vfma.f32	s7, s15, s20
+d0042650:	db62      	blt.n	d0042718 <fillTriangleDitherBayer2Mode+0x6d0>
+d0042652:	eba4 0c01 	sub.w	ip, r4, r1
+d0042656:	eeb4 5ac1 	vcmpe.f32	s10, s2
+d004265a:	f10c 0301 	add.w	r3, ip, #1
+d004265e:	2b30      	cmp	r3, #48	; 0x30
+d0042660:	bfa8      	it	ge
+d0042662:	2330      	movge	r3, #48	; 0x30
+d0042664:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042668:	d9e2      	bls.n	d0042630 <fillTriangleDitherBayer2Mode+0x5e8>
+d004266a:	f1bc 0f00 	cmp.w	ip, #0
+d004266e:	eec3 7a85 	vdiv.f32	s15, s7, s10
+d0042672:	dd54      	ble.n	d004271e <fillTriangleDitherBayer2Mode+0x6d6>
+d0042674:	1e5a      	subs	r2, r3, #1
+d0042676:	ee06 2a90 	vmov	s13, r2
+d004267a:	eef0 2a45 	vmov.f32	s5, s10
+d004267e:	eef8 6ae6 	vcvt.f32.s32	s13, s13
+d0042682:	eee6 2aa9 	vfma.f32	s5, s13, s19
+d0042686:	eef4 2ac1 	vcmpe.f32	s5, s2
+d004268a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004268e:	dd47      	ble.n	d0042720 <fillTriangleDitherBayer2Mode+0x6d8>
+d0042690:	eeb0 ca63 	vmov.f32	s24, s7
+d0042694:	9a00      	ldr	r2, [sp, #0]
+d0042696:	2a0f      	cmp	r2, #15
+d0042698:	eea6 ca8a 	vfma.f32	s24, s13, s20
+d004269c:	eecc ba22 	vdiv.f32	s23, s24, s5
+d00426a0:	ee7b bae7 	vsub.f32	s23, s23, s15
+d00426a4:	eecb 2aa6 	vdiv.f32	s5, s23, s13
+d00426a8:	dd3f      	ble.n	d004272a <fillTriangleDitherBayer2Mode+0x6e2>
+d00426aa:	f1a9 0602 	sub.w	r6, r9, #2
+d00426ae:	2200      	movs	r2, #0
+d00426b0:	fec7 6a84 	vmaxnm.f32	s13, s15, s8
+d00426b4:	fec6 6ae1 	vminnm.f32	s13, s13, s3
+d00426b8:	eb02 0082 	add.w	r0, r2, r2, lsl #2
+d00426bc:	f836 ef02 	ldrh.w	lr, [r6, #2]!
+d00426c0:	3201      	adds	r2, #1
+d00426c2:	ee76 6a82 	vadd.f32	s13, s13, s4
+d00426c6:	0185      	lsls	r5, r0, #6
+d00426c8:	ee77 7aa2 	vadd.f32	s15, s15, s5
+d00426cc:	eefc 6ae6 	vcvt.u32.f32	s13, s13
+d00426d0:	ee16 0a90 	vmov	r0, s13
+d00426d4:	b280      	uxth	r0, r0
+d00426d6:	4586      	cmp	lr, r0
+d00426d8:	d903      	bls.n	d00426e2 <fillTriangleDitherBayer2Mode+0x69a>
+d00426da:	8030      	strh	r0, [r6, #0]
+d00426dc:	f04f 0010 	mov.w	r0, #16
+d00426e0:	5578      	strb	r0, [r7, r5]
+d00426e2:	4293      	cmp	r3, r2
+d00426e4:	dce4      	bgt.n	d00426b0 <fillTriangleDitherBayer2Mode+0x668>
+d00426e6:	f1bc 0f00 	cmp.w	ip, #0
+d00426ea:	eb03 0283 	add.w	r2, r3, r3, lsl #2
+d00426ee:	ea4f 0043 	mov.w	r0, r3, lsl #1
+d00426f2:	ea4f 1282 	mov.w	r2, r2, lsl #6
+d00426f6:	bfbc      	itt	lt
+d00426f8:	2002      	movlt	r0, #2
+d00426fa:	f44f 72a0 	movlt.w	r2, #320	; 0x140
+d00426fe:	4481      	add	r9, r0
+d0042700:	4417      	add	r7, r2
+d0042702:	ee07 3a90 	vmov	s15, r3
+d0042706:	4419      	add	r1, r3
+d0042708:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d004270c:	428c      	cmp	r4, r1
+d004270e:	eea7 5aa9 	vfma.f32	s10, s15, s19
+d0042712:	eee7 3a8a 	vfma.f32	s7, s15, s20
+d0042716:	da9c      	bge.n	d0042652 <fillTriangleDitherBayer2Mode+0x60a>
+d0042718:	f8dd 800c 	ldr.w	r8, [sp, #12]
+d004271c:	e5d2      	b.n	d00422c4 <fillTriangleDitherBayer2Mode+0x27c>
+d004271e:	d1f0      	bne.n	d0042702 <fillTriangleDitherBayer2Mode+0x6ba>
+d0042720:	9a00      	ldr	r2, [sp, #0]
+d0042722:	eef0 2a44 	vmov.f32	s5, s8
+d0042726:	2a0f      	cmp	r2, #15
+d0042728:	dcbf      	bgt.n	d00426aa <fillTriangleDitherBayer2Mode+0x662>
+d004272a:	2a00      	cmp	r2, #0
+d004272c:	f340 8136 	ble.w	d004299c <fillTriangleDitherBayer2Mode+0x954>
+d0042730:	9404      	str	r4, [sp, #16]
+d0042732:	f1a9 0e02 	sub.w	lr, r9, #2
+d0042736:	2200      	movs	r2, #0
+d0042738:	9c02      	ldr	r4, [sp, #8]
+d004273a:	fec7 6a84 	vmaxnm.f32	s13, s15, s8
+d004273e:	fec6 6ae1 	vminnm.f32	s13, s13, s3
+d0042742:	ee76 6a82 	vadd.f32	s13, s13, s4
+d0042746:	f83e af02 	ldrh.w	sl, [lr, #2]!
+d004274a:	188e      	adds	r6, r1, r2
+d004274c:	eb02 0582 	add.w	r5, r2, r2, lsl #2
+d0042750:	ee77 7aa2 	vadd.f32	s15, s15, s5
+d0042754:	3201      	adds	r2, #1
+d0042756:	eefc 6ae6 	vcvt.u32.f32	s13, s13
+d004275a:	f006 0603 	and.w	r6, r6, #3
+d004275e:	01ad      	lsls	r5, r5, #6
+d0042760:	ee16 0a90 	vmov	r0, s13
+d0042764:	b280      	uxth	r0, r0
+d0042766:	4582      	cmp	sl, r0
+d0042768:	d908      	bls.n	d004277c <fillTriangleDitherBayer2Mode+0x734>
+d004276a:	f818 6006 	ldrb.w	r6, [r8, r6]
+d004276e:	f8ae 0000 	strh.w	r0, [lr]
+d0042772:	42a6      	cmp	r6, r4
+d0042774:	bfac      	ite	ge
+d0042776:	4658      	movge	r0, fp
+d0042778:	2010      	movlt	r0, #16
+d004277a:	5578      	strb	r0, [r7, r5]
+d004277c:	4293      	cmp	r3, r2
+d004277e:	dcdc      	bgt.n	d004273a <fillTriangleDitherBayer2Mode+0x6f2>
+d0042780:	9c04      	ldr	r4, [sp, #16]
+d0042782:	e7b0      	b.n	d00426e6 <fillTriangleDitherBayer2Mode+0x69e>
+d0042784:	ee77 7ac4 	vsub.f32	s15, s15, s8
+d0042788:	ed9f 0a74 	vldr	s0, [pc, #464]	; d004295c <fillTriangleDitherBayer2Mode+0x914>
+d004278c:	eef4 7ac0 	vcmpe.f32	s15, s0
+d0042790:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042794:	f340 8125 	ble.w	d00429e2 <fillTriangleDitherBayer2Mode+0x99a>
+d0042798:	eeb7 9a00 	vmov.f32	s18, #112	; 0x3f800000  1.0
+d004279c:	ee32 2a66 	vsub.f32	s4, s4, s13
+d00427a0:	ee71 1ac6 	vsub.f32	s3, s3, s12
+d00427a4:	ee89 0a27 	vdiv.f32	s0, s18, s15
+d00427a8:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
+d00427ac:	ee37 4ac4 	vsub.f32	s8, s15, s8
+d00427b0:	ee07 1a90 	vmov	s15, r1
+d00427b4:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d00427b8:	ee77 7a84 	vadd.f32	s15, s15, s8
+d00427bc:	ee22 2a00 	vmul.f32	s4, s4, s0
+d00427c0:	ee61 1a80 	vmul.f32	s3, s3, s0
+d00427c4:	eee7 6a82 	vfma.f32	s13, s15, s4
+d00427c8:	eea7 6aa1 	vfma.f32	s12, s15, s3
+d00427cc:	ebc8 1208 	rsb	r2, r8, r8, lsl #4
+d00427d0:	4d5f      	ldr	r5, [pc, #380]	; (d0042950 <fillTriangleDitherBayer2Mode+0x908>)
+d00427d2:	eb01 0381 	add.w	r3, r1, r1, lsl #2
+d00427d6:	485f      	ldr	r0, [pc, #380]	; (d0042954 <fillTriangleDitherBayer2Mode+0x90c>)
+d00427d8:	eb01 1242 	add.w	r2, r1, r2, lsl #5
+d00427dc:	682f      	ldr	r7, [r5, #0]
+d00427de:	eb08 1383 	add.w	r3, r8, r3, lsl #6
+d00427e2:	f008 0503 	and.w	r5, r8, #3
+d00427e6:	eb00 0942 	add.w	r9, r0, r2, lsl #1
+d00427ea:	4a5b      	ldr	r2, [pc, #364]	; (d0042958 <fillTriangleDitherBayer2Mode+0x910>)
+d00427ec:	441f      	add	r7, r3
+d00427ee:	f8cd 8010 	str.w	r8, [sp, #16]
+d00427f2:	eb02 0385 	add.w	r3, r2, r5, lsl #2
+d00427f6:	eeb6 4a00 	vmov.f32	s8, #96	; 0x3f000000  0.5
+d00427fa:	4698      	mov	r8, r3
+d00427fc:	e010      	b.n	d0042820 <fillTriangleDitherBayer2Mode+0x7d8>
+d00427fe:	ee07 2a90 	vmov	s15, r2
+d0042802:	4411      	add	r1, r2
+d0042804:	eb02 0382 	add.w	r3, r2, r2, lsl #2
+d0042808:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d004280c:	428c      	cmp	r4, r1
+d004280e:	eb09 0942 	add.w	r9, r9, r2, lsl #1
+d0042812:	eb07 1783 	add.w	r7, r7, r3, lsl #6
+d0042816:	eee7 6a82 	vfma.f32	s13, s15, s4
+d004281a:	eea7 6aa1 	vfma.f32	s12, s15, s3
+d004281e:	db62      	blt.n	d00428e6 <fillTriangleDitherBayer2Mode+0x89e>
+d0042820:	eba4 0c01 	sub.w	ip, r4, r1
+d0042824:	eef4 6aed 	vcmpe.f32	s13, s27
+d0042828:	f10c 0201 	add.w	r2, ip, #1
+d004282c:	2a30      	cmp	r2, #48	; 0x30
+d004282e:	bfa8      	it	ge
+d0042830:	2230      	movge	r2, #48	; 0x30
+d0042832:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042836:	d9e2      	bls.n	d00427fe <fillTriangleDitherBayer2Mode+0x7b6>
+d0042838:	f1bc 0f00 	cmp.w	ip, #0
+d004283c:	eec6 7a26 	vdiv.f32	s15, s12, s13
+d0042840:	dd54      	ble.n	d00428ec <fillTriangleDitherBayer2Mode+0x8a4>
+d0042842:	1e53      	subs	r3, r2, #1
+d0042844:	ee00 3a10 	vmov	s0, r3
+d0042848:	eeb0 9a66 	vmov.f32	s18, s13
+d004284c:	eeb8 0ac0 	vcvt.f32.s32	s0, s0
+d0042850:	eea0 9a02 	vfma.f32	s18, s0, s4
+d0042854:	eeb4 9aed 	vcmpe.f32	s18, s27
+d0042858:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004285c:	dd47      	ble.n	d00428ee <fillTriangleDitherBayer2Mode+0x8a6>
+d004285e:	eeb0 fa46 	vmov.f32	s30, s12
+d0042862:	9b00      	ldr	r3, [sp, #0]
+d0042864:	2b0f      	cmp	r3, #15
+d0042866:	eea0 fa21 	vfma.f32	s30, s0, s3
+d004286a:	eecf 9a09 	vdiv.f32	s19, s30, s18
+d004286e:	ee79 9ae7 	vsub.f32	s19, s19, s15
+d0042872:	ee89 9a80 	vdiv.f32	s18, s19, s0
+d0042876:	dd3f      	ble.n	d00428f8 <fillTriangleDitherBayer2Mode+0x8b0>
+d0042878:	f1a9 0602 	sub.w	r6, r9, #2
+d004287c:	2000      	movs	r0, #0
+d004287e:	fe87 0aa2 	vmaxnm.f32	s0, s15, s5
+d0042882:	fe80 0a41 	vminnm.f32	s0, s0, s2
+d0042886:	eb00 0380 	add.w	r3, r0, r0, lsl #2
+d004288a:	f836 ef02 	ldrh.w	lr, [r6, #2]!
+d004288e:	3001      	adds	r0, #1
+d0042890:	ee30 0a04 	vadd.f32	s0, s0, s8
+d0042894:	019d      	lsls	r5, r3, #6
+d0042896:	ee77 7a89 	vadd.f32	s15, s15, s18
+d004289a:	eebc 0ac0 	vcvt.u32.f32	s0, s0
+d004289e:	ee10 3a10 	vmov	r3, s0
+d00428a2:	b29b      	uxth	r3, r3
+d00428a4:	459e      	cmp	lr, r3
+d00428a6:	d903      	bls.n	d00428b0 <fillTriangleDitherBayer2Mode+0x868>
+d00428a8:	8033      	strh	r3, [r6, #0]
+d00428aa:	f04f 0310 	mov.w	r3, #16
+d00428ae:	557b      	strb	r3, [r7, r5]
+d00428b0:	4282      	cmp	r2, r0
+d00428b2:	dce4      	bgt.n	d004287e <fillTriangleDitherBayer2Mode+0x836>
+d00428b4:	f1bc 0f00 	cmp.w	ip, #0
+d00428b8:	eb02 0382 	add.w	r3, r2, r2, lsl #2
+d00428bc:	ea4f 0042 	mov.w	r0, r2, lsl #1
+d00428c0:	ea4f 1383 	mov.w	r3, r3, lsl #6
+d00428c4:	bfbc      	itt	lt
+d00428c6:	2002      	movlt	r0, #2
+d00428c8:	f44f 73a0 	movlt.w	r3, #320	; 0x140
+d00428cc:	4481      	add	r9, r0
+d00428ce:	441f      	add	r7, r3
+d00428d0:	ee07 2a90 	vmov	s15, r2
+d00428d4:	4411      	add	r1, r2
+d00428d6:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d00428da:	428c      	cmp	r4, r1
+d00428dc:	eee7 6a82 	vfma.f32	s13, s15, s4
+d00428e0:	eea7 6aa1 	vfma.f32	s12, s15, s3
+d00428e4:	da9c      	bge.n	d0042820 <fillTriangleDitherBayer2Mode+0x7d8>
+d00428e6:	f8dd 8010 	ldr.w	r8, [sp, #16]
+d00428ea:	e5f2      	b.n	d00424d2 <fillTriangleDitherBayer2Mode+0x48a>
+d00428ec:	d1f0      	bne.n	d00428d0 <fillTriangleDitherBayer2Mode+0x888>
+d00428ee:	9b00      	ldr	r3, [sp, #0]
+d00428f0:	eeb0 9a62 	vmov.f32	s18, s5
+d00428f4:	2b0f      	cmp	r3, #15
+d00428f6:	dcbf      	bgt.n	d0042878 <fillTriangleDitherBayer2Mode+0x830>
+d00428f8:	2b00      	cmp	r3, #0
+d00428fa:	dd31      	ble.n	d0042960 <fillTriangleDitherBayer2Mode+0x918>
+d00428fc:	9407      	str	r4, [sp, #28]
+d00428fe:	f1a9 0e02 	sub.w	lr, r9, #2
+d0042902:	2000      	movs	r0, #0
+d0042904:	9c02      	ldr	r4, [sp, #8]
+d0042906:	fe87 0aa2 	vmaxnm.f32	s0, s15, s5
+d004290a:	fe80 0a41 	vminnm.f32	s0, s0, s2
+d004290e:	ee30 0a04 	vadd.f32	s0, s0, s8
+d0042912:	f83e af02 	ldrh.w	sl, [lr, #2]!
+d0042916:	180e      	adds	r6, r1, r0
+d0042918:	eb00 0580 	add.w	r5, r0, r0, lsl #2
+d004291c:	ee77 7a89 	vadd.f32	s15, s15, s18
+d0042920:	3001      	adds	r0, #1
+d0042922:	eebc 0ac0 	vcvt.u32.f32	s0, s0
+d0042926:	f006 0603 	and.w	r6, r6, #3
+d004292a:	01ad      	lsls	r5, r5, #6
+d004292c:	ee10 3a10 	vmov	r3, s0
+d0042930:	b29b      	uxth	r3, r3
+d0042932:	459a      	cmp	sl, r3
+d0042934:	d908      	bls.n	d0042948 <fillTriangleDitherBayer2Mode+0x900>
+d0042936:	f818 6006 	ldrb.w	r6, [r8, r6]
+d004293a:	f8ae 3000 	strh.w	r3, [lr]
+d004293e:	42a6      	cmp	r6, r4
+d0042940:	bfac      	ite	ge
+d0042942:	465b      	movge	r3, fp
+d0042944:	2310      	movlt	r3, #16
+d0042946:	557b      	strb	r3, [r7, r5]
+d0042948:	4282      	cmp	r2, r0
+d004294a:	dcdc      	bgt.n	d0042906 <fillTriangleDitherBayer2Mode+0x8be>
+d004294c:	9c07      	ldr	r4, [sp, #28]
+d004294e:	e7b1      	b.n	d00428b4 <fillTriangleDitherBayer2Mode+0x86c>
+d0042950:	d012da64 	.word	0xd012da64
+d0042954:	d0048360 	.word	0xd0048360
+d0042958:	d00479fc 	.word	0xd00479fc
+d004295c:	38d1b717 	.word	0x38d1b717
+d0042960:	f1a9 0602 	sub.w	r6, r9, #2
+d0042964:	2000      	movs	r0, #0
+d0042966:	fe87 0aa2 	vmaxnm.f32	s0, s15, s5
+d004296a:	fe80 0a41 	vminnm.f32	s0, s0, s2
+d004296e:	ee30 0a04 	vadd.f32	s0, s0, s8
+d0042972:	eb00 0380 	add.w	r3, r0, r0, lsl #2
+d0042976:	f836 ef02 	ldrh.w	lr, [r6, #2]!
+d004297a:	ee77 7a89 	vadd.f32	s15, s15, s18
+d004297e:	019d      	lsls	r5, r3, #6
+d0042980:	3001      	adds	r0, #1
+d0042982:	eebc 0ac0 	vcvt.u32.f32	s0, s0
+d0042986:	ee10 3a10 	vmov	r3, s0
+d004298a:	b29b      	uxth	r3, r3
+d004298c:	459e      	cmp	lr, r3
+d004298e:	d902      	bls.n	d0042996 <fillTriangleDitherBayer2Mode+0x94e>
+d0042990:	8033      	strh	r3, [r6, #0]
+d0042992:	f807 b005 	strb.w	fp, [r7, r5]
+d0042996:	4282      	cmp	r2, r0
+d0042998:	dce5      	bgt.n	d0042966 <fillTriangleDitherBayer2Mode+0x91e>
+d004299a:	e78b      	b.n	d00428b4 <fillTriangleDitherBayer2Mode+0x86c>
+d004299c:	f1a9 0602 	sub.w	r6, r9, #2
+d00429a0:	2200      	movs	r2, #0
+d00429a2:	fec7 6a84 	vmaxnm.f32	s13, s15, s8
+d00429a6:	fec6 6ae1 	vminnm.f32	s13, s13, s3
+d00429aa:	ee76 6a82 	vadd.f32	s13, s13, s4
+d00429ae:	eb02 0082 	add.w	r0, r2, r2, lsl #2
+d00429b2:	f836 ef02 	ldrh.w	lr, [r6, #2]!
+d00429b6:	ee77 7aa2 	vadd.f32	s15, s15, s5
+d00429ba:	0185      	lsls	r5, r0, #6
+d00429bc:	3201      	adds	r2, #1
+d00429be:	eefc 6ae6 	vcvt.u32.f32	s13, s13
+d00429c2:	ee16 0a90 	vmov	r0, s13
+d00429c6:	b280      	uxth	r0, r0
+d00429c8:	4586      	cmp	lr, r0
+d00429ca:	d902      	bls.n	d00429d2 <fillTriangleDitherBayer2Mode+0x98a>
+d00429cc:	8030      	strh	r0, [r6, #0]
+d00429ce:	f807 b005 	strb.w	fp, [r7, r5]
+d00429d2:	4293      	cmp	r3, r2
+d00429d4:	dce5      	bgt.n	d00429a2 <fillTriangleDitherBayer2Mode+0x95a>
+d00429d6:	e686      	b.n	d00426e6 <fillTriangleDitherBayer2Mode+0x69e>
+d00429d8:	eeb0 aa44 	vmov.f32	s20, s8
+d00429dc:	eef0 9a44 	vmov.f32	s19, s8
+d00429e0:	e60d      	b.n	d00425fe <fillTriangleDitherBayer2Mode+0x5b6>
+d00429e2:	eef0 1a62 	vmov.f32	s3, s5
+d00429e6:	eeb0 2a62 	vmov.f32	s4, s5
+d00429ea:	e6ef      	b.n	d00427cc <fillTriangleDitherBayer2Mode+0x784>
 
-d00426fc <vec3>:
-d00426fc:	b088      	sub	sp, #32
-d00426fe:	b008      	add	sp, #32
-d0042700:	4770      	bx	lr
-d0042702:	bf00      	nop
+d00429ec <vec3Add>:
+d00429ec:	ee30 0a21 	vadd.f32	s0, s0, s3
+d00429f0:	b08e      	sub	sp, #56	; 0x38
+d00429f2:	ee70 0a82 	vadd.f32	s1, s1, s4
+d00429f6:	ee31 1a22 	vadd.f32	s2, s2, s5
+d00429fa:	b00e      	add	sp, #56	; 0x38
+d00429fc:	4770      	bx	lr
+d00429fe:	bf00      	nop
 
-d0042704 <powf>:
-d0042704:	eeb7 7a00 	vmov.f32	s14, #112	; 0x3f800000  1.0
-d0042708:	eeb4 0a47 	vcmp.f32	s0, s14
-d004270c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042710:	d04e      	beq.n	d00427b0 <powf+0xac>
-d0042712:	eef5 0a40 	vcmp.f32	s1, #0.0
-d0042716:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004271a:	d049      	beq.n	d00427b0 <powf+0xac>
-d004271c:	eef4 0a47 	vcmp.f32	s1, s14
-d0042720:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042724:	d054      	beq.n	d00427d0 <powf+0xcc>
-d0042726:	eeb5 0a40 	vcmp.f32	s0, #0.0
-d004272a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004272e:	d044      	beq.n	d00427ba <powf+0xb6>
-d0042730:	eefd 7ae0 	vcvt.s32.f32	s15, s1
-d0042734:	eef8 6ae7 	vcvt.f32.s32	s13, s15
-d0042738:	eef4 6a60 	vcmp.f32	s13, s1
-d004273c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042740:	d04e      	beq.n	d00427e0 <powf+0xdc>
-d0042742:	eeb5 0ac0 	vcmpe.f32	s0, #0.0
-d0042746:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004274a:	d459      	bmi.n	d0042800 <powf+0xfc>
-d004274c:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
-d0042750:	eef4 0a67 	vcmp.f32	s1, s15
-d0042754:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042758:	d03f      	beq.n	d00427da <powf+0xd6>
-d004275a:	eefe 7a00 	vmov.f32	s15, #224	; 0xbf000000 -0.5
-d004275e:	eef4 0a67 	vcmp.f32	s1, s15
-d0042762:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042766:	d052      	beq.n	d004280e <powf+0x10a>
-d0042768:	eef0 7a00 	vmov.f32	s15, #0	; 0x40000000  2.0
-d004276c:	eef4 0a67 	vcmp.f32	s1, s15
-d0042770:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042774:	d052      	beq.n	d004281c <powf+0x118>
-d0042776:	eef0 7a08 	vmov.f32	s15, #8	; 0x40400000  3.0
-d004277a:	eef4 0a67 	vcmp.f32	s1, s15
-d004277e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042782:	d04e      	beq.n	d0042822 <powf+0x11e>
-d0042784:	eef1 7a00 	vmov.f32	s15, #16	; 0x40800000  4.0
-d0042788:	eef4 0a67 	vcmp.f32	s1, s15
-d004278c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042790:	d042      	beq.n	d0042818 <powf+0x114>
-d0042792:	b500      	push	{lr}
-d0042794:	b083      	sub	sp, #12
-d0042796:	edcd 0a01 	vstr	s1, [sp, #4]
-d004279a:	f003 ff9f 	bl	d00466dc <logf>
-d004279e:	eddd 0a01 	vldr	s1, [sp, #4]
-d00427a2:	ee20 0a20 	vmul.f32	s0, s0, s1
-d00427a6:	b003      	add	sp, #12
-d00427a8:	f85d eb04 	ldr.w	lr, [sp], #4
-d00427ac:	f003 bf20 	b.w	d00465f0 <expf>
-d00427b0:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
-d00427b4:	eeb0 0a67 	vmov.f32	s0, s15
-d00427b8:	4770      	bx	lr
-d00427ba:	eef5 0ac0 	vcmpe.f32	s1, #0.0
-d00427be:	eddf 7a1d 	vldr	s15, [pc, #116]	; d0042834 <powf+0x130>
-d00427c2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00427c6:	fe70 7a27 	vselgt.f32	s15, s0, s15
-d00427ca:	eeb0 0a67 	vmov.f32	s0, s15
-d00427ce:	4770      	bx	lr
-d00427d0:	eef0 7a40 	vmov.f32	s15, s0
-d00427d4:	eeb0 0a67 	vmov.f32	s0, s15
-d00427d8:	4770      	bx	lr
-d00427da:	eef1 7ac0 	vsqrt.f32	s15, s0
-d00427de:	e7e9      	b.n	d00427b4 <powf+0xb0>
-d00427e0:	ee17 3a90 	vmov	r3, s15
-d00427e4:	2b00      	cmp	r3, #0
-d00427e6:	db0e      	blt.n	d0042806 <powf+0x102>
-d00427e8:	d020      	beq.n	d004282c <powf+0x128>
-d00427ea:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
-d00427ee:	07da      	lsls	r2, r3, #31
-d00427f0:	bf48      	it	mi
-d00427f2:	ee67 7a80 	vmulmi.f32	s15, s15, s0
-d00427f6:	085b      	lsrs	r3, r3, #1
-d00427f8:	ee20 0a00 	vmul.f32	s0, s0, s0
-d00427fc:	d1f7      	bne.n	d00427ee <powf+0xea>
-d00427fe:	e7d9      	b.n	d00427b4 <powf+0xb0>
-d0042800:	eddf 7a0d 	vldr	s15, [pc, #52]	; d0042838 <powf+0x134>
-d0042804:	e7d6      	b.n	d00427b4 <powf+0xb0>
-d0042806:	ee87 0a00 	vdiv.f32	s0, s14, s0
-d004280a:	425b      	negs	r3, r3
-d004280c:	e7ed      	b.n	d00427ea <powf+0xe6>
-d004280e:	eef1 6ac0 	vsqrt.f32	s13, s0
-d0042812:	eec7 7a26 	vdiv.f32	s15, s14, s13
-d0042816:	e7cd      	b.n	d00427b4 <powf+0xb0>
-d0042818:	ee20 0a00 	vmul.f32	s0, s0, s0
-d004281c:	ee60 7a00 	vmul.f32	s15, s0, s0
-d0042820:	e7c8      	b.n	d00427b4 <powf+0xb0>
-d0042822:	ee60 7a00 	vmul.f32	s15, s0, s0
-d0042826:	ee67 7a80 	vmul.f32	s15, s15, s0
-d004282a:	e7c3      	b.n	d00427b4 <powf+0xb0>
-d004282c:	eef0 7a47 	vmov.f32	s15, s14
-d0042830:	e7c0      	b.n	d00427b4 <powf+0xb0>
-d0042832:	bf00      	nop
-d0042834:	7f800000 	.word	0x7f800000
-d0042838:	7fc00000 	.word	0x7fc00000
+d0042a00 <vec3Scale>:
+d0042a00:	ee20 0a21 	vmul.f32	s0, s0, s3
+d0042a04:	b08c      	sub	sp, #48	; 0x30
+d0042a06:	ee61 0aa0 	vmul.f32	s1, s3, s1
+d0042a0a:	ee21 1a81 	vmul.f32	s2, s3, s2
+d0042a0e:	b00c      	add	sp, #48	; 0x30
+d0042a10:	4770      	bx	lr
+d0042a12:	bf00      	nop
 
-d004283c <sb3dParticlesClear>:
-d004283c:	4b0f      	ldr	r3, [pc, #60]	; (d004287c <sb3dParticlesClear+0x40>)
-d004283e:	f04f 507e 	mov.w	r0, #1065353216	; 0x3f800000
-d0042842:	2100      	movs	r1, #0
-d0042844:	2200      	movs	r2, #0
-d0042846:	b430      	push	{r4, r5}
-d0042848:	f503 5500 	add.w	r5, r3, #8192	; 0x2000
-d004284c:	2421      	movs	r4, #33	; 0x21
-d004284e:	7699      	strb	r1, [r3, #26]
-d0042850:	3320      	adds	r3, #32
-d0042852:	f843 2c20 	str.w	r2, [r3, #-32]
-d0042856:	f843 2c1c 	str.w	r2, [r3, #-28]
-d004285a:	f843 2c18 	str.w	r2, [r3, #-24]
-d004285e:	f843 0c14 	str.w	r0, [r3, #-20]
-d0042862:	f843 2c10 	str.w	r2, [r3, #-16]
-d0042866:	f843 0c0c 	str.w	r0, [r3, #-12]
-d004286a:	f803 4c08 	strb.w	r4, [r3, #-8]
-d004286e:	f803 1c07 	strb.w	r1, [r3, #-7]
-d0042872:	42ab      	cmp	r3, r5
-d0042874:	d1eb      	bne.n	d004284e <sb3dParticlesClear+0x12>
-d0042876:	bc30      	pop	{r4, r5}
-d0042878:	4770      	bx	lr
-d004287a:	bf00      	nop
-d004287c:	d0092660 	.word	0xd0092660
+d0042a14 <vec3Dot>:
+d0042a14:	ee20 2a82 	vmul.f32	s4, s1, s4
+d0042a18:	b086      	sub	sp, #24
+d0042a1a:	eea0 2a21 	vfma.f32	s4, s0, s3
+d0042a1e:	eea1 2a22 	vfma.f32	s4, s2, s5
+d0042a22:	eeb0 0a42 	vmov.f32	s0, s4
+d0042a26:	b006      	add	sp, #24
+d0042a28:	4770      	bx	lr
+d0042a2a:	bf00      	nop
 
-d0042880 <sb3dParticlesRender>:
-d0042880:	2800      	cmp	r0, #0
-d0042882:	f000 82d6 	beq.w	d0042e32 <sb3dParticlesRender+0x5b2>
-d0042886:	edd0 7a02 	vldr	s15, [r0, #8]
-d004288a:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d004288e:	ed2d 8b10 	vpush	{d8-d15}
-d0042892:	b0c7      	sub	sp, #284	; 0x11c
-d0042894:	4605      	mov	r5, r0
-d0042896:	ed90 ea00 	vldr	s28, [r0]
-d004289a:	edcd 7a15 	vstr	s15, [sp, #84]	; 0x54
-d004289e:	edd0 da01 	vldr	s27, [r0, #4]
-d00428a2:	edd0 ca06 	vldr	s25, [r0, #24]
-d00428a6:	ed90 ca07 	vldr	s24, [r0, #28]
-d00428aa:	edd0 ba08 	vldr	s23, [r0, #32]
-d00428ae:	ed90 9a09 	vldr	s18, [r0, #36]	; 0x24
-d00428b2:	edd0 8a0a 	vldr	s17, [r0, #40]	; 0x28
-d00428b6:	ed90 8a0b 	vldr	s16, [r0, #44]	; 0x2c
-d00428ba:	edd0 aa0c 	vldr	s21, [r0, #48]	; 0x30
-d00428be:	ed90 aa0d 	vldr	s20, [r0, #52]	; 0x34
-d00428c2:	edd0 9a0e 	vldr	s19, [r0, #56]	; 0x38
-d00428c6:	ed90 ba10 	vldr	s22, [r0, #64]	; 0x40
-d00428ca:	f001 f92d 	bl	d0043b28 <lightsGet>
-d00428ce:	4cae      	ldr	r4, [pc, #696]	; (d0042b88 <sb3dParticlesRender+0x308>)
-d00428d0:	4681      	mov	r9, r0
-d00428d2:	f001 f92d 	bl	d0043b30 <lightsGetCount>
-d00428d6:	4680      	mov	r8, r0
-d00428d8:	f504 5600 	add.w	r6, r4, #8192	; 0x2000
-d00428dc:	eb09 1780 	add.w	r7, r9, r0, lsl #6
-d00428e0:	e115      	b.n	d0042b0e <sb3dParticlesRender+0x28e>
-d00428e2:	eeb1 7a04 	vmov.f32	s14, #20	; 0x40a00000  5.0
-d00428e6:	edd4 ea04 	vldr	s29, [r4, #16]
-d00428ea:	ed9f 5aac 	vldr	s10, [pc, #688]	; d0042b9c <sb3dParticlesRender+0x31c>
-d00428ee:	fece ea85 	vmaxnm.f32	s29, s29, s10
-d00428f2:	fece eac7 	vminnm.f32	s29, s29, s14
-d00428f6:	eeb6 7a00 	vmov.f32	s14, #96	; 0x3f000000  0.5
-d00428fa:	f105 0a10 	add.w	sl, r5, #16
-d00428fe:	eeb0 4a46 	vmov.f32	s8, s12
-d0042902:	2250      	movs	r2, #80	; 0x50
-d0042904:	eef0 4a66 	vmov.f32	s9, s13
-d0042908:	4651      	mov	r1, sl
-d004290a:	ee67 7a87 	vmul.f32	s15, s15, s14
-d004290e:	4668      	mov	r0, sp
-d0042910:	eeb0 5a65 	vmov.f32	s10, s11
-d0042914:	eeb0 7a65 	vmov.f32	s14, s11
-d0042918:	eeac 6aa7 	vfma.f32	s12, s25, s15
-d004291c:	eeac 4ae7 	vfms.f32	s8, s25, s15
-d0042920:	eeec 4a67 	vfms.f32	s9, s24, s15
-d0042924:	eeec 6a27 	vfma.f32	s13, s24, s15
-d0042928:	eeab 5ae7 	vfms.f32	s10, s23, s15
-d004292c:	eeab 7aa7 	vfma.f32	s14, s23, s15
-d0042930:	eef0 3a46 	vmov.f32	s7, s12
-d0042934:	eea9 6a67 	vfms.f32	s12, s18, s15
-d0042938:	eeb0 da44 	vmov.f32	s26, s8
-d004293c:	eef0 fa64 	vmov.f32	s31, s9
-d0042940:	eef0 5a66 	vmov.f32	s11, s13
-d0042944:	eeb0 fa45 	vmov.f32	s30, s10
-d0042948:	eea9 da27 	vfma.f32	s26, s18, s15
-d004294c:	ed8d 6a1c 	vstr	s12, [sp, #112]	; 0x70
-d0042950:	eeb0 6a47 	vmov.f32	s12, s14
-d0042954:	eee8 faa7 	vfma.f32	s31, s17, s15
-d0042958:	eea8 fa27 	vfma.f32	s30, s16, s15
-d004295c:	eea9 4a67 	vfms.f32	s8, s18, s15
-d0042960:	eee9 3a27 	vfma.f32	s7, s18, s15
-d0042964:	eee8 4ae7 	vfms.f32	s9, s17, s15
-d0042968:	ed8d da16 	vstr	s26, [sp, #88]	; 0x58
-d004296c:	eee8 5aa7 	vfma.f32	s11, s17, s15
-d0042970:	eee8 6ae7 	vfms.f32	s13, s17, s15
-d0042974:	edcd fa17 	vstr	s31, [sp, #92]	; 0x5c
-d0042978:	eea8 5a67 	vfms.f32	s10, s16, s15
-d004297c:	ed8d fa18 	vstr	s30, [sp, #96]	; 0x60
-d0042980:	eea8 6a27 	vfma.f32	s12, s16, s15
-d0042984:	ed8d 4a1f 	vstr	s8, [sp, #124]	; 0x7c
-d0042988:	eea8 7a67 	vfms.f32	s14, s16, s15
-d004298c:	edcd 3a19 	vstr	s7, [sp, #100]	; 0x64
-d0042990:	edcd 4a20 	vstr	s9, [sp, #128]	; 0x80
-d0042994:	edcd 5a1a 	vstr	s11, [sp, #104]	; 0x68
-d0042998:	edcd 6a1d 	vstr	s13, [sp, #116]	; 0x74
-d004299c:	ed8d 5a21 	vstr	s10, [sp, #132]	; 0x84
-d00429a0:	ed8d 6a1b 	vstr	s12, [sp, #108]	; 0x6c
-d00429a4:	ed8d 7a1e 	vstr	s14, [sp, #120]	; 0x78
-d00429a8:	f003 faf8 	bl	d0045f9c <memcpy>
-d00429ac:	eeb0 0a4d 	vmov.f32	s0, s26
-d00429b0:	eef0 0a6f 	vmov.f32	s1, s31
-d00429b4:	eeb0 1a4f 	vmov.f32	s2, s30
-d00429b8:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
-d00429bc:	f000 fbfc 	bl	d00431b8 <worldToCamera>
-d00429c0:	ed9d da19 	vldr	s26, [sp, #100]	; 0x64
-d00429c4:	eddd fa1a 	vldr	s31, [sp, #104]	; 0x68
-d00429c8:	4651      	mov	r1, sl
-d00429ca:	ed9d fa1b 	vldr	s30, [sp, #108]	; 0x6c
-d00429ce:	2250      	movs	r2, #80	; 0x50
-d00429d0:	4668      	mov	r0, sp
-d00429d2:	ed8d 0a22 	vstr	s0, [sp, #136]	; 0x88
-d00429d6:	edcd 0a23 	vstr	s1, [sp, #140]	; 0x8c
-d00429da:	ed8d 1a24 	vstr	s2, [sp, #144]	; 0x90
-d00429de:	f003 fadd 	bl	d0045f9c <memcpy>
-d00429e2:	eeb0 0a4d 	vmov.f32	s0, s26
-d00429e6:	eef0 0a6f 	vmov.f32	s1, s31
-d00429ea:	eeb0 1a4f 	vmov.f32	s2, s30
-d00429ee:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
-d00429f2:	f000 fbe1 	bl	d00431b8 <worldToCamera>
-d00429f6:	ed9d da1c 	vldr	s26, [sp, #112]	; 0x70
-d00429fa:	eddd fa1d 	vldr	s31, [sp, #116]	; 0x74
-d00429fe:	4651      	mov	r1, sl
-d0042a00:	ed9d fa1e 	vldr	s30, [sp, #120]	; 0x78
-d0042a04:	2250      	movs	r2, #80	; 0x50
-d0042a06:	4668      	mov	r0, sp
-d0042a08:	ed8d 0a25 	vstr	s0, [sp, #148]	; 0x94
-d0042a0c:	edcd 0a26 	vstr	s1, [sp, #152]	; 0x98
-d0042a10:	ed8d 1a27 	vstr	s2, [sp, #156]	; 0x9c
-d0042a14:	f003 fac2 	bl	d0045f9c <memcpy>
-d0042a18:	eeb0 0a4d 	vmov.f32	s0, s26
-d0042a1c:	eef0 0a6f 	vmov.f32	s1, s31
-d0042a20:	eeb0 1a4f 	vmov.f32	s2, s30
-d0042a24:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
-d0042a28:	f000 fbc6 	bl	d00431b8 <worldToCamera>
-d0042a2c:	ed9d da1f 	vldr	s26, [sp, #124]	; 0x7c
-d0042a30:	eddd fa20 	vldr	s31, [sp, #128]	; 0x80
-d0042a34:	4651      	mov	r1, sl
-d0042a36:	ed9d fa21 	vldr	s30, [sp, #132]	; 0x84
-d0042a3a:	2250      	movs	r2, #80	; 0x50
-d0042a3c:	4668      	mov	r0, sp
-d0042a3e:	ed8d 0a28 	vstr	s0, [sp, #160]	; 0xa0
-d0042a42:	edcd 0a29 	vstr	s1, [sp, #164]	; 0xa4
-d0042a46:	ed8d 1a2a 	vstr	s2, [sp, #168]	; 0xa8
-d0042a4a:	f003 faa7 	bl	d0045f9c <memcpy>
-d0042a4e:	eeb0 0a4d 	vmov.f32	s0, s26
-d0042a52:	eef0 0a6f 	vmov.f32	s1, s31
-d0042a56:	eeb0 1a4f 	vmov.f32	s2, s30
-d0042a5a:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
-d0042a5e:	f000 fbab 	bl	d00431b8 <worldToCamera>
-d0042a62:	eddd 7a24 	vldr	s15, [sp, #144]	; 0x90
-d0042a66:	ed8d 0a2b 	vstr	s0, [sp, #172]	; 0xac
-d0042a6a:	eef4 7acb 	vcmpe.f32	s15, s22
-d0042a6e:	edcd 0a2c 	vstr	s1, [sp, #176]	; 0xb0
-d0042a72:	ed8d 1a2d 	vstr	s2, [sp, #180]	; 0xb4
-d0042a76:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042a7a:	d812      	bhi.n	d0042aa2 <sb3dParticlesRender+0x222>
-d0042a7c:	eddd 7a27 	vldr	s15, [sp, #156]	; 0x9c
-d0042a80:	eef4 7acb 	vcmpe.f32	s15, s22
-d0042a84:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042a88:	d80b      	bhi.n	d0042aa2 <sb3dParticlesRender+0x222>
-d0042a8a:	eddd 7a2a 	vldr	s15, [sp, #168]	; 0xa8
-d0042a8e:	eef4 7acb 	vcmpe.f32	s15, s22
-d0042a92:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042a96:	d804      	bhi.n	d0042aa2 <sb3dParticlesRender+0x222>
-d0042a98:	eeb4 1acb 	vcmpe.f32	s2, s22
-d0042a9c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042aa0:	d931      	bls.n	d0042b06 <sb3dParticlesRender+0x286>
-d0042aa2:	4629      	mov	r1, r5
-d0042aa4:	ed9d 3a28 	vldr	s6, [sp, #160]	; 0xa0
-d0042aa8:	eddd 3a29 	vldr	s7, [sp, #164]	; 0xa4
-d0042aac:	a82e      	add	r0, sp, #184	; 0xb8
-d0042aae:	ed9d 4a2a 	vldr	s8, [sp, #168]	; 0xa8
-d0042ab2:	eddd 1a25 	vldr	s3, [sp, #148]	; 0x94
-d0042ab6:	ed9d 2a26 	vldr	s4, [sp, #152]	; 0x98
-d0042aba:	eddd 2a27 	vldr	s5, [sp, #156]	; 0x9c
-d0042abe:	ed9d 0a22 	vldr	s0, [sp, #136]	; 0x88
-d0042ac2:	eddd 0a23 	vldr	s1, [sp, #140]	; 0x8c
-d0042ac6:	ed9d 1a24 	vldr	s2, [sp, #144]	; 0x90
-d0042aca:	f001 f881 	bl	d0043bd0 <clipTriangleToFrustum>
-d0042ace:	2802      	cmp	r0, #2
-d0042ad0:	f300 8156 	bgt.w	d0042d80 <sb3dParticlesRender+0x500>
-d0042ad4:	a82e      	add	r0, sp, #184	; 0xb8
-d0042ad6:	4629      	mov	r1, r5
-d0042ad8:	ed9d 3a2b 	vldr	s6, [sp, #172]	; 0xac
-d0042adc:	eddd 3a2c 	vldr	s7, [sp, #176]	; 0xb0
-d0042ae0:	ed9d 4a2d 	vldr	s8, [sp, #180]	; 0xb4
-d0042ae4:	eddd 1a28 	vldr	s3, [sp, #160]	; 0xa0
-d0042ae8:	ed9d 2a29 	vldr	s4, [sp, #164]	; 0xa4
-d0042aec:	eddd 2a2a 	vldr	s5, [sp, #168]	; 0xa8
-d0042af0:	ed9d 0a22 	vldr	s0, [sp, #136]	; 0x88
-d0042af4:	eddd 0a23 	vldr	s1, [sp, #140]	; 0x8c
-d0042af8:	ed9d 1a24 	vldr	s2, [sp, #144]	; 0x90
-d0042afc:	f001 f868 	bl	d0043bd0 <clipTriangleToFrustum>
-d0042b00:	2802      	cmp	r0, #2
-d0042b02:	f300 8105 	bgt.w	d0042d10 <sb3dParticlesRender+0x490>
-d0042b06:	3420      	adds	r4, #32
-d0042b08:	42a6      	cmp	r6, r4
-d0042b0a:	f000 8134 	beq.w	d0042d76 <sb3dParticlesRender+0x4f6>
-d0042b0e:	7ea3      	ldrb	r3, [r4, #26]
-d0042b10:	2b00      	cmp	r3, #0
-d0042b12:	d0f8      	beq.n	d0042b06 <sb3dParticlesRender+0x286>
-d0042b14:	edd4 7a03 	vldr	s15, [r4, #12]
-d0042b18:	eef5 7ac0 	vcmpe.f32	s15, #0.0
-d0042b1c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042b20:	d9f1      	bls.n	d0042b06 <sb3dParticlesRender+0x286>
-d0042b22:	edd4 6a01 	vldr	s13, [r4, #4]
-d0042b26:	eeb1 5a67 	vneg.f32	s10, s15
-d0042b2a:	ed94 6a00 	vldr	s12, [r4]
-d0042b2e:	ee36 7aed 	vsub.f32	s14, s13, s27
-d0042b32:	edd4 5a02 	vldr	s11, [r4, #8]
-d0042b36:	ee36 4a4e 	vsub.f32	s8, s12, s28
-d0042b3a:	eddd 4a15 	vldr	s9, [sp, #84]	; 0x54
-d0042b3e:	ee27 7a0a 	vmul.f32	s14, s14, s20
-d0042b42:	ee75 4ae4 	vsub.f32	s9, s11, s9
-d0042b46:	eeaa 7a84 	vfma.f32	s14, s21, s8
-d0042b4a:	eea9 7aa4 	vfma.f32	s14, s19, s9
-d0042b4e:	eeb4 5ac7 	vcmpe.f32	s10, s14
-d0042b52:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042b56:	dad6      	bge.n	d0042b06 <sb3dParticlesRender+0x286>
-d0042b58:	ed94 7a05 	vldr	s14, [r4, #20]
-d0042b5c:	ed9f 5a0b 	vldr	s10, [pc, #44]	; d0042b8c <sb3dParticlesRender+0x30c>
-d0042b60:	eeb4 7ac5 	vcmpe.f32	s14, s10
-d0042b64:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042b68:	f67f aebb 	bls.w	d00428e2 <sb3dParticlesRender+0x62>
-d0042b6c:	f1b8 0f00 	cmp.w	r8, #0
-d0042b70:	f340 809e 	ble.w	d0042cb0 <sb3dParticlesRender+0x430>
-d0042b74:	eeb7 4a00 	vmov.f32	s8, #112	; 0x3f800000  1.0
-d0042b78:	464b      	mov	r3, r9
-d0042b7a:	eeb5 3a00 	vmov.f32	s6, #80	; 0x3e800000  0.250
-d0042b7e:	ed9f 0a05 	vldr	s0, [pc, #20]	; d0042b94 <sb3dParticlesRender+0x314>
-d0042b82:	eef6 3a08 	vmov.f32	s7, #104	; 0x3f400000  0.750
-d0042b86:	e07e      	b.n	d0042c86 <sb3dParticlesRender+0x406>
-d0042b88:	d0092660 	.word	0xd0092660
-d0042b8c:	38d1b717 	.word	0x38d1b717
-d0042b90:	358637bd 	.word	0x358637bd
-d0042b94:	3dcccccd 	.word	0x3dcccccd
-d0042b98:	3b808081 	.word	0x3b808081
-d0042b9c:	00000000 	.word	0x00000000
-d0042ba0:	edd3 7a02 	vldr	s15, [r3, #8]
-d0042ba4:	edd3 4a01 	vldr	s9, [r3, #4]
-d0042ba8:	ee77 7ae6 	vsub.f32	s15, s15, s13
-d0042bac:	ed93 7a03 	vldr	s14, [r3, #12]
-d0042bb0:	ee74 4ac6 	vsub.f32	s9, s9, s12
-d0042bb4:	ed93 2a0a 	vldr	s4, [r3, #40]	; 0x28
-d0042bb8:	ee37 7a65 	vsub.f32	s14, s14, s11
-d0042bbc:	ee27 5aa7 	vmul.f32	s10, s15, s15
-d0042bc0:	ee62 2a02 	vmul.f32	s5, s4, s4
-d0042bc4:	eea4 5aa4 	vfma.f32	s10, s9, s9
-d0042bc8:	eea7 5a07 	vfma.f32	s10, s14, s14
-d0042bcc:	eeb4 5a62 	vcmp.f32	s10, s5
-d0042bd0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042bd4:	d554      	bpl.n	d0042c80 <sb3dParticlesRender+0x400>
-d0042bd6:	ed5f 2a12 	vldr	s5, [pc, #-72]	; d0042b90 <sb3dParticlesRender+0x310>
-d0042bda:	eeb4 5a62 	vcmp.f32	s10, s5
-d0042bde:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042be2:	dd4d      	ble.n	d0042c80 <sb3dParticlesRender+0x400>
-d0042be4:	eef1 0ac5 	vsqrt.f32	s1, s10
-d0042be8:	edd3 1a08 	vldr	s3, [r3, #32]
-d0042bec:	ee21 1aa1 	vmul.f32	s2, s3, s3
-d0042bf0:	eeb4 5ac1 	vcmpe.f32	s10, s2
-d0042bf4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042bf8:	eec4 2a20 	vdiv.f32	s5, s8, s1
-d0042bfc:	ee64 4aa2 	vmul.f32	s9, s9, s5
-d0042c00:	ee67 7aa2 	vmul.f32	s15, s15, s5
-d0042c04:	ee27 7a22 	vmul.f32	s14, s14, s5
-d0042c08:	f240 80e9 	bls.w	d0042dde <sb3dParticlesRender+0x55e>
-d0042c0c:	ed93 1a09 	vldr	s2, [r3, #36]	; 0x24
-d0042c10:	eef4 1ac1 	vcmpe.f32	s3, s2
-d0042c14:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042c18:	da32      	bge.n	d0042c80 <sb3dParticlesRender+0x400>
-d0042c1a:	eeb4 2ac1 	vcmpe.f32	s4, s2
-d0042c1e:	ee25 5a22 	vmul.f32	s10, s10, s5
-d0042c22:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042c26:	eeb4 1ac5 	vcmpe.f32	s2, s10
-d0042c2a:	f200 80db 	bhi.w	d0042de4 <sb3dParticlesRender+0x564>
-d0042c2e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042c32:	d925      	bls.n	d0042c80 <sb3dParticlesRender+0x400>
-d0042c34:	ee75 2a61 	vsub.f32	s5, s10, s3
-d0042c38:	ee31 2a61 	vsub.f32	s4, s2, s3
-d0042c3c:	ee82 5a82 	vdiv.f32	s10, s5, s4
-d0042c40:	ed5f 2a2a 	vldr	s5, [pc, #-168]	; d0042b9c <sb3dParticlesRender+0x31c>
-d0042c44:	fe85 5a22 	vmaxnm.f32	s10, s10, s5
-d0042c48:	fe85 5a44 	vminnm.f32	s10, s10, s8
-d0042c4c:	ee34 5a45 	vsub.f32	s10, s8, s10
-d0042c50:	eeb5 5ac0 	vcmpe.f32	s10, #0.0
-d0042c54:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042c58:	d912      	bls.n	d0042c80 <sb3dParticlesRender+0x400>
-d0042c5a:	ee67 7a8a 	vmul.f32	s15, s15, s20
-d0042c5e:	eee4 7aaa 	vfma.f32	s15, s9, s21
-d0042c62:	eee7 7a29 	vfma.f32	s15, s14, s19
-d0042c66:	eef5 7ac0 	vcmpe.f32	s15, #0.0
-d0042c6a:	eeb1 7a67 	vneg.f32	s14, s15
-d0042c6e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042c72:	da05      	bge.n	d0042c80 <sb3dParticlesRender+0x400>
-d0042c74:	edd3 7a07 	vldr	s15, [r3, #28]
-d0042c78:	ee25 5a27 	vmul.f32	s10, s10, s15
-d0042c7c:	eea5 0a07 	vfma.f32	s0, s10, s14
-d0042c80:	3340      	adds	r3, #64	; 0x40
-d0042c82:	429f      	cmp	r7, r3
-d0042c84:	d016      	beq.n	d0042cb4 <sb3dParticlesRender+0x434>
-d0042c86:	6ada      	ldr	r2, [r3, #44]	; 0x2c
-d0042c88:	2a00      	cmp	r2, #0
-d0042c8a:	d0f9      	beq.n	d0042c80 <sb3dParticlesRender+0x400>
-d0042c8c:	781a      	ldrb	r2, [r3, #0]
-d0042c8e:	2a00      	cmp	r2, #0
-d0042c90:	d086      	beq.n	d0042ba0 <sb3dParticlesRender+0x320>
-d0042c92:	edd3 4a04 	vldr	s9, [r3, #16]
-d0042c96:	eeb7 5a00 	vmov.f32	s10, #112	; 0x3f800000  1.0
-d0042c9a:	edd3 7a05 	vldr	s15, [r3, #20]
-d0042c9e:	ed93 7a06 	vldr	s14, [r3, #24]
-d0042ca2:	eef1 4a64 	vneg.f32	s9, s9
-d0042ca6:	eef1 7a67 	vneg.f32	s15, s15
-d0042caa:	eeb1 7a47 	vneg.f32	s14, s14
-d0042cae:	e7d4      	b.n	d0042c5a <sb3dParticlesRender+0x3da>
-d0042cb0:	ed1f 0a48 	vldr	s0, [pc, #-288]	; d0042b94 <sb3dParticlesRender+0x314>
-d0042cb4:	7e63      	ldrb	r3, [r4, #25]
-d0042cb6:	eeb7 fa00 	vmov.f32	s30, #112	; 0x3f800000  1.0
-d0042cba:	ed1f 7a49 	vldr	s14, [pc, #-292]	; d0042b98 <sb3dParticlesRender+0x318>
-d0042cbe:	ee07 3a90 	vmov	s15, r3
-d0042cc2:	ed1f da4a 	vldr	s26, [pc, #-296]	; d0042b9c <sb3dParticlesRender+0x31c>
-d0042cc6:	eef8 7a67 	vcvt.f32.u32	s15, s15
-d0042cca:	ee67 7a87 	vmul.f32	s15, s15, s14
-d0042cce:	fec7 7a8d 	vmaxnm.f32	s15, s15, s26
-d0042cd2:	fe87 0a80 	vmaxnm.f32	s0, s15, s0
-d0042cd6:	fe80 0a4f 	vminnm.f32	s0, s0, s30
-d0042cda:	f000 ff0d 	bl	d0043af8 <brightnessToShadeF>
-d0042cde:	edd4 ea05 	vldr	s29, [r4, #20]
-d0042ce2:	ed94 5a04 	vldr	s10, [r4, #16]
-d0042ce6:	eeb1 7a04 	vmov.f32	s14, #20	; 0x40a00000  5.0
-d0042cea:	ee3f fa6e 	vsub.f32	s30, s30, s29
-d0042cee:	edd4 7a03 	vldr	s15, [r4, #12]
-d0042cf2:	ee60 ea2e 	vmul.f32	s29, s0, s29
-d0042cf6:	ed94 6a00 	vldr	s12, [r4]
-d0042cfa:	edd4 6a01 	vldr	s13, [r4, #4]
-d0042cfe:	edd4 5a02 	vldr	s11, [r4, #8]
-d0042d02:	eee5 ea0f 	vfma.f32	s29, s10, s30
-d0042d06:	fece ea8d 	vmaxnm.f32	s29, s29, s26
-d0042d0a:	fece eac7 	vminnm.f32	s29, s29, s14
-d0042d0e:	e5f2      	b.n	d00428f6 <sb3dParticlesRender+0x76>
-d0042d10:	f100 3aff 	add.w	sl, r0, #4294967295	; 0xffffffff
-d0042d14:	f04f 0b01 	mov.w	fp, #1
-d0042d18:	465b      	mov	r3, fp
-d0042d1a:	f10b 0b01 	add.w	fp, fp, #1
-d0042d1e:	a946      	add	r1, sp, #280	; 0x118
-d0042d20:	eef0 4a6e 	vmov.f32	s9, s29
-d0042d24:	eb03 0343 	add.w	r3, r3, r3, lsl #1
-d0042d28:	7e62      	ldrb	r2, [r4, #25]
-d0042d2a:	eb0b 004b 	add.w	r0, fp, fp, lsl #1
-d0042d2e:	ed9d 0a2e 	vldr	s0, [sp, #184]	; 0xb8
-d0042d32:	eb01 0383 	add.w	r3, r1, r3, lsl #2
-d0042d36:	eddd 0a2f 	vldr	s1, [sp, #188]	; 0xbc
-d0042d3a:	eb01 0080 	add.w	r0, r1, r0, lsl #2
-d0042d3e:	ed9d 1a30 	vldr	s2, [sp, #192]	; 0xc0
-d0042d42:	f1a3 0c60 	sub.w	ip, r3, #96	; 0x60
-d0042d46:	ed53 1a18 	vldr	s3, [r3, #-96]	; 0xffffffa0
-d0042d4a:	ed10 3a18 	vldr	s6, [r0, #-96]	; 0xffffffa0
-d0042d4e:	f1a0 0360 	sub.w	r3, r0, #96	; 0x60
-d0042d52:	7e21      	ldrb	r1, [r4, #24]
-d0042d54:	4628      	mov	r0, r5
-d0042d56:	ed9c 2a01 	vldr	s4, [ip, #4]
-d0042d5a:	eddc 2a02 	vldr	s5, [ip, #8]
-d0042d5e:	edd3 3a01 	vldr	s7, [r3, #4]
-d0042d62:	ed93 4a02 	vldr	s8, [r3, #8]
-d0042d66:	f001 fb8f 	bl	d0044488 <submitClippedTri>
-d0042d6a:	45d3      	cmp	fp, sl
-d0042d6c:	d1d4      	bne.n	d0042d18 <sb3dParticlesRender+0x498>
-d0042d6e:	3420      	adds	r4, #32
-d0042d70:	42a6      	cmp	r6, r4
-d0042d72:	f47f aecc 	bne.w	d0042b0e <sb3dParticlesRender+0x28e>
-d0042d76:	b047      	add	sp, #284	; 0x11c
-d0042d78:	ecbd 8b10 	vpop	{d8-d15}
-d0042d7c:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-d0042d80:	f100 3aff 	add.w	sl, r0, #4294967295	; 0xffffffff
-d0042d84:	f04f 0b01 	mov.w	fp, #1
-d0042d88:	465b      	mov	r3, fp
-d0042d8a:	aa46      	add	r2, sp, #280	; 0x118
-d0042d8c:	f10b 0b01 	add.w	fp, fp, #1
-d0042d90:	a846      	add	r0, sp, #280	; 0x118
-d0042d92:	eb03 0343 	add.w	r3, r3, r3, lsl #1
-d0042d96:	eef0 4a6e 	vmov.f32	s9, s29
-d0042d9a:	eb0b 014b 	add.w	r1, fp, fp, lsl #1
-d0042d9e:	ed9d 0a2e 	vldr	s0, [sp, #184]	; 0xb8
-d0042da2:	eb02 0383 	add.w	r3, r2, r3, lsl #2
-d0042da6:	eddd 0a2f 	vldr	s1, [sp, #188]	; 0xbc
-d0042daa:	eb00 0181 	add.w	r1, r0, r1, lsl #2
-d0042dae:	ed9d 1a30 	vldr	s2, [sp, #192]	; 0xc0
-d0042db2:	7e62      	ldrb	r2, [r4, #25]
-d0042db4:	4628      	mov	r0, r5
-d0042db6:	ed11 3a18 	vldr	s6, [r1, #-96]	; 0xffffffa0
-d0042dba:	f1a3 0c60 	sub.w	ip, r3, #96	; 0x60
-d0042dbe:	ed51 3a17 	vldr	s7, [r1, #-92]	; 0xffffffa4
-d0042dc2:	ed11 4a16 	vldr	s8, [r1, #-88]	; 0xffffffa8
-d0042dc6:	ed53 1a18 	vldr	s3, [r3, #-96]	; 0xffffffa0
-d0042dca:	7e21      	ldrb	r1, [r4, #24]
-d0042dcc:	ed9c 2a01 	vldr	s4, [ip, #4]
-d0042dd0:	eddc 2a02 	vldr	s5, [ip, #8]
-d0042dd4:	f001 fb58 	bl	d0044488 <submitClippedTri>
-d0042dd8:	45d3      	cmp	fp, sl
-d0042dda:	d1d5      	bne.n	d0042d88 <sb3dParticlesRender+0x508>
-d0042ddc:	e67a      	b.n	d0042ad4 <sb3dParticlesRender+0x254>
-d0042dde:	eeb7 5a00 	vmov.f32	s10, #112	; 0x3f800000  1.0
-d0042de2:	e73a      	b.n	d0042c5a <sb3dParticlesRender+0x3da>
-d0042de4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042de8:	db12      	blt.n	d0042e10 <sb3dParticlesRender+0x590>
-d0042dea:	ee35 5a61 	vsub.f32	s10, s10, s3
-d0042dee:	ee31 2a61 	vsub.f32	s4, s2, s3
-d0042df2:	eec5 2a02 	vdiv.f32	s5, s10, s4
-d0042df6:	ed1f 5a97 	vldr	s10, [pc, #-604]	; d0042b9c <sb3dParticlesRender+0x31c>
-d0042dfa:	fe82 5a85 	vmaxnm.f32	s10, s5, s10
-d0042dfe:	eef0 2a44 	vmov.f32	s5, s8
-d0042e02:	fe85 5a44 	vminnm.f32	s10, s10, s8
-d0042e06:	eee5 2a63 	vfms.f32	s5, s10, s7
-d0042e0a:	eeb0 5a62 	vmov.f32	s10, s5
-d0042e0e:	e71f      	b.n	d0042c50 <sb3dParticlesRender+0x3d0>
-d0042e10:	ee75 2a41 	vsub.f32	s5, s10, s2
-d0042e14:	ee32 2a41 	vsub.f32	s4, s4, s2
-d0042e18:	ee82 5a82 	vdiv.f32	s10, s5, s4
-d0042e1c:	ed5f 2aa1 	vldr	s5, [pc, #-644]	; d0042b9c <sb3dParticlesRender+0x31c>
-d0042e20:	fe85 5a22 	vmaxnm.f32	s10, s10, s5
-d0042e24:	fe85 5a44 	vminnm.f32	s10, s10, s8
-d0042e28:	ee34 5a45 	vsub.f32	s10, s8, s10
-d0042e2c:	ee25 5a03 	vmul.f32	s10, s10, s6
-d0042e30:	e70e      	b.n	d0042c50 <sb3dParticlesRender+0x3d0>
-d0042e32:	4770      	bx	lr
+d0042a2c <vec3Cross>:
+d0042a2c:	eeb0 7a60 	vmov.f32	s14, s1
+d0042a30:	b08e      	sub	sp, #56	; 0x38
+d0042a32:	eef0 7a40 	vmov.f32	s15, s0
+d0042a36:	ee62 0ac0 	vnmul.f32	s1, s5, s0
+d0042a3a:	ee61 6ac7 	vnmul.f32	s13, s3, s14
+d0042a3e:	ee22 0a41 	vnmul.f32	s0, s4, s2
+d0042a42:	eee1 0a21 	vfma.f32	s1, s2, s3
+d0042a46:	eee7 6a82 	vfma.f32	s13, s15, s4
+d0042a4a:	eea7 0a22 	vfma.f32	s0, s14, s5
+d0042a4e:	eeb0 1a66 	vmov.f32	s2, s13
+d0042a52:	b00e      	add	sp, #56	; 0x38
+d0042a54:	4770      	bx	lr
+d0042a56:	bf00      	nop
 
-d0042e34 <worldClear>:
-d0042e34:	f44f 42c0 	mov.w	r2, #24576	; 0x6000
-d0042e38:	2100      	movs	r1, #0
-d0042e3a:	4801      	ldr	r0, [pc, #4]	; (d0042e40 <worldClear+0xc>)
-d0042e3c:	f003 b8bc 	b.w	d0045fb8 <memset>
-d0042e40:	d012cd60 	.word	0xd012cd60
+d0042a58 <vec3Normalize>:
+d0042a58:	ee60 7aa0 	vmul.f32	s15, s1, s1
+d0042a5c:	ed9f 7a22 	vldr	s14, [pc, #136]	; d0042ae8 <vec3Normalize+0x90>
+d0042a60:	b08c      	sub	sp, #48	; 0x30
+d0042a62:	eee0 7a00 	vfma.f32	s15, s0, s0
+d0042a66:	eee1 7a01 	vfma.f32	s15, s2, s2
+d0042a6a:	eef4 7ac7 	vcmpe.f32	s15, s14
+d0042a6e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042a72:	d934      	bls.n	d0042ade <vec3Normalize+0x86>
+d0042a74:	ed9f 7a1d 	vldr	s14, [pc, #116]	; d0042aec <vec3Normalize+0x94>
+d0042a78:	eef4 7a47 	vcmp.f32	s15, s14
+d0042a7c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042a80:	dd06      	ble.n	d0042a90 <vec3Normalize+0x38>
+d0042a82:	ed9f 7a1b 	vldr	s14, [pc, #108]	; d0042af0 <vec3Normalize+0x98>
+d0042a86:	eef4 7a47 	vcmp.f32	s15, s14
+d0042a8a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042a8e:	d418      	bmi.n	d0042ac2 <vec3Normalize+0x6a>
+d0042a90:	ee17 2a90 	vmov	r2, s15
+d0042a94:	eeb6 6a00 	vmov.f32	s12, #96	; 0x3f000000  0.5
+d0042a98:	4b16      	ldr	r3, [pc, #88]	; (d0042af4 <vec3Normalize+0x9c>)
+d0042a9a:	eeb7 7a08 	vmov.f32	s14, #120	; 0x3fc00000  1.5
+d0042a9e:	eba3 0352 	sub.w	r3, r3, r2, lsr #1
+d0042aa2:	ee67 7a86 	vmul.f32	s15, s15, s12
+d0042aa6:	ee06 3a90 	vmov	s13, r3
+d0042aaa:	ee67 7aa6 	vmul.f32	s15, s15, s13
+d0042aae:	eea6 7ae7 	vfms.f32	s14, s13, s15
+d0042ab2:	ee67 7a26 	vmul.f32	s15, s14, s13
+d0042ab6:	ee27 0a80 	vmul.f32	s0, s15, s0
+d0042aba:	ee67 0aa0 	vmul.f32	s1, s15, s1
+d0042abe:	ee27 1a81 	vmul.f32	s2, s15, s2
+d0042ac2:	ed8d 0a09 	vstr	s0, [sp, #36]	; 0x24
+d0042ac6:	edcd 0a0a 	vstr	s1, [sp, #40]	; 0x28
+d0042aca:	ed8d 1a0b 	vstr	s2, [sp, #44]	; 0x2c
+d0042ace:	ed9d 0a09 	vldr	s0, [sp, #36]	; 0x24
+d0042ad2:	eddd 0a0a 	vldr	s1, [sp, #40]	; 0x28
+d0042ad6:	ed9d 1a0b 	vldr	s2, [sp, #44]	; 0x2c
+d0042ada:	b00c      	add	sp, #48	; 0x30
+d0042adc:	4770      	bx	lr
+d0042ade:	2300      	movs	r3, #0
+d0042ae0:	9309      	str	r3, [sp, #36]	; 0x24
+d0042ae2:	930a      	str	r3, [sp, #40]	; 0x28
+d0042ae4:	930b      	str	r3, [sp, #44]	; 0x2c
+d0042ae6:	e7f2      	b.n	d0042ace <vec3Normalize+0x76>
+d0042ae8:	358637bd 	.word	0x358637bd
+d0042aec:	3f7fbe77 	.word	0x3f7fbe77
+d0042af0:	3f8020c5 	.word	0x3f8020c5
+d0042af4:	5f3759df 	.word	0x5f3759df
 
-d0042e44 <cameraCreate>:
-d0042e44:	b510      	push	{r4, lr}
-d0042e46:	4604      	mov	r4, r0
-d0042e48:	2260      	movs	r2, #96	; 0x60
-d0042e4a:	4902      	ldr	r1, [pc, #8]	; (d0042e54 <cameraCreate+0x10>)
-d0042e4c:	f003 f8a6 	bl	d0045f9c <memcpy>
-d0042e50:	4620      	mov	r0, r4
-d0042e52:	bd10      	pop	{r4, pc}
-d0042e54:	d0046d60 	.word	0xd0046d60
+d0042af8 <rotateAroundAxis>:
+d0042af8:	ee62 7a02 	vmul.f32	s15, s4, s4
+d0042afc:	ed9f 7a51 	vldr	s14, [pc, #324]	; d0042c44 <rotateAroundAxis+0x14c>
+d0042b00:	b500      	push	{lr}
+d0042b02:	eee1 7aa1 	vfma.f32	s15, s3, s3
+d0042b06:	ed2d 8b0c 	vpush	{d8-d13}
+d0042b0a:	eef0 ca40 	vmov.f32	s25, s0
+d0042b0e:	b08f      	sub	sp, #60	; 0x3c
+d0042b10:	eeb0 ca60 	vmov.f32	s24, s1
+d0042b14:	eef0 ba41 	vmov.f32	s23, s2
+d0042b18:	eee2 7aa2 	vfma.f32	s15, s5, s5
+d0042b1c:	eeb0 da43 	vmov.f32	s26, s6
+d0042b20:	eef4 7ac7 	vcmpe.f32	s15, s14
+d0042b24:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042b28:	d97c      	bls.n	d0042c24 <rotateAroundAxis+0x12c>
+d0042b2a:	ed9f 7a47 	vldr	s14, [pc, #284]	; d0042c48 <rotateAroundAxis+0x150>
+d0042b2e:	eef4 7a47 	vcmp.f32	s15, s14
+d0042b32:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042b36:	dd55      	ble.n	d0042be4 <rotateAroundAxis+0xec>
+d0042b38:	ed9f 7a44 	vldr	s14, [pc, #272]	; d0042c4c <rotateAroundAxis+0x154>
+d0042b3c:	eef4 7a47 	vcmp.f32	s15, s14
+d0042b40:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042b44:	d54e      	bpl.n	d0042be4 <rotateAroundAxis+0xec>
+d0042b46:	eef0 da42 	vmov.f32	s27, s4
+d0042b4a:	eeb0 9a61 	vmov.f32	s18, s3
+d0042b4e:	eeb0 8a62 	vmov.f32	s16, s5
+d0042b52:	ee60 8a82 	vmul.f32	s17, s1, s4
+d0042b56:	ee62 5ae0 	vnmul.f32	s11, s5, s1
+d0042b5a:	ee21 6ac1 	vnmul.f32	s12, s3, s2
+d0042b5e:	eeec 8a89 	vfma.f32	s17, s25, s18
+d0042b62:	ee6d 7aec 	vnmul.f32	s15, s27, s25
+d0042b66:	eeeb 5aad 	vfma.f32	s11, s23, s27
+d0042b6a:	eeac 6a88 	vfma.f32	s12, s25, s16
+d0042b6e:	eeec 7a09 	vfma.f32	s15, s24, s18
+d0042b72:	eeeb 8a88 	vfma.f32	s17, s23, s16
+d0042b76:	eeb0 ba65 	vmov.f32	s22, s11
+d0042b7a:	eeb0 aa46 	vmov.f32	s20, s12
+d0042b7e:	eef0 aa67 	vmov.f32	s21, s15
+d0042b82:	eeb0 0a4d 	vmov.f32	s0, s26
+d0042b86:	f004 faaf 	bl	d00470e8 <cosf>
+d0042b8a:	eef0 9a40 	vmov.f32	s19, s0
+d0042b8e:	eeb0 0a4d 	vmov.f32	s0, s26
+d0042b92:	f004 fc8d 	bl	d00474b0 <sinf>
+d0042b96:	ee60 5a0b 	vmul.f32	s11, s0, s22
+d0042b9a:	ee20 6a0a 	vmul.f32	s12, s0, s20
+d0042b9e:	ee60 7a2a 	vmul.f32	s15, s0, s21
+d0042ba2:	eee9 5aac 	vfma.f32	s11, s19, s25
+d0042ba6:	eea9 6a8c 	vfma.f32	s12, s19, s24
+d0042baa:	eee9 7aab 	vfma.f32	s15, s19, s23
+d0042bae:	eef7 6a00 	vmov.f32	s13, #112	; 0x3f800000  1.0
+d0042bb2:	ee29 9a28 	vmul.f32	s18, s18, s17
+d0042bb6:	ee2d 7aa8 	vmul.f32	s14, s27, s17
+d0042bba:	ee76 9ae9 	vsub.f32	s19, s13, s19
+d0042bbe:	ee28 8a28 	vmul.f32	s16, s16, s17
+d0042bc2:	eeb0 0a65 	vmov.f32	s0, s11
+d0042bc6:	eef0 0a46 	vmov.f32	s1, s12
+d0042bca:	eeb0 1a67 	vmov.f32	s2, s15
+d0042bce:	eea9 0a89 	vfma.f32	s0, s19, s18
+d0042bd2:	eee9 0a87 	vfma.f32	s1, s19, s14
+d0042bd6:	eea9 1a88 	vfma.f32	s2, s19, s16
+d0042bda:	b00f      	add	sp, #60	; 0x3c
+d0042bdc:	ecbd 8b0c 	vpop	{d8-d13}
+d0042be0:	f85d fb04 	ldr.w	pc, [sp], #4
+d0042be4:	ee17 2a90 	vmov	r2, s15
+d0042be8:	eef6 6a00 	vmov.f32	s13, #96	; 0x3f000000  0.5
+d0042bec:	4b18      	ldr	r3, [pc, #96]	; (d0042c50 <rotateAroundAxis+0x158>)
+d0042bee:	eeb7 8a08 	vmov.f32	s16, #120	; 0x3fc00000  1.5
+d0042bf2:	eba3 0352 	sub.w	r3, r3, r2, lsr #1
+d0042bf6:	ee67 7aa6 	vmul.f32	s15, s15, s13
+d0042bfa:	ee07 3a10 	vmov	s14, r3
+d0042bfe:	ee67 7a87 	vmul.f32	s15, s15, s14
+d0042c02:	eea7 8a67 	vfms.f32	s16, s14, s15
+d0042c06:	ee27 8a08 	vmul.f32	s16, s14, s16
+d0042c0a:	ee62 da08 	vmul.f32	s27, s4, s16
+d0042c0e:	ee21 9a88 	vmul.f32	s18, s3, s16
+d0042c12:	ee22 8a88 	vmul.f32	s16, s5, s16
+d0042c16:	ee6c 8a2d 	vmul.f32	s17, s24, s27
+d0042c1a:	ee29 6a6b 	vnmul.f32	s12, s18, s23
+d0042c1e:	ee68 5a4c 	vnmul.f32	s11, s16, s24
+d0042c22:	e79c      	b.n	d0042b5e <rotateAroundAxis+0x66>
+d0042c24:	eddf 8a0b 	vldr	s17, [pc, #44]	; d0042c54 <rotateAroundAxis+0x15c>
+d0042c28:	eef0 aa68 	vmov.f32	s21, s17
+d0042c2c:	eeb0 aa68 	vmov.f32	s20, s17
+d0042c30:	eeb0 ba68 	vmov.f32	s22, s17
+d0042c34:	eeb0 8a68 	vmov.f32	s16, s17
+d0042c38:	eef0 da68 	vmov.f32	s27, s17
+d0042c3c:	eeb0 9a68 	vmov.f32	s18, s17
+d0042c40:	e79f      	b.n	d0042b82 <rotateAroundAxis+0x8a>
+d0042c42:	bf00      	nop
+d0042c44:	358637bd 	.word	0x358637bd
+d0042c48:	3f7fbe77 	.word	0x3f7fbe77
+d0042c4c:	3f8020c5 	.word	0x3f8020c5
+d0042c50:	5f3759df 	.word	0x5f3759df
+d0042c54:	00000000 	.word	0x00000000
 
-d0042e58 <cameraSetPosition>:
-d0042e58:	b084      	sub	sp, #16
-d0042e5a:	ed8d 0a01 	vstr	s0, [sp, #4]
-d0042e5e:	edcd 0a02 	vstr	s1, [sp, #8]
-d0042e62:	ed8d 1a03 	vstr	s2, [sp, #12]
-d0042e66:	b128      	cbz	r0, d0042e74 <cameraSetPosition+0x1c>
-d0042e68:	aa04      	add	r2, sp, #16
-d0042e6a:	4603      	mov	r3, r0
-d0042e6c:	e912 0007 	ldmdb	r2, {r0, r1, r2}
-d0042e70:	e883 0007 	stmia.w	r3, {r0, r1, r2}
-d0042e74:	b004      	add	sp, #16
-d0042e76:	4770      	bx	lr
+d0042c58 <vec3>:
+d0042c58:	b088      	sub	sp, #32
+d0042c5a:	b008      	add	sp, #32
+d0042c5c:	4770      	bx	lr
+d0042c5e:	bf00      	nop
 
-d0042e78 <cameraNormalize>:
-d0042e78:	edd0 0a0d 	vldr	s1, [r0, #52]	; 0x34
-d0042e7c:	ed90 1a0e 	vldr	s2, [r0, #56]	; 0x38
-d0042e80:	ed90 0a0c 	vldr	s0, [r0, #48]	; 0x30
-d0042e84:	b510      	push	{r4, lr}
-d0042e86:	4604      	mov	r4, r0
-d0042e88:	f7ff fb38 	bl	d00424fc <vec3Normalize>
-d0042e8c:	eeb0 7a60 	vmov.f32	s14, s1
-d0042e90:	eef0 7a41 	vmov.f32	s15, s2
-d0042e94:	ed84 0a0c 	vstr	s0, [r4, #48]	; 0x30
-d0042e98:	ed94 0a06 	vldr	s0, [r4, #24]
-d0042e9c:	ed84 7a0d 	vstr	s14, [r4, #52]	; 0x34
-d0042ea0:	edc4 7a0e 	vstr	s15, [r4, #56]	; 0x38
-d0042ea4:	edd4 0a07 	vldr	s1, [r4, #28]
-d0042ea8:	ed94 1a08 	vldr	s2, [r4, #32]
-d0042eac:	f7ff fb26 	bl	d00424fc <vec3Normalize>
-d0042eb0:	eef0 1a40 	vmov.f32	s3, s0
-d0042eb4:	eeb0 2a60 	vmov.f32	s4, s1
-d0042eb8:	ed94 0a0c 	vldr	s0, [r4, #48]	; 0x30
-d0042ebc:	eef0 2a41 	vmov.f32	s5, s2
-d0042ec0:	edc4 0a07 	vstr	s1, [r4, #28]
-d0042ec4:	ed84 1a08 	vstr	s2, [r4, #32]
-d0042ec8:	edd4 0a0d 	vldr	s1, [r4, #52]	; 0x34
-d0042ecc:	ed94 1a0e 	vldr	s2, [r4, #56]	; 0x38
-d0042ed0:	edc4 1a06 	vstr	s3, [r4, #24]
-d0042ed4:	f7ff fafc 	bl	d00424d0 <vec3Cross>
-d0042ed8:	ed84 0a09 	vstr	s0, [r4, #36]	; 0x24
-d0042edc:	edc4 0a0a 	vstr	s1, [r4, #40]	; 0x28
-d0042ee0:	ed84 1a0b 	vstr	s2, [r4, #44]	; 0x2c
-d0042ee4:	f7ff fb0a 	bl	d00424fc <vec3Normalize>
-d0042ee8:	edd4 1a0c 	vldr	s3, [r4, #48]	; 0x30
-d0042eec:	ed94 2a0d 	vldr	s4, [r4, #52]	; 0x34
-d0042ef0:	edd4 2a0e 	vldr	s5, [r4, #56]	; 0x38
-d0042ef4:	ed84 0a09 	vstr	s0, [r4, #36]	; 0x24
-d0042ef8:	edc4 0a0a 	vstr	s1, [r4, #40]	; 0x28
-d0042efc:	ed84 1a0b 	vstr	s2, [r4, #44]	; 0x2c
-d0042f00:	f7ff fae6 	bl	d00424d0 <vec3Cross>
-d0042f04:	ed84 0a06 	vstr	s0, [r4, #24]
-d0042f08:	edc4 0a07 	vstr	s1, [r4, #28]
-d0042f0c:	ed84 1a08 	vstr	s2, [r4, #32]
-d0042f10:	f7ff faf4 	bl	d00424fc <vec3Normalize>
-d0042f14:	ed84 0a06 	vstr	s0, [r4, #24]
-d0042f18:	edc4 0a07 	vstr	s1, [r4, #28]
-d0042f1c:	ed84 1a08 	vstr	s2, [r4, #32]
-d0042f20:	bd10      	pop	{r4, pc}
-d0042f22:	bf00      	nop
+d0042c60 <degrees>:
+d0042c60:	eddf 7a02 	vldr	s15, [pc, #8]	; d0042c6c <degrees+0xc>
+d0042c64:	ee20 0a27 	vmul.f32	s0, s0, s15
+d0042c68:	4770      	bx	lr
+d0042c6a:	bf00      	nop
+d0042c6c:	3c8efa35 	.word	0x3c8efa35
 
-d0042f24 <cameraTurn>:
-d0042f24:	2800      	cmp	r0, #0
-d0042f26:	f000 8144 	beq.w	d00431b2 <cameraTurn+0x28e>
-d0042f2a:	b570      	push	{r4, r5, r6, lr}
-d0042f2c:	4604      	mov	r4, r0
-d0042f2e:	ed2d 8b04 	vpush	{d8-d9}
-d0042f32:	eef0 8a40 	vmov.f32	s17, s0
-d0042f36:	b08a      	sub	sp, #40	; 0x28
-d0042f38:	eeb0 9a60 	vmov.f32	s18, s1
-d0042f3c:	eeb0 8a41 	vmov.f32	s16, s2
-d0042f40:	bb69      	cbnz	r1, d0042f9e <cameraTurn+0x7a>
-d0042f42:	f100 0318 	add.w	r3, r0, #24
-d0042f46:	ae01      	add	r6, sp, #4
-d0042f48:	f100 0524 	add.w	r5, r0, #36	; 0x24
-d0042f4c:	eeb5 9a40 	vcmp.f32	s18, #0.0
-d0042f50:	e893 0007 	ldmia.w	r3, {r0, r1, r2}
-d0042f54:	f104 0330 	add.w	r3, r4, #48	; 0x30
-d0042f58:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042f5c:	e886 0007 	stmia.w	r6, {r0, r1, r2}
-d0042f60:	e895 0007 	ldmia.w	r5, {r0, r1, r2}
-d0042f64:	ae04      	add	r6, sp, #16
-d0042f66:	e886 0007 	stmia.w	r6, {r0, r1, r2}
-d0042f6a:	e893 0007 	ldmia.w	r3, {r0, r1, r2}
-d0042f6e:	ab0a      	add	r3, sp, #40	; 0x28
-d0042f70:	e903 0007 	stmdb	r3, {r0, r1, r2}
-d0042f74:	d14a      	bne.n	d004300c <cameraTurn+0xe8>
-d0042f76:	eef5 8a40 	vcmp.f32	s17, #0.0
-d0042f7a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042f7e:	f040 808d 	bne.w	d004309c <cameraTurn+0x178>
-d0042f82:	eeb5 8a40 	vcmp.f32	s16, #0.0
-d0042f86:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0042f8a:	f040 80cf 	bne.w	d004312c <cameraTurn+0x208>
-d0042f8e:	4620      	mov	r0, r4
-d0042f90:	b00a      	add	sp, #40	; 0x28
-d0042f92:	ecbd 8b04 	vpop	{d8-d9}
-d0042f96:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
-d0042f9a:	f7ff bf6d 	b.w	d0042e78 <cameraNormalize>
-d0042f9e:	ed9f 1a85 	vldr	s2, [pc, #532]	; d00431b4 <cameraTurn+0x290>
-d0042fa2:	eeb7 0a00 	vmov.f32	s0, #112	; 0x3f800000  1.0
-d0042fa6:	eef0 0a41 	vmov.f32	s1, s2
-d0042faa:	f7ff fba7 	bl	d00426fc <vec3>
-d0042fae:	eef0 7a41 	vmov.f32	s15, s2
-d0042fb2:	ed9f 1a80 	vldr	s2, [pc, #512]	; d00431b4 <cameraTurn+0x290>
-d0042fb6:	eeb0 7a60 	vmov.f32	s14, s1
-d0042fba:	ed8d 0a01 	vstr	s0, [sp, #4]
-d0042fbe:	eef7 0a00 	vmov.f32	s1, #112	; 0x3f800000  1.0
-d0042fc2:	edcd 7a03 	vstr	s15, [sp, #12]
-d0042fc6:	eeb0 0a41 	vmov.f32	s0, s2
-d0042fca:	ed8d 7a02 	vstr	s14, [sp, #8]
-d0042fce:	f7ff fb95 	bl	d00426fc <vec3>
-d0042fd2:	eeb0 7a60 	vmov.f32	s14, s1
-d0042fd6:	eddf 0a77 	vldr	s1, [pc, #476]	; d00431b4 <cameraTurn+0x290>
-d0042fda:	eef0 7a41 	vmov.f32	s15, s2
-d0042fde:	ed8d 0a04 	vstr	s0, [sp, #16]
-d0042fe2:	eeb7 1a00 	vmov.f32	s2, #112	; 0x3f800000  1.0
-d0042fe6:	eeb0 0a60 	vmov.f32	s0, s1
-d0042fea:	ed8d 7a05 	vstr	s14, [sp, #20]
-d0042fee:	edcd 7a06 	vstr	s15, [sp, #24]
-d0042ff2:	f7ff fb83 	bl	d00426fc <vec3>
-d0042ff6:	eeb5 9a40 	vcmp.f32	s18, #0.0
-d0042ffa:	edcd 0a08 	vstr	s1, [sp, #32]
-d0042ffe:	ed8d 0a07 	vstr	s0, [sp, #28]
-d0043002:	ed8d 1a09 	vstr	s2, [sp, #36]	; 0x24
-d0043006:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004300a:	d0b4      	beq.n	d0042f76 <cameraTurn+0x52>
-d004300c:	ed94 0a0c 	vldr	s0, [r4, #48]	; 0x30
-d0043010:	eeb0 3a49 	vmov.f32	s6, s18
-d0043014:	edd4 0a0d 	vldr	s1, [r4, #52]	; 0x34
-d0043018:	ed94 1a0e 	vldr	s2, [r4, #56]	; 0x38
-d004301c:	eddd 1a04 	vldr	s3, [sp, #16]
-d0043020:	ed9d 2a05 	vldr	s4, [sp, #20]
-d0043024:	eddd 2a06 	vldr	s5, [sp, #24]
-d0043028:	f7ff fab8 	bl	d004259c <rotateAroundAxis>
-d004302c:	ed84 0a0c 	vstr	s0, [r4, #48]	; 0x30
-d0043030:	edc4 0a0d 	vstr	s1, [r4, #52]	; 0x34
-d0043034:	eeb0 3a49 	vmov.f32	s6, s18
-d0043038:	ed94 0a06 	vldr	s0, [r4, #24]
-d004303c:	edd4 0a07 	vldr	s1, [r4, #28]
-d0043040:	ed84 1a0e 	vstr	s2, [r4, #56]	; 0x38
-d0043044:	ed94 1a08 	vldr	s2, [r4, #32]
-d0043048:	eddd 1a04 	vldr	s3, [sp, #16]
-d004304c:	ed9d 2a05 	vldr	s4, [sp, #20]
-d0043050:	eddd 2a06 	vldr	s5, [sp, #24]
-d0043054:	f7ff faa2 	bl	d004259c <rotateAroundAxis>
-d0043058:	eeb0 3a49 	vmov.f32	s6, s18
-d004305c:	ed84 0a06 	vstr	s0, [r4, #24]
-d0043060:	edc4 0a07 	vstr	s1, [r4, #28]
-d0043064:	ed94 0a09 	vldr	s0, [r4, #36]	; 0x24
-d0043068:	edd4 0a0a 	vldr	s1, [r4, #40]	; 0x28
-d004306c:	ed84 1a08 	vstr	s2, [r4, #32]
-d0043070:	eddd 1a04 	vldr	s3, [sp, #16]
-d0043074:	ed94 1a0b 	vldr	s2, [r4, #44]	; 0x2c
-d0043078:	ed9d 2a05 	vldr	s4, [sp, #20]
-d004307c:	eddd 2a06 	vldr	s5, [sp, #24]
-d0043080:	f7ff fa8c 	bl	d004259c <rotateAroundAxis>
-d0043084:	eef5 8a40 	vcmp.f32	s17, #0.0
-d0043088:	ed84 0a09 	vstr	s0, [r4, #36]	; 0x24
-d004308c:	edc4 0a0a 	vstr	s1, [r4, #40]	; 0x28
-d0043090:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043094:	ed84 1a0b 	vstr	s2, [r4, #44]	; 0x2c
-d0043098:	f43f af73 	beq.w	d0042f82 <cameraTurn+0x5e>
-d004309c:	ed94 0a0c 	vldr	s0, [r4, #48]	; 0x30
-d00430a0:	eeb0 3a68 	vmov.f32	s6, s17
-d00430a4:	edd4 0a0d 	vldr	s1, [r4, #52]	; 0x34
-d00430a8:	ed94 1a0e 	vldr	s2, [r4, #56]	; 0x38
-d00430ac:	eddd 1a01 	vldr	s3, [sp, #4]
-d00430b0:	ed9d 2a02 	vldr	s4, [sp, #8]
-d00430b4:	eddd 2a03 	vldr	s5, [sp, #12]
-d00430b8:	f7ff fa70 	bl	d004259c <rotateAroundAxis>
-d00430bc:	ed84 0a0c 	vstr	s0, [r4, #48]	; 0x30
-d00430c0:	edc4 0a0d 	vstr	s1, [r4, #52]	; 0x34
-d00430c4:	eeb0 3a68 	vmov.f32	s6, s17
-d00430c8:	ed94 0a06 	vldr	s0, [r4, #24]
-d00430cc:	edd4 0a07 	vldr	s1, [r4, #28]
-d00430d0:	ed84 1a0e 	vstr	s2, [r4, #56]	; 0x38
-d00430d4:	ed94 1a08 	vldr	s2, [r4, #32]
-d00430d8:	eddd 1a01 	vldr	s3, [sp, #4]
-d00430dc:	ed9d 2a02 	vldr	s4, [sp, #8]
-d00430e0:	eddd 2a03 	vldr	s5, [sp, #12]
-d00430e4:	f7ff fa5a 	bl	d004259c <rotateAroundAxis>
-d00430e8:	eeb0 3a68 	vmov.f32	s6, s17
-d00430ec:	ed84 0a06 	vstr	s0, [r4, #24]
-d00430f0:	edc4 0a07 	vstr	s1, [r4, #28]
-d00430f4:	ed94 0a09 	vldr	s0, [r4, #36]	; 0x24
-d00430f8:	edd4 0a0a 	vldr	s1, [r4, #40]	; 0x28
-d00430fc:	ed84 1a08 	vstr	s2, [r4, #32]
-d0043100:	eddd 1a01 	vldr	s3, [sp, #4]
-d0043104:	ed94 1a0b 	vldr	s2, [r4, #44]	; 0x2c
-d0043108:	ed9d 2a02 	vldr	s4, [sp, #8]
-d004310c:	eddd 2a03 	vldr	s5, [sp, #12]
-d0043110:	f7ff fa44 	bl	d004259c <rotateAroundAxis>
-d0043114:	eeb5 8a40 	vcmp.f32	s16, #0.0
-d0043118:	ed84 0a09 	vstr	s0, [r4, #36]	; 0x24
-d004311c:	edc4 0a0a 	vstr	s1, [r4, #40]	; 0x28
-d0043120:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043124:	ed84 1a0b 	vstr	s2, [r4, #44]	; 0x2c
-d0043128:	f43f af31 	beq.w	d0042f8e <cameraTurn+0x6a>
-d004312c:	ed94 0a0c 	vldr	s0, [r4, #48]	; 0x30
-d0043130:	eeb0 3a48 	vmov.f32	s6, s16
-d0043134:	edd4 0a0d 	vldr	s1, [r4, #52]	; 0x34
-d0043138:	ed94 1a0e 	vldr	s2, [r4, #56]	; 0x38
-d004313c:	eddd 1a07 	vldr	s3, [sp, #28]
-d0043140:	ed9d 2a08 	vldr	s4, [sp, #32]
-d0043144:	eddd 2a09 	vldr	s5, [sp, #36]	; 0x24
-d0043148:	f7ff fa28 	bl	d004259c <rotateAroundAxis>
-d004314c:	ed84 0a0c 	vstr	s0, [r4, #48]	; 0x30
-d0043150:	edc4 0a0d 	vstr	s1, [r4, #52]	; 0x34
-d0043154:	eeb0 3a48 	vmov.f32	s6, s16
-d0043158:	ed94 0a06 	vldr	s0, [r4, #24]
-d004315c:	edd4 0a07 	vldr	s1, [r4, #28]
-d0043160:	ed84 1a0e 	vstr	s2, [r4, #56]	; 0x38
-d0043164:	ed94 1a08 	vldr	s2, [r4, #32]
-d0043168:	eddd 1a07 	vldr	s3, [sp, #28]
-d004316c:	ed9d 2a08 	vldr	s4, [sp, #32]
-d0043170:	eddd 2a09 	vldr	s5, [sp, #36]	; 0x24
-d0043174:	f7ff fa12 	bl	d004259c <rotateAroundAxis>
-d0043178:	ed84 0a06 	vstr	s0, [r4, #24]
-d004317c:	edc4 0a07 	vstr	s1, [r4, #28]
-d0043180:	eeb0 3a48 	vmov.f32	s6, s16
-d0043184:	ed94 0a09 	vldr	s0, [r4, #36]	; 0x24
-d0043188:	edd4 0a0a 	vldr	s1, [r4, #40]	; 0x28
-d004318c:	ed84 1a08 	vstr	s2, [r4, #32]
-d0043190:	ed94 1a0b 	vldr	s2, [r4, #44]	; 0x2c
-d0043194:	eddd 1a07 	vldr	s3, [sp, #28]
-d0043198:	ed9d 2a08 	vldr	s4, [sp, #32]
-d004319c:	eddd 2a09 	vldr	s5, [sp, #36]	; 0x24
-d00431a0:	f7ff f9fc 	bl	d004259c <rotateAroundAxis>
-d00431a4:	ed84 0a09 	vstr	s0, [r4, #36]	; 0x24
-d00431a8:	edc4 0a0a 	vstr	s1, [r4, #40]	; 0x28
-d00431ac:	ed84 1a0b 	vstr	s2, [r4, #44]	; 0x2c
-d00431b0:	e6ed      	b.n	d0042f8e <cameraTurn+0x6a>
-d00431b2:	4770      	bx	lr
-d00431b4:	00000000 	.word	0x00000000
+d0042c70 <powf>:
+d0042c70:	eeb7 7a00 	vmov.f32	s14, #112	; 0x3f800000  1.0
+d0042c74:	eeb4 0a47 	vcmp.f32	s0, s14
+d0042c78:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042c7c:	d04e      	beq.n	d0042d1c <powf+0xac>
+d0042c7e:	eef5 0a40 	vcmp.f32	s1, #0.0
+d0042c82:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042c86:	d049      	beq.n	d0042d1c <powf+0xac>
+d0042c88:	eef4 0a47 	vcmp.f32	s1, s14
+d0042c8c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042c90:	d054      	beq.n	d0042d3c <powf+0xcc>
+d0042c92:	eeb5 0a40 	vcmp.f32	s0, #0.0
+d0042c96:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042c9a:	d044      	beq.n	d0042d26 <powf+0xb6>
+d0042c9c:	eefd 7ae0 	vcvt.s32.f32	s15, s1
+d0042ca0:	eef8 6ae7 	vcvt.f32.s32	s13, s15
+d0042ca4:	eef4 6a60 	vcmp.f32	s13, s1
+d0042ca8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042cac:	d04e      	beq.n	d0042d4c <powf+0xdc>
+d0042cae:	eeb5 0ac0 	vcmpe.f32	s0, #0.0
+d0042cb2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042cb6:	d459      	bmi.n	d0042d6c <powf+0xfc>
+d0042cb8:	eef6 7a00 	vmov.f32	s15, #96	; 0x3f000000  0.5
+d0042cbc:	eef4 0a67 	vcmp.f32	s1, s15
+d0042cc0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042cc4:	d03f      	beq.n	d0042d46 <powf+0xd6>
+d0042cc6:	eefe 7a00 	vmov.f32	s15, #224	; 0xbf000000 -0.5
+d0042cca:	eef4 0a67 	vcmp.f32	s1, s15
+d0042cce:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042cd2:	d052      	beq.n	d0042d7a <powf+0x10a>
+d0042cd4:	eef0 7a00 	vmov.f32	s15, #0	; 0x40000000  2.0
+d0042cd8:	eef4 0a67 	vcmp.f32	s1, s15
+d0042cdc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042ce0:	d052      	beq.n	d0042d88 <powf+0x118>
+d0042ce2:	eef0 7a08 	vmov.f32	s15, #8	; 0x40400000  3.0
+d0042ce6:	eef4 0a67 	vcmp.f32	s1, s15
+d0042cea:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042cee:	d04e      	beq.n	d0042d8e <powf+0x11e>
+d0042cf0:	eef1 7a00 	vmov.f32	s15, #16	; 0x40800000  4.0
+d0042cf4:	eef4 0a67 	vcmp.f32	s1, s15
+d0042cf8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042cfc:	d042      	beq.n	d0042d84 <powf+0x114>
+d0042cfe:	b500      	push	{lr}
+d0042d00:	b083      	sub	sp, #12
+d0042d02:	edcd 0a01 	vstr	s1, [sp, #4]
+d0042d06:	f004 fb41 	bl	d004738c <logf>
+d0042d0a:	eddd 0a01 	vldr	s1, [sp, #4]
+d0042d0e:	ee20 0a20 	vmul.f32	s0, s0, s1
+d0042d12:	b003      	add	sp, #12
+d0042d14:	f85d eb04 	ldr.w	lr, [sp], #4
+d0042d18:	f004 bac2 	b.w	d00472a0 <expf>
+d0042d1c:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
+d0042d20:	eeb0 0a67 	vmov.f32	s0, s15
+d0042d24:	4770      	bx	lr
+d0042d26:	eef5 0ac0 	vcmpe.f32	s1, #0.0
+d0042d2a:	eddf 7a1d 	vldr	s15, [pc, #116]	; d0042da0 <powf+0x130>
+d0042d2e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042d32:	fe70 7a27 	vselgt.f32	s15, s0, s15
+d0042d36:	eeb0 0a67 	vmov.f32	s0, s15
+d0042d3a:	4770      	bx	lr
+d0042d3c:	eef0 7a40 	vmov.f32	s15, s0
+d0042d40:	eeb0 0a67 	vmov.f32	s0, s15
+d0042d44:	4770      	bx	lr
+d0042d46:	eef1 7ac0 	vsqrt.f32	s15, s0
+d0042d4a:	e7e9      	b.n	d0042d20 <powf+0xb0>
+d0042d4c:	ee17 3a90 	vmov	r3, s15
+d0042d50:	2b00      	cmp	r3, #0
+d0042d52:	db0e      	blt.n	d0042d72 <powf+0x102>
+d0042d54:	d020      	beq.n	d0042d98 <powf+0x128>
+d0042d56:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
+d0042d5a:	07da      	lsls	r2, r3, #31
+d0042d5c:	bf48      	it	mi
+d0042d5e:	ee67 7a80 	vmulmi.f32	s15, s15, s0
+d0042d62:	085b      	lsrs	r3, r3, #1
+d0042d64:	ee20 0a00 	vmul.f32	s0, s0, s0
+d0042d68:	d1f7      	bne.n	d0042d5a <powf+0xea>
+d0042d6a:	e7d9      	b.n	d0042d20 <powf+0xb0>
+d0042d6c:	eddf 7a0d 	vldr	s15, [pc, #52]	; d0042da4 <powf+0x134>
+d0042d70:	e7d6      	b.n	d0042d20 <powf+0xb0>
+d0042d72:	ee87 0a00 	vdiv.f32	s0, s14, s0
+d0042d76:	425b      	negs	r3, r3
+d0042d78:	e7ed      	b.n	d0042d56 <powf+0xe6>
+d0042d7a:	eef1 6ac0 	vsqrt.f32	s13, s0
+d0042d7e:	eec7 7a26 	vdiv.f32	s15, s14, s13
+d0042d82:	e7cd      	b.n	d0042d20 <powf+0xb0>
+d0042d84:	ee20 0a00 	vmul.f32	s0, s0, s0
+d0042d88:	ee60 7a00 	vmul.f32	s15, s0, s0
+d0042d8c:	e7c8      	b.n	d0042d20 <powf+0xb0>
+d0042d8e:	ee60 7a00 	vmul.f32	s15, s0, s0
+d0042d92:	ee67 7a80 	vmul.f32	s15, s15, s0
+d0042d96:	e7c3      	b.n	d0042d20 <powf+0xb0>
+d0042d98:	eef0 7a47 	vmov.f32	s15, s14
+d0042d9c:	e7c0      	b.n	d0042d20 <powf+0xb0>
+d0042d9e:	bf00      	nop
+d0042da0:	7f800000 	.word	0x7f800000
+d0042da4:	7fc00000 	.word	0x7fc00000
 
-d00431b8 <worldToCamera>:
-d00431b8:	b084      	sub	sp, #16
-d00431ba:	b510      	push	{r4, lr}
-d00431bc:	ed2d 8b02 	vpush	{d8}
-d00431c0:	b0ac      	sub	sp, #176	; 0xb0
-d00431c2:	f10d 042f 	add.w	r4, sp, #47	; 0x2f
-d00431c6:	f10d 0cc0 	add.w	ip, sp, #192	; 0xc0
-d00431ca:	ed8d 0a23 	vstr	s0, [sp, #140]	; 0x8c
-d00431ce:	f024 041f 	bic.w	r4, r4, #31
-d00431d2:	edcd 0a24 	vstr	s1, [sp, #144]	; 0x90
-d00431d6:	ed8d 1a25 	vstr	s2, [sp, #148]	; 0x94
-d00431da:	e88c 000f 	stmia.w	ip, {r0, r1, r2, r3}
-d00431de:	2260      	movs	r2, #96	; 0x60
-d00431e0:	4661      	mov	r1, ip
-d00431e2:	4620      	mov	r0, r4
-d00431e4:	f002 feda 	bl	d0045f9c <memcpy>
-d00431e8:	edd4 7a00 	vldr	s15, [r4]
-d00431ec:	ed9d 0a23 	vldr	s0, [sp, #140]	; 0x8c
-d00431f0:	ed94 7a01 	vldr	s14, [r4, #4]
-d00431f4:	ee30 0a67 	vsub.f32	s0, s0, s15
-d00431f8:	eddd 0a24 	vldr	s1, [sp, #144]	; 0x90
-d00431fc:	edd4 7a02 	vldr	s15, [r4, #8]
-d0043200:	ed9d 1a25 	vldr	s2, [sp, #148]	; 0x94
-d0043204:	ee70 0ac7 	vsub.f32	s1, s1, s14
-d0043208:	edd4 1a06 	vldr	s3, [r4, #24]
-d004320c:	ee31 1a67 	vsub.f32	s2, s2, s15
-d0043210:	ed94 2a07 	vldr	s4, [r4, #28]
-d0043214:	edd4 2a08 	vldr	s5, [r4, #32]
-d0043218:	edcd 0a27 	vstr	s1, [sp, #156]	; 0x9c
-d004321c:	ed8d 1a28 	vstr	s2, [sp, #160]	; 0xa0
-d0043220:	ed8d 0a26 	vstr	s0, [sp, #152]	; 0x98
-d0043224:	f7ff f948 	bl	d00424b8 <vec3Dot>
-d0043228:	edd4 1a09 	vldr	s3, [r4, #36]	; 0x24
-d004322c:	eef0 8a40 	vmov.f32	s17, s0
-d0043230:	ed94 2a0a 	vldr	s4, [r4, #40]	; 0x28
-d0043234:	edd4 2a0b 	vldr	s5, [r4, #44]	; 0x2c
-d0043238:	eddd 0a27 	vldr	s1, [sp, #156]	; 0x9c
-d004323c:	ed9d 1a28 	vldr	s2, [sp, #160]	; 0xa0
-d0043240:	ed9d 0a26 	vldr	s0, [sp, #152]	; 0x98
-d0043244:	f7ff f938 	bl	d00424b8 <vec3Dot>
-d0043248:	eeb0 8a40 	vmov.f32	s16, s0
-d004324c:	eddd 0a27 	vldr	s1, [sp, #156]	; 0x9c
-d0043250:	ed9d 1a28 	vldr	s2, [sp, #160]	; 0xa0
-d0043254:	edd4 1a0c 	vldr	s3, [r4, #48]	; 0x30
-d0043258:	ed9d 0a26 	vldr	s0, [sp, #152]	; 0x98
-d004325c:	ed94 2a0d 	vldr	s4, [r4, #52]	; 0x34
-d0043260:	edd4 2a0e 	vldr	s5, [r4, #56]	; 0x38
-d0043264:	f7ff f928 	bl	d00424b8 <vec3Dot>
-d0043268:	eef0 0a48 	vmov.f32	s1, s16
-d004326c:	eeb0 1a40 	vmov.f32	s2, s0
-d0043270:	eeb0 0a68 	vmov.f32	s0, s17
-d0043274:	b02c      	add	sp, #176	; 0xb0
-d0043276:	ecbd 8b02 	vpop	{d8}
-d004327a:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
-d004327e:	b004      	add	sp, #16
-d0043280:	4770      	bx	lr
-d0043282:	bf00      	nop
+d0042da8 <sb3dParticlesClear>:
+d0042da8:	4b0f      	ldr	r3, [pc, #60]	; (d0042de8 <sb3dParticlesClear+0x40>)
+d0042daa:	f04f 507e 	mov.w	r0, #1065353216	; 0x3f800000
+d0042dae:	2100      	movs	r1, #0
+d0042db0:	2200      	movs	r2, #0
+d0042db2:	b430      	push	{r4, r5}
+d0042db4:	f503 5500 	add.w	r5, r3, #8192	; 0x2000
+d0042db8:	2421      	movs	r4, #33	; 0x21
+d0042dba:	7699      	strb	r1, [r3, #26]
+d0042dbc:	3320      	adds	r3, #32
+d0042dbe:	f843 2c20 	str.w	r2, [r3, #-32]
+d0042dc2:	f843 2c1c 	str.w	r2, [r3, #-28]
+d0042dc6:	f843 2c18 	str.w	r2, [r3, #-24]
+d0042dca:	f843 0c14 	str.w	r0, [r3, #-20]
+d0042dce:	f843 2c10 	str.w	r2, [r3, #-16]
+d0042dd2:	f843 0c0c 	str.w	r0, [r3, #-12]
+d0042dd6:	f803 4c08 	strb.w	r4, [r3, #-8]
+d0042dda:	f803 1c07 	strb.w	r1, [r3, #-7]
+d0042dde:	42ab      	cmp	r3, r5
+d0042de0:	d1eb      	bne.n	d0042dba <sb3dParticlesClear+0x12>
+d0042de2:	bc30      	pop	{r4, r5}
+d0042de4:	4770      	bx	lr
+d0042de6:	bf00      	nop
+d0042de8:	d0093360 	.word	0xd0093360
 
-d0043284 <cameraSetRange>:
-d0043284:	b1a0      	cbz	r0, d00432b0 <cameraSetRange+0x2c>
-d0043286:	eddf 7a0d 	vldr	s15, [pc, #52]	; d00432bc <cameraSetRange+0x38>
-d004328a:	fe80 0a27 	vmaxnm.f32	s0, s0, s15
-d004328e:	eeb4 0ae0 	vcmpe.f32	s0, s1
-d0043292:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043296:	da0c      	bge.n	d00432b2 <cameraSetRange+0x2e>
-d0043298:	ee30 7ac0 	vsub.f32	s14, s1, s0
-d004329c:	eef7 6a00 	vmov.f32	s13, #112	; 0x3f800000  1.0
-d00432a0:	eec6 7a87 	vdiv.f32	s15, s13, s14
-d00432a4:	ed80 0a10 	vstr	s0, [r0, #64]	; 0x40
-d00432a8:	edc0 0a11 	vstr	s1, [r0, #68]	; 0x44
-d00432ac:	edc0 7a0f 	vstr	s15, [r0, #60]	; 0x3c
-d00432b0:	4770      	bx	lr
-d00432b2:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
-d00432b6:	ee70 0a27 	vadd.f32	s1, s0, s15
-d00432ba:	e7f3      	b.n	d00432a4 <cameraSetRange+0x20>
-d00432bc:	3a83126f 	.word	0x3a83126f
+d0042dec <sb3dParticlesRender>:
+d0042dec:	2800      	cmp	r0, #0
+d0042dee:	f000 82d6 	beq.w	d004339e <sb3dParticlesRender+0x5b2>
+d0042df2:	edd0 7a02 	vldr	s15, [r0, #8]
+d0042df6:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d0042dfa:	ed2d 8b10 	vpush	{d8-d15}
+d0042dfe:	b0c7      	sub	sp, #284	; 0x11c
+d0042e00:	4605      	mov	r5, r0
+d0042e02:	ed90 ea00 	vldr	s28, [r0]
+d0042e06:	edcd 7a15 	vstr	s15, [sp, #84]	; 0x54
+d0042e0a:	edd0 da01 	vldr	s27, [r0, #4]
+d0042e0e:	edd0 ca06 	vldr	s25, [r0, #24]
+d0042e12:	ed90 ca07 	vldr	s24, [r0, #28]
+d0042e16:	edd0 ba08 	vldr	s23, [r0, #32]
+d0042e1a:	ed90 9a09 	vldr	s18, [r0, #36]	; 0x24
+d0042e1e:	edd0 8a0a 	vldr	s17, [r0, #40]	; 0x28
+d0042e22:	ed90 8a0b 	vldr	s16, [r0, #44]	; 0x2c
+d0042e26:	edd0 aa0c 	vldr	s21, [r0, #48]	; 0x30
+d0042e2a:	ed90 aa0d 	vldr	s20, [r0, #52]	; 0x34
+d0042e2e:	edd0 9a0e 	vldr	s19, [r0, #56]	; 0x38
+d0042e32:	ed90 ba10 	vldr	s22, [r0, #64]	; 0x40
+d0042e36:	f001 fc4f 	bl	d00446d8 <lightsGet>
+d0042e3a:	4cae      	ldr	r4, [pc, #696]	; (d00430f4 <sb3dParticlesRender+0x308>)
+d0042e3c:	4681      	mov	r9, r0
+d0042e3e:	f001 fc4f 	bl	d00446e0 <lightsGetCount>
+d0042e42:	4680      	mov	r8, r0
+d0042e44:	f504 5600 	add.w	r6, r4, #8192	; 0x2000
+d0042e48:	eb09 1780 	add.w	r7, r9, r0, lsl #6
+d0042e4c:	e115      	b.n	d004307a <sb3dParticlesRender+0x28e>
+d0042e4e:	eeb1 7a04 	vmov.f32	s14, #20	; 0x40a00000  5.0
+d0042e52:	edd4 ea04 	vldr	s29, [r4, #16]
+d0042e56:	ed9f 5aac 	vldr	s10, [pc, #688]	; d0043108 <sb3dParticlesRender+0x31c>
+d0042e5a:	fece ea85 	vmaxnm.f32	s29, s29, s10
+d0042e5e:	fece eac7 	vminnm.f32	s29, s29, s14
+d0042e62:	eeb6 7a00 	vmov.f32	s14, #96	; 0x3f000000  0.5
+d0042e66:	f105 0a10 	add.w	sl, r5, #16
+d0042e6a:	eeb0 4a46 	vmov.f32	s8, s12
+d0042e6e:	2250      	movs	r2, #80	; 0x50
+d0042e70:	eef0 4a66 	vmov.f32	s9, s13
+d0042e74:	4651      	mov	r1, sl
+d0042e76:	ee67 7a87 	vmul.f32	s15, s15, s14
+d0042e7a:	4668      	mov	r0, sp
+d0042e7c:	eeb0 5a65 	vmov.f32	s10, s11
+d0042e80:	eeb0 7a65 	vmov.f32	s14, s11
+d0042e84:	eeac 6aa7 	vfma.f32	s12, s25, s15
+d0042e88:	eeac 4ae7 	vfms.f32	s8, s25, s15
+d0042e8c:	eeec 4a67 	vfms.f32	s9, s24, s15
+d0042e90:	eeec 6a27 	vfma.f32	s13, s24, s15
+d0042e94:	eeab 5ae7 	vfms.f32	s10, s23, s15
+d0042e98:	eeab 7aa7 	vfma.f32	s14, s23, s15
+d0042e9c:	eef0 3a46 	vmov.f32	s7, s12
+d0042ea0:	eea9 6a67 	vfms.f32	s12, s18, s15
+d0042ea4:	eeb0 da44 	vmov.f32	s26, s8
+d0042ea8:	eef0 fa64 	vmov.f32	s31, s9
+d0042eac:	eef0 5a66 	vmov.f32	s11, s13
+d0042eb0:	eeb0 fa45 	vmov.f32	s30, s10
+d0042eb4:	eea9 da27 	vfma.f32	s26, s18, s15
+d0042eb8:	ed8d 6a1c 	vstr	s12, [sp, #112]	; 0x70
+d0042ebc:	eeb0 6a47 	vmov.f32	s12, s14
+d0042ec0:	eee8 faa7 	vfma.f32	s31, s17, s15
+d0042ec4:	eea8 fa27 	vfma.f32	s30, s16, s15
+d0042ec8:	eea9 4a67 	vfms.f32	s8, s18, s15
+d0042ecc:	eee9 3a27 	vfma.f32	s7, s18, s15
+d0042ed0:	eee8 4ae7 	vfms.f32	s9, s17, s15
+d0042ed4:	ed8d da16 	vstr	s26, [sp, #88]	; 0x58
+d0042ed8:	eee8 5aa7 	vfma.f32	s11, s17, s15
+d0042edc:	eee8 6ae7 	vfms.f32	s13, s17, s15
+d0042ee0:	edcd fa17 	vstr	s31, [sp, #92]	; 0x5c
+d0042ee4:	eea8 5a67 	vfms.f32	s10, s16, s15
+d0042ee8:	ed8d fa18 	vstr	s30, [sp, #96]	; 0x60
+d0042eec:	eea8 6a27 	vfma.f32	s12, s16, s15
+d0042ef0:	ed8d 4a1f 	vstr	s8, [sp, #124]	; 0x7c
+d0042ef4:	eea8 7a67 	vfms.f32	s14, s16, s15
+d0042ef8:	edcd 3a19 	vstr	s7, [sp, #100]	; 0x64
+d0042efc:	edcd 4a20 	vstr	s9, [sp, #128]	; 0x80
+d0042f00:	edcd 5a1a 	vstr	s11, [sp, #104]	; 0x68
+d0042f04:	edcd 6a1d 	vstr	s13, [sp, #116]	; 0x74
+d0042f08:	ed8d 5a21 	vstr	s10, [sp, #132]	; 0x84
+d0042f0c:	ed8d 6a1b 	vstr	s12, [sp, #108]	; 0x6c
+d0042f10:	ed8d 7a1e 	vstr	s14, [sp, #120]	; 0x78
+d0042f14:	f003 fe98 	bl	d0046c48 <memcpy>
+d0042f18:	eeb0 0a4d 	vmov.f32	s0, s26
+d0042f1c:	eef0 0a6f 	vmov.f32	s1, s31
+d0042f20:	eeb0 1a4f 	vmov.f32	s2, s30
+d0042f24:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
+d0042f28:	f000 fbfc 	bl	d0043724 <worldToCamera>
+d0042f2c:	ed9d da19 	vldr	s26, [sp, #100]	; 0x64
+d0042f30:	eddd fa1a 	vldr	s31, [sp, #104]	; 0x68
+d0042f34:	4651      	mov	r1, sl
+d0042f36:	ed9d fa1b 	vldr	s30, [sp, #108]	; 0x6c
+d0042f3a:	2250      	movs	r2, #80	; 0x50
+d0042f3c:	4668      	mov	r0, sp
+d0042f3e:	ed8d 0a22 	vstr	s0, [sp, #136]	; 0x88
+d0042f42:	edcd 0a23 	vstr	s1, [sp, #140]	; 0x8c
+d0042f46:	ed8d 1a24 	vstr	s2, [sp, #144]	; 0x90
+d0042f4a:	f003 fe7d 	bl	d0046c48 <memcpy>
+d0042f4e:	eeb0 0a4d 	vmov.f32	s0, s26
+d0042f52:	eef0 0a6f 	vmov.f32	s1, s31
+d0042f56:	eeb0 1a4f 	vmov.f32	s2, s30
+d0042f5a:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
+d0042f5e:	f000 fbe1 	bl	d0043724 <worldToCamera>
+d0042f62:	ed9d da1c 	vldr	s26, [sp, #112]	; 0x70
+d0042f66:	eddd fa1d 	vldr	s31, [sp, #116]	; 0x74
+d0042f6a:	4651      	mov	r1, sl
+d0042f6c:	ed9d fa1e 	vldr	s30, [sp, #120]	; 0x78
+d0042f70:	2250      	movs	r2, #80	; 0x50
+d0042f72:	4668      	mov	r0, sp
+d0042f74:	ed8d 0a25 	vstr	s0, [sp, #148]	; 0x94
+d0042f78:	edcd 0a26 	vstr	s1, [sp, #152]	; 0x98
+d0042f7c:	ed8d 1a27 	vstr	s2, [sp, #156]	; 0x9c
+d0042f80:	f003 fe62 	bl	d0046c48 <memcpy>
+d0042f84:	eeb0 0a4d 	vmov.f32	s0, s26
+d0042f88:	eef0 0a6f 	vmov.f32	s1, s31
+d0042f8c:	eeb0 1a4f 	vmov.f32	s2, s30
+d0042f90:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
+d0042f94:	f000 fbc6 	bl	d0043724 <worldToCamera>
+d0042f98:	ed9d da1f 	vldr	s26, [sp, #124]	; 0x7c
+d0042f9c:	eddd fa20 	vldr	s31, [sp, #128]	; 0x80
+d0042fa0:	4651      	mov	r1, sl
+d0042fa2:	ed9d fa21 	vldr	s30, [sp, #132]	; 0x84
+d0042fa6:	2250      	movs	r2, #80	; 0x50
+d0042fa8:	4668      	mov	r0, sp
+d0042faa:	ed8d 0a28 	vstr	s0, [sp, #160]	; 0xa0
+d0042fae:	edcd 0a29 	vstr	s1, [sp, #164]	; 0xa4
+d0042fb2:	ed8d 1a2a 	vstr	s2, [sp, #168]	; 0xa8
+d0042fb6:	f003 fe47 	bl	d0046c48 <memcpy>
+d0042fba:	eeb0 0a4d 	vmov.f32	s0, s26
+d0042fbe:	eef0 0a6f 	vmov.f32	s1, s31
+d0042fc2:	eeb0 1a4f 	vmov.f32	s2, s30
+d0042fc6:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
+d0042fca:	f000 fbab 	bl	d0043724 <worldToCamera>
+d0042fce:	eddd 7a24 	vldr	s15, [sp, #144]	; 0x90
+d0042fd2:	ed8d 0a2b 	vstr	s0, [sp, #172]	; 0xac
+d0042fd6:	eef4 7acb 	vcmpe.f32	s15, s22
+d0042fda:	edcd 0a2c 	vstr	s1, [sp, #176]	; 0xb0
+d0042fde:	ed8d 1a2d 	vstr	s2, [sp, #180]	; 0xb4
+d0042fe2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042fe6:	d812      	bhi.n	d004300e <sb3dParticlesRender+0x222>
+d0042fe8:	eddd 7a27 	vldr	s15, [sp, #156]	; 0x9c
+d0042fec:	eef4 7acb 	vcmpe.f32	s15, s22
+d0042ff0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0042ff4:	d80b      	bhi.n	d004300e <sb3dParticlesRender+0x222>
+d0042ff6:	eddd 7a2a 	vldr	s15, [sp, #168]	; 0xa8
+d0042ffa:	eef4 7acb 	vcmpe.f32	s15, s22
+d0042ffe:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043002:	d804      	bhi.n	d004300e <sb3dParticlesRender+0x222>
+d0043004:	eeb4 1acb 	vcmpe.f32	s2, s22
+d0043008:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004300c:	d931      	bls.n	d0043072 <sb3dParticlesRender+0x286>
+d004300e:	4629      	mov	r1, r5
+d0043010:	ed9d 3a28 	vldr	s6, [sp, #160]	; 0xa0
+d0043014:	eddd 3a29 	vldr	s7, [sp, #164]	; 0xa4
+d0043018:	a82e      	add	r0, sp, #184	; 0xb8
+d004301a:	ed9d 4a2a 	vldr	s8, [sp, #168]	; 0xa8
+d004301e:	eddd 1a25 	vldr	s3, [sp, #148]	; 0x94
+d0043022:	ed9d 2a26 	vldr	s4, [sp, #152]	; 0x98
+d0043026:	eddd 2a27 	vldr	s5, [sp, #156]	; 0x9c
+d004302a:	ed9d 0a22 	vldr	s0, [sp, #136]	; 0x88
+d004302e:	eddd 0a23 	vldr	s1, [sp, #140]	; 0x8c
+d0043032:	ed9d 1a24 	vldr	s2, [sp, #144]	; 0x90
+d0043036:	f001 fc19 	bl	d004486c <clipTriangleToFrustum>
+d004303a:	2802      	cmp	r0, #2
+d004303c:	f300 8156 	bgt.w	d00432ec <sb3dParticlesRender+0x500>
+d0043040:	a82e      	add	r0, sp, #184	; 0xb8
+d0043042:	4629      	mov	r1, r5
+d0043044:	ed9d 3a2b 	vldr	s6, [sp, #172]	; 0xac
+d0043048:	eddd 3a2c 	vldr	s7, [sp, #176]	; 0xb0
+d004304c:	ed9d 4a2d 	vldr	s8, [sp, #180]	; 0xb4
+d0043050:	eddd 1a28 	vldr	s3, [sp, #160]	; 0xa0
+d0043054:	ed9d 2a29 	vldr	s4, [sp, #164]	; 0xa4
+d0043058:	eddd 2a2a 	vldr	s5, [sp, #168]	; 0xa8
+d004305c:	ed9d 0a22 	vldr	s0, [sp, #136]	; 0x88
+d0043060:	eddd 0a23 	vldr	s1, [sp, #140]	; 0x8c
+d0043064:	ed9d 1a24 	vldr	s2, [sp, #144]	; 0x90
+d0043068:	f001 fc00 	bl	d004486c <clipTriangleToFrustum>
+d004306c:	2802      	cmp	r0, #2
+d004306e:	f300 8105 	bgt.w	d004327c <sb3dParticlesRender+0x490>
+d0043072:	3420      	adds	r4, #32
+d0043074:	42a6      	cmp	r6, r4
+d0043076:	f000 8134 	beq.w	d00432e2 <sb3dParticlesRender+0x4f6>
+d004307a:	7ea3      	ldrb	r3, [r4, #26]
+d004307c:	2b00      	cmp	r3, #0
+d004307e:	d0f8      	beq.n	d0043072 <sb3dParticlesRender+0x286>
+d0043080:	edd4 7a03 	vldr	s15, [r4, #12]
+d0043084:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+d0043088:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004308c:	d9f1      	bls.n	d0043072 <sb3dParticlesRender+0x286>
+d004308e:	edd4 6a01 	vldr	s13, [r4, #4]
+d0043092:	eeb1 5a67 	vneg.f32	s10, s15
+d0043096:	ed94 6a00 	vldr	s12, [r4]
+d004309a:	ee36 7aed 	vsub.f32	s14, s13, s27
+d004309e:	edd4 5a02 	vldr	s11, [r4, #8]
+d00430a2:	ee36 4a4e 	vsub.f32	s8, s12, s28
+d00430a6:	eddd 4a15 	vldr	s9, [sp, #84]	; 0x54
+d00430aa:	ee27 7a0a 	vmul.f32	s14, s14, s20
+d00430ae:	ee75 4ae4 	vsub.f32	s9, s11, s9
+d00430b2:	eeaa 7a84 	vfma.f32	s14, s21, s8
+d00430b6:	eea9 7aa4 	vfma.f32	s14, s19, s9
+d00430ba:	eeb4 5ac7 	vcmpe.f32	s10, s14
+d00430be:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00430c2:	dad6      	bge.n	d0043072 <sb3dParticlesRender+0x286>
+d00430c4:	ed94 7a05 	vldr	s14, [r4, #20]
+d00430c8:	ed9f 5a0b 	vldr	s10, [pc, #44]	; d00430f8 <sb3dParticlesRender+0x30c>
+d00430cc:	eeb4 7ac5 	vcmpe.f32	s14, s10
+d00430d0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00430d4:	f67f aebb 	bls.w	d0042e4e <sb3dParticlesRender+0x62>
+d00430d8:	f1b8 0f00 	cmp.w	r8, #0
+d00430dc:	f340 809e 	ble.w	d004321c <sb3dParticlesRender+0x430>
+d00430e0:	eeb7 4a00 	vmov.f32	s8, #112	; 0x3f800000  1.0
+d00430e4:	464b      	mov	r3, r9
+d00430e6:	eeb5 3a00 	vmov.f32	s6, #80	; 0x3e800000  0.250
+d00430ea:	ed9f 0a05 	vldr	s0, [pc, #20]	; d0043100 <sb3dParticlesRender+0x314>
+d00430ee:	eef6 3a08 	vmov.f32	s7, #104	; 0x3f400000  0.750
+d00430f2:	e07e      	b.n	d00431f2 <sb3dParticlesRender+0x406>
+d00430f4:	d0093360 	.word	0xd0093360
+d00430f8:	38d1b717 	.word	0x38d1b717
+d00430fc:	358637bd 	.word	0x358637bd
+d0043100:	3dcccccd 	.word	0x3dcccccd
+d0043104:	3b808081 	.word	0x3b808081
+d0043108:	00000000 	.word	0x00000000
+d004310c:	edd3 7a02 	vldr	s15, [r3, #8]
+d0043110:	edd3 4a01 	vldr	s9, [r3, #4]
+d0043114:	ee77 7ae6 	vsub.f32	s15, s15, s13
+d0043118:	ed93 7a03 	vldr	s14, [r3, #12]
+d004311c:	ee74 4ac6 	vsub.f32	s9, s9, s12
+d0043120:	ed93 2a0a 	vldr	s4, [r3, #40]	; 0x28
+d0043124:	ee37 7a65 	vsub.f32	s14, s14, s11
+d0043128:	ee27 5aa7 	vmul.f32	s10, s15, s15
+d004312c:	ee62 2a02 	vmul.f32	s5, s4, s4
+d0043130:	eea4 5aa4 	vfma.f32	s10, s9, s9
+d0043134:	eea7 5a07 	vfma.f32	s10, s14, s14
+d0043138:	eeb4 5a62 	vcmp.f32	s10, s5
+d004313c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043140:	d554      	bpl.n	d00431ec <sb3dParticlesRender+0x400>
+d0043142:	ed5f 2a12 	vldr	s5, [pc, #-72]	; d00430fc <sb3dParticlesRender+0x310>
+d0043146:	eeb4 5a62 	vcmp.f32	s10, s5
+d004314a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004314e:	dd4d      	ble.n	d00431ec <sb3dParticlesRender+0x400>
+d0043150:	eef1 0ac5 	vsqrt.f32	s1, s10
+d0043154:	edd3 1a08 	vldr	s3, [r3, #32]
+d0043158:	ee21 1aa1 	vmul.f32	s2, s3, s3
+d004315c:	eeb4 5ac1 	vcmpe.f32	s10, s2
+d0043160:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043164:	eec4 2a20 	vdiv.f32	s5, s8, s1
+d0043168:	ee64 4aa2 	vmul.f32	s9, s9, s5
+d004316c:	ee67 7aa2 	vmul.f32	s15, s15, s5
+d0043170:	ee27 7a22 	vmul.f32	s14, s14, s5
+d0043174:	f240 80e9 	bls.w	d004334a <sb3dParticlesRender+0x55e>
+d0043178:	ed93 1a09 	vldr	s2, [r3, #36]	; 0x24
+d004317c:	eef4 1ac1 	vcmpe.f32	s3, s2
+d0043180:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043184:	da32      	bge.n	d00431ec <sb3dParticlesRender+0x400>
+d0043186:	eeb4 2ac1 	vcmpe.f32	s4, s2
+d004318a:	ee25 5a22 	vmul.f32	s10, s10, s5
+d004318e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043192:	eeb4 1ac5 	vcmpe.f32	s2, s10
+d0043196:	f200 80db 	bhi.w	d0043350 <sb3dParticlesRender+0x564>
+d004319a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004319e:	d925      	bls.n	d00431ec <sb3dParticlesRender+0x400>
+d00431a0:	ee75 2a61 	vsub.f32	s5, s10, s3
+d00431a4:	ee31 2a61 	vsub.f32	s4, s2, s3
+d00431a8:	ee82 5a82 	vdiv.f32	s10, s5, s4
+d00431ac:	ed5f 2a2a 	vldr	s5, [pc, #-168]	; d0043108 <sb3dParticlesRender+0x31c>
+d00431b0:	fe85 5a22 	vmaxnm.f32	s10, s10, s5
+d00431b4:	fe85 5a44 	vminnm.f32	s10, s10, s8
+d00431b8:	ee34 5a45 	vsub.f32	s10, s8, s10
+d00431bc:	eeb5 5ac0 	vcmpe.f32	s10, #0.0
+d00431c0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00431c4:	d912      	bls.n	d00431ec <sb3dParticlesRender+0x400>
+d00431c6:	ee67 7a8a 	vmul.f32	s15, s15, s20
+d00431ca:	eee4 7aaa 	vfma.f32	s15, s9, s21
+d00431ce:	eee7 7a29 	vfma.f32	s15, s14, s19
+d00431d2:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+d00431d6:	eeb1 7a67 	vneg.f32	s14, s15
+d00431da:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00431de:	da05      	bge.n	d00431ec <sb3dParticlesRender+0x400>
+d00431e0:	edd3 7a07 	vldr	s15, [r3, #28]
+d00431e4:	ee25 5a27 	vmul.f32	s10, s10, s15
+d00431e8:	eea5 0a07 	vfma.f32	s0, s10, s14
+d00431ec:	3340      	adds	r3, #64	; 0x40
+d00431ee:	429f      	cmp	r7, r3
+d00431f0:	d016      	beq.n	d0043220 <sb3dParticlesRender+0x434>
+d00431f2:	6ada      	ldr	r2, [r3, #44]	; 0x2c
+d00431f4:	2a00      	cmp	r2, #0
+d00431f6:	d0f9      	beq.n	d00431ec <sb3dParticlesRender+0x400>
+d00431f8:	781a      	ldrb	r2, [r3, #0]
+d00431fa:	2a00      	cmp	r2, #0
+d00431fc:	d086      	beq.n	d004310c <sb3dParticlesRender+0x320>
+d00431fe:	edd3 4a04 	vldr	s9, [r3, #16]
+d0043202:	eeb7 5a00 	vmov.f32	s10, #112	; 0x3f800000  1.0
+d0043206:	edd3 7a05 	vldr	s15, [r3, #20]
+d004320a:	ed93 7a06 	vldr	s14, [r3, #24]
+d004320e:	eef1 4a64 	vneg.f32	s9, s9
+d0043212:	eef1 7a67 	vneg.f32	s15, s15
+d0043216:	eeb1 7a47 	vneg.f32	s14, s14
+d004321a:	e7d4      	b.n	d00431c6 <sb3dParticlesRender+0x3da>
+d004321c:	ed1f 0a48 	vldr	s0, [pc, #-288]	; d0043100 <sb3dParticlesRender+0x314>
+d0043220:	7e63      	ldrb	r3, [r4, #25]
+d0043222:	eeb7 fa00 	vmov.f32	s30, #112	; 0x3f800000  1.0
+d0043226:	ed1f 7a49 	vldr	s14, [pc, #-292]	; d0043104 <sb3dParticlesRender+0x318>
+d004322a:	ee07 3a90 	vmov	s15, r3
+d004322e:	ed1f da4a 	vldr	s26, [pc, #-296]	; d0043108 <sb3dParticlesRender+0x31c>
+d0043232:	eef8 7a67 	vcvt.f32.u32	s15, s15
+d0043236:	ee67 7a87 	vmul.f32	s15, s15, s14
+d004323a:	fec7 7a8d 	vmaxnm.f32	s15, s15, s26
+d004323e:	fe87 0a80 	vmaxnm.f32	s0, s15, s0
+d0043242:	fe80 0a4f 	vminnm.f32	s0, s0, s30
+d0043246:	f001 fa1b 	bl	d0044680 <brightnessToShadeF>
+d004324a:	edd4 ea05 	vldr	s29, [r4, #20]
+d004324e:	ed94 5a04 	vldr	s10, [r4, #16]
+d0043252:	eeb1 7a04 	vmov.f32	s14, #20	; 0x40a00000  5.0
+d0043256:	ee3f fa6e 	vsub.f32	s30, s30, s29
+d004325a:	edd4 7a03 	vldr	s15, [r4, #12]
+d004325e:	ee60 ea2e 	vmul.f32	s29, s0, s29
+d0043262:	ed94 6a00 	vldr	s12, [r4]
+d0043266:	edd4 6a01 	vldr	s13, [r4, #4]
+d004326a:	edd4 5a02 	vldr	s11, [r4, #8]
+d004326e:	eee5 ea0f 	vfma.f32	s29, s10, s30
+d0043272:	fece ea8d 	vmaxnm.f32	s29, s29, s26
+d0043276:	fece eac7 	vminnm.f32	s29, s29, s14
+d004327a:	e5f2      	b.n	d0042e62 <sb3dParticlesRender+0x76>
+d004327c:	f100 3aff 	add.w	sl, r0, #4294967295	; 0xffffffff
+d0043280:	f04f 0b01 	mov.w	fp, #1
+d0043284:	465b      	mov	r3, fp
+d0043286:	f10b 0b01 	add.w	fp, fp, #1
+d004328a:	a946      	add	r1, sp, #280	; 0x118
+d004328c:	eef0 4a6e 	vmov.f32	s9, s29
+d0043290:	eb03 0343 	add.w	r3, r3, r3, lsl #1
+d0043294:	7e62      	ldrb	r2, [r4, #25]
+d0043296:	eb0b 004b 	add.w	r0, fp, fp, lsl #1
+d004329a:	ed9d 0a2e 	vldr	s0, [sp, #184]	; 0xb8
+d004329e:	eb01 0383 	add.w	r3, r1, r3, lsl #2
+d00432a2:	eddd 0a2f 	vldr	s1, [sp, #188]	; 0xbc
+d00432a6:	eb01 0080 	add.w	r0, r1, r0, lsl #2
+d00432aa:	ed9d 1a30 	vldr	s2, [sp, #192]	; 0xc0
+d00432ae:	f1a3 0c60 	sub.w	ip, r3, #96	; 0x60
+d00432b2:	ed53 1a18 	vldr	s3, [r3, #-96]	; 0xffffffa0
+d00432b6:	ed10 3a18 	vldr	s6, [r0, #-96]	; 0xffffffa0
+d00432ba:	f1a0 0360 	sub.w	r3, r0, #96	; 0x60
+d00432be:	7e21      	ldrb	r1, [r4, #24]
+d00432c0:	4628      	mov	r0, r5
+d00432c2:	ed9c 2a01 	vldr	s4, [ip, #4]
+d00432c6:	eddc 2a02 	vldr	s5, [ip, #8]
+d00432ca:	edd3 3a01 	vldr	s7, [r3, #4]
+d00432ce:	ed93 4a02 	vldr	s8, [r3, #8]
+d00432d2:	f001 ff27 	bl	d0045124 <submitClippedTri>
+d00432d6:	45d3      	cmp	fp, sl
+d00432d8:	d1d4      	bne.n	d0043284 <sb3dParticlesRender+0x498>
+d00432da:	3420      	adds	r4, #32
+d00432dc:	42a6      	cmp	r6, r4
+d00432de:	f47f aecc 	bne.w	d004307a <sb3dParticlesRender+0x28e>
+d00432e2:	b047      	add	sp, #284	; 0x11c
+d00432e4:	ecbd 8b10 	vpop	{d8-d15}
+d00432e8:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d00432ec:	f100 3aff 	add.w	sl, r0, #4294967295	; 0xffffffff
+d00432f0:	f04f 0b01 	mov.w	fp, #1
+d00432f4:	465b      	mov	r3, fp
+d00432f6:	aa46      	add	r2, sp, #280	; 0x118
+d00432f8:	f10b 0b01 	add.w	fp, fp, #1
+d00432fc:	a846      	add	r0, sp, #280	; 0x118
+d00432fe:	eb03 0343 	add.w	r3, r3, r3, lsl #1
+d0043302:	eef0 4a6e 	vmov.f32	s9, s29
+d0043306:	eb0b 014b 	add.w	r1, fp, fp, lsl #1
+d004330a:	ed9d 0a2e 	vldr	s0, [sp, #184]	; 0xb8
+d004330e:	eb02 0383 	add.w	r3, r2, r3, lsl #2
+d0043312:	eddd 0a2f 	vldr	s1, [sp, #188]	; 0xbc
+d0043316:	eb00 0181 	add.w	r1, r0, r1, lsl #2
+d004331a:	ed9d 1a30 	vldr	s2, [sp, #192]	; 0xc0
+d004331e:	7e62      	ldrb	r2, [r4, #25]
+d0043320:	4628      	mov	r0, r5
+d0043322:	ed11 3a18 	vldr	s6, [r1, #-96]	; 0xffffffa0
+d0043326:	f1a3 0c60 	sub.w	ip, r3, #96	; 0x60
+d004332a:	ed51 3a17 	vldr	s7, [r1, #-92]	; 0xffffffa4
+d004332e:	ed11 4a16 	vldr	s8, [r1, #-88]	; 0xffffffa8
+d0043332:	ed53 1a18 	vldr	s3, [r3, #-96]	; 0xffffffa0
+d0043336:	7e21      	ldrb	r1, [r4, #24]
+d0043338:	ed9c 2a01 	vldr	s4, [ip, #4]
+d004333c:	eddc 2a02 	vldr	s5, [ip, #8]
+d0043340:	f001 fef0 	bl	d0045124 <submitClippedTri>
+d0043344:	45d3      	cmp	fp, sl
+d0043346:	d1d5      	bne.n	d00432f4 <sb3dParticlesRender+0x508>
+d0043348:	e67a      	b.n	d0043040 <sb3dParticlesRender+0x254>
+d004334a:	eeb7 5a00 	vmov.f32	s10, #112	; 0x3f800000  1.0
+d004334e:	e73a      	b.n	d00431c6 <sb3dParticlesRender+0x3da>
+d0043350:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043354:	db12      	blt.n	d004337c <sb3dParticlesRender+0x590>
+d0043356:	ee35 5a61 	vsub.f32	s10, s10, s3
+d004335a:	ee31 2a61 	vsub.f32	s4, s2, s3
+d004335e:	eec5 2a02 	vdiv.f32	s5, s10, s4
+d0043362:	ed1f 5a97 	vldr	s10, [pc, #-604]	; d0043108 <sb3dParticlesRender+0x31c>
+d0043366:	fe82 5a85 	vmaxnm.f32	s10, s5, s10
+d004336a:	eef0 2a44 	vmov.f32	s5, s8
+d004336e:	fe85 5a44 	vminnm.f32	s10, s10, s8
+d0043372:	eee5 2a63 	vfms.f32	s5, s10, s7
+d0043376:	eeb0 5a62 	vmov.f32	s10, s5
+d004337a:	e71f      	b.n	d00431bc <sb3dParticlesRender+0x3d0>
+d004337c:	ee75 2a41 	vsub.f32	s5, s10, s2
+d0043380:	ee32 2a41 	vsub.f32	s4, s4, s2
+d0043384:	ee82 5a82 	vdiv.f32	s10, s5, s4
+d0043388:	ed5f 2aa1 	vldr	s5, [pc, #-644]	; d0043108 <sb3dParticlesRender+0x31c>
+d004338c:	fe85 5a22 	vmaxnm.f32	s10, s10, s5
+d0043390:	fe85 5a44 	vminnm.f32	s10, s10, s8
+d0043394:	ee34 5a45 	vsub.f32	s10, s8, s10
+d0043398:	ee25 5a03 	vmul.f32	s10, s10, s6
+d004339c:	e70e      	b.n	d00431bc <sb3dParticlesRender+0x3d0>
+d004339e:	4770      	bx	lr
 
-d00432c0 <cameraMove>:
-d00432c0:	b3a8      	cbz	r0, d004332e <cameraMove+0x6e>
-d00432c2:	edd0 6a0b 	vldr	s13, [r0, #44]	; 0x2c
-d00432c6:	ed90 7a09 	vldr	s14, [r0, #36]	; 0x24
-d00432ca:	edd0 7a0a 	vldr	s15, [r0, #40]	; 0x28
-d00432ce:	ee20 7a87 	vmul.f32	s14, s1, s14
-d00432d2:	edd0 5a06 	vldr	s11, [r0, #24]
-d00432d6:	ee60 7aa7 	vmul.f32	s15, s1, s15
-d00432da:	ed90 6a08 	vldr	s12, [r0, #32]
-d00432de:	ee60 0aa6 	vmul.f32	s1, s1, s13
-d00432e2:	edd0 6a07 	vldr	s13, [r0, #28]
-d00432e6:	eea5 7a80 	vfma.f32	s14, s11, s0
-d00432ea:	edd0 4a01 	vldr	s9, [r0, #4]
-d00432ee:	eee6 7a80 	vfma.f32	s15, s13, s0
-d00432f2:	ed90 5a02 	vldr	s10, [r0, #8]
-d00432f6:	eee6 0a00 	vfma.f32	s1, s12, s0
-d00432fa:	edd0 6a00 	vldr	s13, [r0]
-d00432fe:	edd0 5a0c 	vldr	s11, [r0, #48]	; 0x30
-d0043302:	ed90 6a0d 	vldr	s12, [r0, #52]	; 0x34
-d0043306:	ee37 7a26 	vadd.f32	s14, s14, s13
-d004330a:	edd0 6a0e 	vldr	s13, [r0, #56]	; 0x38
-d004330e:	ee77 7aa4 	vadd.f32	s15, s15, s9
-d0043312:	ee70 0a85 	vadd.f32	s1, s1, s10
-d0043316:	eea5 7a81 	vfma.f32	s14, s11, s2
-d004331a:	eee6 7a01 	vfma.f32	s15, s12, s2
-d004331e:	eee6 0a81 	vfma.f32	s1, s13, s2
-d0043322:	ed80 7a00 	vstr	s14, [r0]
-d0043326:	edc0 7a01 	vstr	s15, [r0, #4]
-d004332a:	edc0 0a02 	vstr	s1, [r0, #8]
-d004332e:	4770      	bx	lr
+d00433a0 <worldClear>:
+d00433a0:	f44f 42c0 	mov.w	r2, #24576	; 0x6000
+d00433a4:	2100      	movs	r1, #0
+d00433a6:	4801      	ldr	r0, [pc, #4]	; (d00433ac <worldClear+0xc>)
+d00433a8:	f003 bc5c 	b.w	d0046c64 <memset>
+d00433ac:	d012da80 	.word	0xd012da80
 
-d0043330 <normalizeEntity.part.0>:
-d0043330:	edd0 0a05 	vldr	s1, [r0, #20]
-d0043334:	ed90 1a06 	vldr	s2, [r0, #24]
-d0043338:	ed90 0a04 	vldr	s0, [r0, #16]
-d004333c:	b510      	push	{r4, lr}
-d004333e:	4604      	mov	r4, r0
-d0043340:	f7ff f8dc 	bl	d00424fc <vec3Normalize>
-d0043344:	eeb0 7a60 	vmov.f32	s14, s1
-d0043348:	eef0 7a41 	vmov.f32	s15, s2
-d004334c:	ed84 0a04 	vstr	s0, [r4, #16]
-d0043350:	ed94 0a07 	vldr	s0, [r4, #28]
-d0043354:	ed84 7a05 	vstr	s14, [r4, #20]
-d0043358:	edc4 7a06 	vstr	s15, [r4, #24]
-d004335c:	edd4 0a08 	vldr	s1, [r4, #32]
-d0043360:	ed94 1a09 	vldr	s2, [r4, #36]	; 0x24
-d0043364:	f7ff f8ca 	bl	d00424fc <vec3Normalize>
-d0043368:	eef0 1a40 	vmov.f32	s3, s0
-d004336c:	eeb0 2a60 	vmov.f32	s4, s1
-d0043370:	ed94 0a04 	vldr	s0, [r4, #16]
-d0043374:	eef0 2a41 	vmov.f32	s5, s2
-d0043378:	edc4 0a08 	vstr	s1, [r4, #32]
-d004337c:	ed84 1a09 	vstr	s2, [r4, #36]	; 0x24
-d0043380:	edd4 0a05 	vldr	s1, [r4, #20]
-d0043384:	ed94 1a06 	vldr	s2, [r4, #24]
-d0043388:	edc4 1a07 	vstr	s3, [r4, #28]
-d004338c:	f7ff f8a0 	bl	d00424d0 <vec3Cross>
-d0043390:	ed84 0a0a 	vstr	s0, [r4, #40]	; 0x28
-d0043394:	edc4 0a0b 	vstr	s1, [r4, #44]	; 0x2c
-d0043398:	ed84 1a0c 	vstr	s2, [r4, #48]	; 0x30
-d004339c:	f7ff f8ae 	bl	d00424fc <vec3Normalize>
-d00433a0:	edd4 1a04 	vldr	s3, [r4, #16]
-d00433a4:	ed94 2a05 	vldr	s4, [r4, #20]
-d00433a8:	edd4 2a06 	vldr	s5, [r4, #24]
-d00433ac:	ed84 0a0a 	vstr	s0, [r4, #40]	; 0x28
-d00433b0:	edc4 0a0b 	vstr	s1, [r4, #44]	; 0x2c
-d00433b4:	ed84 1a0c 	vstr	s2, [r4, #48]	; 0x30
-d00433b8:	f7ff f88a 	bl	d00424d0 <vec3Cross>
-d00433bc:	ed84 0a07 	vstr	s0, [r4, #28]
-d00433c0:	edc4 0a08 	vstr	s1, [r4, #32]
-d00433c4:	ed84 1a09 	vstr	s2, [r4, #36]	; 0x24
-d00433c8:	f7ff f898 	bl	d00424fc <vec3Normalize>
-d00433cc:	ed84 0a07 	vstr	s0, [r4, #28]
-d00433d0:	edc4 0a08 	vstr	s1, [r4, #32]
-d00433d4:	ed84 1a09 	vstr	s2, [r4, #36]	; 0x24
-d00433d8:	bd10      	pop	{r4, pc}
-d00433da:	bf00      	nop
+d00433b0 <cameraNormalize>:
+d00433b0:	edd0 0a0d 	vldr	s1, [r0, #52]	; 0x34
+d00433b4:	ed90 1a0e 	vldr	s2, [r0, #56]	; 0x38
+d00433b8:	ed90 0a0c 	vldr	s0, [r0, #48]	; 0x30
+d00433bc:	b510      	push	{r4, lr}
+d00433be:	4604      	mov	r4, r0
+d00433c0:	f7ff fb4a 	bl	d0042a58 <vec3Normalize>
+d00433c4:	eeb0 7a60 	vmov.f32	s14, s1
+d00433c8:	eef0 7a41 	vmov.f32	s15, s2
+d00433cc:	ed84 0a0c 	vstr	s0, [r4, #48]	; 0x30
+d00433d0:	ed94 0a06 	vldr	s0, [r4, #24]
+d00433d4:	ed84 7a0d 	vstr	s14, [r4, #52]	; 0x34
+d00433d8:	edc4 7a0e 	vstr	s15, [r4, #56]	; 0x38
+d00433dc:	edd4 0a07 	vldr	s1, [r4, #28]
+d00433e0:	ed94 1a08 	vldr	s2, [r4, #32]
+d00433e4:	f7ff fb38 	bl	d0042a58 <vec3Normalize>
+d00433e8:	eef0 1a40 	vmov.f32	s3, s0
+d00433ec:	eeb0 2a60 	vmov.f32	s4, s1
+d00433f0:	ed94 0a0c 	vldr	s0, [r4, #48]	; 0x30
+d00433f4:	eef0 2a41 	vmov.f32	s5, s2
+d00433f8:	edc4 0a07 	vstr	s1, [r4, #28]
+d00433fc:	ed84 1a08 	vstr	s2, [r4, #32]
+d0043400:	edd4 0a0d 	vldr	s1, [r4, #52]	; 0x34
+d0043404:	ed94 1a0e 	vldr	s2, [r4, #56]	; 0x38
+d0043408:	edc4 1a06 	vstr	s3, [r4, #24]
+d004340c:	f7ff fb0e 	bl	d0042a2c <vec3Cross>
+d0043410:	ed84 0a09 	vstr	s0, [r4, #36]	; 0x24
+d0043414:	edc4 0a0a 	vstr	s1, [r4, #40]	; 0x28
+d0043418:	ed84 1a0b 	vstr	s2, [r4, #44]	; 0x2c
+d004341c:	f7ff fb1c 	bl	d0042a58 <vec3Normalize>
+d0043420:	edd4 1a0c 	vldr	s3, [r4, #48]	; 0x30
+d0043424:	ed94 2a0d 	vldr	s4, [r4, #52]	; 0x34
+d0043428:	edd4 2a0e 	vldr	s5, [r4, #56]	; 0x38
+d004342c:	ed84 0a09 	vstr	s0, [r4, #36]	; 0x24
+d0043430:	edc4 0a0a 	vstr	s1, [r4, #40]	; 0x28
+d0043434:	ed84 1a0b 	vstr	s2, [r4, #44]	; 0x2c
+d0043438:	f7ff faf8 	bl	d0042a2c <vec3Cross>
+d004343c:	ed84 0a06 	vstr	s0, [r4, #24]
+d0043440:	edc4 0a07 	vstr	s1, [r4, #28]
+d0043444:	ed84 1a08 	vstr	s2, [r4, #32]
+d0043448:	f7ff fb06 	bl	d0042a58 <vec3Normalize>
+d004344c:	ed84 0a06 	vstr	s0, [r4, #24]
+d0043450:	edc4 0a07 	vstr	s1, [r4, #28]
+d0043454:	ed84 1a08 	vstr	s2, [r4, #32]
+d0043458:	bd10      	pop	{r4, pc}
+d004345a:	bf00      	nop
 
-d00433dc <meshComputeBoundsRadius>:
-d00433dc:	b1f0      	cbz	r0, d004341c <meshComputeBoundsRadius+0x40>
-d00433de:	6803      	ldr	r3, [r0, #0]
-d00433e0:	b1e3      	cbz	r3, d004341c <meshComputeBoundsRadius+0x40>
-d00433e2:	6842      	ldr	r2, [r0, #4]
-d00433e4:	2a00      	cmp	r2, #0
-d00433e6:	dd19      	ble.n	d004341c <meshComputeBoundsRadius+0x40>
-d00433e8:	eb02 0242 	add.w	r2, r2, r2, lsl #1
-d00433ec:	ed9f 6a0d 	vldr	s12, [pc, #52]	; d0043424 <meshComputeBoundsRadius+0x48>
-d00433f0:	eb03 0282 	add.w	r2, r3, r2, lsl #2
-d00433f4:	edd3 7a01 	vldr	s15, [r3, #4]
-d00433f8:	330c      	adds	r3, #12
-d00433fa:	ed53 6a03 	vldr	s13, [r3, #-12]
-d00433fe:	ee67 7aa7 	vmul.f32	s15, s15, s15
-d0043402:	ed13 7a01 	vldr	s14, [r3, #-4]
-d0043406:	429a      	cmp	r2, r3
-d0043408:	eee6 7aa6 	vfma.f32	s15, s13, s13
-d004340c:	eee7 7a07 	vfma.f32	s15, s14, s14
-d0043410:	fe86 6a27 	vmaxnm.f32	s12, s12, s15
-d0043414:	d1ee      	bne.n	d00433f4 <meshComputeBoundsRadius+0x18>
-d0043416:	eeb1 0ac6 	vsqrt.f32	s0, s12
-d004341a:	4770      	bx	lr
-d004341c:	ed9f 0a01 	vldr	s0, [pc, #4]	; d0043424 <meshComputeBoundsRadius+0x48>
-d0043420:	4770      	bx	lr
-d0043422:	bf00      	nop
-d0043424:	00000000 	.word	0x00000000
+d004345c <cameraCreate>:
+d004345c:	b510      	push	{r4, lr}
+d004345e:	4604      	mov	r4, r0
+d0043460:	2260      	movs	r2, #96	; 0x60
+d0043462:	4902      	ldr	r1, [pc, #8]	; (d004346c <cameraCreate+0x10>)
+d0043464:	f003 fbf0 	bl	d0046c48 <memcpy>
+d0043468:	4620      	mov	r0, r4
+d004346a:	bd10      	pop	{r4, pc}
+d004346c:	d0047a20 	.word	0xd0047a20
 
-d0043428 <entityWorldSpawn>:
-d0043428:	b4f0      	push	{r4, r5, r6, r7}
-d004342a:	4d20      	ldr	r5, [pc, #128]	; (d00434ac <entityWorldSpawn+0x84>)
-d004342c:	b084      	sub	sp, #16
-d004342e:	2300      	movs	r3, #0
-d0043430:	462a      	mov	r2, r5
-d0043432:	ed8d 0a01 	vstr	s0, [sp, #4]
-d0043436:	edcd 0a02 	vstr	s1, [sp, #8]
-d004343a:	ed8d 1a03 	vstr	s2, [sp, #12]
-d004343e:	e003      	b.n	d0043448 <entityWorldSpawn+0x20>
-d0043440:	3301      	adds	r3, #1
-d0043442:	f5b3 7f80 	cmp.w	r3, #256	; 0x100
-d0043446:	d02b      	beq.n	d00434a0 <entityWorldSpawn+0x78>
-d0043448:	f892 4034 	ldrb.w	r4, [r2, #52]	; 0x34
-d004344c:	3260      	adds	r2, #96	; 0x60
-d004344e:	2c00      	cmp	r4, #0
-d0043450:	d1f6      	bne.n	d0043440 <entityWorldSpawn+0x18>
-d0043452:	eb03 0243 	add.w	r2, r3, r3, lsl #1
-d0043456:	4f16      	ldr	r7, [pc, #88]	; (d00434b0 <entityWorldSpawn+0x88>)
-d0043458:	f04f 517e 	mov.w	r1, #1065353216	; 0x3f800000
-d004345c:	2600      	movs	r6, #0
-d004345e:	eb05 1542 	add.w	r5, r5, r2, lsl #5
-d0043462:	f240 1c01 	movw	ip, #257	; 0x101
-d0043466:	eb07 1742 	add.w	r7, r7, r2, lsl #5
-d004346a:	aa04      	add	r2, sp, #16
-d004346c:	60e8      	str	r0, [r5, #12]
-d004346e:	61e9      	str	r1, [r5, #28]
-d0043470:	62e9      	str	r1, [r5, #44]	; 0x2c
-d0043472:	61a9      	str	r1, [r5, #24]
-d0043474:	622e      	str	r6, [r5, #32]
-d0043476:	626e      	str	r6, [r5, #36]	; 0x24
-d0043478:	62ae      	str	r6, [r5, #40]	; 0x28
-d004347a:	632e      	str	r6, [r5, #48]	; 0x30
-d004347c:	612e      	str	r6, [r5, #16]
-d004347e:	616e      	str	r6, [r5, #20]
-d0043480:	e912 0007 	ldmdb	r2, {r0, r1, r2}
-d0043484:	e885 0007 	stmia.w	r5, {r0, r1, r2}
-d0043488:	4618      	mov	r0, r3
-d004348a:	f8a7 c014 	strh.w	ip, [r7, #20]
-d004348e:	f885 4036 	strb.w	r4, [r5, #54]	; 0x36
-d0043492:	63ee      	str	r6, [r5, #60]	; 0x3c
-d0043494:	642e      	str	r6, [r5, #64]	; 0x40
-d0043496:	646e      	str	r6, [r5, #68]	; 0x44
-d0043498:	63ae      	str	r6, [r5, #56]	; 0x38
-d004349a:	b004      	add	sp, #16
-d004349c:	bcf0      	pop	{r4, r5, r6, r7}
-d004349e:	4770      	bx	lr
-d00434a0:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
-d00434a4:	4618      	mov	r0, r3
-d00434a6:	b004      	add	sp, #16
-d00434a8:	bcf0      	pop	{r4, r5, r6, r7}
-d00434aa:	4770      	bx	lr
-d00434ac:	d012cd60 	.word	0xd012cd60
-d00434b0:	d012cd80 	.word	0xd012cd80
+d0043470 <cameraSetPosition>:
+d0043470:	b084      	sub	sp, #16
+d0043472:	ed8d 0a01 	vstr	s0, [sp, #4]
+d0043476:	edcd 0a02 	vstr	s1, [sp, #8]
+d004347a:	ed8d 1a03 	vstr	s2, [sp, #12]
+d004347e:	b128      	cbz	r0, d004348c <cameraSetPosition+0x1c>
+d0043480:	aa04      	add	r2, sp, #16
+d0043482:	4603      	mov	r3, r0
+d0043484:	e912 0007 	ldmdb	r2, {r0, r1, r2}
+d0043488:	e883 0007 	stmia.w	r3, {r0, r1, r2}
+d004348c:	b004      	add	sp, #16
+d004348e:	4770      	bx	lr
 
-d00434b4 <entityMoveForward>:
-d00434b4:	28ff      	cmp	r0, #255	; 0xff
-d00434b6:	d82b      	bhi.n	d0043510 <entityMoveForward+0x5c>
-d00434b8:	eb00 0040 	add.w	r0, r0, r0, lsl #1
-d00434bc:	b510      	push	{r4, lr}
-d00434be:	4c15      	ldr	r4, [pc, #84]	; (d0043514 <entityMoveForward+0x60>)
-d00434c0:	b084      	sub	sp, #16
-d00434c2:	eb04 1440 	add.w	r4, r4, r0, lsl #5
-d00434c6:	f894 3034 	ldrb.w	r3, [r4, #52]	; 0x34
-d00434ca:	b1fb      	cbz	r3, d004350c <entityMoveForward+0x58>
-d00434cc:	68e3      	ldr	r3, [r4, #12]
-d00434ce:	b1eb      	cbz	r3, d004350c <entityMoveForward+0x58>
-d00434d0:	eef0 1a40 	vmov.f32	s3, s0
-d00434d4:	edd4 0a05 	vldr	s1, [r4, #20]
-d00434d8:	ed94 0a04 	vldr	s0, [r4, #16]
-d00434dc:	ed94 1a06 	vldr	s2, [r4, #24]
-d00434e0:	f7fe ffe0 	bl	d00424a4 <vec3Scale>
-d00434e4:	eef0 1a40 	vmov.f32	s3, s0
-d00434e8:	eeb0 2a60 	vmov.f32	s4, s1
-d00434ec:	ed94 0a00 	vldr	s0, [r4]
-d00434f0:	eef0 2a41 	vmov.f32	s5, s2
-d00434f4:	edd4 0a01 	vldr	s1, [r4, #4]
-d00434f8:	ed94 1a02 	vldr	s2, [r4, #8]
-d00434fc:	f7fe ffc8 	bl	d0042490 <vec3Add>
-d0043500:	ed84 0a00 	vstr	s0, [r4]
-d0043504:	edc4 0a01 	vstr	s1, [r4, #4]
-d0043508:	ed84 1a02 	vstr	s2, [r4, #8]
-d004350c:	b004      	add	sp, #16
-d004350e:	bd10      	pop	{r4, pc}
-d0043510:	4770      	bx	lr
-d0043512:	bf00      	nop
-d0043514:	d012cd60 	.word	0xd012cd60
+d0043490 <cameraTurn>:
+d0043490:	2800      	cmp	r0, #0
+d0043492:	f000 8144 	beq.w	d004371e <cameraTurn+0x28e>
+d0043496:	b570      	push	{r4, r5, r6, lr}
+d0043498:	4604      	mov	r4, r0
+d004349a:	ed2d 8b04 	vpush	{d8-d9}
+d004349e:	eef0 8a40 	vmov.f32	s17, s0
+d00434a2:	b08a      	sub	sp, #40	; 0x28
+d00434a4:	eeb0 9a60 	vmov.f32	s18, s1
+d00434a8:	eeb0 8a41 	vmov.f32	s16, s2
+d00434ac:	bb69      	cbnz	r1, d004350a <cameraTurn+0x7a>
+d00434ae:	f100 0318 	add.w	r3, r0, #24
+d00434b2:	ae01      	add	r6, sp, #4
+d00434b4:	f100 0524 	add.w	r5, r0, #36	; 0x24
+d00434b8:	eeb5 9a40 	vcmp.f32	s18, #0.0
+d00434bc:	e893 0007 	ldmia.w	r3, {r0, r1, r2}
+d00434c0:	f104 0330 	add.w	r3, r4, #48	; 0x30
+d00434c4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00434c8:	e886 0007 	stmia.w	r6, {r0, r1, r2}
+d00434cc:	e895 0007 	ldmia.w	r5, {r0, r1, r2}
+d00434d0:	ae04      	add	r6, sp, #16
+d00434d2:	e886 0007 	stmia.w	r6, {r0, r1, r2}
+d00434d6:	e893 0007 	ldmia.w	r3, {r0, r1, r2}
+d00434da:	ab0a      	add	r3, sp, #40	; 0x28
+d00434dc:	e903 0007 	stmdb	r3, {r0, r1, r2}
+d00434e0:	d14a      	bne.n	d0043578 <cameraTurn+0xe8>
+d00434e2:	eef5 8a40 	vcmp.f32	s17, #0.0
+d00434e6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00434ea:	f040 808d 	bne.w	d0043608 <cameraTurn+0x178>
+d00434ee:	eeb5 8a40 	vcmp.f32	s16, #0.0
+d00434f2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00434f6:	f040 80cf 	bne.w	d0043698 <cameraTurn+0x208>
+d00434fa:	4620      	mov	r0, r4
+d00434fc:	b00a      	add	sp, #40	; 0x28
+d00434fe:	ecbd 8b04 	vpop	{d8-d9}
+d0043502:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
+d0043506:	f7ff bf53 	b.w	d00433b0 <cameraNormalize>
+d004350a:	ed9f 1a85 	vldr	s2, [pc, #532]	; d0043720 <cameraTurn+0x290>
+d004350e:	eeb7 0a00 	vmov.f32	s0, #112	; 0x3f800000  1.0
+d0043512:	eef0 0a41 	vmov.f32	s1, s2
+d0043516:	f7ff fb9f 	bl	d0042c58 <vec3>
+d004351a:	eef0 7a41 	vmov.f32	s15, s2
+d004351e:	ed9f 1a80 	vldr	s2, [pc, #512]	; d0043720 <cameraTurn+0x290>
+d0043522:	eeb0 7a60 	vmov.f32	s14, s1
+d0043526:	ed8d 0a01 	vstr	s0, [sp, #4]
+d004352a:	eef7 0a00 	vmov.f32	s1, #112	; 0x3f800000  1.0
+d004352e:	edcd 7a03 	vstr	s15, [sp, #12]
+d0043532:	eeb0 0a41 	vmov.f32	s0, s2
+d0043536:	ed8d 7a02 	vstr	s14, [sp, #8]
+d004353a:	f7ff fb8d 	bl	d0042c58 <vec3>
+d004353e:	eeb0 7a60 	vmov.f32	s14, s1
+d0043542:	eddf 0a77 	vldr	s1, [pc, #476]	; d0043720 <cameraTurn+0x290>
+d0043546:	eef0 7a41 	vmov.f32	s15, s2
+d004354a:	ed8d 0a04 	vstr	s0, [sp, #16]
+d004354e:	eeb7 1a00 	vmov.f32	s2, #112	; 0x3f800000  1.0
+d0043552:	eeb0 0a60 	vmov.f32	s0, s1
+d0043556:	ed8d 7a05 	vstr	s14, [sp, #20]
+d004355a:	edcd 7a06 	vstr	s15, [sp, #24]
+d004355e:	f7ff fb7b 	bl	d0042c58 <vec3>
+d0043562:	eeb5 9a40 	vcmp.f32	s18, #0.0
+d0043566:	edcd 0a08 	vstr	s1, [sp, #32]
+d004356a:	ed8d 0a07 	vstr	s0, [sp, #28]
+d004356e:	ed8d 1a09 	vstr	s2, [sp, #36]	; 0x24
+d0043572:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043576:	d0b4      	beq.n	d00434e2 <cameraTurn+0x52>
+d0043578:	ed94 0a0c 	vldr	s0, [r4, #48]	; 0x30
+d004357c:	eeb0 3a49 	vmov.f32	s6, s18
+d0043580:	edd4 0a0d 	vldr	s1, [r4, #52]	; 0x34
+d0043584:	ed94 1a0e 	vldr	s2, [r4, #56]	; 0x38
+d0043588:	eddd 1a04 	vldr	s3, [sp, #16]
+d004358c:	ed9d 2a05 	vldr	s4, [sp, #20]
+d0043590:	eddd 2a06 	vldr	s5, [sp, #24]
+d0043594:	f7ff fab0 	bl	d0042af8 <rotateAroundAxis>
+d0043598:	ed84 0a0c 	vstr	s0, [r4, #48]	; 0x30
+d004359c:	edc4 0a0d 	vstr	s1, [r4, #52]	; 0x34
+d00435a0:	eeb0 3a49 	vmov.f32	s6, s18
+d00435a4:	ed94 0a06 	vldr	s0, [r4, #24]
+d00435a8:	edd4 0a07 	vldr	s1, [r4, #28]
+d00435ac:	ed84 1a0e 	vstr	s2, [r4, #56]	; 0x38
+d00435b0:	ed94 1a08 	vldr	s2, [r4, #32]
+d00435b4:	eddd 1a04 	vldr	s3, [sp, #16]
+d00435b8:	ed9d 2a05 	vldr	s4, [sp, #20]
+d00435bc:	eddd 2a06 	vldr	s5, [sp, #24]
+d00435c0:	f7ff fa9a 	bl	d0042af8 <rotateAroundAxis>
+d00435c4:	eeb0 3a49 	vmov.f32	s6, s18
+d00435c8:	ed84 0a06 	vstr	s0, [r4, #24]
+d00435cc:	edc4 0a07 	vstr	s1, [r4, #28]
+d00435d0:	ed94 0a09 	vldr	s0, [r4, #36]	; 0x24
+d00435d4:	edd4 0a0a 	vldr	s1, [r4, #40]	; 0x28
+d00435d8:	ed84 1a08 	vstr	s2, [r4, #32]
+d00435dc:	eddd 1a04 	vldr	s3, [sp, #16]
+d00435e0:	ed94 1a0b 	vldr	s2, [r4, #44]	; 0x2c
+d00435e4:	ed9d 2a05 	vldr	s4, [sp, #20]
+d00435e8:	eddd 2a06 	vldr	s5, [sp, #24]
+d00435ec:	f7ff fa84 	bl	d0042af8 <rotateAroundAxis>
+d00435f0:	eef5 8a40 	vcmp.f32	s17, #0.0
+d00435f4:	ed84 0a09 	vstr	s0, [r4, #36]	; 0x24
+d00435f8:	edc4 0a0a 	vstr	s1, [r4, #40]	; 0x28
+d00435fc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043600:	ed84 1a0b 	vstr	s2, [r4, #44]	; 0x2c
+d0043604:	f43f af73 	beq.w	d00434ee <cameraTurn+0x5e>
+d0043608:	ed94 0a0c 	vldr	s0, [r4, #48]	; 0x30
+d004360c:	eeb0 3a68 	vmov.f32	s6, s17
+d0043610:	edd4 0a0d 	vldr	s1, [r4, #52]	; 0x34
+d0043614:	ed94 1a0e 	vldr	s2, [r4, #56]	; 0x38
+d0043618:	eddd 1a01 	vldr	s3, [sp, #4]
+d004361c:	ed9d 2a02 	vldr	s4, [sp, #8]
+d0043620:	eddd 2a03 	vldr	s5, [sp, #12]
+d0043624:	f7ff fa68 	bl	d0042af8 <rotateAroundAxis>
+d0043628:	ed84 0a0c 	vstr	s0, [r4, #48]	; 0x30
+d004362c:	edc4 0a0d 	vstr	s1, [r4, #52]	; 0x34
+d0043630:	eeb0 3a68 	vmov.f32	s6, s17
+d0043634:	ed94 0a06 	vldr	s0, [r4, #24]
+d0043638:	edd4 0a07 	vldr	s1, [r4, #28]
+d004363c:	ed84 1a0e 	vstr	s2, [r4, #56]	; 0x38
+d0043640:	ed94 1a08 	vldr	s2, [r4, #32]
+d0043644:	eddd 1a01 	vldr	s3, [sp, #4]
+d0043648:	ed9d 2a02 	vldr	s4, [sp, #8]
+d004364c:	eddd 2a03 	vldr	s5, [sp, #12]
+d0043650:	f7ff fa52 	bl	d0042af8 <rotateAroundAxis>
+d0043654:	eeb0 3a68 	vmov.f32	s6, s17
+d0043658:	ed84 0a06 	vstr	s0, [r4, #24]
+d004365c:	edc4 0a07 	vstr	s1, [r4, #28]
+d0043660:	ed94 0a09 	vldr	s0, [r4, #36]	; 0x24
+d0043664:	edd4 0a0a 	vldr	s1, [r4, #40]	; 0x28
+d0043668:	ed84 1a08 	vstr	s2, [r4, #32]
+d004366c:	eddd 1a01 	vldr	s3, [sp, #4]
+d0043670:	ed94 1a0b 	vldr	s2, [r4, #44]	; 0x2c
+d0043674:	ed9d 2a02 	vldr	s4, [sp, #8]
+d0043678:	eddd 2a03 	vldr	s5, [sp, #12]
+d004367c:	f7ff fa3c 	bl	d0042af8 <rotateAroundAxis>
+d0043680:	eeb5 8a40 	vcmp.f32	s16, #0.0
+d0043684:	ed84 0a09 	vstr	s0, [r4, #36]	; 0x24
+d0043688:	edc4 0a0a 	vstr	s1, [r4, #40]	; 0x28
+d004368c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043690:	ed84 1a0b 	vstr	s2, [r4, #44]	; 0x2c
+d0043694:	f43f af31 	beq.w	d00434fa <cameraTurn+0x6a>
+d0043698:	ed94 0a0c 	vldr	s0, [r4, #48]	; 0x30
+d004369c:	eeb0 3a48 	vmov.f32	s6, s16
+d00436a0:	edd4 0a0d 	vldr	s1, [r4, #52]	; 0x34
+d00436a4:	ed94 1a0e 	vldr	s2, [r4, #56]	; 0x38
+d00436a8:	eddd 1a07 	vldr	s3, [sp, #28]
+d00436ac:	ed9d 2a08 	vldr	s4, [sp, #32]
+d00436b0:	eddd 2a09 	vldr	s5, [sp, #36]	; 0x24
+d00436b4:	f7ff fa20 	bl	d0042af8 <rotateAroundAxis>
+d00436b8:	ed84 0a0c 	vstr	s0, [r4, #48]	; 0x30
+d00436bc:	edc4 0a0d 	vstr	s1, [r4, #52]	; 0x34
+d00436c0:	eeb0 3a48 	vmov.f32	s6, s16
+d00436c4:	ed94 0a06 	vldr	s0, [r4, #24]
+d00436c8:	edd4 0a07 	vldr	s1, [r4, #28]
+d00436cc:	ed84 1a0e 	vstr	s2, [r4, #56]	; 0x38
+d00436d0:	ed94 1a08 	vldr	s2, [r4, #32]
+d00436d4:	eddd 1a07 	vldr	s3, [sp, #28]
+d00436d8:	ed9d 2a08 	vldr	s4, [sp, #32]
+d00436dc:	eddd 2a09 	vldr	s5, [sp, #36]	; 0x24
+d00436e0:	f7ff fa0a 	bl	d0042af8 <rotateAroundAxis>
+d00436e4:	ed84 0a06 	vstr	s0, [r4, #24]
+d00436e8:	edc4 0a07 	vstr	s1, [r4, #28]
+d00436ec:	eeb0 3a48 	vmov.f32	s6, s16
+d00436f0:	ed94 0a09 	vldr	s0, [r4, #36]	; 0x24
+d00436f4:	edd4 0a0a 	vldr	s1, [r4, #40]	; 0x28
+d00436f8:	ed84 1a08 	vstr	s2, [r4, #32]
+d00436fc:	ed94 1a0b 	vldr	s2, [r4, #44]	; 0x2c
+d0043700:	eddd 1a07 	vldr	s3, [sp, #28]
+d0043704:	ed9d 2a08 	vldr	s4, [sp, #32]
+d0043708:	eddd 2a09 	vldr	s5, [sp, #36]	; 0x24
+d004370c:	f7ff f9f4 	bl	d0042af8 <rotateAroundAxis>
+d0043710:	ed84 0a09 	vstr	s0, [r4, #36]	; 0x24
+d0043714:	edc4 0a0a 	vstr	s1, [r4, #40]	; 0x28
+d0043718:	ed84 1a0b 	vstr	s2, [r4, #44]	; 0x2c
+d004371c:	e6ed      	b.n	d00434fa <cameraTurn+0x6a>
+d004371e:	4770      	bx	lr
+d0043720:	00000000 	.word	0x00000000
 
-d0043518 <entityTurnLocal>:
-d0043518:	28ff      	cmp	r0, #255	; 0xff
-d004351a:	d82c      	bhi.n	d0043576 <entityTurnLocal+0x5e>
-d004351c:	eb00 0040 	add.w	r0, r0, r0, lsl #1
-d0043520:	b510      	push	{r4, lr}
-d0043522:	4c65      	ldr	r4, [pc, #404]	; (d00436b8 <entityTurnLocal+0x1a0>)
-d0043524:	eb04 1440 	add.w	r4, r4, r0, lsl #5
-d0043528:	ed2d 8b04 	vpush	{d8-d9}
-d004352c:	f894 3034 	ldrb.w	r3, [r4, #52]	; 0x34
-d0043530:	b1f3      	cbz	r3, d0043570 <entityTurnLocal+0x58>
-d0043532:	68e3      	ldr	r3, [r4, #12]
-d0043534:	b1e3      	cbz	r3, d0043570 <entityTurnLocal+0x58>
-d0043536:	eeb5 0a40 	vcmp.f32	s0, #0.0
-d004353a:	eeb0 9a40 	vmov.f32	s18, s0
-d004353e:	eef0 8a60 	vmov.f32	s17, s1
-d0043542:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043546:	eeb0 8a41 	vmov.f32	s16, s2
-d004354a:	f040 8081 	bne.w	d0043650 <entityTurnLocal+0x138>
-d004354e:	eef5 8a40 	vcmp.f32	s17, #0.0
-d0043552:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043556:	d148      	bne.n	d00435ea <entityTurnLocal+0xd2>
-d0043558:	eeb5 8a40 	vcmp.f32	s16, #0.0
-d004355c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043560:	d10a      	bne.n	d0043578 <entityTurnLocal+0x60>
-d0043562:	4620      	mov	r0, r4
-d0043564:	ecbd 8b04 	vpop	{d8-d9}
-d0043568:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
-d004356c:	f7ff bee0 	b.w	d0043330 <normalizeEntity.part.0>
-d0043570:	ecbd 8b04 	vpop	{d8-d9}
-d0043574:	bd10      	pop	{r4, pc}
-d0043576:	4770      	bx	lr
-d0043578:	ed94 0a07 	vldr	s0, [r4, #28]
-d004357c:	eeb0 3a48 	vmov.f32	s6, s16
-d0043580:	edd4 0a08 	vldr	s1, [r4, #32]
-d0043584:	ed94 1a09 	vldr	s2, [r4, #36]	; 0x24
-d0043588:	edd4 1a04 	vldr	s3, [r4, #16]
-d004358c:	ed94 2a05 	vldr	s4, [r4, #20]
-d0043590:	edd4 2a06 	vldr	s5, [r4, #24]
-d0043594:	f7ff f802 	bl	d004259c <rotateAroundAxis>
-d0043598:	eef0 6a40 	vmov.f32	s13, s0
-d004359c:	eeb0 7a60 	vmov.f32	s14, s1
-d00435a0:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
-d00435a4:	eef0 7a41 	vmov.f32	s15, s2
-d00435a8:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
-d00435ac:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
-d00435b0:	eeb0 3a48 	vmov.f32	s6, s16
-d00435b4:	edd4 1a04 	vldr	s3, [r4, #16]
-d00435b8:	ed94 2a05 	vldr	s4, [r4, #20]
-d00435bc:	edd4 2a06 	vldr	s5, [r4, #24]
-d00435c0:	edc4 6a07 	vstr	s13, [r4, #28]
-d00435c4:	ed84 7a08 	vstr	s14, [r4, #32]
-d00435c8:	edc4 7a09 	vstr	s15, [r4, #36]	; 0x24
-d00435cc:	f7fe ffe6 	bl	d004259c <rotateAroundAxis>
-d00435d0:	4620      	mov	r0, r4
-d00435d2:	ed84 0a0a 	vstr	s0, [r4, #40]	; 0x28
-d00435d6:	edc4 0a0b 	vstr	s1, [r4, #44]	; 0x2c
-d00435da:	ed84 1a0c 	vstr	s2, [r4, #48]	; 0x30
-d00435de:	ecbd 8b04 	vpop	{d8-d9}
-d00435e2:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
-d00435e6:	f7ff bea3 	b.w	d0043330 <normalizeEntity.part.0>
-d00435ea:	ed94 0a04 	vldr	s0, [r4, #16]
-d00435ee:	eeb0 3a68 	vmov.f32	s6, s17
-d00435f2:	edd4 0a05 	vldr	s1, [r4, #20]
-d00435f6:	ed94 1a06 	vldr	s2, [r4, #24]
-d00435fa:	edd4 1a07 	vldr	s3, [r4, #28]
-d00435fe:	ed94 2a08 	vldr	s4, [r4, #32]
-d0043602:	edd4 2a09 	vldr	s5, [r4, #36]	; 0x24
-d0043606:	f7fe ffc9 	bl	d004259c <rotateAroundAxis>
-d004360a:	eef0 6a40 	vmov.f32	s13, s0
-d004360e:	eeb0 7a60 	vmov.f32	s14, s1
-d0043612:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
-d0043616:	eef0 7a41 	vmov.f32	s15, s2
-d004361a:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
-d004361e:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
-d0043622:	eeb0 3a68 	vmov.f32	s6, s17
-d0043626:	edd4 1a07 	vldr	s3, [r4, #28]
-d004362a:	ed94 2a08 	vldr	s4, [r4, #32]
-d004362e:	edd4 2a09 	vldr	s5, [r4, #36]	; 0x24
-d0043632:	edc4 6a04 	vstr	s13, [r4, #16]
-d0043636:	ed84 7a05 	vstr	s14, [r4, #20]
-d004363a:	edc4 7a06 	vstr	s15, [r4, #24]
-d004363e:	f7fe ffad 	bl	d004259c <rotateAroundAxis>
-d0043642:	ed84 0a0a 	vstr	s0, [r4, #40]	; 0x28
-d0043646:	edc4 0a0b 	vstr	s1, [r4, #44]	; 0x2c
-d004364a:	ed84 1a0c 	vstr	s2, [r4, #48]	; 0x30
-d004364e:	e783      	b.n	d0043558 <entityTurnLocal+0x40>
-d0043650:	eeb0 3a40 	vmov.f32	s6, s0
-d0043654:	edd4 0a05 	vldr	s1, [r4, #20]
-d0043658:	ed94 0a04 	vldr	s0, [r4, #16]
-d004365c:	ed94 1a06 	vldr	s2, [r4, #24]
-d0043660:	edd4 1a0a 	vldr	s3, [r4, #40]	; 0x28
-d0043664:	ed94 2a0b 	vldr	s4, [r4, #44]	; 0x2c
-d0043668:	edd4 2a0c 	vldr	s5, [r4, #48]	; 0x30
-d004366c:	f7fe ff96 	bl	d004259c <rotateAroundAxis>
-d0043670:	eef0 6a40 	vmov.f32	s13, s0
-d0043674:	eeb0 7a60 	vmov.f32	s14, s1
-d0043678:	ed94 0a07 	vldr	s0, [r4, #28]
-d004367c:	eef0 7a41 	vmov.f32	s15, s2
-d0043680:	edd4 0a08 	vldr	s1, [r4, #32]
-d0043684:	ed94 1a09 	vldr	s2, [r4, #36]	; 0x24
-d0043688:	eeb0 3a49 	vmov.f32	s6, s18
-d004368c:	edd4 1a0a 	vldr	s3, [r4, #40]	; 0x28
-d0043690:	ed94 2a0b 	vldr	s4, [r4, #44]	; 0x2c
-d0043694:	edd4 2a0c 	vldr	s5, [r4, #48]	; 0x30
-d0043698:	edc4 6a04 	vstr	s13, [r4, #16]
-d004369c:	ed84 7a05 	vstr	s14, [r4, #20]
-d00436a0:	edc4 7a06 	vstr	s15, [r4, #24]
-d00436a4:	f7fe ff7a 	bl	d004259c <rotateAroundAxis>
-d00436a8:	ed84 0a07 	vstr	s0, [r4, #28]
-d00436ac:	edc4 0a08 	vstr	s1, [r4, #32]
-d00436b0:	ed84 1a09 	vstr	s2, [r4, #36]	; 0x24
-d00436b4:	e74b      	b.n	d004354e <entityTurnLocal+0x36>
-d00436b6:	bf00      	nop
-d00436b8:	d012cd60 	.word	0xd012cd60
+d0043724 <worldToCamera>:
+d0043724:	b084      	sub	sp, #16
+d0043726:	b510      	push	{r4, lr}
+d0043728:	ed2d 8b02 	vpush	{d8}
+d004372c:	b0ac      	sub	sp, #176	; 0xb0
+d004372e:	f10d 042f 	add.w	r4, sp, #47	; 0x2f
+d0043732:	f10d 0cc0 	add.w	ip, sp, #192	; 0xc0
+d0043736:	ed8d 0a23 	vstr	s0, [sp, #140]	; 0x8c
+d004373a:	f024 041f 	bic.w	r4, r4, #31
+d004373e:	edcd 0a24 	vstr	s1, [sp, #144]	; 0x90
+d0043742:	ed8d 1a25 	vstr	s2, [sp, #148]	; 0x94
+d0043746:	e88c 000f 	stmia.w	ip, {r0, r1, r2, r3}
+d004374a:	2260      	movs	r2, #96	; 0x60
+d004374c:	4661      	mov	r1, ip
+d004374e:	4620      	mov	r0, r4
+d0043750:	f003 fa7a 	bl	d0046c48 <memcpy>
+d0043754:	edd4 7a00 	vldr	s15, [r4]
+d0043758:	ed9d 0a23 	vldr	s0, [sp, #140]	; 0x8c
+d004375c:	ed94 7a01 	vldr	s14, [r4, #4]
+d0043760:	ee30 0a67 	vsub.f32	s0, s0, s15
+d0043764:	eddd 0a24 	vldr	s1, [sp, #144]	; 0x90
+d0043768:	edd4 7a02 	vldr	s15, [r4, #8]
+d004376c:	ed9d 1a25 	vldr	s2, [sp, #148]	; 0x94
+d0043770:	ee70 0ac7 	vsub.f32	s1, s1, s14
+d0043774:	edd4 1a06 	vldr	s3, [r4, #24]
+d0043778:	ee31 1a67 	vsub.f32	s2, s2, s15
+d004377c:	ed94 2a07 	vldr	s4, [r4, #28]
+d0043780:	edd4 2a08 	vldr	s5, [r4, #32]
+d0043784:	edcd 0a27 	vstr	s1, [sp, #156]	; 0x9c
+d0043788:	ed8d 1a28 	vstr	s2, [sp, #160]	; 0xa0
+d004378c:	ed8d 0a26 	vstr	s0, [sp, #152]	; 0x98
+d0043790:	f7ff f940 	bl	d0042a14 <vec3Dot>
+d0043794:	edd4 1a09 	vldr	s3, [r4, #36]	; 0x24
+d0043798:	eef0 8a40 	vmov.f32	s17, s0
+d004379c:	ed94 2a0a 	vldr	s4, [r4, #40]	; 0x28
+d00437a0:	edd4 2a0b 	vldr	s5, [r4, #44]	; 0x2c
+d00437a4:	eddd 0a27 	vldr	s1, [sp, #156]	; 0x9c
+d00437a8:	ed9d 1a28 	vldr	s2, [sp, #160]	; 0xa0
+d00437ac:	ed9d 0a26 	vldr	s0, [sp, #152]	; 0x98
+d00437b0:	f7ff f930 	bl	d0042a14 <vec3Dot>
+d00437b4:	eeb0 8a40 	vmov.f32	s16, s0
+d00437b8:	eddd 0a27 	vldr	s1, [sp, #156]	; 0x9c
+d00437bc:	ed9d 1a28 	vldr	s2, [sp, #160]	; 0xa0
+d00437c0:	edd4 1a0c 	vldr	s3, [r4, #48]	; 0x30
+d00437c4:	ed9d 0a26 	vldr	s0, [sp, #152]	; 0x98
+d00437c8:	ed94 2a0d 	vldr	s4, [r4, #52]	; 0x34
+d00437cc:	edd4 2a0e 	vldr	s5, [r4, #56]	; 0x38
+d00437d0:	f7ff f920 	bl	d0042a14 <vec3Dot>
+d00437d4:	eef0 0a48 	vmov.f32	s1, s16
+d00437d8:	eeb0 1a40 	vmov.f32	s2, s0
+d00437dc:	eeb0 0a68 	vmov.f32	s0, s17
+d00437e0:	b02c      	add	sp, #176	; 0xb0
+d00437e2:	ecbd 8b02 	vpop	{d8}
+d00437e6:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
+d00437ea:	b004      	add	sp, #16
+d00437ec:	4770      	bx	lr
+d00437ee:	bf00      	nop
 
-d00436bc <buildLightingCLUT>:
-d00436bc:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d00436c0:	f1b2 0900 	subs.w	r9, r2, #0
-d00436c4:	b085      	sub	sp, #20
-d00436c6:	9c0e      	ldr	r4, [sp, #56]	; 0x38
-d00436c8:	f340 8212 	ble.w	d0043af0 <buildLightingCLUT+0x434>
-d00436cc:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
-d00436d0:	4f24      	ldr	r7, [pc, #144]	; (d0043764 <buildLightingCLUT+0xa8>)
-d00436d2:	eb09 0c49 	add.w	ip, r9, r9, lsl #1
-d00436d6:	edd4 4a00 	vldr	s9, [r4]
-d00436da:	ed94 5a01 	vldr	s10, [r4, #4]
-d00436de:	eb09 0807 	add.w	r8, r9, r7
-d00436e2:	edd4 5a02 	vldr	s11, [r4, #8]
-d00436e6:	eb07 0e49 	add.w	lr, r7, r9, lsl #1
-d00436ea:	ed94 6a03 	vldr	s12, [r4, #12]
-d00436ee:	44bc      	add	ip, r7
-d00436f0:	edd4 6a04 	vldr	s13, [r4, #16]
-d00436f4:	eb07 0789 	add.w	r7, r7, r9, lsl #2
-d00436f8:	3904      	subs	r1, #4
-d00436fa:	ee77 4ae4 	vsub.f32	s9, s15, s9
-d00436fe:	ee37 5ac5 	vsub.f32	s10, s15, s10
-d0043702:	ed9f 7a19 	vldr	s14, [pc, #100]	; d0043768 <buildLightingCLUT+0xac>
-d0043706:	ee77 5ae5 	vsub.f32	s11, s15, s11
-d004370a:	f100 067c 	add.w	r6, r0, #124	; 0x7c
-d004370e:	ee37 6ac6 	vsub.f32	s12, s15, s12
-d0043712:	eb00 0888 	add.w	r8, r0, r8, lsl #2
-d0043716:	ee77 6ae6 	vsub.f32	s13, s15, s13
-d004371a:	eb00 0e8e 	add.w	lr, r0, lr, lsl #2
-d004371e:	eb00 0c8c 	add.w	ip, r0, ip, lsl #2
-d0043722:	f3c3 4507 	ubfx	r5, r3, #16, #8
-d0043726:	eb00 0787 	add.w	r7, r0, r7, lsl #2
-d004372a:	f3c3 2007 	ubfx	r0, r3, #8, #8
-d004372e:	eb01 0989 	add.w	r9, r1, r9, lsl #2
-d0043732:	fec4 4a87 	vmaxnm.f32	s9, s9, s14
-d0043736:	0e1c      	lsrs	r4, r3, #24
-d0043738:	fe85 5a07 	vmaxnm.f32	s10, s10, s14
-d004373c:	b2da      	uxtb	r2, r3
-d004373e:	fec5 5a87 	vmaxnm.f32	s11, s11, s14
-d0043742:	fe86 6a07 	vmaxnm.f32	s12, s12, s14
-d0043746:	fec6 6a87 	vmaxnm.f32	s13, s13, s14
-d004374a:	fec4 4ae7 	vminnm.f32	s9, s9, s15
-d004374e:	fe85 5a67 	vminnm.f32	s10, s10, s15
-d0043752:	fec5 5ae7 	vminnm.f32	s11, s11, s15
-d0043756:	fe86 6a67 	vminnm.f32	s12, s12, s15
-d004375a:	fec6 6ae7 	vminnm.f32	s13, s13, s15
-d004375e:	9601      	str	r6, [sp, #4]
-d0043760:	e004      	b.n	d004376c <buildLightingCLUT+0xb0>
-d0043762:	bf00      	nop
-d0043764:	4000001f 	.word	0x4000001f
-d0043768:	00000000 	.word	0x00000000
-d004376c:	f851 3f04 	ldr.w	r3, [r1, #4]!
-d0043770:	f3c3 4b07 	ubfx	fp, r3, #16, #8
-d0043774:	0e1e      	lsrs	r6, r3, #24
-d0043776:	fa5f fa83 	uxtb.w	sl, r3
-d004377a:	4549      	cmp	r1, r9
-d004377c:	ee07 6a10 	vmov	s14, r6
-d0043780:	eba5 060b 	sub.w	r6, r5, fp
-d0043784:	ee04 ba10 	vmov	s8, fp
-d0043788:	ee07 6a90 	vmov	s15, r6
-d004378c:	eba4 6613 	sub.w	r6, r4, r3, lsr #24
-d0043790:	eef8 3ac4 	vcvt.f32.s32	s7, s8
-d0043794:	f3c3 2307 	ubfx	r3, r3, #8, #8
-d0043798:	ee02 6a10 	vmov	s4, r6
-d004379c:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d00437a0:	eba2 060a 	sub.w	r6, r2, sl
-d00437a4:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
-d00437a8:	eeb8 2ac2 	vcvt.f32.s32	s4, s4
-d00437ac:	ee04 aa10 	vmov	s8, sl
-d00437b0:	ee02 6a90 	vmov	s5, r6
-d00437b4:	eba0 0603 	sub.w	r6, r0, r3
-d00437b8:	eee4 3aa7 	vfma.f32	s7, s9, s15
-d00437bc:	ee07 3a90 	vmov	s15, r3
-d00437c0:	eea4 7a82 	vfma.f32	s14, s9, s4
-d00437c4:	ee03 6a10 	vmov	s6, r6
-d00437c8:	eef8 2ae2 	vcvt.f32.s32	s5, s5
-d00437cc:	9e01      	ldr	r6, [sp, #4]
-d00437ce:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
-d00437d2:	eeb8 3ac3 	vcvt.f32.s32	s6, s6
-d00437d6:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d00437da:	eea4 4aa2 	vfma.f32	s8, s9, s5
-d00437de:	eefc 3ae3 	vcvt.u32.f32	s7, s7
-d00437e2:	eee4 7a83 	vfma.f32	s15, s9, s6
-d00437e6:	eebc 7ac7 	vcvt.u32.f32	s14, s14
-d00437ea:	edcd 3a02 	vstr	s7, [sp, #8]
-d00437ee:	f89d a008 	ldrb.w	sl, [sp, #8]
-d00437f2:	ee17 3a10 	vmov	r3, s14
-d00437f6:	eebc 7ac4 	vcvt.u32.f32	s14, s8
-d00437fa:	ea4f 4a0a 	mov.w	sl, sl, lsl #16
-d00437fe:	eefc 7ae7 	vcvt.u32.f32	s15, s15
-d0043802:	ed8d 7a02 	vstr	s14, [sp, #8]
-d0043806:	ea4a 6303 	orr.w	r3, sl, r3, lsl #24
-d004380a:	f89d b008 	ldrb.w	fp, [sp, #8]
-d004380e:	edcd 7a03 	vstr	s15, [sp, #12]
-d0043812:	ea43 030b 	orr.w	r3, r3, fp
-d0043816:	f89d a00c 	ldrb.w	sl, [sp, #12]
-d004381a:	ea43 230a 	orr.w	r3, r3, sl, lsl #8
-d004381e:	f846 3f04 	str.w	r3, [r6, #4]!
-d0043822:	680b      	ldr	r3, [r1, #0]
-d0043824:	9601      	str	r6, [sp, #4]
-d0043826:	f3c3 4b07 	ubfx	fp, r3, #16, #8
-d004382a:	ea4f 6613 	mov.w	r6, r3, lsr #24
-d004382e:	fa5f fa83 	uxtb.w	sl, r3
-d0043832:	ee07 6a10 	vmov	s14, r6
-d0043836:	eba5 060b 	sub.w	r6, r5, fp
-d004383a:	ee04 ba10 	vmov	s8, fp
-d004383e:	ee07 6a90 	vmov	s15, r6
-d0043842:	eba4 6613 	sub.w	r6, r4, r3, lsr #24
-d0043846:	eef8 3ac4 	vcvt.f32.s32	s7, s8
-d004384a:	f3c3 2307 	ubfx	r3, r3, #8, #8
-d004384e:	ee02 6a10 	vmov	s4, r6
-d0043852:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0043856:	eba2 060a 	sub.w	r6, r2, sl
-d004385a:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
-d004385e:	eeb8 2ac2 	vcvt.f32.s32	s4, s4
-d0043862:	ee04 aa10 	vmov	s8, sl
-d0043866:	ee02 6a90 	vmov	s5, r6
-d004386a:	eba0 0603 	sub.w	r6, r0, r3
-d004386e:	eee5 3a27 	vfma.f32	s7, s10, s15
-d0043872:	ee07 3a90 	vmov	s15, r3
-d0043876:	eea5 7a02 	vfma.f32	s14, s10, s4
-d004387a:	ee03 6a10 	vmov	s6, r6
-d004387e:	eef8 2ae2 	vcvt.f32.s32	s5, s5
-d0043882:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
-d0043886:	eeb8 3ac3 	vcvt.f32.s32	s6, s6
-d004388a:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d004388e:	eea5 4a22 	vfma.f32	s8, s10, s5
-d0043892:	eefc 3ae3 	vcvt.u32.f32	s7, s7
-d0043896:	eee5 7a03 	vfma.f32	s15, s10, s6
-d004389a:	eebc 7ac7 	vcvt.u32.f32	s14, s14
-d004389e:	edcd 3a02 	vstr	s7, [sp, #8]
-d00438a2:	f89d a008 	ldrb.w	sl, [sp, #8]
-d00438a6:	ee17 3a10 	vmov	r3, s14
-d00438aa:	eebc 7ac4 	vcvt.u32.f32	s14, s8
-d00438ae:	ea4f 4a0a 	mov.w	sl, sl, lsl #16
-d00438b2:	eefc 7ae7 	vcvt.u32.f32	s15, s15
-d00438b6:	ed8d 7a02 	vstr	s14, [sp, #8]
-d00438ba:	ea4a 6303 	orr.w	r3, sl, r3, lsl #24
-d00438be:	f89d b008 	ldrb.w	fp, [sp, #8]
-d00438c2:	edcd 7a03 	vstr	s15, [sp, #12]
-d00438c6:	ea43 030b 	orr.w	r3, r3, fp
-d00438ca:	f89d a00c 	ldrb.w	sl, [sp, #12]
-d00438ce:	ea43 230a 	orr.w	r3, r3, sl, lsl #8
-d00438d2:	f848 3f04 	str.w	r3, [r8, #4]!
-d00438d6:	680b      	ldr	r3, [r1, #0]
-d00438d8:	f3c3 4b07 	ubfx	fp, r3, #16, #8
-d00438dc:	ea4f 6613 	mov.w	r6, r3, lsr #24
-d00438e0:	fa5f fa83 	uxtb.w	sl, r3
-d00438e4:	ee07 6a10 	vmov	s14, r6
-d00438e8:	eba5 060b 	sub.w	r6, r5, fp
-d00438ec:	ee04 ba10 	vmov	s8, fp
-d00438f0:	ee07 6a90 	vmov	s15, r6
-d00438f4:	eba4 6613 	sub.w	r6, r4, r3, lsr #24
-d00438f8:	eef8 3ac4 	vcvt.f32.s32	s7, s8
-d00438fc:	f3c3 2307 	ubfx	r3, r3, #8, #8
-d0043900:	ee02 6a10 	vmov	s4, r6
-d0043904:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0043908:	eba2 060a 	sub.w	r6, r2, sl
-d004390c:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
-d0043910:	eeb8 2ac2 	vcvt.f32.s32	s4, s4
-d0043914:	ee04 aa10 	vmov	s8, sl
-d0043918:	ee02 6a90 	vmov	s5, r6
-d004391c:	eba0 0603 	sub.w	r6, r0, r3
-d0043920:	eee5 3aa7 	vfma.f32	s7, s11, s15
-d0043924:	ee07 3a90 	vmov	s15, r3
-d0043928:	eea5 7a82 	vfma.f32	s14, s11, s4
-d004392c:	ee03 6a10 	vmov	s6, r6
-d0043930:	eef8 2ae2 	vcvt.f32.s32	s5, s5
-d0043934:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
-d0043938:	eeb8 3ac3 	vcvt.f32.s32	s6, s6
-d004393c:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0043940:	eea5 4aa2 	vfma.f32	s8, s11, s5
-d0043944:	eefc 3ae3 	vcvt.u32.f32	s7, s7
-d0043948:	eee5 7a83 	vfma.f32	s15, s11, s6
-d004394c:	eebc 7ac7 	vcvt.u32.f32	s14, s14
-d0043950:	edcd 3a02 	vstr	s7, [sp, #8]
-d0043954:	f89d a008 	ldrb.w	sl, [sp, #8]
-d0043958:	ee17 3a10 	vmov	r3, s14
-d004395c:	eebc 7ac4 	vcvt.u32.f32	s14, s8
-d0043960:	ea4f 4a0a 	mov.w	sl, sl, lsl #16
-d0043964:	eefc 7ae7 	vcvt.u32.f32	s15, s15
-d0043968:	ed8d 7a02 	vstr	s14, [sp, #8]
-d004396c:	ea4a 6303 	orr.w	r3, sl, r3, lsl #24
-d0043970:	f89d b008 	ldrb.w	fp, [sp, #8]
-d0043974:	edcd 7a03 	vstr	s15, [sp, #12]
-d0043978:	ea43 030b 	orr.w	r3, r3, fp
-d004397c:	f89d a00c 	ldrb.w	sl, [sp, #12]
-d0043980:	ea43 230a 	orr.w	r3, r3, sl, lsl #8
-d0043984:	f84e 3f04 	str.w	r3, [lr, #4]!
-d0043988:	680b      	ldr	r3, [r1, #0]
-d004398a:	f3c3 4b07 	ubfx	fp, r3, #16, #8
-d004398e:	ea4f 6613 	mov.w	r6, r3, lsr #24
-d0043992:	fa5f fa83 	uxtb.w	sl, r3
-d0043996:	ee07 6a10 	vmov	s14, r6
-d004399a:	eba5 060b 	sub.w	r6, r5, fp
-d004399e:	ee04 ba10 	vmov	s8, fp
-d00439a2:	ee07 6a90 	vmov	s15, r6
-d00439a6:	eba4 6613 	sub.w	r6, r4, r3, lsr #24
-d00439aa:	eef8 3ac4 	vcvt.f32.s32	s7, s8
-d00439ae:	f3c3 2307 	ubfx	r3, r3, #8, #8
-d00439b2:	ee02 6a10 	vmov	s4, r6
-d00439b6:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d00439ba:	eba2 060a 	sub.w	r6, r2, sl
-d00439be:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
-d00439c2:	eeb8 2ac2 	vcvt.f32.s32	s4, s4
-d00439c6:	ee04 aa10 	vmov	s8, sl
-d00439ca:	ee02 6a90 	vmov	s5, r6
-d00439ce:	eba0 0603 	sub.w	r6, r0, r3
-d00439d2:	eee6 3a27 	vfma.f32	s7, s12, s15
-d00439d6:	ee07 3a90 	vmov	s15, r3
-d00439da:	eea6 7a02 	vfma.f32	s14, s12, s4
-d00439de:	ee03 6a10 	vmov	s6, r6
-d00439e2:	eef8 2ae2 	vcvt.f32.s32	s5, s5
-d00439e6:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
-d00439ea:	eeb8 3ac3 	vcvt.f32.s32	s6, s6
-d00439ee:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d00439f2:	eea6 4a22 	vfma.f32	s8, s12, s5
-d00439f6:	eefc 3ae3 	vcvt.u32.f32	s7, s7
-d00439fa:	eee6 7a03 	vfma.f32	s15, s12, s6
-d00439fe:	eebc 7ac7 	vcvt.u32.f32	s14, s14
-d0043a02:	edcd 3a02 	vstr	s7, [sp, #8]
-d0043a06:	f89d a008 	ldrb.w	sl, [sp, #8]
-d0043a0a:	ee17 3a10 	vmov	r3, s14
-d0043a0e:	eebc 7ac4 	vcvt.u32.f32	s14, s8
-d0043a12:	ea4f 4a0a 	mov.w	sl, sl, lsl #16
-d0043a16:	eefc 7ae7 	vcvt.u32.f32	s15, s15
-d0043a1a:	ed8d 7a02 	vstr	s14, [sp, #8]
-d0043a1e:	ea4a 6303 	orr.w	r3, sl, r3, lsl #24
-d0043a22:	f89d b008 	ldrb.w	fp, [sp, #8]
-d0043a26:	edcd 7a03 	vstr	s15, [sp, #12]
-d0043a2a:	ea43 030b 	orr.w	r3, r3, fp
-d0043a2e:	f89d a00c 	ldrb.w	sl, [sp, #12]
-d0043a32:	ea43 230a 	orr.w	r3, r3, sl, lsl #8
-d0043a36:	f84c 3f04 	str.w	r3, [ip, #4]!
-d0043a3a:	680b      	ldr	r3, [r1, #0]
-d0043a3c:	f3c3 4b07 	ubfx	fp, r3, #16, #8
-d0043a40:	ea4f 6613 	mov.w	r6, r3, lsr #24
-d0043a44:	fa5f fa83 	uxtb.w	sl, r3
-d0043a48:	ee07 6a10 	vmov	s14, r6
-d0043a4c:	eba5 060b 	sub.w	r6, r5, fp
-d0043a50:	ee04 ba10 	vmov	s8, fp
-d0043a54:	ee07 6a90 	vmov	s15, r6
-d0043a58:	eba4 6613 	sub.w	r6, r4, r3, lsr #24
-d0043a5c:	eef8 3ac4 	vcvt.f32.s32	s7, s8
-d0043a60:	f3c3 2307 	ubfx	r3, r3, #8, #8
-d0043a64:	ee02 6a10 	vmov	s4, r6
-d0043a68:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0043a6c:	eba2 060a 	sub.w	r6, r2, sl
-d0043a70:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
-d0043a74:	eeb8 2ac2 	vcvt.f32.s32	s4, s4
-d0043a78:	ee04 aa10 	vmov	s8, sl
-d0043a7c:	ee02 6a90 	vmov	s5, r6
-d0043a80:	eba0 0603 	sub.w	r6, r0, r3
-d0043a84:	eee6 3aa7 	vfma.f32	s7, s13, s15
-d0043a88:	ee07 3a90 	vmov	s15, r3
-d0043a8c:	eea6 7a82 	vfma.f32	s14, s13, s4
-d0043a90:	ee03 6a10 	vmov	s6, r6
-d0043a94:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
-d0043a98:	eef8 2ae2 	vcvt.f32.s32	s5, s5
-d0043a9c:	eeb8 3ac3 	vcvt.f32.s32	s6, s6
-d0043aa0:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0043aa4:	eea6 4aa2 	vfma.f32	s8, s13, s5
-d0043aa8:	eefc 3ae3 	vcvt.u32.f32	s7, s7
-d0043aac:	eee6 7a83 	vfma.f32	s15, s13, s6
-d0043ab0:	eebc 7ac7 	vcvt.u32.f32	s14, s14
-d0043ab4:	edcd 3a02 	vstr	s7, [sp, #8]
-d0043ab8:	f89d a008 	ldrb.w	sl, [sp, #8]
-d0043abc:	ee17 3a10 	vmov	r3, s14
-d0043ac0:	eebc 7ac4 	vcvt.u32.f32	s14, s8
-d0043ac4:	ea4f 4a0a 	mov.w	sl, sl, lsl #16
-d0043ac8:	eefc 7ae7 	vcvt.u32.f32	s15, s15
-d0043acc:	ea4a 6303 	orr.w	r3, sl, r3, lsl #24
-d0043ad0:	ed8d 7a02 	vstr	s14, [sp, #8]
-d0043ad4:	f89d b008 	ldrb.w	fp, [sp, #8]
-d0043ad8:	edcd 7a03 	vstr	s15, [sp, #12]
-d0043adc:	ea43 030b 	orr.w	r3, r3, fp
-d0043ae0:	f89d a00c 	ldrb.w	sl, [sp, #12]
-d0043ae4:	ea43 230a 	orr.w	r3, r3, sl, lsl #8
-d0043ae8:	f847 3f04 	str.w	r3, [r7, #4]!
-d0043aec:	f47f ae3e 	bne.w	d004376c <buildLightingCLUT+0xb0>
-d0043af0:	b005      	add	sp, #20
-d0043af2:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-d0043af6:	bf00      	nop
+d00437f0 <cameraSetRange>:
+d00437f0:	b1a0      	cbz	r0, d004381c <cameraSetRange+0x2c>
+d00437f2:	eddf 7a0d 	vldr	s15, [pc, #52]	; d0043828 <cameraSetRange+0x38>
+d00437f6:	fe80 0a27 	vmaxnm.f32	s0, s0, s15
+d00437fa:	eeb4 0ae0 	vcmpe.f32	s0, s1
+d00437fe:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043802:	da0c      	bge.n	d004381e <cameraSetRange+0x2e>
+d0043804:	ee30 7ac0 	vsub.f32	s14, s1, s0
+d0043808:	eef7 6a00 	vmov.f32	s13, #112	; 0x3f800000  1.0
+d004380c:	eec6 7a87 	vdiv.f32	s15, s13, s14
+d0043810:	ed80 0a10 	vstr	s0, [r0, #64]	; 0x40
+d0043814:	edc0 0a11 	vstr	s1, [r0, #68]	; 0x44
+d0043818:	edc0 7a0f 	vstr	s15, [r0, #60]	; 0x3c
+d004381c:	4770      	bx	lr
+d004381e:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
+d0043822:	ee70 0a27 	vadd.f32	s1, s0, s15
+d0043826:	e7f3      	b.n	d0043810 <cameraSetRange+0x20>
+d0043828:	3a83126f 	.word	0x3a83126f
 
-d0043af8 <brightnessToShadeF>:
-d0043af8:	eeb7 7a00 	vmov.f32	s14, #112	; 0x3f800000  1.0
-d0043afc:	eddf 7a09 	vldr	s15, [pc, #36]	; d0043b24 <brightnessToShadeF+0x2c>
-d0043b00:	eeb6 6a00 	vmov.f32	s12, #96	; 0x3f000000  0.5
-d0043b04:	eef7 6a08 	vmov.f32	s13, #120	; 0x3fc00000  1.5
-d0043b08:	fe80 0a27 	vmaxnm.f32	s0, s0, s15
-d0043b0c:	fec0 7a47 	vminnm.f32	s15, s0, s14
-d0043b10:	eeb1 0a04 	vmov.f32	s0, #20	; 0x40a00000  5.0
-d0043b14:	eee7 6ac6 	vfms.f32	s13, s15, s12
-d0043b18:	eea6 7ae7 	vfms.f32	s14, s13, s15
-d0043b1c:	ee27 0a00 	vmul.f32	s0, s14, s0
-d0043b20:	4770      	bx	lr
-d0043b22:	bf00      	nop
-d0043b24:	00000000 	.word	0x00000000
+d004382c <cameraMove>:
+d004382c:	b3a8      	cbz	r0, d004389a <cameraMove+0x6e>
+d004382e:	edd0 6a0b 	vldr	s13, [r0, #44]	; 0x2c
+d0043832:	ed90 7a09 	vldr	s14, [r0, #36]	; 0x24
+d0043836:	edd0 7a0a 	vldr	s15, [r0, #40]	; 0x28
+d004383a:	ee20 7a87 	vmul.f32	s14, s1, s14
+d004383e:	edd0 5a06 	vldr	s11, [r0, #24]
+d0043842:	ee60 7aa7 	vmul.f32	s15, s1, s15
+d0043846:	ed90 6a08 	vldr	s12, [r0, #32]
+d004384a:	ee60 0aa6 	vmul.f32	s1, s1, s13
+d004384e:	edd0 6a07 	vldr	s13, [r0, #28]
+d0043852:	eea5 7a80 	vfma.f32	s14, s11, s0
+d0043856:	edd0 4a01 	vldr	s9, [r0, #4]
+d004385a:	eee6 7a80 	vfma.f32	s15, s13, s0
+d004385e:	ed90 5a02 	vldr	s10, [r0, #8]
+d0043862:	eee6 0a00 	vfma.f32	s1, s12, s0
+d0043866:	edd0 6a00 	vldr	s13, [r0]
+d004386a:	edd0 5a0c 	vldr	s11, [r0, #48]	; 0x30
+d004386e:	ed90 6a0d 	vldr	s12, [r0, #52]	; 0x34
+d0043872:	ee37 7a26 	vadd.f32	s14, s14, s13
+d0043876:	edd0 6a0e 	vldr	s13, [r0, #56]	; 0x38
+d004387a:	ee77 7aa4 	vadd.f32	s15, s15, s9
+d004387e:	ee70 0a85 	vadd.f32	s1, s1, s10
+d0043882:	eea5 7a81 	vfma.f32	s14, s11, s2
+d0043886:	eee6 7a01 	vfma.f32	s15, s12, s2
+d004388a:	eee6 0a81 	vfma.f32	s1, s13, s2
+d004388e:	ed80 7a00 	vstr	s14, [r0]
+d0043892:	edc0 7a01 	vstr	s15, [r0, #4]
+d0043896:	edc0 0a02 	vstr	s1, [r0, #8]
+d004389a:	4770      	bx	lr
 
-d0043b28 <lightsGet>:
-d0043b28:	4800      	ldr	r0, [pc, #0]	; (d0043b2c <lightsGet+0x4>)
-d0043b2a:	4770      	bx	lr
-d0043b2c:	d0094680 	.word	0xd0094680
+d004389c <normalizeEntity.part.0>:
+d004389c:	edd0 0a05 	vldr	s1, [r0, #20]
+d00438a0:	ed90 1a06 	vldr	s2, [r0, #24]
+d00438a4:	ed90 0a04 	vldr	s0, [r0, #16]
+d00438a8:	b510      	push	{r4, lr}
+d00438aa:	4604      	mov	r4, r0
+d00438ac:	f7ff f8d4 	bl	d0042a58 <vec3Normalize>
+d00438b0:	eeb0 7a60 	vmov.f32	s14, s1
+d00438b4:	eef0 7a41 	vmov.f32	s15, s2
+d00438b8:	ed84 0a04 	vstr	s0, [r4, #16]
+d00438bc:	ed94 0a07 	vldr	s0, [r4, #28]
+d00438c0:	ed84 7a05 	vstr	s14, [r4, #20]
+d00438c4:	edc4 7a06 	vstr	s15, [r4, #24]
+d00438c8:	edd4 0a08 	vldr	s1, [r4, #32]
+d00438cc:	ed94 1a09 	vldr	s2, [r4, #36]	; 0x24
+d00438d0:	f7ff f8c2 	bl	d0042a58 <vec3Normalize>
+d00438d4:	eef0 1a40 	vmov.f32	s3, s0
+d00438d8:	eeb0 2a60 	vmov.f32	s4, s1
+d00438dc:	ed94 0a04 	vldr	s0, [r4, #16]
+d00438e0:	eef0 2a41 	vmov.f32	s5, s2
+d00438e4:	edc4 0a08 	vstr	s1, [r4, #32]
+d00438e8:	ed84 1a09 	vstr	s2, [r4, #36]	; 0x24
+d00438ec:	edd4 0a05 	vldr	s1, [r4, #20]
+d00438f0:	ed94 1a06 	vldr	s2, [r4, #24]
+d00438f4:	edc4 1a07 	vstr	s3, [r4, #28]
+d00438f8:	f7ff f898 	bl	d0042a2c <vec3Cross>
+d00438fc:	ed84 0a0a 	vstr	s0, [r4, #40]	; 0x28
+d0043900:	edc4 0a0b 	vstr	s1, [r4, #44]	; 0x2c
+d0043904:	ed84 1a0c 	vstr	s2, [r4, #48]	; 0x30
+d0043908:	f7ff f8a6 	bl	d0042a58 <vec3Normalize>
+d004390c:	edd4 1a04 	vldr	s3, [r4, #16]
+d0043910:	ed94 2a05 	vldr	s4, [r4, #20]
+d0043914:	edd4 2a06 	vldr	s5, [r4, #24]
+d0043918:	ed84 0a0a 	vstr	s0, [r4, #40]	; 0x28
+d004391c:	edc4 0a0b 	vstr	s1, [r4, #44]	; 0x2c
+d0043920:	ed84 1a0c 	vstr	s2, [r4, #48]	; 0x30
+d0043924:	f7ff f882 	bl	d0042a2c <vec3Cross>
+d0043928:	ed84 0a07 	vstr	s0, [r4, #28]
+d004392c:	edc4 0a08 	vstr	s1, [r4, #32]
+d0043930:	ed84 1a09 	vstr	s2, [r4, #36]	; 0x24
+d0043934:	f7ff f890 	bl	d0042a58 <vec3Normalize>
+d0043938:	ed84 0a07 	vstr	s0, [r4, #28]
+d004393c:	edc4 0a08 	vstr	s1, [r4, #32]
+d0043940:	ed84 1a09 	vstr	s2, [r4, #36]	; 0x24
+d0043944:	bd10      	pop	{r4, pc}
+d0043946:	bf00      	nop
 
-d0043b30 <lightsGetCount>:
-d0043b30:	4b01      	ldr	r3, [pc, #4]	; (d0043b38 <lightsGetCount+0x8>)
-d0043b32:	6818      	ldr	r0, [r3, #0]
-d0043b34:	4770      	bx	lr
-d0043b36:	bf00      	nop
-d0043b38:	d0094660 	.word	0xd0094660
+d0043948 <entityRotation.part.0>:
+d0043948:	b5f0      	push	{r4, r5, r6, r7, lr}
+d004394a:	4eb7      	ldr	r6, [pc, #732]	; (d0043c28 <entityRotation.part.0+0x2e0>)
+d004394c:	eb00 0440 	add.w	r4, r0, r0, lsl #1
+d0043950:	ed2d 8b04 	vpush	{d8-d9}
+d0043954:	eb06 1444 	add.w	r4, r6, r4, lsl #5
+d0043958:	eeb0 9a40 	vmov.f32	s18, s0
+d004395c:	eef0 8a60 	vmov.f32	s17, s1
+d0043960:	b08b      	sub	sp, #44	; 0x2c
+d0043962:	eeb0 8a41 	vmov.f32	s16, s2
+d0043966:	2900      	cmp	r1, #0
+d0043968:	d040      	beq.n	d00439ec <entityRotation.part.0+0xa4>
+d004396a:	eddf 1ab0 	vldr	s3, [pc, #704]	; d0043c2c <entityRotation.part.0+0x2e4>
+d004396e:	eeb7 2a00 	vmov.f32	s4, #112	; 0x3f800000  1.0
+d0043972:	eeb4 0a61 	vcmp.f32	s0, s3
+d0043976:	edc4 1a08 	vstr	s3, [r4, #32]
+d004397a:	ed84 2a07 	vstr	s4, [r4, #28]
+d004397e:	ed84 2a0b 	vstr	s4, [r4, #44]	; 0x2c
+d0043982:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043986:	ed84 2a06 	vstr	s4, [r4, #24]
+d004398a:	ed8d 2a02 	vstr	s4, [sp, #8]
+d004398e:	ed8d 2a04 	vstr	s4, [sp, #16]
+d0043992:	ed8d 2a09 	vstr	s4, [sp, #36]	; 0x24
+d0043996:	edc4 1a09 	vstr	s3, [r4, #36]	; 0x24
+d004399a:	edc4 1a0a 	vstr	s3, [r4, #40]	; 0x28
+d004399e:	edc4 1a0c 	vstr	s3, [r4, #48]	; 0x30
+d00439a2:	edc4 1a04 	vstr	s3, [r4, #16]
+d00439a6:	edc4 1a05 	vstr	s3, [r4, #20]
+d00439aa:	edcd 1a01 	vstr	s3, [sp, #4]
+d00439ae:	edcd 1a03 	vstr	s3, [sp, #12]
+d00439b2:	edcd 1a05 	vstr	s3, [sp, #20]
+d00439b6:	edcd 1a06 	vstr	s3, [sp, #24]
+d00439ba:	edcd 1a07 	vstr	s3, [sp, #28]
+d00439be:	edcd 1a08 	vstr	s3, [sp, #32]
+d00439c2:	d17e      	bne.n	d0043ac2 <entityRotation.part.0+0x17a>
+d00439c4:	eef5 8a40 	vcmp.f32	s17, #0.0
+d00439c8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00439cc:	f040 80c9 	bne.w	d0043b62 <entityRotation.part.0+0x21a>
+d00439d0:	eeb5 8a40 	vcmp.f32	s16, #0.0
+d00439d4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00439d8:	f040 8117 	bne.w	d0043c0a <entityRotation.part.0+0x2c2>
+d00439dc:	4620      	mov	r0, r4
+d00439de:	b00b      	add	sp, #44	; 0x2c
+d00439e0:	ecbd 8b04 	vpop	{d8-d9}
+d00439e4:	e8bd 40f0 	ldmia.w	sp!, {r4, r5, r6, r7, lr}
+d00439e8:	f7ff bf58 	b.w	d004389c <normalizeEntity.part.0>
+d00439ec:	eeb5 0a40 	vcmp.f32	s0, #0.0
+d00439f0:	4605      	mov	r5, r0
+d00439f2:	0047      	lsls	r7, r0, #1
+d00439f4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00439f8:	f040 811a 	bne.w	d0043c30 <entityRotation.part.0+0x2e8>
+d00439fc:	eef5 8a40 	vcmp.f32	s17, #0.0
+d0043a00:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043a04:	f040 8170 	bne.w	d0043ce8 <entityRotation.part.0+0x3a0>
+d0043a08:	eeb5 8a40 	vcmp.f32	s16, #0.0
+d0043a0c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043a10:	d0e4      	beq.n	d00439dc <entityRotation.part.0+0x94>
+d0043a12:	443d      	add	r5, r7
+d0043a14:	ab0a      	add	r3, sp, #40	; 0x28
+d0043a16:	eeb0 3a48 	vmov.f32	s6, s16
+d0043a1a:	ed94 0a04 	vldr	s0, [r4, #16]
+d0043a1e:	eb06 1545 	add.w	r5, r6, r5, lsl #5
+d0043a22:	edd4 0a05 	vldr	s1, [r4, #20]
+d0043a26:	ed94 1a06 	vldr	s2, [r4, #24]
+d0043a2a:	3510      	adds	r5, #16
+d0043a2c:	e895 0007 	ldmia.w	r5, {r0, r1, r2}
+d0043a30:	e903 0007 	stmdb	r3, {r0, r1, r2}
+d0043a34:	eddd 1a07 	vldr	s3, [sp, #28]
+d0043a38:	ed9d 2a08 	vldr	s4, [sp, #32]
+d0043a3c:	eddd 2a09 	vldr	s5, [sp, #36]	; 0x24
+d0043a40:	f7ff f85a 	bl	d0042af8 <rotateAroundAxis>
+d0043a44:	eef0 6a40 	vmov.f32	s13, s0
+d0043a48:	eeb0 7a60 	vmov.f32	s14, s1
+d0043a4c:	ed94 0a07 	vldr	s0, [r4, #28]
+d0043a50:	eef0 7a41 	vmov.f32	s15, s2
+d0043a54:	edd4 0a08 	vldr	s1, [r4, #32]
+d0043a58:	ed94 1a09 	vldr	s2, [r4, #36]	; 0x24
+d0043a5c:	eeb0 3a48 	vmov.f32	s6, s16
+d0043a60:	eddd 1a07 	vldr	s3, [sp, #28]
+d0043a64:	ed9d 2a08 	vldr	s4, [sp, #32]
+d0043a68:	eddd 2a09 	vldr	s5, [sp, #36]	; 0x24
+d0043a6c:	edc4 6a04 	vstr	s13, [r4, #16]
+d0043a70:	ed84 7a05 	vstr	s14, [r4, #20]
+d0043a74:	edc4 7a06 	vstr	s15, [r4, #24]
+d0043a78:	f7ff f83e 	bl	d0042af8 <rotateAroundAxis>
+d0043a7c:	eef0 6a40 	vmov.f32	s13, s0
+d0043a80:	eeb0 7a60 	vmov.f32	s14, s1
+d0043a84:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
+d0043a88:	eef0 7a41 	vmov.f32	s15, s2
+d0043a8c:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
+d0043a90:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
+d0043a94:	eeb0 3a48 	vmov.f32	s6, s16
+d0043a98:	eddd 1a07 	vldr	s3, [sp, #28]
+d0043a9c:	ed9d 2a08 	vldr	s4, [sp, #32]
+d0043aa0:	eddd 2a09 	vldr	s5, [sp, #36]	; 0x24
+d0043aa4:	edc4 6a07 	vstr	s13, [r4, #28]
+d0043aa8:	ed84 7a08 	vstr	s14, [r4, #32]
+d0043aac:	edc4 7a09 	vstr	s15, [r4, #36]	; 0x24
+d0043ab0:	f7ff f822 	bl	d0042af8 <rotateAroundAxis>
+d0043ab4:	ed84 0a0a 	vstr	s0, [r4, #40]	; 0x28
+d0043ab8:	edc4 0a0b 	vstr	s1, [r4, #44]	; 0x2c
+d0043abc:	ed84 1a0c 	vstr	s2, [r4, #48]	; 0x30
+d0043ac0:	e78c      	b.n	d00439dc <entityRotation.part.0+0x94>
+d0043ac2:	eeb0 1a42 	vmov.f32	s2, s4
+d0043ac6:	eef0 0a61 	vmov.f32	s1, s3
+d0043aca:	eeb0 3a40 	vmov.f32	s6, s0
+d0043ace:	eeb0 0a61 	vmov.f32	s0, s3
+d0043ad2:	eef0 2a61 	vmov.f32	s5, s3
+d0043ad6:	f7ff f80f 	bl	d0042af8 <rotateAroundAxis>
+d0043ada:	eeb0 7a60 	vmov.f32	s14, s1
+d0043ade:	eef0 6a40 	vmov.f32	s13, s0
+d0043ae2:	edd4 0a08 	vldr	s1, [r4, #32]
+d0043ae6:	eef0 7a41 	vmov.f32	s15, s2
+d0043aea:	ed94 0a07 	vldr	s0, [r4, #28]
+d0043aee:	ed94 1a09 	vldr	s2, [r4, #36]	; 0x24
+d0043af2:	eeb0 3a49 	vmov.f32	s6, s18
+d0043af6:	eddd 1a01 	vldr	s3, [sp, #4]
+d0043afa:	ed9d 2a02 	vldr	s4, [sp, #8]
+d0043afe:	eddd 2a03 	vldr	s5, [sp, #12]
+d0043b02:	edc4 6a04 	vstr	s13, [r4, #16]
+d0043b06:	ed84 7a05 	vstr	s14, [r4, #20]
+d0043b0a:	edc4 7a06 	vstr	s15, [r4, #24]
+d0043b0e:	f7fe fff3 	bl	d0042af8 <rotateAroundAxis>
+d0043b12:	eef0 6a40 	vmov.f32	s13, s0
+d0043b16:	eeb0 7a60 	vmov.f32	s14, s1
+d0043b1a:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
+d0043b1e:	eef0 7a41 	vmov.f32	s15, s2
+d0043b22:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
+d0043b26:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
+d0043b2a:	eeb0 3a49 	vmov.f32	s6, s18
+d0043b2e:	eddd 1a01 	vldr	s3, [sp, #4]
+d0043b32:	ed9d 2a02 	vldr	s4, [sp, #8]
+d0043b36:	eddd 2a03 	vldr	s5, [sp, #12]
+d0043b3a:	edc4 6a07 	vstr	s13, [r4, #28]
+d0043b3e:	ed84 7a08 	vstr	s14, [r4, #32]
+d0043b42:	edc4 7a09 	vstr	s15, [r4, #36]	; 0x24
+d0043b46:	f7fe ffd7 	bl	d0042af8 <rotateAroundAxis>
+d0043b4a:	eef5 8a40 	vcmp.f32	s17, #0.0
+d0043b4e:	ed84 0a0a 	vstr	s0, [r4, #40]	; 0x28
+d0043b52:	edc4 0a0b 	vstr	s1, [r4, #44]	; 0x2c
+d0043b56:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043b5a:	ed84 1a0c 	vstr	s2, [r4, #48]	; 0x30
+d0043b5e:	f43f af37 	beq.w	d00439d0 <entityRotation.part.0+0x88>
+d0043b62:	ed94 0a04 	vldr	s0, [r4, #16]
+d0043b66:	eeb0 3a68 	vmov.f32	s6, s17
+d0043b6a:	edd4 0a05 	vldr	s1, [r4, #20]
+d0043b6e:	ed94 1a06 	vldr	s2, [r4, #24]
+d0043b72:	eddd 1a04 	vldr	s3, [sp, #16]
+d0043b76:	ed9d 2a05 	vldr	s4, [sp, #20]
+d0043b7a:	eddd 2a06 	vldr	s5, [sp, #24]
+d0043b7e:	f7fe ffbb 	bl	d0042af8 <rotateAroundAxis>
+d0043b82:	eef0 6a40 	vmov.f32	s13, s0
+d0043b86:	eeb0 7a60 	vmov.f32	s14, s1
+d0043b8a:	ed94 0a07 	vldr	s0, [r4, #28]
+d0043b8e:	eef0 7a41 	vmov.f32	s15, s2
+d0043b92:	edd4 0a08 	vldr	s1, [r4, #32]
+d0043b96:	ed94 1a09 	vldr	s2, [r4, #36]	; 0x24
+d0043b9a:	eeb0 3a68 	vmov.f32	s6, s17
+d0043b9e:	eddd 1a04 	vldr	s3, [sp, #16]
+d0043ba2:	ed9d 2a05 	vldr	s4, [sp, #20]
+d0043ba6:	eddd 2a06 	vldr	s5, [sp, #24]
+d0043baa:	edc4 6a04 	vstr	s13, [r4, #16]
+d0043bae:	ed84 7a05 	vstr	s14, [r4, #20]
+d0043bb2:	edc4 7a06 	vstr	s15, [r4, #24]
+d0043bb6:	f7fe ff9f 	bl	d0042af8 <rotateAroundAxis>
+d0043bba:	eef0 6a40 	vmov.f32	s13, s0
+d0043bbe:	eeb0 7a60 	vmov.f32	s14, s1
+d0043bc2:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
+d0043bc6:	eef0 7a41 	vmov.f32	s15, s2
+d0043bca:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
+d0043bce:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
+d0043bd2:	eeb0 3a68 	vmov.f32	s6, s17
+d0043bd6:	eddd 1a04 	vldr	s3, [sp, #16]
+d0043bda:	ed9d 2a05 	vldr	s4, [sp, #20]
+d0043bde:	eddd 2a06 	vldr	s5, [sp, #24]
+d0043be2:	edc4 6a07 	vstr	s13, [r4, #28]
+d0043be6:	ed84 7a08 	vstr	s14, [r4, #32]
+d0043bea:	edc4 7a09 	vstr	s15, [r4, #36]	; 0x24
+d0043bee:	f7fe ff83 	bl	d0042af8 <rotateAroundAxis>
+d0043bf2:	eeb5 8a40 	vcmp.f32	s16, #0.0
+d0043bf6:	ed84 0a0a 	vstr	s0, [r4, #40]	; 0x28
+d0043bfa:	edc4 0a0b 	vstr	s1, [r4, #44]	; 0x2c
+d0043bfe:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043c02:	ed84 1a0c 	vstr	s2, [r4, #48]	; 0x30
+d0043c06:	f43f aee9 	beq.w	d00439dc <entityRotation.part.0+0x94>
+d0043c0a:	eeb0 3a48 	vmov.f32	s6, s16
+d0043c0e:	eddd 1a07 	vldr	s3, [sp, #28]
+d0043c12:	ed9d 2a08 	vldr	s4, [sp, #32]
+d0043c16:	eddd 2a09 	vldr	s5, [sp, #36]	; 0x24
+d0043c1a:	ed94 0a04 	vldr	s0, [r4, #16]
+d0043c1e:	edd4 0a05 	vldr	s1, [r4, #20]
+d0043c22:	ed94 1a06 	vldr	s2, [r4, #24]
+d0043c26:	e70b      	b.n	d0043a40 <entityRotation.part.0+0xf8>
+d0043c28:	d012da80 	.word	0xd012da80
+d0043c2c:	00000000 	.word	0x00000000
+d0043c30:	f104 0328 	add.w	r3, r4, #40	; 0x28
+d0043c34:	f10d 0c04 	add.w	ip, sp, #4
+d0043c38:	eeb0 3a40 	vmov.f32	s6, s0
+d0043c3c:	edd4 0a05 	vldr	s1, [r4, #20]
+d0043c40:	ed94 0a04 	vldr	s0, [r4, #16]
+d0043c44:	ed94 1a06 	vldr	s2, [r4, #24]
+d0043c48:	e893 0007 	ldmia.w	r3, {r0, r1, r2}
+d0043c4c:	e88c 0007 	stmia.w	ip, {r0, r1, r2}
+d0043c50:	eddd 1a01 	vldr	s3, [sp, #4]
+d0043c54:	ed9d 2a02 	vldr	s4, [sp, #8]
+d0043c58:	eddd 2a03 	vldr	s5, [sp, #12]
+d0043c5c:	f7fe ff4c 	bl	d0042af8 <rotateAroundAxis>
+d0043c60:	eef0 6a40 	vmov.f32	s13, s0
+d0043c64:	eeb0 7a60 	vmov.f32	s14, s1
+d0043c68:	ed94 0a07 	vldr	s0, [r4, #28]
+d0043c6c:	eef0 7a41 	vmov.f32	s15, s2
+d0043c70:	edd4 0a08 	vldr	s1, [r4, #32]
+d0043c74:	ed94 1a09 	vldr	s2, [r4, #36]	; 0x24
+d0043c78:	eeb0 3a49 	vmov.f32	s6, s18
+d0043c7c:	eddd 1a01 	vldr	s3, [sp, #4]
+d0043c80:	ed9d 2a02 	vldr	s4, [sp, #8]
+d0043c84:	eddd 2a03 	vldr	s5, [sp, #12]
+d0043c88:	edc4 6a04 	vstr	s13, [r4, #16]
+d0043c8c:	ed84 7a05 	vstr	s14, [r4, #20]
+d0043c90:	edc4 7a06 	vstr	s15, [r4, #24]
+d0043c94:	f7fe ff30 	bl	d0042af8 <rotateAroundAxis>
+d0043c98:	eef0 6a40 	vmov.f32	s13, s0
+d0043c9c:	eeb0 7a60 	vmov.f32	s14, s1
+d0043ca0:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
+d0043ca4:	eef0 7a41 	vmov.f32	s15, s2
+d0043ca8:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
+d0043cac:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
+d0043cb0:	eeb0 3a49 	vmov.f32	s6, s18
+d0043cb4:	eddd 1a01 	vldr	s3, [sp, #4]
+d0043cb8:	ed9d 2a02 	vldr	s4, [sp, #8]
+d0043cbc:	eddd 2a03 	vldr	s5, [sp, #12]
+d0043cc0:	edc4 6a07 	vstr	s13, [r4, #28]
+d0043cc4:	ed84 7a08 	vstr	s14, [r4, #32]
+d0043cc8:	edc4 7a09 	vstr	s15, [r4, #36]	; 0x24
+d0043ccc:	f7fe ff14 	bl	d0042af8 <rotateAroundAxis>
+d0043cd0:	eef5 8a40 	vcmp.f32	s17, #0.0
+d0043cd4:	ed84 0a0a 	vstr	s0, [r4, #40]	; 0x28
+d0043cd8:	edc4 0a0b 	vstr	s1, [r4, #44]	; 0x2c
+d0043cdc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043ce0:	ed84 1a0c 	vstr	s2, [r4, #48]	; 0x30
+d0043ce4:	f43f ae90 	beq.w	d0043a08 <entityRotation.part.0+0xc0>
+d0043ce8:	197b      	adds	r3, r7, r5
+d0043cea:	f10d 0c10 	add.w	ip, sp, #16
+d0043cee:	ed94 0a04 	vldr	s0, [r4, #16]
+d0043cf2:	eeb0 3a68 	vmov.f32	s6, s17
+d0043cf6:	eb06 1343 	add.w	r3, r6, r3, lsl #5
+d0043cfa:	edd4 0a05 	vldr	s1, [r4, #20]
+d0043cfe:	ed94 1a06 	vldr	s2, [r4, #24]
+d0043d02:	331c      	adds	r3, #28
+d0043d04:	e893 0007 	ldmia.w	r3, {r0, r1, r2}
+d0043d08:	e88c 0007 	stmia.w	ip, {r0, r1, r2}
+d0043d0c:	eddd 1a04 	vldr	s3, [sp, #16]
+d0043d10:	ed9d 2a05 	vldr	s4, [sp, #20]
+d0043d14:	eddd 2a06 	vldr	s5, [sp, #24]
+d0043d18:	f7fe feee 	bl	d0042af8 <rotateAroundAxis>
+d0043d1c:	eef0 6a40 	vmov.f32	s13, s0
+d0043d20:	eeb0 7a60 	vmov.f32	s14, s1
+d0043d24:	ed94 0a07 	vldr	s0, [r4, #28]
+d0043d28:	eef0 7a41 	vmov.f32	s15, s2
+d0043d2c:	edd4 0a08 	vldr	s1, [r4, #32]
+d0043d30:	ed94 1a09 	vldr	s2, [r4, #36]	; 0x24
+d0043d34:	eeb0 3a68 	vmov.f32	s6, s17
+d0043d38:	eddd 1a04 	vldr	s3, [sp, #16]
+d0043d3c:	ed9d 2a05 	vldr	s4, [sp, #20]
+d0043d40:	eddd 2a06 	vldr	s5, [sp, #24]
+d0043d44:	edc4 6a04 	vstr	s13, [r4, #16]
+d0043d48:	ed84 7a05 	vstr	s14, [r4, #20]
+d0043d4c:	edc4 7a06 	vstr	s15, [r4, #24]
+d0043d50:	f7fe fed2 	bl	d0042af8 <rotateAroundAxis>
+d0043d54:	eef0 6a40 	vmov.f32	s13, s0
+d0043d58:	eeb0 7a60 	vmov.f32	s14, s1
+d0043d5c:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
+d0043d60:	eef0 7a41 	vmov.f32	s15, s2
+d0043d64:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
+d0043d68:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
+d0043d6c:	eeb0 3a68 	vmov.f32	s6, s17
+d0043d70:	eddd 1a04 	vldr	s3, [sp, #16]
+d0043d74:	ed9d 2a05 	vldr	s4, [sp, #20]
+d0043d78:	eddd 2a06 	vldr	s5, [sp, #24]
+d0043d7c:	edc4 6a07 	vstr	s13, [r4, #28]
+d0043d80:	ed84 7a08 	vstr	s14, [r4, #32]
+d0043d84:	edc4 7a09 	vstr	s15, [r4, #36]	; 0x24
+d0043d88:	f7fe feb6 	bl	d0042af8 <rotateAroundAxis>
+d0043d8c:	eeb5 8a40 	vcmp.f32	s16, #0.0
+d0043d90:	ed84 0a0a 	vstr	s0, [r4, #40]	; 0x28
+d0043d94:	edc4 0a0b 	vstr	s1, [r4, #44]	; 0x2c
+d0043d98:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043d9c:	ed84 1a0c 	vstr	s2, [r4, #48]	; 0x30
+d0043da0:	f43f ae1c 	beq.w	d00439dc <entityRotation.part.0+0x94>
+d0043da4:	e635      	b.n	d0043a12 <entityRotation.part.0+0xca>
+d0043da6:	bf00      	nop
 
-d0043b3c <lightsClear>:
-d0043b3c:	4b01      	ldr	r3, [pc, #4]	; (d0043b44 <lightsClear+0x8>)
-d0043b3e:	2200      	movs	r2, #0
-d0043b40:	601a      	str	r2, [r3, #0]
-d0043b42:	4770      	bx	lr
-d0043b44:	d0094660 	.word	0xd0094660
+d0043da8 <meshComputeBoundsRadius>:
+d0043da8:	b1f0      	cbz	r0, d0043de8 <meshComputeBoundsRadius+0x40>
+d0043daa:	6803      	ldr	r3, [r0, #0]
+d0043dac:	b1e3      	cbz	r3, d0043de8 <meshComputeBoundsRadius+0x40>
+d0043dae:	6842      	ldr	r2, [r0, #4]
+d0043db0:	2a00      	cmp	r2, #0
+d0043db2:	dd19      	ble.n	d0043de8 <meshComputeBoundsRadius+0x40>
+d0043db4:	eb02 0242 	add.w	r2, r2, r2, lsl #1
+d0043db8:	ed9f 6a0d 	vldr	s12, [pc, #52]	; d0043df0 <meshComputeBoundsRadius+0x48>
+d0043dbc:	eb03 0282 	add.w	r2, r3, r2, lsl #2
+d0043dc0:	edd3 7a01 	vldr	s15, [r3, #4]
+d0043dc4:	330c      	adds	r3, #12
+d0043dc6:	ed53 6a03 	vldr	s13, [r3, #-12]
+d0043dca:	ee67 7aa7 	vmul.f32	s15, s15, s15
+d0043dce:	ed13 7a01 	vldr	s14, [r3, #-4]
+d0043dd2:	429a      	cmp	r2, r3
+d0043dd4:	eee6 7aa6 	vfma.f32	s15, s13, s13
+d0043dd8:	eee7 7a07 	vfma.f32	s15, s14, s14
+d0043ddc:	fe86 6a27 	vmaxnm.f32	s12, s12, s15
+d0043de0:	d1ee      	bne.n	d0043dc0 <meshComputeBoundsRadius+0x18>
+d0043de2:	eeb1 0ac6 	vsqrt.f32	s0, s12
+d0043de6:	4770      	bx	lr
+d0043de8:	ed9f 0a01 	vldr	s0, [pc, #4]	; d0043df0 <meshComputeBoundsRadius+0x48>
+d0043dec:	4770      	bx	lr
+d0043dee:	bf00      	nop
+d0043df0:	00000000 	.word	0x00000000
 
-d0043b48 <addDirectionalLight>:
-d0043b48:	b5f0      	push	{r4, r5, r6, r7, lr}
-d0043b4a:	4f15      	ldr	r7, [pc, #84]	; (d0043ba0 <addDirectionalLight+0x58>)
-d0043b4c:	683d      	ldr	r5, [r7, #0]
-d0043b4e:	2d07      	cmp	r5, #7
-d0043b50:	ed2d 8b02 	vpush	{d8}
-d0043b54:	b085      	sub	sp, #20
-d0043b56:	dc1f      	bgt.n	d0043b98 <addDirectionalLight+0x50>
-d0043b58:	4912      	ldr	r1, [pc, #72]	; (d0043ba4 <addDirectionalLight+0x5c>)
-d0043b5a:	2300      	movs	r3, #0
-d0043b5c:	4606      	mov	r6, r0
-d0043b5e:	01aa      	lsls	r2, r5, #6
-d0043b60:	eb01 1485 	add.w	r4, r1, r5, lsl #6
-d0043b64:	2001      	movs	r0, #1
-d0043b66:	eeb0 8a61 	vmov.f32	s16, s3
-d0043b6a:	6063      	str	r3, [r4, #4]
-d0043b6c:	60a3      	str	r3, [r4, #8]
-d0043b6e:	60e3      	str	r3, [r4, #12]
-d0043b70:	5488      	strb	r0, [r1, r2]
-d0043b72:	f7fe fcc3 	bl	d00424fc <vec3Normalize>
-d0043b76:	683b      	ldr	r3, [r7, #0]
-d0043b78:	ed84 8a07 	vstr	s16, [r4, #28]
-d0043b7c:	3301      	adds	r3, #1
-d0043b7e:	62e6      	str	r6, [r4, #44]	; 0x2c
-d0043b80:	ed84 0a04 	vstr	s0, [r4, #16]
-d0043b84:	edc4 0a05 	vstr	s1, [r4, #20]
-d0043b88:	ed84 1a06 	vstr	s2, [r4, #24]
-d0043b8c:	603b      	str	r3, [r7, #0]
-d0043b8e:	4628      	mov	r0, r5
-d0043b90:	b005      	add	sp, #20
-d0043b92:	ecbd 8b02 	vpop	{d8}
-d0043b96:	bdf0      	pop	{r4, r5, r6, r7, pc}
-d0043b98:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
-d0043b9c:	e7f7      	b.n	d0043b8e <addDirectionalLight+0x46>
-d0043b9e:	bf00      	nop
-d0043ba0:	d0094660 	.word	0xd0094660
-d0043ba4:	d0094680 	.word	0xd0094680
+d0043df4 <entityWorldSpawn>:
+d0043df4:	b4f0      	push	{r4, r5, r6, r7}
+d0043df6:	4d20      	ldr	r5, [pc, #128]	; (d0043e78 <entityWorldSpawn+0x84>)
+d0043df8:	b084      	sub	sp, #16
+d0043dfa:	2300      	movs	r3, #0
+d0043dfc:	462a      	mov	r2, r5
+d0043dfe:	ed8d 0a01 	vstr	s0, [sp, #4]
+d0043e02:	edcd 0a02 	vstr	s1, [sp, #8]
+d0043e06:	ed8d 1a03 	vstr	s2, [sp, #12]
+d0043e0a:	e003      	b.n	d0043e14 <entityWorldSpawn+0x20>
+d0043e0c:	3301      	adds	r3, #1
+d0043e0e:	f5b3 7f80 	cmp.w	r3, #256	; 0x100
+d0043e12:	d02b      	beq.n	d0043e6c <entityWorldSpawn+0x78>
+d0043e14:	f892 4034 	ldrb.w	r4, [r2, #52]	; 0x34
+d0043e18:	3260      	adds	r2, #96	; 0x60
+d0043e1a:	2c00      	cmp	r4, #0
+d0043e1c:	d1f6      	bne.n	d0043e0c <entityWorldSpawn+0x18>
+d0043e1e:	eb03 0243 	add.w	r2, r3, r3, lsl #1
+d0043e22:	4f16      	ldr	r7, [pc, #88]	; (d0043e7c <entityWorldSpawn+0x88>)
+d0043e24:	f04f 517e 	mov.w	r1, #1065353216	; 0x3f800000
+d0043e28:	2600      	movs	r6, #0
+d0043e2a:	eb05 1542 	add.w	r5, r5, r2, lsl #5
+d0043e2e:	f240 1c01 	movw	ip, #257	; 0x101
+d0043e32:	eb07 1742 	add.w	r7, r7, r2, lsl #5
+d0043e36:	aa04      	add	r2, sp, #16
+d0043e38:	60e8      	str	r0, [r5, #12]
+d0043e3a:	61e9      	str	r1, [r5, #28]
+d0043e3c:	62e9      	str	r1, [r5, #44]	; 0x2c
+d0043e3e:	61a9      	str	r1, [r5, #24]
+d0043e40:	622e      	str	r6, [r5, #32]
+d0043e42:	626e      	str	r6, [r5, #36]	; 0x24
+d0043e44:	62ae      	str	r6, [r5, #40]	; 0x28
+d0043e46:	632e      	str	r6, [r5, #48]	; 0x30
+d0043e48:	612e      	str	r6, [r5, #16]
+d0043e4a:	616e      	str	r6, [r5, #20]
+d0043e4c:	e912 0007 	ldmdb	r2, {r0, r1, r2}
+d0043e50:	e885 0007 	stmia.w	r5, {r0, r1, r2}
+d0043e54:	4618      	mov	r0, r3
+d0043e56:	f8a7 c014 	strh.w	ip, [r7, #20]
+d0043e5a:	f885 4036 	strb.w	r4, [r5, #54]	; 0x36
+d0043e5e:	63ee      	str	r6, [r5, #60]	; 0x3c
+d0043e60:	642e      	str	r6, [r5, #64]	; 0x40
+d0043e62:	646e      	str	r6, [r5, #68]	; 0x44
+d0043e64:	63ae      	str	r6, [r5, #56]	; 0x38
+d0043e66:	b004      	add	sp, #16
+d0043e68:	bcf0      	pop	{r4, r5, r6, r7}
+d0043e6a:	4770      	bx	lr
+d0043e6c:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
+d0043e70:	4618      	mov	r0, r3
+d0043e72:	b004      	add	sp, #16
+d0043e74:	bcf0      	pop	{r4, r5, r6, r7}
+d0043e76:	4770      	bx	lr
+d0043e78:	d012da80 	.word	0xd012da80
+d0043e7c:	d012daa0 	.word	0xd012daa0
 
-d0043ba8 <setDefaultRenderMode>:
-d0043ba8:	2300      	movs	r3, #0
-d0043baa:	4803      	ldr	r0, [pc, #12]	; (d0043bb8 <setDefaultRenderMode+0x10>)
-d0043bac:	4903      	ldr	r1, [pc, #12]	; (d0043bbc <setDefaultRenderMode+0x14>)
-d0043bae:	4a04      	ldr	r2, [pc, #16]	; (d0043bc0 <setDefaultRenderMode+0x18>)
-d0043bb0:	6003      	str	r3, [r0, #0]
-d0043bb2:	600b      	str	r3, [r1, #0]
-d0043bb4:	6013      	str	r3, [r2, #0]
-d0043bb6:	4770      	bx	lr
-d0043bb8:	d00a0880 	.word	0xd00a0880
-d0043bbc:	d01208a0 	.word	0xd01208a0
-d0043bc0:	d01208a4 	.word	0xd01208a4
+d0043e80 <entitySetPosition>:
+d0043e80:	b084      	sub	sp, #16
+d0043e82:	28ff      	cmp	r0, #255	; 0xff
+d0043e84:	ed8d 0a01 	vstr	s0, [sp, #4]
+d0043e88:	edcd 0a02 	vstr	s1, [sp, #8]
+d0043e8c:	ed8d 1a03 	vstr	s2, [sp, #12]
+d0043e90:	d80e      	bhi.n	d0043eb0 <entitySetPosition+0x30>
+d0043e92:	eb00 0040 	add.w	r0, r0, r0, lsl #1
+d0043e96:	4b07      	ldr	r3, [pc, #28]	; (d0043eb4 <entitySetPosition+0x34>)
+d0043e98:	eb03 1340 	add.w	r3, r3, r0, lsl #5
+d0043e9c:	f893 2034 	ldrb.w	r2, [r3, #52]	; 0x34
+d0043ea0:	b132      	cbz	r2, d0043eb0 <entitySetPosition+0x30>
+d0043ea2:	68da      	ldr	r2, [r3, #12]
+d0043ea4:	b122      	cbz	r2, d0043eb0 <entitySetPosition+0x30>
+d0043ea6:	aa04      	add	r2, sp, #16
+d0043ea8:	e912 0007 	ldmdb	r2, {r0, r1, r2}
+d0043eac:	e883 0007 	stmia.w	r3, {r0, r1, r2}
+d0043eb0:	b004      	add	sp, #16
+d0043eb2:	4770      	bx	lr
+d0043eb4:	d012da80 	.word	0xd012da80
 
-d0043bc4 <enableFlatMode>:
-d0043bc4:	4b01      	ldr	r3, [pc, #4]	; (d0043bcc <enableFlatMode+0x8>)
-d0043bc6:	6018      	str	r0, [r3, #0]
-d0043bc8:	4770      	bx	lr
-d0043bca:	bf00      	nop
-d0043bcc:	d00a0880 	.word	0xd00a0880
+d0043eb8 <entityGetPosition>:
+d0043eb8:	28ff      	cmp	r0, #255	; 0xff
+d0043eba:	b088      	sub	sp, #32
+d0043ebc:	d80e      	bhi.n	d0043edc <entityGetPosition+0x24>
+d0043ebe:	4b0d      	ldr	r3, [pc, #52]	; (d0043ef4 <entityGetPosition+0x3c>)
+d0043ec0:	eb00 0040 	add.w	r0, r0, r0, lsl #1
+d0043ec4:	eb03 1040 	add.w	r0, r3, r0, lsl #5
+d0043ec8:	f890 3034 	ldrb.w	r3, [r0, #52]	; 0x34
+d0043ecc:	b133      	cbz	r3, d0043edc <entityGetPosition+0x24>
+d0043ece:	68c3      	ldr	r3, [r0, #12]
+d0043ed0:	b123      	cbz	r3, d0043edc <entityGetPosition+0x24>
+d0043ed2:	ab08      	add	r3, sp, #32
+d0043ed4:	c807      	ldmia	r0, {r0, r1, r2}
+d0043ed6:	e903 0007 	stmdb	r3, {r0, r1, r2}
+d0043eda:	e003      	b.n	d0043ee4 <entityGetPosition+0x2c>
+d0043edc:	2300      	movs	r3, #0
+d0043ede:	9305      	str	r3, [sp, #20]
+d0043ee0:	9306      	str	r3, [sp, #24]
+d0043ee2:	9307      	str	r3, [sp, #28]
+d0043ee4:	ed9d 0a05 	vldr	s0, [sp, #20]
+d0043ee8:	eddd 0a06 	vldr	s1, [sp, #24]
+d0043eec:	ed9d 1a07 	vldr	s2, [sp, #28]
+d0043ef0:	b008      	add	sp, #32
+d0043ef2:	4770      	bx	lr
+d0043ef4:	d012da80 	.word	0xd012da80
 
-d0043bd0 <clipTriangleToFrustum>:
-d0043bd0:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
-d0043bd4:	ed2d 8b02 	vpush	{d8}
-d0043bd8:	b0ba      	sub	sp, #232	; 0xe8
-d0043bda:	ed91 7a10 	vldr	s14, [r1, #64]	; 0x40
-d0043bde:	4605      	mov	r5, r0
-d0043be0:	aa07      	add	r2, sp, #28
-d0043be2:	ab04      	add	r3, sp, #16
-d0043be4:	ed8d 0a07 	vstr	s0, [sp, #28]
-d0043be8:	ac0a      	add	r4, sp, #40	; 0x28
-d0043bea:	edcd 0a08 	vstr	s1, [sp, #32]
-d0043bee:	af0d      	add	r7, sp, #52	; 0x34
-d0043bf0:	ed8d 1a09 	vstr	s2, [sp, #36]	; 0x24
-d0043bf4:	ae01      	add	r6, sp, #4
-d0043bf6:	edcd 1a04 	vstr	s3, [sp, #16]
-d0043bfa:	ed8d 2a05 	vstr	s4, [sp, #20]
-d0043bfe:	edcd 2a06 	vstr	s5, [sp, #24]
-d0043c02:	ed8d 4a03 	vstr	s8, [sp, #12]
-d0043c06:	ed8d 3a01 	vstr	s6, [sp, #4]
-d0043c0a:	edcd 3a02 	vstr	s7, [sp, #8]
-d0043c0e:	ca07      	ldmia	r2, {r0, r1, r2}
-d0043c10:	e884 0007 	stmia.w	r4, {r0, r1, r2}
-d0043c14:	e893 0007 	ldmia.w	r3, {r0, r1, r2}
-d0043c18:	ab10      	add	r3, sp, #64	; 0x40
-d0043c1a:	ed9d 6a0a 	vldr	s12, [sp, #40]	; 0x28
-d0043c1e:	e887 0007 	stmia.w	r7, {r0, r1, r2}
-d0043c22:	e896 0007 	ldmia.w	r6, {r0, r1, r2}
-d0043c26:	e883 0007 	stmia.w	r3, {r0, r1, r2}
-d0043c2a:	ed9d 4a12 	vldr	s8, [sp, #72]	; 0x48
-d0043c2e:	eddd 5a10 	vldr	s11, [sp, #64]	; 0x40
-d0043c32:	ee34 5a47 	vsub.f32	s10, s8, s14
-d0043c36:	eddd 7a0c 	vldr	s15, [sp, #48]	; 0x30
-d0043c3a:	eddd 1a11 	vldr	s3, [sp, #68]	; 0x44
-d0043c3e:	ee77 4ac7 	vsub.f32	s9, s15, s14
-d0043c42:	eddd 6a0b 	vldr	s13, [sp, #44]	; 0x2c
-d0043c46:	eeb5 5ac0 	vcmpe.f32	s10, #0.0
-d0043c4a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043c4e:	eef5 4ac0 	vcmpe.f32	s9, #0.0
-d0043c52:	bfac      	ite	ge
-d0043c54:	2101      	movge	r1, #1
-d0043c56:	2100      	movlt	r1, #0
-d0043c58:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043c5c:	bfac      	ite	ge
-d0043c5e:	2001      	movge	r0, #1
-d0043c60:	2000      	movlt	r0, #0
-d0043c62:	2900      	cmp	r1, #0
-d0043c64:	f000 825d 	beq.w	d0044122 <clipTriangleToFrustum+0x552>
-d0043c68:	2800      	cmp	r0, #0
-d0043c6a:	f000 825a 	beq.w	d0044122 <clipTriangleToFrustum+0x552>
-d0043c6e:	2301      	movs	r3, #1
-d0043c70:	ed8d 6a22 	vstr	s12, [sp, #136]	; 0x88
-d0043c74:	edcd 6a23 	vstr	s13, [sp, #140]	; 0x8c
-d0043c78:	edcd 7a24 	vstr	s15, [sp, #144]	; 0x90
-d0043c7c:	eddd 3a0f 	vldr	s7, [sp, #60]	; 0x3c
-d0043c80:	f000 0201 	and.w	r2, r0, #1
-d0043c84:	ed9d 2a0d 	vldr	s4, [sp, #52]	; 0x34
-d0043c88:	ee33 3ac7 	vsub.f32	s6, s7, s14
-d0043c8c:	eddd 2a0e 	vldr	s5, [sp, #56]	; 0x38
-d0043c90:	eeb5 3ac0 	vcmpe.f32	s6, #0.0
-d0043c94:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043c98:	bfb6      	itet	lt
-d0043c9a:	2200      	movlt	r2, #0
-d0043c9c:	2601      	movge	r6, #1
-d0043c9e:	2600      	movlt	r6, #0
-d0043ca0:	2a00      	cmp	r2, #0
-d0043ca2:	f000 8277 	beq.w	d0044194 <clipTriangleToFrustum+0x5c4>
-d0043ca6:	eb03 0043 	add.w	r0, r3, r3, lsl #1
-d0043caa:	ae22      	add	r6, sp, #136	; 0x88
-d0043cac:	3301      	adds	r3, #1
-d0043cae:	eb06 0080 	add.w	r0, r6, r0, lsl #2
-d0043cb2:	ed80 2a00 	vstr	s4, [r0]
-d0043cb6:	edc0 2a01 	vstr	s5, [r0, #4]
-d0043cba:	edc0 3a02 	vstr	s7, [r0, #8]
-d0043cbe:	2a00      	cmp	r2, #0
-d0043cc0:	f000 828e 	beq.w	d00441e0 <clipTriangleToFrustum+0x610>
-d0043cc4:	2900      	cmp	r1, #0
-d0043cc6:	f000 828b 	beq.w	d00441e0 <clipTriangleToFrustum+0x610>
-d0043cca:	eb03 0243 	add.w	r2, r3, r3, lsl #1
-d0043cce:	a922      	add	r1, sp, #136	; 0x88
-d0043cd0:	3301      	adds	r3, #1
-d0043cd2:	eb01 0282 	add.w	r2, r1, r2, lsl #2
-d0043cd6:	edc2 5a00 	vstr	s11, [r2]
-d0043cda:	edc2 1a01 	vstr	s3, [r2, #4]
-d0043cde:	ed82 4a02 	vstr	s8, [r2, #8]
-d0043ce2:	2b02      	cmp	r3, #2
-d0043ce4:	f340 8216 	ble.w	d0044114 <clipTriangleToFrustum+0x544>
-d0043ce8:	eb03 0643 	add.w	r6, r3, r3, lsl #1
-d0043cec:	a822      	add	r0, sp, #136	; 0x88
-d0043cee:	2300      	movs	r3, #0
-d0043cf0:	00b6      	lsls	r6, r6, #2
-d0043cf2:	4601      	mov	r1, r0
-d0043cf4:	4607      	mov	r7, r0
-d0043cf6:	f1a6 020c 	sub.w	r2, r6, #12
-d0043cfa:	4406      	add	r6, r0
-d0043cfc:	4402      	add	r2, r0
-d0043cfe:	ed92 7a00 	vldr	s14, [r2]
-d0043d02:	edd2 7a02 	vldr	s15, [r2, #8]
-d0043d06:	ed92 6a01 	vldr	s12, [r2, #4]
-d0043d0a:	ee77 6a27 	vadd.f32	s13, s14, s15
-d0043d0e:	e009      	b.n	d0043d24 <clipTriangleToFrustum+0x154>
-d0043d10:	3301      	adds	r3, #1
-d0043d12:	ed82 7a00 	vstr	s14, [r2]
-d0043d16:	ed82 6a01 	vstr	s12, [r2, #4]
-d0043d1a:	edc2 7a02 	vstr	s15, [r2, #8]
-d0043d1e:	310c      	adds	r1, #12
-d0043d20:	428e      	cmp	r6, r1
-d0043d22:	d04e      	beq.n	d0043dc2 <clipTriangleToFrustum+0x1f2>
-d0043d24:	eeb0 4a47 	vmov.f32	s8, s14
-d0043d28:	ed91 7a00 	vldr	s14, [r1]
-d0043d2c:	eeb0 5a67 	vmov.f32	s10, s15
-d0043d30:	edd1 7a02 	vldr	s15, [r1, #8]
-d0043d34:	eef5 6ac0 	vcmpe.f32	s13, #0.0
-d0043d38:	eb03 0243 	add.w	r2, r3, r3, lsl #1
-d0043d3c:	eef0 5a66 	vmov.f32	s11, s13
-d0043d40:	ee77 6a27 	vadd.f32	s13, s14, s15
-d0043d44:	eb04 0282 	add.w	r2, r4, r2, lsl #2
-d0043d48:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043d4c:	eef0 4a46 	vmov.f32	s9, s12
-d0043d50:	ed91 6a01 	vldr	s12, [r1, #4]
-d0043d54:	eef5 6ac0 	vcmpe.f32	s13, #0.0
-d0043d58:	bfac      	ite	ge
-d0043d5a:	2701      	movge	r7, #1
-d0043d5c:	2700      	movlt	r7, #0
-d0043d5e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043d62:	bfac      	ite	ge
-d0043d64:	f04f 0c01 	movge.w	ip, #1
-d0043d68:	f04f 0c00 	movlt.w	ip, #0
-d0043d6c:	b117      	cbz	r7, d0043d74 <clipTriangleToFrustum+0x1a4>
-d0043d6e:	f1bc 0f00 	cmp.w	ip, #0
-d0043d72:	d1cd      	bne.n	d0043d10 <clipTriangleToFrustum+0x140>
-d0043d74:	eef5 6a40 	vcmp.f32	s13, #0.0
-d0043d78:	eb03 0243 	add.w	r2, r3, r3, lsl #1
-d0043d7c:	ee75 1ae6 	vsub.f32	s3, s11, s13
-d0043d80:	ee37 2a44 	vsub.f32	s4, s14, s8
-d0043d84:	eb04 0282 	add.w	r2, r4, r2, lsl #2
-d0043d88:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043d8c:	ee76 2a64 	vsub.f32	s5, s12, s9
-d0043d90:	ee37 3ac5 	vsub.f32	s6, s15, s10
-d0043d94:	f140 818f 	bpl.w	d00440b6 <clipTriangleToFrustum+0x4e6>
-d0043d98:	2f00      	cmp	r7, #0
-d0043d9a:	f000 818c 	beq.w	d00440b6 <clipTriangleToFrustum+0x4e6>
-d0043d9e:	eec5 3aa1 	vdiv.f32	s7, s11, s3
-d0043da2:	310c      	adds	r1, #12
-d0043da4:	3301      	adds	r3, #1
-d0043da6:	428e      	cmp	r6, r1
-d0043da8:	eea2 4a23 	vfma.f32	s8, s4, s7
-d0043dac:	eee2 4aa3 	vfma.f32	s9, s5, s7
-d0043db0:	eea3 5a23 	vfma.f32	s10, s6, s7
-d0043db4:	ed82 4a00 	vstr	s8, [r2]
-d0043db8:	edc2 4a01 	vstr	s9, [r2, #4]
-d0043dbc:	ed82 5a02 	vstr	s10, [r2, #8]
-d0043dc0:	d1b0      	bne.n	d0043d24 <clipTriangleToFrustum+0x154>
-d0043dc2:	2b02      	cmp	r3, #2
-d0043dc4:	f340 81a6 	ble.w	d0044114 <clipTriangleToFrustum+0x544>
-d0043dc8:	eb03 0343 	add.w	r3, r3, r3, lsl #1
-d0043dcc:	4626      	mov	r6, r4
-d0043dce:	4627      	mov	r7, r4
-d0043dd0:	2200      	movs	r2, #0
-d0043dd2:	009b      	lsls	r3, r3, #2
-d0043dd4:	f1a3 010c 	sub.w	r1, r3, #12
-d0043dd8:	4423      	add	r3, r4
-d0043dda:	4421      	add	r1, r4
-d0043ddc:	edd1 7a00 	vldr	s15, [r1]
-d0043de0:	ed91 7a02 	vldr	s14, [r1, #8]
-d0043de4:	ed91 6a01 	vldr	s12, [r1, #4]
-d0043de8:	ee77 6a67 	vsub.f32	s13, s14, s15
-d0043dec:	e009      	b.n	d0043e02 <clipTriangleToFrustum+0x232>
-d0043dee:	3201      	adds	r2, #1
-d0043df0:	edc1 7a00 	vstr	s15, [r1]
-d0043df4:	ed81 6a01 	vstr	s12, [r1, #4]
-d0043df8:	ed81 7a02 	vstr	s14, [r1, #8]
-d0043dfc:	370c      	adds	r7, #12
-d0043dfe:	42bb      	cmp	r3, r7
-d0043e00:	d059      	beq.n	d0043eb6 <clipTriangleToFrustum+0x2e6>
-d0043e02:	eeb0 4a67 	vmov.f32	s8, s15
-d0043e06:	edd7 7a00 	vldr	s15, [r7]
-d0043e0a:	eeb0 5a47 	vmov.f32	s10, s14
-d0043e0e:	ed97 7a02 	vldr	s14, [r7, #8]
-d0043e12:	eef5 6ac0 	vcmpe.f32	s13, #0.0
-d0043e16:	f10d 0c88 	add.w	ip, sp, #136	; 0x88
-d0043e1a:	eef0 5a66 	vmov.f32	s11, s13
-d0043e1e:	eb02 0142 	add.w	r1, r2, r2, lsl #1
-d0043e22:	ee77 6a67 	vsub.f32	s13, s14, s15
-d0043e26:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043e2a:	eb0c 0181 	add.w	r1, ip, r1, lsl #2
-d0043e2e:	eef0 4a46 	vmov.f32	s9, s12
-d0043e32:	ed97 6a01 	vldr	s12, [r7, #4]
-d0043e36:	eef5 6ac0 	vcmpe.f32	s13, #0.0
-d0043e3a:	bfac      	ite	ge
-d0043e3c:	f04f 0c01 	movge.w	ip, #1
-d0043e40:	f04f 0c00 	movlt.w	ip, #0
-d0043e44:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043e48:	bfac      	ite	ge
-d0043e4a:	f04f 0e01 	movge.w	lr, #1
-d0043e4e:	f04f 0e00 	movlt.w	lr, #0
-d0043e52:	f1bc 0f00 	cmp.w	ip, #0
-d0043e56:	d002      	beq.n	d0043e5e <clipTriangleToFrustum+0x28e>
-d0043e58:	f1be 0f00 	cmp.w	lr, #0
-d0043e5c:	d1c7      	bne.n	d0043dee <clipTriangleToFrustum+0x21e>
-d0043e5e:	eef5 6a40 	vcmp.f32	s13, #0.0
-d0043e62:	eb02 0142 	add.w	r1, r2, r2, lsl #1
-d0043e66:	ee77 3aa5 	vadd.f32	s7, s15, s11
-d0043e6a:	f10d 0888 	add.w	r8, sp, #136	; 0x88
-d0043e6e:	ee77 1ac4 	vsub.f32	s3, s15, s8
-d0043e72:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043e76:	eb08 0181 	add.w	r1, r8, r1, lsl #2
-d0043e7a:	ee36 2a64 	vsub.f32	s4, s12, s9
-d0043e7e:	ee73 3ac7 	vsub.f32	s7, s7, s14
-d0043e82:	ee77 2a45 	vsub.f32	s5, s14, s10
-d0043e86:	f140 8268 	bpl.w	d004435a <clipTriangleToFrustum+0x78a>
-d0043e8a:	f1bc 0f00 	cmp.w	ip, #0
-d0043e8e:	f000 8264 	beq.w	d004435a <clipTriangleToFrustum+0x78a>
-d0043e92:	ee85 3aa3 	vdiv.f32	s6, s11, s7
-d0043e96:	370c      	adds	r7, #12
-d0043e98:	3201      	adds	r2, #1
-d0043e9a:	42bb      	cmp	r3, r7
-d0043e9c:	eea1 4a83 	vfma.f32	s8, s3, s6
-d0043ea0:	eee2 4a03 	vfma.f32	s9, s4, s6
-d0043ea4:	eea2 5a83 	vfma.f32	s10, s5, s6
-d0043ea8:	ed81 4a00 	vstr	s8, [r1]
-d0043eac:	edc1 4a01 	vstr	s9, [r1, #4]
-d0043eb0:	ed81 5a02 	vstr	s10, [r1, #8]
-d0043eb4:	d1a5      	bne.n	d0043e02 <clipTriangleToFrustum+0x232>
-d0043eb6:	2a02      	cmp	r2, #2
-d0043eb8:	f340 812c 	ble.w	d0044114 <clipTriangleToFrustum+0x544>
-d0043ebc:	eb02 0342 	add.w	r3, r2, r2, lsl #1
-d0043ec0:	af22      	add	r7, sp, #136	; 0x88
-d0043ec2:	eddf 6add 	vldr	s13, [pc, #884]	; d0044238 <clipTriangleToFrustum+0x668>
-d0043ec6:	2200      	movs	r2, #0
-d0043ec8:	009b      	lsls	r3, r3, #2
-d0043eca:	eef0 2a66 	vmov.f32	s5, s13
-d0043ece:	f1a3 010c 	sub.w	r1, r3, #12
-d0043ed2:	443b      	add	r3, r7
-d0043ed4:	4439      	add	r1, r7
-d0043ed6:	edd1 7a01 	vldr	s15, [r1, #4]
-d0043eda:	ed91 7a02 	vldr	s14, [r1, #8]
-d0043ede:	eef0 5a67 	vmov.f32	s11, s15
-d0043ee2:	ed91 6a00 	vldr	s12, [r1]
-d0043ee6:	eed7 5a26 	vfnms.f32	s11, s14, s13
-d0043eea:	eef0 6a65 	vmov.f32	s13, s11
-d0043eee:	e00c      	b.n	d0043f0a <clipTriangleToFrustum+0x33a>
-d0043ef0:	f1bc 0f00 	cmp.w	ip, #0
-d0043ef4:	d031      	beq.n	d0043f5a <clipTriangleToFrustum+0x38a>
-d0043ef6:	3201      	adds	r2, #1
-d0043ef8:	ed81 6a00 	vstr	s12, [r1]
-d0043efc:	edc1 7a01 	vstr	s15, [r1, #4]
-d0043f00:	ed81 7a02 	vstr	s14, [r1, #8]
-d0043f04:	300c      	adds	r0, #12
-d0043f06:	4298      	cmp	r0, r3
-d0043f08:	d050      	beq.n	d0043fac <clipTriangleToFrustum+0x3dc>
-d0043f0a:	eeb0 5a47 	vmov.f32	s10, s14
-d0043f0e:	ed90 7a02 	vldr	s14, [r0, #8]
-d0043f12:	eef0 4a67 	vmov.f32	s9, s15
-d0043f16:	edd0 7a01 	vldr	s15, [r0, #4]
-d0043f1a:	ee67 3a22 	vmul.f32	s7, s14, s5
-d0043f1e:	eb02 0142 	add.w	r1, r2, r2, lsl #1
-d0043f22:	eef5 6ac0 	vcmpe.f32	s13, #0.0
-d0043f26:	eef0 5a66 	vmov.f32	s11, s13
-d0043f2a:	eb04 0181 	add.w	r1, r4, r1, lsl #2
-d0043f2e:	ee73 6ae7 	vsub.f32	s13, s7, s15
-d0043f32:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043f36:	eeb0 4a46 	vmov.f32	s8, s12
-d0043f3a:	ed90 6a00 	vldr	s12, [r0]
-d0043f3e:	eef5 6ac0 	vcmpe.f32	s13, #0.0
-d0043f42:	bfac      	ite	ge
-d0043f44:	2701      	movge	r7, #1
-d0043f46:	2700      	movlt	r7, #0
-d0043f48:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043f4c:	bfac      	ite	ge
-d0043f4e:	f04f 0c01 	movge.w	ip, #1
-d0043f52:	f04f 0c00 	movlt.w	ip, #0
-d0043f56:	2f00      	cmp	r7, #0
-d0043f58:	d1ca      	bne.n	d0043ef0 <clipTriangleToFrustum+0x320>
-d0043f5a:	eef5 6a40 	vcmp.f32	s13, #0.0
-d0043f5e:	eb02 0142 	add.w	r1, r2, r2, lsl #1
-d0043f62:	ee37 3aa5 	vadd.f32	s6, s15, s11
-d0043f66:	ee36 1a44 	vsub.f32	s2, s12, s8
-d0043f6a:	eb04 0181 	add.w	r1, r4, r1, lsl #2
-d0043f6e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0043f72:	ee77 1ae4 	vsub.f32	s3, s15, s9
-d0043f76:	ee33 3a63 	vsub.f32	s6, s6, s7
-d0043f7a:	ee37 2a45 	vsub.f32	s4, s14, s10
-d0043f7e:	f140 821f 	bpl.w	d00443c0 <clipTriangleToFrustum+0x7f0>
-d0043f82:	2f00      	cmp	r7, #0
-d0043f84:	f000 821c 	beq.w	d00443c0 <clipTriangleToFrustum+0x7f0>
-d0043f88:	eec5 3a83 	vdiv.f32	s7, s11, s6
-d0043f8c:	300c      	adds	r0, #12
-d0043f8e:	3201      	adds	r2, #1
-d0043f90:	4298      	cmp	r0, r3
-d0043f92:	eea1 4a23 	vfma.f32	s8, s2, s7
-d0043f96:	eee1 4aa3 	vfma.f32	s9, s3, s7
-d0043f9a:	eea2 5a23 	vfma.f32	s10, s4, s7
-d0043f9e:	ed81 4a00 	vstr	s8, [r1]
-d0043fa2:	edc1 4a01 	vstr	s9, [r1, #4]
-d0043fa6:	ed81 5a02 	vstr	s10, [r1, #8]
-d0043faa:	d1ae      	bne.n	d0043f0a <clipTriangleToFrustum+0x33a>
-d0043fac:	2a02      	cmp	r2, #2
-d0043fae:	f340 80b1 	ble.w	d0044114 <clipTriangleToFrustum+0x544>
-d0043fb2:	eb02 0342 	add.w	r3, r2, r2, lsl #1
-d0043fb6:	eddf 6aa0 	vldr	s13, [pc, #640]	; d0044238 <clipTriangleToFrustum+0x668>
-d0043fba:	2700      	movs	r7, #0
-d0043fbc:	009b      	lsls	r3, r3, #2
-d0043fbe:	eef0 3a66 	vmov.f32	s7, s13
-d0043fc2:	f1a3 020c 	sub.w	r2, r3, #12
-d0043fc6:	4423      	add	r3, r4
-d0043fc8:	4414      	add	r4, r2
-d0043fca:	edd4 7a01 	vldr	s15, [r4, #4]
-d0043fce:	ed94 7a02 	vldr	s14, [r4, #8]
-d0043fd2:	eef0 5a67 	vmov.f32	s11, s15
-d0043fd6:	ed94 6a00 	vldr	s12, [r4]
-d0043fda:	eee7 5a26 	vfma.f32	s11, s14, s13
-d0043fde:	eef0 6a65 	vmov.f32	s13, s11
-d0043fe2:	e00a      	b.n	d0043ffa <clipTriangleToFrustum+0x42a>
-d0043fe4:	b380      	cbz	r0, d0044048 <clipTriangleToFrustum+0x478>
-d0043fe6:	3701      	adds	r7, #1
-d0043fe8:	ed82 6a00 	vstr	s12, [r2]
-d0043fec:	edc2 7a01 	vstr	s15, [r2, #4]
-d0043ff0:	ed82 7a02 	vstr	s14, [r2, #8]
-d0043ff4:	360c      	adds	r6, #12
-d0043ff6:	429e      	cmp	r6, r3
-d0043ff8:	d04e      	beq.n	d0044098 <clipTriangleToFrustum+0x4c8>
-d0043ffa:	eef0 4a67 	vmov.f32	s9, s15
-d0043ffe:	edd6 7a01 	vldr	s15, [r6, #4]
-d0044002:	eef5 6ac0 	vcmpe.f32	s13, #0.0
-d0044006:	a922      	add	r1, sp, #136	; 0x88
-d0044008:	eef0 5a66 	vmov.f32	s11, s13
-d004400c:	eb07 0247 	add.w	r2, r7, r7, lsl #1
-d0044010:	eef0 6a67 	vmov.f32	s13, s15
-d0044014:	eeb0 5a47 	vmov.f32	s10, s14
-d0044018:	ed96 7a02 	vldr	s14, [r6, #8]
-d004401c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044020:	eb01 0282 	add.w	r2, r1, r2, lsl #2
-d0044024:	eee7 6a23 	vfma.f32	s13, s14, s7
-d0044028:	eeb0 4a46 	vmov.f32	s8, s12
-d004402c:	ed96 6a00 	vldr	s12, [r6]
-d0044030:	bfac      	ite	ge
-d0044032:	2101      	movge	r1, #1
-d0044034:	2100      	movlt	r1, #0
-d0044036:	eef5 6ac0 	vcmpe.f32	s13, #0.0
-d004403a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004403e:	bfac      	ite	ge
-d0044040:	2001      	movge	r0, #1
-d0044042:	2000      	movlt	r0, #0
-d0044044:	2900      	cmp	r1, #0
-d0044046:	d1cd      	bne.n	d0043fe4 <clipTriangleToFrustum+0x414>
-d0044048:	eef5 6a40 	vcmp.f32	s13, #0.0
-d004404c:	eb07 0247 	add.w	r2, r7, r7, lsl #1
-d0044050:	ac22      	add	r4, sp, #136	; 0x88
-d0044052:	ee35 1ae6 	vsub.f32	s2, s11, s13
-d0044056:	ee76 1a44 	vsub.f32	s3, s12, s8
-d004405a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004405e:	eb04 0282 	add.w	r2, r4, r2, lsl #2
-d0044062:	ee37 2ae4 	vsub.f32	s4, s15, s9
-d0044066:	ee77 2a45 	vsub.f32	s5, s14, s10
-d004406a:	f140 81de 	bpl.w	d004442a <clipTriangleToFrustum+0x85a>
-d004406e:	2900      	cmp	r1, #0
-d0044070:	f000 81db 	beq.w	d004442a <clipTriangleToFrustum+0x85a>
-d0044074:	ee85 3a81 	vdiv.f32	s6, s11, s2
-d0044078:	360c      	adds	r6, #12
-d004407a:	3701      	adds	r7, #1
-d004407c:	429e      	cmp	r6, r3
-d004407e:	eea1 4a83 	vfma.f32	s8, s3, s6
-d0044082:	eee2 4a03 	vfma.f32	s9, s4, s6
-d0044086:	eea2 5a83 	vfma.f32	s10, s5, s6
-d004408a:	ed82 4a00 	vstr	s8, [r2]
-d004408e:	edc2 4a01 	vstr	s9, [r2, #4]
-d0044092:	ed82 5a02 	vstr	s10, [r2, #8]
-d0044096:	d1b0      	bne.n	d0043ffa <clipTriangleToFrustum+0x42a>
-d0044098:	2f02      	cmp	r7, #2
-d004409a:	dd3b      	ble.n	d0044114 <clipTriangleToFrustum+0x544>
-d004409c:	eb07 0247 	add.w	r2, r7, r7, lsl #1
-d00440a0:	a922      	add	r1, sp, #136	; 0x88
-d00440a2:	4628      	mov	r0, r5
-d00440a4:	0092      	lsls	r2, r2, #2
-d00440a6:	f001 ff79 	bl	d0045f9c <memcpy>
-d00440aa:	4638      	mov	r0, r7
-d00440ac:	b03a      	add	sp, #232	; 0xe8
-d00440ae:	ecbd 8b02 	vpop	{d8}
-d00440b2:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
-d00440b6:	eef5 5a40 	vcmp.f32	s11, #0.0
-d00440ba:	eb03 0243 	add.w	r2, r3, r3, lsl #1
-d00440be:	ee75 1ae6 	vsub.f32	s3, s11, s13
-d00440c2:	eb04 0782 	add.w	r7, r4, r2, lsl #2
-d00440c6:	ee37 2a44 	vsub.f32	s4, s14, s8
-d00440ca:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00440ce:	463a      	mov	r2, r7
-d00440d0:	ee76 2a64 	vsub.f32	s5, s12, s9
-d00440d4:	ee37 3ac5 	vsub.f32	s6, s15, s10
-d00440d8:	f107 070c 	add.w	r7, r7, #12
-d00440dc:	f57f ae1f 	bpl.w	d0043d1e <clipTriangleToFrustum+0x14e>
-d00440e0:	f1bc 0f00 	cmp.w	ip, #0
-d00440e4:	f43f ae1b 	beq.w	d0043d1e <clipTriangleToFrustum+0x14e>
-d00440e8:	eec5 3aa1 	vdiv.f32	s7, s11, s3
-d00440ec:	3302      	adds	r3, #2
-d00440ee:	eea2 4a23 	vfma.f32	s8, s4, s7
-d00440f2:	eee2 4aa3 	vfma.f32	s9, s5, s7
-d00440f6:	eea3 5a23 	vfma.f32	s10, s6, s7
-d00440fa:	ed82 4a00 	vstr	s8, [r2]
-d00440fe:	edc2 4a01 	vstr	s9, [r2, #4]
-d0044102:	ed82 5a02 	vstr	s10, [r2, #8]
-d0044106:	ed87 7a00 	vstr	s14, [r7]
-d004410a:	ed87 6a01 	vstr	s12, [r7, #4]
-d004410e:	edc7 7a02 	vstr	s15, [r7, #8]
-d0044112:	e604      	b.n	d0043d1e <clipTriangleToFrustum+0x14e>
-d0044114:	2700      	movs	r7, #0
-d0044116:	4638      	mov	r0, r7
-d0044118:	b03a      	add	sp, #232	; 0xe8
-d004411a:	ecbd 8b02 	vpop	{d8}
-d004411e:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
-d0044122:	eef5 4a40 	vcmp.f32	s9, #0.0
-d0044126:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004412a:	f140 80b7 	bpl.w	d004429c <clipTriangleToFrustum+0x6cc>
-d004412e:	2900      	cmp	r1, #0
-d0044130:	f000 80b4 	beq.w	d004429c <clipTriangleToFrustum+0x6cc>
-d0044134:	ee74 0a67 	vsub.f32	s1, s8, s15
-d0044138:	eddd 3a0f 	vldr	s7, [sp, #60]	; 0x3c
-d004413c:	ee36 8a65 	vsub.f32	s16, s12, s11
-d0044140:	2301      	movs	r3, #1
-d0044142:	eef0 8a65 	vmov.f32	s17, s11
-d0044146:	ed9d 2a0d 	vldr	s4, [sp, #52]	; 0x34
-d004414a:	ee85 1a20 	vdiv.f32	s2, s10, s1
-d004414e:	eddd 2a0e 	vldr	s5, [sp, #56]	; 0x38
-d0044152:	ee36 0ae1 	vsub.f32	s0, s13, s3
-d0044156:	ee33 3ac7 	vsub.f32	s6, s7, s14
-d004415a:	ee77 0ac4 	vsub.f32	s1, s15, s8
-d004415e:	eeb5 3ac0 	vcmpe.f32	s6, #0.0
-d0044162:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044166:	bfac      	ite	ge
-d0044168:	461e      	movge	r6, r3
-d004416a:	2600      	movlt	r6, #0
-d004416c:	eee1 8a08 	vfma.f32	s17, s2, s16
-d0044170:	eeb0 8a68 	vmov.f32	s16, s17
-d0044174:	eef0 8a61 	vmov.f32	s17, s3
-d0044178:	ed8d 8a22 	vstr	s16, [sp, #136]	; 0x88
-d004417c:	eee1 8a00 	vfma.f32	s17, s2, s0
-d0044180:	eeb0 0a68 	vmov.f32	s0, s17
-d0044184:	eef0 8a44 	vmov.f32	s17, s8
-d0044188:	ed8d 0a23 	vstr	s0, [sp, #140]	; 0x8c
-d004418c:	eee0 8a81 	vfma.f32	s17, s1, s2
-d0044190:	edcd 8a24 	vstr	s17, [sp, #144]	; 0x90
-d0044194:	eeb5 3a40 	vcmp.f32	s6, #0.0
-d0044198:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004419c:	f140 80af 	bpl.w	d00442fe <clipTriangleToFrustum+0x72e>
-d00441a0:	2800      	cmp	r0, #0
-d00441a2:	f000 80ac 	beq.w	d00442fe <clipTriangleToFrustum+0x72e>
-d00441a6:	ee37 8ae3 	vsub.f32	s16, s15, s7
-d00441aa:	eb03 0043 	add.w	r0, r3, r3, lsl #1
-d00441ae:	ee32 0a46 	vsub.f32	s0, s4, s12
-d00441b2:	4632      	mov	r2, r6
-d00441b4:	ee72 0ae6 	vsub.f32	s1, s5, s13
-d00441b8:	ae22      	add	r6, sp, #136	; 0x88
-d00441ba:	ee84 1a88 	vdiv.f32	s2, s9, s16
-d00441be:	3301      	adds	r3, #1
-d00441c0:	eb06 0080 	add.w	r0, r6, r0, lsl #2
-d00441c4:	ee73 4ae7 	vsub.f32	s9, s7, s15
-d00441c8:	eea0 6a01 	vfma.f32	s12, s0, s2
-d00441cc:	eee0 6a81 	vfma.f32	s13, s1, s2
-d00441d0:	eee4 7a81 	vfma.f32	s15, s9, s2
-d00441d4:	ed80 6a00 	vstr	s12, [r0]
-d00441d8:	edc0 6a01 	vstr	s13, [r0, #4]
-d00441dc:	edc0 7a02 	vstr	s15, [r0, #8]
-d00441e0:	eeb5 5a40 	vcmp.f32	s10, #0.0
-d00441e4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00441e8:	d528      	bpl.n	d004423c <clipTriangleToFrustum+0x66c>
-d00441ea:	b33a      	cbz	r2, d004423c <clipTriangleToFrustum+0x66c>
-d00441ec:	ee37 5a44 	vsub.f32	s10, s14, s8
-d00441f0:	eb03 0243 	add.w	r2, r3, r3, lsl #1
-d00441f4:	ee75 5ac2 	vsub.f32	s11, s11, s4
-d00441f8:	a922      	add	r1, sp, #136	; 0x88
-d00441fa:	ee71 1ae2 	vsub.f32	s3, s3, s5
-d00441fe:	3301      	adds	r3, #1
-d0044200:	ee35 5a03 	vadd.f32	s10, s10, s6
-d0044204:	eb01 0282 	add.w	r2, r1, r2, lsl #2
-d0044208:	ee34 4a63 	vsub.f32	s8, s8, s7
-d004420c:	eef0 6a42 	vmov.f32	s13, s4
-d0044210:	ee83 6a05 	vdiv.f32	s12, s6, s10
-d0044214:	eeb0 7a62 	vmov.f32	s14, s5
-d0044218:	eef0 7a63 	vmov.f32	s15, s7
-d004421c:	eee5 6a86 	vfma.f32	s13, s11, s12
-d0044220:	eea1 7a86 	vfma.f32	s14, s3, s12
-d0044224:	eee4 7a06 	vfma.f32	s15, s8, s12
-d0044228:	edc2 6a00 	vstr	s13, [r2]
-d004422c:	ed82 7a01 	vstr	s14, [r2, #4]
-d0044230:	edc2 7a02 	vstr	s15, [r2, #8]
-d0044234:	e555      	b.n	d0043ce2 <clipTriangleToFrustum+0x112>
-d0044236:	bf00      	nop
-d0044238:	3f2aaaab 	.word	0x3f2aaaab
-d004423c:	eeb5 3a40 	vcmp.f32	s6, #0.0
-d0044240:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044244:	f57f ad4d 	bpl.w	d0043ce2 <clipTriangleToFrustum+0x112>
-d0044248:	2900      	cmp	r1, #0
-d004424a:	f43f ad4a 	beq.w	d0043ce2 <clipTriangleToFrustum+0x112>
-d004424e:	ee77 7a44 	vsub.f32	s15, s14, s8
-d0044252:	eb03 0243 	add.w	r2, r3, r3, lsl #1
-d0044256:	ee75 6ac2 	vsub.f32	s13, s11, s4
-d004425a:	a922      	add	r1, sp, #136	; 0x88
-d004425c:	ee31 7ae2 	vsub.f32	s14, s3, s5
-d0044260:	3302      	adds	r3, #2
-d0044262:	ee77 7a83 	vadd.f32	s15, s15, s6
-d0044266:	eb01 0182 	add.w	r1, r1, r2, lsl #2
-d004426a:	ee34 5a63 	vsub.f32	s10, s8, s7
-d004426e:	edc1 5a03 	vstr	s11, [r1, #12]
-d0044272:	ee83 6a27 	vdiv.f32	s12, s6, s15
-d0044276:	edc1 1a04 	vstr	s3, [r1, #16]
-d004427a:	ed81 4a05 	vstr	s8, [r1, #20]
-d004427e:	eef0 7a63 	vmov.f32	s15, s7
-d0044282:	eea6 2a86 	vfma.f32	s4, s13, s12
-d0044286:	eee7 2a06 	vfma.f32	s5, s14, s12
-d004428a:	eee5 7a06 	vfma.f32	s15, s10, s12
-d004428e:	ed81 2a00 	vstr	s4, [r1]
-d0044292:	edc1 2a01 	vstr	s5, [r1, #4]
-d0044296:	edc1 7a02 	vstr	s15, [r1, #8]
-d004429a:	e522      	b.n	d0043ce2 <clipTriangleToFrustum+0x112>
-d004429c:	eeb5 5a40 	vcmp.f32	s10, #0.0
-d00442a0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00442a4:	f140 80bf 	bpl.w	d0044426 <clipTriangleToFrustum+0x856>
-d00442a8:	2800      	cmp	r0, #0
-d00442aa:	f000 80bc 	beq.w	d0044426 <clipTriangleToFrustum+0x856>
-d00442ae:	ee74 3a67 	vsub.f32	s7, s8, s15
-d00442b2:	2302      	movs	r3, #2
-d00442b4:	ee36 2a65 	vsub.f32	s4, s12, s11
-d00442b8:	ed8d 6a25 	vstr	s12, [sp, #148]	; 0x94
-d00442bc:	eeb0 1a65 	vmov.f32	s2, s11
-d00442c0:	edcd 6a26 	vstr	s13, [sp, #152]	; 0x98
-d00442c4:	ee85 3a23 	vdiv.f32	s6, s10, s7
-d00442c8:	edcd 7a27 	vstr	s15, [sp, #156]	; 0x9c
-d00442cc:	ee76 2ae1 	vsub.f32	s5, s13, s3
-d00442d0:	ee77 3ac4 	vsub.f32	s7, s15, s8
-d00442d4:	eea3 1a02 	vfma.f32	s2, s6, s4
-d00442d8:	eeb0 2a41 	vmov.f32	s4, s2
-d00442dc:	eeb0 1a61 	vmov.f32	s2, s3
-d00442e0:	ed8d 2a22 	vstr	s4, [sp, #136]	; 0x88
-d00442e4:	eea3 1a22 	vfma.f32	s2, s6, s5
-d00442e8:	eef0 2a41 	vmov.f32	s5, s2
-d00442ec:	eeb0 1a44 	vmov.f32	s2, s8
-d00442f0:	edcd 2a23 	vstr	s5, [sp, #140]	; 0x8c
-d00442f4:	eea3 1a23 	vfma.f32	s2, s6, s7
-d00442f8:	ed8d 1a24 	vstr	s2, [sp, #144]	; 0x90
-d00442fc:	e4be      	b.n	d0043c7c <clipTriangleToFrustum+0xac>
-d00442fe:	eef5 4ac0 	vcmpe.f32	s9, #0.0
-d0044302:	f006 0201 	and.w	r2, r6, #1
-d0044306:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004430a:	bf58      	it	pl
-d004430c:	2200      	movpl	r2, #0
-d004430e:	2a00      	cmp	r2, #0
-d0044310:	f000 8087 	beq.w	d0044422 <clipTriangleToFrustum+0x852>
-d0044314:	ee37 8ae3 	vsub.f32	s16, s15, s7
-d0044318:	eb03 0043 	add.w	r0, r3, r3, lsl #1
-d004431c:	ee32 0a46 	vsub.f32	s0, s4, s12
-d0044320:	ae22      	add	r6, sp, #136	; 0x88
-d0044322:	ee72 0ae6 	vsub.f32	s1, s5, s13
-d0044326:	3302      	adds	r3, #2
-d0044328:	ee84 1a88 	vdiv.f32	s2, s9, s16
-d004432c:	eb06 0680 	add.w	r6, r6, r0, lsl #2
-d0044330:	ed86 2a03 	vstr	s4, [r6, #12]
-d0044334:	edc6 2a04 	vstr	s5, [r6, #16]
-d0044338:	edc6 3a05 	vstr	s7, [r6, #20]
-d004433c:	ee73 4ae7 	vsub.f32	s9, s7, s15
-d0044340:	eea0 6a01 	vfma.f32	s12, s0, s2
-d0044344:	eee0 6a81 	vfma.f32	s13, s1, s2
-d0044348:	eee4 7a81 	vfma.f32	s15, s9, s2
-d004434c:	ed86 6a00 	vstr	s12, [r6]
-d0044350:	edc6 6a01 	vstr	s13, [r6, #4]
-d0044354:	edc6 7a02 	vstr	s15, [r6, #8]
-d0044358:	e4b1      	b.n	d0043cbe <clipTriangleToFrustum+0xee>
-d004435a:	eef5 5a40 	vcmp.f32	s11, #0.0
-d004435e:	eb02 0142 	add.w	r1, r2, r2, lsl #1
-d0044362:	f10d 0c88 	add.w	ip, sp, #136	; 0x88
-d0044366:	ee77 3aa5 	vadd.f32	s7, s15, s11
-d004436a:	ee77 1ac4 	vsub.f32	s3, s15, s8
-d004436e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044372:	eb0c 0c81 	add.w	ip, ip, r1, lsl #2
-d0044376:	ee36 2a64 	vsub.f32	s4, s12, s9
-d004437a:	4661      	mov	r1, ip
-d004437c:	ee73 3ac7 	vsub.f32	s7, s7, s14
-d0044380:	ee77 2a45 	vsub.f32	s5, s14, s10
-d0044384:	f10c 0c0c 	add.w	ip, ip, #12
-d0044388:	f57f ad38 	bpl.w	d0043dfc <clipTriangleToFrustum+0x22c>
-d004438c:	f1be 0f00 	cmp.w	lr, #0
-d0044390:	f43f ad34 	beq.w	d0043dfc <clipTriangleToFrustum+0x22c>
-d0044394:	ee85 3aa3 	vdiv.f32	s6, s11, s7
-d0044398:	3202      	adds	r2, #2
-d004439a:	eea1 4a83 	vfma.f32	s8, s3, s6
-d004439e:	eee2 4a03 	vfma.f32	s9, s4, s6
-d00443a2:	eea2 5a83 	vfma.f32	s10, s5, s6
-d00443a6:	ed81 4a00 	vstr	s8, [r1]
-d00443aa:	edc1 4a01 	vstr	s9, [r1, #4]
-d00443ae:	ed81 5a02 	vstr	s10, [r1, #8]
-d00443b2:	edcc 7a00 	vstr	s15, [ip]
-d00443b6:	ed8c 6a01 	vstr	s12, [ip, #4]
-d00443ba:	ed8c 7a02 	vstr	s14, [ip, #8]
-d00443be:	e51d      	b.n	d0043dfc <clipTriangleToFrustum+0x22c>
-d00443c0:	eef5 5a40 	vcmp.f32	s11, #0.0
-d00443c4:	eb02 0142 	add.w	r1, r2, r2, lsl #1
-d00443c8:	ee37 3aa5 	vadd.f32	s6, s15, s11
-d00443cc:	eb04 0781 	add.w	r7, r4, r1, lsl #2
-d00443d0:	ee36 1a44 	vsub.f32	s2, s12, s8
-d00443d4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00443d8:	4639      	mov	r1, r7
-d00443da:	ee77 1ae4 	vsub.f32	s3, s15, s9
-d00443de:	ee73 3a63 	vsub.f32	s7, s6, s7
-d00443e2:	f107 070c 	add.w	r7, r7, #12
-d00443e6:	ee37 2a45 	vsub.f32	s4, s14, s10
-d00443ea:	f57f ad8b 	bpl.w	d0043f04 <clipTriangleToFrustum+0x334>
-d00443ee:	f1bc 0f00 	cmp.w	ip, #0
-d00443f2:	f43f ad87 	beq.w	d0043f04 <clipTriangleToFrustum+0x334>
-d00443f6:	ee85 3aa3 	vdiv.f32	s6, s11, s7
-d00443fa:	3202      	adds	r2, #2
-d00443fc:	eea1 4a03 	vfma.f32	s8, s2, s6
-d0044400:	eee1 4a83 	vfma.f32	s9, s3, s6
-d0044404:	eea2 5a03 	vfma.f32	s10, s4, s6
-d0044408:	ed81 4a00 	vstr	s8, [r1]
-d004440c:	edc1 4a01 	vstr	s9, [r1, #4]
-d0044410:	ed81 5a02 	vstr	s10, [r1, #8]
-d0044414:	ed87 6a00 	vstr	s12, [r7]
-d0044418:	edc7 7a01 	vstr	s15, [r7, #4]
-d004441c:	ed87 7a02 	vstr	s14, [r7, #8]
-d0044420:	e570      	b.n	d0043f04 <clipTriangleToFrustum+0x334>
-d0044422:	4632      	mov	r2, r6
-d0044424:	e44b      	b.n	d0043cbe <clipTriangleToFrustum+0xee>
-d0044426:	2300      	movs	r3, #0
-d0044428:	e428      	b.n	d0043c7c <clipTriangleToFrustum+0xac>
-d004442a:	eef5 5a40 	vcmp.f32	s11, #0.0
-d004442e:	eb07 0247 	add.w	r2, r7, r7, lsl #1
-d0044432:	a922      	add	r1, sp, #136	; 0x88
-d0044434:	ee35 1ae6 	vsub.f32	s2, s11, s13
-d0044438:	ee76 1a44 	vsub.f32	s3, s12, s8
-d004443c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044440:	eb01 0182 	add.w	r1, r1, r2, lsl #2
-d0044444:	ee37 2ae4 	vsub.f32	s4, s15, s9
-d0044448:	460a      	mov	r2, r1
-d004444a:	ee77 2a45 	vsub.f32	s5, s14, s10
-d004444e:	f101 010c 	add.w	r1, r1, #12
-d0044452:	f57f adcf 	bpl.w	d0043ff4 <clipTriangleToFrustum+0x424>
-d0044456:	2800      	cmp	r0, #0
-d0044458:	f43f adcc 	beq.w	d0043ff4 <clipTriangleToFrustum+0x424>
-d004445c:	ee85 3a81 	vdiv.f32	s6, s11, s2
-d0044460:	3702      	adds	r7, #2
-d0044462:	eea1 4a83 	vfma.f32	s8, s3, s6
-d0044466:	eee2 4a03 	vfma.f32	s9, s4, s6
-d004446a:	eea2 5a83 	vfma.f32	s10, s5, s6
-d004446e:	ed82 4a00 	vstr	s8, [r2]
-d0044472:	edc2 4a01 	vstr	s9, [r2, #4]
-d0044476:	ed82 5a02 	vstr	s10, [r2, #8]
-d004447a:	ed81 6a00 	vstr	s12, [r1]
-d004447e:	edc1 7a01 	vstr	s15, [r1, #4]
-d0044482:	ed81 7a02 	vstr	s14, [r1, #8]
-d0044486:	e5b5      	b.n	d0043ff4 <clipTriangleToFrustum+0x424>
+d0043ef8 <entityMoveForward>:
+d0043ef8:	28ff      	cmp	r0, #255	; 0xff
+d0043efa:	d82b      	bhi.n	d0043f54 <entityMoveForward+0x5c>
+d0043efc:	eb00 0040 	add.w	r0, r0, r0, lsl #1
+d0043f00:	b510      	push	{r4, lr}
+d0043f02:	4c15      	ldr	r4, [pc, #84]	; (d0043f58 <entityMoveForward+0x60>)
+d0043f04:	b084      	sub	sp, #16
+d0043f06:	eb04 1440 	add.w	r4, r4, r0, lsl #5
+d0043f0a:	f894 3034 	ldrb.w	r3, [r4, #52]	; 0x34
+d0043f0e:	b1fb      	cbz	r3, d0043f50 <entityMoveForward+0x58>
+d0043f10:	68e3      	ldr	r3, [r4, #12]
+d0043f12:	b1eb      	cbz	r3, d0043f50 <entityMoveForward+0x58>
+d0043f14:	eef0 1a40 	vmov.f32	s3, s0
+d0043f18:	edd4 0a05 	vldr	s1, [r4, #20]
+d0043f1c:	ed94 0a04 	vldr	s0, [r4, #16]
+d0043f20:	ed94 1a06 	vldr	s2, [r4, #24]
+d0043f24:	f7fe fd6c 	bl	d0042a00 <vec3Scale>
+d0043f28:	eef0 1a40 	vmov.f32	s3, s0
+d0043f2c:	eeb0 2a60 	vmov.f32	s4, s1
+d0043f30:	ed94 0a00 	vldr	s0, [r4]
+d0043f34:	eef0 2a41 	vmov.f32	s5, s2
+d0043f38:	edd4 0a01 	vldr	s1, [r4, #4]
+d0043f3c:	ed94 1a02 	vldr	s2, [r4, #8]
+d0043f40:	f7fe fd54 	bl	d00429ec <vec3Add>
+d0043f44:	ed84 0a00 	vstr	s0, [r4]
+d0043f48:	edc4 0a01 	vstr	s1, [r4, #4]
+d0043f4c:	ed84 1a02 	vstr	s2, [r4, #8]
+d0043f50:	b004      	add	sp, #16
+d0043f52:	bd10      	pop	{r4, pc}
+d0043f54:	4770      	bx	lr
+d0043f56:	bf00      	nop
+d0043f58:	d012da80 	.word	0xd012da80
 
-d0044488 <submitClippedTri>:
-d0044488:	edd0 7a10 	vldr	s15, [r0, #64]	; 0x40
-d004448c:	eef4 7ac1 	vcmpe.f32	s15, s2
-d0044490:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044494:	eef4 2ae7 	vcmpe.f32	s5, s15
-d0044498:	bfac      	ite	ge
-d004449a:	2301      	movge	r3, #1
-d004449c:	2300      	movlt	r3, #0
-d004449e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00444a2:	bf98      	it	ls
-d00444a4:	f043 0301 	orrls.w	r3, r3, #1
-d00444a8:	b923      	cbnz	r3, d00444b4 <submitClippedTri+0x2c>
-d00444aa:	eef4 7ac4 	vcmpe.f32	s15, s8
-d00444ae:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00444b2:	db00      	blt.n	d00444b6 <submitClippedTri+0x2e>
-d00444b4:	4770      	bx	lr
-d00444b6:	eef7 6a00 	vmov.f32	s13, #112	; 0x3f800000  1.0
-d00444ba:	ed9f 6a69 	vldr	s12, [pc, #420]	; d0044660 <submitClippedTri+0x1d8>
-d00444be:	eddf 7a69 	vldr	s15, [pc, #420]	; d0044664 <submitClippedTri+0x1dc>
-d00444c2:	eeb6 7a00 	vmov.f32	s14, #96	; 0x3f000000  0.5
-d00444c6:	ee60 0a86 	vmul.f32	s1, s1, s12
-d00444ca:	ed9f 5a67 	vldr	s10, [pc, #412]	; d0044668 <submitClippedTri+0x1e0>
-d00444ce:	eec6 5aa2 	vdiv.f32	s11, s13, s5
-d00444d2:	ee63 3a86 	vmul.f32	s7, s7, s12
-d00444d6:	ee22 2a06 	vmul.f32	s4, s4, s12
-d00444da:	eeb0 6a67 	vmov.f32	s12, s15
-d00444de:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d00444e2:	ed2d 8b04 	vpush	{d8-d9}
-d00444e6:	eec6 8a81 	vdiv.f32	s17, s13, s2
-d00444ea:	b08b      	sub	sp, #44	; 0x2c
-d00444ec:	eeb0 9a66 	vmov.f32	s18, s13
-d00444f0:	ee86 8a84 	vdiv.f32	s16, s13, s8
-d00444f4:	eea5 6a82 	vfma.f32	s12, s11, s4
-d00444f8:	eea0 9a28 	vfma.f32	s18, s0, s17
-d00444fc:	eeb0 0a67 	vmov.f32	s0, s15
-d0044500:	eebd 6ac6 	vcvt.s32.f32	s12, s12
-d0044504:	eea8 0aa0 	vfma.f32	s0, s17, s1
-d0044508:	eef0 0a66 	vmov.f32	s1, s13
-d004450c:	ee16 3a10 	vmov	r3, s12
-d0044510:	eee8 7a23 	vfma.f32	s15, s16, s7
-d0044514:	eee1 0aa5 	vfma.f32	s1, s3, s11
-d0044518:	eef0 1a47 	vmov.f32	s3, s14
-d004451c:	eefd 5ac0 	vcvt.s32.f32	s11, s0
-d0044520:	eee9 1a05 	vfma.f32	s3, s18, s10
-d0044524:	ee15 6a90 	vmov	r6, s11
-d0044528:	eef0 5a66 	vmov.f32	s11, s13
-d004452c:	eefd 7ae7 	vcvt.s32.f32	s15, s15
-d0044530:	1b9d      	subs	r5, r3, r6
-d0044532:	eee3 5a08 	vfma.f32	s11, s6, s16
-d0044536:	ee17 3a90 	vmov	r3, s15
-d004453a:	eefd 3ae1 	vcvt.s32.f32	s7, s3
-d004453e:	eba3 0c06 	sub.w	ip, r3, r6
-d0044542:	ee13 7a90 	vmov	r7, s7
-d0044546:	eeb0 3a65 	vmov.f32	s6, s11
-d004454a:	eef0 5a47 	vmov.f32	s11, s14
-d004454e:	eea3 7a05 	vfma.f32	s14, s6, s10
-d0044552:	eee0 5a85 	vfma.f32	s11, s1, s10
-d0044556:	eefd 7ac7 	vcvt.s32.f32	s15, s14
-d004455a:	eefd 5ae5 	vcvt.s32.f32	s11, s11
-d004455e:	ee15 4a90 	vmov	r4, s11
-d0044562:	eba4 0e07 	sub.w	lr, r4, r7
-d0044566:	ee17 4a90 	vmov	r4, s15
-d004456a:	fb0c fc0e 	mul.w	ip, ip, lr
-d004456e:	eba4 0e07 	sub.w	lr, r4, r7
-d0044572:	fb0e c515 	mls	r5, lr, r5, ip
-d0044576:	2d00      	cmp	r5, #0
-d0044578:	dd6d      	ble.n	d0044656 <submitClippedTri+0x1ce>
-d004457a:	f8df e0f8 	ldr.w	lr, [pc, #248]	; d0044674 <submitClippedTri+0x1ec>
-d004457e:	f8de 5000 	ldr.w	r5, [lr]
-d0044582:	f5b5 5f00 	cmp.w	r5, #8192	; 0x2000
-d0044586:	da66      	bge.n	d0044656 <submitClippedTri+0x1ce>
-d0044588:	f8df c0ec 	ldr.w	ip, [pc, #236]	; d0044678 <submitClippedTri+0x1f0>
-d004458c:	ea4f 1885 	mov.w	r8, r5, lsl #6
-d0044590:	f105 0b01 	add.w	fp, r5, #1
-d0044594:	ed9f 5a35 	vldr	s10, [pc, #212]	; d004466c <submitClippedTri+0x1e4>
-d0044598:	f848 700c 	str.w	r7, [r8, ip]
-d004459c:	eb0c 1585 	add.w	r5, ip, r5, lsl #6
-d00445a0:	f108 0a08 	add.w	sl, r8, #8
-d00445a4:	f108 0910 	add.w	r9, r8, #16
-d00445a8:	ee15 7a90 	vmov	r7, s11
-d00445ac:	606e      	str	r6, [r5, #4]
-d00445ae:	eb0a 060c 	add.w	r6, sl, ip
-d00445b2:	f8ce b000 	str.w	fp, [lr]
-d00445b6:	f84a 700c 	str.w	r7, [sl, ip]
-d00445ba:	eb09 070c 	add.w	r7, r9, ip
-d00445be:	ed86 6a01 	vstr	s12, [r6, #4]
-d00445c2:	f849 400c 	str.w	r4, [r9, ip]
-d00445c6:	607b      	str	r3, [r7, #4]
-d00445c8:	f885 1034 	strb.w	r1, [r5, #52]	; 0x34
-d00445cc:	f885 2035 	strb.w	r2, [r5, #53]	; 0x35
-d00445d0:	edc5 4a07 	vstr	s9, [r5, #28]
-d00445d4:	ed90 7a10 	vldr	s14, [r0, #64]	; 0x40
-d00445d8:	edd0 7a0f 	vldr	s15, [r0, #60]	; 0x3c
-d00445dc:	ee31 7a47 	vsub.f32	s14, s2, s14
-d00445e0:	ed9f 6a23 	vldr	s12, [pc, #140]	; d0044670 <submitClippedTri+0x1e8>
-d00445e4:	ee27 7a27 	vmul.f32	s14, s14, s15
-d00445e8:	fe87 7a05 	vmaxnm.f32	s14, s14, s10
-d00445ec:	fe87 7a66 	vminnm.f32	s14, s14, s13
-d00445f0:	ee27 7a06 	vmul.f32	s14, s14, s12
-d00445f4:	eebc 7ac7 	vcvt.u32.f32	s14, s14
-d00445f8:	ee17 3a10 	vmov	r3, s14
-d00445fc:	842b      	strh	r3, [r5, #32]
-d00445fe:	ed90 7a10 	vldr	s14, [r0, #64]	; 0x40
-d0044602:	edd0 7a0f 	vldr	s15, [r0, #60]	; 0x3c
-d0044606:	ee32 7ac7 	vsub.f32	s14, s5, s14
-d004460a:	ee27 7a27 	vmul.f32	s14, s14, s15
-d004460e:	fe87 7a05 	vmaxnm.f32	s14, s14, s10
-d0044612:	fe87 7a66 	vminnm.f32	s14, s14, s13
-d0044616:	ee27 7a06 	vmul.f32	s14, s14, s12
-d004461a:	eebc 7ac7 	vcvt.u32.f32	s14, s14
-d004461e:	ee17 3a10 	vmov	r3, s14
-d0044622:	846b      	strh	r3, [r5, #34]	; 0x22
-d0044624:	edd0 7a10 	vldr	s15, [r0, #64]	; 0x40
-d0044628:	ed90 7a0f 	vldr	s14, [r0, #60]	; 0x3c
-d004462c:	ee74 7a67 	vsub.f32	s15, s8, s15
-d0044630:	ed85 1a0a 	vstr	s2, [r5, #40]	; 0x28
-d0044634:	edc5 2a0b 	vstr	s5, [r5, #44]	; 0x2c
-d0044638:	ed85 4a0c 	vstr	s8, [r5, #48]	; 0x30
-d004463c:	ee67 7a87 	vmul.f32	s15, s15, s14
-d0044640:	fec7 7a85 	vmaxnm.f32	s15, s15, s10
-d0044644:	fec7 6ae6 	vminnm.f32	s13, s15, s13
-d0044648:	ee66 6a86 	vmul.f32	s13, s13, s12
-d004464c:	eefc 6ae6 	vcvt.u32.f32	s13, s13
-d0044650:	ee16 3a90 	vmov	r3, s13
-d0044654:	84ab      	strh	r3, [r5, #36]	; 0x24
-d0044656:	b00b      	add	sp, #44	; 0x2c
-d0044658:	ecbd 8b04 	vpop	{d8-d9}
-d004465c:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-d0044660:	c3700000 	.word	0xc3700000
-d0044664:	43208000 	.word	0x43208000
-d0044668:	43700000 	.word	0x43700000
-d004466c:	00000000 	.word	0x00000000
-d0044670:	477fff00 	.word	0x477fff00
-d0044674:	d00a0884 	.word	0xd00a0884
-d0044678:	d00a08a0 	.word	0xd00a08a0
+d0043f5c <entityTurnLocal>:
+d0043f5c:	28ff      	cmp	r0, #255	; 0xff
+d0043f5e:	d82c      	bhi.n	d0043fba <entityTurnLocal+0x5e>
+d0043f60:	eb00 0040 	add.w	r0, r0, r0, lsl #1
+d0043f64:	b510      	push	{r4, lr}
+d0043f66:	4c65      	ldr	r4, [pc, #404]	; (d00440fc <entityTurnLocal+0x1a0>)
+d0043f68:	eb04 1440 	add.w	r4, r4, r0, lsl #5
+d0043f6c:	ed2d 8b04 	vpush	{d8-d9}
+d0043f70:	f894 3034 	ldrb.w	r3, [r4, #52]	; 0x34
+d0043f74:	b1f3      	cbz	r3, d0043fb4 <entityTurnLocal+0x58>
+d0043f76:	68e3      	ldr	r3, [r4, #12]
+d0043f78:	b1e3      	cbz	r3, d0043fb4 <entityTurnLocal+0x58>
+d0043f7a:	eeb5 0a40 	vcmp.f32	s0, #0.0
+d0043f7e:	eeb0 9a40 	vmov.f32	s18, s0
+d0043f82:	eef0 8a60 	vmov.f32	s17, s1
+d0043f86:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043f8a:	eeb0 8a41 	vmov.f32	s16, s2
+d0043f8e:	f040 8081 	bne.w	d0044094 <entityTurnLocal+0x138>
+d0043f92:	eef5 8a40 	vcmp.f32	s17, #0.0
+d0043f96:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043f9a:	d148      	bne.n	d004402e <entityTurnLocal+0xd2>
+d0043f9c:	eeb5 8a40 	vcmp.f32	s16, #0.0
+d0043fa0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0043fa4:	d10a      	bne.n	d0043fbc <entityTurnLocal+0x60>
+d0043fa6:	4620      	mov	r0, r4
+d0043fa8:	ecbd 8b04 	vpop	{d8-d9}
+d0043fac:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
+d0043fb0:	f7ff bc74 	b.w	d004389c <normalizeEntity.part.0>
+d0043fb4:	ecbd 8b04 	vpop	{d8-d9}
+d0043fb8:	bd10      	pop	{r4, pc}
+d0043fba:	4770      	bx	lr
+d0043fbc:	ed94 0a07 	vldr	s0, [r4, #28]
+d0043fc0:	eeb0 3a48 	vmov.f32	s6, s16
+d0043fc4:	edd4 0a08 	vldr	s1, [r4, #32]
+d0043fc8:	ed94 1a09 	vldr	s2, [r4, #36]	; 0x24
+d0043fcc:	edd4 1a04 	vldr	s3, [r4, #16]
+d0043fd0:	ed94 2a05 	vldr	s4, [r4, #20]
+d0043fd4:	edd4 2a06 	vldr	s5, [r4, #24]
+d0043fd8:	f7fe fd8e 	bl	d0042af8 <rotateAroundAxis>
+d0043fdc:	eef0 6a40 	vmov.f32	s13, s0
+d0043fe0:	eeb0 7a60 	vmov.f32	s14, s1
+d0043fe4:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
+d0043fe8:	eef0 7a41 	vmov.f32	s15, s2
+d0043fec:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
+d0043ff0:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
+d0043ff4:	eeb0 3a48 	vmov.f32	s6, s16
+d0043ff8:	edd4 1a04 	vldr	s3, [r4, #16]
+d0043ffc:	ed94 2a05 	vldr	s4, [r4, #20]
+d0044000:	edd4 2a06 	vldr	s5, [r4, #24]
+d0044004:	edc4 6a07 	vstr	s13, [r4, #28]
+d0044008:	ed84 7a08 	vstr	s14, [r4, #32]
+d004400c:	edc4 7a09 	vstr	s15, [r4, #36]	; 0x24
+d0044010:	f7fe fd72 	bl	d0042af8 <rotateAroundAxis>
+d0044014:	4620      	mov	r0, r4
+d0044016:	ed84 0a0a 	vstr	s0, [r4, #40]	; 0x28
+d004401a:	edc4 0a0b 	vstr	s1, [r4, #44]	; 0x2c
+d004401e:	ed84 1a0c 	vstr	s2, [r4, #48]	; 0x30
+d0044022:	ecbd 8b04 	vpop	{d8-d9}
+d0044026:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
+d004402a:	f7ff bc37 	b.w	d004389c <normalizeEntity.part.0>
+d004402e:	ed94 0a04 	vldr	s0, [r4, #16]
+d0044032:	eeb0 3a68 	vmov.f32	s6, s17
+d0044036:	edd4 0a05 	vldr	s1, [r4, #20]
+d004403a:	ed94 1a06 	vldr	s2, [r4, #24]
+d004403e:	edd4 1a07 	vldr	s3, [r4, #28]
+d0044042:	ed94 2a08 	vldr	s4, [r4, #32]
+d0044046:	edd4 2a09 	vldr	s5, [r4, #36]	; 0x24
+d004404a:	f7fe fd55 	bl	d0042af8 <rotateAroundAxis>
+d004404e:	eef0 6a40 	vmov.f32	s13, s0
+d0044052:	eeb0 7a60 	vmov.f32	s14, s1
+d0044056:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
+d004405a:	eef0 7a41 	vmov.f32	s15, s2
+d004405e:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
+d0044062:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
+d0044066:	eeb0 3a68 	vmov.f32	s6, s17
+d004406a:	edd4 1a07 	vldr	s3, [r4, #28]
+d004406e:	ed94 2a08 	vldr	s4, [r4, #32]
+d0044072:	edd4 2a09 	vldr	s5, [r4, #36]	; 0x24
+d0044076:	edc4 6a04 	vstr	s13, [r4, #16]
+d004407a:	ed84 7a05 	vstr	s14, [r4, #20]
+d004407e:	edc4 7a06 	vstr	s15, [r4, #24]
+d0044082:	f7fe fd39 	bl	d0042af8 <rotateAroundAxis>
+d0044086:	ed84 0a0a 	vstr	s0, [r4, #40]	; 0x28
+d004408a:	edc4 0a0b 	vstr	s1, [r4, #44]	; 0x2c
+d004408e:	ed84 1a0c 	vstr	s2, [r4, #48]	; 0x30
+d0044092:	e783      	b.n	d0043f9c <entityTurnLocal+0x40>
+d0044094:	eeb0 3a40 	vmov.f32	s6, s0
+d0044098:	edd4 0a05 	vldr	s1, [r4, #20]
+d004409c:	ed94 0a04 	vldr	s0, [r4, #16]
+d00440a0:	ed94 1a06 	vldr	s2, [r4, #24]
+d00440a4:	edd4 1a0a 	vldr	s3, [r4, #40]	; 0x28
+d00440a8:	ed94 2a0b 	vldr	s4, [r4, #44]	; 0x2c
+d00440ac:	edd4 2a0c 	vldr	s5, [r4, #48]	; 0x30
+d00440b0:	f7fe fd22 	bl	d0042af8 <rotateAroundAxis>
+d00440b4:	eef0 6a40 	vmov.f32	s13, s0
+d00440b8:	eeb0 7a60 	vmov.f32	s14, s1
+d00440bc:	ed94 0a07 	vldr	s0, [r4, #28]
+d00440c0:	eef0 7a41 	vmov.f32	s15, s2
+d00440c4:	edd4 0a08 	vldr	s1, [r4, #32]
+d00440c8:	ed94 1a09 	vldr	s2, [r4, #36]	; 0x24
+d00440cc:	eeb0 3a49 	vmov.f32	s6, s18
+d00440d0:	edd4 1a0a 	vldr	s3, [r4, #40]	; 0x28
+d00440d4:	ed94 2a0b 	vldr	s4, [r4, #44]	; 0x2c
+d00440d8:	edd4 2a0c 	vldr	s5, [r4, #48]	; 0x30
+d00440dc:	edc4 6a04 	vstr	s13, [r4, #16]
+d00440e0:	ed84 7a05 	vstr	s14, [r4, #20]
+d00440e4:	edc4 7a06 	vstr	s15, [r4, #24]
+d00440e8:	f7fe fd06 	bl	d0042af8 <rotateAroundAxis>
+d00440ec:	ed84 0a07 	vstr	s0, [r4, #28]
+d00440f0:	edc4 0a08 	vstr	s1, [r4, #32]
+d00440f4:	ed84 1a09 	vstr	s2, [r4, #36]	; 0x24
+d00440f8:	e74b      	b.n	d0043f92 <entityTurnLocal+0x36>
+d00440fa:	bf00      	nop
+d00440fc:	d012da80 	.word	0xd012da80
 
-d004467c <drawFakeHorizonDots>:
-d004467c:	2800      	cmp	r0, #0
-d004467e:	f000 80f2 	beq.w	d0044866 <drawFakeHorizonDots+0x1ea>
-d0044682:	2a02      	cmp	r2, #2
-d0044684:	edd0 7a02 	vldr	s15, [r0, #8]
-d0044688:	ed90 6a01 	vldr	s12, [r0, #4]
-d004468c:	bfb8      	it	lt
-d004468e:	2202      	movlt	r2, #2
-d0044690:	eddf 5a75 	vldr	s11, [pc, #468]	; d0044868 <drawFakeHorizonDots+0x1ec>
-d0044694:	edd0 6a0d 	vldr	s13, [r0, #52]	; 0x34
-d0044698:	ee07 2a10 	vmov	s14, r2
-d004469c:	edd0 4a10 	vldr	s9, [r0, #64]	; 0x40
-d00446a0:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d00446a4:	ed2d 8b10 	vpush	{d8-d15}
-d00446a8:	eef8 9ac7 	vcvt.f32.s32	s19, s14
-d00446ac:	ed90 aa00 	vldr	s20, [r0]
-d00446b0:	b085      	sub	sp, #20
-d00446b2:	4617      	mov	r7, r2
-d00446b4:	468b      	mov	fp, r1
-d00446b6:	496d      	ldr	r1, [pc, #436]	; (d004486c <drawFakeHorizonDots+0x1f0>)
-d00446b8:	ee8a 7a29 	vdiv.f32	s14, s20, s19
-d00446bc:	edcd 7a01 	vstr	s15, [sp, #4]
-d00446c0:	4e6b      	ldr	r6, [pc, #428]	; (d0044870 <drawFakeHorizonDots+0x1f4>)
-d00446c2:	4698      	mov	r8, r3
-d00446c4:	ed90 ca07 	vldr	s24, [r0, #28]
-d00446c8:	edd0 ba0a 	vldr	s23, [r0, #40]	; 0x28
-d00446cc:	4c69      	ldr	r4, [pc, #420]	; (d0044874 <drawFakeHorizonDots+0x1f8>)
-d00446ce:	eec7 7aa9 	vdiv.f32	s15, s15, s19
-d00446d2:	edd0 fa06 	vldr	s31, [r0, #24]
-d00446d6:	ed90 fa08 	vldr	s30, [r0, #32]
-d00446da:	edd0 ea09 	vldr	s29, [r0, #36]	; 0x24
-d00446de:	ed90 ea0b 	vldr	s28, [r0, #44]	; 0x2c
-d00446e2:	edd0 da0c 	vldr	s27, [r0, #48]	; 0x30
-d00446e6:	ee30 ba46 	vsub.f32	s22, s0, s12
-d00446ea:	ed90 da0e 	vldr	s26, [r0, #56]	; 0x38
-d00446ee:	ee69 9aa5 	vmul.f32	s19, s19, s11
-d00446f2:	ed9f 8a61 	vldr	s16, [pc, #388]	; d0044878 <drawFakeHorizonDots+0x1fc>
-d00446f6:	4b61      	ldr	r3, [pc, #388]	; (d004487c <drawFakeHorizonDots+0x200>)
-d00446f8:	ee2b ca0c 	vmul.f32	s24, s22, s24
-d00446fc:	eddf ca60 	vldr	s25, [pc, #384]	; d0044880 <drawFakeHorizonDots+0x204>
-d0044700:	ee6b ba2b 	vmul.f32	s23, s22, s23
-d0044704:	eddf 8a5f 	vldr	s17, [pc, #380]	; d0044884 <drawFakeHorizonDots+0x208>
-d0044708:	ee29 8a88 	vmul.f32	s16, s19, s16
-d004470c:	f8df 9184 	ldr.w	r9, [pc, #388]	; d0044894 <drawFakeHorizonDots+0x218>
-d0044710:	febb 7a47 	vrintm.f32	s14, s14
-d0044714:	eebd 7ac7 	vcvt.s32.f32	s14, s14
-d0044718:	ee2b ba26 	vmul.f32	s22, s22, s13
-d004471c:	ee17 2a10 	vmov	r2, s14
-d0044720:	fefb 7a67 	vrintm.f32	s15, s15
-d0044724:	eefd 7ae7 	vcvt.s32.f32	s15, s15
-d0044728:	fb01 f002 	mul.w	r0, r1, r2
-d004472c:	f1a2 0112 	sub.w	r1, r2, #18
-d0044730:	ee17 2a90 	vmov	r2, s15
-d0044734:	4404      	add	r4, r0
-d0044736:	fb07 f101 	mul.w	r1, r7, r1
-d004473a:	f1a2 0a12 	sub.w	sl, r2, #18
-d004473e:	fb06 0202 	mla	r2, r6, r2, r0
-d0044742:	9103      	str	r1, [sp, #12]
-d0044744:	fb06 460a 	mla	r6, r6, sl, r4
-d0044748:	18d3      	adds	r3, r2, r3
-d004474a:	fb0a fa07 	mul.w	sl, sl, r7
-d004474e:	9302      	str	r3, [sp, #8]
-d0044750:	eddd 7a01 	vldr	s15, [sp, #4]
-d0044754:	4c4c      	ldr	r4, [pc, #304]	; (d0044888 <drawFakeHorizonDots+0x20c>)
-d0044756:	ee37 9aa9 	vadd.f32	s18, s15, s19
-d004475a:	ee07 aa90 	vmov	s15, sl
-d004475e:	1934      	adds	r4, r6, r4
-d0044760:	9d03      	ldr	r5, [sp, #12]
-d0044762:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d0044766:	eddf aa49 	vldr	s21, [pc, #292]	; d004488c <drawFakeHorizonDots+0x210>
-d004476a:	ee37 9ac9 	vsub.f32	s18, s15, s18
-d004476e:	ea84 3354 	eor.w	r3, r4, r4, lsr #13
-d0044772:	ee07 5a90 	vmov	s15, r5
-d0044776:	f104 54b2 	add.w	r4, r4, #373293056	; 0x16400000
-d004477a:	eef0 3a49 	vmov.f32	s7, s18
-d004477e:	fb09 f303 	mul.w	r3, r9, r3
-d0044782:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
-d0044786:	ee7a 7a29 	vadd.f32	s15, s20, s19
-d004478a:	f504 14b3 	add.w	r4, r4, #1466368	; 0x166000
-d004478e:	ea83 4313 	eor.w	r3, r3, r3, lsr #16
-d0044792:	eeb7 5a00 	vmov.f32	s10, #112	; 0x3f800000  1.0
-d0044796:	eddf 5a3e 	vldr	s11, [pc, #248]	; d0044890 <drawFakeHorizonDots+0x214>
-d004479a:	443d      	add	r5, r7
-d004479c:	f3c3 4207 	ubfx	r2, r3, #16, #8
-d00447a0:	ee77 7a67 	vsub.f32	s15, s14, s15
-d00447a4:	f204 74b1 	addw	r4, r4, #1969	; 0x7b1
-d00447a8:	ee07 2a10 	vmov	s14, r2
-d00447ac:	f3c3 2207 	ubfx	r2, r3, #8, #8
-d00447b0:	b2db      	uxtb	r3, r3
-d00447b2:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
-d00447b6:	ee06 2a90 	vmov	s13, r2
-d00447ba:	4543      	cmp	r3, r8
-d00447bc:	eef8 6ae6 	vcvt.f32.s32	s13, s13
-d00447c0:	eee7 3a08 	vfma.f32	s7, s14, s16
-d00447c4:	d83d      	bhi.n	d0044842 <drawFakeHorizonDots+0x1c6>
-d00447c6:	eee6 7a88 	vfma.f32	s15, s13, s16
-d00447ca:	ee2d 6a23 	vmul.f32	s12, s26, s7
-d00447ce:	ee2e 7aa7 	vmul.f32	s14, s29, s15
-d00447d2:	eead 6aa7 	vfma.f32	s12, s27, s15
-d00447d6:	ee6f 6aa7 	vmul.f32	s13, s31, s15
-d00447da:	eef0 7a47 	vmov.f32	s15, s14
-d00447de:	eeef 6a23 	vfma.f32	s13, s30, s7
-d00447e2:	eeee 7a23 	vfma.f32	s15, s28, s7
-d00447e6:	ee3b 6a06 	vadd.f32	s12, s22, s12
-d00447ea:	eef4 4ac6 	vcmpe.f32	s9, s12
-d00447ee:	ee3c 7a26 	vadd.f32	s14, s24, s13
-d00447f2:	ee7b 7aa7 	vadd.f32	s15, s23, s15
-d00447f6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00447fa:	ee27 7a2c 	vmul.f32	s14, s14, s25
-d00447fe:	ee67 7aaa 	vmul.f32	s15, s15, s21
-d0044802:	da1e      	bge.n	d0044842 <drawFakeHorizonDots+0x1c6>
-d0044804:	eec5 6a06 	vdiv.f32	s13, s10, s12
-d0044808:	eeb0 6a68 	vmov.f32	s12, s17
-d004480c:	eea7 6a26 	vfma.f32	s12, s14, s13
-d0044810:	eee7 5aa6 	vfma.f32	s11, s15, s13
-d0044814:	eefd 7ac6 	vcvt.s32.f32	s15, s12
-d0044818:	eefd 5ae5 	vcvt.s32.f32	s11, s11
-d004481c:	ee17 0a90 	vmov	r0, s15
-d0044820:	f5b0 7ff0 	cmp.w	r0, #480	; 0x1e0
-d0044824:	d20d      	bcs.n	d0044842 <drawFakeHorizonDots+0x1c6>
-d0044826:	ee15 3a90 	vmov	r3, s11
-d004482a:	465a      	mov	r2, fp
-d004482c:	ee15 1a90 	vmov	r1, s11
-d0044830:	f5b3 7fa0 	cmp.w	r3, #320	; 0x140
-d0044834:	d205      	bcs.n	d0044842 <drawFakeHorizonDots+0x1c6>
-d0044836:	edcd 4a00 	vstr	s9, [sp]
-d004483a:	f7fc f81d 	bl	d0040878 <putPixel>
-d004483e:	eddd 4a00 	vldr	s9, [sp]
-d0044842:	42b4      	cmp	r4, r6
-d0044844:	d193      	bne.n	d004476e <drawFakeHorizonDots+0xf2>
-d0044846:	f106 561f 	add.w	r6, r6, #666894336	; 0x27c00000
-d004484a:	9b02      	ldr	r3, [sp, #8]
-d004484c:	44ba      	add	sl, r7
-d004484e:	f506 16a7 	add.w	r6, r6, #1368064	; 0x14e000
-d0044852:	f606 362f 	addw	r6, r6, #2863	; 0xb2f
-d0044856:	42b3      	cmp	r3, r6
-d0044858:	f47f af7a 	bne.w	d0044750 <drawFakeHorizonDots+0xd4>
-d004485c:	b005      	add	sp, #20
-d004485e:	ecbd 8b10 	vpop	{d8-d15}
-d0044862:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-d0044866:	4770      	bx	lr
-d0044868:	3eb33333 	.word	0x3eb33333
-d004486c:	165667b1 	.word	0x165667b1
-d0044870:	27d4eb2f 	.word	0x27d4eb2f
-d0044874:	a869b223 	.word	0xa869b223
-d0044878:	3c008081 	.word	0x3c008081
-d004487c:	9d3726a0 	.word	0x9d3726a0
-d0044880:	43700000 	.word	0x43700000
-d0044884:	43708000 	.word	0x43708000
-d0044888:	c583036b 	.word	0xc583036b
-d004488c:	c3700000 	.word	0xc3700000
-d0044890:	43208000 	.word	0x43208000
-d0044894:	4bf19f61 	.word	0x4bf19f61
+d0044100 <entityRotation>:
+d0044100:	28ff      	cmp	r0, #255	; 0xff
+d0044102:	d80b      	bhi.n	d004411c <entityRotation+0x1c>
+d0044104:	4a06      	ldr	r2, [pc, #24]	; (d0044120 <entityRotation+0x20>)
+d0044106:	eb00 0340 	add.w	r3, r0, r0, lsl #1
+d004410a:	eb02 1343 	add.w	r3, r2, r3, lsl #5
+d004410e:	f893 2034 	ldrb.w	r2, [r3, #52]	; 0x34
+d0044112:	b11a      	cbz	r2, d004411c <entityRotation+0x1c>
+d0044114:	68db      	ldr	r3, [r3, #12]
+d0044116:	b10b      	cbz	r3, d004411c <entityRotation+0x1c>
+d0044118:	f7ff bc16 	b.w	d0043948 <entityRotation.part.0>
+d004411c:	4770      	bx	lr
+d004411e:	bf00      	nop
+d0044120:	d012da80 	.word	0xd012da80
 
-d0044898 <drawFakeHorizon>:
-d0044898:	2800      	cmp	r0, #0
-d004489a:	f000 813c 	beq.w	d0044b16 <drawFakeHorizon+0x27e>
-d004489e:	ed9f 7aa2 	vldr	s14, [pc, #648]	; d0044b28 <drawFakeHorizon+0x290>
-d00448a2:	eddf 6aa2 	vldr	s13, [pc, #648]	; d0044b2c <drawFakeHorizon+0x294>
-d00448a6:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d00448aa:	ed2d 8b0c 	vpush	{d8-d13}
-d00448ae:	ed90 da0a 	vldr	s26, [r0, #40]	; 0x28
-d00448b2:	eeb0 ca47 	vmov.f32	s24, s14
-d00448b6:	ed9f 9a9e 	vldr	s18, [pc, #632]	; d0044b30 <drawFakeHorizon+0x298>
-d00448ba:	b083      	sub	sp, #12
-d00448bc:	edd0 ba0d 	vldr	s23, [r0, #52]	; 0x34
-d00448c0:	eeb0 bacd 	vabs.f32	s22, s26
-d00448c4:	ee6d 7a09 	vmul.f32	s15, s26, s18
-d00448c8:	eddf 9a9a 	vldr	s19, [pc, #616]	; d0044b34 <drawFakeHorizon+0x29c>
-d00448cc:	eef0 aa6b 	vmov.f32	s21, s23
-d00448d0:	edd0 da07 	vldr	s27, [r0, #28]
-d00448d4:	eeb0 aa6b 	vmov.f32	s20, s23
-d00448d8:	edd0 8a01 	vldr	s17, [r0, #4]
-d00448dc:	eec9 ca8d 	vdiv.f32	s25, s19, s26
-d00448e0:	460f      	mov	r7, r1
-d00448e2:	4690      	mov	r8, r2
-d00448e4:	4699      	mov	r9, r3
-d00448e6:	2400      	movs	r4, #0
-d00448e8:	4e93      	ldr	r6, [pc, #588]	; (d0044b38 <drawFakeHorizon+0x2a0>)
-d00448ea:	ed9f 8a94 	vldr	s16, [pc, #592]	; d0044b3c <drawFakeHorizon+0x2a4>
-d00448ee:	eee7 aa87 	vfma.f32	s21, s15, s14
-d00448f2:	eea7 aaa6 	vfma.f32	s20, s15, s13
-d00448f6:	ee2d 9a89 	vmul.f32	s18, s27, s18
-d00448fa:	ee70 8a68 	vsub.f32	s17, s0, s17
-d00448fe:	e056      	b.n	d00449ae <drawFakeHorizon+0x116>
-d0044900:	ee88 6aa6 	vdiv.f32	s12, s17, s13
-d0044904:	eef0 6ac7 	vabs.f32	s13, s14
-d0044908:	eeb5 6ac0 	vcmpe.f32	s12, #0.0
-d004490c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044910:	eef4 6ac8 	vcmpe.f32	s13, s16
-d0044914:	bfcc      	ite	gt
-d0044916:	2201      	movgt	r2, #1
-d0044918:	2200      	movle	r2, #0
-d004491a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004491e:	da61      	bge.n	d00449e4 <drawFakeHorizon+0x14c>
-d0044920:	eeb5 6ac0 	vcmpe.f32	s12, #0.0
-d0044924:	eb04 0584 	add.w	r5, r4, r4, lsl #2
-d0044928:	6833      	ldr	r3, [r6, #0]
-d004492a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004492e:	eb03 1585 	add.w	r5, r3, r5, lsl #6
-d0044932:	f240 80a8 	bls.w	d0044a86 <drawFakeHorizon+0x1ee>
-d0044936:	eeb4 bac8 	vcmpe.f32	s22, s16
-d004493a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004493e:	f100 809a 	bmi.w	d0044a76 <drawFakeHorizon+0x1de>
-d0044942:	ee7b 7aa7 	vadd.f32	s15, s23, s15
-d0044946:	eeb0 7a4c 	vmov.f32	s14, s24
-d004494a:	eeac 7aa7 	vfma.f32	s14, s25, s15
-d004494e:	fefc 7ac7 	vcvta.s32.f32	s15, s14
-d0044952:	ee17 ba90 	vmov	fp, s15
-d0044956:	f1bb 0f00 	cmp.w	fp, #0
-d004495a:	f2c0 80aa 	blt.w	d0044ab2 <drawFakeHorizon+0x21a>
-d004495e:	2201      	movs	r2, #1
-d0044960:	f5bb 7fa0 	cmp.w	fp, #320	; 0x140
-d0044964:	46da      	mov	sl, fp
-d0044966:	bfa8      	it	ge
-d0044968:	f44f 7aa0 	movge.w	sl, #320	; 0x140
-d004496c:	2a00      	cmp	r2, #0
-d004496e:	f000 8091 	beq.w	d0044a94 <drawFakeHorizon+0x1fc>
-d0044972:	f1bb 0f00 	cmp.w	fp, #0
-d0044976:	d009      	beq.n	d004498c <drawFakeHorizon+0xf4>
-d0044978:	f1ba 0f00 	cmp.w	sl, #0
-d004497c:	4628      	mov	r0, r5
-d004497e:	4641      	mov	r1, r8
-d0044980:	bfcc      	ite	gt
-d0044982:	4652      	movgt	r2, sl
-d0044984:	2201      	movle	r2, #1
-d0044986:	4415      	add	r5, r2
-d0044988:	f001 fb16 	bl	d0045fb8 <memset>
-d004498c:	f5ba 7fa0 	cmp.w	sl, #320	; 0x140
-d0044990:	d009      	beq.n	d00449a6 <drawFakeHorizon+0x10e>
-d0044992:	f5ba 7fa0 	cmp.w	sl, #320	; 0x140
-d0044996:	f5ca 72a0 	rsb	r2, sl, #320	; 0x140
-d004499a:	4628      	mov	r0, r5
-d004499c:	4639      	mov	r1, r7
-d004499e:	bfa8      	it	ge
-d00449a0:	2201      	movge	r2, #1
-d00449a2:	f001 fb09 	bl	d0045fb8 <memset>
-d00449a6:	3401      	adds	r4, #1
-d00449a8:	f5b4 7ff0 	cmp.w	r4, #480	; 0x1e0
-d00449ac:	d04e      	beq.n	d0044a4c <drawFakeHorizon+0x1b4>
-d00449ae:	ee07 4a90 	vmov	s15, r4
-d00449b2:	eef8 7ae7 	vcvt.f32.s32	s15, s15
-d00449b6:	ee77 7ae9 	vsub.f32	s15, s15, s19
-d00449ba:	ee67 7a89 	vmul.f32	s15, s15, s18
-d00449be:	ee77 6aaa 	vadd.f32	s13, s15, s21
-d00449c2:	ee3a 7a27 	vadd.f32	s14, s20, s15
-d00449c6:	eeb0 6ae6 	vabs.f32	s12, s13
-d00449ca:	eeb4 6ac8 	vcmpe.f32	s12, s16
-d00449ce:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00449d2:	da95      	bge.n	d0044900 <drawFakeHorizon+0x68>
-d00449d4:	eef0 6ac7 	vabs.f32	s13, s14
-d00449d8:	eef4 6ac8 	vcmpe.f32	s13, s16
-d00449dc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00449e0:	db4c      	blt.n	d0044a7c <drawFakeHorizon+0x1e4>
-d00449e2:	2200      	movs	r2, #0
-d00449e4:	eec8 6a87 	vdiv.f32	s13, s17, s14
-d00449e8:	6833      	ldr	r3, [r6, #0]
-d00449ea:	eb04 0584 	add.w	r5, r4, r4, lsl #2
-d00449ee:	eb03 1585 	add.w	r5, r3, r5, lsl #6
-d00449f2:	eef5 6ac0 	vcmpe.f32	s13, #0.0
-d00449f6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00449fa:	bfcc      	ite	gt
-d00449fc:	2301      	movgt	r3, #1
-d00449fe:	2300      	movle	r3, #0
-d0044a00:	4293      	cmp	r3, r2
-d0044a02:	f000 8089 	beq.w	d0044b18 <drawFakeHorizon+0x280>
-d0044a06:	eeb4 bac8 	vcmpe.f32	s22, s16
-d0044a0a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044a0e:	d429      	bmi.n	d0044a64 <drawFakeHorizon+0x1cc>
-d0044a10:	ee7b 7aa7 	vadd.f32	s15, s23, s15
-d0044a14:	eeb0 7a4c 	vmov.f32	s14, s24
-d0044a18:	eeac 7aa7 	vfma.f32	s14, s25, s15
-d0044a1c:	fefc 7ac7 	vcvta.s32.f32	s15, s14
-d0044a20:	ee17 ba90 	vmov	fp, s15
-d0044a24:	f1bb 0f00 	cmp.w	fp, #0
-d0044a28:	da9a      	bge.n	d0044960 <drawFakeHorizon+0xc8>
-d0044a2a:	2a00      	cmp	r2, #0
-d0044a2c:	d141      	bne.n	d0044ab2 <drawFakeHorizon+0x21a>
-d0044a2e:	f5b2 7fa0 	cmp.w	r2, #320	; 0x140
-d0044a32:	f104 0401 	add.w	r4, r4, #1
-d0044a36:	f5c2 72a0 	rsb	r2, r2, #320	; 0x140
-d0044a3a:	4628      	mov	r0, r5
-d0044a3c:	bfa8      	it	ge
-d0044a3e:	2201      	movge	r2, #1
-d0044a40:	4641      	mov	r1, r8
-d0044a42:	f001 fab9 	bl	d0045fb8 <memset>
-d0044a46:	f5b4 7ff0 	cmp.w	r4, #480	; 0x1e0
-d0044a4a:	d1b0      	bne.n	d00449ae <drawFakeHorizon+0x116>
-d0044a4c:	eddf 7a3b 	vldr	s15, [pc, #236]	; d0044b3c <drawFakeHorizon+0x2a4>
-d0044a50:	eeb4 bae7 	vcmpe.f32	s22, s15
-d0044a54:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044a58:	da31      	bge.n	d0044abe <drawFakeHorizon+0x226>
-d0044a5a:	b003      	add	sp, #12
-d0044a5c:	ecbd 8b0c 	vpop	{d8-d13}
-d0044a60:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-d0044a64:	b93a      	cbnz	r2, d0044a76 <drawFakeHorizon+0x1de>
-d0044a66:	22a0      	movs	r2, #160	; 0xa0
-d0044a68:	4628      	mov	r0, r5
-d0044a6a:	4639      	mov	r1, r7
-d0044a6c:	4415      	add	r5, r2
-d0044a6e:	f001 faa3 	bl	d0045fb8 <memset>
-d0044a72:	22a0      	movs	r2, #160	; 0xa0
-d0044a74:	e7db      	b.n	d0044a2e <drawFakeHorizon+0x196>
-d0044a76:	f04f 0aa0 	mov.w	sl, #160	; 0xa0
-d0044a7a:	e77d      	b.n	d0044978 <drawFakeHorizon+0xe0>
-d0044a7c:	eb04 0584 	add.w	r5, r4, r4, lsl #2
-d0044a80:	6832      	ldr	r2, [r6, #0]
-d0044a82:	eb02 1585 	add.w	r5, r2, r5, lsl #6
-d0044a86:	4639      	mov	r1, r7
-d0044a88:	4628      	mov	r0, r5
-d0044a8a:	f44f 72a0 	mov.w	r2, #320	; 0x140
-d0044a8e:	f001 fa93 	bl	d0045fb8 <memset>
-d0044a92:	e788      	b.n	d00449a6 <drawFakeHorizon+0x10e>
-d0044a94:	f1bb 0f00 	cmp.w	fp, #0
-d0044a98:	d00e      	beq.n	d0044ab8 <drawFakeHorizon+0x220>
-d0044a9a:	4628      	mov	r0, r5
-d0044a9c:	4652      	mov	r2, sl
-d0044a9e:	4639      	mov	r1, r7
-d0044aa0:	4455      	add	r5, sl
-d0044aa2:	f001 fa89 	bl	d0045fb8 <memset>
-d0044aa6:	f5bb 7fa0 	cmp.w	fp, #320	; 0x140
-d0044aaa:	f6bf af7c 	bge.w	d00449a6 <drawFakeHorizon+0x10e>
-d0044aae:	4652      	mov	r2, sl
-d0044ab0:	e7bd      	b.n	d0044a2e <drawFakeHorizon+0x196>
-d0044ab2:	f04f 0a00 	mov.w	sl, #0
-d0044ab6:	e76c      	b.n	d0044992 <drawFakeHorizon+0xfa>
-d0044ab8:	46da      	mov	sl, fp
-d0044aba:	4652      	mov	r2, sl
-d0044abc:	e7b7      	b.n	d0044a2e <drawFakeHorizon+0x196>
-d0044abe:	ed9f 7a1d 	vldr	s14, [pc, #116]	; d0044b34 <drawFakeHorizon+0x29c>
-d0044ac2:	f240 12df 	movw	r2, #479	; 0x1df
-d0044ac6:	eddf 7a1e 	vldr	s15, [pc, #120]	; d0044b40 <drawFakeHorizon+0x2a8>
-d0044aca:	2000      	movs	r0, #0
-d0044acc:	ee6b ba87 	vmul.f32	s23, s23, s14
-d0044ad0:	ed9f 7a1c 	vldr	s14, [pc, #112]	; d0044b44 <drawFakeHorizon+0x2ac>
-d0044ad4:	eddf 6a14 	vldr	s13, [pc, #80]	; d0044b28 <drawFakeHorizon+0x290>
-d0044ad8:	f8cd 9000 	str.w	r9, [sp]
-d0044adc:	eeb0 6a6b 	vmov.f32	s12, s23
-d0044ae0:	eeed ba87 	vfma.f32	s23, s27, s14
-d0044ae4:	eead 6aa7 	vfma.f32	s12, s27, s15
-d0044ae8:	eecb 7a8d 	vdiv.f32	s15, s23, s26
-d0044aec:	ee86 7a0d 	vdiv.f32	s14, s12, s26
-d0044af0:	ee77 7aa6 	vadd.f32	s15, s15, s13
-d0044af4:	fefc 7ae7 	vcvta.s32.f32	s15, s15
-d0044af8:	ee37 7a26 	vadd.f32	s14, s14, s13
-d0044afc:	ee17 3a90 	vmov	r3, s15
-d0044b00:	febc 7ac7 	vcvta.s32.f32	s14, s14
-d0044b04:	ee17 1a10 	vmov	r1, s14
-d0044b08:	f7fb fec6 	bl	d0040898 <drawLine>
-d0044b0c:	b003      	add	sp, #12
-d0044b0e:	ecbd 8b0c 	vpop	{d8-d13}
-d0044b12:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-d0044b16:	4770      	bx	lr
-d0044b18:	eef5 6ac0 	vcmpe.f32	s13, #0.0
-d0044b1c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044b20:	ddb1      	ble.n	d0044a86 <drawFakeHorizon+0x1ee>
-d0044b22:	4641      	mov	r1, r8
-d0044b24:	e7b0      	b.n	d0044a88 <drawFakeHorizon+0x1f0>
-d0044b26:	bf00      	nop
-d0044b28:	43200000 	.word	0x43200000
-d0044b2c:	c31f0000 	.word	0xc31f0000
-d0044b30:	3b888889 	.word	0x3b888889
-d0044b34:	43700000 	.word	0x43700000
-d0044b38:	d012cd44 	.word	0xd012cd44
-d0044b3c:	38d1b717 	.word	0x38d1b717
-d0044b40:	c3700000 	.word	0xc3700000
-d0044b44:	436f0000 	.word	0x436f0000
+d0044124 <copyMesh>:
+d0044124:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d0044128:	460f      	mov	r7, r1
+d004412a:	b083      	sub	sp, #12
+d004412c:	2240      	movs	r2, #64	; 0x40
+d004412e:	2100      	movs	r1, #0
+d0044130:	4606      	mov	r6, r0
+d0044132:	f002 fd97 	bl	d0046c64 <memset>
+d0044136:	2f00      	cmp	r7, #0
+d0044138:	d077      	beq.n	d004422a <copyMesh+0x106>
+d004413a:	687b      	ldr	r3, [r7, #4]
+d004413c:	697a      	ldr	r2, [r7, #20]
+d004413e:	2b00      	cmp	r3, #0
+d0044140:	f8d7 800c 	ldr.w	r8, [r7, #12]
+d0044144:	9301      	str	r3, [sp, #4]
+d0044146:	9200      	str	r2, [sp, #0]
+d0044148:	dc59      	bgt.n	d00441fe <copyMesh+0xda>
+d004414a:	f1b8 0f00 	cmp.w	r8, #0
+d004414e:	f04f 0900 	mov.w	r9, #0
+d0044152:	dc5d      	bgt.n	d0044210 <copyMesh+0xec>
+d0044154:	9b00      	ldr	r3, [sp, #0]
+d0044156:	f04f 0a00 	mov.w	sl, #0
+d004415a:	2b00      	cmp	r3, #0
+d004415c:	dc60      	bgt.n	d0044220 <copyMesh+0xfc>
+d004415e:	f04f 0c00 	mov.w	ip, #0
+d0044162:	9b01      	ldr	r3, [sp, #4]
+d0044164:	2b00      	cmp	r3, #0
+d0044166:	dd0f      	ble.n	d0044188 <copyMesh+0x64>
+d0044168:	eb03 0543 	add.w	r5, r3, r3, lsl #1
+d004416c:	f8d7 e000 	ldr.w	lr, [r7]
+d0044170:	2300      	movs	r3, #0
+d0044172:	00ad      	lsls	r5, r5, #2
+d0044174:	eb0e 0203 	add.w	r2, lr, r3
+d0044178:	eb09 0403 	add.w	r4, r9, r3
+d004417c:	330c      	adds	r3, #12
+d004417e:	ca07      	ldmia	r2, {r0, r1, r2}
+d0044180:	429d      	cmp	r5, r3
+d0044182:	e884 0007 	stmia.w	r4, {r0, r1, r2}
+d0044186:	d1f5      	bne.n	d0044174 <copyMesh+0x50>
+d0044188:	f1b8 0f00 	cmp.w	r8, #0
+d004418c:	dd0b      	ble.n	d00441a6 <copyMesh+0x82>
+d004418e:	68bc      	ldr	r4, [r7, #8]
+d0044190:	2300      	movs	r3, #0
+d0044192:	eb04 01c3 	add.w	r1, r4, r3, lsl #3
+d0044196:	eb0a 02c3 	add.w	r2, sl, r3, lsl #3
+d004419a:	3301      	adds	r3, #1
+d004419c:	c903      	ldmia	r1, {r0, r1}
+d004419e:	4598      	cmp	r8, r3
+d00441a0:	e882 0003 	stmia.w	r2, {r0, r1}
+d00441a4:	d1f5      	bne.n	d0044192 <copyMesh+0x6e>
+d00441a6:	9b00      	ldr	r3, [sp, #0]
+d00441a8:	2b00      	cmp	r3, #0
+d00441aa:	dd0e      	ble.n	d00441ca <copyMesh+0xa6>
+d00441ac:	f8d7 b010 	ldr.w	fp, [r7, #16]
+d00441b0:	ea4f 1e03 	mov.w	lr, r3, lsl #4
+d00441b4:	2400      	movs	r4, #0
+d00441b6:	eb0b 0304 	add.w	r3, fp, r4
+d00441ba:	eb0c 0504 	add.w	r5, ip, r4
+d00441be:	3410      	adds	r4, #16
+d00441c0:	cb0f      	ldmia	r3, {r0, r1, r2, r3}
+d00441c2:	4574      	cmp	r4, lr
+d00441c4:	e885 000f 	stmia.w	r5, {r0, r1, r2, r3}
+d00441c8:	d1f5      	bne.n	d00441b6 <copyMesh+0x92>
+d00441ca:	9a01      	ldr	r2, [sp, #4]
+d00441cc:	f107 0520 	add.w	r5, r7, #32
+d00441d0:	69bb      	ldr	r3, [r7, #24]
+d00441d2:	f106 0420 	add.w	r4, r6, #32
+d00441d6:	6072      	str	r2, [r6, #4]
+d00441d8:	9a00      	ldr	r2, [sp, #0]
+d00441da:	61b3      	str	r3, [r6, #24]
+d00441dc:	6172      	str	r2, [r6, #20]
+d00441de:	f8c6 9000 	str.w	r9, [r6]
+d00441e2:	f8c6 c010 	str.w	ip, [r6, #16]
+d00441e6:	cd0f      	ldmia	r5!, {r0, r1, r2, r3}
+d00441e8:	c40f      	stmia	r4!, {r0, r1, r2, r3}
+d00441ea:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
+d00441ee:	e884 000f 	stmia.w	r4, {r0, r1, r2, r3}
+d00441f2:	4630      	mov	r0, r6
+d00441f4:	e9c6 a802 	strd	sl, r8, [r6, #8]
+d00441f8:	b003      	add	sp, #12
+d00441fa:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d00441fe:	eb03 0043 	add.w	r0, r3, r3, lsl #1
+d0044202:	0080      	lsls	r0, r0, #2
+d0044204:	f002 fd10 	bl	d0046c28 <malloc>
+d0044208:	f1b8 0f00 	cmp.w	r8, #0
+d004420c:	4681      	mov	r9, r0
+d004420e:	dda1      	ble.n	d0044154 <copyMesh+0x30>
+d0044210:	ea4f 00c8 	mov.w	r0, r8, lsl #3
+d0044214:	f002 fd08 	bl	d0046c28 <malloc>
+d0044218:	9b00      	ldr	r3, [sp, #0]
+d004421a:	4682      	mov	sl, r0
+d004421c:	2b00      	cmp	r3, #0
+d004421e:	dd9e      	ble.n	d004415e <copyMesh+0x3a>
+d0044220:	0118      	lsls	r0, r3, #4
+d0044222:	f002 fd01 	bl	d0046c28 <malloc>
+d0044226:	4684      	mov	ip, r0
+d0044228:	e79b      	b.n	d0044162 <copyMesh+0x3e>
+d004422a:	2300      	movs	r3, #0
+d004422c:	4630      	mov	r0, r6
+d004422e:	e9c6 7700 	strd	r7, r7, [r6]
+d0044232:	e9c6 7702 	strd	r7, r7, [r6, #8]
+d0044236:	e9c6 7704 	strd	r7, r7, [r6, #16]
+d004423a:	61b3      	str	r3, [r6, #24]
+d004423c:	b003      	add	sp, #12
+d004423e:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d0044242:	bf00      	nop
 
-d0044b48 <submitEntitySolid>:
-d0044b48:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d0044b4c:	ed2d 8b10 	vpush	{d8-d15}
-d0044b50:	b0b3      	sub	sp, #204	; 0xcc
-d0044b52:	f10d 036f 	add.w	r3, sp, #111	; 0x6f
-d0044b56:	9104      	str	r1, [sp, #16]
-d0044b58:	f023 031f 	bic.w	r3, r3, #31
-d0044b5c:	9305      	str	r3, [sp, #20]
-d0044b5e:	2800      	cmp	r0, #0
-d0044b60:	f000 827c 	beq.w	d004505c <submitEntitySolid+0x514>
-d0044b64:	f8d0 800c 	ldr.w	r8, [r0, #12]
-d0044b68:	4604      	mov	r4, r0
-d0044b6a:	f1b8 0f00 	cmp.w	r8, #0
-d0044b6e:	f000 8275 	beq.w	d004505c <submitEntitySolid+0x514>
-d0044b72:	f8d8 3000 	ldr.w	r3, [r8]
-d0044b76:	2b00      	cmp	r3, #0
-d0044b78:	f000 8270 	beq.w	d004505c <submitEntitySolid+0x514>
-d0044b7c:	f8d8 3010 	ldr.w	r3, [r8, #16]
-d0044b80:	2b00      	cmp	r3, #0
-d0044b82:	f000 826b 	beq.w	d004505c <submitEntitySolid+0x514>
-d0044b86:	f8d8 3004 	ldr.w	r3, [r8, #4]
-d0044b8a:	3b01      	subs	r3, #1
-d0044b8c:	f5b3 5f80 	cmp.w	r3, #4096	; 0x1000
-d0044b90:	f080 8264 	bcs.w	d004505c <submitEntitySolid+0x514>
-d0044b94:	f8d8 3014 	ldr.w	r3, [r8, #20]
-d0044b98:	2b00      	cmp	r3, #0
-d0044b9a:	f340 825f 	ble.w	d004505c <submitEntitySolid+0x514>
-d0044b9e:	460f      	mov	r7, r1
-d0044ba0:	edd1 aa11 	vldr	s21, [r1, #68]	; 0x44
-d0044ba4:	ed91 fa10 	vldr	s30, [r1, #64]	; 0x40
-d0044ba8:	f7fe ffbe 	bl	d0043b28 <lightsGet>
-d0044bac:	900b      	str	r0, [sp, #44]	; 0x2c
-d0044bae:	f7fe ffbf 	bl	d0043b30 <lightsGetCount>
-d0044bb2:	edd8 fa09 	vldr	s31, [r8, #36]	; 0x24
-d0044bb6:	edd8 7a0a 	vldr	s15, [r8, #40]	; 0x28
-d0044bba:	eef5 fac0 	vcmpe.f32	s31, #0.0
-d0044bbe:	ed98 7a08 	vldr	s14, [r8, #32]
-d0044bc2:	f8d8 3004 	ldr.w	r3, [r8, #4]
-d0044bc6:	ed8d 7a01 	vstr	s14, [sp, #4]
-d0044bca:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044bce:	ed98 7a0c 	vldr	s14, [r8, #48]	; 0x30
-d0044bd2:	eef5 7ac0 	vcmpe.f32	s15, #0.0
-d0044bd6:	ed94 6a00 	vldr	s12, [r4]
-d0044bda:	ed8d 7a09 	vstr	s14, [sp, #36]	; 0x24
-d0044bde:	bfcc      	ite	gt
-d0044be0:	2601      	movgt	r6, #1
-d0044be2:	2600      	movle	r6, #0
+d0044244 <buildLightingCLUT>:
+d0044244:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d0044248:	f1b2 0900 	subs.w	r9, r2, #0
+d004424c:	b085      	sub	sp, #20
+d004424e:	9c0e      	ldr	r4, [sp, #56]	; 0x38
+d0044250:	f340 8212 	ble.w	d0044678 <buildLightingCLUT+0x434>
+d0044254:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
+d0044258:	4f24      	ldr	r7, [pc, #144]	; (d00442ec <buildLightingCLUT+0xa8>)
+d004425a:	eb09 0c49 	add.w	ip, r9, r9, lsl #1
+d004425e:	edd4 4a00 	vldr	s9, [r4]
+d0044262:	ed94 5a01 	vldr	s10, [r4, #4]
+d0044266:	eb09 0807 	add.w	r8, r9, r7
+d004426a:	edd4 5a02 	vldr	s11, [r4, #8]
+d004426e:	eb07 0e49 	add.w	lr, r7, r9, lsl #1
+d0044272:	ed94 6a03 	vldr	s12, [r4, #12]
+d0044276:	44bc      	add	ip, r7
+d0044278:	edd4 6a04 	vldr	s13, [r4, #16]
+d004427c:	eb07 0789 	add.w	r7, r7, r9, lsl #2
+d0044280:	3904      	subs	r1, #4
+d0044282:	ee77 4ae4 	vsub.f32	s9, s15, s9
+d0044286:	ee37 5ac5 	vsub.f32	s10, s15, s10
+d004428a:	ed9f 7a19 	vldr	s14, [pc, #100]	; d00442f0 <buildLightingCLUT+0xac>
+d004428e:	ee77 5ae5 	vsub.f32	s11, s15, s11
+d0044292:	f100 067c 	add.w	r6, r0, #124	; 0x7c
+d0044296:	ee37 6ac6 	vsub.f32	s12, s15, s12
+d004429a:	eb00 0888 	add.w	r8, r0, r8, lsl #2
+d004429e:	ee77 6ae6 	vsub.f32	s13, s15, s13
+d00442a2:	eb00 0e8e 	add.w	lr, r0, lr, lsl #2
+d00442a6:	eb00 0c8c 	add.w	ip, r0, ip, lsl #2
+d00442aa:	f3c3 4507 	ubfx	r5, r3, #16, #8
+d00442ae:	eb00 0787 	add.w	r7, r0, r7, lsl #2
+d00442b2:	f3c3 2007 	ubfx	r0, r3, #8, #8
+d00442b6:	eb01 0989 	add.w	r9, r1, r9, lsl #2
+d00442ba:	fec4 4a87 	vmaxnm.f32	s9, s9, s14
+d00442be:	0e1c      	lsrs	r4, r3, #24
+d00442c0:	fe85 5a07 	vmaxnm.f32	s10, s10, s14
+d00442c4:	b2da      	uxtb	r2, r3
+d00442c6:	fec5 5a87 	vmaxnm.f32	s11, s11, s14
+d00442ca:	fe86 6a07 	vmaxnm.f32	s12, s12, s14
+d00442ce:	fec6 6a87 	vmaxnm.f32	s13, s13, s14
+d00442d2:	fec4 4ae7 	vminnm.f32	s9, s9, s15
+d00442d6:	fe85 5a67 	vminnm.f32	s10, s10, s15
+d00442da:	fec5 5ae7 	vminnm.f32	s11, s11, s15
+d00442de:	fe86 6a67 	vminnm.f32	s12, s12, s15
+d00442e2:	fec6 6ae7 	vminnm.f32	s13, s13, s15
+d00442e6:	9601      	str	r6, [sp, #4]
+d00442e8:	e004      	b.n	d00442f4 <buildLightingCLUT+0xb0>
+d00442ea:	bf00      	nop
+d00442ec:	4000001f 	.word	0x4000001f
+d00442f0:	00000000 	.word	0x00000000
+d00442f4:	f851 3f04 	ldr.w	r3, [r1, #4]!
+d00442f8:	f3c3 4b07 	ubfx	fp, r3, #16, #8
+d00442fc:	0e1e      	lsrs	r6, r3, #24
+d00442fe:	fa5f fa83 	uxtb.w	sl, r3
+d0044302:	4549      	cmp	r1, r9
+d0044304:	ee07 6a10 	vmov	s14, r6
+d0044308:	eba5 060b 	sub.w	r6, r5, fp
+d004430c:	ee04 ba10 	vmov	s8, fp
+d0044310:	ee07 6a90 	vmov	s15, r6
+d0044314:	eba4 6613 	sub.w	r6, r4, r3, lsr #24
+d0044318:	eef8 3ac4 	vcvt.f32.s32	s7, s8
+d004431c:	f3c3 2307 	ubfx	r3, r3, #8, #8
+d0044320:	ee02 6a10 	vmov	s4, r6
+d0044324:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0044328:	eba2 060a 	sub.w	r6, r2, sl
+d004432c:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
+d0044330:	eeb8 2ac2 	vcvt.f32.s32	s4, s4
+d0044334:	ee04 aa10 	vmov	s8, sl
+d0044338:	ee02 6a90 	vmov	s5, r6
+d004433c:	eba0 0603 	sub.w	r6, r0, r3
+d0044340:	eee4 3aa7 	vfma.f32	s7, s9, s15
+d0044344:	ee07 3a90 	vmov	s15, r3
+d0044348:	eea4 7a82 	vfma.f32	s14, s9, s4
+d004434c:	ee03 6a10 	vmov	s6, r6
+d0044350:	eef8 2ae2 	vcvt.f32.s32	s5, s5
+d0044354:	9e01      	ldr	r6, [sp, #4]
+d0044356:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
+d004435a:	eeb8 3ac3 	vcvt.f32.s32	s6, s6
+d004435e:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0044362:	eea4 4aa2 	vfma.f32	s8, s9, s5
+d0044366:	eefc 3ae3 	vcvt.u32.f32	s7, s7
+d004436a:	eee4 7a83 	vfma.f32	s15, s9, s6
+d004436e:	eebc 7ac7 	vcvt.u32.f32	s14, s14
+d0044372:	edcd 3a02 	vstr	s7, [sp, #8]
+d0044376:	f89d a008 	ldrb.w	sl, [sp, #8]
+d004437a:	ee17 3a10 	vmov	r3, s14
+d004437e:	eebc 7ac4 	vcvt.u32.f32	s14, s8
+d0044382:	ea4f 4a0a 	mov.w	sl, sl, lsl #16
+d0044386:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+d004438a:	ed8d 7a02 	vstr	s14, [sp, #8]
+d004438e:	ea4a 6303 	orr.w	r3, sl, r3, lsl #24
+d0044392:	f89d b008 	ldrb.w	fp, [sp, #8]
+d0044396:	edcd 7a03 	vstr	s15, [sp, #12]
+d004439a:	ea43 030b 	orr.w	r3, r3, fp
+d004439e:	f89d a00c 	ldrb.w	sl, [sp, #12]
+d00443a2:	ea43 230a 	orr.w	r3, r3, sl, lsl #8
+d00443a6:	f846 3f04 	str.w	r3, [r6, #4]!
+d00443aa:	680b      	ldr	r3, [r1, #0]
+d00443ac:	9601      	str	r6, [sp, #4]
+d00443ae:	f3c3 4b07 	ubfx	fp, r3, #16, #8
+d00443b2:	ea4f 6613 	mov.w	r6, r3, lsr #24
+d00443b6:	fa5f fa83 	uxtb.w	sl, r3
+d00443ba:	ee07 6a10 	vmov	s14, r6
+d00443be:	eba5 060b 	sub.w	r6, r5, fp
+d00443c2:	ee04 ba10 	vmov	s8, fp
+d00443c6:	ee07 6a90 	vmov	s15, r6
+d00443ca:	eba4 6613 	sub.w	r6, r4, r3, lsr #24
+d00443ce:	eef8 3ac4 	vcvt.f32.s32	s7, s8
+d00443d2:	f3c3 2307 	ubfx	r3, r3, #8, #8
+d00443d6:	ee02 6a10 	vmov	s4, r6
+d00443da:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d00443de:	eba2 060a 	sub.w	r6, r2, sl
+d00443e2:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
+d00443e6:	eeb8 2ac2 	vcvt.f32.s32	s4, s4
+d00443ea:	ee04 aa10 	vmov	s8, sl
+d00443ee:	ee02 6a90 	vmov	s5, r6
+d00443f2:	eba0 0603 	sub.w	r6, r0, r3
+d00443f6:	eee5 3a27 	vfma.f32	s7, s10, s15
+d00443fa:	ee07 3a90 	vmov	s15, r3
+d00443fe:	eea5 7a02 	vfma.f32	s14, s10, s4
+d0044402:	ee03 6a10 	vmov	s6, r6
+d0044406:	eef8 2ae2 	vcvt.f32.s32	s5, s5
+d004440a:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
+d004440e:	eeb8 3ac3 	vcvt.f32.s32	s6, s6
+d0044412:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0044416:	eea5 4a22 	vfma.f32	s8, s10, s5
+d004441a:	eefc 3ae3 	vcvt.u32.f32	s7, s7
+d004441e:	eee5 7a03 	vfma.f32	s15, s10, s6
+d0044422:	eebc 7ac7 	vcvt.u32.f32	s14, s14
+d0044426:	edcd 3a02 	vstr	s7, [sp, #8]
+d004442a:	f89d a008 	ldrb.w	sl, [sp, #8]
+d004442e:	ee17 3a10 	vmov	r3, s14
+d0044432:	eebc 7ac4 	vcvt.u32.f32	s14, s8
+d0044436:	ea4f 4a0a 	mov.w	sl, sl, lsl #16
+d004443a:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+d004443e:	ed8d 7a02 	vstr	s14, [sp, #8]
+d0044442:	ea4a 6303 	orr.w	r3, sl, r3, lsl #24
+d0044446:	f89d b008 	ldrb.w	fp, [sp, #8]
+d004444a:	edcd 7a03 	vstr	s15, [sp, #12]
+d004444e:	ea43 030b 	orr.w	r3, r3, fp
+d0044452:	f89d a00c 	ldrb.w	sl, [sp, #12]
+d0044456:	ea43 230a 	orr.w	r3, r3, sl, lsl #8
+d004445a:	f848 3f04 	str.w	r3, [r8, #4]!
+d004445e:	680b      	ldr	r3, [r1, #0]
+d0044460:	f3c3 4b07 	ubfx	fp, r3, #16, #8
+d0044464:	ea4f 6613 	mov.w	r6, r3, lsr #24
+d0044468:	fa5f fa83 	uxtb.w	sl, r3
+d004446c:	ee07 6a10 	vmov	s14, r6
+d0044470:	eba5 060b 	sub.w	r6, r5, fp
+d0044474:	ee04 ba10 	vmov	s8, fp
+d0044478:	ee07 6a90 	vmov	s15, r6
+d004447c:	eba4 6613 	sub.w	r6, r4, r3, lsr #24
+d0044480:	eef8 3ac4 	vcvt.f32.s32	s7, s8
+d0044484:	f3c3 2307 	ubfx	r3, r3, #8, #8
+d0044488:	ee02 6a10 	vmov	s4, r6
+d004448c:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0044490:	eba2 060a 	sub.w	r6, r2, sl
+d0044494:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
+d0044498:	eeb8 2ac2 	vcvt.f32.s32	s4, s4
+d004449c:	ee04 aa10 	vmov	s8, sl
+d00444a0:	ee02 6a90 	vmov	s5, r6
+d00444a4:	eba0 0603 	sub.w	r6, r0, r3
+d00444a8:	eee5 3aa7 	vfma.f32	s7, s11, s15
+d00444ac:	ee07 3a90 	vmov	s15, r3
+d00444b0:	eea5 7a82 	vfma.f32	s14, s11, s4
+d00444b4:	ee03 6a10 	vmov	s6, r6
+d00444b8:	eef8 2ae2 	vcvt.f32.s32	s5, s5
+d00444bc:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
+d00444c0:	eeb8 3ac3 	vcvt.f32.s32	s6, s6
+d00444c4:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d00444c8:	eea5 4aa2 	vfma.f32	s8, s11, s5
+d00444cc:	eefc 3ae3 	vcvt.u32.f32	s7, s7
+d00444d0:	eee5 7a83 	vfma.f32	s15, s11, s6
+d00444d4:	eebc 7ac7 	vcvt.u32.f32	s14, s14
+d00444d8:	edcd 3a02 	vstr	s7, [sp, #8]
+d00444dc:	f89d a008 	ldrb.w	sl, [sp, #8]
+d00444e0:	ee17 3a10 	vmov	r3, s14
+d00444e4:	eebc 7ac4 	vcvt.u32.f32	s14, s8
+d00444e8:	ea4f 4a0a 	mov.w	sl, sl, lsl #16
+d00444ec:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+d00444f0:	ed8d 7a02 	vstr	s14, [sp, #8]
+d00444f4:	ea4a 6303 	orr.w	r3, sl, r3, lsl #24
+d00444f8:	f89d b008 	ldrb.w	fp, [sp, #8]
+d00444fc:	edcd 7a03 	vstr	s15, [sp, #12]
+d0044500:	ea43 030b 	orr.w	r3, r3, fp
+d0044504:	f89d a00c 	ldrb.w	sl, [sp, #12]
+d0044508:	ea43 230a 	orr.w	r3, r3, sl, lsl #8
+d004450c:	f84e 3f04 	str.w	r3, [lr, #4]!
+d0044510:	680b      	ldr	r3, [r1, #0]
+d0044512:	f3c3 4b07 	ubfx	fp, r3, #16, #8
+d0044516:	ea4f 6613 	mov.w	r6, r3, lsr #24
+d004451a:	fa5f fa83 	uxtb.w	sl, r3
+d004451e:	ee07 6a10 	vmov	s14, r6
+d0044522:	eba5 060b 	sub.w	r6, r5, fp
+d0044526:	ee04 ba10 	vmov	s8, fp
+d004452a:	ee07 6a90 	vmov	s15, r6
+d004452e:	eba4 6613 	sub.w	r6, r4, r3, lsr #24
+d0044532:	eef8 3ac4 	vcvt.f32.s32	s7, s8
+d0044536:	f3c3 2307 	ubfx	r3, r3, #8, #8
+d004453a:	ee02 6a10 	vmov	s4, r6
+d004453e:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0044542:	eba2 060a 	sub.w	r6, r2, sl
+d0044546:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
+d004454a:	eeb8 2ac2 	vcvt.f32.s32	s4, s4
+d004454e:	ee04 aa10 	vmov	s8, sl
+d0044552:	ee02 6a90 	vmov	s5, r6
+d0044556:	eba0 0603 	sub.w	r6, r0, r3
+d004455a:	eee6 3a27 	vfma.f32	s7, s12, s15
+d004455e:	ee07 3a90 	vmov	s15, r3
+d0044562:	eea6 7a02 	vfma.f32	s14, s12, s4
+d0044566:	ee03 6a10 	vmov	s6, r6
+d004456a:	eef8 2ae2 	vcvt.f32.s32	s5, s5
+d004456e:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
+d0044572:	eeb8 3ac3 	vcvt.f32.s32	s6, s6
+d0044576:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d004457a:	eea6 4a22 	vfma.f32	s8, s12, s5
+d004457e:	eefc 3ae3 	vcvt.u32.f32	s7, s7
+d0044582:	eee6 7a03 	vfma.f32	s15, s12, s6
+d0044586:	eebc 7ac7 	vcvt.u32.f32	s14, s14
+d004458a:	edcd 3a02 	vstr	s7, [sp, #8]
+d004458e:	f89d a008 	ldrb.w	sl, [sp, #8]
+d0044592:	ee17 3a10 	vmov	r3, s14
+d0044596:	eebc 7ac4 	vcvt.u32.f32	s14, s8
+d004459a:	ea4f 4a0a 	mov.w	sl, sl, lsl #16
+d004459e:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+d00445a2:	ed8d 7a02 	vstr	s14, [sp, #8]
+d00445a6:	ea4a 6303 	orr.w	r3, sl, r3, lsl #24
+d00445aa:	f89d b008 	ldrb.w	fp, [sp, #8]
+d00445ae:	edcd 7a03 	vstr	s15, [sp, #12]
+d00445b2:	ea43 030b 	orr.w	r3, r3, fp
+d00445b6:	f89d a00c 	ldrb.w	sl, [sp, #12]
+d00445ba:	ea43 230a 	orr.w	r3, r3, sl, lsl #8
+d00445be:	f84c 3f04 	str.w	r3, [ip, #4]!
+d00445c2:	680b      	ldr	r3, [r1, #0]
+d00445c4:	f3c3 4b07 	ubfx	fp, r3, #16, #8
+d00445c8:	ea4f 6613 	mov.w	r6, r3, lsr #24
+d00445cc:	fa5f fa83 	uxtb.w	sl, r3
+d00445d0:	ee07 6a10 	vmov	s14, r6
+d00445d4:	eba5 060b 	sub.w	r6, r5, fp
+d00445d8:	ee04 ba10 	vmov	s8, fp
+d00445dc:	ee07 6a90 	vmov	s15, r6
+d00445e0:	eba4 6613 	sub.w	r6, r4, r3, lsr #24
+d00445e4:	eef8 3ac4 	vcvt.f32.s32	s7, s8
+d00445e8:	f3c3 2307 	ubfx	r3, r3, #8, #8
+d00445ec:	ee02 6a10 	vmov	s4, r6
+d00445f0:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d00445f4:	eba2 060a 	sub.w	r6, r2, sl
+d00445f8:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
+d00445fc:	eeb8 2ac2 	vcvt.f32.s32	s4, s4
+d0044600:	ee04 aa10 	vmov	s8, sl
+d0044604:	ee02 6a90 	vmov	s5, r6
+d0044608:	eba0 0603 	sub.w	r6, r0, r3
+d004460c:	eee6 3aa7 	vfma.f32	s7, s13, s15
+d0044610:	ee07 3a90 	vmov	s15, r3
+d0044614:	eea6 7a82 	vfma.f32	s14, s13, s4
+d0044618:	ee03 6a10 	vmov	s6, r6
+d004461c:	eeb8 4ac4 	vcvt.f32.s32	s8, s8
+d0044620:	eef8 2ae2 	vcvt.f32.s32	s5, s5
+d0044624:	eeb8 3ac3 	vcvt.f32.s32	s6, s6
+d0044628:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d004462c:	eea6 4aa2 	vfma.f32	s8, s13, s5
+d0044630:	eefc 3ae3 	vcvt.u32.f32	s7, s7
+d0044634:	eee6 7a83 	vfma.f32	s15, s13, s6
+d0044638:	eebc 7ac7 	vcvt.u32.f32	s14, s14
+d004463c:	edcd 3a02 	vstr	s7, [sp, #8]
+d0044640:	f89d a008 	ldrb.w	sl, [sp, #8]
+d0044644:	ee17 3a10 	vmov	r3, s14
+d0044648:	eebc 7ac4 	vcvt.u32.f32	s14, s8
+d004464c:	ea4f 4a0a 	mov.w	sl, sl, lsl #16
+d0044650:	eefc 7ae7 	vcvt.u32.f32	s15, s15
+d0044654:	ea4a 6303 	orr.w	r3, sl, r3, lsl #24
+d0044658:	ed8d 7a02 	vstr	s14, [sp, #8]
+d004465c:	f89d b008 	ldrb.w	fp, [sp, #8]
+d0044660:	edcd 7a03 	vstr	s15, [sp, #12]
+d0044664:	ea43 030b 	orr.w	r3, r3, fp
+d0044668:	f89d a00c 	ldrb.w	sl, [sp, #12]
+d004466c:	ea43 230a 	orr.w	r3, r3, sl, lsl #8
+d0044670:	f847 3f04 	str.w	r3, [r7, #4]!
+d0044674:	f47f ae3e 	bne.w	d00442f4 <buildLightingCLUT+0xb0>
+d0044678:	b005      	add	sp, #20
+d004467a:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d004467e:	bf00      	nop
+
+d0044680 <brightnessToShadeF>:
+d0044680:	eeb7 7a00 	vmov.f32	s14, #112	; 0x3f800000  1.0
+d0044684:	eddf 7a09 	vldr	s15, [pc, #36]	; d00446ac <brightnessToShadeF+0x2c>
+d0044688:	eeb6 6a00 	vmov.f32	s12, #96	; 0x3f000000  0.5
+d004468c:	eef7 6a08 	vmov.f32	s13, #120	; 0x3fc00000  1.5
+d0044690:	fe80 0a27 	vmaxnm.f32	s0, s0, s15
+d0044694:	fec0 7a47 	vminnm.f32	s15, s0, s14
+d0044698:	eeb1 0a04 	vmov.f32	s0, #20	; 0x40a00000  5.0
+d004469c:	eee7 6ac6 	vfms.f32	s13, s15, s12
+d00446a0:	eea6 7ae7 	vfms.f32	s14, s13, s15
+d00446a4:	ee27 0a00 	vmul.f32	s0, s14, s0
+d00446a8:	4770      	bx	lr
+d00446aa:	bf00      	nop
+d00446ac:	00000000 	.word	0x00000000
+
+d00446b0 <lightSetRanges>:
+d00446b0:	2800      	cmp	r0, #0
+d00446b2:	db0c      	blt.n	d00446ce <lightSetRanges+0x1e>
+d00446b4:	4b06      	ldr	r3, [pc, #24]	; (d00446d0 <lightSetRanges+0x20>)
+d00446b6:	681b      	ldr	r3, [r3, #0]
+d00446b8:	4283      	cmp	r3, r0
+d00446ba:	dd08      	ble.n	d00446ce <lightSetRanges+0x1e>
+d00446bc:	4b05      	ldr	r3, [pc, #20]	; (d00446d4 <lightSetRanges+0x24>)
+d00446be:	eb03 1080 	add.w	r0, r3, r0, lsl #6
+d00446c2:	ed80 0a08 	vstr	s0, [r0, #32]
+d00446c6:	edc0 0a09 	vstr	s1, [r0, #36]	; 0x24
+d00446ca:	ed80 1a0a 	vstr	s2, [r0, #40]	; 0x28
+d00446ce:	4770      	bx	lr
+d00446d0:	d0095360 	.word	0xd0095360
+d00446d4:	d0095380 	.word	0xd0095380
+
+d00446d8 <lightsGet>:
+d00446d8:	4800      	ldr	r0, [pc, #0]	; (d00446dc <lightsGet+0x4>)
+d00446da:	4770      	bx	lr
+d00446dc:	d0095380 	.word	0xd0095380
+
+d00446e0 <lightsGetCount>:
+d00446e0:	4b01      	ldr	r3, [pc, #4]	; (d00446e8 <lightsGetCount+0x8>)
+d00446e2:	6818      	ldr	r0, [r3, #0]
+d00446e4:	4770      	bx	lr
+d00446e6:	bf00      	nop
+d00446e8:	d0095360 	.word	0xd0095360
+
+d00446ec <lightsClear>:
+d00446ec:	4b01      	ldr	r3, [pc, #4]	; (d00446f4 <lightsClear+0x8>)
+d00446ee:	2200      	movs	r2, #0
+d00446f0:	601a      	str	r2, [r3, #0]
+d00446f2:	4770      	bx	lr
+d00446f4:	d0095360 	.word	0xd0095360
+
+d00446f8 <lightEnable>:
+d00446f8:	4b04      	ldr	r3, [pc, #16]	; (d004470c <lightEnable+0x14>)
+d00446fa:	681b      	ldr	r3, [r3, #0]
+d00446fc:	4298      	cmp	r0, r3
+d00446fe:	da03      	bge.n	d0044708 <lightEnable+0x10>
+d0044700:	4b03      	ldr	r3, [pc, #12]	; (d0044710 <lightEnable+0x18>)
+d0044702:	eb03 1080 	add.w	r0, r3, r0, lsl #6
+d0044706:	62c1      	str	r1, [r0, #44]	; 0x2c
+d0044708:	4770      	bx	lr
+d004470a:	bf00      	nop
+d004470c:	d0095360 	.word	0xd0095360
+d0044710:	d0095380 	.word	0xd0095380
+
+d0044714 <addPointLight>:
+d0044714:	4918      	ldr	r1, [pc, #96]	; (d0044778 <addPointLight+0x64>)
+d0044716:	b5f0      	push	{r4, r5, r6, r7, lr}
+d0044718:	680c      	ldr	r4, [r1, #0]
+d004471a:	b085      	sub	sp, #20
+d004471c:	2c07      	cmp	r4, #7
+d004471e:	ed8d 0a01 	vstr	s0, [sp, #4]
+d0044722:	edcd 0a02 	vstr	s1, [sp, #8]
+d0044726:	ed8d 1a03 	vstr	s2, [sp, #12]
+d004472a:	dc21      	bgt.n	d0044770 <addPointLight+0x5c>
+d004472c:	4d13      	ldr	r5, [pc, #76]	; (d004477c <addPointLight+0x68>)
+d004472e:	01a2      	lsls	r2, r4, #6
+d0044730:	2600      	movs	r6, #0
+d0044732:	f8df e050 	ldr.w	lr, [pc, #80]	; d0044784 <addPointLight+0x70>
+d0044736:	eb05 1384 	add.w	r3, r5, r4, lsl #6
+d004473a:	f8df c04c 	ldr.w	ip, [pc, #76]	; d0044788 <addPointLight+0x74>
+d004473e:	54ae      	strb	r6, [r5, r2]
+d0044740:	2200      	movs	r2, #0
+d0044742:	4f0f      	ldr	r7, [pc, #60]	; (d0044780 <addPointLight+0x6c>)
+d0044744:	1d1d      	adds	r5, r3, #4
+d0044746:	62d8      	str	r0, [r3, #44]	; 0x2c
+d0044748:	1c66      	adds	r6, r4, #1
+d004474a:	611a      	str	r2, [r3, #16]
+d004474c:	615a      	str	r2, [r3, #20]
+d004474e:	619a      	str	r2, [r3, #24]
+d0044750:	edc3 1a07 	vstr	s3, [r3, #28]
+d0044754:	f8c3 e020 	str.w	lr, [r3, #32]
+d0044758:	f8c3 c024 	str.w	ip, [r3, #36]	; 0x24
+d004475c:	629f      	str	r7, [r3, #40]	; 0x28
+d004475e:	ab04      	add	r3, sp, #16
+d0044760:	600e      	str	r6, [r1, #0]
+d0044762:	e913 0007 	ldmdb	r3, {r0, r1, r2}
+d0044766:	e885 0007 	stmia.w	r5, {r0, r1, r2}
+d004476a:	4620      	mov	r0, r4
+d004476c:	b005      	add	sp, #20
+d004476e:	bdf0      	pop	{r4, r5, r6, r7, pc}
+d0044770:	f04f 34ff 	mov.w	r4, #4294967295	; 0xffffffff
+d0044774:	e7f9      	b.n	d004476a <addPointLight+0x56>
+d0044776:	bf00      	nop
+d0044778:	d0095360 	.word	0xd0095360
+d004477c:	d0095380 	.word	0xd0095380
+d0044780:	44020000 	.word	0x44020000
+d0044784:	42c80000 	.word	0x42c80000
+d0044788:	43660000 	.word	0x43660000
+
+d004478c <addDirectionalLight>:
+d004478c:	b5f0      	push	{r4, r5, r6, r7, lr}
+d004478e:	4f15      	ldr	r7, [pc, #84]	; (d00447e4 <addDirectionalLight+0x58>)
+d0044790:	683d      	ldr	r5, [r7, #0]
+d0044792:	2d07      	cmp	r5, #7
+d0044794:	ed2d 8b02 	vpush	{d8}
+d0044798:	b085      	sub	sp, #20
+d004479a:	dc1f      	bgt.n	d00447dc <addDirectionalLight+0x50>
+d004479c:	4912      	ldr	r1, [pc, #72]	; (d00447e8 <addDirectionalLight+0x5c>)
+d004479e:	2300      	movs	r3, #0
+d00447a0:	4606      	mov	r6, r0
+d00447a2:	01aa      	lsls	r2, r5, #6
+d00447a4:	eb01 1485 	add.w	r4, r1, r5, lsl #6
+d00447a8:	2001      	movs	r0, #1
+d00447aa:	eeb0 8a61 	vmov.f32	s16, s3
+d00447ae:	6063      	str	r3, [r4, #4]
+d00447b0:	60a3      	str	r3, [r4, #8]
+d00447b2:	60e3      	str	r3, [r4, #12]
+d00447b4:	5488      	strb	r0, [r1, r2]
+d00447b6:	f7fe f94f 	bl	d0042a58 <vec3Normalize>
+d00447ba:	683b      	ldr	r3, [r7, #0]
+d00447bc:	ed84 8a07 	vstr	s16, [r4, #28]
+d00447c0:	3301      	adds	r3, #1
+d00447c2:	62e6      	str	r6, [r4, #44]	; 0x2c
+d00447c4:	ed84 0a04 	vstr	s0, [r4, #16]
+d00447c8:	edc4 0a05 	vstr	s1, [r4, #20]
+d00447cc:	ed84 1a06 	vstr	s2, [r4, #24]
+d00447d0:	603b      	str	r3, [r7, #0]
+d00447d2:	4628      	mov	r0, r5
+d00447d4:	b005      	add	sp, #20
+d00447d6:	ecbd 8b02 	vpop	{d8}
+d00447da:	bdf0      	pop	{r4, r5, r6, r7, pc}
+d00447dc:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
+d00447e0:	e7f7      	b.n	d00447d2 <addDirectionalLight+0x46>
+d00447e2:	bf00      	nop
+d00447e4:	d0095360 	.word	0xd0095360
+d00447e8:	d0095380 	.word	0xd0095380
+
+d00447ec <lightSetPosition>:
+d00447ec:	b084      	sub	sp, #16
+d00447ee:	2800      	cmp	r0, #0
+d00447f0:	ed8d 0a01 	vstr	s0, [sp, #4]
+d00447f4:	edcd 0a02 	vstr	s1, [sp, #8]
+d00447f8:	ed8d 1a03 	vstr	s2, [sp, #12]
+d00447fc:	db0c      	blt.n	d0044818 <lightSetPosition+0x2c>
+d00447fe:	4b07      	ldr	r3, [pc, #28]	; (d004481c <lightSetPosition+0x30>)
+d0044800:	681b      	ldr	r3, [r3, #0]
+d0044802:	4283      	cmp	r3, r0
+d0044804:	dd08      	ble.n	d0044818 <lightSetPosition+0x2c>
+d0044806:	4b06      	ldr	r3, [pc, #24]	; (d0044820 <lightSetPosition+0x34>)
+d0044808:	aa04      	add	r2, sp, #16
+d004480a:	eb03 1380 	add.w	r3, r3, r0, lsl #6
+d004480e:	e912 0007 	ldmdb	r2, {r0, r1, r2}
+d0044812:	3304      	adds	r3, #4
+d0044814:	e883 0007 	stmia.w	r3, {r0, r1, r2}
+d0044818:	b004      	add	sp, #16
+d004481a:	4770      	bx	lr
+d004481c:	d0095360 	.word	0xd0095360
+d0044820:	d0095380 	.word	0xd0095380
+
+d0044824 <lightSetIntensity>:
+d0044824:	2800      	cmp	r0, #0
+d0044826:	db08      	blt.n	d004483a <lightSetIntensity+0x16>
+d0044828:	4b04      	ldr	r3, [pc, #16]	; (d004483c <lightSetIntensity+0x18>)
+d004482a:	681b      	ldr	r3, [r3, #0]
+d004482c:	4283      	cmp	r3, r0
+d004482e:	dd04      	ble.n	d004483a <lightSetIntensity+0x16>
+d0044830:	4b03      	ldr	r3, [pc, #12]	; (d0044840 <lightSetIntensity+0x1c>)
+d0044832:	eb03 1080 	add.w	r0, r3, r0, lsl #6
+d0044836:	ed80 0a07 	vstr	s0, [r0, #28]
+d004483a:	4770      	bx	lr
+d004483c:	d0095360 	.word	0xd0095360
+d0044840:	d0095380 	.word	0xd0095380
+
+d0044844 <setDefaultRenderMode>:
+d0044844:	2300      	movs	r3, #0
+d0044846:	4803      	ldr	r0, [pc, #12]	; (d0044854 <setDefaultRenderMode+0x10>)
+d0044848:	4903      	ldr	r1, [pc, #12]	; (d0044858 <setDefaultRenderMode+0x14>)
+d004484a:	4a04      	ldr	r2, [pc, #16]	; (d004485c <setDefaultRenderMode+0x18>)
+d004484c:	6003      	str	r3, [r0, #0]
+d004484e:	600b      	str	r3, [r1, #0]
+d0044850:	6013      	str	r3, [r2, #0]
+d0044852:	4770      	bx	lr
+d0044854:	d00a1580 	.word	0xd00a1580
+d0044858:	d01215a0 	.word	0xd01215a0
+d004485c:	d01215a4 	.word	0xd01215a4
+
+d0044860 <enableFlatMode>:
+d0044860:	4b01      	ldr	r3, [pc, #4]	; (d0044868 <enableFlatMode+0x8>)
+d0044862:	6018      	str	r0, [r3, #0]
+d0044864:	4770      	bx	lr
+d0044866:	bf00      	nop
+d0044868:	d00a1580 	.word	0xd00a1580
+
+d004486c <clipTriangleToFrustum>:
+d004486c:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+d0044870:	ed2d 8b02 	vpush	{d8}
+d0044874:	b0ba      	sub	sp, #232	; 0xe8
+d0044876:	ed91 7a10 	vldr	s14, [r1, #64]	; 0x40
+d004487a:	4605      	mov	r5, r0
+d004487c:	aa07      	add	r2, sp, #28
+d004487e:	ab04      	add	r3, sp, #16
+d0044880:	ed8d 0a07 	vstr	s0, [sp, #28]
+d0044884:	ac0a      	add	r4, sp, #40	; 0x28
+d0044886:	edcd 0a08 	vstr	s1, [sp, #32]
+d004488a:	af0d      	add	r7, sp, #52	; 0x34
+d004488c:	ed8d 1a09 	vstr	s2, [sp, #36]	; 0x24
+d0044890:	ae01      	add	r6, sp, #4
+d0044892:	edcd 1a04 	vstr	s3, [sp, #16]
+d0044896:	ed8d 2a05 	vstr	s4, [sp, #20]
+d004489a:	edcd 2a06 	vstr	s5, [sp, #24]
+d004489e:	ed8d 4a03 	vstr	s8, [sp, #12]
+d00448a2:	ed8d 3a01 	vstr	s6, [sp, #4]
+d00448a6:	edcd 3a02 	vstr	s7, [sp, #8]
+d00448aa:	ca07      	ldmia	r2, {r0, r1, r2}
+d00448ac:	e884 0007 	stmia.w	r4, {r0, r1, r2}
+d00448b0:	e893 0007 	ldmia.w	r3, {r0, r1, r2}
+d00448b4:	ab10      	add	r3, sp, #64	; 0x40
+d00448b6:	ed9d 6a0a 	vldr	s12, [sp, #40]	; 0x28
+d00448ba:	e887 0007 	stmia.w	r7, {r0, r1, r2}
+d00448be:	e896 0007 	ldmia.w	r6, {r0, r1, r2}
+d00448c2:	e883 0007 	stmia.w	r3, {r0, r1, r2}
+d00448c6:	ed9d 4a12 	vldr	s8, [sp, #72]	; 0x48
+d00448ca:	eddd 5a10 	vldr	s11, [sp, #64]	; 0x40
+d00448ce:	ee34 5a47 	vsub.f32	s10, s8, s14
+d00448d2:	eddd 7a0c 	vldr	s15, [sp, #48]	; 0x30
+d00448d6:	eddd 1a11 	vldr	s3, [sp, #68]	; 0x44
+d00448da:	ee77 4ac7 	vsub.f32	s9, s15, s14
+d00448de:	eddd 6a0b 	vldr	s13, [sp, #44]	; 0x2c
+d00448e2:	eeb5 5ac0 	vcmpe.f32	s10, #0.0
+d00448e6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00448ea:	eef5 4ac0 	vcmpe.f32	s9, #0.0
+d00448ee:	bfac      	ite	ge
+d00448f0:	2101      	movge	r1, #1
+d00448f2:	2100      	movlt	r1, #0
+d00448f4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00448f8:	bfac      	ite	ge
+d00448fa:	2001      	movge	r0, #1
+d00448fc:	2000      	movlt	r0, #0
+d00448fe:	2900      	cmp	r1, #0
+d0044900:	f000 825d 	beq.w	d0044dbe <clipTriangleToFrustum+0x552>
+d0044904:	2800      	cmp	r0, #0
+d0044906:	f000 825a 	beq.w	d0044dbe <clipTriangleToFrustum+0x552>
+d004490a:	2301      	movs	r3, #1
+d004490c:	ed8d 6a22 	vstr	s12, [sp, #136]	; 0x88
+d0044910:	edcd 6a23 	vstr	s13, [sp, #140]	; 0x8c
+d0044914:	edcd 7a24 	vstr	s15, [sp, #144]	; 0x90
+d0044918:	eddd 3a0f 	vldr	s7, [sp, #60]	; 0x3c
+d004491c:	f000 0201 	and.w	r2, r0, #1
+d0044920:	ed9d 2a0d 	vldr	s4, [sp, #52]	; 0x34
+d0044924:	ee33 3ac7 	vsub.f32	s6, s7, s14
+d0044928:	eddd 2a0e 	vldr	s5, [sp, #56]	; 0x38
+d004492c:	eeb5 3ac0 	vcmpe.f32	s6, #0.0
+d0044930:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044934:	bfb6      	itet	lt
+d0044936:	2200      	movlt	r2, #0
+d0044938:	2601      	movge	r6, #1
+d004493a:	2600      	movlt	r6, #0
+d004493c:	2a00      	cmp	r2, #0
+d004493e:	f000 8277 	beq.w	d0044e30 <clipTriangleToFrustum+0x5c4>
+d0044942:	eb03 0043 	add.w	r0, r3, r3, lsl #1
+d0044946:	ae22      	add	r6, sp, #136	; 0x88
+d0044948:	3301      	adds	r3, #1
+d004494a:	eb06 0080 	add.w	r0, r6, r0, lsl #2
+d004494e:	ed80 2a00 	vstr	s4, [r0]
+d0044952:	edc0 2a01 	vstr	s5, [r0, #4]
+d0044956:	edc0 3a02 	vstr	s7, [r0, #8]
+d004495a:	2a00      	cmp	r2, #0
+d004495c:	f000 828e 	beq.w	d0044e7c <clipTriangleToFrustum+0x610>
+d0044960:	2900      	cmp	r1, #0
+d0044962:	f000 828b 	beq.w	d0044e7c <clipTriangleToFrustum+0x610>
+d0044966:	eb03 0243 	add.w	r2, r3, r3, lsl #1
+d004496a:	a922      	add	r1, sp, #136	; 0x88
+d004496c:	3301      	adds	r3, #1
+d004496e:	eb01 0282 	add.w	r2, r1, r2, lsl #2
+d0044972:	edc2 5a00 	vstr	s11, [r2]
+d0044976:	edc2 1a01 	vstr	s3, [r2, #4]
+d004497a:	ed82 4a02 	vstr	s8, [r2, #8]
+d004497e:	2b02      	cmp	r3, #2
+d0044980:	f340 8216 	ble.w	d0044db0 <clipTriangleToFrustum+0x544>
+d0044984:	eb03 0643 	add.w	r6, r3, r3, lsl #1
+d0044988:	a822      	add	r0, sp, #136	; 0x88
+d004498a:	2300      	movs	r3, #0
+d004498c:	00b6      	lsls	r6, r6, #2
+d004498e:	4601      	mov	r1, r0
+d0044990:	4607      	mov	r7, r0
+d0044992:	f1a6 020c 	sub.w	r2, r6, #12
+d0044996:	4406      	add	r6, r0
+d0044998:	4402      	add	r2, r0
+d004499a:	ed92 7a00 	vldr	s14, [r2]
+d004499e:	edd2 7a02 	vldr	s15, [r2, #8]
+d00449a2:	ed92 6a01 	vldr	s12, [r2, #4]
+d00449a6:	ee77 6a27 	vadd.f32	s13, s14, s15
+d00449aa:	e009      	b.n	d00449c0 <clipTriangleToFrustum+0x154>
+d00449ac:	3301      	adds	r3, #1
+d00449ae:	ed82 7a00 	vstr	s14, [r2]
+d00449b2:	ed82 6a01 	vstr	s12, [r2, #4]
+d00449b6:	edc2 7a02 	vstr	s15, [r2, #8]
+d00449ba:	310c      	adds	r1, #12
+d00449bc:	428e      	cmp	r6, r1
+d00449be:	d04e      	beq.n	d0044a5e <clipTriangleToFrustum+0x1f2>
+d00449c0:	eeb0 4a47 	vmov.f32	s8, s14
+d00449c4:	ed91 7a00 	vldr	s14, [r1]
+d00449c8:	eeb0 5a67 	vmov.f32	s10, s15
+d00449cc:	edd1 7a02 	vldr	s15, [r1, #8]
+d00449d0:	eef5 6ac0 	vcmpe.f32	s13, #0.0
+d00449d4:	eb03 0243 	add.w	r2, r3, r3, lsl #1
+d00449d8:	eef0 5a66 	vmov.f32	s11, s13
+d00449dc:	ee77 6a27 	vadd.f32	s13, s14, s15
+d00449e0:	eb04 0282 	add.w	r2, r4, r2, lsl #2
+d00449e4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00449e8:	eef0 4a46 	vmov.f32	s9, s12
+d00449ec:	ed91 6a01 	vldr	s12, [r1, #4]
+d00449f0:	eef5 6ac0 	vcmpe.f32	s13, #0.0
+d00449f4:	bfac      	ite	ge
+d00449f6:	2701      	movge	r7, #1
+d00449f8:	2700      	movlt	r7, #0
+d00449fa:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00449fe:	bfac      	ite	ge
+d0044a00:	f04f 0c01 	movge.w	ip, #1
+d0044a04:	f04f 0c00 	movlt.w	ip, #0
+d0044a08:	b117      	cbz	r7, d0044a10 <clipTriangleToFrustum+0x1a4>
+d0044a0a:	f1bc 0f00 	cmp.w	ip, #0
+d0044a0e:	d1cd      	bne.n	d00449ac <clipTriangleToFrustum+0x140>
+d0044a10:	eef5 6a40 	vcmp.f32	s13, #0.0
+d0044a14:	eb03 0243 	add.w	r2, r3, r3, lsl #1
+d0044a18:	ee75 1ae6 	vsub.f32	s3, s11, s13
+d0044a1c:	ee37 2a44 	vsub.f32	s4, s14, s8
+d0044a20:	eb04 0282 	add.w	r2, r4, r2, lsl #2
+d0044a24:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044a28:	ee76 2a64 	vsub.f32	s5, s12, s9
+d0044a2c:	ee37 3ac5 	vsub.f32	s6, s15, s10
+d0044a30:	f140 818f 	bpl.w	d0044d52 <clipTriangleToFrustum+0x4e6>
+d0044a34:	2f00      	cmp	r7, #0
+d0044a36:	f000 818c 	beq.w	d0044d52 <clipTriangleToFrustum+0x4e6>
+d0044a3a:	eec5 3aa1 	vdiv.f32	s7, s11, s3
+d0044a3e:	310c      	adds	r1, #12
+d0044a40:	3301      	adds	r3, #1
+d0044a42:	428e      	cmp	r6, r1
+d0044a44:	eea2 4a23 	vfma.f32	s8, s4, s7
+d0044a48:	eee2 4aa3 	vfma.f32	s9, s5, s7
+d0044a4c:	eea3 5a23 	vfma.f32	s10, s6, s7
+d0044a50:	ed82 4a00 	vstr	s8, [r2]
+d0044a54:	edc2 4a01 	vstr	s9, [r2, #4]
+d0044a58:	ed82 5a02 	vstr	s10, [r2, #8]
+d0044a5c:	d1b0      	bne.n	d00449c0 <clipTriangleToFrustum+0x154>
+d0044a5e:	2b02      	cmp	r3, #2
+d0044a60:	f340 81a6 	ble.w	d0044db0 <clipTriangleToFrustum+0x544>
+d0044a64:	eb03 0343 	add.w	r3, r3, r3, lsl #1
+d0044a68:	4626      	mov	r6, r4
+d0044a6a:	4627      	mov	r7, r4
+d0044a6c:	2200      	movs	r2, #0
+d0044a6e:	009b      	lsls	r3, r3, #2
+d0044a70:	f1a3 010c 	sub.w	r1, r3, #12
+d0044a74:	4423      	add	r3, r4
+d0044a76:	4421      	add	r1, r4
+d0044a78:	edd1 7a00 	vldr	s15, [r1]
+d0044a7c:	ed91 7a02 	vldr	s14, [r1, #8]
+d0044a80:	ed91 6a01 	vldr	s12, [r1, #4]
+d0044a84:	ee77 6a67 	vsub.f32	s13, s14, s15
+d0044a88:	e009      	b.n	d0044a9e <clipTriangleToFrustum+0x232>
+d0044a8a:	3201      	adds	r2, #1
+d0044a8c:	edc1 7a00 	vstr	s15, [r1]
+d0044a90:	ed81 6a01 	vstr	s12, [r1, #4]
+d0044a94:	ed81 7a02 	vstr	s14, [r1, #8]
+d0044a98:	370c      	adds	r7, #12
+d0044a9a:	42bb      	cmp	r3, r7
+d0044a9c:	d059      	beq.n	d0044b52 <clipTriangleToFrustum+0x2e6>
+d0044a9e:	eeb0 4a67 	vmov.f32	s8, s15
+d0044aa2:	edd7 7a00 	vldr	s15, [r7]
+d0044aa6:	eeb0 5a47 	vmov.f32	s10, s14
+d0044aaa:	ed97 7a02 	vldr	s14, [r7, #8]
+d0044aae:	eef5 6ac0 	vcmpe.f32	s13, #0.0
+d0044ab2:	f10d 0c88 	add.w	ip, sp, #136	; 0x88
+d0044ab6:	eef0 5a66 	vmov.f32	s11, s13
+d0044aba:	eb02 0142 	add.w	r1, r2, r2, lsl #1
+d0044abe:	ee77 6a67 	vsub.f32	s13, s14, s15
+d0044ac2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044ac6:	eb0c 0181 	add.w	r1, ip, r1, lsl #2
+d0044aca:	eef0 4a46 	vmov.f32	s9, s12
+d0044ace:	ed97 6a01 	vldr	s12, [r7, #4]
+d0044ad2:	eef5 6ac0 	vcmpe.f32	s13, #0.0
+d0044ad6:	bfac      	ite	ge
+d0044ad8:	f04f 0c01 	movge.w	ip, #1
+d0044adc:	f04f 0c00 	movlt.w	ip, #0
+d0044ae0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044ae4:	bfac      	ite	ge
+d0044ae6:	f04f 0e01 	movge.w	lr, #1
+d0044aea:	f04f 0e00 	movlt.w	lr, #0
+d0044aee:	f1bc 0f00 	cmp.w	ip, #0
+d0044af2:	d002      	beq.n	d0044afa <clipTriangleToFrustum+0x28e>
+d0044af4:	f1be 0f00 	cmp.w	lr, #0
+d0044af8:	d1c7      	bne.n	d0044a8a <clipTriangleToFrustum+0x21e>
+d0044afa:	eef5 6a40 	vcmp.f32	s13, #0.0
+d0044afe:	eb02 0142 	add.w	r1, r2, r2, lsl #1
+d0044b02:	ee77 3aa5 	vadd.f32	s7, s15, s11
+d0044b06:	f10d 0888 	add.w	r8, sp, #136	; 0x88
+d0044b0a:	ee77 1ac4 	vsub.f32	s3, s15, s8
+d0044b0e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044b12:	eb08 0181 	add.w	r1, r8, r1, lsl #2
+d0044b16:	ee36 2a64 	vsub.f32	s4, s12, s9
+d0044b1a:	ee73 3ac7 	vsub.f32	s7, s7, s14
+d0044b1e:	ee77 2a45 	vsub.f32	s5, s14, s10
+d0044b22:	f140 8268 	bpl.w	d0044ff6 <clipTriangleToFrustum+0x78a>
+d0044b26:	f1bc 0f00 	cmp.w	ip, #0
+d0044b2a:	f000 8264 	beq.w	d0044ff6 <clipTriangleToFrustum+0x78a>
+d0044b2e:	ee85 3aa3 	vdiv.f32	s6, s11, s7
+d0044b32:	370c      	adds	r7, #12
+d0044b34:	3201      	adds	r2, #1
+d0044b36:	42bb      	cmp	r3, r7
+d0044b38:	eea1 4a83 	vfma.f32	s8, s3, s6
+d0044b3c:	eee2 4a03 	vfma.f32	s9, s4, s6
+d0044b40:	eea2 5a83 	vfma.f32	s10, s5, s6
+d0044b44:	ed81 4a00 	vstr	s8, [r1]
+d0044b48:	edc1 4a01 	vstr	s9, [r1, #4]
+d0044b4c:	ed81 5a02 	vstr	s10, [r1, #8]
+d0044b50:	d1a5      	bne.n	d0044a9e <clipTriangleToFrustum+0x232>
+d0044b52:	2a02      	cmp	r2, #2
+d0044b54:	f340 812c 	ble.w	d0044db0 <clipTriangleToFrustum+0x544>
+d0044b58:	eb02 0342 	add.w	r3, r2, r2, lsl #1
+d0044b5c:	af22      	add	r7, sp, #136	; 0x88
+d0044b5e:	eddf 6add 	vldr	s13, [pc, #884]	; d0044ed4 <clipTriangleToFrustum+0x668>
+d0044b62:	2200      	movs	r2, #0
+d0044b64:	009b      	lsls	r3, r3, #2
+d0044b66:	eef0 2a66 	vmov.f32	s5, s13
+d0044b6a:	f1a3 010c 	sub.w	r1, r3, #12
+d0044b6e:	443b      	add	r3, r7
+d0044b70:	4439      	add	r1, r7
+d0044b72:	edd1 7a01 	vldr	s15, [r1, #4]
+d0044b76:	ed91 7a02 	vldr	s14, [r1, #8]
+d0044b7a:	eef0 5a67 	vmov.f32	s11, s15
+d0044b7e:	ed91 6a00 	vldr	s12, [r1]
+d0044b82:	eed7 5a26 	vfnms.f32	s11, s14, s13
+d0044b86:	eef0 6a65 	vmov.f32	s13, s11
+d0044b8a:	e00c      	b.n	d0044ba6 <clipTriangleToFrustum+0x33a>
+d0044b8c:	f1bc 0f00 	cmp.w	ip, #0
+d0044b90:	d031      	beq.n	d0044bf6 <clipTriangleToFrustum+0x38a>
+d0044b92:	3201      	adds	r2, #1
+d0044b94:	ed81 6a00 	vstr	s12, [r1]
+d0044b98:	edc1 7a01 	vstr	s15, [r1, #4]
+d0044b9c:	ed81 7a02 	vstr	s14, [r1, #8]
+d0044ba0:	300c      	adds	r0, #12
+d0044ba2:	4298      	cmp	r0, r3
+d0044ba4:	d050      	beq.n	d0044c48 <clipTriangleToFrustum+0x3dc>
+d0044ba6:	eeb0 5a47 	vmov.f32	s10, s14
+d0044baa:	ed90 7a02 	vldr	s14, [r0, #8]
+d0044bae:	eef0 4a67 	vmov.f32	s9, s15
+d0044bb2:	edd0 7a01 	vldr	s15, [r0, #4]
+d0044bb6:	ee67 3a22 	vmul.f32	s7, s14, s5
+d0044bba:	eb02 0142 	add.w	r1, r2, r2, lsl #1
+d0044bbe:	eef5 6ac0 	vcmpe.f32	s13, #0.0
+d0044bc2:	eef0 5a66 	vmov.f32	s11, s13
+d0044bc6:	eb04 0181 	add.w	r1, r4, r1, lsl #2
+d0044bca:	ee73 6ae7 	vsub.f32	s13, s7, s15
+d0044bce:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044bd2:	eeb0 4a46 	vmov.f32	s8, s12
+d0044bd6:	ed90 6a00 	vldr	s12, [r0]
+d0044bda:	eef5 6ac0 	vcmpe.f32	s13, #0.0
+d0044bde:	bfac      	ite	ge
+d0044be0:	2701      	movge	r7, #1
+d0044be2:	2700      	movlt	r7, #0
 d0044be4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044be8:	ed98 7a0b 	vldr	s14, [r8, #44]	; 0x2c
-d0044bec:	edd4 5a01 	vldr	s11, [r4, #4]
-d0044bf0:	ed94 5a02 	vldr	s10, [r4, #8]
-d0044bf4:	bfcc      	ite	gt
-d0044bf6:	2501      	movgt	r5, #1
-d0044bf8:	2500      	movle	r5, #0
-d0044bfa:	2b00      	cmp	r3, #0
-d0044bfc:	edd4 4a07 	vldr	s9, [r4, #28]
-d0044c00:	ed94 4a08 	vldr	s8, [r4, #32]
-d0044c04:	edd4 3a09 	vldr	s7, [r4, #36]	; 0x24
-d0044c08:	ed94 3a0a 	vldr	s6, [r4, #40]	; 0x28
-d0044c0c:	edd4 2a0b 	vldr	s5, [r4, #44]	; 0x2c
-d0044c10:	ed94 2a0c 	vldr	s4, [r4, #48]	; 0x30
-d0044c14:	edd4 1a04 	vldr	s3, [r4, #16]
-d0044c18:	ed94 1a05 	vldr	s2, [r4, #20]
-d0044c1c:	edd4 0a06 	vldr	s1, [r4, #24]
-d0044c20:	edd7 ca00 	vldr	s25, [r7]
-d0044c24:	ed97 da01 	vldr	s26, [r7, #4]
-d0044c28:	edd7 da02 	vldr	s27, [r7, #8]
-d0044c2c:	ed97 0a06 	vldr	s0, [r7, #24]
-d0044c30:	ed97 8a07 	vldr	s16, [r7, #28]
-d0044c34:	edd7 8a08 	vldr	s17, [r7, #32]
-d0044c38:	ed97 9a09 	vldr	s18, [r7, #36]	; 0x24
-d0044c3c:	edd7 9a0a 	vldr	s19, [r7, #40]	; 0x28
-d0044c40:	ed97 aa0b 	vldr	s20, [r7, #44]	; 0x2c
-d0044c44:	edcd 7a0a 	vstr	s15, [sp, #40]	; 0x28
-d0044c48:	9007      	str	r0, [sp, #28]
-d0044c4a:	ed8d 7a08 	vstr	s14, [sp, #32]
-d0044c4e:	ed97 ba0c 	vldr	s22, [r7, #48]	; 0x30
-d0044c52:	edd7 ba0d 	vldr	s23, [r7, #52]	; 0x34
-d0044c56:	ed97 ca0e 	vldr	s24, [r7, #56]	; 0x38
-d0044c5a:	dd51      	ble.n	d0044d00 <submitEntitySolid+0x1b8>
-d0044c5c:	eb03 0043 	add.w	r0, r3, r3, lsl #1
-d0044c60:	f8d8 3000 	ldr.w	r3, [r8]
-d0044c64:	49de      	ldr	r1, [pc, #888]	; (d0044fe0 <submitEntitySolid+0x498>)
-d0044c66:	eb03 0080 	add.w	r0, r3, r0, lsl #2
-d0044c6a:	4ade      	ldr	r2, [pc, #888]	; (d0044fe4 <submitEntitySolid+0x49c>)
-d0044c6c:	edd3 7a01 	vldr	s15, [r3, #4]
-d0044c70:	330c      	adds	r3, #12
-d0044c72:	ed53 ea03 	vldr	s29, [r3, #-12]
-d0044c76:	310c      	adds	r1, #12
-d0044c78:	ee27 7aa2 	vmul.f32	s14, s15, s5
-d0044c7c:	ed53 6a01 	vldr	s13, [r3, #-4]
-d0044c80:	ee27 ea83 	vmul.f32	s28, s15, s6
-d0044c84:	4298      	cmp	r0, r3
-d0044c86:	ee67 7a82 	vmul.f32	s15, s15, s4
-d0044c8a:	f102 020c 	add.w	r2, r2, #12
-d0044c8e:	eeae 7a84 	vfma.f32	s14, s29, s8
-d0044c92:	eeae eaa4 	vfma.f32	s28, s29, s9
-d0044c96:	eeee 7aa3 	vfma.f32	s15, s29, s7
-d0044c9a:	ee35 7a87 	vadd.f32	s14, s11, s14
-d0044c9e:	ee36 ea0e 	vadd.f32	s28, s12, s28
-d0044ca2:	ee75 7a27 	vadd.f32	s15, s10, s15
-d0044ca6:	eea6 7a81 	vfma.f32	s14, s13, s2
-d0044caa:	eea6 eaa1 	vfma.f32	s28, s13, s3
-d0044cae:	eee6 7aa0 	vfma.f32	s15, s13, s1
-d0044cb2:	eef0 ea47 	vmov.f32	s29, s14
-d0044cb6:	ee37 7a4d 	vsub.f32	s14, s14, s26
-d0044cba:	ed01 ea03 	vstr	s28, [r1, #-12]
-d0044cbe:	ee7e 6a6c 	vsub.f32	s13, s28, s25
-d0044cc2:	ed41 7a01 	vstr	s15, [r1, #-4]
-d0044cc6:	ee37 eaed 	vsub.f32	s28, s15, s27
-d0044cca:	ed41 ea02 	vstr	s29, [r1, #-8]
-d0044cce:	ee69 7a87 	vmul.f32	s15, s19, s14
-d0044cd2:	ee68 ea07 	vmul.f32	s29, s16, s14
-d0044cd6:	ee2b 7a87 	vmul.f32	s14, s23, s14
-d0044cda:	eee9 7a26 	vfma.f32	s15, s18, s13
-d0044cde:	eee0 ea26 	vfma.f32	s29, s0, s13
-d0044ce2:	eeab 7a26 	vfma.f32	s14, s22, s13
-d0044ce6:	eeea 7a0e 	vfma.f32	s15, s20, s28
-d0044cea:	eee8 ea8e 	vfma.f32	s29, s17, s28
-d0044cee:	eeac 7a0e 	vfma.f32	s14, s24, s28
-d0044cf2:	ed42 7a02 	vstr	s15, [r2, #-8]
-d0044cf6:	ed42 ea03 	vstr	s29, [r2, #-12]
-d0044cfa:	ed02 7a01 	vstr	s14, [r2, #-4]
-d0044cfe:	d1b5      	bne.n	d0044c6c <submitEntitySolid+0x124>
-d0044d00:	f8d8 3014 	ldr.w	r3, [r8, #20]
-d0044d04:	2b00      	cmp	r3, #0
-d0044d06:	9302      	str	r3, [sp, #8]
-d0044d08:	f340 81a8 	ble.w	d004505c <submitEntitySolid+0x514>
-d0044d0c:	ea46 0305 	orr.w	r3, r6, r5
-d0044d10:	ed9d ba0a 	vldr	s22, [sp, #40]	; 0x28
-d0044d14:	f04f 0900 	mov.w	r9, #0
-d0044d18:	edcd ca0a 	vstr	s25, [sp, #40]	; 0x28
-d0044d1c:	eddf eab2 	vldr	s29, [pc, #712]	; d0044fe8 <submitEntitySolid+0x4a0>
-d0044d20:	eddd ca01 	vldr	s25, [sp, #4]
-d0044d24:	ed8d da0c 	vstr	s26, [sp, #48]	; 0x30
-d0044d28:	9306      	str	r3, [sp, #24]
-d0044d2a:	ed9d da09 	vldr	s26, [sp, #36]	; 0x24
-d0044d2e:	f8cd 800c 	str.w	r8, [sp, #12]
-d0044d32:	edcd da09 	vstr	s27, [sp, #36]	; 0x24
-d0044d36:	9a03      	ldr	r2, [sp, #12]
-d0044d38:	ea4f 1309 	mov.w	r3, r9, lsl #4
-d0044d3c:	4ea9      	ldr	r6, [pc, #676]	; (d0044fe4 <submitEntitySolid+0x49c>)
-d0044d3e:	6915      	ldr	r5, [r2, #16]
-d0044d40:	58e8      	ldr	r0, [r5, r3]
-d0044d42:	eb05 1509 	add.w	r5, r5, r9, lsl #4
-d0044d46:	4633      	mov	r3, r6
-d0044d48:	eb00 0440 	add.w	r4, r0, r0, lsl #1
-d0044d4c:	686a      	ldr	r2, [r5, #4]
-d0044d4e:	68af      	ldr	r7, [r5, #8]
-d0044d50:	0041      	lsls	r1, r0, #1
-d0044d52:	eb06 0484 	add.w	r4, r6, r4, lsl #2
-d0044d56:	9701      	str	r7, [sp, #4]
-d0044d58:	eb02 0642 	add.w	r6, r2, r2, lsl #1
-d0044d5c:	edd4 4a02 	vldr	s9, [r4, #8]
-d0044d60:	eb07 0747 	add.w	r7, r7, r7, lsl #1
-d0044d64:	eb03 0686 	add.w	r6, r3, r6, lsl #2
-d0044d68:	eef4 4aea 	vcmpe.f32	s9, s21
-d0044d6c:	eb03 0787 	add.w	r7, r3, r7, lsl #2
-d0044d70:	9b01      	ldr	r3, [sp, #4]
-d0044d72:	ea4f 0842 	mov.w	r8, r2, lsl #1
-d0044d76:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044d7a:	ea4f 0b43 	mov.w	fp, r3, lsl #1
-d0044d7e:	dd0e      	ble.n	d0044d9e <submitEntitySolid+0x256>
-d0044d80:	edd6 7a02 	vldr	s15, [r6, #8]
-d0044d84:	eef4 7aea 	vcmpe.f32	s15, s21
-d0044d88:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044d8c:	dd07      	ble.n	d0044d9e <submitEntitySolid+0x256>
-d0044d8e:	edd7 7a02 	vldr	s15, [r7, #8]
-d0044d92:	eef4 7aea 	vcmpe.f32	s15, s21
-d0044d96:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044d9a:	f300 8159 	bgt.w	d0045050 <submitEntitySolid+0x508>
-d0044d9e:	ed94 5a00 	vldr	s10, [r4]
-d0044da2:	edd4 2a02 	vldr	s5, [r4, #8]
-d0044da6:	ed96 4a00 	vldr	s8, [r6]
-d0044daa:	ed97 6a02 	vldr	s12, [r7, #8]
-d0044dae:	ee34 1a45 	vsub.f32	s2, s8, s10
-d0044db2:	edd4 7a01 	vldr	s15, [r4, #4]
-d0044db6:	ee36 6a62 	vsub.f32	s12, s12, s5
-d0044dba:	ed96 3a02 	vldr	s6, [r6, #8]
-d0044dbe:	edd7 6a01 	vldr	s13, [r7, #4]
-d0044dc2:	edd7 3a00 	vldr	s7, [r7]
-d0044dc6:	ee33 3a62 	vsub.f32	s6, s6, s5
-d0044dca:	ee76 6ae7 	vsub.f32	s13, s13, s15
-d0044dce:	edd6 5a01 	vldr	s11, [r6, #4]
-d0044dd2:	ee33 7ac5 	vsub.f32	s14, s7, s10
-d0044dd6:	ee66 1a41 	vnmul.f32	s3, s12, s2
-d0044dda:	ee75 5ae7 	vsub.f32	s11, s11, s15
-d0044dde:	ee26 2ac3 	vnmul.f32	s4, s13, s6
-d0044de2:	eee3 1a07 	vfma.f32	s3, s6, s14
-d0044de6:	ee27 7a65 	vnmul.f32	s14, s14, s11
-d0044dea:	eea5 2a86 	vfma.f32	s4, s11, s12
-d0044dee:	eea1 7a26 	vfma.f32	s14, s2, s13
-d0044df2:	ee67 7aa1 	vmul.f32	s15, s15, s3
-d0044df6:	eee5 7a02 	vfma.f32	s15, s10, s4
-d0044dfa:	eee2 7a87 	vfma.f32	s15, s5, s14
-d0044dfe:	eef5 7ac0 	vcmpe.f32	s15, #0.0
-d0044e02:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044e06:	f280 8123 	bge.w	d0045050 <submitEntitySolid+0x508>
-d0044e0a:	180b      	adds	r3, r1, r0
-d0044e0c:	9901      	ldr	r1, [sp, #4]
-d0044e0e:	f8df e1d0 	ldr.w	lr, [pc, #464]	; d0044fe0 <submitEntitySolid+0x498>
-d0044e12:	eb08 0c02 	add.w	ip, r8, r2
-d0044e16:	eb0b 0a01 	add.w	sl, fp, r1
-d0044e1a:	eb0e 0383 	add.w	r3, lr, r3, lsl #2
-d0044e1e:	eb0e 0c8c 	add.w	ip, lr, ip, lsl #2
-d0044e22:	eb0e 0a8a 	add.w	sl, lr, sl, lsl #2
-d0044e26:	ed93 7a00 	vldr	s14, [r3]
-d0044e2a:	ed93 6a02 	vldr	s12, [r3, #8]
-d0044e2e:	eddc 5a00 	vldr	s11, [ip]
-d0044e32:	ed9a 1a02 	vldr	s2, [sl, #8]
-d0044e36:	ee75 0ac7 	vsub.f32	s1, s11, s14
-d0044e3a:	edd3 6a01 	vldr	s13, [r3, #4]
-d0044e3e:	ee31 0a46 	vsub.f32	s0, s2, s12
-d0044e42:	eddc 2a02 	vldr	s5, [ip, #8]
-d0044e46:	edda 1a01 	vldr	s3, [sl, #4]
-d0044e4a:	ed9a 2a00 	vldr	s4, [sl]
-d0044e4e:	ee32 aac6 	vsub.f32	s20, s5, s12
-d0044e52:	ee71 7ae6 	vsub.f32	s15, s3, s13
-d0044e56:	ed9c 3a01 	vldr	s6, [ip, #4]
-d0044e5a:	ee32 8a47 	vsub.f32	s16, s4, s14
-d0044e5e:	ee20 9a60 	vnmul.f32	s18, s0, s1
-d0044e62:	ee73 9a66 	vsub.f32	s19, s6, s13
-d0044e66:	ee67 8aca 	vnmul.f32	s17, s15, s20
-d0044e6a:	eeaa 9a08 	vfma.f32	s18, s20, s16
-d0044e6e:	ee28 8a69 	vnmul.f32	s16, s16, s19
-d0044e72:	eee9 8a80 	vfma.f32	s17, s19, s0
-d0044e76:	eea0 8aa7 	vfma.f32	s16, s1, s15
-d0044e7a:	ee69 7a09 	vmul.f32	s15, s18, s18
-d0044e7e:	eee8 7aa8 	vfma.f32	s15, s17, s17
-d0044e82:	eee8 7a08 	vfma.f32	s15, s16, s16
-d0044e86:	eef4 7aee 	vcmpe.f32	s15, s29
-d0044e8a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044e8e:	f240 80df 	bls.w	d0045050 <submitEntitySolid+0x508>
-d0044e92:	eddf 0a59 	vldr	s1, [pc, #356]	; d0044ff8 <submitEntitySolid+0x4b0>
-d0044e96:	eef4 7ae0 	vcmpe.f32	s15, s1
-d0044e9a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044e9e:	f100 822b 	bmi.w	d00452f8 <submitEntitySolid+0x7b0>
-d0044ea2:	eddf 0a56 	vldr	s1, [pc, #344]	; d0044ffc <submitEntitySolid+0x4b4>
-d0044ea6:	eef4 7a60 	vcmp.f32	s15, s1
-d0044eaa:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044eae:	f300 8223 	bgt.w	d00452f8 <submitEntitySolid+0x7b0>
-d0044eb2:	7b6b      	ldrb	r3, [r5, #13]
-d0044eb4:	eef4 4acf 	vcmpe.f32	s9, s30
-d0044eb8:	eddf 7a4c 	vldr	s15, [pc, #304]	; d0044fec <submitEntitySolid+0x4a4>
-d0044ebc:	ee7c 9a8d 	vadd.f32	s19, s25, s26
-d0044ec0:	ee0a 3a10 	vmov	s20, r3
-d0044ec4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044ec8:	eeb8 aa4a 	vcvt.f32.u32	s20, s20
-d0044ecc:	ee2a aa27 	vmul.f32	s20, s20, s15
-d0044ed0:	f2c0 80c9 	blt.w	d0045066 <submitEntitySolid+0x51e>
-d0044ed4:	4490      	add	r8, r2
-d0044ed6:	4b43      	ldr	r3, [pc, #268]	; (d0044fe4 <submitEntitySolid+0x49c>)
-d0044ed8:	eb03 0888 	add.w	r8, r3, r8, lsl #2
-d0044edc:	edd8 7a02 	vldr	s15, [r8, #8]
-d0044ee0:	eef4 7acf 	vcmpe.f32	s15, s30
-d0044ee4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044ee8:	f2c0 80bd 	blt.w	d0045066 <submitEntitySolid+0x51e>
-d0044eec:	9901      	ldr	r1, [sp, #4]
-d0044eee:	448b      	add	fp, r1
-d0044ef0:	4619      	mov	r1, r3
-d0044ef2:	eb03 0b8b 	add.w	fp, r3, fp, lsl #2
-d0044ef6:	eddb 0a02 	vldr	s1, [fp, #8]
-d0044efa:	eef4 0acf 	vcmpe.f32	s1, s30
-d0044efe:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044f02:	f2c0 80b0 	blt.w	d0045066 <submitEntitySolid+0x51e>
-d0044f06:	eeb1 0a64 	vneg.f32	s0, s9
-d0044f0a:	eeb4 0a45 	vcmp.f32	s0, s10
-d0044f0e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044f12:	f200 80a8 	bhi.w	d0045066 <submitEntitySolid+0x51e>
-d0044f16:	eef4 4a45 	vcmp.f32	s9, s10
-d0044f1a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044f1e:	f2c0 80a2 	blt.w	d0045066 <submitEntitySolid+0x51e>
-d0044f22:	eeb1 5a67 	vneg.f32	s10, s15
-d0044f26:	eeb4 5a44 	vcmp.f32	s10, s8
-d0044f2a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044f2e:	f200 809a 	bhi.w	d0045066 <submitEntitySolid+0x51e>
-d0044f32:	eef4 7a44 	vcmp.f32	s15, s8
-d0044f36:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044f3a:	f2c0 8094 	blt.w	d0045066 <submitEntitySolid+0x51e>
-d0044f3e:	eeb1 5a60 	vneg.f32	s10, s1
-d0044f42:	eeb4 5a63 	vcmp.f32	s10, s7
-d0044f46:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044f4a:	f200 808c 	bhi.w	d0045066 <submitEntitySolid+0x51e>
-d0044f4e:	eef4 0a63 	vcmp.f32	s1, s7
-d0044f52:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044f56:	f2c0 8086 	blt.w	d0045066 <submitEntitySolid+0x51e>
-d0044f5a:	ed9f 5a25 	vldr	s10, [pc, #148]	; d0044ff0 <submitEntitySolid+0x4a8>
-d0044f5e:	230c      	movs	r3, #12
-d0044f60:	ee64 4a85 	vmul.f32	s9, s9, s10
-d0044f64:	fb03 1000 	mla	r0, r3, r0, r1
-d0044f68:	ed90 5a01 	vldr	s10, [r0, #4]
-d0044f6c:	eeb1 4a64 	vneg.f32	s8, s9
-d0044f70:	eeb4 5a44 	vcmp.f32	s10, s8
-d0044f74:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044f78:	db75      	blt.n	d0045066 <submitEntitySolid+0x51e>
-d0044f7a:	eeb4 5a64 	vcmp.f32	s10, s9
-d0044f7e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044f82:	d870      	bhi.n	d0045066 <submitEntitySolid+0x51e>
-d0044f84:	ed9f 5a1a 	vldr	s10, [pc, #104]	; d0044ff0 <submitEntitySolid+0x4a8>
-d0044f88:	fb03 1202 	mla	r2, r3, r2, r1
-d0044f8c:	ee67 7a85 	vmul.f32	s15, s15, s10
-d0044f90:	edd2 4a01 	vldr	s9, [r2, #4]
-d0044f94:	eeb1 4a67 	vneg.f32	s8, s15
-d0044f98:	eef4 4a44 	vcmp.f32	s9, s8
-d0044f9c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044fa0:	db61      	blt.n	d0045066 <submitEntitySolid+0x51e>
-d0044fa2:	eef4 4a67 	vcmp.f32	s9, s15
-d0044fa6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044faa:	d85c      	bhi.n	d0045066 <submitEntitySolid+0x51e>
-d0044fac:	ee60 0a85 	vmul.f32	s1, s1, s10
-d0044fb0:	9a01      	ldr	r2, [sp, #4]
-d0044fb2:	fb03 1102 	mla	r1, r3, r2, r1
-d0044fb6:	eeb1 5a60 	vneg.f32	s10, s1
-d0044fba:	edd1 7a01 	vldr	s15, [r1, #4]
-d0044fbe:	eef4 7a45 	vcmp.f32	s15, s10
-d0044fc2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044fc6:	db4e      	blt.n	d0045066 <submitEntitySolid+0x51e>
-d0044fc8:	eef4 7ae0 	vcmpe.f32	s15, s1
-d0044fcc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0044fd0:	d849      	bhi.n	d0045066 <submitEntitySolid+0x51e>
-d0044fd2:	9b06      	ldr	r3, [sp, #24]
-d0044fd4:	b1b3      	cbz	r3, d0045004 <submitEntitySolid+0x4bc>
-d0044fd6:	9b07      	ldr	r3, [sp, #28]
-d0044fd8:	2b00      	cmp	r3, #0
-d0044fda:	f300 828a 	bgt.w	d00454f2 <submitEntitySolid+0x9aa>
-d0044fde:	e011      	b.n	d0045004 <submitEntitySolid+0x4bc>
-d0044fe0:	d01208c0 	.word	0xd01208c0
-d0044fe4:	d0094880 	.word	0xd0094880
-d0044fe8:	358637bd 	.word	0x358637bd
-d0044fec:	3b808081 	.word	0x3b808081
-d0044ff0:	3f2aaaab 	.word	0x3f2aaaab
-d0044ff4:	3eaaaaab 	.word	0x3eaaaaab
-d0044ff8:	3f7fbe77 	.word	0x3f7fbe77
-d0044ffc:	3f8020c5 	.word	0x3f8020c5
-d0045000:	00000000 	.word	0x00000000
-d0045004:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
-d0045008:	fe8a 0a29 	vmaxnm.f32	s0, s20, s19
-d004500c:	fe80 0a67 	vminnm.f32	s0, s0, s15
-d0045010:	f7fe fd72 	bl	d0043af8 <brightnessToShadeF>
-d0045014:	eeb0 8a40 	vmov.f32	s16, s0
-d0045018:	eef0 4a48 	vmov.f32	s9, s16
-d004501c:	7b6a      	ldrb	r2, [r5, #13]
-d004501e:	7b29      	ldrb	r1, [r5, #12]
-d0045020:	9804      	ldr	r0, [sp, #16]
-d0045022:	ed97 3a00 	vldr	s6, [r7]
-d0045026:	edd7 3a01 	vldr	s7, [r7, #4]
-d004502a:	ed97 4a02 	vldr	s8, [r7, #8]
-d004502e:	edd6 1a00 	vldr	s3, [r6]
-d0045032:	ed96 2a01 	vldr	s4, [r6, #4]
-d0045036:	edd6 2a02 	vldr	s5, [r6, #8]
-d004503a:	ed94 0a00 	vldr	s0, [r4]
-d004503e:	edd4 0a01 	vldr	s1, [r4, #4]
-d0045042:	ed94 1a02 	vldr	s2, [r4, #8]
-d0045046:	f7ff fa1f 	bl	d0044488 <submitClippedTri>
-d004504a:	9b03      	ldr	r3, [sp, #12]
-d004504c:	695b      	ldr	r3, [r3, #20]
-d004504e:	9302      	str	r3, [sp, #8]
-d0045050:	f109 0901 	add.w	r9, r9, #1
-d0045054:	9b02      	ldr	r3, [sp, #8]
-d0045056:	4599      	cmp	r9, r3
-d0045058:	f6ff ae6d 	blt.w	d0044d36 <submitEntitySolid+0x1ee>
-d004505c:	b033      	add	sp, #204	; 0xcc
-d004505e:	ecbd 8b10 	vpop	{d8-d15}
-d0045062:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-d0045066:	9b06      	ldr	r3, [sp, #24]
-d0045068:	2b00      	cmp	r3, #0
-d004506a:	f000 8152 	beq.w	d0045312 <submitEntitySolid+0x7ca>
-d004506e:	9b07      	ldr	r3, [sp, #28]
-d0045070:	2b00      	cmp	r3, #0
-d0045072:	f340 814e 	ble.w	d0045312 <submitEntitySolid+0x7ca>
-d0045076:	f04f 0800 	mov.w	r8, #0
-d004507a:	ee75 ba87 	vadd.f32	s23, s11, s14
-d004507e:	ed5f 7a23 	vldr	s15, [pc, #-140]	; d0044ff4 <submitEntitySolid+0x4ac>
-d0045082:	ee33 ca26 	vadd.f32	s24, s6, s13
-d0045086:	ee32 ea86 	vadd.f32	s28, s5, s12
-d004508a:	eeb5 bac0 	vcmpe.f32	s22, #0.0
-d004508e:	ee7b ba82 	vadd.f32	s23, s23, s4
-d0045092:	ee3c ca21 	vadd.f32	s24, s24, s3
-d0045096:	ee3e ea01 	vadd.f32	s28, s28, s2
-d004509a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004509e:	ee6b baa7 	vmul.f32	s23, s23, s15
-d00450a2:	ee2c ca27 	vmul.f32	s24, s24, s15
-d00450a6:	ee2e ea27 	vmul.f32	s28, s28, s15
-d00450aa:	f340 818b 	ble.w	d00453c4 <submitEntitySolid+0x87c>
-d00450ae:	eddd 7a0c 	vldr	s15, [sp, #48]	; 0x30
-d00450b2:	ee77 2acc 	vsub.f32	s5, s15, s24
-d00450b6:	eddd 7a0a 	vldr	s15, [sp, #40]	; 0x28
-d00450ba:	ee37 3aeb 	vsub.f32	s6, s15, s23
-d00450be:	eddd 7a09 	vldr	s15, [sp, #36]	; 0x24
-d00450c2:	ee77 4ace 	vsub.f32	s9, s15, s28
-d00450c6:	ee62 7aa2 	vmul.f32	s15, s5, s5
-d00450ca:	eee3 7a03 	vfma.f32	s15, s6, s6
-d00450ce:	eee4 7aa4 	vfma.f32	s15, s9, s9
-d00450d2:	eef4 7aee 	vcmpe.f32	s15, s29
-d00450d6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00450da:	f340 8173 	ble.w	d00453c4 <submitEntitySolid+0x87c>
-d00450de:	ed1f 7a3a 	vldr	s14, [pc, #-232]	; d0044ff8 <submitEntitySolid+0x4b0>
-d00450e2:	eef4 7ac7 	vcmpe.f32	s15, s14
-d00450e6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00450ea:	f100 81e2 	bmi.w	d00454b2 <submitEntitySolid+0x96a>
-d00450ee:	ed1f 7a3d 	vldr	s14, [pc, #-244]	; d0044ffc <submitEntitySolid+0x4b4>
-d00450f2:	eef4 7a47 	vcmp.f32	s15, s14
-d00450f6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00450fa:	f300 81da 	bgt.w	d00454b2 <submitEntitySolid+0x96a>
-d00450fe:	ee79 1a09 	vadd.f32	s3, s18, s18
-d0045102:	4642      	mov	r2, r8
-d0045104:	ee38 2a08 	vadd.f32	s4, s16, s16
-d0045108:	46b8      	mov	r8, r7
-d004510a:	eef0 6a6c 	vmov.f32	s13, s25
-d004510e:	4637      	mov	r7, r6
-d0045110:	eef0 7a61 	vmov.f32	s15, s3
-d0045114:	4626      	mov	r6, r4
-d0045116:	eeb0 7a42 	vmov.f32	s14, s4
-d004511a:	f8dd a02c 	ldr.w	sl, [sp, #44]	; 0x2c
-d004511e:	eef0 ca64 	vmov.f32	s25, s9
-d0045122:	f04f 0b00 	mov.w	fp, #0
-d0045126:	eef0 4a6a 	vmov.f32	s9, s21
-d004512a:	9c07      	ldr	r4, [sp, #28]
-d004512c:	eef0 aa62 	vmov.f32	s21, s5
-d0045130:	eeb0 2a4d 	vmov.f32	s4, s26
-d0045134:	eef0 1a4a 	vmov.f32	s3, s20
-d0045138:	ee38 1aa8 	vadd.f32	s2, s17, s17
-d004513c:	eeb0 aa43 	vmov.f32	s20, s6
-d0045140:	eeb7 5a00 	vmov.f32	s10, #112	; 0x3f800000  1.0
-d0045144:	eeb0 3a4f 	vmov.f32	s6, s30
-d0045148:	eef2 da00 	vmov.f32	s27, #32	; 0x41000000  8.0
-d004514c:	eeb0 fa67 	vmov.f32	s30, s15
-d0045150:	eeb0 da47 	vmov.f32	s26, s14
-d0045154:	eef0 2a66 	vmov.f32	s5, s13
-d0045158:	e0b6      	b.n	d00452c8 <submitEntitySolid+0x780>
-d004515a:	edda 7a02 	vldr	s15, [sl, #8]
-d004515e:	edda 6a01 	vldr	s13, [sl, #4]
-d0045162:	ee77 7acc 	vsub.f32	s15, s15, s24
-d0045166:	ed9a 7a03 	vldr	s14, [sl, #12]
-d004516a:	ee76 6aeb 	vsub.f32	s13, s13, s23
-d004516e:	edda 5a0a 	vldr	s11, [sl, #40]	; 0x28
-d0045172:	ee37 7a4e 	vsub.f32	s14, s14, s28
-d0045176:	ee27 6aa7 	vmul.f32	s12, s15, s15
-d004517a:	ee25 4aa5 	vmul.f32	s8, s11, s11
-d004517e:	eea6 6aa6 	vfma.f32	s12, s13, s13
-d0045182:	eea7 6a07 	vfma.f32	s12, s14, s14
-d0045186:	eeb4 6a6e 	vcmp.f32	s12, s29
-d004518a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004518e:	f340 8094 	ble.w	d00452ba <submitEntitySolid+0x772>
-d0045192:	eeb4 4a46 	vcmp.f32	s8, s12
-d0045196:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004519a:	f340 808e 	ble.w	d00452ba <submitEntitySolid+0x772>
-d004519e:	eeb1 0ac6 	vsqrt.f32	s0, s12
-d00451a2:	edda 3a08 	vldr	s7, [sl, #32]
-d00451a6:	ee63 0aa3 	vmul.f32	s1, s7, s7
-d00451aa:	eef4 0ac6 	vcmpe.f32	s1, s12
-d00451ae:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00451b2:	ee85 4a00 	vdiv.f32	s8, s10, s0
-d00451b6:	ee66 6a84 	vmul.f32	s13, s13, s8
-d00451ba:	ee67 7a84 	vmul.f32	s15, s15, s8
-d00451be:	ee27 7a04 	vmul.f32	s14, s14, s8
-d00451c2:	f140 8123 	bpl.w	d004540c <submitEntitySolid+0x8c4>
-d00451c6:	edda 0a09 	vldr	s1, [sl, #36]	; 0x24
-d00451ca:	eef4 3ae0 	vcmpe.f32	s7, s1
-d00451ce:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00451d2:	da72      	bge.n	d00452ba <submitEntitySolid+0x772>
-d00451d4:	eef4 5ae0 	vcmpe.f32	s11, s1
-d00451d8:	ee26 6a04 	vmul.f32	s12, s12, s8
-d00451dc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00451e0:	eef4 0ac6 	vcmpe.f32	s1, s12
-d00451e4:	f200 814d 	bhi.w	d0045482 <submitEntitySolid+0x93a>
-d00451e8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00451ec:	d965      	bls.n	d00452ba <submitEntitySolid+0x772>
-d00451ee:	ee36 6a63 	vsub.f32	s12, s12, s7
-d00451f2:	ee70 3ae3 	vsub.f32	s7, s1, s7
-d00451f6:	eec6 5a23 	vdiv.f32	s11, s12, s7
-d00451fa:	ed1f 6a7f 	vldr	s12, [pc, #-508]	; d0045000 <submitEntitySolid+0x4b8>
-d00451fe:	fe85 6a86 	vmaxnm.f32	s12, s11, s12
-d0045202:	fe86 6a45 	vminnm.f32	s12, s12, s10
-d0045206:	ee35 6a46 	vsub.f32	s12, s10, s12
-d004520a:	eeb5 6ac0 	vcmpe.f32	s12, #0.0
-d004520e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0045212:	d952      	bls.n	d00452ba <submitEntitySolid+0x772>
-d0045214:	ee69 5a27 	vmul.f32	s11, s18, s15
-d0045218:	eee8 5aa6 	vfma.f32	s11, s17, s13
-d004521c:	eee8 5a07 	vfma.f32	s11, s16, s14
-d0045220:	eef5 5ac0 	vcmpe.f32	s11, #0.0
-d0045224:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0045228:	d947      	bls.n	d00452ba <submitEntitySolid+0x772>
-d004522a:	eef5 fac0 	vcmpe.f32	s31, #0.0
-d004522e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0045232:	dd07      	ble.n	d0045244 <submitEntitySolid+0x6fc>
-d0045234:	ed9a 4a07 	vldr	s8, [sl, #28]
-d0045238:	ee2f 4a84 	vmul.f32	s8, s31, s8
-d004523c:	ee24 4a06 	vmul.f32	s8, s8, s12
-d0045240:	eee5 9a84 	vfma.f32	s19, s11, s8
-d0045244:	eeb5 bac0 	vcmpe.f32	s22, #0.0
-d0045248:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004524c:	dd2f      	ble.n	d00452ae <submitEntitySolid+0x766>
-d004524e:	eed5 7a8f 	vfnms.f32	s15, s11, s30
-d0045252:	eed5 6a81 	vfnms.f32	s13, s11, s2
-d0045256:	ee95 7a8d 	vfnms.f32	s14, s11, s26
-d004525a:	ee2a 0aa7 	vmul.f32	s0, s21, s15
-d004525e:	eeaa 0a26 	vfma.f32	s0, s20, s13
-d0045262:	eeac 0a87 	vfma.f32	s0, s25, s14
-d0045266:	eeb5 0ac0 	vcmpe.f32	s0, #0.0
-d004526a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004526e:	dd1e      	ble.n	d00452ae <submitEntitySolid+0x766>
-d0045270:	eddd 7a08 	vldr	s15, [sp, #32]
-d0045274:	eef4 7a6d 	vcmp.f32	s15, s27
-d0045278:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004527c:	d009      	beq.n	d0045292 <submitEntitySolid+0x74a>
-d004527e:	eeb3 7a00 	vmov.f32	s14, #48	; 0x41800000  16.0
-d0045282:	eef4 7a47 	vcmp.f32	s15, s14
-d0045286:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004528a:	f040 80c2 	bne.w	d0045412 <submitEntitySolid+0x8ca>
-d004528e:	ee20 0a00 	vmul.f32	s0, s0, s0
-d0045292:	ee20 0a00 	vmul.f32	s0, s0, s0
-d0045296:	ee20 0a00 	vmul.f32	s0, s0, s0
-d004529a:	ee20 0a00 	vmul.f32	s0, s0, s0
-d004529e:	edda 7a07 	vldr	s15, [sl, #28]
-d00452a2:	ee6b 7a27 	vmul.f32	s15, s22, s15
-d00452a6:	ee27 6a86 	vmul.f32	s12, s15, s12
-d00452aa:	eee6 9a00 	vfma.f32	s19, s12, s0
-d00452ae:	eef4 9ac5 	vcmpe.f32	s19, s10
-d00452b2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00452b6:	f280 80d3 	bge.w	d0045460 <submitEntitySolid+0x918>
-d00452ba:	f10b 0b01 	add.w	fp, fp, #1
-d00452be:	f10a 0a40 	add.w	sl, sl, #64	; 0x40
-d00452c2:	455c      	cmp	r4, fp
-d00452c4:	f340 8085 	ble.w	d00453d2 <submitEntitySolid+0x88a>
-d00452c8:	f8da 302c 	ldr.w	r3, [sl, #44]	; 0x2c
-d00452cc:	2b00      	cmp	r3, #0
-d00452ce:	d0f4      	beq.n	d00452ba <submitEntitySolid+0x772>
-d00452d0:	f89a 3000 	ldrb.w	r3, [sl]
-d00452d4:	2b00      	cmp	r3, #0
-d00452d6:	f43f af40 	beq.w	d004515a <submitEntitySolid+0x612>
-d00452da:	edda 6a04 	vldr	s13, [sl, #16]
-d00452de:	eeb7 6a00 	vmov.f32	s12, #112	; 0x3f800000  1.0
-d00452e2:	edda 7a05 	vldr	s15, [sl, #20]
-d00452e6:	ed9a 7a06 	vldr	s14, [sl, #24]
-d00452ea:	eef1 6a66 	vneg.f32	s13, s13
-d00452ee:	eef1 7a67 	vneg.f32	s15, s15
-d00452f2:	eeb1 7a47 	vneg.f32	s14, s14
-d00452f6:	e78d      	b.n	d0045214 <submitEntitySolid+0x6cc>
-d00452f8:	eef1 0ae7 	vsqrt.f32	s1, s15
-d00452fc:	eeb7 0a00 	vmov.f32	s0, #112	; 0x3f800000  1.0
-d0045300:	eec0 7a20 	vdiv.f32	s15, s0, s1
-d0045304:	ee68 8aa7 	vmul.f32	s17, s17, s15
-d0045308:	ee29 9a27 	vmul.f32	s18, s18, s15
-d004530c:	ee28 8a27 	vmul.f32	s16, s16, s15
-d0045310:	e5cf      	b.n	d0044eb2 <submitEntitySolid+0x36a>
-d0045312:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
-d0045316:	fe8a 0a29 	vmaxnm.f32	s0, s20, s19
-d004531a:	fe80 0a67 	vminnm.f32	s0, s0, s15
-d004531e:	f7fe fbeb 	bl	d0043af8 <brightnessToShadeF>
-d0045322:	eeb0 8a40 	vmov.f32	s16, s0
-d0045326:	f8dd a010 	ldr.w	sl, [sp, #16]
-d004532a:	f8dd 8014 	ldr.w	r8, [sp, #20]
-d004532e:	4651      	mov	r1, sl
-d0045330:	ed97 3a00 	vldr	s6, [r7]
-d0045334:	4640      	mov	r0, r8
-d0045336:	edd7 3a01 	vldr	s7, [r7, #4]
-d004533a:	ed97 4a02 	vldr	s8, [r7, #8]
-d004533e:	edd6 1a00 	vldr	s3, [r6]
-d0045342:	ed96 2a01 	vldr	s4, [r6, #4]
-d0045346:	edd6 2a02 	vldr	s5, [r6, #8]
-d004534a:	ed94 0a00 	vldr	s0, [r4]
-d004534e:	edd4 0a01 	vldr	s1, [r4, #4]
-d0045352:	ed94 1a02 	vldr	s2, [r4, #8]
-d0045356:	f7fe fc3b 	bl	d0043bd0 <clipTriangleToFrustum>
-d004535a:	2802      	cmp	r0, #2
-d004535c:	dc09      	bgt.n	d0045372 <submitEntitySolid+0x82a>
-d004535e:	9b03      	ldr	r3, [sp, #12]
-d0045360:	f109 0901 	add.w	r9, r9, #1
-d0045364:	695b      	ldr	r3, [r3, #20]
-d0045366:	9302      	str	r3, [sp, #8]
-d0045368:	9b02      	ldr	r3, [sp, #8]
-d004536a:	4599      	cmp	r9, r3
-d004536c:	f6ff ace3 	blt.w	d0044d36 <submitEntitySolid+0x1ee>
-d0045370:	e674      	b.n	d004505c <submitEntitySolid+0x514>
-d0045372:	eef0 4a48 	vmov.f32	s9, s16
-d0045376:	1e44      	subs	r4, r0, #1
-d0045378:	2601      	movs	r6, #1
-d004537a:	4647      	mov	r7, r8
-d004537c:	4650      	mov	r0, sl
-d004537e:	4633      	mov	r3, r6
-d0045380:	3601      	adds	r6, #1
-d0045382:	7b6a      	ldrb	r2, [r5, #13]
-d0045384:	eb03 0343 	add.w	r3, r3, r3, lsl #1
-d0045388:	7b29      	ldrb	r1, [r5, #12]
-d004538a:	eb06 0c46 	add.w	ip, r6, r6, lsl #1
-d004538e:	ed97 0a00 	vldr	s0, [r7]
-d0045392:	eb07 0383 	add.w	r3, r7, r3, lsl #2
-d0045396:	edd7 0a01 	vldr	s1, [r7, #4]
-d004539a:	eb07 0c8c 	add.w	ip, r7, ip, lsl #2
-d004539e:	ed97 1a02 	vldr	s2, [r7, #8]
-d00453a2:	edd3 1a00 	vldr	s3, [r3]
-d00453a6:	ed93 2a01 	vldr	s4, [r3, #4]
-d00453aa:	edd3 2a02 	vldr	s5, [r3, #8]
-d00453ae:	ed9c 3a00 	vldr	s6, [ip]
-d00453b2:	eddc 3a01 	vldr	s7, [ip, #4]
-d00453b6:	ed9c 4a02 	vldr	s8, [ip, #8]
-d00453ba:	f7ff f865 	bl	d0044488 <submitClippedTri>
-d00453be:	42a6      	cmp	r6, r4
-d00453c0:	d1dd      	bne.n	d004537e <submitEntitySolid+0x836>
-d00453c2:	e7cc      	b.n	d004535e <submitEntitySolid+0x816>
-d00453c4:	eddf 4a4c 	vldr	s9, [pc, #304]	; d00454f8 <submitEntitySolid+0x9b0>
-d00453c8:	eef0 2a64 	vmov.f32	s5, s9
-d00453cc:	eeb0 3a64 	vmov.f32	s6, s9
-d00453d0:	e695      	b.n	d00450fe <submitEntitySolid+0x5b6>
-d00453d2:	eef0 aa64 	vmov.f32	s21, s9
-d00453d6:	4634      	mov	r4, r6
-d00453d8:	eeb0 fa43 	vmov.f32	s30, s6
-d00453dc:	463e      	mov	r6, r7
-d00453de:	eef0 ca62 	vmov.f32	s25, s5
-d00453e2:	4647      	mov	r7, r8
-d00453e4:	eeb0 da42 	vmov.f32	s26, s4
-d00453e8:	4690      	mov	r8, r2
-d00453ea:	eeb0 aa61 	vmov.f32	s20, s3
-d00453ee:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
-d00453f2:	fe89 0a8a 	vmaxnm.f32	s0, s19, s20
-d00453f6:	fe80 0a67 	vminnm.f32	s0, s0, s15
-d00453fa:	f7fe fb7d 	bl	d0043af8 <brightnessToShadeF>
-d00453fe:	eeb0 8a40 	vmov.f32	s16, s0
-d0045402:	f1b8 0f00 	cmp.w	r8, #0
-d0045406:	f47f ae07 	bne.w	d0045018 <submitEntitySolid+0x4d0>
-d004540a:	e78c      	b.n	d0045326 <submitEntitySolid+0x7de>
-d004540c:	eeb7 6a00 	vmov.f32	s12, #112	; 0x3f800000  1.0
-d0045410:	e700      	b.n	d0045214 <submitEntitySolid+0x6cc>
-d0045412:	eef0 0a67 	vmov.f32	s1, s15
-d0045416:	ed8d 1a13 	vstr	s2, [sp, #76]	; 0x4c
-d004541a:	9212      	str	r2, [sp, #72]	; 0x48
-d004541c:	edcd 1a11 	vstr	s3, [sp, #68]	; 0x44
-d0045420:	ed8d 2a10 	vstr	s4, [sp, #64]	; 0x40
-d0045424:	edcd 2a0f 	vstr	s5, [sp, #60]	; 0x3c
-d0045428:	ed8d 3a0e 	vstr	s6, [sp, #56]	; 0x38
-d004542c:	edcd 4a0d 	vstr	s9, [sp, #52]	; 0x34
-d0045430:	ed8d 5a02 	vstr	s10, [sp, #8]
-d0045434:	ed8d 6a01 	vstr	s12, [sp, #4]
-d0045438:	f7fd f964 	bl	d0042704 <powf>
-d004543c:	ed9d 1a13 	vldr	s2, [sp, #76]	; 0x4c
-d0045440:	9a12      	ldr	r2, [sp, #72]	; 0x48
-d0045442:	eddd 1a11 	vldr	s3, [sp, #68]	; 0x44
-d0045446:	ed9d 2a10 	vldr	s4, [sp, #64]	; 0x40
-d004544a:	eddd 2a0f 	vldr	s5, [sp, #60]	; 0x3c
-d004544e:	ed9d 3a0e 	vldr	s6, [sp, #56]	; 0x38
-d0045452:	eddd 4a0d 	vldr	s9, [sp, #52]	; 0x34
-d0045456:	ed9d 5a02 	vldr	s10, [sp, #8]
-d004545a:	ed9d 6a01 	vldr	s12, [sp, #4]
-d004545e:	e71e      	b.n	d004529e <submitEntitySolid+0x756>
-d0045460:	4634      	mov	r4, r6
-d0045462:	eef0 aa64 	vmov.f32	s21, s9
-d0045466:	463e      	mov	r6, r7
-d0045468:	eeb0 fa43 	vmov.f32	s30, s6
-d004546c:	4647      	mov	r7, r8
-d004546e:	eef0 ca62 	vmov.f32	s25, s5
-d0045472:	eeb0 da42 	vmov.f32	s26, s4
-d0045476:	4690      	mov	r8, r2
-d0045478:	eeb0 aa61 	vmov.f32	s20, s3
-d004547c:	eef7 9a00 	vmov.f32	s19, #112	; 0x3f800000  1.0
-d0045480:	e7b5      	b.n	d00453ee <submitEntitySolid+0x8a6>
-d0045482:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0045486:	db21      	blt.n	d00454cc <submitEntitySolid+0x984>
-d0045488:	ee36 6a63 	vsub.f32	s12, s12, s7
-d004548c:	ee70 3ae3 	vsub.f32	s7, s1, s7
-d0045490:	eeb6 4a08 	vmov.f32	s8, #104	; 0x3f400000  0.750
-d0045494:	eec6 5a23 	vdiv.f32	s11, s12, s7
-d0045498:	ed9f 6a17 	vldr	s12, [pc, #92]	; d00454f8 <submitEntitySolid+0x9b0>
-d004549c:	fe85 6a86 	vmaxnm.f32	s12, s11, s12
-d00454a0:	eef0 5a45 	vmov.f32	s11, s10
-d00454a4:	fe86 6a45 	vminnm.f32	s12, s12, s10
-d00454a8:	eee6 5a44 	vfms.f32	s11, s12, s8
-d00454ac:	eeb0 6a65 	vmov.f32	s12, s11
-d00454b0:	e6ab      	b.n	d004520a <submitEntitySolid+0x6c2>
-d00454b2:	eeb1 7ae7 	vsqrt.f32	s14, s15
-d00454b6:	eef7 6a00 	vmov.f32	s13, #112	; 0x3f800000  1.0
-d00454ba:	eec6 7a87 	vdiv.f32	s15, s13, s14
-d00454be:	ee23 3a27 	vmul.f32	s6, s6, s15
-d00454c2:	ee62 2aa7 	vmul.f32	s5, s5, s15
-d00454c6:	ee64 4aa7 	vmul.f32	s9, s9, s15
-d00454ca:	e618      	b.n	d00450fe <submitEntitySolid+0x5b6>
-d00454cc:	ee36 6a60 	vsub.f32	s12, s12, s1
-d00454d0:	ee75 5ae0 	vsub.f32	s11, s11, s1
-d00454d4:	ee86 4a25 	vdiv.f32	s8, s12, s11
-d00454d8:	ed9f 6a07 	vldr	s12, [pc, #28]	; d00454f8 <submitEntitySolid+0x9b0>
-d00454dc:	eef5 5a00 	vmov.f32	s11, #80	; 0x3e800000  0.250
-d00454e0:	fe84 6a06 	vmaxnm.f32	s12, s8, s12
-d00454e4:	fe86 6a45 	vminnm.f32	s12, s12, s10
-d00454e8:	ee35 6a46 	vsub.f32	s12, s10, s12
-d00454ec:	ee26 6a25 	vmul.f32	s12, s12, s11
-d00454f0:	e68b      	b.n	d004520a <submitEntitySolid+0x6c2>
-d00454f2:	f04f 0801 	mov.w	r8, #1
-d00454f6:	e5c0      	b.n	d004507a <submitEntitySolid+0x532>
-d00454f8:	00000000 	.word	0x00000000
+d0044be8:	bfac      	ite	ge
+d0044bea:	f04f 0c01 	movge.w	ip, #1
+d0044bee:	f04f 0c00 	movlt.w	ip, #0
+d0044bf2:	2f00      	cmp	r7, #0
+d0044bf4:	d1ca      	bne.n	d0044b8c <clipTriangleToFrustum+0x320>
+d0044bf6:	eef5 6a40 	vcmp.f32	s13, #0.0
+d0044bfa:	eb02 0142 	add.w	r1, r2, r2, lsl #1
+d0044bfe:	ee37 3aa5 	vadd.f32	s6, s15, s11
+d0044c02:	ee36 1a44 	vsub.f32	s2, s12, s8
+d0044c06:	eb04 0181 	add.w	r1, r4, r1, lsl #2
+d0044c0a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044c0e:	ee77 1ae4 	vsub.f32	s3, s15, s9
+d0044c12:	ee33 3a63 	vsub.f32	s6, s6, s7
+d0044c16:	ee37 2a45 	vsub.f32	s4, s14, s10
+d0044c1a:	f140 821f 	bpl.w	d004505c <clipTriangleToFrustum+0x7f0>
+d0044c1e:	2f00      	cmp	r7, #0
+d0044c20:	f000 821c 	beq.w	d004505c <clipTriangleToFrustum+0x7f0>
+d0044c24:	eec5 3a83 	vdiv.f32	s7, s11, s6
+d0044c28:	300c      	adds	r0, #12
+d0044c2a:	3201      	adds	r2, #1
+d0044c2c:	4298      	cmp	r0, r3
+d0044c2e:	eea1 4a23 	vfma.f32	s8, s2, s7
+d0044c32:	eee1 4aa3 	vfma.f32	s9, s3, s7
+d0044c36:	eea2 5a23 	vfma.f32	s10, s4, s7
+d0044c3a:	ed81 4a00 	vstr	s8, [r1]
+d0044c3e:	edc1 4a01 	vstr	s9, [r1, #4]
+d0044c42:	ed81 5a02 	vstr	s10, [r1, #8]
+d0044c46:	d1ae      	bne.n	d0044ba6 <clipTriangleToFrustum+0x33a>
+d0044c48:	2a02      	cmp	r2, #2
+d0044c4a:	f340 80b1 	ble.w	d0044db0 <clipTriangleToFrustum+0x544>
+d0044c4e:	eb02 0342 	add.w	r3, r2, r2, lsl #1
+d0044c52:	eddf 6aa0 	vldr	s13, [pc, #640]	; d0044ed4 <clipTriangleToFrustum+0x668>
+d0044c56:	2700      	movs	r7, #0
+d0044c58:	009b      	lsls	r3, r3, #2
+d0044c5a:	eef0 3a66 	vmov.f32	s7, s13
+d0044c5e:	f1a3 020c 	sub.w	r2, r3, #12
+d0044c62:	4423      	add	r3, r4
+d0044c64:	4414      	add	r4, r2
+d0044c66:	edd4 7a01 	vldr	s15, [r4, #4]
+d0044c6a:	ed94 7a02 	vldr	s14, [r4, #8]
+d0044c6e:	eef0 5a67 	vmov.f32	s11, s15
+d0044c72:	ed94 6a00 	vldr	s12, [r4]
+d0044c76:	eee7 5a26 	vfma.f32	s11, s14, s13
+d0044c7a:	eef0 6a65 	vmov.f32	s13, s11
+d0044c7e:	e00a      	b.n	d0044c96 <clipTriangleToFrustum+0x42a>
+d0044c80:	b380      	cbz	r0, d0044ce4 <clipTriangleToFrustum+0x478>
+d0044c82:	3701      	adds	r7, #1
+d0044c84:	ed82 6a00 	vstr	s12, [r2]
+d0044c88:	edc2 7a01 	vstr	s15, [r2, #4]
+d0044c8c:	ed82 7a02 	vstr	s14, [r2, #8]
+d0044c90:	360c      	adds	r6, #12
+d0044c92:	429e      	cmp	r6, r3
+d0044c94:	d04e      	beq.n	d0044d34 <clipTriangleToFrustum+0x4c8>
+d0044c96:	eef0 4a67 	vmov.f32	s9, s15
+d0044c9a:	edd6 7a01 	vldr	s15, [r6, #4]
+d0044c9e:	eef5 6ac0 	vcmpe.f32	s13, #0.0
+d0044ca2:	a922      	add	r1, sp, #136	; 0x88
+d0044ca4:	eef0 5a66 	vmov.f32	s11, s13
+d0044ca8:	eb07 0247 	add.w	r2, r7, r7, lsl #1
+d0044cac:	eef0 6a67 	vmov.f32	s13, s15
+d0044cb0:	eeb0 5a47 	vmov.f32	s10, s14
+d0044cb4:	ed96 7a02 	vldr	s14, [r6, #8]
+d0044cb8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044cbc:	eb01 0282 	add.w	r2, r1, r2, lsl #2
+d0044cc0:	eee7 6a23 	vfma.f32	s13, s14, s7
+d0044cc4:	eeb0 4a46 	vmov.f32	s8, s12
+d0044cc8:	ed96 6a00 	vldr	s12, [r6]
+d0044ccc:	bfac      	ite	ge
+d0044cce:	2101      	movge	r1, #1
+d0044cd0:	2100      	movlt	r1, #0
+d0044cd2:	eef5 6ac0 	vcmpe.f32	s13, #0.0
+d0044cd6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044cda:	bfac      	ite	ge
+d0044cdc:	2001      	movge	r0, #1
+d0044cde:	2000      	movlt	r0, #0
+d0044ce0:	2900      	cmp	r1, #0
+d0044ce2:	d1cd      	bne.n	d0044c80 <clipTriangleToFrustum+0x414>
+d0044ce4:	eef5 6a40 	vcmp.f32	s13, #0.0
+d0044ce8:	eb07 0247 	add.w	r2, r7, r7, lsl #1
+d0044cec:	ac22      	add	r4, sp, #136	; 0x88
+d0044cee:	ee35 1ae6 	vsub.f32	s2, s11, s13
+d0044cf2:	ee76 1a44 	vsub.f32	s3, s12, s8
+d0044cf6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044cfa:	eb04 0282 	add.w	r2, r4, r2, lsl #2
+d0044cfe:	ee37 2ae4 	vsub.f32	s4, s15, s9
+d0044d02:	ee77 2a45 	vsub.f32	s5, s14, s10
+d0044d06:	f140 81de 	bpl.w	d00450c6 <clipTriangleToFrustum+0x85a>
+d0044d0a:	2900      	cmp	r1, #0
+d0044d0c:	f000 81db 	beq.w	d00450c6 <clipTriangleToFrustum+0x85a>
+d0044d10:	ee85 3a81 	vdiv.f32	s6, s11, s2
+d0044d14:	360c      	adds	r6, #12
+d0044d16:	3701      	adds	r7, #1
+d0044d18:	429e      	cmp	r6, r3
+d0044d1a:	eea1 4a83 	vfma.f32	s8, s3, s6
+d0044d1e:	eee2 4a03 	vfma.f32	s9, s4, s6
+d0044d22:	eea2 5a83 	vfma.f32	s10, s5, s6
+d0044d26:	ed82 4a00 	vstr	s8, [r2]
+d0044d2a:	edc2 4a01 	vstr	s9, [r2, #4]
+d0044d2e:	ed82 5a02 	vstr	s10, [r2, #8]
+d0044d32:	d1b0      	bne.n	d0044c96 <clipTriangleToFrustum+0x42a>
+d0044d34:	2f02      	cmp	r7, #2
+d0044d36:	dd3b      	ble.n	d0044db0 <clipTriangleToFrustum+0x544>
+d0044d38:	eb07 0247 	add.w	r2, r7, r7, lsl #1
+d0044d3c:	a922      	add	r1, sp, #136	; 0x88
+d0044d3e:	4628      	mov	r0, r5
+d0044d40:	0092      	lsls	r2, r2, #2
+d0044d42:	f001 ff81 	bl	d0046c48 <memcpy>
+d0044d46:	4638      	mov	r0, r7
+d0044d48:	b03a      	add	sp, #232	; 0xe8
+d0044d4a:	ecbd 8b02 	vpop	{d8}
+d0044d4e:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+d0044d52:	eef5 5a40 	vcmp.f32	s11, #0.0
+d0044d56:	eb03 0243 	add.w	r2, r3, r3, lsl #1
+d0044d5a:	ee75 1ae6 	vsub.f32	s3, s11, s13
+d0044d5e:	eb04 0782 	add.w	r7, r4, r2, lsl #2
+d0044d62:	ee37 2a44 	vsub.f32	s4, s14, s8
+d0044d66:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044d6a:	463a      	mov	r2, r7
+d0044d6c:	ee76 2a64 	vsub.f32	s5, s12, s9
+d0044d70:	ee37 3ac5 	vsub.f32	s6, s15, s10
+d0044d74:	f107 070c 	add.w	r7, r7, #12
+d0044d78:	f57f ae1f 	bpl.w	d00449ba <clipTriangleToFrustum+0x14e>
+d0044d7c:	f1bc 0f00 	cmp.w	ip, #0
+d0044d80:	f43f ae1b 	beq.w	d00449ba <clipTriangleToFrustum+0x14e>
+d0044d84:	eec5 3aa1 	vdiv.f32	s7, s11, s3
+d0044d88:	3302      	adds	r3, #2
+d0044d8a:	eea2 4a23 	vfma.f32	s8, s4, s7
+d0044d8e:	eee2 4aa3 	vfma.f32	s9, s5, s7
+d0044d92:	eea3 5a23 	vfma.f32	s10, s6, s7
+d0044d96:	ed82 4a00 	vstr	s8, [r2]
+d0044d9a:	edc2 4a01 	vstr	s9, [r2, #4]
+d0044d9e:	ed82 5a02 	vstr	s10, [r2, #8]
+d0044da2:	ed87 7a00 	vstr	s14, [r7]
+d0044da6:	ed87 6a01 	vstr	s12, [r7, #4]
+d0044daa:	edc7 7a02 	vstr	s15, [r7, #8]
+d0044dae:	e604      	b.n	d00449ba <clipTriangleToFrustum+0x14e>
+d0044db0:	2700      	movs	r7, #0
+d0044db2:	4638      	mov	r0, r7
+d0044db4:	b03a      	add	sp, #232	; 0xe8
+d0044db6:	ecbd 8b02 	vpop	{d8}
+d0044dba:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+d0044dbe:	eef5 4a40 	vcmp.f32	s9, #0.0
+d0044dc2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044dc6:	f140 80b7 	bpl.w	d0044f38 <clipTriangleToFrustum+0x6cc>
+d0044dca:	2900      	cmp	r1, #0
+d0044dcc:	f000 80b4 	beq.w	d0044f38 <clipTriangleToFrustum+0x6cc>
+d0044dd0:	ee74 0a67 	vsub.f32	s1, s8, s15
+d0044dd4:	eddd 3a0f 	vldr	s7, [sp, #60]	; 0x3c
+d0044dd8:	ee36 8a65 	vsub.f32	s16, s12, s11
+d0044ddc:	2301      	movs	r3, #1
+d0044dde:	eef0 8a65 	vmov.f32	s17, s11
+d0044de2:	ed9d 2a0d 	vldr	s4, [sp, #52]	; 0x34
+d0044de6:	ee85 1a20 	vdiv.f32	s2, s10, s1
+d0044dea:	eddd 2a0e 	vldr	s5, [sp, #56]	; 0x38
+d0044dee:	ee36 0ae1 	vsub.f32	s0, s13, s3
+d0044df2:	ee33 3ac7 	vsub.f32	s6, s7, s14
+d0044df6:	ee77 0ac4 	vsub.f32	s1, s15, s8
+d0044dfa:	eeb5 3ac0 	vcmpe.f32	s6, #0.0
+d0044dfe:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044e02:	bfac      	ite	ge
+d0044e04:	461e      	movge	r6, r3
+d0044e06:	2600      	movlt	r6, #0
+d0044e08:	eee1 8a08 	vfma.f32	s17, s2, s16
+d0044e0c:	eeb0 8a68 	vmov.f32	s16, s17
+d0044e10:	eef0 8a61 	vmov.f32	s17, s3
+d0044e14:	ed8d 8a22 	vstr	s16, [sp, #136]	; 0x88
+d0044e18:	eee1 8a00 	vfma.f32	s17, s2, s0
+d0044e1c:	eeb0 0a68 	vmov.f32	s0, s17
+d0044e20:	eef0 8a44 	vmov.f32	s17, s8
+d0044e24:	ed8d 0a23 	vstr	s0, [sp, #140]	; 0x8c
+d0044e28:	eee0 8a81 	vfma.f32	s17, s1, s2
+d0044e2c:	edcd 8a24 	vstr	s17, [sp, #144]	; 0x90
+d0044e30:	eeb5 3a40 	vcmp.f32	s6, #0.0
+d0044e34:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044e38:	f140 80af 	bpl.w	d0044f9a <clipTriangleToFrustum+0x72e>
+d0044e3c:	2800      	cmp	r0, #0
+d0044e3e:	f000 80ac 	beq.w	d0044f9a <clipTriangleToFrustum+0x72e>
+d0044e42:	ee37 8ae3 	vsub.f32	s16, s15, s7
+d0044e46:	eb03 0043 	add.w	r0, r3, r3, lsl #1
+d0044e4a:	ee32 0a46 	vsub.f32	s0, s4, s12
+d0044e4e:	4632      	mov	r2, r6
+d0044e50:	ee72 0ae6 	vsub.f32	s1, s5, s13
+d0044e54:	ae22      	add	r6, sp, #136	; 0x88
+d0044e56:	ee84 1a88 	vdiv.f32	s2, s9, s16
+d0044e5a:	3301      	adds	r3, #1
+d0044e5c:	eb06 0080 	add.w	r0, r6, r0, lsl #2
+d0044e60:	ee73 4ae7 	vsub.f32	s9, s7, s15
+d0044e64:	eea0 6a01 	vfma.f32	s12, s0, s2
+d0044e68:	eee0 6a81 	vfma.f32	s13, s1, s2
+d0044e6c:	eee4 7a81 	vfma.f32	s15, s9, s2
+d0044e70:	ed80 6a00 	vstr	s12, [r0]
+d0044e74:	edc0 6a01 	vstr	s13, [r0, #4]
+d0044e78:	edc0 7a02 	vstr	s15, [r0, #8]
+d0044e7c:	eeb5 5a40 	vcmp.f32	s10, #0.0
+d0044e80:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044e84:	d528      	bpl.n	d0044ed8 <clipTriangleToFrustum+0x66c>
+d0044e86:	b33a      	cbz	r2, d0044ed8 <clipTriangleToFrustum+0x66c>
+d0044e88:	ee37 5a44 	vsub.f32	s10, s14, s8
+d0044e8c:	eb03 0243 	add.w	r2, r3, r3, lsl #1
+d0044e90:	ee75 5ac2 	vsub.f32	s11, s11, s4
+d0044e94:	a922      	add	r1, sp, #136	; 0x88
+d0044e96:	ee71 1ae2 	vsub.f32	s3, s3, s5
+d0044e9a:	3301      	adds	r3, #1
+d0044e9c:	ee35 5a03 	vadd.f32	s10, s10, s6
+d0044ea0:	eb01 0282 	add.w	r2, r1, r2, lsl #2
+d0044ea4:	ee34 4a63 	vsub.f32	s8, s8, s7
+d0044ea8:	eef0 6a42 	vmov.f32	s13, s4
+d0044eac:	ee83 6a05 	vdiv.f32	s12, s6, s10
+d0044eb0:	eeb0 7a62 	vmov.f32	s14, s5
+d0044eb4:	eef0 7a63 	vmov.f32	s15, s7
+d0044eb8:	eee5 6a86 	vfma.f32	s13, s11, s12
+d0044ebc:	eea1 7a86 	vfma.f32	s14, s3, s12
+d0044ec0:	eee4 7a06 	vfma.f32	s15, s8, s12
+d0044ec4:	edc2 6a00 	vstr	s13, [r2]
+d0044ec8:	ed82 7a01 	vstr	s14, [r2, #4]
+d0044ecc:	edc2 7a02 	vstr	s15, [r2, #8]
+d0044ed0:	e555      	b.n	d004497e <clipTriangleToFrustum+0x112>
+d0044ed2:	bf00      	nop
+d0044ed4:	3f2aaaab 	.word	0x3f2aaaab
+d0044ed8:	eeb5 3a40 	vcmp.f32	s6, #0.0
+d0044edc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044ee0:	f57f ad4d 	bpl.w	d004497e <clipTriangleToFrustum+0x112>
+d0044ee4:	2900      	cmp	r1, #0
+d0044ee6:	f43f ad4a 	beq.w	d004497e <clipTriangleToFrustum+0x112>
+d0044eea:	ee77 7a44 	vsub.f32	s15, s14, s8
+d0044eee:	eb03 0243 	add.w	r2, r3, r3, lsl #1
+d0044ef2:	ee75 6ac2 	vsub.f32	s13, s11, s4
+d0044ef6:	a922      	add	r1, sp, #136	; 0x88
+d0044ef8:	ee31 7ae2 	vsub.f32	s14, s3, s5
+d0044efc:	3302      	adds	r3, #2
+d0044efe:	ee77 7a83 	vadd.f32	s15, s15, s6
+d0044f02:	eb01 0182 	add.w	r1, r1, r2, lsl #2
+d0044f06:	ee34 5a63 	vsub.f32	s10, s8, s7
+d0044f0a:	edc1 5a03 	vstr	s11, [r1, #12]
+d0044f0e:	ee83 6a27 	vdiv.f32	s12, s6, s15
+d0044f12:	edc1 1a04 	vstr	s3, [r1, #16]
+d0044f16:	ed81 4a05 	vstr	s8, [r1, #20]
+d0044f1a:	eef0 7a63 	vmov.f32	s15, s7
+d0044f1e:	eea6 2a86 	vfma.f32	s4, s13, s12
+d0044f22:	eee7 2a06 	vfma.f32	s5, s14, s12
+d0044f26:	eee5 7a06 	vfma.f32	s15, s10, s12
+d0044f2a:	ed81 2a00 	vstr	s4, [r1]
+d0044f2e:	edc1 2a01 	vstr	s5, [r1, #4]
+d0044f32:	edc1 7a02 	vstr	s15, [r1, #8]
+d0044f36:	e522      	b.n	d004497e <clipTriangleToFrustum+0x112>
+d0044f38:	eeb5 5a40 	vcmp.f32	s10, #0.0
+d0044f3c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044f40:	f140 80bf 	bpl.w	d00450c2 <clipTriangleToFrustum+0x856>
+d0044f44:	2800      	cmp	r0, #0
+d0044f46:	f000 80bc 	beq.w	d00450c2 <clipTriangleToFrustum+0x856>
+d0044f4a:	ee74 3a67 	vsub.f32	s7, s8, s15
+d0044f4e:	2302      	movs	r3, #2
+d0044f50:	ee36 2a65 	vsub.f32	s4, s12, s11
+d0044f54:	ed8d 6a25 	vstr	s12, [sp, #148]	; 0x94
+d0044f58:	eeb0 1a65 	vmov.f32	s2, s11
+d0044f5c:	edcd 6a26 	vstr	s13, [sp, #152]	; 0x98
+d0044f60:	ee85 3a23 	vdiv.f32	s6, s10, s7
+d0044f64:	edcd 7a27 	vstr	s15, [sp, #156]	; 0x9c
+d0044f68:	ee76 2ae1 	vsub.f32	s5, s13, s3
+d0044f6c:	ee77 3ac4 	vsub.f32	s7, s15, s8
+d0044f70:	eea3 1a02 	vfma.f32	s2, s6, s4
+d0044f74:	eeb0 2a41 	vmov.f32	s4, s2
+d0044f78:	eeb0 1a61 	vmov.f32	s2, s3
+d0044f7c:	ed8d 2a22 	vstr	s4, [sp, #136]	; 0x88
+d0044f80:	eea3 1a22 	vfma.f32	s2, s6, s5
+d0044f84:	eef0 2a41 	vmov.f32	s5, s2
+d0044f88:	eeb0 1a44 	vmov.f32	s2, s8
+d0044f8c:	edcd 2a23 	vstr	s5, [sp, #140]	; 0x8c
+d0044f90:	eea3 1a23 	vfma.f32	s2, s6, s7
+d0044f94:	ed8d 1a24 	vstr	s2, [sp, #144]	; 0x90
+d0044f98:	e4be      	b.n	d0044918 <clipTriangleToFrustum+0xac>
+d0044f9a:	eef5 4ac0 	vcmpe.f32	s9, #0.0
+d0044f9e:	f006 0201 	and.w	r2, r6, #1
+d0044fa2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0044fa6:	bf58      	it	pl
+d0044fa8:	2200      	movpl	r2, #0
+d0044faa:	2a00      	cmp	r2, #0
+d0044fac:	f000 8087 	beq.w	d00450be <clipTriangleToFrustum+0x852>
+d0044fb0:	ee37 8ae3 	vsub.f32	s16, s15, s7
+d0044fb4:	eb03 0043 	add.w	r0, r3, r3, lsl #1
+d0044fb8:	ee32 0a46 	vsub.f32	s0, s4, s12
+d0044fbc:	ae22      	add	r6, sp, #136	; 0x88
+d0044fbe:	ee72 0ae6 	vsub.f32	s1, s5, s13
+d0044fc2:	3302      	adds	r3, #2
+d0044fc4:	ee84 1a88 	vdiv.f32	s2, s9, s16
+d0044fc8:	eb06 0680 	add.w	r6, r6, r0, lsl #2
+d0044fcc:	ed86 2a03 	vstr	s4, [r6, #12]
+d0044fd0:	edc6 2a04 	vstr	s5, [r6, #16]
+d0044fd4:	edc6 3a05 	vstr	s7, [r6, #20]
+d0044fd8:	ee73 4ae7 	vsub.f32	s9, s7, s15
+d0044fdc:	eea0 6a01 	vfma.f32	s12, s0, s2
+d0044fe0:	eee0 6a81 	vfma.f32	s13, s1, s2
+d0044fe4:	eee4 7a81 	vfma.f32	s15, s9, s2
+d0044fe8:	ed86 6a00 	vstr	s12, [r6]
+d0044fec:	edc6 6a01 	vstr	s13, [r6, #4]
+d0044ff0:	edc6 7a02 	vstr	s15, [r6, #8]
+d0044ff4:	e4b1      	b.n	d004495a <clipTriangleToFrustum+0xee>
+d0044ff6:	eef5 5a40 	vcmp.f32	s11, #0.0
+d0044ffa:	eb02 0142 	add.w	r1, r2, r2, lsl #1
+d0044ffe:	f10d 0c88 	add.w	ip, sp, #136	; 0x88
+d0045002:	ee77 3aa5 	vadd.f32	s7, s15, s11
+d0045006:	ee77 1ac4 	vsub.f32	s3, s15, s8
+d004500a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004500e:	eb0c 0c81 	add.w	ip, ip, r1, lsl #2
+d0045012:	ee36 2a64 	vsub.f32	s4, s12, s9
+d0045016:	4661      	mov	r1, ip
+d0045018:	ee73 3ac7 	vsub.f32	s7, s7, s14
+d004501c:	ee77 2a45 	vsub.f32	s5, s14, s10
+d0045020:	f10c 0c0c 	add.w	ip, ip, #12
+d0045024:	f57f ad38 	bpl.w	d0044a98 <clipTriangleToFrustum+0x22c>
+d0045028:	f1be 0f00 	cmp.w	lr, #0
+d004502c:	f43f ad34 	beq.w	d0044a98 <clipTriangleToFrustum+0x22c>
+d0045030:	ee85 3aa3 	vdiv.f32	s6, s11, s7
+d0045034:	3202      	adds	r2, #2
+d0045036:	eea1 4a83 	vfma.f32	s8, s3, s6
+d004503a:	eee2 4a03 	vfma.f32	s9, s4, s6
+d004503e:	eea2 5a83 	vfma.f32	s10, s5, s6
+d0045042:	ed81 4a00 	vstr	s8, [r1]
+d0045046:	edc1 4a01 	vstr	s9, [r1, #4]
+d004504a:	ed81 5a02 	vstr	s10, [r1, #8]
+d004504e:	edcc 7a00 	vstr	s15, [ip]
+d0045052:	ed8c 6a01 	vstr	s12, [ip, #4]
+d0045056:	ed8c 7a02 	vstr	s14, [ip, #8]
+d004505a:	e51d      	b.n	d0044a98 <clipTriangleToFrustum+0x22c>
+d004505c:	eef5 5a40 	vcmp.f32	s11, #0.0
+d0045060:	eb02 0142 	add.w	r1, r2, r2, lsl #1
+d0045064:	ee37 3aa5 	vadd.f32	s6, s15, s11
+d0045068:	eb04 0781 	add.w	r7, r4, r1, lsl #2
+d004506c:	ee36 1a44 	vsub.f32	s2, s12, s8
+d0045070:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045074:	4639      	mov	r1, r7
+d0045076:	ee77 1ae4 	vsub.f32	s3, s15, s9
+d004507a:	ee73 3a63 	vsub.f32	s7, s6, s7
+d004507e:	f107 070c 	add.w	r7, r7, #12
+d0045082:	ee37 2a45 	vsub.f32	s4, s14, s10
+d0045086:	f57f ad8b 	bpl.w	d0044ba0 <clipTriangleToFrustum+0x334>
+d004508a:	f1bc 0f00 	cmp.w	ip, #0
+d004508e:	f43f ad87 	beq.w	d0044ba0 <clipTriangleToFrustum+0x334>
+d0045092:	ee85 3aa3 	vdiv.f32	s6, s11, s7
+d0045096:	3202      	adds	r2, #2
+d0045098:	eea1 4a03 	vfma.f32	s8, s2, s6
+d004509c:	eee1 4a83 	vfma.f32	s9, s3, s6
+d00450a0:	eea2 5a03 	vfma.f32	s10, s4, s6
+d00450a4:	ed81 4a00 	vstr	s8, [r1]
+d00450a8:	edc1 4a01 	vstr	s9, [r1, #4]
+d00450ac:	ed81 5a02 	vstr	s10, [r1, #8]
+d00450b0:	ed87 6a00 	vstr	s12, [r7]
+d00450b4:	edc7 7a01 	vstr	s15, [r7, #4]
+d00450b8:	ed87 7a02 	vstr	s14, [r7, #8]
+d00450bc:	e570      	b.n	d0044ba0 <clipTriangleToFrustum+0x334>
+d00450be:	4632      	mov	r2, r6
+d00450c0:	e44b      	b.n	d004495a <clipTriangleToFrustum+0xee>
+d00450c2:	2300      	movs	r3, #0
+d00450c4:	e428      	b.n	d0044918 <clipTriangleToFrustum+0xac>
+d00450c6:	eef5 5a40 	vcmp.f32	s11, #0.0
+d00450ca:	eb07 0247 	add.w	r2, r7, r7, lsl #1
+d00450ce:	a922      	add	r1, sp, #136	; 0x88
+d00450d0:	ee35 1ae6 	vsub.f32	s2, s11, s13
+d00450d4:	ee76 1a44 	vsub.f32	s3, s12, s8
+d00450d8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00450dc:	eb01 0182 	add.w	r1, r1, r2, lsl #2
+d00450e0:	ee37 2ae4 	vsub.f32	s4, s15, s9
+d00450e4:	460a      	mov	r2, r1
+d00450e6:	ee77 2a45 	vsub.f32	s5, s14, s10
+d00450ea:	f101 010c 	add.w	r1, r1, #12
+d00450ee:	f57f adcf 	bpl.w	d0044c90 <clipTriangleToFrustum+0x424>
+d00450f2:	2800      	cmp	r0, #0
+d00450f4:	f43f adcc 	beq.w	d0044c90 <clipTriangleToFrustum+0x424>
+d00450f8:	ee85 3a81 	vdiv.f32	s6, s11, s2
+d00450fc:	3702      	adds	r7, #2
+d00450fe:	eea1 4a83 	vfma.f32	s8, s3, s6
+d0045102:	eee2 4a03 	vfma.f32	s9, s4, s6
+d0045106:	eea2 5a83 	vfma.f32	s10, s5, s6
+d004510a:	ed82 4a00 	vstr	s8, [r2]
+d004510e:	edc2 4a01 	vstr	s9, [r2, #4]
+d0045112:	ed82 5a02 	vstr	s10, [r2, #8]
+d0045116:	ed81 6a00 	vstr	s12, [r1]
+d004511a:	edc1 7a01 	vstr	s15, [r1, #4]
+d004511e:	ed81 7a02 	vstr	s14, [r1, #8]
+d0045122:	e5b5      	b.n	d0044c90 <clipTriangleToFrustum+0x424>
 
-d00454fc <submitWorldEntities>:
-d00454fc:	e92d 43f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, lr}
-d0045500:	4c30      	ldr	r4, [pc, #192]	; (d00455c4 <submitWorldEntities+0xc8>)
-d0045502:	b09d      	sub	sp, #116	; 0x74
-d0045504:	f04f 0800 	mov.w	r8, #0
-d0045508:	f8df 90bc 	ldr.w	r9, [pc, #188]	; d00455c8 <submitWorldEntities+0xcc>
-d004550c:	4605      	mov	r5, r0
-d004550e:	f504 46c0 	add.w	r6, r4, #24576	; 0x6000
-d0045512:	f100 0710 	add.w	r7, r0, #16
-d0045516:	f894 3034 	ldrb.w	r3, [r4, #52]	; 0x34
-d004551a:	2b00      	cmp	r3, #0
-d004551c:	d03f      	beq.n	d004559e <submitWorldEntities+0xa2>
-d004551e:	68e3      	ldr	r3, [r4, #12]
-d0045520:	2250      	movs	r2, #80	; 0x50
-d0045522:	4639      	mov	r1, r7
-d0045524:	4668      	mov	r0, sp
-d0045526:	b3d3      	cbz	r3, d004559e <submitWorldEntities+0xa2>
-d0045528:	f894 3035 	ldrb.w	r3, [r4, #53]	; 0x35
-d004552c:	07db      	lsls	r3, r3, #31
-d004552e:	d536      	bpl.n	d004559e <submitWorldEntities+0xa2>
-d0045530:	ed94 0a00 	vldr	s0, [r4]
-d0045534:	edd4 0a01 	vldr	s1, [r4, #4]
-d0045538:	ed94 1a02 	vldr	s2, [r4, #8]
-d004553c:	ed8d 0a17 	vstr	s0, [sp, #92]	; 0x5c
-d0045540:	edcd 0a16 	vstr	s1, [sp, #88]	; 0x58
-d0045544:	ed8d 1a15 	vstr	s2, [sp, #84]	; 0x54
-d0045548:	f000 fd28 	bl	d0045f9c <memcpy>
-d004554c:	ed9d 1a15 	vldr	s2, [sp, #84]	; 0x54
-d0045550:	ed9d 0a17 	vldr	s0, [sp, #92]	; 0x5c
-d0045554:	eddd 0a16 	vldr	s1, [sp, #88]	; 0x58
-d0045558:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
-d004555c:	f7fd fe2c 	bl	d00431b8 <worldToCamera>
-d0045560:	68e3      	ldr	r3, [r4, #12]
-d0045562:	ed95 7a11 	vldr	s14, [r5, #68]	; 0x44
-d0045566:	edd3 7a06 	vldr	s15, [r3, #24]
-d004556a:	ed8d 0a19 	vstr	s0, [sp, #100]	; 0x64
-d004556e:	ee71 6a67 	vsub.f32	s13, s2, s15
-d0045572:	edcd 0a1a 	vstr	s1, [sp, #104]	; 0x68
-d0045576:	ee71 7a27 	vadd.f32	s15, s2, s15
-d004557a:	ed8d 1a1b 	vstr	s2, [sp, #108]	; 0x6c
-d004557e:	eef4 6ac7 	vcmpe.f32	s13, s14
-d0045582:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0045586:	dc0a      	bgt.n	d004559e <submitWorldEntities+0xa2>
-d0045588:	ed95 7a10 	vldr	s14, [r5, #64]	; 0x40
-d004558c:	eef4 7ac7 	vcmpe.f32	s15, s14
-d0045590:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0045594:	d403      	bmi.n	d004559e <submitWorldEntities+0xa2>
-d0045596:	f849 4028 	str.w	r4, [r9, r8, lsl #2]
-d004559a:	f108 0801 	add.w	r8, r8, #1
-d004559e:	3460      	adds	r4, #96	; 0x60
-d00455a0:	42b4      	cmp	r4, r6
-d00455a2:	d1b8      	bne.n	d0045516 <submitWorldEntities+0x1a>
-d00455a4:	f1b8 0f00 	cmp.w	r8, #0
-d00455a8:	d009      	beq.n	d00455be <submitWorldEntities+0xc2>
-d00455aa:	4c07      	ldr	r4, [pc, #28]	; (d00455c8 <submitWorldEntities+0xcc>)
-d00455ac:	eb04 0888 	add.w	r8, r4, r8, lsl #2
-d00455b0:	f854 0b04 	ldr.w	r0, [r4], #4
-d00455b4:	4629      	mov	r1, r5
-d00455b6:	f7ff fac7 	bl	d0044b48 <submitEntitySolid>
-d00455ba:	45a0      	cmp	r8, r4
-d00455bc:	d1f8      	bne.n	d00455b0 <submitWorldEntities+0xb4>
-d00455be:	b01d      	add	sp, #116	; 0x74
-d00455c0:	e8bd 83f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, pc}
-d00455c4:	d012cd60 	.word	0xd012cd60
-d00455c8:	d012c8c0 	.word	0xd012c8c0
+d0045124 <submitClippedTri>:
+d0045124:	edd0 7a10 	vldr	s15, [r0, #64]	; 0x40
+d0045128:	eef4 7ac1 	vcmpe.f32	s15, s2
+d004512c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045130:	eef4 2ae7 	vcmpe.f32	s5, s15
+d0045134:	bfac      	ite	ge
+d0045136:	2301      	movge	r3, #1
+d0045138:	2300      	movlt	r3, #0
+d004513a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004513e:	bf98      	it	ls
+d0045140:	f043 0301 	orrls.w	r3, r3, #1
+d0045144:	b923      	cbnz	r3, d0045150 <submitClippedTri+0x2c>
+d0045146:	eef4 7ac4 	vcmpe.f32	s15, s8
+d004514a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004514e:	db00      	blt.n	d0045152 <submitClippedTri+0x2e>
+d0045150:	4770      	bx	lr
+d0045152:	eef7 6a00 	vmov.f32	s13, #112	; 0x3f800000  1.0
+d0045156:	ed9f 6a69 	vldr	s12, [pc, #420]	; d00452fc <submitClippedTri+0x1d8>
+d004515a:	eddf 7a69 	vldr	s15, [pc, #420]	; d0045300 <submitClippedTri+0x1dc>
+d004515e:	eeb6 7a00 	vmov.f32	s14, #96	; 0x3f000000  0.5
+d0045162:	ee60 0a86 	vmul.f32	s1, s1, s12
+d0045166:	ed9f 5a67 	vldr	s10, [pc, #412]	; d0045304 <submitClippedTri+0x1e0>
+d004516a:	eec6 5aa2 	vdiv.f32	s11, s13, s5
+d004516e:	ee63 3a86 	vmul.f32	s7, s7, s12
+d0045172:	ee22 2a06 	vmul.f32	s4, s4, s12
+d0045176:	eeb0 6a67 	vmov.f32	s12, s15
+d004517a:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d004517e:	ed2d 8b04 	vpush	{d8-d9}
+d0045182:	eec6 8a81 	vdiv.f32	s17, s13, s2
+d0045186:	b08b      	sub	sp, #44	; 0x2c
+d0045188:	eeb0 9a66 	vmov.f32	s18, s13
+d004518c:	ee86 8a84 	vdiv.f32	s16, s13, s8
+d0045190:	eea5 6a82 	vfma.f32	s12, s11, s4
+d0045194:	eea0 9a28 	vfma.f32	s18, s0, s17
+d0045198:	eeb0 0a67 	vmov.f32	s0, s15
+d004519c:	eebd 6ac6 	vcvt.s32.f32	s12, s12
+d00451a0:	eea8 0aa0 	vfma.f32	s0, s17, s1
+d00451a4:	eef0 0a66 	vmov.f32	s1, s13
+d00451a8:	ee16 3a10 	vmov	r3, s12
+d00451ac:	eee8 7a23 	vfma.f32	s15, s16, s7
+d00451b0:	eee1 0aa5 	vfma.f32	s1, s3, s11
+d00451b4:	eef0 1a47 	vmov.f32	s3, s14
+d00451b8:	eefd 5ac0 	vcvt.s32.f32	s11, s0
+d00451bc:	eee9 1a05 	vfma.f32	s3, s18, s10
+d00451c0:	ee15 6a90 	vmov	r6, s11
+d00451c4:	eef0 5a66 	vmov.f32	s11, s13
+d00451c8:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+d00451cc:	1b9d      	subs	r5, r3, r6
+d00451ce:	eee3 5a08 	vfma.f32	s11, s6, s16
+d00451d2:	ee17 3a90 	vmov	r3, s15
+d00451d6:	eefd 3ae1 	vcvt.s32.f32	s7, s3
+d00451da:	eba3 0c06 	sub.w	ip, r3, r6
+d00451de:	ee13 7a90 	vmov	r7, s7
+d00451e2:	eeb0 3a65 	vmov.f32	s6, s11
+d00451e6:	eef0 5a47 	vmov.f32	s11, s14
+d00451ea:	eea3 7a05 	vfma.f32	s14, s6, s10
+d00451ee:	eee0 5a85 	vfma.f32	s11, s1, s10
+d00451f2:	eefd 7ac7 	vcvt.s32.f32	s15, s14
+d00451f6:	eefd 5ae5 	vcvt.s32.f32	s11, s11
+d00451fa:	ee15 4a90 	vmov	r4, s11
+d00451fe:	eba4 0e07 	sub.w	lr, r4, r7
+d0045202:	ee17 4a90 	vmov	r4, s15
+d0045206:	fb0c fc0e 	mul.w	ip, ip, lr
+d004520a:	eba4 0e07 	sub.w	lr, r4, r7
+d004520e:	fb0e c515 	mls	r5, lr, r5, ip
+d0045212:	2d00      	cmp	r5, #0
+d0045214:	dd6d      	ble.n	d00452f2 <submitClippedTri+0x1ce>
+d0045216:	f8df e0f8 	ldr.w	lr, [pc, #248]	; d0045310 <submitClippedTri+0x1ec>
+d004521a:	f8de 5000 	ldr.w	r5, [lr]
+d004521e:	f5b5 5f00 	cmp.w	r5, #8192	; 0x2000
+d0045222:	da66      	bge.n	d00452f2 <submitClippedTri+0x1ce>
+d0045224:	f8df c0ec 	ldr.w	ip, [pc, #236]	; d0045314 <submitClippedTri+0x1f0>
+d0045228:	ea4f 1885 	mov.w	r8, r5, lsl #6
+d004522c:	f105 0b01 	add.w	fp, r5, #1
+d0045230:	ed9f 5a35 	vldr	s10, [pc, #212]	; d0045308 <submitClippedTri+0x1e4>
+d0045234:	f848 700c 	str.w	r7, [r8, ip]
+d0045238:	eb0c 1585 	add.w	r5, ip, r5, lsl #6
+d004523c:	f108 0a08 	add.w	sl, r8, #8
+d0045240:	f108 0910 	add.w	r9, r8, #16
+d0045244:	ee15 7a90 	vmov	r7, s11
+d0045248:	606e      	str	r6, [r5, #4]
+d004524a:	eb0a 060c 	add.w	r6, sl, ip
+d004524e:	f8ce b000 	str.w	fp, [lr]
+d0045252:	f84a 700c 	str.w	r7, [sl, ip]
+d0045256:	eb09 070c 	add.w	r7, r9, ip
+d004525a:	ed86 6a01 	vstr	s12, [r6, #4]
+d004525e:	f849 400c 	str.w	r4, [r9, ip]
+d0045262:	607b      	str	r3, [r7, #4]
+d0045264:	f885 1034 	strb.w	r1, [r5, #52]	; 0x34
+d0045268:	f885 2035 	strb.w	r2, [r5, #53]	; 0x35
+d004526c:	edc5 4a07 	vstr	s9, [r5, #28]
+d0045270:	ed90 7a10 	vldr	s14, [r0, #64]	; 0x40
+d0045274:	edd0 7a0f 	vldr	s15, [r0, #60]	; 0x3c
+d0045278:	ee31 7a47 	vsub.f32	s14, s2, s14
+d004527c:	ed9f 6a23 	vldr	s12, [pc, #140]	; d004530c <submitClippedTri+0x1e8>
+d0045280:	ee27 7a27 	vmul.f32	s14, s14, s15
+d0045284:	fe87 7a05 	vmaxnm.f32	s14, s14, s10
+d0045288:	fe87 7a66 	vminnm.f32	s14, s14, s13
+d004528c:	ee27 7a06 	vmul.f32	s14, s14, s12
+d0045290:	eebc 7ac7 	vcvt.u32.f32	s14, s14
+d0045294:	ee17 3a10 	vmov	r3, s14
+d0045298:	842b      	strh	r3, [r5, #32]
+d004529a:	ed90 7a10 	vldr	s14, [r0, #64]	; 0x40
+d004529e:	edd0 7a0f 	vldr	s15, [r0, #60]	; 0x3c
+d00452a2:	ee32 7ac7 	vsub.f32	s14, s5, s14
+d00452a6:	ee27 7a27 	vmul.f32	s14, s14, s15
+d00452aa:	fe87 7a05 	vmaxnm.f32	s14, s14, s10
+d00452ae:	fe87 7a66 	vminnm.f32	s14, s14, s13
+d00452b2:	ee27 7a06 	vmul.f32	s14, s14, s12
+d00452b6:	eebc 7ac7 	vcvt.u32.f32	s14, s14
+d00452ba:	ee17 3a10 	vmov	r3, s14
+d00452be:	846b      	strh	r3, [r5, #34]	; 0x22
+d00452c0:	edd0 7a10 	vldr	s15, [r0, #64]	; 0x40
+d00452c4:	ed90 7a0f 	vldr	s14, [r0, #60]	; 0x3c
+d00452c8:	ee74 7a67 	vsub.f32	s15, s8, s15
+d00452cc:	ed85 1a0a 	vstr	s2, [r5, #40]	; 0x28
+d00452d0:	edc5 2a0b 	vstr	s5, [r5, #44]	; 0x2c
+d00452d4:	ed85 4a0c 	vstr	s8, [r5, #48]	; 0x30
+d00452d8:	ee67 7a87 	vmul.f32	s15, s15, s14
+d00452dc:	fec7 7a85 	vmaxnm.f32	s15, s15, s10
+d00452e0:	fec7 6ae6 	vminnm.f32	s13, s15, s13
+d00452e4:	ee66 6a86 	vmul.f32	s13, s13, s12
+d00452e8:	eefc 6ae6 	vcvt.u32.f32	s13, s13
+d00452ec:	ee16 3a90 	vmov	r3, s13
+d00452f0:	84ab      	strh	r3, [r5, #36]	; 0x24
+d00452f2:	b00b      	add	sp, #44	; 0x2c
+d00452f4:	ecbd 8b04 	vpop	{d8-d9}
+d00452f8:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d00452fc:	c3700000 	.word	0xc3700000
+d0045300:	43208000 	.word	0x43208000
+d0045304:	43700000 	.word	0x43700000
+d0045308:	00000000 	.word	0x00000000
+d004530c:	477fff00 	.word	0x477fff00
+d0045310:	d00a1584 	.word	0xd00a1584
+d0045314:	d00a15a0 	.word	0xd00a15a0
 
-d00455cc <Render3D>:
-d00455cc:	b5f0      	push	{r4, r5, r6, r7, lr}
-d00455ce:	4604      	mov	r4, r0
-d00455d0:	4e6d      	ldr	r6, [pc, #436]	; (d0045788 <Render3D+0x1bc>)
-d00455d2:	2700      	movs	r7, #0
-d00455d4:	ed2d 8b02 	vpush	{d8}
-d00455d8:	b087      	sub	sp, #28
-d00455da:	6037      	str	r7, [r6, #0]
-d00455dc:	f7ff ff8e 	bl	d00454fc <submitWorldEntities>
-d00455e0:	4620      	mov	r0, r4
-d00455e2:	f7fd f94d 	bl	d0042880 <sb3dParticlesRender>
-d00455e6:	4b69      	ldr	r3, [pc, #420]	; (d004578c <Render3D+0x1c0>)
-d00455e8:	681d      	ldr	r5, [r3, #0]
-d00455ea:	2d00      	cmp	r5, #0
-d00455ec:	d04d      	beq.n	d004568a <Render3D+0xbe>
-d00455ee:	6833      	ldr	r3, [r6, #0]
-d00455f0:	42bb      	cmp	r3, r7
-d00455f2:	dd46      	ble.n	d0045682 <Render3D+0xb6>
-d00455f4:	eeb6 8a00 	vmov.f32	s16, #96	; 0x3f000000  0.5
-d00455f8:	4c65      	ldr	r4, [pc, #404]	; (d0045790 <Render3D+0x1c4>)
-d00455fa:	eddf 8a66 	vldr	s17, [pc, #408]	; d0045794 <Render3D+0x1c8>
-d00455fe:	edd4 7a07 	vldr	s15, [r4, #28]
-d0045602:	3701      	adds	r7, #1
-d0045604:	f894 3035 	ldrb.w	r3, [r4, #53]	; 0x35
-d0045608:	ee77 7a88 	vadd.f32	s15, s15, s16
-d004560c:	ee07 3a10 	vmov	s14, r3
-d0045610:	eefd 7ae7 	vcvt.s32.f32	s15, s15
-d0045614:	eeb8 7a47 	vcvt.f32.u32	s14, s14
-d0045618:	ee17 1a90 	vmov	r1, s15
-d004561c:	eef0 7a48 	vmov.f32	s15, s16
-d0045620:	2904      	cmp	r1, #4
-d0045622:	eee7 7a28 	vfma.f32	s15, s14, s17
-d0045626:	bfa8      	it	ge
-d0045628:	2104      	movge	r1, #4
-d004562a:	ea21 71e1 	bic.w	r1, r1, r1, asr #31
-d004562e:	b153      	cbz	r3, d0045646 <Render3D+0x7a>
-d0045630:	eefd 7ae7 	vcvt.s32.f32	s15, s15
-d0045634:	ee17 3a90 	vmov	r3, s15
-d0045638:	f1c3 0305 	rsb	r3, r3, #5
-d004563c:	ea23 73e3 	bic.w	r3, r3, r3, asr #31
-d0045640:	4299      	cmp	r1, r3
-d0045642:	bfa8      	it	ge
-d0045644:	4619      	movge	r1, r3
-d0045646:	f894 0034 	ldrb.w	r0, [r4, #52]	; 0x34
-d004564a:	f7fb f973 	bl	d0040934 <shadeColor>
-d004564e:	4605      	mov	r5, r0
-d0045650:	68e3      	ldr	r3, [r4, #12]
-d0045652:	68a2      	ldr	r2, [r4, #8]
-d0045654:	6861      	ldr	r1, [r4, #4]
-d0045656:	9000      	str	r0, [sp, #0]
-d0045658:	6820      	ldr	r0, [r4, #0]
-d004565a:	f7fb f91d 	bl	d0040898 <drawLine>
-d004565e:	9500      	str	r5, [sp, #0]
-d0045660:	e9d4 2304 	ldrd	r2, r3, [r4, #16]
-d0045664:	e9d4 0102 	ldrd	r0, r1, [r4, #8]
-d0045668:	f7fb f916 	bl	d0040898 <drawLine>
-d004566c:	9500      	str	r5, [sp, #0]
-d004566e:	e9d4 2300 	ldrd	r2, r3, [r4]
-d0045672:	e9d4 0104 	ldrd	r0, r1, [r4, #16]
-d0045676:	f7fb f90f 	bl	d0040898 <drawLine>
-d004567a:	6833      	ldr	r3, [r6, #0]
-d004567c:	3440      	adds	r4, #64	; 0x40
-d004567e:	42bb      	cmp	r3, r7
-d0045680:	dcbd      	bgt.n	d00455fe <Render3D+0x32>
-d0045682:	b007      	add	sp, #28
-d0045684:	ecbd 8b02 	vpop	{d8}
-d0045688:	bdf0      	pop	{r4, r5, r6, r7, pc}
-d004568a:	f7fb f8e7 	bl	d004085c <resetDepthBuffer>
-d004568e:	4b42      	ldr	r3, [pc, #264]	; (d0045798 <Render3D+0x1cc>)
-d0045690:	681f      	ldr	r7, [r3, #0]
-d0045692:	b33f      	cbz	r7, d00456e4 <Render3D+0x118>
-d0045694:	6833      	ldr	r3, [r6, #0]
-d0045696:	2b00      	cmp	r3, #0
-d0045698:	ddf3      	ble.n	d0045682 <Render3D+0xb6>
-d004569a:	4c3d      	ldr	r4, [pc, #244]	; (d0045790 <Render3D+0x1c4>)
-d004569c:	f894 3034 	ldrb.w	r3, [r4, #52]	; 0x34
-d00456a0:	3501      	adds	r5, #1
-d00456a2:	8c60      	ldrh	r0, [r4, #34]	; 0x22
-d00456a4:	8c21      	ldrh	r1, [r4, #32]
-d00456a6:	6962      	ldr	r2, [r4, #20]
-d00456a8:	8ca7      	ldrh	r7, [r4, #36]	; 0x24
-d00456aa:	9305      	str	r3, [sp, #20]
-d00456ac:	9704      	str	r7, [sp, #16]
-d00456ae:	9003      	str	r0, [sp, #12]
-d00456b0:	9102      	str	r1, [sp, #8]
-d00456b2:	9201      	str	r2, [sp, #4]
-d00456b4:	6923      	ldr	r3, [r4, #16]
-d00456b6:	9300      	str	r3, [sp, #0]
-d00456b8:	edd4 1a07 	vldr	s3, [r4, #28]
-d00456bc:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
-d00456c0:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
-d00456c4:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
-d00456c8:	e9d4 2302 	ldrd	r2, r3, [r4, #8]
-d00456cc:	e9d4 0100 	ldrd	r0, r1, [r4]
-d00456d0:	f7fb f940 	bl	d0040954 <fillTriangleFlat>
-d00456d4:	6833      	ldr	r3, [r6, #0]
-d00456d6:	3440      	adds	r4, #64	; 0x40
-d00456d8:	42ab      	cmp	r3, r5
-d00456da:	dcdf      	bgt.n	d004569c <Render3D+0xd0>
-d00456dc:	b007      	add	sp, #28
-d00456de:	ecbd 8b02 	vpop	{d8}
-d00456e2:	bdf0      	pop	{r4, r5, r6, r7, pc}
-d00456e4:	4b2d      	ldr	r3, [pc, #180]	; (d004579c <Render3D+0x1d0>)
-d00456e6:	681d      	ldr	r5, [r3, #0]
-d00456e8:	6833      	ldr	r3, [r6, #0]
-d00456ea:	b335      	cbz	r5, d004573a <Render3D+0x16e>
-d00456ec:	2b00      	cmp	r3, #0
-d00456ee:	ddc8      	ble.n	d0045682 <Render3D+0xb6>
-d00456f0:	4c27      	ldr	r4, [pc, #156]	; (d0045790 <Render3D+0x1c4>)
-d00456f2:	f894 3034 	ldrb.w	r3, [r4, #52]	; 0x34
-d00456f6:	3701      	adds	r7, #1
-d00456f8:	8c60      	ldrh	r0, [r4, #34]	; 0x22
-d00456fa:	8c21      	ldrh	r1, [r4, #32]
-d00456fc:	6962      	ldr	r2, [r4, #20]
-d00456fe:	8ca5      	ldrh	r5, [r4, #36]	; 0x24
-d0045700:	9305      	str	r3, [sp, #20]
-d0045702:	6923      	ldr	r3, [r4, #16]
-d0045704:	9504      	str	r5, [sp, #16]
-d0045706:	9003      	str	r0, [sp, #12]
-d0045708:	9102      	str	r1, [sp, #8]
-d004570a:	9201      	str	r2, [sp, #4]
-d004570c:	9300      	str	r3, [sp, #0]
-d004570e:	edd4 1a07 	vldr	s3, [r4, #28]
-d0045712:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
-d0045716:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
-d004571a:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
-d004571e:	e9d4 2302 	ldrd	r2, r3, [r4, #8]
-d0045722:	e9d4 0100 	ldrd	r0, r1, [r4]
-d0045726:	f7fc f9e1 	bl	d0041aec <fillTriangleDitherBayer2Mode>
-d004572a:	6833      	ldr	r3, [r6, #0]
-d004572c:	3440      	adds	r4, #64	; 0x40
-d004572e:	42bb      	cmp	r3, r7
-d0045730:	dcdf      	bgt.n	d00456f2 <Render3D+0x126>
-d0045732:	b007      	add	sp, #28
-d0045734:	ecbd 8b02 	vpop	{d8}
-d0045738:	bdf0      	pop	{r4, r5, r6, r7, pc}
-d004573a:	2b00      	cmp	r3, #0
-d004573c:	dda1      	ble.n	d0045682 <Render3D+0xb6>
-d004573e:	4c14      	ldr	r4, [pc, #80]	; (d0045790 <Render3D+0x1c4>)
-d0045740:	f894 3034 	ldrb.w	r3, [r4, #52]	; 0x34
-d0045744:	3501      	adds	r5, #1
-d0045746:	8c60      	ldrh	r0, [r4, #34]	; 0x22
-d0045748:	8c21      	ldrh	r1, [r4, #32]
-d004574a:	6962      	ldr	r2, [r4, #20]
-d004574c:	8ca7      	ldrh	r7, [r4, #36]	; 0x24
-d004574e:	9305      	str	r3, [sp, #20]
-d0045750:	6923      	ldr	r3, [r4, #16]
-d0045752:	9704      	str	r7, [sp, #16]
-d0045754:	9003      	str	r0, [sp, #12]
-d0045756:	9102      	str	r1, [sp, #8]
-d0045758:	9201      	str	r2, [sp, #4]
-d004575a:	9300      	str	r3, [sp, #0]
-d004575c:	edd4 1a07 	vldr	s3, [r4, #28]
-d0045760:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
-d0045764:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
-d0045768:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
-d004576c:	e9d4 2302 	ldrd	r2, r3, [r4, #8]
-d0045770:	e9d4 0100 	ldrd	r0, r1, [r4]
-d0045774:	f7fb fcfc 	bl	d0041170 <fillTriangleDitherBayer>
-d0045778:	6833      	ldr	r3, [r6, #0]
-d004577a:	3440      	adds	r4, #64	; 0x40
-d004577c:	42ab      	cmp	r3, r5
-d004577e:	dcdf      	bgt.n	d0045740 <Render3D+0x174>
-d0045780:	b007      	add	sp, #28
-d0045782:	ecbd 8b02 	vpop	{d8}
-d0045786:	bdf0      	pop	{r4, r5, r6, r7, pc}
-d0045788:	d00a0884 	.word	0xd00a0884
-d004578c:	d01208a4 	.word	0xd01208a4
-d0045790:	d00a08a0 	.word	0xd00a08a0
-d0045794:	3ca0a0a1 	.word	0x3ca0a0a1
-d0045798:	d00a0880 	.word	0xd00a0880
-d004579c:	d01208a0 	.word	0xd01208a0
+d0045318 <drawFakeHorizonDots>:
+d0045318:	2800      	cmp	r0, #0
+d004531a:	f000 80f2 	beq.w	d0045502 <drawFakeHorizonDots+0x1ea>
+d004531e:	2a02      	cmp	r2, #2
+d0045320:	edd0 7a02 	vldr	s15, [r0, #8]
+d0045324:	ed90 6a01 	vldr	s12, [r0, #4]
+d0045328:	bfb8      	it	lt
+d004532a:	2202      	movlt	r2, #2
+d004532c:	eddf 5a75 	vldr	s11, [pc, #468]	; d0045504 <drawFakeHorizonDots+0x1ec>
+d0045330:	edd0 6a0d 	vldr	s13, [r0, #52]	; 0x34
+d0045334:	ee07 2a10 	vmov	s14, r2
+d0045338:	edd0 4a10 	vldr	s9, [r0, #64]	; 0x40
+d004533c:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d0045340:	ed2d 8b10 	vpush	{d8-d15}
+d0045344:	eef8 9ac7 	vcvt.f32.s32	s19, s14
+d0045348:	ed90 aa00 	vldr	s20, [r0]
+d004534c:	b085      	sub	sp, #20
+d004534e:	4617      	mov	r7, r2
+d0045350:	468b      	mov	fp, r1
+d0045352:	496d      	ldr	r1, [pc, #436]	; (d0045508 <drawFakeHorizonDots+0x1f0>)
+d0045354:	ee8a 7a29 	vdiv.f32	s14, s20, s19
+d0045358:	edcd 7a01 	vstr	s15, [sp, #4]
+d004535c:	4e6b      	ldr	r6, [pc, #428]	; (d004550c <drawFakeHorizonDots+0x1f4>)
+d004535e:	4698      	mov	r8, r3
+d0045360:	ed90 ca07 	vldr	s24, [r0, #28]
+d0045364:	edd0 ba0a 	vldr	s23, [r0, #40]	; 0x28
+d0045368:	4c69      	ldr	r4, [pc, #420]	; (d0045510 <drawFakeHorizonDots+0x1f8>)
+d004536a:	eec7 7aa9 	vdiv.f32	s15, s15, s19
+d004536e:	edd0 fa06 	vldr	s31, [r0, #24]
+d0045372:	ed90 fa08 	vldr	s30, [r0, #32]
+d0045376:	edd0 ea09 	vldr	s29, [r0, #36]	; 0x24
+d004537a:	ed90 ea0b 	vldr	s28, [r0, #44]	; 0x2c
+d004537e:	edd0 da0c 	vldr	s27, [r0, #48]	; 0x30
+d0045382:	ee30 ba46 	vsub.f32	s22, s0, s12
+d0045386:	ed90 da0e 	vldr	s26, [r0, #56]	; 0x38
+d004538a:	ee69 9aa5 	vmul.f32	s19, s19, s11
+d004538e:	ed9f 8a61 	vldr	s16, [pc, #388]	; d0045514 <drawFakeHorizonDots+0x1fc>
+d0045392:	4b61      	ldr	r3, [pc, #388]	; (d0045518 <drawFakeHorizonDots+0x200>)
+d0045394:	ee2b ca0c 	vmul.f32	s24, s22, s24
+d0045398:	eddf ca60 	vldr	s25, [pc, #384]	; d004551c <drawFakeHorizonDots+0x204>
+d004539c:	ee6b ba2b 	vmul.f32	s23, s22, s23
+d00453a0:	eddf 8a5f 	vldr	s17, [pc, #380]	; d0045520 <drawFakeHorizonDots+0x208>
+d00453a4:	ee29 8a88 	vmul.f32	s16, s19, s16
+d00453a8:	f8df 9184 	ldr.w	r9, [pc, #388]	; d0045530 <drawFakeHorizonDots+0x218>
+d00453ac:	febb 7a47 	vrintm.f32	s14, s14
+d00453b0:	eebd 7ac7 	vcvt.s32.f32	s14, s14
+d00453b4:	ee2b ba26 	vmul.f32	s22, s22, s13
+d00453b8:	ee17 2a10 	vmov	r2, s14
+d00453bc:	fefb 7a67 	vrintm.f32	s15, s15
+d00453c0:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+d00453c4:	fb01 f002 	mul.w	r0, r1, r2
+d00453c8:	f1a2 0112 	sub.w	r1, r2, #18
+d00453cc:	ee17 2a90 	vmov	r2, s15
+d00453d0:	4404      	add	r4, r0
+d00453d2:	fb07 f101 	mul.w	r1, r7, r1
+d00453d6:	f1a2 0a12 	sub.w	sl, r2, #18
+d00453da:	fb06 0202 	mla	r2, r6, r2, r0
+d00453de:	9103      	str	r1, [sp, #12]
+d00453e0:	fb06 460a 	mla	r6, r6, sl, r4
+d00453e4:	18d3      	adds	r3, r2, r3
+d00453e6:	fb0a fa07 	mul.w	sl, sl, r7
+d00453ea:	9302      	str	r3, [sp, #8]
+d00453ec:	eddd 7a01 	vldr	s15, [sp, #4]
+d00453f0:	4c4c      	ldr	r4, [pc, #304]	; (d0045524 <drawFakeHorizonDots+0x20c>)
+d00453f2:	ee37 9aa9 	vadd.f32	s18, s15, s19
+d00453f6:	ee07 aa90 	vmov	s15, sl
+d00453fa:	1934      	adds	r4, r6, r4
+d00453fc:	9d03      	ldr	r5, [sp, #12]
+d00453fe:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0045402:	eddf aa49 	vldr	s21, [pc, #292]	; d0045528 <drawFakeHorizonDots+0x210>
+d0045406:	ee37 9ac9 	vsub.f32	s18, s15, s18
+d004540a:	ea84 3354 	eor.w	r3, r4, r4, lsr #13
+d004540e:	ee07 5a90 	vmov	s15, r5
+d0045412:	f104 54b2 	add.w	r4, r4, #373293056	; 0x16400000
+d0045416:	eef0 3a49 	vmov.f32	s7, s18
+d004541a:	fb09 f303 	mul.w	r3, r9, r3
+d004541e:	eeb8 7ae7 	vcvt.f32.s32	s14, s15
+d0045422:	ee7a 7a29 	vadd.f32	s15, s20, s19
+d0045426:	f504 14b3 	add.w	r4, r4, #1466368	; 0x166000
+d004542a:	ea83 4313 	eor.w	r3, r3, r3, lsr #16
+d004542e:	eeb7 5a00 	vmov.f32	s10, #112	; 0x3f800000  1.0
+d0045432:	eddf 5a3e 	vldr	s11, [pc, #248]	; d004552c <drawFakeHorizonDots+0x214>
+d0045436:	443d      	add	r5, r7
+d0045438:	f3c3 4207 	ubfx	r2, r3, #16, #8
+d004543c:	ee77 7a67 	vsub.f32	s15, s14, s15
+d0045440:	f204 74b1 	addw	r4, r4, #1969	; 0x7b1
+d0045444:	ee07 2a10 	vmov	s14, r2
+d0045448:	f3c3 2207 	ubfx	r2, r3, #8, #8
+d004544c:	b2db      	uxtb	r3, r3
+d004544e:	eeb8 7ac7 	vcvt.f32.s32	s14, s14
+d0045452:	ee06 2a90 	vmov	s13, r2
+d0045456:	4543      	cmp	r3, r8
+d0045458:	eef8 6ae6 	vcvt.f32.s32	s13, s13
+d004545c:	eee7 3a08 	vfma.f32	s7, s14, s16
+d0045460:	d83d      	bhi.n	d00454de <drawFakeHorizonDots+0x1c6>
+d0045462:	eee6 7a88 	vfma.f32	s15, s13, s16
+d0045466:	ee2d 6a23 	vmul.f32	s12, s26, s7
+d004546a:	ee2e 7aa7 	vmul.f32	s14, s29, s15
+d004546e:	eead 6aa7 	vfma.f32	s12, s27, s15
+d0045472:	ee6f 6aa7 	vmul.f32	s13, s31, s15
+d0045476:	eef0 7a47 	vmov.f32	s15, s14
+d004547a:	eeef 6a23 	vfma.f32	s13, s30, s7
+d004547e:	eeee 7a23 	vfma.f32	s15, s28, s7
+d0045482:	ee3b 6a06 	vadd.f32	s12, s22, s12
+d0045486:	eef4 4ac6 	vcmpe.f32	s9, s12
+d004548a:	ee3c 7a26 	vadd.f32	s14, s24, s13
+d004548e:	ee7b 7aa7 	vadd.f32	s15, s23, s15
+d0045492:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045496:	ee27 7a2c 	vmul.f32	s14, s14, s25
+d004549a:	ee67 7aaa 	vmul.f32	s15, s15, s21
+d004549e:	da1e      	bge.n	d00454de <drawFakeHorizonDots+0x1c6>
+d00454a0:	eec5 6a06 	vdiv.f32	s13, s10, s12
+d00454a4:	eeb0 6a68 	vmov.f32	s12, s17
+d00454a8:	eea7 6a26 	vfma.f32	s12, s14, s13
+d00454ac:	eee7 5aa6 	vfma.f32	s11, s15, s13
+d00454b0:	eefd 7ac6 	vcvt.s32.f32	s15, s12
+d00454b4:	eefd 5ae5 	vcvt.s32.f32	s11, s11
+d00454b8:	ee17 0a90 	vmov	r0, s15
+d00454bc:	f5b0 7ff0 	cmp.w	r0, #480	; 0x1e0
+d00454c0:	d20d      	bcs.n	d00454de <drawFakeHorizonDots+0x1c6>
+d00454c2:	ee15 3a90 	vmov	r3, s11
+d00454c6:	465a      	mov	r2, fp
+d00454c8:	ee15 1a90 	vmov	r1, s11
+d00454cc:	f5b3 7fa0 	cmp.w	r3, #320	; 0x140
+d00454d0:	d205      	bcs.n	d00454de <drawFakeHorizonDots+0x1c6>
+d00454d2:	edcd 4a00 	vstr	s9, [sp]
+d00454d6:	f7fb fc7d 	bl	d0040dd4 <putPixel>
+d00454da:	eddd 4a00 	vldr	s9, [sp]
+d00454de:	42b4      	cmp	r4, r6
+d00454e0:	d193      	bne.n	d004540a <drawFakeHorizonDots+0xf2>
+d00454e2:	f106 561f 	add.w	r6, r6, #666894336	; 0x27c00000
+d00454e6:	9b02      	ldr	r3, [sp, #8]
+d00454e8:	44ba      	add	sl, r7
+d00454ea:	f506 16a7 	add.w	r6, r6, #1368064	; 0x14e000
+d00454ee:	f606 362f 	addw	r6, r6, #2863	; 0xb2f
+d00454f2:	42b3      	cmp	r3, r6
+d00454f4:	f47f af7a 	bne.w	d00453ec <drawFakeHorizonDots+0xd4>
+d00454f8:	b005      	add	sp, #20
+d00454fa:	ecbd 8b10 	vpop	{d8-d15}
+d00454fe:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d0045502:	4770      	bx	lr
+d0045504:	3eb33333 	.word	0x3eb33333
+d0045508:	165667b1 	.word	0x165667b1
+d004550c:	27d4eb2f 	.word	0x27d4eb2f
+d0045510:	a869b223 	.word	0xa869b223
+d0045514:	3c008081 	.word	0x3c008081
+d0045518:	9d3726a0 	.word	0x9d3726a0
+d004551c:	43700000 	.word	0x43700000
+d0045520:	43708000 	.word	0x43708000
+d0045524:	c583036b 	.word	0xc583036b
+d0045528:	c3700000 	.word	0xc3700000
+d004552c:	43208000 	.word	0x43208000
+d0045530:	4bf19f61 	.word	0x4bf19f61
 
-d00457a0 <loadMeshSB3D>:
-d00457a0:	2800      	cmp	r0, #0
-d00457a2:	d07a      	beq.n	d004589a <loadMeshSB3D+0xfa>
-d00457a4:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
-d00457a8:	460d      	mov	r5, r1
-d00457aa:	4601      	mov	r1, r0
-d00457ac:	fab5 f085 	clz	r0, r5
-d00457b0:	ed2d 8b02 	vpush	{d8}
-d00457b4:	0940      	lsrs	r0, r0, #5
-d00457b6:	b08c      	sub	sp, #48	; 0x30
-d00457b8:	2d00      	cmp	r5, #0
-d00457ba:	d068      	beq.n	d004588e <loadMeshSB3D+0xee>
-d00457bc:	4c6c      	ldr	r4, [pc, #432]	; (d0045970 <loadMeshSB3D+0x1d0>)
-d00457be:	2201      	movs	r2, #1
-d00457c0:	eeb0 8a40 	vmov.f32	s16, s0
-d00457c4:	7923      	ldrb	r3, [r4, #4]
-d00457c6:	7966      	ldrb	r6, [r4, #5]
-d00457c8:	ea43 2306 	orr.w	r3, r3, r6, lsl #8
-d00457cc:	79a6      	ldrb	r6, [r4, #6]
-d00457ce:	ea43 4306 	orr.w	r3, r3, r6, lsl #16
-d00457d2:	79e6      	ldrb	r6, [r4, #7]
-d00457d4:	ea43 6306 	orr.w	r3, r3, r6, lsl #24
-d00457d8:	681b      	ldr	r3, [r3, #0]
-d00457da:	681b      	ldr	r3, [r3, #0]
-d00457dc:	4798      	blx	r3
-d00457de:	2800      	cmp	r0, #0
-d00457e0:	d155      	bne.n	d004588e <loadMeshSB3D+0xee>
-d00457e2:	f894 c004 	ldrb.w	ip, [r4, #4]
-d00457e6:	2204      	movs	r2, #4
-d00457e8:	7961      	ldrb	r1, [r4, #5]
-d00457ea:	ab02      	add	r3, sp, #8
-d00457ec:	79a7      	ldrb	r7, [r4, #6]
-d00457ee:	ea4c 2101 	orr.w	r1, ip, r1, lsl #8
-d00457f2:	79e6      	ldrb	r6, [r4, #7]
-d00457f4:	ea41 4707 	orr.w	r7, r1, r7, lsl #16
-d00457f8:	a903      	add	r1, sp, #12
-d00457fa:	ea47 6606 	orr.w	r6, r7, r6, lsl #24
-d00457fe:	6836      	ldr	r6, [r6, #0]
-d0045800:	68b6      	ldr	r6, [r6, #8]
-d0045802:	47b0      	blx	r6
-d0045804:	2800      	cmp	r0, #0
-d0045806:	d13f      	bne.n	d0045888 <loadMeshSB3D+0xe8>
-d0045808:	4b5a      	ldr	r3, [pc, #360]	; (d0045974 <loadMeshSB3D+0x1d4>)
-d004580a:	9a03      	ldr	r2, [sp, #12]
-d004580c:	429a      	cmp	r2, r3
-d004580e:	d13b      	bne.n	d0045888 <loadMeshSB3D+0xe8>
-d0045810:	f894 c004 	ldrb.w	ip, [r4, #4]
-d0045814:	ab02      	add	r3, sp, #8
-d0045816:	7961      	ldrb	r1, [r4, #5]
-d0045818:	2204      	movs	r2, #4
-d004581a:	79a7      	ldrb	r7, [r4, #6]
-d004581c:	ea4c 2101 	orr.w	r1, ip, r1, lsl #8
-d0045820:	79e6      	ldrb	r6, [r4, #7]
-d0045822:	ea41 4707 	orr.w	r7, r1, r7, lsl #16
-d0045826:	a904      	add	r1, sp, #16
-d0045828:	ea47 6606 	orr.w	r6, r7, r6, lsl #24
-d004582c:	6836      	ldr	r6, [r6, #0]
-d004582e:	68b6      	ldr	r6, [r6, #8]
-d0045830:	47b0      	blx	r6
-d0045832:	bb48      	cbnz	r0, d0045888 <loadMeshSB3D+0xe8>
-d0045834:	9b04      	ldr	r3, [sp, #16]
-d0045836:	2b02      	cmp	r3, #2
-d0045838:	d126      	bne.n	d0045888 <loadMeshSB3D+0xe8>
-d004583a:	f894 c004 	ldrb.w	ip, [r4, #4]
-d004583e:	ab02      	add	r3, sp, #8
-d0045840:	7961      	ldrb	r1, [r4, #5]
-d0045842:	2204      	movs	r2, #4
-d0045844:	79a7      	ldrb	r7, [r4, #6]
-d0045846:	ea4c 2101 	orr.w	r1, ip, r1, lsl #8
-d004584a:	79e6      	ldrb	r6, [r4, #7]
-d004584c:	ea41 4707 	orr.w	r7, r1, r7, lsl #16
-d0045850:	a905      	add	r1, sp, #20
-d0045852:	ea47 6606 	orr.w	r6, r7, r6, lsl #24
-d0045856:	6836      	ldr	r6, [r6, #0]
-d0045858:	68b6      	ldr	r6, [r6, #8]
-d004585a:	47b0      	blx	r6
-d004585c:	b9a0      	cbnz	r0, d0045888 <loadMeshSB3D+0xe8>
-d004585e:	7921      	ldrb	r1, [r4, #4]
-d0045860:	ab02      	add	r3, sp, #8
-d0045862:	7966      	ldrb	r6, [r4, #5]
-d0045864:	2204      	movs	r2, #4
-d0045866:	79a7      	ldrb	r7, [r4, #6]
-d0045868:	ea41 2106 	orr.w	r1, r1, r6, lsl #8
-d004586c:	79e6      	ldrb	r6, [r4, #7]
-d004586e:	ea41 4707 	orr.w	r7, r1, r7, lsl #16
-d0045872:	a906      	add	r1, sp, #24
-d0045874:	ea47 6606 	orr.w	r6, r7, r6, lsl #24
-d0045878:	6836      	ldr	r6, [r6, #0]
-d004587a:	68b6      	ldr	r6, [r6, #8]
-d004587c:	47b0      	blx	r6
-d004587e:	b918      	cbnz	r0, d0045888 <loadMeshSB3D+0xe8>
-d0045880:	9b05      	ldr	r3, [sp, #20]
-d0045882:	b10b      	cbz	r3, d0045888 <loadMeshSB3D+0xe8>
-d0045884:	9e06      	ldr	r6, [sp, #24]
-d0045886:	b956      	cbnz	r6, d004589e <loadMeshSB3D+0xfe>
-d0045888:	2000      	movs	r0, #0
-d004588a:	f000 f98f 	bl	d0045bac <fclose>
-d004588e:	2000      	movs	r0, #0
-d0045890:	b00c      	add	sp, #48	; 0x30
-d0045892:	ecbd 8b02 	vpop	{d8}
-d0045896:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
-d004589a:	2000      	movs	r0, #0
-d004589c:	4770      	bx	lr
-d004589e:	eb03 0043 	add.w	r0, r3, r3, lsl #1
-d00458a2:	2700      	movs	r7, #0
-d00458a4:	606b      	str	r3, [r5, #4]
-d00458a6:	616e      	str	r6, [r5, #20]
-d00458a8:	0080      	lsls	r0, r0, #2
-d00458aa:	60ef      	str	r7, [r5, #12]
-d00458ac:	f000 fb66 	bl	d0045f7c <malloc>
-d00458b0:	4603      	mov	r3, r0
-d00458b2:	0130      	lsls	r0, r6, #4
-d00458b4:	461e      	mov	r6, r3
-d00458b6:	602b      	str	r3, [r5, #0]
-d00458b8:	f000 fb60 	bl	d0045f7c <malloc>
-d00458bc:	60af      	str	r7, [r5, #8]
-d00458be:	6128      	str	r0, [r5, #16]
-d00458c0:	2e00      	cmp	r6, #0
-d00458c2:	f000 80fb 	beq.w	d0045abc <loadMeshSB3D+0x31c>
-d00458c6:	2800      	cmp	r0, #0
-d00458c8:	f000 80eb 	beq.w	d0045aa2 <loadMeshSB3D+0x302>
-d00458cc:	46b8      	mov	r8, r7
-d00458ce:	e017      	b.n	d0045900 <loadMeshSB3D+0x160>
-d00458d0:	eddd 6a09 	vldr	s13, [sp, #36]	; 0x24
-d00458d4:	ed9d 7a0a 	vldr	s14, [sp, #40]	; 0x28
-d00458d8:	eddd 7a0b 	vldr	s15, [sp, #44]	; 0x2c
-d00458dc:	ee66 6a88 	vmul.f32	s13, s13, s16
-d00458e0:	682b      	ldr	r3, [r5, #0]
-d00458e2:	ee27 7a08 	vmul.f32	s14, s14, s16
-d00458e6:	9905      	ldr	r1, [sp, #20]
-d00458e8:	ee67 7a88 	vmul.f32	s15, s15, s16
-d00458ec:	eb03 0382 	add.w	r3, r3, r2, lsl #2
-d00458f0:	4541      	cmp	r1, r8
-d00458f2:	edc3 6a00 	vstr	s13, [r3]
-d00458f6:	ed83 7a01 	vstr	s14, [r3, #4]
-d00458fa:	edc3 7a02 	vstr	s15, [r3, #8]
-d00458fe:	d931      	bls.n	d0045964 <loadMeshSB3D+0x1c4>
-d0045900:	f894 c004 	ldrb.w	ip, [r4, #4]
-d0045904:	220c      	movs	r2, #12
-d0045906:	7960      	ldrb	r0, [r4, #5]
-d0045908:	ab02      	add	r3, sp, #8
-d004590a:	79a7      	ldrb	r7, [r4, #6]
-d004590c:	a909      	add	r1, sp, #36	; 0x24
-d004590e:	ea4c 2000 	orr.w	r0, ip, r0, lsl #8
-d0045912:	79e6      	ldrb	r6, [r4, #7]
-d0045914:	ea40 4707 	orr.w	r7, r0, r7, lsl #16
-d0045918:	2000      	movs	r0, #0
-d004591a:	ea47 6606 	orr.w	r6, r7, r6, lsl #24
-d004591e:	6836      	ldr	r6, [r6, #0]
-d0045920:	68b6      	ldr	r6, [r6, #8]
-d0045922:	47b0      	blx	r6
-d0045924:	eb08 0248 	add.w	r2, r8, r8, lsl #1
-d0045928:	f108 0801 	add.w	r8, r8, #1
-d004592c:	2800      	cmp	r0, #0
-d004592e:	d0cf      	beq.n	d00458d0 <loadMeshSB3D+0x130>
-d0045930:	6828      	ldr	r0, [r5, #0]
-d0045932:	b108      	cbz	r0, d0045938 <loadMeshSB3D+0x198>
-d0045934:	f000 fb2a 	bl	d0045f8c <free>
-d0045938:	6928      	ldr	r0, [r5, #16]
-d004593a:	b108      	cbz	r0, d0045940 <loadMeshSB3D+0x1a0>
-d004593c:	f000 fb26 	bl	d0045f8c <free>
-d0045940:	68a8      	ldr	r0, [r5, #8]
-d0045942:	b108      	cbz	r0, d0045948 <loadMeshSB3D+0x1a8>
-d0045944:	f000 fb22 	bl	d0045f8c <free>
-d0045948:	2400      	movs	r4, #0
-d004594a:	2300      	movs	r3, #0
-d004594c:	4620      	mov	r0, r4
-d004594e:	602c      	str	r4, [r5, #0]
-d0045950:	612c      	str	r4, [r5, #16]
-d0045952:	60ac      	str	r4, [r5, #8]
-d0045954:	606c      	str	r4, [r5, #4]
-d0045956:	616c      	str	r4, [r5, #20]
-d0045958:	60ec      	str	r4, [r5, #12]
-d004595a:	61ab      	str	r3, [r5, #24]
-d004595c:	f000 f926 	bl	d0045bac <fclose>
-d0045960:	4620      	mov	r0, r4
-d0045962:	e795      	b.n	d0045890 <loadMeshSB3D+0xf0>
-d0045964:	9b06      	ldr	r3, [sp, #24]
-d0045966:	2b00      	cmp	r3, #0
-d0045968:	f000 808a 	beq.w	d0045a80 <loadMeshSB3D+0x2e0>
-d004596c:	4606      	mov	r6, r0
-d004596e:	e06e      	b.n	d0045a4e <loadMeshSB3D+0x2ae>
-d0045970:	2001f000 	.word	0x2001f000
-d0045974:	44334253 	.word	0x44334253
-d0045978:	f894 e004 	ldrb.w	lr, [r4, #4]
-d004597c:	7967      	ldrb	r7, [r4, #5]
-d004597e:	f894 c006 	ldrb.w	ip, [r4, #6]
-d0045982:	ea4e 2e07 	orr.w	lr, lr, r7, lsl #8
-d0045986:	79e7      	ldrb	r7, [r4, #7]
-d0045988:	ea4e 4c0c 	orr.w	ip, lr, ip, lsl #16
-d004598c:	ea4c 6707 	orr.w	r7, ip, r7, lsl #24
-d0045990:	683f      	ldr	r7, [r7, #0]
-d0045992:	68bf      	ldr	r7, [r7, #8]
-d0045994:	47b8      	blx	r7
-d0045996:	ab02      	add	r3, sp, #8
-d0045998:	2204      	movs	r2, #4
-d004599a:	a909      	add	r1, sp, #36	; 0x24
-d004599c:	2800      	cmp	r0, #0
-d004599e:	d1c7      	bne.n	d0045930 <loadMeshSB3D+0x190>
-d00459a0:	f894 e004 	ldrb.w	lr, [r4, #4]
-d00459a4:	7967      	ldrb	r7, [r4, #5]
-d00459a6:	f894 c006 	ldrb.w	ip, [r4, #6]
-d00459aa:	ea4e 2e07 	orr.w	lr, lr, r7, lsl #8
-d00459ae:	79e7      	ldrb	r7, [r4, #7]
-d00459b0:	ea4e 4c0c 	orr.w	ip, lr, ip, lsl #16
-d00459b4:	ea4c 6707 	orr.w	r7, ip, r7, lsl #24
-d00459b8:	683f      	ldr	r7, [r7, #0]
-d00459ba:	68bf      	ldr	r7, [r7, #8]
-d00459bc:	47b8      	blx	r7
-d00459be:	ab02      	add	r3, sp, #8
-d00459c0:	2201      	movs	r2, #1
-d00459c2:	f10d 0106 	add.w	r1, sp, #6
-d00459c6:	2800      	cmp	r0, #0
-d00459c8:	d1b2      	bne.n	d0045930 <loadMeshSB3D+0x190>
-d00459ca:	f894 e004 	ldrb.w	lr, [r4, #4]
-d00459ce:	7967      	ldrb	r7, [r4, #5]
-d00459d0:	f894 c006 	ldrb.w	ip, [r4, #6]
-d00459d4:	ea4e 2e07 	orr.w	lr, lr, r7, lsl #8
-d00459d8:	79e7      	ldrb	r7, [r4, #7]
-d00459da:	ea4e 4c0c 	orr.w	ip, lr, ip, lsl #16
-d00459de:	ea4c 6707 	orr.w	r7, ip, r7, lsl #24
-d00459e2:	683f      	ldr	r7, [r7, #0]
-d00459e4:	68bf      	ldr	r7, [r7, #8]
-d00459e6:	47b8      	blx	r7
-d00459e8:	ab02      	add	r3, sp, #8
-d00459ea:	2201      	movs	r2, #1
-d00459ec:	f10d 0107 	add.w	r1, sp, #7
-d00459f0:	2800      	cmp	r0, #0
-d00459f2:	d19d      	bne.n	d0045930 <loadMeshSB3D+0x190>
-d00459f4:	f894 e004 	ldrb.w	lr, [r4, #4]
-d00459f8:	7967      	ldrb	r7, [r4, #5]
-d00459fa:	f894 c006 	ldrb.w	ip, [r4, #6]
-d00459fe:	ea4e 2e07 	orr.w	lr, lr, r7, lsl #8
-d0045a02:	79e7      	ldrb	r7, [r4, #7]
-d0045a04:	ea4e 4c0c 	orr.w	ip, lr, ip, lsl #16
-d0045a08:	ea4c 6707 	orr.w	r7, ip, r7, lsl #24
-d0045a0c:	683f      	ldr	r7, [r7, #0]
-d0045a0e:	68bf      	ldr	r7, [r7, #8]
-d0045a10:	47b8      	blx	r7
-d0045a12:	0137      	lsls	r7, r6, #4
-d0045a14:	2800      	cmp	r0, #0
-d0045a16:	d18b      	bne.n	d0045930 <loadMeshSB3D+0x190>
-d0045a18:	9a07      	ldr	r2, [sp, #28]
-d0045a1a:	9b05      	ldr	r3, [sp, #20]
-d0045a1c:	429a      	cmp	r2, r3
-d0045a1e:	d287      	bcs.n	d0045930 <loadMeshSB3D+0x190>
-d0045a20:	9908      	ldr	r1, [sp, #32]
-d0045a22:	428b      	cmp	r3, r1
-d0045a24:	d984      	bls.n	d0045930 <loadMeshSB3D+0x190>
-d0045a26:	9809      	ldr	r0, [sp, #36]	; 0x24
-d0045a28:	4283      	cmp	r3, r0
-d0045a2a:	d981      	bls.n	d0045930 <loadMeshSB3D+0x190>
-d0045a2c:	692b      	ldr	r3, [r5, #16]
-d0045a2e:	f8dd c018 	ldr.w	ip, [sp, #24]
-d0045a32:	51da      	str	r2, [r3, r7]
-d0045a34:	eb03 1306 	add.w	r3, r3, r6, lsl #4
-d0045a38:	3601      	adds	r6, #1
-d0045a3a:	f89d 7006 	ldrb.w	r7, [sp, #6]
-d0045a3e:	f89d 2007 	ldrb.w	r2, [sp, #7]
-d0045a42:	45b4      	cmp	ip, r6
-d0045a44:	6059      	str	r1, [r3, #4]
-d0045a46:	6098      	str	r0, [r3, #8]
-d0045a48:	731f      	strb	r7, [r3, #12]
-d0045a4a:	735a      	strb	r2, [r3, #13]
-d0045a4c:	d918      	bls.n	d0045a80 <loadMeshSB3D+0x2e0>
-d0045a4e:	7920      	ldrb	r0, [r4, #4]
-d0045a50:	ab02      	add	r3, sp, #8
-d0045a52:	7967      	ldrb	r7, [r4, #5]
-d0045a54:	2204      	movs	r2, #4
-d0045a56:	f894 c006 	ldrb.w	ip, [r4, #6]
-d0045a5a:	a907      	add	r1, sp, #28
-d0045a5c:	ea40 2007 	orr.w	r0, r0, r7, lsl #8
-d0045a60:	79e7      	ldrb	r7, [r4, #7]
-d0045a62:	ea40 4c0c 	orr.w	ip, r0, ip, lsl #16
-d0045a66:	2000      	movs	r0, #0
-d0045a68:	ea4c 6707 	orr.w	r7, ip, r7, lsl #24
-d0045a6c:	683f      	ldr	r7, [r7, #0]
-d0045a6e:	68bf      	ldr	r7, [r7, #8]
-d0045a70:	47b8      	blx	r7
-d0045a72:	ab02      	add	r3, sp, #8
-d0045a74:	2204      	movs	r2, #4
-d0045a76:	a908      	add	r1, sp, #32
-d0045a78:	2800      	cmp	r0, #0
-d0045a7a:	f43f af7d 	beq.w	d0045978 <loadMeshSB3D+0x1d8>
-d0045a7e:	e757      	b.n	d0045930 <loadMeshSB3D+0x190>
-d0045a80:	2000      	movs	r0, #0
-d0045a82:	f000 f893 	bl	d0045bac <fclose>
-d0045a86:	4628      	mov	r0, r5
-d0045a88:	f7fd fca8 	bl	d00433dc <meshComputeBoundsRadius>
-d0045a8c:	eef1 7a00 	vmov.f32	s15, #16	; 0x40800000  4.0
-d0045a90:	4628      	mov	r0, r5
-d0045a92:	ee20 0a27 	vmul.f32	s0, s0, s15
-d0045a96:	ed85 0a06 	vstr	s0, [r5, #24]
-d0045a9a:	f7fa fec7 	bl	d004082c <meshSetDefaultMaterial>
-d0045a9e:	2001      	movs	r0, #1
-d0045aa0:	e6f6      	b.n	d0045890 <loadMeshSB3D+0xf0>
-d0045aa2:	4630      	mov	r0, r6
-d0045aa4:	f000 fa72 	bl	d0045f8c <free>
-d0045aa8:	2400      	movs	r4, #0
-d0045aaa:	4620      	mov	r0, r4
-d0045aac:	602c      	str	r4, [r5, #0]
-d0045aae:	612c      	str	r4, [r5, #16]
-d0045ab0:	606c      	str	r4, [r5, #4]
-d0045ab2:	616c      	str	r4, [r5, #20]
-d0045ab4:	f000 f87a 	bl	d0045bac <fclose>
-d0045ab8:	4620      	mov	r0, r4
-d0045aba:	e6e9      	b.n	d0045890 <loadMeshSB3D+0xf0>
-d0045abc:	2800      	cmp	r0, #0
-d0045abe:	d0f3      	beq.n	d0045aa8 <loadMeshSB3D+0x308>
-d0045ac0:	f000 fa64 	bl	d0045f8c <free>
-d0045ac4:	e7f0      	b.n	d0045aa8 <loadMeshSB3D+0x308>
-d0045ac6:	bf00      	nop
+d0045534 <drawFakeHorizon>:
+d0045534:	2800      	cmp	r0, #0
+d0045536:	f000 813c 	beq.w	d00457b2 <drawFakeHorizon+0x27e>
+d004553a:	ed9f 7aa2 	vldr	s14, [pc, #648]	; d00457c4 <drawFakeHorizon+0x290>
+d004553e:	eddf 6aa2 	vldr	s13, [pc, #648]	; d00457c8 <drawFakeHorizon+0x294>
+d0045542:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d0045546:	ed2d 8b0c 	vpush	{d8-d13}
+d004554a:	ed90 da0a 	vldr	s26, [r0, #40]	; 0x28
+d004554e:	eeb0 ca47 	vmov.f32	s24, s14
+d0045552:	ed9f 9a9e 	vldr	s18, [pc, #632]	; d00457cc <drawFakeHorizon+0x298>
+d0045556:	b083      	sub	sp, #12
+d0045558:	edd0 ba0d 	vldr	s23, [r0, #52]	; 0x34
+d004555c:	eeb0 bacd 	vabs.f32	s22, s26
+d0045560:	ee6d 7a09 	vmul.f32	s15, s26, s18
+d0045564:	eddf 9a9a 	vldr	s19, [pc, #616]	; d00457d0 <drawFakeHorizon+0x29c>
+d0045568:	eef0 aa6b 	vmov.f32	s21, s23
+d004556c:	edd0 da07 	vldr	s27, [r0, #28]
+d0045570:	eeb0 aa6b 	vmov.f32	s20, s23
+d0045574:	edd0 8a01 	vldr	s17, [r0, #4]
+d0045578:	eec9 ca8d 	vdiv.f32	s25, s19, s26
+d004557c:	460f      	mov	r7, r1
+d004557e:	4690      	mov	r8, r2
+d0045580:	4699      	mov	r9, r3
+d0045582:	2400      	movs	r4, #0
+d0045584:	4e93      	ldr	r6, [pc, #588]	; (d00457d4 <drawFakeHorizon+0x2a0>)
+d0045586:	ed9f 8a94 	vldr	s16, [pc, #592]	; d00457d8 <drawFakeHorizon+0x2a4>
+d004558a:	eee7 aa87 	vfma.f32	s21, s15, s14
+d004558e:	eea7 aaa6 	vfma.f32	s20, s15, s13
+d0045592:	ee2d 9a89 	vmul.f32	s18, s27, s18
+d0045596:	ee70 8a68 	vsub.f32	s17, s0, s17
+d004559a:	e056      	b.n	d004564a <drawFakeHorizon+0x116>
+d004559c:	ee88 6aa6 	vdiv.f32	s12, s17, s13
+d00455a0:	eef0 6ac7 	vabs.f32	s13, s14
+d00455a4:	eeb5 6ac0 	vcmpe.f32	s12, #0.0
+d00455a8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00455ac:	eef4 6ac8 	vcmpe.f32	s13, s16
+d00455b0:	bfcc      	ite	gt
+d00455b2:	2201      	movgt	r2, #1
+d00455b4:	2200      	movle	r2, #0
+d00455b6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00455ba:	da61      	bge.n	d0045680 <drawFakeHorizon+0x14c>
+d00455bc:	eeb5 6ac0 	vcmpe.f32	s12, #0.0
+d00455c0:	eb04 0584 	add.w	r5, r4, r4, lsl #2
+d00455c4:	6833      	ldr	r3, [r6, #0]
+d00455c6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00455ca:	eb03 1585 	add.w	r5, r3, r5, lsl #6
+d00455ce:	f240 80a8 	bls.w	d0045722 <drawFakeHorizon+0x1ee>
+d00455d2:	eeb4 bac8 	vcmpe.f32	s22, s16
+d00455d6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00455da:	f100 809a 	bmi.w	d0045712 <drawFakeHorizon+0x1de>
+d00455de:	ee7b 7aa7 	vadd.f32	s15, s23, s15
+d00455e2:	eeb0 7a4c 	vmov.f32	s14, s24
+d00455e6:	eeac 7aa7 	vfma.f32	s14, s25, s15
+d00455ea:	fefc 7ac7 	vcvta.s32.f32	s15, s14
+d00455ee:	ee17 ba90 	vmov	fp, s15
+d00455f2:	f1bb 0f00 	cmp.w	fp, #0
+d00455f6:	f2c0 80aa 	blt.w	d004574e <drawFakeHorizon+0x21a>
+d00455fa:	2201      	movs	r2, #1
+d00455fc:	f5bb 7fa0 	cmp.w	fp, #320	; 0x140
+d0045600:	46da      	mov	sl, fp
+d0045602:	bfa8      	it	ge
+d0045604:	f44f 7aa0 	movge.w	sl, #320	; 0x140
+d0045608:	2a00      	cmp	r2, #0
+d004560a:	f000 8091 	beq.w	d0045730 <drawFakeHorizon+0x1fc>
+d004560e:	f1bb 0f00 	cmp.w	fp, #0
+d0045612:	d009      	beq.n	d0045628 <drawFakeHorizon+0xf4>
+d0045614:	f1ba 0f00 	cmp.w	sl, #0
+d0045618:	4628      	mov	r0, r5
+d004561a:	4641      	mov	r1, r8
+d004561c:	bfcc      	ite	gt
+d004561e:	4652      	movgt	r2, sl
+d0045620:	2201      	movle	r2, #1
+d0045622:	4415      	add	r5, r2
+d0045624:	f001 fb1e 	bl	d0046c64 <memset>
+d0045628:	f5ba 7fa0 	cmp.w	sl, #320	; 0x140
+d004562c:	d009      	beq.n	d0045642 <drawFakeHorizon+0x10e>
+d004562e:	f5ba 7fa0 	cmp.w	sl, #320	; 0x140
+d0045632:	f5ca 72a0 	rsb	r2, sl, #320	; 0x140
+d0045636:	4628      	mov	r0, r5
+d0045638:	4639      	mov	r1, r7
+d004563a:	bfa8      	it	ge
+d004563c:	2201      	movge	r2, #1
+d004563e:	f001 fb11 	bl	d0046c64 <memset>
+d0045642:	3401      	adds	r4, #1
+d0045644:	f5b4 7ff0 	cmp.w	r4, #480	; 0x1e0
+d0045648:	d04e      	beq.n	d00456e8 <drawFakeHorizon+0x1b4>
+d004564a:	ee07 4a90 	vmov	s15, r4
+d004564e:	eef8 7ae7 	vcvt.f32.s32	s15, s15
+d0045652:	ee77 7ae9 	vsub.f32	s15, s15, s19
+d0045656:	ee67 7a89 	vmul.f32	s15, s15, s18
+d004565a:	ee77 6aaa 	vadd.f32	s13, s15, s21
+d004565e:	ee3a 7a27 	vadd.f32	s14, s20, s15
+d0045662:	eeb0 6ae6 	vabs.f32	s12, s13
+d0045666:	eeb4 6ac8 	vcmpe.f32	s12, s16
+d004566a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004566e:	da95      	bge.n	d004559c <drawFakeHorizon+0x68>
+d0045670:	eef0 6ac7 	vabs.f32	s13, s14
+d0045674:	eef4 6ac8 	vcmpe.f32	s13, s16
+d0045678:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004567c:	db4c      	blt.n	d0045718 <drawFakeHorizon+0x1e4>
+d004567e:	2200      	movs	r2, #0
+d0045680:	eec8 6a87 	vdiv.f32	s13, s17, s14
+d0045684:	6833      	ldr	r3, [r6, #0]
+d0045686:	eb04 0584 	add.w	r5, r4, r4, lsl #2
+d004568a:	eb03 1585 	add.w	r5, r3, r5, lsl #6
+d004568e:	eef5 6ac0 	vcmpe.f32	s13, #0.0
+d0045692:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045696:	bfcc      	ite	gt
+d0045698:	2301      	movgt	r3, #1
+d004569a:	2300      	movle	r3, #0
+d004569c:	4293      	cmp	r3, r2
+d004569e:	f000 8089 	beq.w	d00457b4 <drawFakeHorizon+0x280>
+d00456a2:	eeb4 bac8 	vcmpe.f32	s22, s16
+d00456a6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00456aa:	d429      	bmi.n	d0045700 <drawFakeHorizon+0x1cc>
+d00456ac:	ee7b 7aa7 	vadd.f32	s15, s23, s15
+d00456b0:	eeb0 7a4c 	vmov.f32	s14, s24
+d00456b4:	eeac 7aa7 	vfma.f32	s14, s25, s15
+d00456b8:	fefc 7ac7 	vcvta.s32.f32	s15, s14
+d00456bc:	ee17 ba90 	vmov	fp, s15
+d00456c0:	f1bb 0f00 	cmp.w	fp, #0
+d00456c4:	da9a      	bge.n	d00455fc <drawFakeHorizon+0xc8>
+d00456c6:	2a00      	cmp	r2, #0
+d00456c8:	d141      	bne.n	d004574e <drawFakeHorizon+0x21a>
+d00456ca:	f5b2 7fa0 	cmp.w	r2, #320	; 0x140
+d00456ce:	f104 0401 	add.w	r4, r4, #1
+d00456d2:	f5c2 72a0 	rsb	r2, r2, #320	; 0x140
+d00456d6:	4628      	mov	r0, r5
+d00456d8:	bfa8      	it	ge
+d00456da:	2201      	movge	r2, #1
+d00456dc:	4641      	mov	r1, r8
+d00456de:	f001 fac1 	bl	d0046c64 <memset>
+d00456e2:	f5b4 7ff0 	cmp.w	r4, #480	; 0x1e0
+d00456e6:	d1b0      	bne.n	d004564a <drawFakeHorizon+0x116>
+d00456e8:	eddf 7a3b 	vldr	s15, [pc, #236]	; d00457d8 <drawFakeHorizon+0x2a4>
+d00456ec:	eeb4 bae7 	vcmpe.f32	s22, s15
+d00456f0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00456f4:	da31      	bge.n	d004575a <drawFakeHorizon+0x226>
+d00456f6:	b003      	add	sp, #12
+d00456f8:	ecbd 8b0c 	vpop	{d8-d13}
+d00456fc:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d0045700:	b93a      	cbnz	r2, d0045712 <drawFakeHorizon+0x1de>
+d0045702:	22a0      	movs	r2, #160	; 0xa0
+d0045704:	4628      	mov	r0, r5
+d0045706:	4639      	mov	r1, r7
+d0045708:	4415      	add	r5, r2
+d004570a:	f001 faab 	bl	d0046c64 <memset>
+d004570e:	22a0      	movs	r2, #160	; 0xa0
+d0045710:	e7db      	b.n	d00456ca <drawFakeHorizon+0x196>
+d0045712:	f04f 0aa0 	mov.w	sl, #160	; 0xa0
+d0045716:	e77d      	b.n	d0045614 <drawFakeHorizon+0xe0>
+d0045718:	eb04 0584 	add.w	r5, r4, r4, lsl #2
+d004571c:	6832      	ldr	r2, [r6, #0]
+d004571e:	eb02 1585 	add.w	r5, r2, r5, lsl #6
+d0045722:	4639      	mov	r1, r7
+d0045724:	4628      	mov	r0, r5
+d0045726:	f44f 72a0 	mov.w	r2, #320	; 0x140
+d004572a:	f001 fa9b 	bl	d0046c64 <memset>
+d004572e:	e788      	b.n	d0045642 <drawFakeHorizon+0x10e>
+d0045730:	f1bb 0f00 	cmp.w	fp, #0
+d0045734:	d00e      	beq.n	d0045754 <drawFakeHorizon+0x220>
+d0045736:	4628      	mov	r0, r5
+d0045738:	4652      	mov	r2, sl
+d004573a:	4639      	mov	r1, r7
+d004573c:	4455      	add	r5, sl
+d004573e:	f001 fa91 	bl	d0046c64 <memset>
+d0045742:	f5bb 7fa0 	cmp.w	fp, #320	; 0x140
+d0045746:	f6bf af7c 	bge.w	d0045642 <drawFakeHorizon+0x10e>
+d004574a:	4652      	mov	r2, sl
+d004574c:	e7bd      	b.n	d00456ca <drawFakeHorizon+0x196>
+d004574e:	f04f 0a00 	mov.w	sl, #0
+d0045752:	e76c      	b.n	d004562e <drawFakeHorizon+0xfa>
+d0045754:	46da      	mov	sl, fp
+d0045756:	4652      	mov	r2, sl
+d0045758:	e7b7      	b.n	d00456ca <drawFakeHorizon+0x196>
+d004575a:	ed9f 7a1d 	vldr	s14, [pc, #116]	; d00457d0 <drawFakeHorizon+0x29c>
+d004575e:	f240 12df 	movw	r2, #479	; 0x1df
+d0045762:	eddf 7a1e 	vldr	s15, [pc, #120]	; d00457dc <drawFakeHorizon+0x2a8>
+d0045766:	2000      	movs	r0, #0
+d0045768:	ee6b ba87 	vmul.f32	s23, s23, s14
+d004576c:	ed9f 7a1c 	vldr	s14, [pc, #112]	; d00457e0 <drawFakeHorizon+0x2ac>
+d0045770:	eddf 6a14 	vldr	s13, [pc, #80]	; d00457c4 <drawFakeHorizon+0x290>
+d0045774:	f8cd 9000 	str.w	r9, [sp]
+d0045778:	eeb0 6a6b 	vmov.f32	s12, s23
+d004577c:	eeed ba87 	vfma.f32	s23, s27, s14
+d0045780:	eead 6aa7 	vfma.f32	s12, s27, s15
+d0045784:	eecb 7a8d 	vdiv.f32	s15, s23, s26
+d0045788:	ee86 7a0d 	vdiv.f32	s14, s12, s26
+d004578c:	ee77 7aa6 	vadd.f32	s15, s15, s13
+d0045790:	fefc 7ae7 	vcvta.s32.f32	s15, s15
+d0045794:	ee37 7a26 	vadd.f32	s14, s14, s13
+d0045798:	ee17 3a90 	vmov	r3, s15
+d004579c:	febc 7ac7 	vcvta.s32.f32	s14, s14
+d00457a0:	ee17 1a10 	vmov	r1, s14
+d00457a4:	f7fb fb26 	bl	d0040df4 <drawLine>
+d00457a8:	b003      	add	sp, #12
+d00457aa:	ecbd 8b0c 	vpop	{d8-d13}
+d00457ae:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d00457b2:	4770      	bx	lr
+d00457b4:	eef5 6ac0 	vcmpe.f32	s13, #0.0
+d00457b8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00457bc:	ddb1      	ble.n	d0045722 <drawFakeHorizon+0x1ee>
+d00457be:	4641      	mov	r1, r8
+d00457c0:	e7b0      	b.n	d0045724 <drawFakeHorizon+0x1f0>
+d00457c2:	bf00      	nop
+d00457c4:	43200000 	.word	0x43200000
+d00457c8:	c31f0000 	.word	0xc31f0000
+d00457cc:	3b888889 	.word	0x3b888889
+d00457d0:	43700000 	.word	0x43700000
+d00457d4:	d012da64 	.word	0xd012da64
+d00457d8:	38d1b717 	.word	0x38d1b717
+d00457dc:	c3700000 	.word	0xc3700000
+d00457e0:	436f0000 	.word	0x436f0000
 
-d0045ac8 <__errno>:
-d0045ac8:	4b01      	ldr	r3, [pc, #4]	; (d0045ad0 <__errno+0x8>)
-d0045aca:	6818      	ldr	r0, [r3, #0]
-d0045acc:	4770      	bx	lr
-d0045ace:	bf00      	nop
-d0045ad0:	d00475d8 	.word	0xd00475d8
+d00457e4 <submitEntitySolid>:
+d00457e4:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d00457e8:	ed2d 8b10 	vpush	{d8-d15}
+d00457ec:	b0b3      	sub	sp, #204	; 0xcc
+d00457ee:	f10d 036f 	add.w	r3, sp, #111	; 0x6f
+d00457f2:	9104      	str	r1, [sp, #16]
+d00457f4:	f023 031f 	bic.w	r3, r3, #31
+d00457f8:	9305      	str	r3, [sp, #20]
+d00457fa:	2800      	cmp	r0, #0
+d00457fc:	f000 827c 	beq.w	d0045cf8 <submitEntitySolid+0x514>
+d0045800:	f8d0 800c 	ldr.w	r8, [r0, #12]
+d0045804:	4604      	mov	r4, r0
+d0045806:	f1b8 0f00 	cmp.w	r8, #0
+d004580a:	f000 8275 	beq.w	d0045cf8 <submitEntitySolid+0x514>
+d004580e:	f8d8 3000 	ldr.w	r3, [r8]
+d0045812:	2b00      	cmp	r3, #0
+d0045814:	f000 8270 	beq.w	d0045cf8 <submitEntitySolid+0x514>
+d0045818:	f8d8 3010 	ldr.w	r3, [r8, #16]
+d004581c:	2b00      	cmp	r3, #0
+d004581e:	f000 826b 	beq.w	d0045cf8 <submitEntitySolid+0x514>
+d0045822:	f8d8 3004 	ldr.w	r3, [r8, #4]
+d0045826:	3b01      	subs	r3, #1
+d0045828:	f5b3 5f80 	cmp.w	r3, #4096	; 0x1000
+d004582c:	f080 8264 	bcs.w	d0045cf8 <submitEntitySolid+0x514>
+d0045830:	f8d8 3014 	ldr.w	r3, [r8, #20]
+d0045834:	2b00      	cmp	r3, #0
+d0045836:	f340 825f 	ble.w	d0045cf8 <submitEntitySolid+0x514>
+d004583a:	460f      	mov	r7, r1
+d004583c:	edd1 aa11 	vldr	s21, [r1, #68]	; 0x44
+d0045840:	ed91 fa10 	vldr	s30, [r1, #64]	; 0x40
+d0045844:	f7fe ff48 	bl	d00446d8 <lightsGet>
+d0045848:	900b      	str	r0, [sp, #44]	; 0x2c
+d004584a:	f7fe ff49 	bl	d00446e0 <lightsGetCount>
+d004584e:	edd8 fa09 	vldr	s31, [r8, #36]	; 0x24
+d0045852:	edd8 7a0a 	vldr	s15, [r8, #40]	; 0x28
+d0045856:	eef5 fac0 	vcmpe.f32	s31, #0.0
+d004585a:	ed98 7a08 	vldr	s14, [r8, #32]
+d004585e:	f8d8 3004 	ldr.w	r3, [r8, #4]
+d0045862:	ed8d 7a01 	vstr	s14, [sp, #4]
+d0045866:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d004586a:	ed98 7a0c 	vldr	s14, [r8, #48]	; 0x30
+d004586e:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+d0045872:	ed94 6a00 	vldr	s12, [r4]
+d0045876:	ed8d 7a09 	vstr	s14, [sp, #36]	; 0x24
+d004587a:	bfcc      	ite	gt
+d004587c:	2601      	movgt	r6, #1
+d004587e:	2600      	movle	r6, #0
+d0045880:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045884:	ed98 7a0b 	vldr	s14, [r8, #44]	; 0x2c
+d0045888:	edd4 5a01 	vldr	s11, [r4, #4]
+d004588c:	ed94 5a02 	vldr	s10, [r4, #8]
+d0045890:	bfcc      	ite	gt
+d0045892:	2501      	movgt	r5, #1
+d0045894:	2500      	movle	r5, #0
+d0045896:	2b00      	cmp	r3, #0
+d0045898:	edd4 4a07 	vldr	s9, [r4, #28]
+d004589c:	ed94 4a08 	vldr	s8, [r4, #32]
+d00458a0:	edd4 3a09 	vldr	s7, [r4, #36]	; 0x24
+d00458a4:	ed94 3a0a 	vldr	s6, [r4, #40]	; 0x28
+d00458a8:	edd4 2a0b 	vldr	s5, [r4, #44]	; 0x2c
+d00458ac:	ed94 2a0c 	vldr	s4, [r4, #48]	; 0x30
+d00458b0:	edd4 1a04 	vldr	s3, [r4, #16]
+d00458b4:	ed94 1a05 	vldr	s2, [r4, #20]
+d00458b8:	edd4 0a06 	vldr	s1, [r4, #24]
+d00458bc:	edd7 ca00 	vldr	s25, [r7]
+d00458c0:	ed97 da01 	vldr	s26, [r7, #4]
+d00458c4:	edd7 da02 	vldr	s27, [r7, #8]
+d00458c8:	ed97 0a06 	vldr	s0, [r7, #24]
+d00458cc:	ed97 8a07 	vldr	s16, [r7, #28]
+d00458d0:	edd7 8a08 	vldr	s17, [r7, #32]
+d00458d4:	ed97 9a09 	vldr	s18, [r7, #36]	; 0x24
+d00458d8:	edd7 9a0a 	vldr	s19, [r7, #40]	; 0x28
+d00458dc:	ed97 aa0b 	vldr	s20, [r7, #44]	; 0x2c
+d00458e0:	edcd 7a0a 	vstr	s15, [sp, #40]	; 0x28
+d00458e4:	9007      	str	r0, [sp, #28]
+d00458e6:	ed8d 7a08 	vstr	s14, [sp, #32]
+d00458ea:	ed97 ba0c 	vldr	s22, [r7, #48]	; 0x30
+d00458ee:	edd7 ba0d 	vldr	s23, [r7, #52]	; 0x34
+d00458f2:	ed97 ca0e 	vldr	s24, [r7, #56]	; 0x38
+d00458f6:	dd51      	ble.n	d004599c <submitEntitySolid+0x1b8>
+d00458f8:	eb03 0043 	add.w	r0, r3, r3, lsl #1
+d00458fc:	f8d8 3000 	ldr.w	r3, [r8]
+d0045900:	49de      	ldr	r1, [pc, #888]	; (d0045c7c <submitEntitySolid+0x498>)
+d0045902:	eb03 0080 	add.w	r0, r3, r0, lsl #2
+d0045906:	4ade      	ldr	r2, [pc, #888]	; (d0045c80 <submitEntitySolid+0x49c>)
+d0045908:	edd3 7a01 	vldr	s15, [r3, #4]
+d004590c:	330c      	adds	r3, #12
+d004590e:	ed53 ea03 	vldr	s29, [r3, #-12]
+d0045912:	310c      	adds	r1, #12
+d0045914:	ee27 7aa2 	vmul.f32	s14, s15, s5
+d0045918:	ed53 6a01 	vldr	s13, [r3, #-4]
+d004591c:	ee27 ea83 	vmul.f32	s28, s15, s6
+d0045920:	4298      	cmp	r0, r3
+d0045922:	ee67 7a82 	vmul.f32	s15, s15, s4
+d0045926:	f102 020c 	add.w	r2, r2, #12
+d004592a:	eeae 7a84 	vfma.f32	s14, s29, s8
+d004592e:	eeae eaa4 	vfma.f32	s28, s29, s9
+d0045932:	eeee 7aa3 	vfma.f32	s15, s29, s7
+d0045936:	ee35 7a87 	vadd.f32	s14, s11, s14
+d004593a:	ee36 ea0e 	vadd.f32	s28, s12, s28
+d004593e:	ee75 7a27 	vadd.f32	s15, s10, s15
+d0045942:	eea6 7a81 	vfma.f32	s14, s13, s2
+d0045946:	eea6 eaa1 	vfma.f32	s28, s13, s3
+d004594a:	eee6 7aa0 	vfma.f32	s15, s13, s1
+d004594e:	eef0 ea47 	vmov.f32	s29, s14
+d0045952:	ee37 7a4d 	vsub.f32	s14, s14, s26
+d0045956:	ed01 ea03 	vstr	s28, [r1, #-12]
+d004595a:	ee7e 6a6c 	vsub.f32	s13, s28, s25
+d004595e:	ed41 7a01 	vstr	s15, [r1, #-4]
+d0045962:	ee37 eaed 	vsub.f32	s28, s15, s27
+d0045966:	ed41 ea02 	vstr	s29, [r1, #-8]
+d004596a:	ee69 7a87 	vmul.f32	s15, s19, s14
+d004596e:	ee68 ea07 	vmul.f32	s29, s16, s14
+d0045972:	ee2b 7a87 	vmul.f32	s14, s23, s14
+d0045976:	eee9 7a26 	vfma.f32	s15, s18, s13
+d004597a:	eee0 ea26 	vfma.f32	s29, s0, s13
+d004597e:	eeab 7a26 	vfma.f32	s14, s22, s13
+d0045982:	eeea 7a0e 	vfma.f32	s15, s20, s28
+d0045986:	eee8 ea8e 	vfma.f32	s29, s17, s28
+d004598a:	eeac 7a0e 	vfma.f32	s14, s24, s28
+d004598e:	ed42 7a02 	vstr	s15, [r2, #-8]
+d0045992:	ed42 ea03 	vstr	s29, [r2, #-12]
+d0045996:	ed02 7a01 	vstr	s14, [r2, #-4]
+d004599a:	d1b5      	bne.n	d0045908 <submitEntitySolid+0x124>
+d004599c:	f8d8 3014 	ldr.w	r3, [r8, #20]
+d00459a0:	2b00      	cmp	r3, #0
+d00459a2:	9302      	str	r3, [sp, #8]
+d00459a4:	f340 81a8 	ble.w	d0045cf8 <submitEntitySolid+0x514>
+d00459a8:	ea46 0305 	orr.w	r3, r6, r5
+d00459ac:	ed9d ba0a 	vldr	s22, [sp, #40]	; 0x28
+d00459b0:	f04f 0900 	mov.w	r9, #0
+d00459b4:	edcd ca0a 	vstr	s25, [sp, #40]	; 0x28
+d00459b8:	eddf eab2 	vldr	s29, [pc, #712]	; d0045c84 <submitEntitySolid+0x4a0>
+d00459bc:	eddd ca01 	vldr	s25, [sp, #4]
+d00459c0:	ed8d da0c 	vstr	s26, [sp, #48]	; 0x30
+d00459c4:	9306      	str	r3, [sp, #24]
+d00459c6:	ed9d da09 	vldr	s26, [sp, #36]	; 0x24
+d00459ca:	f8cd 800c 	str.w	r8, [sp, #12]
+d00459ce:	edcd da09 	vstr	s27, [sp, #36]	; 0x24
+d00459d2:	9a03      	ldr	r2, [sp, #12]
+d00459d4:	ea4f 1309 	mov.w	r3, r9, lsl #4
+d00459d8:	4ea9      	ldr	r6, [pc, #676]	; (d0045c80 <submitEntitySolid+0x49c>)
+d00459da:	6915      	ldr	r5, [r2, #16]
+d00459dc:	58e8      	ldr	r0, [r5, r3]
+d00459de:	eb05 1509 	add.w	r5, r5, r9, lsl #4
+d00459e2:	4633      	mov	r3, r6
+d00459e4:	eb00 0440 	add.w	r4, r0, r0, lsl #1
+d00459e8:	686a      	ldr	r2, [r5, #4]
+d00459ea:	68af      	ldr	r7, [r5, #8]
+d00459ec:	0041      	lsls	r1, r0, #1
+d00459ee:	eb06 0484 	add.w	r4, r6, r4, lsl #2
+d00459f2:	9701      	str	r7, [sp, #4]
+d00459f4:	eb02 0642 	add.w	r6, r2, r2, lsl #1
+d00459f8:	edd4 4a02 	vldr	s9, [r4, #8]
+d00459fc:	eb07 0747 	add.w	r7, r7, r7, lsl #1
+d0045a00:	eb03 0686 	add.w	r6, r3, r6, lsl #2
+d0045a04:	eef4 4aea 	vcmpe.f32	s9, s21
+d0045a08:	eb03 0787 	add.w	r7, r3, r7, lsl #2
+d0045a0c:	9b01      	ldr	r3, [sp, #4]
+d0045a0e:	ea4f 0842 	mov.w	r8, r2, lsl #1
+d0045a12:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045a16:	ea4f 0b43 	mov.w	fp, r3, lsl #1
+d0045a1a:	dd0e      	ble.n	d0045a3a <submitEntitySolid+0x256>
+d0045a1c:	edd6 7a02 	vldr	s15, [r6, #8]
+d0045a20:	eef4 7aea 	vcmpe.f32	s15, s21
+d0045a24:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045a28:	dd07      	ble.n	d0045a3a <submitEntitySolid+0x256>
+d0045a2a:	edd7 7a02 	vldr	s15, [r7, #8]
+d0045a2e:	eef4 7aea 	vcmpe.f32	s15, s21
+d0045a32:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045a36:	f300 8159 	bgt.w	d0045cec <submitEntitySolid+0x508>
+d0045a3a:	ed94 5a00 	vldr	s10, [r4]
+d0045a3e:	edd4 2a02 	vldr	s5, [r4, #8]
+d0045a42:	ed96 4a00 	vldr	s8, [r6]
+d0045a46:	ed97 6a02 	vldr	s12, [r7, #8]
+d0045a4a:	ee34 1a45 	vsub.f32	s2, s8, s10
+d0045a4e:	edd4 7a01 	vldr	s15, [r4, #4]
+d0045a52:	ee36 6a62 	vsub.f32	s12, s12, s5
+d0045a56:	ed96 3a02 	vldr	s6, [r6, #8]
+d0045a5a:	edd7 6a01 	vldr	s13, [r7, #4]
+d0045a5e:	edd7 3a00 	vldr	s7, [r7]
+d0045a62:	ee33 3a62 	vsub.f32	s6, s6, s5
+d0045a66:	ee76 6ae7 	vsub.f32	s13, s13, s15
+d0045a6a:	edd6 5a01 	vldr	s11, [r6, #4]
+d0045a6e:	ee33 7ac5 	vsub.f32	s14, s7, s10
+d0045a72:	ee66 1a41 	vnmul.f32	s3, s12, s2
+d0045a76:	ee75 5ae7 	vsub.f32	s11, s11, s15
+d0045a7a:	ee26 2ac3 	vnmul.f32	s4, s13, s6
+d0045a7e:	eee3 1a07 	vfma.f32	s3, s6, s14
+d0045a82:	ee27 7a65 	vnmul.f32	s14, s14, s11
+d0045a86:	eea5 2a86 	vfma.f32	s4, s11, s12
+d0045a8a:	eea1 7a26 	vfma.f32	s14, s2, s13
+d0045a8e:	ee67 7aa1 	vmul.f32	s15, s15, s3
+d0045a92:	eee5 7a02 	vfma.f32	s15, s10, s4
+d0045a96:	eee2 7a87 	vfma.f32	s15, s5, s14
+d0045a9a:	eef5 7ac0 	vcmpe.f32	s15, #0.0
+d0045a9e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045aa2:	f280 8123 	bge.w	d0045cec <submitEntitySolid+0x508>
+d0045aa6:	180b      	adds	r3, r1, r0
+d0045aa8:	9901      	ldr	r1, [sp, #4]
+d0045aaa:	f8df e1d0 	ldr.w	lr, [pc, #464]	; d0045c7c <submitEntitySolid+0x498>
+d0045aae:	eb08 0c02 	add.w	ip, r8, r2
+d0045ab2:	eb0b 0a01 	add.w	sl, fp, r1
+d0045ab6:	eb0e 0383 	add.w	r3, lr, r3, lsl #2
+d0045aba:	eb0e 0c8c 	add.w	ip, lr, ip, lsl #2
+d0045abe:	eb0e 0a8a 	add.w	sl, lr, sl, lsl #2
+d0045ac2:	ed93 7a00 	vldr	s14, [r3]
+d0045ac6:	ed93 6a02 	vldr	s12, [r3, #8]
+d0045aca:	eddc 5a00 	vldr	s11, [ip]
+d0045ace:	ed9a 1a02 	vldr	s2, [sl, #8]
+d0045ad2:	ee75 0ac7 	vsub.f32	s1, s11, s14
+d0045ad6:	edd3 6a01 	vldr	s13, [r3, #4]
+d0045ada:	ee31 0a46 	vsub.f32	s0, s2, s12
+d0045ade:	eddc 2a02 	vldr	s5, [ip, #8]
+d0045ae2:	edda 1a01 	vldr	s3, [sl, #4]
+d0045ae6:	ed9a 2a00 	vldr	s4, [sl]
+d0045aea:	ee32 aac6 	vsub.f32	s20, s5, s12
+d0045aee:	ee71 7ae6 	vsub.f32	s15, s3, s13
+d0045af2:	ed9c 3a01 	vldr	s6, [ip, #4]
+d0045af6:	ee32 8a47 	vsub.f32	s16, s4, s14
+d0045afa:	ee20 9a60 	vnmul.f32	s18, s0, s1
+d0045afe:	ee73 9a66 	vsub.f32	s19, s6, s13
+d0045b02:	ee67 8aca 	vnmul.f32	s17, s15, s20
+d0045b06:	eeaa 9a08 	vfma.f32	s18, s20, s16
+d0045b0a:	ee28 8a69 	vnmul.f32	s16, s16, s19
+d0045b0e:	eee9 8a80 	vfma.f32	s17, s19, s0
+d0045b12:	eea0 8aa7 	vfma.f32	s16, s1, s15
+d0045b16:	ee69 7a09 	vmul.f32	s15, s18, s18
+d0045b1a:	eee8 7aa8 	vfma.f32	s15, s17, s17
+d0045b1e:	eee8 7a08 	vfma.f32	s15, s16, s16
+d0045b22:	eef4 7aee 	vcmpe.f32	s15, s29
+d0045b26:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045b2a:	f240 80df 	bls.w	d0045cec <submitEntitySolid+0x508>
+d0045b2e:	eddf 0a59 	vldr	s1, [pc, #356]	; d0045c94 <submitEntitySolid+0x4b0>
+d0045b32:	eef4 7ae0 	vcmpe.f32	s15, s1
+d0045b36:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045b3a:	f100 822b 	bmi.w	d0045f94 <submitEntitySolid+0x7b0>
+d0045b3e:	eddf 0a56 	vldr	s1, [pc, #344]	; d0045c98 <submitEntitySolid+0x4b4>
+d0045b42:	eef4 7a60 	vcmp.f32	s15, s1
+d0045b46:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045b4a:	f300 8223 	bgt.w	d0045f94 <submitEntitySolid+0x7b0>
+d0045b4e:	7b6b      	ldrb	r3, [r5, #13]
+d0045b50:	eef4 4acf 	vcmpe.f32	s9, s30
+d0045b54:	eddf 7a4c 	vldr	s15, [pc, #304]	; d0045c88 <submitEntitySolid+0x4a4>
+d0045b58:	ee7c 9a8d 	vadd.f32	s19, s25, s26
+d0045b5c:	ee0a 3a10 	vmov	s20, r3
+d0045b60:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045b64:	eeb8 aa4a 	vcvt.f32.u32	s20, s20
+d0045b68:	ee2a aa27 	vmul.f32	s20, s20, s15
+d0045b6c:	f2c0 80c9 	blt.w	d0045d02 <submitEntitySolid+0x51e>
+d0045b70:	4490      	add	r8, r2
+d0045b72:	4b43      	ldr	r3, [pc, #268]	; (d0045c80 <submitEntitySolid+0x49c>)
+d0045b74:	eb03 0888 	add.w	r8, r3, r8, lsl #2
+d0045b78:	edd8 7a02 	vldr	s15, [r8, #8]
+d0045b7c:	eef4 7acf 	vcmpe.f32	s15, s30
+d0045b80:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045b84:	f2c0 80bd 	blt.w	d0045d02 <submitEntitySolid+0x51e>
+d0045b88:	9901      	ldr	r1, [sp, #4]
+d0045b8a:	448b      	add	fp, r1
+d0045b8c:	4619      	mov	r1, r3
+d0045b8e:	eb03 0b8b 	add.w	fp, r3, fp, lsl #2
+d0045b92:	eddb 0a02 	vldr	s1, [fp, #8]
+d0045b96:	eef4 0acf 	vcmpe.f32	s1, s30
+d0045b9a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045b9e:	f2c0 80b0 	blt.w	d0045d02 <submitEntitySolid+0x51e>
+d0045ba2:	eeb1 0a64 	vneg.f32	s0, s9
+d0045ba6:	eeb4 0a45 	vcmp.f32	s0, s10
+d0045baa:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045bae:	f200 80a8 	bhi.w	d0045d02 <submitEntitySolid+0x51e>
+d0045bb2:	eef4 4a45 	vcmp.f32	s9, s10
+d0045bb6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045bba:	f2c0 80a2 	blt.w	d0045d02 <submitEntitySolid+0x51e>
+d0045bbe:	eeb1 5a67 	vneg.f32	s10, s15
+d0045bc2:	eeb4 5a44 	vcmp.f32	s10, s8
+d0045bc6:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045bca:	f200 809a 	bhi.w	d0045d02 <submitEntitySolid+0x51e>
+d0045bce:	eef4 7a44 	vcmp.f32	s15, s8
+d0045bd2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045bd6:	f2c0 8094 	blt.w	d0045d02 <submitEntitySolid+0x51e>
+d0045bda:	eeb1 5a60 	vneg.f32	s10, s1
+d0045bde:	eeb4 5a63 	vcmp.f32	s10, s7
+d0045be2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045be6:	f200 808c 	bhi.w	d0045d02 <submitEntitySolid+0x51e>
+d0045bea:	eef4 0a63 	vcmp.f32	s1, s7
+d0045bee:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045bf2:	f2c0 8086 	blt.w	d0045d02 <submitEntitySolid+0x51e>
+d0045bf6:	ed9f 5a25 	vldr	s10, [pc, #148]	; d0045c8c <submitEntitySolid+0x4a8>
+d0045bfa:	230c      	movs	r3, #12
+d0045bfc:	ee64 4a85 	vmul.f32	s9, s9, s10
+d0045c00:	fb03 1000 	mla	r0, r3, r0, r1
+d0045c04:	ed90 5a01 	vldr	s10, [r0, #4]
+d0045c08:	eeb1 4a64 	vneg.f32	s8, s9
+d0045c0c:	eeb4 5a44 	vcmp.f32	s10, s8
+d0045c10:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045c14:	db75      	blt.n	d0045d02 <submitEntitySolid+0x51e>
+d0045c16:	eeb4 5a64 	vcmp.f32	s10, s9
+d0045c1a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045c1e:	d870      	bhi.n	d0045d02 <submitEntitySolid+0x51e>
+d0045c20:	ed9f 5a1a 	vldr	s10, [pc, #104]	; d0045c8c <submitEntitySolid+0x4a8>
+d0045c24:	fb03 1202 	mla	r2, r3, r2, r1
+d0045c28:	ee67 7a85 	vmul.f32	s15, s15, s10
+d0045c2c:	edd2 4a01 	vldr	s9, [r2, #4]
+d0045c30:	eeb1 4a67 	vneg.f32	s8, s15
+d0045c34:	eef4 4a44 	vcmp.f32	s9, s8
+d0045c38:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045c3c:	db61      	blt.n	d0045d02 <submitEntitySolid+0x51e>
+d0045c3e:	eef4 4a67 	vcmp.f32	s9, s15
+d0045c42:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045c46:	d85c      	bhi.n	d0045d02 <submitEntitySolid+0x51e>
+d0045c48:	ee60 0a85 	vmul.f32	s1, s1, s10
+d0045c4c:	9a01      	ldr	r2, [sp, #4]
+d0045c4e:	fb03 1102 	mla	r1, r3, r2, r1
+d0045c52:	eeb1 5a60 	vneg.f32	s10, s1
+d0045c56:	edd1 7a01 	vldr	s15, [r1, #4]
+d0045c5a:	eef4 7a45 	vcmp.f32	s15, s10
+d0045c5e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045c62:	db4e      	blt.n	d0045d02 <submitEntitySolid+0x51e>
+d0045c64:	eef4 7ae0 	vcmpe.f32	s15, s1
+d0045c68:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045c6c:	d849      	bhi.n	d0045d02 <submitEntitySolid+0x51e>
+d0045c6e:	9b06      	ldr	r3, [sp, #24]
+d0045c70:	b1b3      	cbz	r3, d0045ca0 <submitEntitySolid+0x4bc>
+d0045c72:	9b07      	ldr	r3, [sp, #28]
+d0045c74:	2b00      	cmp	r3, #0
+d0045c76:	f300 828a 	bgt.w	d004618e <submitEntitySolid+0x9aa>
+d0045c7a:	e011      	b.n	d0045ca0 <submitEntitySolid+0x4bc>
+d0045c7c:	d01215c0 	.word	0xd01215c0
+d0045c80:	d0095580 	.word	0xd0095580
+d0045c84:	358637bd 	.word	0x358637bd
+d0045c88:	3b808081 	.word	0x3b808081
+d0045c8c:	3f2aaaab 	.word	0x3f2aaaab
+d0045c90:	3eaaaaab 	.word	0x3eaaaaab
+d0045c94:	3f7fbe77 	.word	0x3f7fbe77
+d0045c98:	3f8020c5 	.word	0x3f8020c5
+d0045c9c:	00000000 	.word	0x00000000
+d0045ca0:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
+d0045ca4:	fe8a 0a29 	vmaxnm.f32	s0, s20, s19
+d0045ca8:	fe80 0a67 	vminnm.f32	s0, s0, s15
+d0045cac:	f7fe fce8 	bl	d0044680 <brightnessToShadeF>
+d0045cb0:	eeb0 8a40 	vmov.f32	s16, s0
+d0045cb4:	eef0 4a48 	vmov.f32	s9, s16
+d0045cb8:	7b6a      	ldrb	r2, [r5, #13]
+d0045cba:	7b29      	ldrb	r1, [r5, #12]
+d0045cbc:	9804      	ldr	r0, [sp, #16]
+d0045cbe:	ed97 3a00 	vldr	s6, [r7]
+d0045cc2:	edd7 3a01 	vldr	s7, [r7, #4]
+d0045cc6:	ed97 4a02 	vldr	s8, [r7, #8]
+d0045cca:	edd6 1a00 	vldr	s3, [r6]
+d0045cce:	ed96 2a01 	vldr	s4, [r6, #4]
+d0045cd2:	edd6 2a02 	vldr	s5, [r6, #8]
+d0045cd6:	ed94 0a00 	vldr	s0, [r4]
+d0045cda:	edd4 0a01 	vldr	s1, [r4, #4]
+d0045cde:	ed94 1a02 	vldr	s2, [r4, #8]
+d0045ce2:	f7ff fa1f 	bl	d0045124 <submitClippedTri>
+d0045ce6:	9b03      	ldr	r3, [sp, #12]
+d0045ce8:	695b      	ldr	r3, [r3, #20]
+d0045cea:	9302      	str	r3, [sp, #8]
+d0045cec:	f109 0901 	add.w	r9, r9, #1
+d0045cf0:	9b02      	ldr	r3, [sp, #8]
+d0045cf2:	4599      	cmp	r9, r3
+d0045cf4:	f6ff ae6d 	blt.w	d00459d2 <submitEntitySolid+0x1ee>
+d0045cf8:	b033      	add	sp, #204	; 0xcc
+d0045cfa:	ecbd 8b10 	vpop	{d8-d15}
+d0045cfe:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d0045d02:	9b06      	ldr	r3, [sp, #24]
+d0045d04:	2b00      	cmp	r3, #0
+d0045d06:	f000 8152 	beq.w	d0045fae <submitEntitySolid+0x7ca>
+d0045d0a:	9b07      	ldr	r3, [sp, #28]
+d0045d0c:	2b00      	cmp	r3, #0
+d0045d0e:	f340 814e 	ble.w	d0045fae <submitEntitySolid+0x7ca>
+d0045d12:	f04f 0800 	mov.w	r8, #0
+d0045d16:	ee75 ba87 	vadd.f32	s23, s11, s14
+d0045d1a:	ed5f 7a23 	vldr	s15, [pc, #-140]	; d0045c90 <submitEntitySolid+0x4ac>
+d0045d1e:	ee33 ca26 	vadd.f32	s24, s6, s13
+d0045d22:	ee32 ea86 	vadd.f32	s28, s5, s12
+d0045d26:	eeb5 bac0 	vcmpe.f32	s22, #0.0
+d0045d2a:	ee7b ba82 	vadd.f32	s23, s23, s4
+d0045d2e:	ee3c ca21 	vadd.f32	s24, s24, s3
+d0045d32:	ee3e ea01 	vadd.f32	s28, s28, s2
+d0045d36:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045d3a:	ee6b baa7 	vmul.f32	s23, s23, s15
+d0045d3e:	ee2c ca27 	vmul.f32	s24, s24, s15
+d0045d42:	ee2e ea27 	vmul.f32	s28, s28, s15
+d0045d46:	f340 818b 	ble.w	d0046060 <submitEntitySolid+0x87c>
+d0045d4a:	eddd 7a0c 	vldr	s15, [sp, #48]	; 0x30
+d0045d4e:	ee77 2acc 	vsub.f32	s5, s15, s24
+d0045d52:	eddd 7a0a 	vldr	s15, [sp, #40]	; 0x28
+d0045d56:	ee37 3aeb 	vsub.f32	s6, s15, s23
+d0045d5a:	eddd 7a09 	vldr	s15, [sp, #36]	; 0x24
+d0045d5e:	ee77 4ace 	vsub.f32	s9, s15, s28
+d0045d62:	ee62 7aa2 	vmul.f32	s15, s5, s5
+d0045d66:	eee3 7a03 	vfma.f32	s15, s6, s6
+d0045d6a:	eee4 7aa4 	vfma.f32	s15, s9, s9
+d0045d6e:	eef4 7aee 	vcmpe.f32	s15, s29
+d0045d72:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045d76:	f340 8173 	ble.w	d0046060 <submitEntitySolid+0x87c>
+d0045d7a:	ed1f 7a3a 	vldr	s14, [pc, #-232]	; d0045c94 <submitEntitySolid+0x4b0>
+d0045d7e:	eef4 7ac7 	vcmpe.f32	s15, s14
+d0045d82:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045d86:	f100 81e2 	bmi.w	d004614e <submitEntitySolid+0x96a>
+d0045d8a:	ed1f 7a3d 	vldr	s14, [pc, #-244]	; d0045c98 <submitEntitySolid+0x4b4>
+d0045d8e:	eef4 7a47 	vcmp.f32	s15, s14
+d0045d92:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045d96:	f300 81da 	bgt.w	d004614e <submitEntitySolid+0x96a>
+d0045d9a:	ee79 1a09 	vadd.f32	s3, s18, s18
+d0045d9e:	4642      	mov	r2, r8
+d0045da0:	ee38 2a08 	vadd.f32	s4, s16, s16
+d0045da4:	46b8      	mov	r8, r7
+d0045da6:	eef0 6a6c 	vmov.f32	s13, s25
+d0045daa:	4637      	mov	r7, r6
+d0045dac:	eef0 7a61 	vmov.f32	s15, s3
+d0045db0:	4626      	mov	r6, r4
+d0045db2:	eeb0 7a42 	vmov.f32	s14, s4
+d0045db6:	f8dd a02c 	ldr.w	sl, [sp, #44]	; 0x2c
+d0045dba:	eef0 ca64 	vmov.f32	s25, s9
+d0045dbe:	f04f 0b00 	mov.w	fp, #0
+d0045dc2:	eef0 4a6a 	vmov.f32	s9, s21
+d0045dc6:	9c07      	ldr	r4, [sp, #28]
+d0045dc8:	eef0 aa62 	vmov.f32	s21, s5
+d0045dcc:	eeb0 2a4d 	vmov.f32	s4, s26
+d0045dd0:	eef0 1a4a 	vmov.f32	s3, s20
+d0045dd4:	ee38 1aa8 	vadd.f32	s2, s17, s17
+d0045dd8:	eeb0 aa43 	vmov.f32	s20, s6
+d0045ddc:	eeb7 5a00 	vmov.f32	s10, #112	; 0x3f800000  1.0
+d0045de0:	eeb0 3a4f 	vmov.f32	s6, s30
+d0045de4:	eef2 da00 	vmov.f32	s27, #32	; 0x41000000  8.0
+d0045de8:	eeb0 fa67 	vmov.f32	s30, s15
+d0045dec:	eeb0 da47 	vmov.f32	s26, s14
+d0045df0:	eef0 2a66 	vmov.f32	s5, s13
+d0045df4:	e0b6      	b.n	d0045f64 <submitEntitySolid+0x780>
+d0045df6:	edda 7a02 	vldr	s15, [sl, #8]
+d0045dfa:	edda 6a01 	vldr	s13, [sl, #4]
+d0045dfe:	ee77 7acc 	vsub.f32	s15, s15, s24
+d0045e02:	ed9a 7a03 	vldr	s14, [sl, #12]
+d0045e06:	ee76 6aeb 	vsub.f32	s13, s13, s23
+d0045e0a:	edda 5a0a 	vldr	s11, [sl, #40]	; 0x28
+d0045e0e:	ee37 7a4e 	vsub.f32	s14, s14, s28
+d0045e12:	ee27 6aa7 	vmul.f32	s12, s15, s15
+d0045e16:	ee25 4aa5 	vmul.f32	s8, s11, s11
+d0045e1a:	eea6 6aa6 	vfma.f32	s12, s13, s13
+d0045e1e:	eea7 6a07 	vfma.f32	s12, s14, s14
+d0045e22:	eeb4 6a6e 	vcmp.f32	s12, s29
+d0045e26:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045e2a:	f340 8094 	ble.w	d0045f56 <submitEntitySolid+0x772>
+d0045e2e:	eeb4 4a46 	vcmp.f32	s8, s12
+d0045e32:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045e36:	f340 808e 	ble.w	d0045f56 <submitEntitySolid+0x772>
+d0045e3a:	eeb1 0ac6 	vsqrt.f32	s0, s12
+d0045e3e:	edda 3a08 	vldr	s7, [sl, #32]
+d0045e42:	ee63 0aa3 	vmul.f32	s1, s7, s7
+d0045e46:	eef4 0ac6 	vcmpe.f32	s1, s12
+d0045e4a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045e4e:	ee85 4a00 	vdiv.f32	s8, s10, s0
+d0045e52:	ee66 6a84 	vmul.f32	s13, s13, s8
+d0045e56:	ee67 7a84 	vmul.f32	s15, s15, s8
+d0045e5a:	ee27 7a04 	vmul.f32	s14, s14, s8
+d0045e5e:	f140 8123 	bpl.w	d00460a8 <submitEntitySolid+0x8c4>
+d0045e62:	edda 0a09 	vldr	s1, [sl, #36]	; 0x24
+d0045e66:	eef4 3ae0 	vcmpe.f32	s7, s1
+d0045e6a:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045e6e:	da72      	bge.n	d0045f56 <submitEntitySolid+0x772>
+d0045e70:	eef4 5ae0 	vcmpe.f32	s11, s1
+d0045e74:	ee26 6a04 	vmul.f32	s12, s12, s8
+d0045e78:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045e7c:	eef4 0ac6 	vcmpe.f32	s1, s12
+d0045e80:	f200 814d 	bhi.w	d004611e <submitEntitySolid+0x93a>
+d0045e84:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045e88:	d965      	bls.n	d0045f56 <submitEntitySolid+0x772>
+d0045e8a:	ee36 6a63 	vsub.f32	s12, s12, s7
+d0045e8e:	ee70 3ae3 	vsub.f32	s7, s1, s7
+d0045e92:	eec6 5a23 	vdiv.f32	s11, s12, s7
+d0045e96:	ed1f 6a7f 	vldr	s12, [pc, #-508]	; d0045c9c <submitEntitySolid+0x4b8>
+d0045e9a:	fe85 6a86 	vmaxnm.f32	s12, s11, s12
+d0045e9e:	fe86 6a45 	vminnm.f32	s12, s12, s10
+d0045ea2:	ee35 6a46 	vsub.f32	s12, s10, s12
+d0045ea6:	eeb5 6ac0 	vcmpe.f32	s12, #0.0
+d0045eaa:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045eae:	d952      	bls.n	d0045f56 <submitEntitySolid+0x772>
+d0045eb0:	ee69 5a27 	vmul.f32	s11, s18, s15
+d0045eb4:	eee8 5aa6 	vfma.f32	s11, s17, s13
+d0045eb8:	eee8 5a07 	vfma.f32	s11, s16, s14
+d0045ebc:	eef5 5ac0 	vcmpe.f32	s11, #0.0
+d0045ec0:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045ec4:	d947      	bls.n	d0045f56 <submitEntitySolid+0x772>
+d0045ec6:	eef5 fac0 	vcmpe.f32	s31, #0.0
+d0045eca:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045ece:	dd07      	ble.n	d0045ee0 <submitEntitySolid+0x6fc>
+d0045ed0:	ed9a 4a07 	vldr	s8, [sl, #28]
+d0045ed4:	ee2f 4a84 	vmul.f32	s8, s31, s8
+d0045ed8:	ee24 4a06 	vmul.f32	s8, s8, s12
+d0045edc:	eee5 9a84 	vfma.f32	s19, s11, s8
+d0045ee0:	eeb5 bac0 	vcmpe.f32	s22, #0.0
+d0045ee4:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045ee8:	dd2f      	ble.n	d0045f4a <submitEntitySolid+0x766>
+d0045eea:	eed5 7a8f 	vfnms.f32	s15, s11, s30
+d0045eee:	eed5 6a81 	vfnms.f32	s13, s11, s2
+d0045ef2:	ee95 7a8d 	vfnms.f32	s14, s11, s26
+d0045ef6:	ee2a 0aa7 	vmul.f32	s0, s21, s15
+d0045efa:	eeaa 0a26 	vfma.f32	s0, s20, s13
+d0045efe:	eeac 0a87 	vfma.f32	s0, s25, s14
+d0045f02:	eeb5 0ac0 	vcmpe.f32	s0, #0.0
+d0045f06:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045f0a:	dd1e      	ble.n	d0045f4a <submitEntitySolid+0x766>
+d0045f0c:	eddd 7a08 	vldr	s15, [sp, #32]
+d0045f10:	eef4 7a6d 	vcmp.f32	s15, s27
+d0045f14:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045f18:	d009      	beq.n	d0045f2e <submitEntitySolid+0x74a>
+d0045f1a:	eeb3 7a00 	vmov.f32	s14, #48	; 0x41800000  16.0
+d0045f1e:	eef4 7a47 	vcmp.f32	s15, s14
+d0045f22:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045f26:	f040 80c2 	bne.w	d00460ae <submitEntitySolid+0x8ca>
+d0045f2a:	ee20 0a00 	vmul.f32	s0, s0, s0
+d0045f2e:	ee20 0a00 	vmul.f32	s0, s0, s0
+d0045f32:	ee20 0a00 	vmul.f32	s0, s0, s0
+d0045f36:	ee20 0a00 	vmul.f32	s0, s0, s0
+d0045f3a:	edda 7a07 	vldr	s15, [sl, #28]
+d0045f3e:	ee6b 7a27 	vmul.f32	s15, s22, s15
+d0045f42:	ee27 6a86 	vmul.f32	s12, s15, s12
+d0045f46:	eee6 9a00 	vfma.f32	s19, s12, s0
+d0045f4a:	eef4 9ac5 	vcmpe.f32	s19, s10
+d0045f4e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0045f52:	f280 80d3 	bge.w	d00460fc <submitEntitySolid+0x918>
+d0045f56:	f10b 0b01 	add.w	fp, fp, #1
+d0045f5a:	f10a 0a40 	add.w	sl, sl, #64	; 0x40
+d0045f5e:	455c      	cmp	r4, fp
+d0045f60:	f340 8085 	ble.w	d004606e <submitEntitySolid+0x88a>
+d0045f64:	f8da 302c 	ldr.w	r3, [sl, #44]	; 0x2c
+d0045f68:	2b00      	cmp	r3, #0
+d0045f6a:	d0f4      	beq.n	d0045f56 <submitEntitySolid+0x772>
+d0045f6c:	f89a 3000 	ldrb.w	r3, [sl]
+d0045f70:	2b00      	cmp	r3, #0
+d0045f72:	f43f af40 	beq.w	d0045df6 <submitEntitySolid+0x612>
+d0045f76:	edda 6a04 	vldr	s13, [sl, #16]
+d0045f7a:	eeb7 6a00 	vmov.f32	s12, #112	; 0x3f800000  1.0
+d0045f7e:	edda 7a05 	vldr	s15, [sl, #20]
+d0045f82:	ed9a 7a06 	vldr	s14, [sl, #24]
+d0045f86:	eef1 6a66 	vneg.f32	s13, s13
+d0045f8a:	eef1 7a67 	vneg.f32	s15, s15
+d0045f8e:	eeb1 7a47 	vneg.f32	s14, s14
+d0045f92:	e78d      	b.n	d0045eb0 <submitEntitySolid+0x6cc>
+d0045f94:	eef1 0ae7 	vsqrt.f32	s1, s15
+d0045f98:	eeb7 0a00 	vmov.f32	s0, #112	; 0x3f800000  1.0
+d0045f9c:	eec0 7a20 	vdiv.f32	s15, s0, s1
+d0045fa0:	ee68 8aa7 	vmul.f32	s17, s17, s15
+d0045fa4:	ee29 9a27 	vmul.f32	s18, s18, s15
+d0045fa8:	ee28 8a27 	vmul.f32	s16, s16, s15
+d0045fac:	e5cf      	b.n	d0045b4e <submitEntitySolid+0x36a>
+d0045fae:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
+d0045fb2:	fe8a 0a29 	vmaxnm.f32	s0, s20, s19
+d0045fb6:	fe80 0a67 	vminnm.f32	s0, s0, s15
+d0045fba:	f7fe fb61 	bl	d0044680 <brightnessToShadeF>
+d0045fbe:	eeb0 8a40 	vmov.f32	s16, s0
+d0045fc2:	f8dd a010 	ldr.w	sl, [sp, #16]
+d0045fc6:	f8dd 8014 	ldr.w	r8, [sp, #20]
+d0045fca:	4651      	mov	r1, sl
+d0045fcc:	ed97 3a00 	vldr	s6, [r7]
+d0045fd0:	4640      	mov	r0, r8
+d0045fd2:	edd7 3a01 	vldr	s7, [r7, #4]
+d0045fd6:	ed97 4a02 	vldr	s8, [r7, #8]
+d0045fda:	edd6 1a00 	vldr	s3, [r6]
+d0045fde:	ed96 2a01 	vldr	s4, [r6, #4]
+d0045fe2:	edd6 2a02 	vldr	s5, [r6, #8]
+d0045fe6:	ed94 0a00 	vldr	s0, [r4]
+d0045fea:	edd4 0a01 	vldr	s1, [r4, #4]
+d0045fee:	ed94 1a02 	vldr	s2, [r4, #8]
+d0045ff2:	f7fe fc3b 	bl	d004486c <clipTriangleToFrustum>
+d0045ff6:	2802      	cmp	r0, #2
+d0045ff8:	dc09      	bgt.n	d004600e <submitEntitySolid+0x82a>
+d0045ffa:	9b03      	ldr	r3, [sp, #12]
+d0045ffc:	f109 0901 	add.w	r9, r9, #1
+d0046000:	695b      	ldr	r3, [r3, #20]
+d0046002:	9302      	str	r3, [sp, #8]
+d0046004:	9b02      	ldr	r3, [sp, #8]
+d0046006:	4599      	cmp	r9, r3
+d0046008:	f6ff ace3 	blt.w	d00459d2 <submitEntitySolid+0x1ee>
+d004600c:	e674      	b.n	d0045cf8 <submitEntitySolid+0x514>
+d004600e:	eef0 4a48 	vmov.f32	s9, s16
+d0046012:	1e44      	subs	r4, r0, #1
+d0046014:	2601      	movs	r6, #1
+d0046016:	4647      	mov	r7, r8
+d0046018:	4650      	mov	r0, sl
+d004601a:	4633      	mov	r3, r6
+d004601c:	3601      	adds	r6, #1
+d004601e:	7b6a      	ldrb	r2, [r5, #13]
+d0046020:	eb03 0343 	add.w	r3, r3, r3, lsl #1
+d0046024:	7b29      	ldrb	r1, [r5, #12]
+d0046026:	eb06 0c46 	add.w	ip, r6, r6, lsl #1
+d004602a:	ed97 0a00 	vldr	s0, [r7]
+d004602e:	eb07 0383 	add.w	r3, r7, r3, lsl #2
+d0046032:	edd7 0a01 	vldr	s1, [r7, #4]
+d0046036:	eb07 0c8c 	add.w	ip, r7, ip, lsl #2
+d004603a:	ed97 1a02 	vldr	s2, [r7, #8]
+d004603e:	edd3 1a00 	vldr	s3, [r3]
+d0046042:	ed93 2a01 	vldr	s4, [r3, #4]
+d0046046:	edd3 2a02 	vldr	s5, [r3, #8]
+d004604a:	ed9c 3a00 	vldr	s6, [ip]
+d004604e:	eddc 3a01 	vldr	s7, [ip, #4]
+d0046052:	ed9c 4a02 	vldr	s8, [ip, #8]
+d0046056:	f7ff f865 	bl	d0045124 <submitClippedTri>
+d004605a:	42a6      	cmp	r6, r4
+d004605c:	d1dd      	bne.n	d004601a <submitEntitySolid+0x836>
+d004605e:	e7cc      	b.n	d0045ffa <submitEntitySolid+0x816>
+d0046060:	eddf 4a4c 	vldr	s9, [pc, #304]	; d0046194 <submitEntitySolid+0x9b0>
+d0046064:	eef0 2a64 	vmov.f32	s5, s9
+d0046068:	eeb0 3a64 	vmov.f32	s6, s9
+d004606c:	e695      	b.n	d0045d9a <submitEntitySolid+0x5b6>
+d004606e:	eef0 aa64 	vmov.f32	s21, s9
+d0046072:	4634      	mov	r4, r6
+d0046074:	eeb0 fa43 	vmov.f32	s30, s6
+d0046078:	463e      	mov	r6, r7
+d004607a:	eef0 ca62 	vmov.f32	s25, s5
+d004607e:	4647      	mov	r7, r8
+d0046080:	eeb0 da42 	vmov.f32	s26, s4
+d0046084:	4690      	mov	r8, r2
+d0046086:	eeb0 aa61 	vmov.f32	s20, s3
+d004608a:	eef7 7a00 	vmov.f32	s15, #112	; 0x3f800000  1.0
+d004608e:	fe89 0a8a 	vmaxnm.f32	s0, s19, s20
+d0046092:	fe80 0a67 	vminnm.f32	s0, s0, s15
+d0046096:	f7fe faf3 	bl	d0044680 <brightnessToShadeF>
+d004609a:	eeb0 8a40 	vmov.f32	s16, s0
+d004609e:	f1b8 0f00 	cmp.w	r8, #0
+d00460a2:	f47f ae07 	bne.w	d0045cb4 <submitEntitySolid+0x4d0>
+d00460a6:	e78c      	b.n	d0045fc2 <submitEntitySolid+0x7de>
+d00460a8:	eeb7 6a00 	vmov.f32	s12, #112	; 0x3f800000  1.0
+d00460ac:	e700      	b.n	d0045eb0 <submitEntitySolid+0x6cc>
+d00460ae:	eef0 0a67 	vmov.f32	s1, s15
+d00460b2:	ed8d 1a13 	vstr	s2, [sp, #76]	; 0x4c
+d00460b6:	9212      	str	r2, [sp, #72]	; 0x48
+d00460b8:	edcd 1a11 	vstr	s3, [sp, #68]	; 0x44
+d00460bc:	ed8d 2a10 	vstr	s4, [sp, #64]	; 0x40
+d00460c0:	edcd 2a0f 	vstr	s5, [sp, #60]	; 0x3c
+d00460c4:	ed8d 3a0e 	vstr	s6, [sp, #56]	; 0x38
+d00460c8:	edcd 4a0d 	vstr	s9, [sp, #52]	; 0x34
+d00460cc:	ed8d 5a02 	vstr	s10, [sp, #8]
+d00460d0:	ed8d 6a01 	vstr	s12, [sp, #4]
+d00460d4:	f7fc fdcc 	bl	d0042c70 <powf>
+d00460d8:	ed9d 1a13 	vldr	s2, [sp, #76]	; 0x4c
+d00460dc:	9a12      	ldr	r2, [sp, #72]	; 0x48
+d00460de:	eddd 1a11 	vldr	s3, [sp, #68]	; 0x44
+d00460e2:	ed9d 2a10 	vldr	s4, [sp, #64]	; 0x40
+d00460e6:	eddd 2a0f 	vldr	s5, [sp, #60]	; 0x3c
+d00460ea:	ed9d 3a0e 	vldr	s6, [sp, #56]	; 0x38
+d00460ee:	eddd 4a0d 	vldr	s9, [sp, #52]	; 0x34
+d00460f2:	ed9d 5a02 	vldr	s10, [sp, #8]
+d00460f6:	ed9d 6a01 	vldr	s12, [sp, #4]
+d00460fa:	e71e      	b.n	d0045f3a <submitEntitySolid+0x756>
+d00460fc:	4634      	mov	r4, r6
+d00460fe:	eef0 aa64 	vmov.f32	s21, s9
+d0046102:	463e      	mov	r6, r7
+d0046104:	eeb0 fa43 	vmov.f32	s30, s6
+d0046108:	4647      	mov	r7, r8
+d004610a:	eef0 ca62 	vmov.f32	s25, s5
+d004610e:	eeb0 da42 	vmov.f32	s26, s4
+d0046112:	4690      	mov	r8, r2
+d0046114:	eeb0 aa61 	vmov.f32	s20, s3
+d0046118:	eef7 9a00 	vmov.f32	s19, #112	; 0x3f800000  1.0
+d004611c:	e7b5      	b.n	d004608a <submitEntitySolid+0x8a6>
+d004611e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0046122:	db21      	blt.n	d0046168 <submitEntitySolid+0x984>
+d0046124:	ee36 6a63 	vsub.f32	s12, s12, s7
+d0046128:	ee70 3ae3 	vsub.f32	s7, s1, s7
+d004612c:	eeb6 4a08 	vmov.f32	s8, #104	; 0x3f400000  0.750
+d0046130:	eec6 5a23 	vdiv.f32	s11, s12, s7
+d0046134:	ed9f 6a17 	vldr	s12, [pc, #92]	; d0046194 <submitEntitySolid+0x9b0>
+d0046138:	fe85 6a86 	vmaxnm.f32	s12, s11, s12
+d004613c:	eef0 5a45 	vmov.f32	s11, s10
+d0046140:	fe86 6a45 	vminnm.f32	s12, s12, s10
+d0046144:	eee6 5a44 	vfms.f32	s11, s12, s8
+d0046148:	eeb0 6a65 	vmov.f32	s12, s11
+d004614c:	e6ab      	b.n	d0045ea6 <submitEntitySolid+0x6c2>
+d004614e:	eeb1 7ae7 	vsqrt.f32	s14, s15
+d0046152:	eef7 6a00 	vmov.f32	s13, #112	; 0x3f800000  1.0
+d0046156:	eec6 7a87 	vdiv.f32	s15, s13, s14
+d004615a:	ee23 3a27 	vmul.f32	s6, s6, s15
+d004615e:	ee62 2aa7 	vmul.f32	s5, s5, s15
+d0046162:	ee64 4aa7 	vmul.f32	s9, s9, s15
+d0046166:	e618      	b.n	d0045d9a <submitEntitySolid+0x5b6>
+d0046168:	ee36 6a60 	vsub.f32	s12, s12, s1
+d004616c:	ee75 5ae0 	vsub.f32	s11, s11, s1
+d0046170:	ee86 4a25 	vdiv.f32	s8, s12, s11
+d0046174:	ed9f 6a07 	vldr	s12, [pc, #28]	; d0046194 <submitEntitySolid+0x9b0>
+d0046178:	eef5 5a00 	vmov.f32	s11, #80	; 0x3e800000  0.250
+d004617c:	fe84 6a06 	vmaxnm.f32	s12, s8, s12
+d0046180:	fe86 6a45 	vminnm.f32	s12, s12, s10
+d0046184:	ee35 6a46 	vsub.f32	s12, s10, s12
+d0046188:	ee26 6a25 	vmul.f32	s12, s12, s11
+d004618c:	e68b      	b.n	d0045ea6 <submitEntitySolid+0x6c2>
+d004618e:	f04f 0801 	mov.w	r8, #1
+d0046192:	e5c0      	b.n	d0045d16 <submitEntitySolid+0x532>
+d0046194:	00000000 	.word	0x00000000
 
-d0045ad4 <_fclose_r>:
-d0045ad4:	b570      	push	{r4, r5, r6, lr}
-d0045ad6:	4605      	mov	r5, r0
-d0045ad8:	460c      	mov	r4, r1
-d0045ada:	b911      	cbnz	r1, d0045ae2 <_fclose_r+0xe>
-d0045adc:	2600      	movs	r6, #0
-d0045ade:	4630      	mov	r0, r6
-d0045ae0:	bd70      	pop	{r4, r5, r6, pc}
-d0045ae2:	b118      	cbz	r0, d0045aec <_fclose_r+0x18>
-d0045ae4:	6983      	ldr	r3, [r0, #24]
-d0045ae6:	b90b      	cbnz	r3, d0045aec <_fclose_r+0x18>
-d0045ae8:	f000 f982 	bl	d0045df0 <__sinit>
-d0045aec:	4b2c      	ldr	r3, [pc, #176]	; (d0045ba0 <_fclose_r+0xcc>)
-d0045aee:	429c      	cmp	r4, r3
-d0045af0:	d114      	bne.n	d0045b1c <_fclose_r+0x48>
-d0045af2:	686c      	ldr	r4, [r5, #4]
-d0045af4:	6e63      	ldr	r3, [r4, #100]	; 0x64
-d0045af6:	07d8      	lsls	r0, r3, #31
-d0045af8:	d405      	bmi.n	d0045b06 <_fclose_r+0x32>
-d0045afa:	89a3      	ldrh	r3, [r4, #12]
-d0045afc:	0599      	lsls	r1, r3, #22
-d0045afe:	d402      	bmi.n	d0045b06 <_fclose_r+0x32>
-d0045b00:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d0045b02:	f000 fa14 	bl	d0045f2e <__retarget_lock_acquire_recursive>
-d0045b06:	f9b4 300c 	ldrsh.w	r3, [r4, #12]
-d0045b0a:	b98b      	cbnz	r3, d0045b30 <_fclose_r+0x5c>
-d0045b0c:	6e66      	ldr	r6, [r4, #100]	; 0x64
-d0045b0e:	f016 0601 	ands.w	r6, r6, #1
-d0045b12:	d1e3      	bne.n	d0045adc <_fclose_r+0x8>
-d0045b14:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d0045b16:	f000 fa0b 	bl	d0045f30 <__retarget_lock_release_recursive>
-d0045b1a:	e7e0      	b.n	d0045ade <_fclose_r+0xa>
-d0045b1c:	4b21      	ldr	r3, [pc, #132]	; (d0045ba4 <_fclose_r+0xd0>)
-d0045b1e:	429c      	cmp	r4, r3
-d0045b20:	d101      	bne.n	d0045b26 <_fclose_r+0x52>
-d0045b22:	68ac      	ldr	r4, [r5, #8]
-d0045b24:	e7e6      	b.n	d0045af4 <_fclose_r+0x20>
-d0045b26:	4b20      	ldr	r3, [pc, #128]	; (d0045ba8 <_fclose_r+0xd4>)
-d0045b28:	429c      	cmp	r4, r3
-d0045b2a:	bf08      	it	eq
-d0045b2c:	68ec      	ldreq	r4, [r5, #12]
-d0045b2e:	e7e1      	b.n	d0045af4 <_fclose_r+0x20>
-d0045b30:	4621      	mov	r1, r4
-d0045b32:	4628      	mov	r0, r5
-d0045b34:	f000 f842 	bl	d0045bbc <__sflush_r>
-d0045b38:	6b23      	ldr	r3, [r4, #48]	; 0x30
-d0045b3a:	4606      	mov	r6, r0
-d0045b3c:	b133      	cbz	r3, d0045b4c <_fclose_r+0x78>
-d0045b3e:	6a21      	ldr	r1, [r4, #32]
-d0045b40:	4628      	mov	r0, r5
-d0045b42:	4798      	blx	r3
-d0045b44:	2800      	cmp	r0, #0
-d0045b46:	bfb8      	it	lt
-d0045b48:	f04f 36ff 	movlt.w	r6, #4294967295	; 0xffffffff
-d0045b4c:	89a3      	ldrh	r3, [r4, #12]
-d0045b4e:	061a      	lsls	r2, r3, #24
-d0045b50:	d503      	bpl.n	d0045b5a <_fclose_r+0x86>
-d0045b52:	6921      	ldr	r1, [r4, #16]
-d0045b54:	4628      	mov	r0, r5
-d0045b56:	f000 fa37 	bl	d0045fc8 <_free_r>
-d0045b5a:	6b61      	ldr	r1, [r4, #52]	; 0x34
-d0045b5c:	b141      	cbz	r1, d0045b70 <_fclose_r+0x9c>
-d0045b5e:	f104 0344 	add.w	r3, r4, #68	; 0x44
-d0045b62:	4299      	cmp	r1, r3
-d0045b64:	d002      	beq.n	d0045b6c <_fclose_r+0x98>
-d0045b66:	4628      	mov	r0, r5
-d0045b68:	f000 fa2e 	bl	d0045fc8 <_free_r>
-d0045b6c:	2300      	movs	r3, #0
-d0045b6e:	6363      	str	r3, [r4, #52]	; 0x34
-d0045b70:	6ca1      	ldr	r1, [r4, #72]	; 0x48
-d0045b72:	b121      	cbz	r1, d0045b7e <_fclose_r+0xaa>
-d0045b74:	4628      	mov	r0, r5
-d0045b76:	f000 fa27 	bl	d0045fc8 <_free_r>
-d0045b7a:	2300      	movs	r3, #0
-d0045b7c:	64a3      	str	r3, [r4, #72]	; 0x48
-d0045b7e:	f000 f91f 	bl	d0045dc0 <__sfp_lock_acquire>
-d0045b82:	2300      	movs	r3, #0
-d0045b84:	81a3      	strh	r3, [r4, #12]
-d0045b86:	6e63      	ldr	r3, [r4, #100]	; 0x64
-d0045b88:	07db      	lsls	r3, r3, #31
-d0045b8a:	d402      	bmi.n	d0045b92 <_fclose_r+0xbe>
-d0045b8c:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d0045b8e:	f000 f9cf 	bl	d0045f30 <__retarget_lock_release_recursive>
-d0045b92:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d0045b94:	f000 f9ca 	bl	d0045f2c <__retarget_lock_close_recursive>
-d0045b98:	f000 f918 	bl	d0045dcc <__sfp_lock_release>
-d0045b9c:	e79f      	b.n	d0045ade <_fclose_r+0xa>
-d0045b9e:	bf00      	nop
-d0045ba0:	d0046de0 	.word	0xd0046de0
-d0045ba4:	d0046e00 	.word	0xd0046e00
-d0045ba8:	d0046dc0 	.word	0xd0046dc0
+d0046198 <submitWorldEntities>:
+d0046198:	e92d 43f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, lr}
+d004619c:	4c30      	ldr	r4, [pc, #192]	; (d0046260 <submitWorldEntities+0xc8>)
+d004619e:	b09d      	sub	sp, #116	; 0x74
+d00461a0:	f04f 0800 	mov.w	r8, #0
+d00461a4:	f8df 90bc 	ldr.w	r9, [pc, #188]	; d0046264 <submitWorldEntities+0xcc>
+d00461a8:	4605      	mov	r5, r0
+d00461aa:	f504 46c0 	add.w	r6, r4, #24576	; 0x6000
+d00461ae:	f100 0710 	add.w	r7, r0, #16
+d00461b2:	f894 3034 	ldrb.w	r3, [r4, #52]	; 0x34
+d00461b6:	2b00      	cmp	r3, #0
+d00461b8:	d03f      	beq.n	d004623a <submitWorldEntities+0xa2>
+d00461ba:	68e3      	ldr	r3, [r4, #12]
+d00461bc:	2250      	movs	r2, #80	; 0x50
+d00461be:	4639      	mov	r1, r7
+d00461c0:	4668      	mov	r0, sp
+d00461c2:	b3d3      	cbz	r3, d004623a <submitWorldEntities+0xa2>
+d00461c4:	f894 3035 	ldrb.w	r3, [r4, #53]	; 0x35
+d00461c8:	07db      	lsls	r3, r3, #31
+d00461ca:	d536      	bpl.n	d004623a <submitWorldEntities+0xa2>
+d00461cc:	ed94 0a00 	vldr	s0, [r4]
+d00461d0:	edd4 0a01 	vldr	s1, [r4, #4]
+d00461d4:	ed94 1a02 	vldr	s2, [r4, #8]
+d00461d8:	ed8d 0a17 	vstr	s0, [sp, #92]	; 0x5c
+d00461dc:	edcd 0a16 	vstr	s1, [sp, #88]	; 0x58
+d00461e0:	ed8d 1a15 	vstr	s2, [sp, #84]	; 0x54
+d00461e4:	f000 fd30 	bl	d0046c48 <memcpy>
+d00461e8:	ed9d 1a15 	vldr	s2, [sp, #84]	; 0x54
+d00461ec:	ed9d 0a17 	vldr	s0, [sp, #92]	; 0x5c
+d00461f0:	eddd 0a16 	vldr	s1, [sp, #88]	; 0x58
+d00461f4:	e895 000f 	ldmia.w	r5, {r0, r1, r2, r3}
+d00461f8:	f7fd fa94 	bl	d0043724 <worldToCamera>
+d00461fc:	68e3      	ldr	r3, [r4, #12]
+d00461fe:	ed95 7a11 	vldr	s14, [r5, #68]	; 0x44
+d0046202:	edd3 7a06 	vldr	s15, [r3, #24]
+d0046206:	ed8d 0a19 	vstr	s0, [sp, #100]	; 0x64
+d004620a:	ee71 6a67 	vsub.f32	s13, s2, s15
+d004620e:	edcd 0a1a 	vstr	s1, [sp, #104]	; 0x68
+d0046212:	ee71 7a27 	vadd.f32	s15, s2, s15
+d0046216:	ed8d 1a1b 	vstr	s2, [sp, #108]	; 0x6c
+d004621a:	eef4 6ac7 	vcmpe.f32	s13, s14
+d004621e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0046222:	dc0a      	bgt.n	d004623a <submitWorldEntities+0xa2>
+d0046224:	ed95 7a10 	vldr	s14, [r5, #64]	; 0x40
+d0046228:	eef4 7ac7 	vcmpe.f32	s15, s14
+d004622c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0046230:	d403      	bmi.n	d004623a <submitWorldEntities+0xa2>
+d0046232:	f849 4028 	str.w	r4, [r9, r8, lsl #2]
+d0046236:	f108 0801 	add.w	r8, r8, #1
+d004623a:	3460      	adds	r4, #96	; 0x60
+d004623c:	42b4      	cmp	r4, r6
+d004623e:	d1b8      	bne.n	d00461b2 <submitWorldEntities+0x1a>
+d0046240:	f1b8 0f00 	cmp.w	r8, #0
+d0046244:	d009      	beq.n	d004625a <submitWorldEntities+0xc2>
+d0046246:	4c07      	ldr	r4, [pc, #28]	; (d0046264 <submitWorldEntities+0xcc>)
+d0046248:	eb04 0888 	add.w	r8, r4, r8, lsl #2
+d004624c:	f854 0b04 	ldr.w	r0, [r4], #4
+d0046250:	4629      	mov	r1, r5
+d0046252:	f7ff fac7 	bl	d00457e4 <submitEntitySolid>
+d0046256:	45a0      	cmp	r8, r4
+d0046258:	d1f8      	bne.n	d004624c <submitWorldEntities+0xb4>
+d004625a:	b01d      	add	sp, #116	; 0x74
+d004625c:	e8bd 83f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, pc}
+d0046260:	d012da80 	.word	0xd012da80
+d0046264:	d012d5c0 	.word	0xd012d5c0
 
-d0045bac <fclose>:
-d0045bac:	4b02      	ldr	r3, [pc, #8]	; (d0045bb8 <fclose+0xc>)
-d0045bae:	4601      	mov	r1, r0
-d0045bb0:	6818      	ldr	r0, [r3, #0]
-d0045bb2:	f7ff bf8f 	b.w	d0045ad4 <_fclose_r>
-d0045bb6:	bf00      	nop
-d0045bb8:	d00475d8 	.word	0xd00475d8
+d0046268 <Render3D>:
+d0046268:	b5f0      	push	{r4, r5, r6, r7, lr}
+d004626a:	4604      	mov	r4, r0
+d004626c:	4e6d      	ldr	r6, [pc, #436]	; (d0046424 <Render3D+0x1bc>)
+d004626e:	2700      	movs	r7, #0
+d0046270:	ed2d 8b02 	vpush	{d8}
+d0046274:	b087      	sub	sp, #28
+d0046276:	6037      	str	r7, [r6, #0]
+d0046278:	f7ff ff8e 	bl	d0046198 <submitWorldEntities>
+d004627c:	4620      	mov	r0, r4
+d004627e:	f7fc fdb5 	bl	d0042dec <sb3dParticlesRender>
+d0046282:	4b69      	ldr	r3, [pc, #420]	; (d0046428 <Render3D+0x1c0>)
+d0046284:	681d      	ldr	r5, [r3, #0]
+d0046286:	2d00      	cmp	r5, #0
+d0046288:	d04d      	beq.n	d0046326 <Render3D+0xbe>
+d004628a:	6833      	ldr	r3, [r6, #0]
+d004628c:	42bb      	cmp	r3, r7
+d004628e:	dd46      	ble.n	d004631e <Render3D+0xb6>
+d0046290:	eeb6 8a00 	vmov.f32	s16, #96	; 0x3f000000  0.5
+d0046294:	4c65      	ldr	r4, [pc, #404]	; (d004642c <Render3D+0x1c4>)
+d0046296:	eddf 8a66 	vldr	s17, [pc, #408]	; d0046430 <Render3D+0x1c8>
+d004629a:	edd4 7a07 	vldr	s15, [r4, #28]
+d004629e:	3701      	adds	r7, #1
+d00462a0:	f894 3035 	ldrb.w	r3, [r4, #53]	; 0x35
+d00462a4:	ee77 7a88 	vadd.f32	s15, s15, s16
+d00462a8:	ee07 3a10 	vmov	s14, r3
+d00462ac:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+d00462b0:	eeb8 7a47 	vcvt.f32.u32	s14, s14
+d00462b4:	ee17 1a90 	vmov	r1, s15
+d00462b8:	eef0 7a48 	vmov.f32	s15, s16
+d00462bc:	2904      	cmp	r1, #4
+d00462be:	eee7 7a28 	vfma.f32	s15, s14, s17
+d00462c2:	bfa8      	it	ge
+d00462c4:	2104      	movge	r1, #4
+d00462c6:	ea21 71e1 	bic.w	r1, r1, r1, asr #31
+d00462ca:	b153      	cbz	r3, d00462e2 <Render3D+0x7a>
+d00462cc:	eefd 7ae7 	vcvt.s32.f32	s15, s15
+d00462d0:	ee17 3a90 	vmov	r3, s15
+d00462d4:	f1c3 0305 	rsb	r3, r3, #5
+d00462d8:	ea23 73e3 	bic.w	r3, r3, r3, asr #31
+d00462dc:	4299      	cmp	r1, r3
+d00462de:	bfa8      	it	ge
+d00462e0:	4619      	movge	r1, r3
+d00462e2:	f894 0034 	ldrb.w	r0, [r4, #52]	; 0x34
+d00462e6:	f7fa fdd3 	bl	d0040e90 <shadeColor>
+d00462ea:	4605      	mov	r5, r0
+d00462ec:	68e3      	ldr	r3, [r4, #12]
+d00462ee:	68a2      	ldr	r2, [r4, #8]
+d00462f0:	6861      	ldr	r1, [r4, #4]
+d00462f2:	9000      	str	r0, [sp, #0]
+d00462f4:	6820      	ldr	r0, [r4, #0]
+d00462f6:	f7fa fd7d 	bl	d0040df4 <drawLine>
+d00462fa:	9500      	str	r5, [sp, #0]
+d00462fc:	e9d4 2304 	ldrd	r2, r3, [r4, #16]
+d0046300:	e9d4 0102 	ldrd	r0, r1, [r4, #8]
+d0046304:	f7fa fd76 	bl	d0040df4 <drawLine>
+d0046308:	9500      	str	r5, [sp, #0]
+d004630a:	e9d4 2300 	ldrd	r2, r3, [r4]
+d004630e:	e9d4 0104 	ldrd	r0, r1, [r4, #16]
+d0046312:	f7fa fd6f 	bl	d0040df4 <drawLine>
+d0046316:	6833      	ldr	r3, [r6, #0]
+d0046318:	3440      	adds	r4, #64	; 0x40
+d004631a:	42bb      	cmp	r3, r7
+d004631c:	dcbd      	bgt.n	d004629a <Render3D+0x32>
+d004631e:	b007      	add	sp, #28
+d0046320:	ecbd 8b02 	vpop	{d8}
+d0046324:	bdf0      	pop	{r4, r5, r6, r7, pc}
+d0046326:	f7fa fd47 	bl	d0040db8 <resetDepthBuffer>
+d004632a:	4b42      	ldr	r3, [pc, #264]	; (d0046434 <Render3D+0x1cc>)
+d004632c:	681f      	ldr	r7, [r3, #0]
+d004632e:	b33f      	cbz	r7, d0046380 <Render3D+0x118>
+d0046330:	6833      	ldr	r3, [r6, #0]
+d0046332:	2b00      	cmp	r3, #0
+d0046334:	ddf3      	ble.n	d004631e <Render3D+0xb6>
+d0046336:	4c3d      	ldr	r4, [pc, #244]	; (d004642c <Render3D+0x1c4>)
+d0046338:	f894 3034 	ldrb.w	r3, [r4, #52]	; 0x34
+d004633c:	3501      	adds	r5, #1
+d004633e:	8c60      	ldrh	r0, [r4, #34]	; 0x22
+d0046340:	8c21      	ldrh	r1, [r4, #32]
+d0046342:	6962      	ldr	r2, [r4, #20]
+d0046344:	8ca7      	ldrh	r7, [r4, #36]	; 0x24
+d0046346:	9305      	str	r3, [sp, #20]
+d0046348:	9704      	str	r7, [sp, #16]
+d004634a:	9003      	str	r0, [sp, #12]
+d004634c:	9102      	str	r1, [sp, #8]
+d004634e:	9201      	str	r2, [sp, #4]
+d0046350:	6923      	ldr	r3, [r4, #16]
+d0046352:	9300      	str	r3, [sp, #0]
+d0046354:	edd4 1a07 	vldr	s3, [r4, #28]
+d0046358:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
+d004635c:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
+d0046360:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
+d0046364:	e9d4 2302 	ldrd	r2, r3, [r4, #8]
+d0046368:	e9d4 0100 	ldrd	r0, r1, [r4]
+d004636c:	f7fa fda0 	bl	d0040eb0 <fillTriangleFlat>
+d0046370:	6833      	ldr	r3, [r6, #0]
+d0046372:	3440      	adds	r4, #64	; 0x40
+d0046374:	42ab      	cmp	r3, r5
+d0046376:	dcdf      	bgt.n	d0046338 <Render3D+0xd0>
+d0046378:	b007      	add	sp, #28
+d004637a:	ecbd 8b02 	vpop	{d8}
+d004637e:	bdf0      	pop	{r4, r5, r6, r7, pc}
+d0046380:	4b2d      	ldr	r3, [pc, #180]	; (d0046438 <Render3D+0x1d0>)
+d0046382:	681d      	ldr	r5, [r3, #0]
+d0046384:	6833      	ldr	r3, [r6, #0]
+d0046386:	b335      	cbz	r5, d00463d6 <Render3D+0x16e>
+d0046388:	2b00      	cmp	r3, #0
+d004638a:	ddc8      	ble.n	d004631e <Render3D+0xb6>
+d004638c:	4c27      	ldr	r4, [pc, #156]	; (d004642c <Render3D+0x1c4>)
+d004638e:	f894 3034 	ldrb.w	r3, [r4, #52]	; 0x34
+d0046392:	3701      	adds	r7, #1
+d0046394:	8c60      	ldrh	r0, [r4, #34]	; 0x22
+d0046396:	8c21      	ldrh	r1, [r4, #32]
+d0046398:	6962      	ldr	r2, [r4, #20]
+d004639a:	8ca5      	ldrh	r5, [r4, #36]	; 0x24
+d004639c:	9305      	str	r3, [sp, #20]
+d004639e:	6923      	ldr	r3, [r4, #16]
+d00463a0:	9504      	str	r5, [sp, #16]
+d00463a2:	9003      	str	r0, [sp, #12]
+d00463a4:	9102      	str	r1, [sp, #8]
+d00463a6:	9201      	str	r2, [sp, #4]
+d00463a8:	9300      	str	r3, [sp, #0]
+d00463aa:	edd4 1a07 	vldr	s3, [r4, #28]
+d00463ae:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
+d00463b2:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
+d00463b6:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
+d00463ba:	e9d4 2302 	ldrd	r2, r3, [r4, #8]
+d00463be:	e9d4 0100 	ldrd	r0, r1, [r4]
+d00463c2:	f7fb fe41 	bl	d0042048 <fillTriangleDitherBayer2Mode>
+d00463c6:	6833      	ldr	r3, [r6, #0]
+d00463c8:	3440      	adds	r4, #64	; 0x40
+d00463ca:	42bb      	cmp	r3, r7
+d00463cc:	dcdf      	bgt.n	d004638e <Render3D+0x126>
+d00463ce:	b007      	add	sp, #28
+d00463d0:	ecbd 8b02 	vpop	{d8}
+d00463d4:	bdf0      	pop	{r4, r5, r6, r7, pc}
+d00463d6:	2b00      	cmp	r3, #0
+d00463d8:	dda1      	ble.n	d004631e <Render3D+0xb6>
+d00463da:	4c14      	ldr	r4, [pc, #80]	; (d004642c <Render3D+0x1c4>)
+d00463dc:	f894 3034 	ldrb.w	r3, [r4, #52]	; 0x34
+d00463e0:	3501      	adds	r5, #1
+d00463e2:	8c60      	ldrh	r0, [r4, #34]	; 0x22
+d00463e4:	8c21      	ldrh	r1, [r4, #32]
+d00463e6:	6962      	ldr	r2, [r4, #20]
+d00463e8:	8ca7      	ldrh	r7, [r4, #36]	; 0x24
+d00463ea:	9305      	str	r3, [sp, #20]
+d00463ec:	6923      	ldr	r3, [r4, #16]
+d00463ee:	9704      	str	r7, [sp, #16]
+d00463f0:	9003      	str	r0, [sp, #12]
+d00463f2:	9102      	str	r1, [sp, #8]
+d00463f4:	9201      	str	r2, [sp, #4]
+d00463f6:	9300      	str	r3, [sp, #0]
+d00463f8:	edd4 1a07 	vldr	s3, [r4, #28]
+d00463fc:	ed94 1a0c 	vldr	s2, [r4, #48]	; 0x30
+d0046400:	edd4 0a0b 	vldr	s1, [r4, #44]	; 0x2c
+d0046404:	ed94 0a0a 	vldr	s0, [r4, #40]	; 0x28
+d0046408:	e9d4 2302 	ldrd	r2, r3, [r4, #8]
+d004640c:	e9d4 0100 	ldrd	r0, r1, [r4]
+d0046410:	f7fb f95c 	bl	d00416cc <fillTriangleDitherBayer>
+d0046414:	6833      	ldr	r3, [r6, #0]
+d0046416:	3440      	adds	r4, #64	; 0x40
+d0046418:	42ab      	cmp	r3, r5
+d004641a:	dcdf      	bgt.n	d00463dc <Render3D+0x174>
+d004641c:	b007      	add	sp, #28
+d004641e:	ecbd 8b02 	vpop	{d8}
+d0046422:	bdf0      	pop	{r4, r5, r6, r7, pc}
+d0046424:	d00a1584 	.word	0xd00a1584
+d0046428:	d01215a4 	.word	0xd01215a4
+d004642c:	d00a15a0 	.word	0xd00a15a0
+d0046430:	3ca0a0a1 	.word	0x3ca0a0a1
+d0046434:	d00a1580 	.word	0xd00a1580
+d0046438:	d01215a0 	.word	0xd01215a0
 
-d0045bbc <__sflush_r>:
-d0045bbc:	898a      	ldrh	r2, [r1, #12]
-d0045bbe:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
-d0045bc2:	4605      	mov	r5, r0
-d0045bc4:	0710      	lsls	r0, r2, #28
-d0045bc6:	460c      	mov	r4, r1
-d0045bc8:	d458      	bmi.n	d0045c7c <__sflush_r+0xc0>
-d0045bca:	684b      	ldr	r3, [r1, #4]
-d0045bcc:	2b00      	cmp	r3, #0
-d0045bce:	dc05      	bgt.n	d0045bdc <__sflush_r+0x20>
-d0045bd0:	6c0b      	ldr	r3, [r1, #64]	; 0x40
-d0045bd2:	2b00      	cmp	r3, #0
-d0045bd4:	dc02      	bgt.n	d0045bdc <__sflush_r+0x20>
-d0045bd6:	2000      	movs	r0, #0
-d0045bd8:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
-d0045bdc:	6ae6      	ldr	r6, [r4, #44]	; 0x2c
-d0045bde:	2e00      	cmp	r6, #0
-d0045be0:	d0f9      	beq.n	d0045bd6 <__sflush_r+0x1a>
-d0045be2:	2300      	movs	r3, #0
-d0045be4:	f412 5280 	ands.w	r2, r2, #4096	; 0x1000
-d0045be8:	682f      	ldr	r7, [r5, #0]
-d0045bea:	602b      	str	r3, [r5, #0]
-d0045bec:	d032      	beq.n	d0045c54 <__sflush_r+0x98>
-d0045bee:	6d60      	ldr	r0, [r4, #84]	; 0x54
-d0045bf0:	89a3      	ldrh	r3, [r4, #12]
-d0045bf2:	075a      	lsls	r2, r3, #29
-d0045bf4:	d505      	bpl.n	d0045c02 <__sflush_r+0x46>
-d0045bf6:	6863      	ldr	r3, [r4, #4]
-d0045bf8:	1ac0      	subs	r0, r0, r3
-d0045bfa:	6b63      	ldr	r3, [r4, #52]	; 0x34
-d0045bfc:	b10b      	cbz	r3, d0045c02 <__sflush_r+0x46>
-d0045bfe:	6c23      	ldr	r3, [r4, #64]	; 0x40
-d0045c00:	1ac0      	subs	r0, r0, r3
-d0045c02:	2300      	movs	r3, #0
-d0045c04:	4602      	mov	r2, r0
-d0045c06:	6ae6      	ldr	r6, [r4, #44]	; 0x2c
-d0045c08:	6a21      	ldr	r1, [r4, #32]
-d0045c0a:	4628      	mov	r0, r5
-d0045c0c:	47b0      	blx	r6
-d0045c0e:	1c43      	adds	r3, r0, #1
-d0045c10:	89a3      	ldrh	r3, [r4, #12]
-d0045c12:	d106      	bne.n	d0045c22 <__sflush_r+0x66>
-d0045c14:	6829      	ldr	r1, [r5, #0]
-d0045c16:	291d      	cmp	r1, #29
-d0045c18:	d82c      	bhi.n	d0045c74 <__sflush_r+0xb8>
-d0045c1a:	4a2a      	ldr	r2, [pc, #168]	; (d0045cc4 <__sflush_r+0x108>)
-d0045c1c:	40ca      	lsrs	r2, r1
-d0045c1e:	07d6      	lsls	r6, r2, #31
-d0045c20:	d528      	bpl.n	d0045c74 <__sflush_r+0xb8>
-d0045c22:	2200      	movs	r2, #0
-d0045c24:	6062      	str	r2, [r4, #4]
-d0045c26:	04d9      	lsls	r1, r3, #19
-d0045c28:	6922      	ldr	r2, [r4, #16]
-d0045c2a:	6022      	str	r2, [r4, #0]
-d0045c2c:	d504      	bpl.n	d0045c38 <__sflush_r+0x7c>
-d0045c2e:	1c42      	adds	r2, r0, #1
-d0045c30:	d101      	bne.n	d0045c36 <__sflush_r+0x7a>
-d0045c32:	682b      	ldr	r3, [r5, #0]
-d0045c34:	b903      	cbnz	r3, d0045c38 <__sflush_r+0x7c>
-d0045c36:	6560      	str	r0, [r4, #84]	; 0x54
-d0045c38:	6b61      	ldr	r1, [r4, #52]	; 0x34
-d0045c3a:	602f      	str	r7, [r5, #0]
-d0045c3c:	2900      	cmp	r1, #0
-d0045c3e:	d0ca      	beq.n	d0045bd6 <__sflush_r+0x1a>
-d0045c40:	f104 0344 	add.w	r3, r4, #68	; 0x44
-d0045c44:	4299      	cmp	r1, r3
-d0045c46:	d002      	beq.n	d0045c4e <__sflush_r+0x92>
-d0045c48:	4628      	mov	r0, r5
-d0045c4a:	f000 f9bd 	bl	d0045fc8 <_free_r>
-d0045c4e:	2000      	movs	r0, #0
-d0045c50:	6360      	str	r0, [r4, #52]	; 0x34
-d0045c52:	e7c1      	b.n	d0045bd8 <__sflush_r+0x1c>
-d0045c54:	6a21      	ldr	r1, [r4, #32]
-d0045c56:	2301      	movs	r3, #1
-d0045c58:	4628      	mov	r0, r5
-d0045c5a:	47b0      	blx	r6
-d0045c5c:	1c41      	adds	r1, r0, #1
-d0045c5e:	d1c7      	bne.n	d0045bf0 <__sflush_r+0x34>
-d0045c60:	682b      	ldr	r3, [r5, #0]
-d0045c62:	2b00      	cmp	r3, #0
-d0045c64:	d0c4      	beq.n	d0045bf0 <__sflush_r+0x34>
-d0045c66:	2b1d      	cmp	r3, #29
-d0045c68:	d001      	beq.n	d0045c6e <__sflush_r+0xb2>
-d0045c6a:	2b16      	cmp	r3, #22
-d0045c6c:	d101      	bne.n	d0045c72 <__sflush_r+0xb6>
-d0045c6e:	602f      	str	r7, [r5, #0]
-d0045c70:	e7b1      	b.n	d0045bd6 <__sflush_r+0x1a>
-d0045c72:	89a3      	ldrh	r3, [r4, #12]
-d0045c74:	f043 0340 	orr.w	r3, r3, #64	; 0x40
-d0045c78:	81a3      	strh	r3, [r4, #12]
-d0045c7a:	e7ad      	b.n	d0045bd8 <__sflush_r+0x1c>
-d0045c7c:	690f      	ldr	r7, [r1, #16]
-d0045c7e:	2f00      	cmp	r7, #0
-d0045c80:	d0a9      	beq.n	d0045bd6 <__sflush_r+0x1a>
-d0045c82:	0793      	lsls	r3, r2, #30
-d0045c84:	680e      	ldr	r6, [r1, #0]
-d0045c86:	bf08      	it	eq
-d0045c88:	694b      	ldreq	r3, [r1, #20]
-d0045c8a:	600f      	str	r7, [r1, #0]
-d0045c8c:	bf18      	it	ne
-d0045c8e:	2300      	movne	r3, #0
-d0045c90:	eba6 0807 	sub.w	r8, r6, r7
-d0045c94:	608b      	str	r3, [r1, #8]
-d0045c96:	f1b8 0f00 	cmp.w	r8, #0
-d0045c9a:	dd9c      	ble.n	d0045bd6 <__sflush_r+0x1a>
-d0045c9c:	6a21      	ldr	r1, [r4, #32]
-d0045c9e:	6aa6      	ldr	r6, [r4, #40]	; 0x28
-d0045ca0:	4643      	mov	r3, r8
-d0045ca2:	463a      	mov	r2, r7
-d0045ca4:	4628      	mov	r0, r5
-d0045ca6:	47b0      	blx	r6
-d0045ca8:	2800      	cmp	r0, #0
-d0045caa:	dc06      	bgt.n	d0045cba <__sflush_r+0xfe>
-d0045cac:	89a3      	ldrh	r3, [r4, #12]
-d0045cae:	f043 0340 	orr.w	r3, r3, #64	; 0x40
-d0045cb2:	81a3      	strh	r3, [r4, #12]
-d0045cb4:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
-d0045cb8:	e78e      	b.n	d0045bd8 <__sflush_r+0x1c>
-d0045cba:	4407      	add	r7, r0
-d0045cbc:	eba8 0800 	sub.w	r8, r8, r0
-d0045cc0:	e7e9      	b.n	d0045c96 <__sflush_r+0xda>
-d0045cc2:	bf00      	nop
-d0045cc4:	20400001 	.word	0x20400001
+d004643c <loadMeshSB3D>:
+d004643c:	2800      	cmp	r0, #0
+d004643e:	d07a      	beq.n	d0046536 <loadMeshSB3D+0xfa>
+d0046440:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+d0046444:	460d      	mov	r5, r1
+d0046446:	4601      	mov	r1, r0
+d0046448:	fab5 f085 	clz	r0, r5
+d004644c:	ed2d 8b02 	vpush	{d8}
+d0046450:	0940      	lsrs	r0, r0, #5
+d0046452:	b08c      	sub	sp, #48	; 0x30
+d0046454:	2d00      	cmp	r5, #0
+d0046456:	d068      	beq.n	d004652a <loadMeshSB3D+0xee>
+d0046458:	4c6c      	ldr	r4, [pc, #432]	; (d004660c <loadMeshSB3D+0x1d0>)
+d004645a:	2201      	movs	r2, #1
+d004645c:	eeb0 8a40 	vmov.f32	s16, s0
+d0046460:	7923      	ldrb	r3, [r4, #4]
+d0046462:	7966      	ldrb	r6, [r4, #5]
+d0046464:	ea43 2306 	orr.w	r3, r3, r6, lsl #8
+d0046468:	79a6      	ldrb	r6, [r4, #6]
+d004646a:	ea43 4306 	orr.w	r3, r3, r6, lsl #16
+d004646e:	79e6      	ldrb	r6, [r4, #7]
+d0046470:	ea43 6306 	orr.w	r3, r3, r6, lsl #24
+d0046474:	681b      	ldr	r3, [r3, #0]
+d0046476:	681b      	ldr	r3, [r3, #0]
+d0046478:	4798      	blx	r3
+d004647a:	2800      	cmp	r0, #0
+d004647c:	d155      	bne.n	d004652a <loadMeshSB3D+0xee>
+d004647e:	f894 c004 	ldrb.w	ip, [r4, #4]
+d0046482:	2204      	movs	r2, #4
+d0046484:	7961      	ldrb	r1, [r4, #5]
+d0046486:	ab02      	add	r3, sp, #8
+d0046488:	79a7      	ldrb	r7, [r4, #6]
+d004648a:	ea4c 2101 	orr.w	r1, ip, r1, lsl #8
+d004648e:	79e6      	ldrb	r6, [r4, #7]
+d0046490:	ea41 4707 	orr.w	r7, r1, r7, lsl #16
+d0046494:	a903      	add	r1, sp, #12
+d0046496:	ea47 6606 	orr.w	r6, r7, r6, lsl #24
+d004649a:	6836      	ldr	r6, [r6, #0]
+d004649c:	68b6      	ldr	r6, [r6, #8]
+d004649e:	47b0      	blx	r6
+d00464a0:	2800      	cmp	r0, #0
+d00464a2:	d13f      	bne.n	d0046524 <loadMeshSB3D+0xe8>
+d00464a4:	4b5a      	ldr	r3, [pc, #360]	; (d0046610 <loadMeshSB3D+0x1d4>)
+d00464a6:	9a03      	ldr	r2, [sp, #12]
+d00464a8:	429a      	cmp	r2, r3
+d00464aa:	d13b      	bne.n	d0046524 <loadMeshSB3D+0xe8>
+d00464ac:	f894 c004 	ldrb.w	ip, [r4, #4]
+d00464b0:	ab02      	add	r3, sp, #8
+d00464b2:	7961      	ldrb	r1, [r4, #5]
+d00464b4:	2204      	movs	r2, #4
+d00464b6:	79a7      	ldrb	r7, [r4, #6]
+d00464b8:	ea4c 2101 	orr.w	r1, ip, r1, lsl #8
+d00464bc:	79e6      	ldrb	r6, [r4, #7]
+d00464be:	ea41 4707 	orr.w	r7, r1, r7, lsl #16
+d00464c2:	a904      	add	r1, sp, #16
+d00464c4:	ea47 6606 	orr.w	r6, r7, r6, lsl #24
+d00464c8:	6836      	ldr	r6, [r6, #0]
+d00464ca:	68b6      	ldr	r6, [r6, #8]
+d00464cc:	47b0      	blx	r6
+d00464ce:	bb48      	cbnz	r0, d0046524 <loadMeshSB3D+0xe8>
+d00464d0:	9b04      	ldr	r3, [sp, #16]
+d00464d2:	2b02      	cmp	r3, #2
+d00464d4:	d126      	bne.n	d0046524 <loadMeshSB3D+0xe8>
+d00464d6:	f894 c004 	ldrb.w	ip, [r4, #4]
+d00464da:	ab02      	add	r3, sp, #8
+d00464dc:	7961      	ldrb	r1, [r4, #5]
+d00464de:	2204      	movs	r2, #4
+d00464e0:	79a7      	ldrb	r7, [r4, #6]
+d00464e2:	ea4c 2101 	orr.w	r1, ip, r1, lsl #8
+d00464e6:	79e6      	ldrb	r6, [r4, #7]
+d00464e8:	ea41 4707 	orr.w	r7, r1, r7, lsl #16
+d00464ec:	a905      	add	r1, sp, #20
+d00464ee:	ea47 6606 	orr.w	r6, r7, r6, lsl #24
+d00464f2:	6836      	ldr	r6, [r6, #0]
+d00464f4:	68b6      	ldr	r6, [r6, #8]
+d00464f6:	47b0      	blx	r6
+d00464f8:	b9a0      	cbnz	r0, d0046524 <loadMeshSB3D+0xe8>
+d00464fa:	7921      	ldrb	r1, [r4, #4]
+d00464fc:	ab02      	add	r3, sp, #8
+d00464fe:	7966      	ldrb	r6, [r4, #5]
+d0046500:	2204      	movs	r2, #4
+d0046502:	79a7      	ldrb	r7, [r4, #6]
+d0046504:	ea41 2106 	orr.w	r1, r1, r6, lsl #8
+d0046508:	79e6      	ldrb	r6, [r4, #7]
+d004650a:	ea41 4707 	orr.w	r7, r1, r7, lsl #16
+d004650e:	a906      	add	r1, sp, #24
+d0046510:	ea47 6606 	orr.w	r6, r7, r6, lsl #24
+d0046514:	6836      	ldr	r6, [r6, #0]
+d0046516:	68b6      	ldr	r6, [r6, #8]
+d0046518:	47b0      	blx	r6
+d004651a:	b918      	cbnz	r0, d0046524 <loadMeshSB3D+0xe8>
+d004651c:	9b05      	ldr	r3, [sp, #20]
+d004651e:	b10b      	cbz	r3, d0046524 <loadMeshSB3D+0xe8>
+d0046520:	9e06      	ldr	r6, [sp, #24]
+d0046522:	b956      	cbnz	r6, d004653a <loadMeshSB3D+0xfe>
+d0046524:	2000      	movs	r0, #0
+d0046526:	f000 f997 	bl	d0046858 <fclose>
+d004652a:	2000      	movs	r0, #0
+d004652c:	b00c      	add	sp, #48	; 0x30
+d004652e:	ecbd 8b02 	vpop	{d8}
+d0046532:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+d0046536:	2000      	movs	r0, #0
+d0046538:	4770      	bx	lr
+d004653a:	eb03 0043 	add.w	r0, r3, r3, lsl #1
+d004653e:	2700      	movs	r7, #0
+d0046540:	606b      	str	r3, [r5, #4]
+d0046542:	616e      	str	r6, [r5, #20]
+d0046544:	0080      	lsls	r0, r0, #2
+d0046546:	60ef      	str	r7, [r5, #12]
+d0046548:	f000 fb6e 	bl	d0046c28 <malloc>
+d004654c:	4603      	mov	r3, r0
+d004654e:	0130      	lsls	r0, r6, #4
+d0046550:	461e      	mov	r6, r3
+d0046552:	602b      	str	r3, [r5, #0]
+d0046554:	f000 fb68 	bl	d0046c28 <malloc>
+d0046558:	60af      	str	r7, [r5, #8]
+d004655a:	6128      	str	r0, [r5, #16]
+d004655c:	2e00      	cmp	r6, #0
+d004655e:	f000 80f7 	beq.w	d0046750 <loadMeshSB3D+0x314>
+d0046562:	2800      	cmp	r0, #0
+d0046564:	f000 80e7 	beq.w	d0046736 <loadMeshSB3D+0x2fa>
+d0046568:	46b8      	mov	r8, r7
+d004656a:	e017      	b.n	d004659c <loadMeshSB3D+0x160>
+d004656c:	eddd 6a09 	vldr	s13, [sp, #36]	; 0x24
+d0046570:	ed9d 7a0a 	vldr	s14, [sp, #40]	; 0x28
+d0046574:	eddd 7a0b 	vldr	s15, [sp, #44]	; 0x2c
+d0046578:	ee66 6a88 	vmul.f32	s13, s13, s16
+d004657c:	682b      	ldr	r3, [r5, #0]
+d004657e:	ee27 7a08 	vmul.f32	s14, s14, s16
+d0046582:	9905      	ldr	r1, [sp, #20]
+d0046584:	ee67 7a88 	vmul.f32	s15, s15, s16
+d0046588:	eb03 0382 	add.w	r3, r3, r2, lsl #2
+d004658c:	4541      	cmp	r1, r8
+d004658e:	edc3 6a00 	vstr	s13, [r3]
+d0046592:	ed83 7a01 	vstr	s14, [r3, #4]
+d0046596:	edc3 7a02 	vstr	s15, [r3, #8]
+d004659a:	d931      	bls.n	d0046600 <loadMeshSB3D+0x1c4>
+d004659c:	f894 c004 	ldrb.w	ip, [r4, #4]
+d00465a0:	220c      	movs	r2, #12
+d00465a2:	7960      	ldrb	r0, [r4, #5]
+d00465a4:	ab02      	add	r3, sp, #8
+d00465a6:	79a7      	ldrb	r7, [r4, #6]
+d00465a8:	a909      	add	r1, sp, #36	; 0x24
+d00465aa:	ea4c 2000 	orr.w	r0, ip, r0, lsl #8
+d00465ae:	79e6      	ldrb	r6, [r4, #7]
+d00465b0:	ea40 4707 	orr.w	r7, r0, r7, lsl #16
+d00465b4:	2000      	movs	r0, #0
+d00465b6:	ea47 6606 	orr.w	r6, r7, r6, lsl #24
+d00465ba:	6836      	ldr	r6, [r6, #0]
+d00465bc:	68b6      	ldr	r6, [r6, #8]
+d00465be:	47b0      	blx	r6
+d00465c0:	eb08 0248 	add.w	r2, r8, r8, lsl #1
+d00465c4:	f108 0801 	add.w	r8, r8, #1
+d00465c8:	2800      	cmp	r0, #0
+d00465ca:	d0cf      	beq.n	d004656c <loadMeshSB3D+0x130>
+d00465cc:	6828      	ldr	r0, [r5, #0]
+d00465ce:	b108      	cbz	r0, d00465d4 <loadMeshSB3D+0x198>
+d00465d0:	f000 fb32 	bl	d0046c38 <free>
+d00465d4:	6928      	ldr	r0, [r5, #16]
+d00465d6:	b108      	cbz	r0, d00465dc <loadMeshSB3D+0x1a0>
+d00465d8:	f000 fb2e 	bl	d0046c38 <free>
+d00465dc:	68a8      	ldr	r0, [r5, #8]
+d00465de:	b108      	cbz	r0, d00465e4 <loadMeshSB3D+0x1a8>
+d00465e0:	f000 fb2a 	bl	d0046c38 <free>
+d00465e4:	2400      	movs	r4, #0
+d00465e6:	2300      	movs	r3, #0
+d00465e8:	4620      	mov	r0, r4
+d00465ea:	602c      	str	r4, [r5, #0]
+d00465ec:	612c      	str	r4, [r5, #16]
+d00465ee:	60ac      	str	r4, [r5, #8]
+d00465f0:	606c      	str	r4, [r5, #4]
+d00465f2:	616c      	str	r4, [r5, #20]
+d00465f4:	60ec      	str	r4, [r5, #12]
+d00465f6:	61ab      	str	r3, [r5, #24]
+d00465f8:	f000 f92e 	bl	d0046858 <fclose>
+d00465fc:	4620      	mov	r0, r4
+d00465fe:	e795      	b.n	d004652c <loadMeshSB3D+0xf0>
+d0046600:	9b06      	ldr	r3, [sp, #24]
+d0046602:	2b00      	cmp	r3, #0
+d0046604:	f000 808a 	beq.w	d004671c <loadMeshSB3D+0x2e0>
+d0046608:	4606      	mov	r6, r0
+d004660a:	e06e      	b.n	d00466ea <loadMeshSB3D+0x2ae>
+d004660c:	2001f000 	.word	0x2001f000
+d0046610:	44334253 	.word	0x44334253
+d0046614:	f894 e004 	ldrb.w	lr, [r4, #4]
+d0046618:	7967      	ldrb	r7, [r4, #5]
+d004661a:	f894 c006 	ldrb.w	ip, [r4, #6]
+d004661e:	ea4e 2e07 	orr.w	lr, lr, r7, lsl #8
+d0046622:	79e7      	ldrb	r7, [r4, #7]
+d0046624:	ea4e 4c0c 	orr.w	ip, lr, ip, lsl #16
+d0046628:	ea4c 6707 	orr.w	r7, ip, r7, lsl #24
+d004662c:	683f      	ldr	r7, [r7, #0]
+d004662e:	68bf      	ldr	r7, [r7, #8]
+d0046630:	47b8      	blx	r7
+d0046632:	ab02      	add	r3, sp, #8
+d0046634:	2204      	movs	r2, #4
+d0046636:	a909      	add	r1, sp, #36	; 0x24
+d0046638:	2800      	cmp	r0, #0
+d004663a:	d1c7      	bne.n	d00465cc <loadMeshSB3D+0x190>
+d004663c:	f894 e004 	ldrb.w	lr, [r4, #4]
+d0046640:	7967      	ldrb	r7, [r4, #5]
+d0046642:	f894 c006 	ldrb.w	ip, [r4, #6]
+d0046646:	ea4e 2e07 	orr.w	lr, lr, r7, lsl #8
+d004664a:	79e7      	ldrb	r7, [r4, #7]
+d004664c:	ea4e 4c0c 	orr.w	ip, lr, ip, lsl #16
+d0046650:	ea4c 6707 	orr.w	r7, ip, r7, lsl #24
+d0046654:	683f      	ldr	r7, [r7, #0]
+d0046656:	68bf      	ldr	r7, [r7, #8]
+d0046658:	47b8      	blx	r7
+d004665a:	ab02      	add	r3, sp, #8
+d004665c:	2201      	movs	r2, #1
+d004665e:	f10d 0106 	add.w	r1, sp, #6
+d0046662:	2800      	cmp	r0, #0
+d0046664:	d1b2      	bne.n	d00465cc <loadMeshSB3D+0x190>
+d0046666:	f894 e004 	ldrb.w	lr, [r4, #4]
+d004666a:	7967      	ldrb	r7, [r4, #5]
+d004666c:	f894 c006 	ldrb.w	ip, [r4, #6]
+d0046670:	ea4e 2e07 	orr.w	lr, lr, r7, lsl #8
+d0046674:	79e7      	ldrb	r7, [r4, #7]
+d0046676:	ea4e 4c0c 	orr.w	ip, lr, ip, lsl #16
+d004667a:	ea4c 6707 	orr.w	r7, ip, r7, lsl #24
+d004667e:	683f      	ldr	r7, [r7, #0]
+d0046680:	68bf      	ldr	r7, [r7, #8]
+d0046682:	47b8      	blx	r7
+d0046684:	ab02      	add	r3, sp, #8
+d0046686:	2201      	movs	r2, #1
+d0046688:	f10d 0107 	add.w	r1, sp, #7
+d004668c:	2800      	cmp	r0, #0
+d004668e:	d19d      	bne.n	d00465cc <loadMeshSB3D+0x190>
+d0046690:	f894 e004 	ldrb.w	lr, [r4, #4]
+d0046694:	7967      	ldrb	r7, [r4, #5]
+d0046696:	f894 c006 	ldrb.w	ip, [r4, #6]
+d004669a:	ea4e 2e07 	orr.w	lr, lr, r7, lsl #8
+d004669e:	79e7      	ldrb	r7, [r4, #7]
+d00466a0:	ea4e 4c0c 	orr.w	ip, lr, ip, lsl #16
+d00466a4:	ea4c 6707 	orr.w	r7, ip, r7, lsl #24
+d00466a8:	683f      	ldr	r7, [r7, #0]
+d00466aa:	68bf      	ldr	r7, [r7, #8]
+d00466ac:	47b8      	blx	r7
+d00466ae:	0137      	lsls	r7, r6, #4
+d00466b0:	2800      	cmp	r0, #0
+d00466b2:	d18b      	bne.n	d00465cc <loadMeshSB3D+0x190>
+d00466b4:	9a07      	ldr	r2, [sp, #28]
+d00466b6:	9b05      	ldr	r3, [sp, #20]
+d00466b8:	429a      	cmp	r2, r3
+d00466ba:	d287      	bcs.n	d00465cc <loadMeshSB3D+0x190>
+d00466bc:	9908      	ldr	r1, [sp, #32]
+d00466be:	428b      	cmp	r3, r1
+d00466c0:	d984      	bls.n	d00465cc <loadMeshSB3D+0x190>
+d00466c2:	9809      	ldr	r0, [sp, #36]	; 0x24
+d00466c4:	4283      	cmp	r3, r0
+d00466c6:	d981      	bls.n	d00465cc <loadMeshSB3D+0x190>
+d00466c8:	692b      	ldr	r3, [r5, #16]
+d00466ca:	f8dd c018 	ldr.w	ip, [sp, #24]
+d00466ce:	51da      	str	r2, [r3, r7]
+d00466d0:	eb03 1306 	add.w	r3, r3, r6, lsl #4
+d00466d4:	3601      	adds	r6, #1
+d00466d6:	f89d 7006 	ldrb.w	r7, [sp, #6]
+d00466da:	f89d 2007 	ldrb.w	r2, [sp, #7]
+d00466de:	45b4      	cmp	ip, r6
+d00466e0:	6059      	str	r1, [r3, #4]
+d00466e2:	6098      	str	r0, [r3, #8]
+d00466e4:	731f      	strb	r7, [r3, #12]
+d00466e6:	735a      	strb	r2, [r3, #13]
+d00466e8:	d918      	bls.n	d004671c <loadMeshSB3D+0x2e0>
+d00466ea:	7920      	ldrb	r0, [r4, #4]
+d00466ec:	ab02      	add	r3, sp, #8
+d00466ee:	7967      	ldrb	r7, [r4, #5]
+d00466f0:	2204      	movs	r2, #4
+d00466f2:	f894 c006 	ldrb.w	ip, [r4, #6]
+d00466f6:	a907      	add	r1, sp, #28
+d00466f8:	ea40 2007 	orr.w	r0, r0, r7, lsl #8
+d00466fc:	79e7      	ldrb	r7, [r4, #7]
+d00466fe:	ea40 4c0c 	orr.w	ip, r0, ip, lsl #16
+d0046702:	2000      	movs	r0, #0
+d0046704:	ea4c 6707 	orr.w	r7, ip, r7, lsl #24
+d0046708:	683f      	ldr	r7, [r7, #0]
+d004670a:	68bf      	ldr	r7, [r7, #8]
+d004670c:	47b8      	blx	r7
+d004670e:	ab02      	add	r3, sp, #8
+d0046710:	2204      	movs	r2, #4
+d0046712:	a908      	add	r1, sp, #32
+d0046714:	2800      	cmp	r0, #0
+d0046716:	f43f af7d 	beq.w	d0046614 <loadMeshSB3D+0x1d8>
+d004671a:	e757      	b.n	d00465cc <loadMeshSB3D+0x190>
+d004671c:	2000      	movs	r0, #0
+d004671e:	f000 f89b 	bl	d0046858 <fclose>
+d0046722:	4628      	mov	r0, r5
+d0046724:	f7fd fb40 	bl	d0043da8 <meshComputeBoundsRadius>
+d0046728:	4628      	mov	r0, r5
+d004672a:	ed85 0a06 	vstr	s0, [r5, #24]
+d004672e:	f000 f815 	bl	d004675c <meshSetDefaultMaterial>
+d0046732:	2001      	movs	r0, #1
+d0046734:	e6fa      	b.n	d004652c <loadMeshSB3D+0xf0>
+d0046736:	4630      	mov	r0, r6
+d0046738:	f000 fa7e 	bl	d0046c38 <free>
+d004673c:	2400      	movs	r4, #0
+d004673e:	4620      	mov	r0, r4
+d0046740:	602c      	str	r4, [r5, #0]
+d0046742:	612c      	str	r4, [r5, #16]
+d0046744:	606c      	str	r4, [r5, #4]
+d0046746:	616c      	str	r4, [r5, #20]
+d0046748:	f000 f886 	bl	d0046858 <fclose>
+d004674c:	4620      	mov	r0, r4
+d004674e:	e6ed      	b.n	d004652c <loadMeshSB3D+0xf0>
+d0046750:	2800      	cmp	r0, #0
+d0046752:	d0f3      	beq.n	d004673c <loadMeshSB3D+0x300>
+d0046754:	f000 fa70 	bl	d0046c38 <free>
+d0046758:	e7f0      	b.n	d004673c <loadMeshSB3D+0x300>
+d004675a:	bf00      	nop
 
-d0045cc8 <_fflush_r>:
-d0045cc8:	b538      	push	{r3, r4, r5, lr}
-d0045cca:	690b      	ldr	r3, [r1, #16]
-d0045ccc:	4605      	mov	r5, r0
-d0045cce:	460c      	mov	r4, r1
-d0045cd0:	b913      	cbnz	r3, d0045cd8 <_fflush_r+0x10>
-d0045cd2:	2500      	movs	r5, #0
-d0045cd4:	4628      	mov	r0, r5
-d0045cd6:	bd38      	pop	{r3, r4, r5, pc}
-d0045cd8:	b118      	cbz	r0, d0045ce2 <_fflush_r+0x1a>
-d0045cda:	6983      	ldr	r3, [r0, #24]
-d0045cdc:	b90b      	cbnz	r3, d0045ce2 <_fflush_r+0x1a>
-d0045cde:	f000 f887 	bl	d0045df0 <__sinit>
-d0045ce2:	4b14      	ldr	r3, [pc, #80]	; (d0045d34 <_fflush_r+0x6c>)
-d0045ce4:	429c      	cmp	r4, r3
-d0045ce6:	d11b      	bne.n	d0045d20 <_fflush_r+0x58>
-d0045ce8:	686c      	ldr	r4, [r5, #4]
-d0045cea:	f9b4 300c 	ldrsh.w	r3, [r4, #12]
-d0045cee:	2b00      	cmp	r3, #0
-d0045cf0:	d0ef      	beq.n	d0045cd2 <_fflush_r+0xa>
-d0045cf2:	6e62      	ldr	r2, [r4, #100]	; 0x64
-d0045cf4:	07d0      	lsls	r0, r2, #31
-d0045cf6:	d404      	bmi.n	d0045d02 <_fflush_r+0x3a>
-d0045cf8:	0599      	lsls	r1, r3, #22
-d0045cfa:	d402      	bmi.n	d0045d02 <_fflush_r+0x3a>
-d0045cfc:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d0045cfe:	f000 f916 	bl	d0045f2e <__retarget_lock_acquire_recursive>
-d0045d02:	4628      	mov	r0, r5
-d0045d04:	4621      	mov	r1, r4
-d0045d06:	f7ff ff59 	bl	d0045bbc <__sflush_r>
-d0045d0a:	6e63      	ldr	r3, [r4, #100]	; 0x64
-d0045d0c:	07da      	lsls	r2, r3, #31
-d0045d0e:	4605      	mov	r5, r0
-d0045d10:	d4e0      	bmi.n	d0045cd4 <_fflush_r+0xc>
-d0045d12:	89a3      	ldrh	r3, [r4, #12]
-d0045d14:	059b      	lsls	r3, r3, #22
-d0045d16:	d4dd      	bmi.n	d0045cd4 <_fflush_r+0xc>
-d0045d18:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d0045d1a:	f000 f909 	bl	d0045f30 <__retarget_lock_release_recursive>
-d0045d1e:	e7d9      	b.n	d0045cd4 <_fflush_r+0xc>
-d0045d20:	4b05      	ldr	r3, [pc, #20]	; (d0045d38 <_fflush_r+0x70>)
-d0045d22:	429c      	cmp	r4, r3
-d0045d24:	d101      	bne.n	d0045d2a <_fflush_r+0x62>
-d0045d26:	68ac      	ldr	r4, [r5, #8]
-d0045d28:	e7df      	b.n	d0045cea <_fflush_r+0x22>
-d0045d2a:	4b04      	ldr	r3, [pc, #16]	; (d0045d3c <_fflush_r+0x74>)
-d0045d2c:	429c      	cmp	r4, r3
-d0045d2e:	bf08      	it	eq
-d0045d30:	68ec      	ldreq	r4, [r5, #12]
-d0045d32:	e7da      	b.n	d0045cea <_fflush_r+0x22>
-d0045d34:	d0046de0 	.word	0xd0046de0
-d0045d38:	d0046e00 	.word	0xd0046e00
-d0045d3c:	d0046dc0 	.word	0xd0046dc0
+d004675c <meshSetDefaultMaterial>:
+d004675c:	b148      	cbz	r0, d0046772 <meshSetDefaultMaterial+0x16>
+d004675e:	2300      	movs	r3, #0
+d0046760:	f04f 517e 	mov.w	r1, #1065353216	; 0x3f800000
+d0046764:	f04f 4282 	mov.w	r2, #1090519040	; 0x41000000
+d0046768:	6203      	str	r3, [r0, #32]
+d004676a:	6241      	str	r1, [r0, #36]	; 0x24
+d004676c:	62c2      	str	r2, [r0, #44]	; 0x2c
+d004676e:	6303      	str	r3, [r0, #48]	; 0x30
+d0046770:	6283      	str	r3, [r0, #40]	; 0x28
+d0046772:	4770      	bx	lr
 
-d0045d40 <std>:
-d0045d40:	2300      	movs	r3, #0
-d0045d42:	b510      	push	{r4, lr}
-d0045d44:	4604      	mov	r4, r0
-d0045d46:	e9c0 3300 	strd	r3, r3, [r0]
-d0045d4a:	e9c0 3304 	strd	r3, r3, [r0, #16]
-d0045d4e:	6083      	str	r3, [r0, #8]
-d0045d50:	8181      	strh	r1, [r0, #12]
-d0045d52:	6643      	str	r3, [r0, #100]	; 0x64
-d0045d54:	81c2      	strh	r2, [r0, #14]
-d0045d56:	6183      	str	r3, [r0, #24]
-d0045d58:	4619      	mov	r1, r3
-d0045d5a:	2208      	movs	r2, #8
-d0045d5c:	305c      	adds	r0, #92	; 0x5c
-d0045d5e:	f000 f92b 	bl	d0045fb8 <memset>
-d0045d62:	4b05      	ldr	r3, [pc, #20]	; (d0045d78 <std+0x38>)
-d0045d64:	6263      	str	r3, [r4, #36]	; 0x24
-d0045d66:	4b05      	ldr	r3, [pc, #20]	; (d0045d7c <std+0x3c>)
-d0045d68:	62a3      	str	r3, [r4, #40]	; 0x28
-d0045d6a:	4b05      	ldr	r3, [pc, #20]	; (d0045d80 <std+0x40>)
-d0045d6c:	62e3      	str	r3, [r4, #44]	; 0x2c
-d0045d6e:	4b05      	ldr	r3, [pc, #20]	; (d0045d84 <std+0x44>)
-d0045d70:	6224      	str	r4, [r4, #32]
-d0045d72:	6323      	str	r3, [r4, #48]	; 0x30
-d0045d74:	bd10      	pop	{r4, pc}
-d0045d76:	bf00      	nop
-d0045d78:	d00462b9 	.word	0xd00462b9
-d0045d7c:	d00462db 	.word	0xd00462db
-d0045d80:	d0046313 	.word	0xd0046313
-d0045d84:	d0046337 	.word	0xd0046337
+d0046774 <__errno>:
+d0046774:	4b01      	ldr	r3, [pc, #4]	; (d004677c <__errno+0x8>)
+d0046776:	6818      	ldr	r0, [r3, #0]
+d0046778:	4770      	bx	lr
+d004677a:	bf00      	nop
+d004677c:	d00482a0 	.word	0xd00482a0
 
-d0045d88 <_cleanup_r>:
-d0045d88:	4901      	ldr	r1, [pc, #4]	; (d0045d90 <_cleanup_r+0x8>)
-d0045d8a:	f000 b8af 	b.w	d0045eec <_fwalk_reent>
-d0045d8e:	bf00      	nop
-d0045d90:	d0045cc9 	.word	0xd0045cc9
+d0046780 <_fclose_r>:
+d0046780:	b570      	push	{r4, r5, r6, lr}
+d0046782:	4605      	mov	r5, r0
+d0046784:	460c      	mov	r4, r1
+d0046786:	b911      	cbnz	r1, d004678e <_fclose_r+0xe>
+d0046788:	2600      	movs	r6, #0
+d004678a:	4630      	mov	r0, r6
+d004678c:	bd70      	pop	{r4, r5, r6, pc}
+d004678e:	b118      	cbz	r0, d0046798 <_fclose_r+0x18>
+d0046790:	6983      	ldr	r3, [r0, #24]
+d0046792:	b90b      	cbnz	r3, d0046798 <_fclose_r+0x18>
+d0046794:	f000 f982 	bl	d0046a9c <__sinit>
+d0046798:	4b2c      	ldr	r3, [pc, #176]	; (d004684c <_fclose_r+0xcc>)
+d004679a:	429c      	cmp	r4, r3
+d004679c:	d114      	bne.n	d00467c8 <_fclose_r+0x48>
+d004679e:	686c      	ldr	r4, [r5, #4]
+d00467a0:	6e63      	ldr	r3, [r4, #100]	; 0x64
+d00467a2:	07d8      	lsls	r0, r3, #31
+d00467a4:	d405      	bmi.n	d00467b2 <_fclose_r+0x32>
+d00467a6:	89a3      	ldrh	r3, [r4, #12]
+d00467a8:	0599      	lsls	r1, r3, #22
+d00467aa:	d402      	bmi.n	d00467b2 <_fclose_r+0x32>
+d00467ac:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d00467ae:	f000 fa14 	bl	d0046bda <__retarget_lock_acquire_recursive>
+d00467b2:	f9b4 300c 	ldrsh.w	r3, [r4, #12]
+d00467b6:	b98b      	cbnz	r3, d00467dc <_fclose_r+0x5c>
+d00467b8:	6e66      	ldr	r6, [r4, #100]	; 0x64
+d00467ba:	f016 0601 	ands.w	r6, r6, #1
+d00467be:	d1e3      	bne.n	d0046788 <_fclose_r+0x8>
+d00467c0:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d00467c2:	f000 fa0b 	bl	d0046bdc <__retarget_lock_release_recursive>
+d00467c6:	e7e0      	b.n	d004678a <_fclose_r+0xa>
+d00467c8:	4b21      	ldr	r3, [pc, #132]	; (d0046850 <_fclose_r+0xd0>)
+d00467ca:	429c      	cmp	r4, r3
+d00467cc:	d101      	bne.n	d00467d2 <_fclose_r+0x52>
+d00467ce:	68ac      	ldr	r4, [r5, #8]
+d00467d0:	e7e6      	b.n	d00467a0 <_fclose_r+0x20>
+d00467d2:	4b20      	ldr	r3, [pc, #128]	; (d0046854 <_fclose_r+0xd4>)
+d00467d4:	429c      	cmp	r4, r3
+d00467d6:	bf08      	it	eq
+d00467d8:	68ec      	ldreq	r4, [r5, #12]
+d00467da:	e7e1      	b.n	d00467a0 <_fclose_r+0x20>
+d00467dc:	4621      	mov	r1, r4
+d00467de:	4628      	mov	r0, r5
+d00467e0:	f000 f842 	bl	d0046868 <__sflush_r>
+d00467e4:	6b23      	ldr	r3, [r4, #48]	; 0x30
+d00467e6:	4606      	mov	r6, r0
+d00467e8:	b133      	cbz	r3, d00467f8 <_fclose_r+0x78>
+d00467ea:	6a21      	ldr	r1, [r4, #32]
+d00467ec:	4628      	mov	r0, r5
+d00467ee:	4798      	blx	r3
+d00467f0:	2800      	cmp	r0, #0
+d00467f2:	bfb8      	it	lt
+d00467f4:	f04f 36ff 	movlt.w	r6, #4294967295	; 0xffffffff
+d00467f8:	89a3      	ldrh	r3, [r4, #12]
+d00467fa:	061a      	lsls	r2, r3, #24
+d00467fc:	d503      	bpl.n	d0046806 <_fclose_r+0x86>
+d00467fe:	6921      	ldr	r1, [r4, #16]
+d0046800:	4628      	mov	r0, r5
+d0046802:	f000 fa37 	bl	d0046c74 <_free_r>
+d0046806:	6b61      	ldr	r1, [r4, #52]	; 0x34
+d0046808:	b141      	cbz	r1, d004681c <_fclose_r+0x9c>
+d004680a:	f104 0344 	add.w	r3, r4, #68	; 0x44
+d004680e:	4299      	cmp	r1, r3
+d0046810:	d002      	beq.n	d0046818 <_fclose_r+0x98>
+d0046812:	4628      	mov	r0, r5
+d0046814:	f000 fa2e 	bl	d0046c74 <_free_r>
+d0046818:	2300      	movs	r3, #0
+d004681a:	6363      	str	r3, [r4, #52]	; 0x34
+d004681c:	6ca1      	ldr	r1, [r4, #72]	; 0x48
+d004681e:	b121      	cbz	r1, d004682a <_fclose_r+0xaa>
+d0046820:	4628      	mov	r0, r5
+d0046822:	f000 fa27 	bl	d0046c74 <_free_r>
+d0046826:	2300      	movs	r3, #0
+d0046828:	64a3      	str	r3, [r4, #72]	; 0x48
+d004682a:	f000 f91f 	bl	d0046a6c <__sfp_lock_acquire>
+d004682e:	2300      	movs	r3, #0
+d0046830:	81a3      	strh	r3, [r4, #12]
+d0046832:	6e63      	ldr	r3, [r4, #100]	; 0x64
+d0046834:	07db      	lsls	r3, r3, #31
+d0046836:	d402      	bmi.n	d004683e <_fclose_r+0xbe>
+d0046838:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d004683a:	f000 f9cf 	bl	d0046bdc <__retarget_lock_release_recursive>
+d004683e:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d0046840:	f000 f9ca 	bl	d0046bd8 <__retarget_lock_close_recursive>
+d0046844:	f000 f918 	bl	d0046a78 <__sfp_lock_release>
+d0046848:	e79f      	b.n	d004678a <_fclose_r+0xa>
+d004684a:	bf00      	nop
+d004684c:	d0047aa0 	.word	0xd0047aa0
+d0046850:	d0047ac0 	.word	0xd0047ac0
+d0046854:	d0047a80 	.word	0xd0047a80
 
-d0045d94 <__sfmoreglue>:
-d0045d94:	b570      	push	{r4, r5, r6, lr}
-d0045d96:	1e4a      	subs	r2, r1, #1
-d0045d98:	2568      	movs	r5, #104	; 0x68
-d0045d9a:	4355      	muls	r5, r2
-d0045d9c:	460e      	mov	r6, r1
-d0045d9e:	f105 0174 	add.w	r1, r5, #116	; 0x74
-d0045da2:	f000 f961 	bl	d0046068 <_malloc_r>
-d0045da6:	4604      	mov	r4, r0
-d0045da8:	b140      	cbz	r0, d0045dbc <__sfmoreglue+0x28>
-d0045daa:	2100      	movs	r1, #0
-d0045dac:	e9c0 1600 	strd	r1, r6, [r0]
-d0045db0:	300c      	adds	r0, #12
-d0045db2:	60a0      	str	r0, [r4, #8]
-d0045db4:	f105 0268 	add.w	r2, r5, #104	; 0x68
-d0045db8:	f000 f8fe 	bl	d0045fb8 <memset>
-d0045dbc:	4620      	mov	r0, r4
-d0045dbe:	bd70      	pop	{r4, r5, r6, pc}
+d0046858 <fclose>:
+d0046858:	4b02      	ldr	r3, [pc, #8]	; (d0046864 <fclose+0xc>)
+d004685a:	4601      	mov	r1, r0
+d004685c:	6818      	ldr	r0, [r3, #0]
+d004685e:	f7ff bf8f 	b.w	d0046780 <_fclose_r>
+d0046862:	bf00      	nop
+d0046864:	d00482a0 	.word	0xd00482a0
 
-d0045dc0 <__sfp_lock_acquire>:
-d0045dc0:	4801      	ldr	r0, [pc, #4]	; (d0045dc8 <__sfp_lock_acquire+0x8>)
-d0045dc2:	f000 b8b4 	b.w	d0045f2e <__retarget_lock_acquire_recursive>
-d0045dc6:	bf00      	nop
-d0045dc8:	d0132d68 	.word	0xd0132d68
+d0046868 <__sflush_r>:
+d0046868:	898a      	ldrh	r2, [r1, #12]
+d004686a:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+d004686e:	4605      	mov	r5, r0
+d0046870:	0710      	lsls	r0, r2, #28
+d0046872:	460c      	mov	r4, r1
+d0046874:	d458      	bmi.n	d0046928 <__sflush_r+0xc0>
+d0046876:	684b      	ldr	r3, [r1, #4]
+d0046878:	2b00      	cmp	r3, #0
+d004687a:	dc05      	bgt.n	d0046888 <__sflush_r+0x20>
+d004687c:	6c0b      	ldr	r3, [r1, #64]	; 0x40
+d004687e:	2b00      	cmp	r3, #0
+d0046880:	dc02      	bgt.n	d0046888 <__sflush_r+0x20>
+d0046882:	2000      	movs	r0, #0
+d0046884:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+d0046888:	6ae6      	ldr	r6, [r4, #44]	; 0x2c
+d004688a:	2e00      	cmp	r6, #0
+d004688c:	d0f9      	beq.n	d0046882 <__sflush_r+0x1a>
+d004688e:	2300      	movs	r3, #0
+d0046890:	f412 5280 	ands.w	r2, r2, #4096	; 0x1000
+d0046894:	682f      	ldr	r7, [r5, #0]
+d0046896:	602b      	str	r3, [r5, #0]
+d0046898:	d032      	beq.n	d0046900 <__sflush_r+0x98>
+d004689a:	6d60      	ldr	r0, [r4, #84]	; 0x54
+d004689c:	89a3      	ldrh	r3, [r4, #12]
+d004689e:	075a      	lsls	r2, r3, #29
+d00468a0:	d505      	bpl.n	d00468ae <__sflush_r+0x46>
+d00468a2:	6863      	ldr	r3, [r4, #4]
+d00468a4:	1ac0      	subs	r0, r0, r3
+d00468a6:	6b63      	ldr	r3, [r4, #52]	; 0x34
+d00468a8:	b10b      	cbz	r3, d00468ae <__sflush_r+0x46>
+d00468aa:	6c23      	ldr	r3, [r4, #64]	; 0x40
+d00468ac:	1ac0      	subs	r0, r0, r3
+d00468ae:	2300      	movs	r3, #0
+d00468b0:	4602      	mov	r2, r0
+d00468b2:	6ae6      	ldr	r6, [r4, #44]	; 0x2c
+d00468b4:	6a21      	ldr	r1, [r4, #32]
+d00468b6:	4628      	mov	r0, r5
+d00468b8:	47b0      	blx	r6
+d00468ba:	1c43      	adds	r3, r0, #1
+d00468bc:	89a3      	ldrh	r3, [r4, #12]
+d00468be:	d106      	bne.n	d00468ce <__sflush_r+0x66>
+d00468c0:	6829      	ldr	r1, [r5, #0]
+d00468c2:	291d      	cmp	r1, #29
+d00468c4:	d82c      	bhi.n	d0046920 <__sflush_r+0xb8>
+d00468c6:	4a2a      	ldr	r2, [pc, #168]	; (d0046970 <__sflush_r+0x108>)
+d00468c8:	40ca      	lsrs	r2, r1
+d00468ca:	07d6      	lsls	r6, r2, #31
+d00468cc:	d528      	bpl.n	d0046920 <__sflush_r+0xb8>
+d00468ce:	2200      	movs	r2, #0
+d00468d0:	6062      	str	r2, [r4, #4]
+d00468d2:	04d9      	lsls	r1, r3, #19
+d00468d4:	6922      	ldr	r2, [r4, #16]
+d00468d6:	6022      	str	r2, [r4, #0]
+d00468d8:	d504      	bpl.n	d00468e4 <__sflush_r+0x7c>
+d00468da:	1c42      	adds	r2, r0, #1
+d00468dc:	d101      	bne.n	d00468e2 <__sflush_r+0x7a>
+d00468de:	682b      	ldr	r3, [r5, #0]
+d00468e0:	b903      	cbnz	r3, d00468e4 <__sflush_r+0x7c>
+d00468e2:	6560      	str	r0, [r4, #84]	; 0x54
+d00468e4:	6b61      	ldr	r1, [r4, #52]	; 0x34
+d00468e6:	602f      	str	r7, [r5, #0]
+d00468e8:	2900      	cmp	r1, #0
+d00468ea:	d0ca      	beq.n	d0046882 <__sflush_r+0x1a>
+d00468ec:	f104 0344 	add.w	r3, r4, #68	; 0x44
+d00468f0:	4299      	cmp	r1, r3
+d00468f2:	d002      	beq.n	d00468fa <__sflush_r+0x92>
+d00468f4:	4628      	mov	r0, r5
+d00468f6:	f000 f9bd 	bl	d0046c74 <_free_r>
+d00468fa:	2000      	movs	r0, #0
+d00468fc:	6360      	str	r0, [r4, #52]	; 0x34
+d00468fe:	e7c1      	b.n	d0046884 <__sflush_r+0x1c>
+d0046900:	6a21      	ldr	r1, [r4, #32]
+d0046902:	2301      	movs	r3, #1
+d0046904:	4628      	mov	r0, r5
+d0046906:	47b0      	blx	r6
+d0046908:	1c41      	adds	r1, r0, #1
+d004690a:	d1c7      	bne.n	d004689c <__sflush_r+0x34>
+d004690c:	682b      	ldr	r3, [r5, #0]
+d004690e:	2b00      	cmp	r3, #0
+d0046910:	d0c4      	beq.n	d004689c <__sflush_r+0x34>
+d0046912:	2b1d      	cmp	r3, #29
+d0046914:	d001      	beq.n	d004691a <__sflush_r+0xb2>
+d0046916:	2b16      	cmp	r3, #22
+d0046918:	d101      	bne.n	d004691e <__sflush_r+0xb6>
+d004691a:	602f      	str	r7, [r5, #0]
+d004691c:	e7b1      	b.n	d0046882 <__sflush_r+0x1a>
+d004691e:	89a3      	ldrh	r3, [r4, #12]
+d0046920:	f043 0340 	orr.w	r3, r3, #64	; 0x40
+d0046924:	81a3      	strh	r3, [r4, #12]
+d0046926:	e7ad      	b.n	d0046884 <__sflush_r+0x1c>
+d0046928:	690f      	ldr	r7, [r1, #16]
+d004692a:	2f00      	cmp	r7, #0
+d004692c:	d0a9      	beq.n	d0046882 <__sflush_r+0x1a>
+d004692e:	0793      	lsls	r3, r2, #30
+d0046930:	680e      	ldr	r6, [r1, #0]
+d0046932:	bf08      	it	eq
+d0046934:	694b      	ldreq	r3, [r1, #20]
+d0046936:	600f      	str	r7, [r1, #0]
+d0046938:	bf18      	it	ne
+d004693a:	2300      	movne	r3, #0
+d004693c:	eba6 0807 	sub.w	r8, r6, r7
+d0046940:	608b      	str	r3, [r1, #8]
+d0046942:	f1b8 0f00 	cmp.w	r8, #0
+d0046946:	dd9c      	ble.n	d0046882 <__sflush_r+0x1a>
+d0046948:	6a21      	ldr	r1, [r4, #32]
+d004694a:	6aa6      	ldr	r6, [r4, #40]	; 0x28
+d004694c:	4643      	mov	r3, r8
+d004694e:	463a      	mov	r2, r7
+d0046950:	4628      	mov	r0, r5
+d0046952:	47b0      	blx	r6
+d0046954:	2800      	cmp	r0, #0
+d0046956:	dc06      	bgt.n	d0046966 <__sflush_r+0xfe>
+d0046958:	89a3      	ldrh	r3, [r4, #12]
+d004695a:	f043 0340 	orr.w	r3, r3, #64	; 0x40
+d004695e:	81a3      	strh	r3, [r4, #12]
+d0046960:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+d0046964:	e78e      	b.n	d0046884 <__sflush_r+0x1c>
+d0046966:	4407      	add	r7, r0
+d0046968:	eba8 0800 	sub.w	r8, r8, r0
+d004696c:	e7e9      	b.n	d0046942 <__sflush_r+0xda>
+d004696e:	bf00      	nop
+d0046970:	20400001 	.word	0x20400001
 
-d0045dcc <__sfp_lock_release>:
-d0045dcc:	4801      	ldr	r0, [pc, #4]	; (d0045dd4 <__sfp_lock_release+0x8>)
-d0045dce:	f000 b8af 	b.w	d0045f30 <__retarget_lock_release_recursive>
-d0045dd2:	bf00      	nop
-d0045dd4:	d0132d68 	.word	0xd0132d68
+d0046974 <_fflush_r>:
+d0046974:	b538      	push	{r3, r4, r5, lr}
+d0046976:	690b      	ldr	r3, [r1, #16]
+d0046978:	4605      	mov	r5, r0
+d004697a:	460c      	mov	r4, r1
+d004697c:	b913      	cbnz	r3, d0046984 <_fflush_r+0x10>
+d004697e:	2500      	movs	r5, #0
+d0046980:	4628      	mov	r0, r5
+d0046982:	bd38      	pop	{r3, r4, r5, pc}
+d0046984:	b118      	cbz	r0, d004698e <_fflush_r+0x1a>
+d0046986:	6983      	ldr	r3, [r0, #24]
+d0046988:	b90b      	cbnz	r3, d004698e <_fflush_r+0x1a>
+d004698a:	f000 f887 	bl	d0046a9c <__sinit>
+d004698e:	4b14      	ldr	r3, [pc, #80]	; (d00469e0 <_fflush_r+0x6c>)
+d0046990:	429c      	cmp	r4, r3
+d0046992:	d11b      	bne.n	d00469cc <_fflush_r+0x58>
+d0046994:	686c      	ldr	r4, [r5, #4]
+d0046996:	f9b4 300c 	ldrsh.w	r3, [r4, #12]
+d004699a:	2b00      	cmp	r3, #0
+d004699c:	d0ef      	beq.n	d004697e <_fflush_r+0xa>
+d004699e:	6e62      	ldr	r2, [r4, #100]	; 0x64
+d00469a0:	07d0      	lsls	r0, r2, #31
+d00469a2:	d404      	bmi.n	d00469ae <_fflush_r+0x3a>
+d00469a4:	0599      	lsls	r1, r3, #22
+d00469a6:	d402      	bmi.n	d00469ae <_fflush_r+0x3a>
+d00469a8:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d00469aa:	f000 f916 	bl	d0046bda <__retarget_lock_acquire_recursive>
+d00469ae:	4628      	mov	r0, r5
+d00469b0:	4621      	mov	r1, r4
+d00469b2:	f7ff ff59 	bl	d0046868 <__sflush_r>
+d00469b6:	6e63      	ldr	r3, [r4, #100]	; 0x64
+d00469b8:	07da      	lsls	r2, r3, #31
+d00469ba:	4605      	mov	r5, r0
+d00469bc:	d4e0      	bmi.n	d0046980 <_fflush_r+0xc>
+d00469be:	89a3      	ldrh	r3, [r4, #12]
+d00469c0:	059b      	lsls	r3, r3, #22
+d00469c2:	d4dd      	bmi.n	d0046980 <_fflush_r+0xc>
+d00469c4:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d00469c6:	f000 f909 	bl	d0046bdc <__retarget_lock_release_recursive>
+d00469ca:	e7d9      	b.n	d0046980 <_fflush_r+0xc>
+d00469cc:	4b05      	ldr	r3, [pc, #20]	; (d00469e4 <_fflush_r+0x70>)
+d00469ce:	429c      	cmp	r4, r3
+d00469d0:	d101      	bne.n	d00469d6 <_fflush_r+0x62>
+d00469d2:	68ac      	ldr	r4, [r5, #8]
+d00469d4:	e7df      	b.n	d0046996 <_fflush_r+0x22>
+d00469d6:	4b04      	ldr	r3, [pc, #16]	; (d00469e8 <_fflush_r+0x74>)
+d00469d8:	429c      	cmp	r4, r3
+d00469da:	bf08      	it	eq
+d00469dc:	68ec      	ldreq	r4, [r5, #12]
+d00469de:	e7da      	b.n	d0046996 <_fflush_r+0x22>
+d00469e0:	d0047aa0 	.word	0xd0047aa0
+d00469e4:	d0047ac0 	.word	0xd0047ac0
+d00469e8:	d0047a80 	.word	0xd0047a80
 
-d0045dd8 <__sinit_lock_acquire>:
-d0045dd8:	4801      	ldr	r0, [pc, #4]	; (d0045de0 <__sinit_lock_acquire+0x8>)
-d0045dda:	f000 b8a8 	b.w	d0045f2e <__retarget_lock_acquire_recursive>
-d0045dde:	bf00      	nop
-d0045de0:	d0132d63 	.word	0xd0132d63
+d00469ec <std>:
+d00469ec:	2300      	movs	r3, #0
+d00469ee:	b510      	push	{r4, lr}
+d00469f0:	4604      	mov	r4, r0
+d00469f2:	e9c0 3300 	strd	r3, r3, [r0]
+d00469f6:	e9c0 3304 	strd	r3, r3, [r0, #16]
+d00469fa:	6083      	str	r3, [r0, #8]
+d00469fc:	8181      	strh	r1, [r0, #12]
+d00469fe:	6643      	str	r3, [r0, #100]	; 0x64
+d0046a00:	81c2      	strh	r2, [r0, #14]
+d0046a02:	6183      	str	r3, [r0, #24]
+d0046a04:	4619      	mov	r1, r3
+d0046a06:	2208      	movs	r2, #8
+d0046a08:	305c      	adds	r0, #92	; 0x5c
+d0046a0a:	f000 f92b 	bl	d0046c64 <memset>
+d0046a0e:	4b05      	ldr	r3, [pc, #20]	; (d0046a24 <std+0x38>)
+d0046a10:	6263      	str	r3, [r4, #36]	; 0x24
+d0046a12:	4b05      	ldr	r3, [pc, #20]	; (d0046a28 <std+0x3c>)
+d0046a14:	62a3      	str	r3, [r4, #40]	; 0x28
+d0046a16:	4b05      	ldr	r3, [pc, #20]	; (d0046a2c <std+0x40>)
+d0046a18:	62e3      	str	r3, [r4, #44]	; 0x2c
+d0046a1a:	4b05      	ldr	r3, [pc, #20]	; (d0046a30 <std+0x44>)
+d0046a1c:	6224      	str	r4, [r4, #32]
+d0046a1e:	6323      	str	r3, [r4, #48]	; 0x30
+d0046a20:	bd10      	pop	{r4, pc}
+d0046a22:	bf00      	nop
+d0046a24:	d0046f65 	.word	0xd0046f65
+d0046a28:	d0046f87 	.word	0xd0046f87
+d0046a2c:	d0046fbf 	.word	0xd0046fbf
+d0046a30:	d0046fe3 	.word	0xd0046fe3
 
-d0045de4 <__sinit_lock_release>:
-d0045de4:	4801      	ldr	r0, [pc, #4]	; (d0045dec <__sinit_lock_release+0x8>)
-d0045de6:	f000 b8a3 	b.w	d0045f30 <__retarget_lock_release_recursive>
-d0045dea:	bf00      	nop
-d0045dec:	d0132d63 	.word	0xd0132d63
+d0046a34 <_cleanup_r>:
+d0046a34:	4901      	ldr	r1, [pc, #4]	; (d0046a3c <_cleanup_r+0x8>)
+d0046a36:	f000 b8af 	b.w	d0046b98 <_fwalk_reent>
+d0046a3a:	bf00      	nop
+d0046a3c:	d0046975 	.word	0xd0046975
 
-d0045df0 <__sinit>:
-d0045df0:	b510      	push	{r4, lr}
-d0045df2:	4604      	mov	r4, r0
-d0045df4:	f7ff fff0 	bl	d0045dd8 <__sinit_lock_acquire>
-d0045df8:	69a3      	ldr	r3, [r4, #24]
-d0045dfa:	b11b      	cbz	r3, d0045e04 <__sinit+0x14>
-d0045dfc:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
-d0045e00:	f7ff bff0 	b.w	d0045de4 <__sinit_lock_release>
-d0045e04:	e9c4 3312 	strd	r3, r3, [r4, #72]	; 0x48
-d0045e08:	6523      	str	r3, [r4, #80]	; 0x50
-d0045e0a:	4b13      	ldr	r3, [pc, #76]	; (d0045e58 <__sinit+0x68>)
-d0045e0c:	4a13      	ldr	r2, [pc, #76]	; (d0045e5c <__sinit+0x6c>)
-d0045e0e:	681b      	ldr	r3, [r3, #0]
-d0045e10:	62a2      	str	r2, [r4, #40]	; 0x28
-d0045e12:	42a3      	cmp	r3, r4
-d0045e14:	bf04      	itt	eq
-d0045e16:	2301      	moveq	r3, #1
-d0045e18:	61a3      	streq	r3, [r4, #24]
-d0045e1a:	4620      	mov	r0, r4
-d0045e1c:	f000 f820 	bl	d0045e60 <__sfp>
-d0045e20:	6060      	str	r0, [r4, #4]
-d0045e22:	4620      	mov	r0, r4
-d0045e24:	f000 f81c 	bl	d0045e60 <__sfp>
-d0045e28:	60a0      	str	r0, [r4, #8]
-d0045e2a:	4620      	mov	r0, r4
-d0045e2c:	f000 f818 	bl	d0045e60 <__sfp>
-d0045e30:	2200      	movs	r2, #0
-d0045e32:	60e0      	str	r0, [r4, #12]
-d0045e34:	2104      	movs	r1, #4
-d0045e36:	6860      	ldr	r0, [r4, #4]
-d0045e38:	f7ff ff82 	bl	d0045d40 <std>
-d0045e3c:	68a0      	ldr	r0, [r4, #8]
-d0045e3e:	2201      	movs	r2, #1
-d0045e40:	2109      	movs	r1, #9
-d0045e42:	f7ff ff7d 	bl	d0045d40 <std>
-d0045e46:	68e0      	ldr	r0, [r4, #12]
-d0045e48:	2202      	movs	r2, #2
-d0045e4a:	2112      	movs	r1, #18
-d0045e4c:	f7ff ff78 	bl	d0045d40 <std>
-d0045e50:	2301      	movs	r3, #1
-d0045e52:	61a3      	str	r3, [r4, #24]
-d0045e54:	e7d2      	b.n	d0045dfc <__sinit+0xc>
-d0045e56:	bf00      	nop
-d0045e58:	d0046e20 	.word	0xd0046e20
-d0045e5c:	d0045d89 	.word	0xd0045d89
+d0046a40 <__sfmoreglue>:
+d0046a40:	b570      	push	{r4, r5, r6, lr}
+d0046a42:	1e4a      	subs	r2, r1, #1
+d0046a44:	2568      	movs	r5, #104	; 0x68
+d0046a46:	4355      	muls	r5, r2
+d0046a48:	460e      	mov	r6, r1
+d0046a4a:	f105 0174 	add.w	r1, r5, #116	; 0x74
+d0046a4e:	f000 f961 	bl	d0046d14 <_malloc_r>
+d0046a52:	4604      	mov	r4, r0
+d0046a54:	b140      	cbz	r0, d0046a68 <__sfmoreglue+0x28>
+d0046a56:	2100      	movs	r1, #0
+d0046a58:	e9c0 1600 	strd	r1, r6, [r0]
+d0046a5c:	300c      	adds	r0, #12
+d0046a5e:	60a0      	str	r0, [r4, #8]
+d0046a60:	f105 0268 	add.w	r2, r5, #104	; 0x68
+d0046a64:	f000 f8fe 	bl	d0046c64 <memset>
+d0046a68:	4620      	mov	r0, r4
+d0046a6a:	bd70      	pop	{r4, r5, r6, pc}
 
-d0045e60 <__sfp>:
-d0045e60:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-d0045e62:	4607      	mov	r7, r0
-d0045e64:	f7ff ffac 	bl	d0045dc0 <__sfp_lock_acquire>
-d0045e68:	4b1e      	ldr	r3, [pc, #120]	; (d0045ee4 <__sfp+0x84>)
-d0045e6a:	681e      	ldr	r6, [r3, #0]
-d0045e6c:	69b3      	ldr	r3, [r6, #24]
-d0045e6e:	b913      	cbnz	r3, d0045e76 <__sfp+0x16>
-d0045e70:	4630      	mov	r0, r6
-d0045e72:	f7ff ffbd 	bl	d0045df0 <__sinit>
-d0045e76:	3648      	adds	r6, #72	; 0x48
-d0045e78:	e9d6 3401 	ldrd	r3, r4, [r6, #4]
-d0045e7c:	3b01      	subs	r3, #1
-d0045e7e:	d503      	bpl.n	d0045e88 <__sfp+0x28>
-d0045e80:	6833      	ldr	r3, [r6, #0]
-d0045e82:	b30b      	cbz	r3, d0045ec8 <__sfp+0x68>
-d0045e84:	6836      	ldr	r6, [r6, #0]
-d0045e86:	e7f7      	b.n	d0045e78 <__sfp+0x18>
-d0045e88:	f9b4 500c 	ldrsh.w	r5, [r4, #12]
-d0045e8c:	b9d5      	cbnz	r5, d0045ec4 <__sfp+0x64>
-d0045e8e:	4b16      	ldr	r3, [pc, #88]	; (d0045ee8 <__sfp+0x88>)
-d0045e90:	60e3      	str	r3, [r4, #12]
-d0045e92:	f104 0058 	add.w	r0, r4, #88	; 0x58
-d0045e96:	6665      	str	r5, [r4, #100]	; 0x64
-d0045e98:	f000 f847 	bl	d0045f2a <__retarget_lock_init_recursive>
-d0045e9c:	f7ff ff96 	bl	d0045dcc <__sfp_lock_release>
-d0045ea0:	e9c4 5501 	strd	r5, r5, [r4, #4]
-d0045ea4:	e9c4 5504 	strd	r5, r5, [r4, #16]
-d0045ea8:	6025      	str	r5, [r4, #0]
-d0045eaa:	61a5      	str	r5, [r4, #24]
-d0045eac:	2208      	movs	r2, #8
-d0045eae:	4629      	mov	r1, r5
-d0045eb0:	f104 005c 	add.w	r0, r4, #92	; 0x5c
-d0045eb4:	f000 f880 	bl	d0045fb8 <memset>
-d0045eb8:	e9c4 550d 	strd	r5, r5, [r4, #52]	; 0x34
-d0045ebc:	e9c4 5512 	strd	r5, r5, [r4, #72]	; 0x48
-d0045ec0:	4620      	mov	r0, r4
-d0045ec2:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
-d0045ec4:	3468      	adds	r4, #104	; 0x68
-d0045ec6:	e7d9      	b.n	d0045e7c <__sfp+0x1c>
-d0045ec8:	2104      	movs	r1, #4
-d0045eca:	4638      	mov	r0, r7
-d0045ecc:	f7ff ff62 	bl	d0045d94 <__sfmoreglue>
-d0045ed0:	4604      	mov	r4, r0
-d0045ed2:	6030      	str	r0, [r6, #0]
-d0045ed4:	2800      	cmp	r0, #0
-d0045ed6:	d1d5      	bne.n	d0045e84 <__sfp+0x24>
-d0045ed8:	f7ff ff78 	bl	d0045dcc <__sfp_lock_release>
-d0045edc:	230c      	movs	r3, #12
-d0045ede:	603b      	str	r3, [r7, #0]
-d0045ee0:	e7ee      	b.n	d0045ec0 <__sfp+0x60>
-d0045ee2:	bf00      	nop
-d0045ee4:	d0046e20 	.word	0xd0046e20
-d0045ee8:	ffff0001 	.word	0xffff0001
+d0046a6c <__sfp_lock_acquire>:
+d0046a6c:	4801      	ldr	r0, [pc, #4]	; (d0046a74 <__sfp_lock_acquire+0x8>)
+d0046a6e:	f000 b8b4 	b.w	d0046bda <__retarget_lock_acquire_recursive>
+d0046a72:	bf00      	nop
+d0046a74:	d0133a88 	.word	0xd0133a88
 
-d0045eec <_fwalk_reent>:
-d0045eec:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
-d0045ef0:	4606      	mov	r6, r0
-d0045ef2:	4688      	mov	r8, r1
-d0045ef4:	f100 0448 	add.w	r4, r0, #72	; 0x48
-d0045ef8:	2700      	movs	r7, #0
-d0045efa:	e9d4 9501 	ldrd	r9, r5, [r4, #4]
-d0045efe:	f1b9 0901 	subs.w	r9, r9, #1
-d0045f02:	d505      	bpl.n	d0045f10 <_fwalk_reent+0x24>
-d0045f04:	6824      	ldr	r4, [r4, #0]
-d0045f06:	2c00      	cmp	r4, #0
-d0045f08:	d1f7      	bne.n	d0045efa <_fwalk_reent+0xe>
-d0045f0a:	4638      	mov	r0, r7
-d0045f0c:	e8bd 83f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, pc}
-d0045f10:	89ab      	ldrh	r3, [r5, #12]
-d0045f12:	2b01      	cmp	r3, #1
-d0045f14:	d907      	bls.n	d0045f26 <_fwalk_reent+0x3a>
-d0045f16:	f9b5 300e 	ldrsh.w	r3, [r5, #14]
-d0045f1a:	3301      	adds	r3, #1
-d0045f1c:	d003      	beq.n	d0045f26 <_fwalk_reent+0x3a>
-d0045f1e:	4629      	mov	r1, r5
-d0045f20:	4630      	mov	r0, r6
-d0045f22:	47c0      	blx	r8
-d0045f24:	4307      	orrs	r7, r0
-d0045f26:	3568      	adds	r5, #104	; 0x68
-d0045f28:	e7e9      	b.n	d0045efe <_fwalk_reent+0x12>
+d0046a78 <__sfp_lock_release>:
+d0046a78:	4801      	ldr	r0, [pc, #4]	; (d0046a80 <__sfp_lock_release+0x8>)
+d0046a7a:	f000 b8af 	b.w	d0046bdc <__retarget_lock_release_recursive>
+d0046a7e:	bf00      	nop
+d0046a80:	d0133a88 	.word	0xd0133a88
 
-d0045f2a <__retarget_lock_init_recursive>:
-d0045f2a:	4770      	bx	lr
+d0046a84 <__sinit_lock_acquire>:
+d0046a84:	4801      	ldr	r0, [pc, #4]	; (d0046a8c <__sinit_lock_acquire+0x8>)
+d0046a86:	f000 b8a8 	b.w	d0046bda <__retarget_lock_acquire_recursive>
+d0046a8a:	bf00      	nop
+d0046a8c:	d0133a83 	.word	0xd0133a83
 
-d0045f2c <__retarget_lock_close_recursive>:
-d0045f2c:	4770      	bx	lr
+d0046a90 <__sinit_lock_release>:
+d0046a90:	4801      	ldr	r0, [pc, #4]	; (d0046a98 <__sinit_lock_release+0x8>)
+d0046a92:	f000 b8a3 	b.w	d0046bdc <__retarget_lock_release_recursive>
+d0046a96:	bf00      	nop
+d0046a98:	d0133a83 	.word	0xd0133a83
 
-d0045f2e <__retarget_lock_acquire_recursive>:
-d0045f2e:	4770      	bx	lr
+d0046a9c <__sinit>:
+d0046a9c:	b510      	push	{r4, lr}
+d0046a9e:	4604      	mov	r4, r0
+d0046aa0:	f7ff fff0 	bl	d0046a84 <__sinit_lock_acquire>
+d0046aa4:	69a3      	ldr	r3, [r4, #24]
+d0046aa6:	b11b      	cbz	r3, d0046ab0 <__sinit+0x14>
+d0046aa8:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
+d0046aac:	f7ff bff0 	b.w	d0046a90 <__sinit_lock_release>
+d0046ab0:	e9c4 3312 	strd	r3, r3, [r4, #72]	; 0x48
+d0046ab4:	6523      	str	r3, [r4, #80]	; 0x50
+d0046ab6:	4b13      	ldr	r3, [pc, #76]	; (d0046b04 <__sinit+0x68>)
+d0046ab8:	4a13      	ldr	r2, [pc, #76]	; (d0046b08 <__sinit+0x6c>)
+d0046aba:	681b      	ldr	r3, [r3, #0]
+d0046abc:	62a2      	str	r2, [r4, #40]	; 0x28
+d0046abe:	42a3      	cmp	r3, r4
+d0046ac0:	bf04      	itt	eq
+d0046ac2:	2301      	moveq	r3, #1
+d0046ac4:	61a3      	streq	r3, [r4, #24]
+d0046ac6:	4620      	mov	r0, r4
+d0046ac8:	f000 f820 	bl	d0046b0c <__sfp>
+d0046acc:	6060      	str	r0, [r4, #4]
+d0046ace:	4620      	mov	r0, r4
+d0046ad0:	f000 f81c 	bl	d0046b0c <__sfp>
+d0046ad4:	60a0      	str	r0, [r4, #8]
+d0046ad6:	4620      	mov	r0, r4
+d0046ad8:	f000 f818 	bl	d0046b0c <__sfp>
+d0046adc:	2200      	movs	r2, #0
+d0046ade:	60e0      	str	r0, [r4, #12]
+d0046ae0:	2104      	movs	r1, #4
+d0046ae2:	6860      	ldr	r0, [r4, #4]
+d0046ae4:	f7ff ff82 	bl	d00469ec <std>
+d0046ae8:	68a0      	ldr	r0, [r4, #8]
+d0046aea:	2201      	movs	r2, #1
+d0046aec:	2109      	movs	r1, #9
+d0046aee:	f7ff ff7d 	bl	d00469ec <std>
+d0046af2:	68e0      	ldr	r0, [r4, #12]
+d0046af4:	2202      	movs	r2, #2
+d0046af6:	2112      	movs	r1, #18
+d0046af8:	f7ff ff78 	bl	d00469ec <std>
+d0046afc:	2301      	movs	r3, #1
+d0046afe:	61a3      	str	r3, [r4, #24]
+d0046b00:	e7d2      	b.n	d0046aa8 <__sinit+0xc>
+d0046b02:	bf00      	nop
+d0046b04:	d0047ae0 	.word	0xd0047ae0
+d0046b08:	d0046a35 	.word	0xd0046a35
 
-d0045f30 <__retarget_lock_release_recursive>:
-d0045f30:	4770      	bx	lr
+d0046b0c <__sfp>:
+d0046b0c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+d0046b0e:	4607      	mov	r7, r0
+d0046b10:	f7ff ffac 	bl	d0046a6c <__sfp_lock_acquire>
+d0046b14:	4b1e      	ldr	r3, [pc, #120]	; (d0046b90 <__sfp+0x84>)
+d0046b16:	681e      	ldr	r6, [r3, #0]
+d0046b18:	69b3      	ldr	r3, [r6, #24]
+d0046b1a:	b913      	cbnz	r3, d0046b22 <__sfp+0x16>
+d0046b1c:	4630      	mov	r0, r6
+d0046b1e:	f7ff ffbd 	bl	d0046a9c <__sinit>
+d0046b22:	3648      	adds	r6, #72	; 0x48
+d0046b24:	e9d6 3401 	ldrd	r3, r4, [r6, #4]
+d0046b28:	3b01      	subs	r3, #1
+d0046b2a:	d503      	bpl.n	d0046b34 <__sfp+0x28>
+d0046b2c:	6833      	ldr	r3, [r6, #0]
+d0046b2e:	b30b      	cbz	r3, d0046b74 <__sfp+0x68>
+d0046b30:	6836      	ldr	r6, [r6, #0]
+d0046b32:	e7f7      	b.n	d0046b24 <__sfp+0x18>
+d0046b34:	f9b4 500c 	ldrsh.w	r5, [r4, #12]
+d0046b38:	b9d5      	cbnz	r5, d0046b70 <__sfp+0x64>
+d0046b3a:	4b16      	ldr	r3, [pc, #88]	; (d0046b94 <__sfp+0x88>)
+d0046b3c:	60e3      	str	r3, [r4, #12]
+d0046b3e:	f104 0058 	add.w	r0, r4, #88	; 0x58
+d0046b42:	6665      	str	r5, [r4, #100]	; 0x64
+d0046b44:	f000 f847 	bl	d0046bd6 <__retarget_lock_init_recursive>
+d0046b48:	f7ff ff96 	bl	d0046a78 <__sfp_lock_release>
+d0046b4c:	e9c4 5501 	strd	r5, r5, [r4, #4]
+d0046b50:	e9c4 5504 	strd	r5, r5, [r4, #16]
+d0046b54:	6025      	str	r5, [r4, #0]
+d0046b56:	61a5      	str	r5, [r4, #24]
+d0046b58:	2208      	movs	r2, #8
+d0046b5a:	4629      	mov	r1, r5
+d0046b5c:	f104 005c 	add.w	r0, r4, #92	; 0x5c
+d0046b60:	f000 f880 	bl	d0046c64 <memset>
+d0046b64:	e9c4 550d 	strd	r5, r5, [r4, #52]	; 0x34
+d0046b68:	e9c4 5512 	strd	r5, r5, [r4, #72]	; 0x48
+d0046b6c:	4620      	mov	r0, r4
+d0046b6e:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+d0046b70:	3468      	adds	r4, #104	; 0x68
+d0046b72:	e7d9      	b.n	d0046b28 <__sfp+0x1c>
+d0046b74:	2104      	movs	r1, #4
+d0046b76:	4638      	mov	r0, r7
+d0046b78:	f7ff ff62 	bl	d0046a40 <__sfmoreglue>
+d0046b7c:	4604      	mov	r4, r0
+d0046b7e:	6030      	str	r0, [r6, #0]
+d0046b80:	2800      	cmp	r0, #0
+d0046b82:	d1d5      	bne.n	d0046b30 <__sfp+0x24>
+d0046b84:	f7ff ff78 	bl	d0046a78 <__sfp_lock_release>
+d0046b88:	230c      	movs	r3, #12
+d0046b8a:	603b      	str	r3, [r7, #0]
+d0046b8c:	e7ee      	b.n	d0046b6c <__sfp+0x60>
+d0046b8e:	bf00      	nop
+d0046b90:	d0047ae0 	.word	0xd0047ae0
+d0046b94:	ffff0001 	.word	0xffff0001
 
-d0045f32 <__swhatbuf_r>:
-d0045f32:	b570      	push	{r4, r5, r6, lr}
-d0045f34:	460e      	mov	r6, r1
-d0045f36:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
-d0045f3a:	2900      	cmp	r1, #0
-d0045f3c:	b096      	sub	sp, #88	; 0x58
-d0045f3e:	4614      	mov	r4, r2
-d0045f40:	461d      	mov	r5, r3
-d0045f42:	da07      	bge.n	d0045f54 <__swhatbuf_r+0x22>
-d0045f44:	2300      	movs	r3, #0
-d0045f46:	602b      	str	r3, [r5, #0]
-d0045f48:	89b3      	ldrh	r3, [r6, #12]
-d0045f4a:	061a      	lsls	r2, r3, #24
-d0045f4c:	d410      	bmi.n	d0045f70 <__swhatbuf_r+0x3e>
-d0045f4e:	f44f 6380 	mov.w	r3, #1024	; 0x400
-d0045f52:	e00e      	b.n	d0045f72 <__swhatbuf_r+0x40>
-d0045f54:	466a      	mov	r2, sp
-d0045f56:	f000 fa03 	bl	d0046360 <_fstat_r>
-d0045f5a:	2800      	cmp	r0, #0
-d0045f5c:	dbf2      	blt.n	d0045f44 <__swhatbuf_r+0x12>
-d0045f5e:	9a01      	ldr	r2, [sp, #4]
-d0045f60:	f402 4270 	and.w	r2, r2, #61440	; 0xf000
-d0045f64:	f5a2 5300 	sub.w	r3, r2, #8192	; 0x2000
-d0045f68:	425a      	negs	r2, r3
-d0045f6a:	415a      	adcs	r2, r3
-d0045f6c:	602a      	str	r2, [r5, #0]
-d0045f6e:	e7ee      	b.n	d0045f4e <__swhatbuf_r+0x1c>
-d0045f70:	2340      	movs	r3, #64	; 0x40
-d0045f72:	2000      	movs	r0, #0
-d0045f74:	6023      	str	r3, [r4, #0]
-d0045f76:	b016      	add	sp, #88	; 0x58
-d0045f78:	bd70      	pop	{r4, r5, r6, pc}
+d0046b98 <_fwalk_reent>:
+d0046b98:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
+d0046b9c:	4606      	mov	r6, r0
+d0046b9e:	4688      	mov	r8, r1
+d0046ba0:	f100 0448 	add.w	r4, r0, #72	; 0x48
+d0046ba4:	2700      	movs	r7, #0
+d0046ba6:	e9d4 9501 	ldrd	r9, r5, [r4, #4]
+d0046baa:	f1b9 0901 	subs.w	r9, r9, #1
+d0046bae:	d505      	bpl.n	d0046bbc <_fwalk_reent+0x24>
+d0046bb0:	6824      	ldr	r4, [r4, #0]
+d0046bb2:	2c00      	cmp	r4, #0
+d0046bb4:	d1f7      	bne.n	d0046ba6 <_fwalk_reent+0xe>
+d0046bb6:	4638      	mov	r0, r7
+d0046bb8:	e8bd 83f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, pc}
+d0046bbc:	89ab      	ldrh	r3, [r5, #12]
+d0046bbe:	2b01      	cmp	r3, #1
+d0046bc0:	d907      	bls.n	d0046bd2 <_fwalk_reent+0x3a>
+d0046bc2:	f9b5 300e 	ldrsh.w	r3, [r5, #14]
+d0046bc6:	3301      	adds	r3, #1
+d0046bc8:	d003      	beq.n	d0046bd2 <_fwalk_reent+0x3a>
+d0046bca:	4629      	mov	r1, r5
+d0046bcc:	4630      	mov	r0, r6
+d0046bce:	47c0      	blx	r8
+d0046bd0:	4307      	orrs	r7, r0
+d0046bd2:	3568      	adds	r5, #104	; 0x68
+d0046bd4:	e7e9      	b.n	d0046baa <_fwalk_reent+0x12>
+
+d0046bd6 <__retarget_lock_init_recursive>:
+d0046bd6:	4770      	bx	lr
+
+d0046bd8 <__retarget_lock_close_recursive>:
+d0046bd8:	4770      	bx	lr
+
+d0046bda <__retarget_lock_acquire_recursive>:
+d0046bda:	4770      	bx	lr
+
+d0046bdc <__retarget_lock_release_recursive>:
+d0046bdc:	4770      	bx	lr
+
+d0046bde <__swhatbuf_r>:
+d0046bde:	b570      	push	{r4, r5, r6, lr}
+d0046be0:	460e      	mov	r6, r1
+d0046be2:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
+d0046be6:	2900      	cmp	r1, #0
+d0046be8:	b096      	sub	sp, #88	; 0x58
+d0046bea:	4614      	mov	r4, r2
+d0046bec:	461d      	mov	r5, r3
+d0046bee:	da07      	bge.n	d0046c00 <__swhatbuf_r+0x22>
+d0046bf0:	2300      	movs	r3, #0
+d0046bf2:	602b      	str	r3, [r5, #0]
+d0046bf4:	89b3      	ldrh	r3, [r6, #12]
+d0046bf6:	061a      	lsls	r2, r3, #24
+d0046bf8:	d410      	bmi.n	d0046c1c <__swhatbuf_r+0x3e>
+d0046bfa:	f44f 6380 	mov.w	r3, #1024	; 0x400
+d0046bfe:	e00e      	b.n	d0046c1e <__swhatbuf_r+0x40>
+d0046c00:	466a      	mov	r2, sp
+d0046c02:	f000 fa03 	bl	d004700c <_fstat_r>
+d0046c06:	2800      	cmp	r0, #0
+d0046c08:	dbf2      	blt.n	d0046bf0 <__swhatbuf_r+0x12>
+d0046c0a:	9a01      	ldr	r2, [sp, #4]
+d0046c0c:	f402 4270 	and.w	r2, r2, #61440	; 0xf000
+d0046c10:	f5a2 5300 	sub.w	r3, r2, #8192	; 0x2000
+d0046c14:	425a      	negs	r2, r3
+d0046c16:	415a      	adcs	r2, r3
+d0046c18:	602a      	str	r2, [r5, #0]
+d0046c1a:	e7ee      	b.n	d0046bfa <__swhatbuf_r+0x1c>
+d0046c1c:	2340      	movs	r3, #64	; 0x40
+d0046c1e:	2000      	movs	r0, #0
+d0046c20:	6023      	str	r3, [r4, #0]
+d0046c22:	b016      	add	sp, #88	; 0x58
+d0046c24:	bd70      	pop	{r4, r5, r6, pc}
 	...
 
-d0045f7c <malloc>:
-d0045f7c:	4b02      	ldr	r3, [pc, #8]	; (d0045f88 <malloc+0xc>)
-d0045f7e:	4601      	mov	r1, r0
-d0045f80:	6818      	ldr	r0, [r3, #0]
-d0045f82:	f000 b871 	b.w	d0046068 <_malloc_r>
-d0045f86:	bf00      	nop
-d0045f88:	d00475d8 	.word	0xd00475d8
+d0046c28 <malloc>:
+d0046c28:	4b02      	ldr	r3, [pc, #8]	; (d0046c34 <malloc+0xc>)
+d0046c2a:	4601      	mov	r1, r0
+d0046c2c:	6818      	ldr	r0, [r3, #0]
+d0046c2e:	f000 b871 	b.w	d0046d14 <_malloc_r>
+d0046c32:	bf00      	nop
+d0046c34:	d00482a0 	.word	0xd00482a0
 
-d0045f8c <free>:
-d0045f8c:	4b02      	ldr	r3, [pc, #8]	; (d0045f98 <free+0xc>)
-d0045f8e:	4601      	mov	r1, r0
-d0045f90:	6818      	ldr	r0, [r3, #0]
-d0045f92:	f000 b819 	b.w	d0045fc8 <_free_r>
-d0045f96:	bf00      	nop
-d0045f98:	d00475d8 	.word	0xd00475d8
+d0046c38 <free>:
+d0046c38:	4b02      	ldr	r3, [pc, #8]	; (d0046c44 <free+0xc>)
+d0046c3a:	4601      	mov	r1, r0
+d0046c3c:	6818      	ldr	r0, [r3, #0]
+d0046c3e:	f000 b819 	b.w	d0046c74 <_free_r>
+d0046c42:	bf00      	nop
+d0046c44:	d00482a0 	.word	0xd00482a0
 
-d0045f9c <memcpy>:
-d0045f9c:	440a      	add	r2, r1
-d0045f9e:	4291      	cmp	r1, r2
-d0045fa0:	f100 33ff 	add.w	r3, r0, #4294967295	; 0xffffffff
-d0045fa4:	d100      	bne.n	d0045fa8 <memcpy+0xc>
-d0045fa6:	4770      	bx	lr
-d0045fa8:	b510      	push	{r4, lr}
-d0045faa:	f811 4b01 	ldrb.w	r4, [r1], #1
-d0045fae:	f803 4f01 	strb.w	r4, [r3, #1]!
-d0045fb2:	4291      	cmp	r1, r2
-d0045fb4:	d1f9      	bne.n	d0045faa <memcpy+0xe>
-d0045fb6:	bd10      	pop	{r4, pc}
+d0046c48 <memcpy>:
+d0046c48:	440a      	add	r2, r1
+d0046c4a:	4291      	cmp	r1, r2
+d0046c4c:	f100 33ff 	add.w	r3, r0, #4294967295	; 0xffffffff
+d0046c50:	d100      	bne.n	d0046c54 <memcpy+0xc>
+d0046c52:	4770      	bx	lr
+d0046c54:	b510      	push	{r4, lr}
+d0046c56:	f811 4b01 	ldrb.w	r4, [r1], #1
+d0046c5a:	f803 4f01 	strb.w	r4, [r3, #1]!
+d0046c5e:	4291      	cmp	r1, r2
+d0046c60:	d1f9      	bne.n	d0046c56 <memcpy+0xe>
+d0046c62:	bd10      	pop	{r4, pc}
 
-d0045fb8 <memset>:
-d0045fb8:	4402      	add	r2, r0
-d0045fba:	4603      	mov	r3, r0
-d0045fbc:	4293      	cmp	r3, r2
-d0045fbe:	d100      	bne.n	d0045fc2 <memset+0xa>
-d0045fc0:	4770      	bx	lr
-d0045fc2:	f803 1b01 	strb.w	r1, [r3], #1
-d0045fc6:	e7f9      	b.n	d0045fbc <memset+0x4>
+d0046c64 <memset>:
+d0046c64:	4402      	add	r2, r0
+d0046c66:	4603      	mov	r3, r0
+d0046c68:	4293      	cmp	r3, r2
+d0046c6a:	d100      	bne.n	d0046c6e <memset+0xa>
+d0046c6c:	4770      	bx	lr
+d0046c6e:	f803 1b01 	strb.w	r1, [r3], #1
+d0046c72:	e7f9      	b.n	d0046c68 <memset+0x4>
 
-d0045fc8 <_free_r>:
-d0045fc8:	b537      	push	{r0, r1, r2, r4, r5, lr}
-d0045fca:	2900      	cmp	r1, #0
-d0045fcc:	d048      	beq.n	d0046060 <_free_r+0x98>
-d0045fce:	f851 3c04 	ldr.w	r3, [r1, #-4]
-d0045fd2:	9001      	str	r0, [sp, #4]
-d0045fd4:	2b00      	cmp	r3, #0
-d0045fd6:	f1a1 0404 	sub.w	r4, r1, #4
-d0045fda:	bfb8      	it	lt
-d0045fdc:	18e4      	addlt	r4, r4, r3
-d0045fde:	f000 f9e3 	bl	d00463a8 <__malloc_lock>
-d0045fe2:	4a20      	ldr	r2, [pc, #128]	; (d0046064 <_free_r+0x9c>)
-d0045fe4:	9801      	ldr	r0, [sp, #4]
-d0045fe6:	6813      	ldr	r3, [r2, #0]
-d0045fe8:	4615      	mov	r5, r2
-d0045fea:	b933      	cbnz	r3, d0045ffa <_free_r+0x32>
-d0045fec:	6063      	str	r3, [r4, #4]
-d0045fee:	6014      	str	r4, [r2, #0]
-d0045ff0:	b003      	add	sp, #12
-d0045ff2:	e8bd 4030 	ldmia.w	sp!, {r4, r5, lr}
-d0045ff6:	f000 b9dd 	b.w	d00463b4 <__malloc_unlock>
-d0045ffa:	42a3      	cmp	r3, r4
-d0045ffc:	d90b      	bls.n	d0046016 <_free_r+0x4e>
-d0045ffe:	6821      	ldr	r1, [r4, #0]
-d0046000:	1862      	adds	r2, r4, r1
-d0046002:	4293      	cmp	r3, r2
-d0046004:	bf04      	itt	eq
-d0046006:	681a      	ldreq	r2, [r3, #0]
-d0046008:	685b      	ldreq	r3, [r3, #4]
-d004600a:	6063      	str	r3, [r4, #4]
-d004600c:	bf04      	itt	eq
-d004600e:	1852      	addeq	r2, r2, r1
-d0046010:	6022      	streq	r2, [r4, #0]
-d0046012:	602c      	str	r4, [r5, #0]
-d0046014:	e7ec      	b.n	d0045ff0 <_free_r+0x28>
-d0046016:	461a      	mov	r2, r3
-d0046018:	685b      	ldr	r3, [r3, #4]
-d004601a:	b10b      	cbz	r3, d0046020 <_free_r+0x58>
-d004601c:	42a3      	cmp	r3, r4
-d004601e:	d9fa      	bls.n	d0046016 <_free_r+0x4e>
-d0046020:	6811      	ldr	r1, [r2, #0]
-d0046022:	1855      	adds	r5, r2, r1
-d0046024:	42a5      	cmp	r5, r4
-d0046026:	d10b      	bne.n	d0046040 <_free_r+0x78>
-d0046028:	6824      	ldr	r4, [r4, #0]
-d004602a:	4421      	add	r1, r4
-d004602c:	1854      	adds	r4, r2, r1
-d004602e:	42a3      	cmp	r3, r4
-d0046030:	6011      	str	r1, [r2, #0]
-d0046032:	d1dd      	bne.n	d0045ff0 <_free_r+0x28>
-d0046034:	681c      	ldr	r4, [r3, #0]
-d0046036:	685b      	ldr	r3, [r3, #4]
-d0046038:	6053      	str	r3, [r2, #4]
-d004603a:	4421      	add	r1, r4
-d004603c:	6011      	str	r1, [r2, #0]
-d004603e:	e7d7      	b.n	d0045ff0 <_free_r+0x28>
-d0046040:	d902      	bls.n	d0046048 <_free_r+0x80>
-d0046042:	230c      	movs	r3, #12
-d0046044:	6003      	str	r3, [r0, #0]
-d0046046:	e7d3      	b.n	d0045ff0 <_free_r+0x28>
-d0046048:	6825      	ldr	r5, [r4, #0]
-d004604a:	1961      	adds	r1, r4, r5
-d004604c:	428b      	cmp	r3, r1
-d004604e:	bf04      	itt	eq
-d0046050:	6819      	ldreq	r1, [r3, #0]
-d0046052:	685b      	ldreq	r3, [r3, #4]
-d0046054:	6063      	str	r3, [r4, #4]
-d0046056:	bf04      	itt	eq
-d0046058:	1949      	addeq	r1, r1, r5
-d004605a:	6021      	streq	r1, [r4, #0]
-d004605c:	6054      	str	r4, [r2, #4]
-d004605e:	e7c7      	b.n	d0045ff0 <_free_r+0x28>
-d0046060:	b003      	add	sp, #12
-d0046062:	bd30      	pop	{r4, r5, pc}
-d0046064:	d012ccc0 	.word	0xd012ccc0
+d0046c74 <_free_r>:
+d0046c74:	b537      	push	{r0, r1, r2, r4, r5, lr}
+d0046c76:	2900      	cmp	r1, #0
+d0046c78:	d048      	beq.n	d0046d0c <_free_r+0x98>
+d0046c7a:	f851 3c04 	ldr.w	r3, [r1, #-4]
+d0046c7e:	9001      	str	r0, [sp, #4]
+d0046c80:	2b00      	cmp	r3, #0
+d0046c82:	f1a1 0404 	sub.w	r4, r1, #4
+d0046c86:	bfb8      	it	lt
+d0046c88:	18e4      	addlt	r4, r4, r3
+d0046c8a:	f000 f9e3 	bl	d0047054 <__malloc_lock>
+d0046c8e:	4a20      	ldr	r2, [pc, #128]	; (d0046d10 <_free_r+0x9c>)
+d0046c90:	9801      	ldr	r0, [sp, #4]
+d0046c92:	6813      	ldr	r3, [r2, #0]
+d0046c94:	4615      	mov	r5, r2
+d0046c96:	b933      	cbnz	r3, d0046ca6 <_free_r+0x32>
+d0046c98:	6063      	str	r3, [r4, #4]
+d0046c9a:	6014      	str	r4, [r2, #0]
+d0046c9c:	b003      	add	sp, #12
+d0046c9e:	e8bd 4030 	ldmia.w	sp!, {r4, r5, lr}
+d0046ca2:	f000 b9dd 	b.w	d0047060 <__malloc_unlock>
+d0046ca6:	42a3      	cmp	r3, r4
+d0046ca8:	d90b      	bls.n	d0046cc2 <_free_r+0x4e>
+d0046caa:	6821      	ldr	r1, [r4, #0]
+d0046cac:	1862      	adds	r2, r4, r1
+d0046cae:	4293      	cmp	r3, r2
+d0046cb0:	bf04      	itt	eq
+d0046cb2:	681a      	ldreq	r2, [r3, #0]
+d0046cb4:	685b      	ldreq	r3, [r3, #4]
+d0046cb6:	6063      	str	r3, [r4, #4]
+d0046cb8:	bf04      	itt	eq
+d0046cba:	1852      	addeq	r2, r2, r1
+d0046cbc:	6022      	streq	r2, [r4, #0]
+d0046cbe:	602c      	str	r4, [r5, #0]
+d0046cc0:	e7ec      	b.n	d0046c9c <_free_r+0x28>
+d0046cc2:	461a      	mov	r2, r3
+d0046cc4:	685b      	ldr	r3, [r3, #4]
+d0046cc6:	b10b      	cbz	r3, d0046ccc <_free_r+0x58>
+d0046cc8:	42a3      	cmp	r3, r4
+d0046cca:	d9fa      	bls.n	d0046cc2 <_free_r+0x4e>
+d0046ccc:	6811      	ldr	r1, [r2, #0]
+d0046cce:	1855      	adds	r5, r2, r1
+d0046cd0:	42a5      	cmp	r5, r4
+d0046cd2:	d10b      	bne.n	d0046cec <_free_r+0x78>
+d0046cd4:	6824      	ldr	r4, [r4, #0]
+d0046cd6:	4421      	add	r1, r4
+d0046cd8:	1854      	adds	r4, r2, r1
+d0046cda:	42a3      	cmp	r3, r4
+d0046cdc:	6011      	str	r1, [r2, #0]
+d0046cde:	d1dd      	bne.n	d0046c9c <_free_r+0x28>
+d0046ce0:	681c      	ldr	r4, [r3, #0]
+d0046ce2:	685b      	ldr	r3, [r3, #4]
+d0046ce4:	6053      	str	r3, [r2, #4]
+d0046ce6:	4421      	add	r1, r4
+d0046ce8:	6011      	str	r1, [r2, #0]
+d0046cea:	e7d7      	b.n	d0046c9c <_free_r+0x28>
+d0046cec:	d902      	bls.n	d0046cf4 <_free_r+0x80>
+d0046cee:	230c      	movs	r3, #12
+d0046cf0:	6003      	str	r3, [r0, #0]
+d0046cf2:	e7d3      	b.n	d0046c9c <_free_r+0x28>
+d0046cf4:	6825      	ldr	r5, [r4, #0]
+d0046cf6:	1961      	adds	r1, r4, r5
+d0046cf8:	428b      	cmp	r3, r1
+d0046cfa:	bf04      	itt	eq
+d0046cfc:	6819      	ldreq	r1, [r3, #0]
+d0046cfe:	685b      	ldreq	r3, [r3, #4]
+d0046d00:	6063      	str	r3, [r4, #4]
+d0046d02:	bf04      	itt	eq
+d0046d04:	1949      	addeq	r1, r1, r5
+d0046d06:	6021      	streq	r1, [r4, #0]
+d0046d08:	6054      	str	r4, [r2, #4]
+d0046d0a:	e7c7      	b.n	d0046c9c <_free_r+0x28>
+d0046d0c:	b003      	add	sp, #12
+d0046d0e:	bd30      	pop	{r4, r5, pc}
+d0046d10:	d012d9c0 	.word	0xd012d9c0
 
-d0046068 <_malloc_r>:
-d0046068:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-d004606a:	1ccd      	adds	r5, r1, #3
-d004606c:	f025 0503 	bic.w	r5, r5, #3
-d0046070:	3508      	adds	r5, #8
-d0046072:	2d0c      	cmp	r5, #12
-d0046074:	bf38      	it	cc
-d0046076:	250c      	movcc	r5, #12
-d0046078:	2d00      	cmp	r5, #0
-d004607a:	4606      	mov	r6, r0
-d004607c:	db01      	blt.n	d0046082 <_malloc_r+0x1a>
-d004607e:	42a9      	cmp	r1, r5
-d0046080:	d903      	bls.n	d004608a <_malloc_r+0x22>
-d0046082:	230c      	movs	r3, #12
-d0046084:	6033      	str	r3, [r6, #0]
-d0046086:	2000      	movs	r0, #0
-d0046088:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
-d004608a:	f000 f98d 	bl	d00463a8 <__malloc_lock>
-d004608e:	4921      	ldr	r1, [pc, #132]	; (d0046114 <_malloc_r+0xac>)
-d0046090:	680a      	ldr	r2, [r1, #0]
-d0046092:	4614      	mov	r4, r2
-d0046094:	b99c      	cbnz	r4, d00460be <_malloc_r+0x56>
-d0046096:	4f20      	ldr	r7, [pc, #128]	; (d0046118 <_malloc_r+0xb0>)
-d0046098:	683b      	ldr	r3, [r7, #0]
-d004609a:	b923      	cbnz	r3, d00460a6 <_malloc_r+0x3e>
-d004609c:	4621      	mov	r1, r4
-d004609e:	4630      	mov	r0, r6
-d00460a0:	f7fa f81e 	bl	d00400e0 <_sbrk_r>
-d00460a4:	6038      	str	r0, [r7, #0]
-d00460a6:	4629      	mov	r1, r5
-d00460a8:	4630      	mov	r0, r6
-d00460aa:	f7fa f819 	bl	d00400e0 <_sbrk_r>
-d00460ae:	1c43      	adds	r3, r0, #1
-d00460b0:	d123      	bne.n	d00460fa <_malloc_r+0x92>
-d00460b2:	230c      	movs	r3, #12
-d00460b4:	6033      	str	r3, [r6, #0]
-d00460b6:	4630      	mov	r0, r6
-d00460b8:	f000 f97c 	bl	d00463b4 <__malloc_unlock>
-d00460bc:	e7e3      	b.n	d0046086 <_malloc_r+0x1e>
-d00460be:	6823      	ldr	r3, [r4, #0]
-d00460c0:	1b5b      	subs	r3, r3, r5
-d00460c2:	d417      	bmi.n	d00460f4 <_malloc_r+0x8c>
-d00460c4:	2b0b      	cmp	r3, #11
-d00460c6:	d903      	bls.n	d00460d0 <_malloc_r+0x68>
-d00460c8:	6023      	str	r3, [r4, #0]
-d00460ca:	441c      	add	r4, r3
-d00460cc:	6025      	str	r5, [r4, #0]
-d00460ce:	e004      	b.n	d00460da <_malloc_r+0x72>
-d00460d0:	6863      	ldr	r3, [r4, #4]
-d00460d2:	42a2      	cmp	r2, r4
-d00460d4:	bf0c      	ite	eq
-d00460d6:	600b      	streq	r3, [r1, #0]
-d00460d8:	6053      	strne	r3, [r2, #4]
-d00460da:	4630      	mov	r0, r6
-d00460dc:	f000 f96a 	bl	d00463b4 <__malloc_unlock>
-d00460e0:	f104 000b 	add.w	r0, r4, #11
-d00460e4:	1d23      	adds	r3, r4, #4
-d00460e6:	f020 0007 	bic.w	r0, r0, #7
-d00460ea:	1ac2      	subs	r2, r0, r3
-d00460ec:	d0cc      	beq.n	d0046088 <_malloc_r+0x20>
-d00460ee:	1a1b      	subs	r3, r3, r0
-d00460f0:	50a3      	str	r3, [r4, r2]
-d00460f2:	e7c9      	b.n	d0046088 <_malloc_r+0x20>
-d00460f4:	4622      	mov	r2, r4
-d00460f6:	6864      	ldr	r4, [r4, #4]
-d00460f8:	e7cc      	b.n	d0046094 <_malloc_r+0x2c>
-d00460fa:	1cc4      	adds	r4, r0, #3
-d00460fc:	f024 0403 	bic.w	r4, r4, #3
-d0046100:	42a0      	cmp	r0, r4
-d0046102:	d0e3      	beq.n	d00460cc <_malloc_r+0x64>
-d0046104:	1a21      	subs	r1, r4, r0
-d0046106:	4630      	mov	r0, r6
-d0046108:	f7f9 ffea 	bl	d00400e0 <_sbrk_r>
-d004610c:	3001      	adds	r0, #1
-d004610e:	d1dd      	bne.n	d00460cc <_malloc_r+0x64>
-d0046110:	e7cf      	b.n	d00460b2 <_malloc_r+0x4a>
-d0046112:	bf00      	nop
-d0046114:	d012ccc0 	.word	0xd012ccc0
-d0046118:	d012ccc4 	.word	0xd012ccc4
+d0046d14 <_malloc_r>:
+d0046d14:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+d0046d16:	1ccd      	adds	r5, r1, #3
+d0046d18:	f025 0503 	bic.w	r5, r5, #3
+d0046d1c:	3508      	adds	r5, #8
+d0046d1e:	2d0c      	cmp	r5, #12
+d0046d20:	bf38      	it	cc
+d0046d22:	250c      	movcc	r5, #12
+d0046d24:	2d00      	cmp	r5, #0
+d0046d26:	4606      	mov	r6, r0
+d0046d28:	db01      	blt.n	d0046d2e <_malloc_r+0x1a>
+d0046d2a:	42a9      	cmp	r1, r5
+d0046d2c:	d903      	bls.n	d0046d36 <_malloc_r+0x22>
+d0046d2e:	230c      	movs	r3, #12
+d0046d30:	6033      	str	r3, [r6, #0]
+d0046d32:	2000      	movs	r0, #0
+d0046d34:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+d0046d36:	f000 f98d 	bl	d0047054 <__malloc_lock>
+d0046d3a:	4921      	ldr	r1, [pc, #132]	; (d0046dc0 <_malloc_r+0xac>)
+d0046d3c:	680a      	ldr	r2, [r1, #0]
+d0046d3e:	4614      	mov	r4, r2
+d0046d40:	b99c      	cbnz	r4, d0046d6a <_malloc_r+0x56>
+d0046d42:	4f20      	ldr	r7, [pc, #128]	; (d0046dc4 <_malloc_r+0xb0>)
+d0046d44:	683b      	ldr	r3, [r7, #0]
+d0046d46:	b923      	cbnz	r3, d0046d52 <_malloc_r+0x3e>
+d0046d48:	4621      	mov	r1, r4
+d0046d4a:	4630      	mov	r0, r6
+d0046d4c:	f7f9 f9c8 	bl	d00400e0 <_sbrk_r>
+d0046d50:	6038      	str	r0, [r7, #0]
+d0046d52:	4629      	mov	r1, r5
+d0046d54:	4630      	mov	r0, r6
+d0046d56:	f7f9 f9c3 	bl	d00400e0 <_sbrk_r>
+d0046d5a:	1c43      	adds	r3, r0, #1
+d0046d5c:	d123      	bne.n	d0046da6 <_malloc_r+0x92>
+d0046d5e:	230c      	movs	r3, #12
+d0046d60:	6033      	str	r3, [r6, #0]
+d0046d62:	4630      	mov	r0, r6
+d0046d64:	f000 f97c 	bl	d0047060 <__malloc_unlock>
+d0046d68:	e7e3      	b.n	d0046d32 <_malloc_r+0x1e>
+d0046d6a:	6823      	ldr	r3, [r4, #0]
+d0046d6c:	1b5b      	subs	r3, r3, r5
+d0046d6e:	d417      	bmi.n	d0046da0 <_malloc_r+0x8c>
+d0046d70:	2b0b      	cmp	r3, #11
+d0046d72:	d903      	bls.n	d0046d7c <_malloc_r+0x68>
+d0046d74:	6023      	str	r3, [r4, #0]
+d0046d76:	441c      	add	r4, r3
+d0046d78:	6025      	str	r5, [r4, #0]
+d0046d7a:	e004      	b.n	d0046d86 <_malloc_r+0x72>
+d0046d7c:	6863      	ldr	r3, [r4, #4]
+d0046d7e:	42a2      	cmp	r2, r4
+d0046d80:	bf0c      	ite	eq
+d0046d82:	600b      	streq	r3, [r1, #0]
+d0046d84:	6053      	strne	r3, [r2, #4]
+d0046d86:	4630      	mov	r0, r6
+d0046d88:	f000 f96a 	bl	d0047060 <__malloc_unlock>
+d0046d8c:	f104 000b 	add.w	r0, r4, #11
+d0046d90:	1d23      	adds	r3, r4, #4
+d0046d92:	f020 0007 	bic.w	r0, r0, #7
+d0046d96:	1ac2      	subs	r2, r0, r3
+d0046d98:	d0cc      	beq.n	d0046d34 <_malloc_r+0x20>
+d0046d9a:	1a1b      	subs	r3, r3, r0
+d0046d9c:	50a3      	str	r3, [r4, r2]
+d0046d9e:	e7c9      	b.n	d0046d34 <_malloc_r+0x20>
+d0046da0:	4622      	mov	r2, r4
+d0046da2:	6864      	ldr	r4, [r4, #4]
+d0046da4:	e7cc      	b.n	d0046d40 <_malloc_r+0x2c>
+d0046da6:	1cc4      	adds	r4, r0, #3
+d0046da8:	f024 0403 	bic.w	r4, r4, #3
+d0046dac:	42a0      	cmp	r0, r4
+d0046dae:	d0e3      	beq.n	d0046d78 <_malloc_r+0x64>
+d0046db0:	1a21      	subs	r1, r4, r0
+d0046db2:	4630      	mov	r0, r6
+d0046db4:	f7f9 f994 	bl	d00400e0 <_sbrk_r>
+d0046db8:	3001      	adds	r0, #1
+d0046dba:	d1dd      	bne.n	d0046d78 <_malloc_r+0x64>
+d0046dbc:	e7cf      	b.n	d0046d5e <_malloc_r+0x4a>
+d0046dbe:	bf00      	nop
+d0046dc0:	d012d9c0 	.word	0xd012d9c0
+d0046dc4:	d012d9c4 	.word	0xd012d9c4
 
-d004611c <setbuf>:
-d004611c:	2900      	cmp	r1, #0
-d004611e:	f44f 6380 	mov.w	r3, #1024	; 0x400
-d0046122:	bf0c      	ite	eq
-d0046124:	2202      	moveq	r2, #2
-d0046126:	2200      	movne	r2, #0
-d0046128:	f000 b800 	b.w	d004612c <setvbuf>
+d0046dc8 <setbuf>:
+d0046dc8:	2900      	cmp	r1, #0
+d0046dca:	f44f 6380 	mov.w	r3, #1024	; 0x400
+d0046dce:	bf0c      	ite	eq
+d0046dd0:	2202      	moveq	r2, #2
+d0046dd2:	2200      	movne	r2, #0
+d0046dd4:	f000 b800 	b.w	d0046dd8 <setvbuf>
 
-d004612c <setvbuf>:
-d004612c:	e92d 43f7 	stmdb	sp!, {r0, r1, r2, r4, r5, r6, r7, r8, r9, lr}
-d0046130:	461d      	mov	r5, r3
-d0046132:	4b5d      	ldr	r3, [pc, #372]	; (d00462a8 <setvbuf+0x17c>)
-d0046134:	681f      	ldr	r7, [r3, #0]
-d0046136:	4604      	mov	r4, r0
-d0046138:	460e      	mov	r6, r1
-d004613a:	4690      	mov	r8, r2
-d004613c:	b127      	cbz	r7, d0046148 <setvbuf+0x1c>
-d004613e:	69bb      	ldr	r3, [r7, #24]
-d0046140:	b913      	cbnz	r3, d0046148 <setvbuf+0x1c>
-d0046142:	4638      	mov	r0, r7
-d0046144:	f7ff fe54 	bl	d0045df0 <__sinit>
-d0046148:	4b58      	ldr	r3, [pc, #352]	; (d00462ac <setvbuf+0x180>)
-d004614a:	429c      	cmp	r4, r3
-d004614c:	d167      	bne.n	d004621e <setvbuf+0xf2>
-d004614e:	687c      	ldr	r4, [r7, #4]
-d0046150:	f1b8 0f02 	cmp.w	r8, #2
-d0046154:	d006      	beq.n	d0046164 <setvbuf+0x38>
-d0046156:	f1b8 0f01 	cmp.w	r8, #1
-d004615a:	f200 809f 	bhi.w	d004629c <setvbuf+0x170>
-d004615e:	2d00      	cmp	r5, #0
-d0046160:	f2c0 809c 	blt.w	d004629c <setvbuf+0x170>
-d0046164:	6e63      	ldr	r3, [r4, #100]	; 0x64
-d0046166:	07db      	lsls	r3, r3, #31
-d0046168:	d405      	bmi.n	d0046176 <setvbuf+0x4a>
-d004616a:	89a3      	ldrh	r3, [r4, #12]
-d004616c:	0598      	lsls	r0, r3, #22
-d004616e:	d402      	bmi.n	d0046176 <setvbuf+0x4a>
-d0046170:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d0046172:	f7ff fedc 	bl	d0045f2e <__retarget_lock_acquire_recursive>
-d0046176:	4621      	mov	r1, r4
-d0046178:	4638      	mov	r0, r7
-d004617a:	f7ff fda5 	bl	d0045cc8 <_fflush_r>
-d004617e:	6b61      	ldr	r1, [r4, #52]	; 0x34
-d0046180:	b141      	cbz	r1, d0046194 <setvbuf+0x68>
-d0046182:	f104 0344 	add.w	r3, r4, #68	; 0x44
-d0046186:	4299      	cmp	r1, r3
-d0046188:	d002      	beq.n	d0046190 <setvbuf+0x64>
-d004618a:	4638      	mov	r0, r7
-d004618c:	f7ff ff1c 	bl	d0045fc8 <_free_r>
-d0046190:	2300      	movs	r3, #0
-d0046192:	6363      	str	r3, [r4, #52]	; 0x34
-d0046194:	2300      	movs	r3, #0
-d0046196:	61a3      	str	r3, [r4, #24]
-d0046198:	6063      	str	r3, [r4, #4]
-d004619a:	89a3      	ldrh	r3, [r4, #12]
-d004619c:	0619      	lsls	r1, r3, #24
-d004619e:	d503      	bpl.n	d00461a8 <setvbuf+0x7c>
-d00461a0:	6921      	ldr	r1, [r4, #16]
-d00461a2:	4638      	mov	r0, r7
-d00461a4:	f7ff ff10 	bl	d0045fc8 <_free_r>
-d00461a8:	89a3      	ldrh	r3, [r4, #12]
-d00461aa:	f423 634a 	bic.w	r3, r3, #3232	; 0xca0
-d00461ae:	f023 0303 	bic.w	r3, r3, #3
-d00461b2:	f1b8 0f02 	cmp.w	r8, #2
-d00461b6:	81a3      	strh	r3, [r4, #12]
-d00461b8:	d06c      	beq.n	d0046294 <setvbuf+0x168>
-d00461ba:	ab01      	add	r3, sp, #4
-d00461bc:	466a      	mov	r2, sp
-d00461be:	4621      	mov	r1, r4
-d00461c0:	4638      	mov	r0, r7
-d00461c2:	f7ff feb6 	bl	d0045f32 <__swhatbuf_r>
-d00461c6:	89a3      	ldrh	r3, [r4, #12]
-d00461c8:	4318      	orrs	r0, r3
-d00461ca:	81a0      	strh	r0, [r4, #12]
-d00461cc:	2d00      	cmp	r5, #0
-d00461ce:	d130      	bne.n	d0046232 <setvbuf+0x106>
-d00461d0:	9d00      	ldr	r5, [sp, #0]
-d00461d2:	4628      	mov	r0, r5
-d00461d4:	f7ff fed2 	bl	d0045f7c <malloc>
-d00461d8:	4606      	mov	r6, r0
-d00461da:	2800      	cmp	r0, #0
-d00461dc:	d155      	bne.n	d004628a <setvbuf+0x15e>
-d00461de:	f8dd 9000 	ldr.w	r9, [sp]
-d00461e2:	45a9      	cmp	r9, r5
-d00461e4:	d14a      	bne.n	d004627c <setvbuf+0x150>
-d00461e6:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
-d00461ea:	2200      	movs	r2, #0
-d00461ec:	60a2      	str	r2, [r4, #8]
-d00461ee:	f104 0247 	add.w	r2, r4, #71	; 0x47
-d00461f2:	6022      	str	r2, [r4, #0]
-d00461f4:	6122      	str	r2, [r4, #16]
-d00461f6:	2201      	movs	r2, #1
-d00461f8:	f9b4 300c 	ldrsh.w	r3, [r4, #12]
-d00461fc:	6162      	str	r2, [r4, #20]
-d00461fe:	6e62      	ldr	r2, [r4, #100]	; 0x64
-d0046200:	f043 0302 	orr.w	r3, r3, #2
-d0046204:	07d2      	lsls	r2, r2, #31
-d0046206:	81a3      	strh	r3, [r4, #12]
-d0046208:	d405      	bmi.n	d0046216 <setvbuf+0xea>
-d004620a:	f413 7f00 	tst.w	r3, #512	; 0x200
-d004620e:	d102      	bne.n	d0046216 <setvbuf+0xea>
-d0046210:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d0046212:	f7ff fe8d 	bl	d0045f30 <__retarget_lock_release_recursive>
-d0046216:	4628      	mov	r0, r5
-d0046218:	b003      	add	sp, #12
-d004621a:	e8bd 83f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, pc}
-d004621e:	4b24      	ldr	r3, [pc, #144]	; (d00462b0 <setvbuf+0x184>)
-d0046220:	429c      	cmp	r4, r3
-d0046222:	d101      	bne.n	d0046228 <setvbuf+0xfc>
-d0046224:	68bc      	ldr	r4, [r7, #8]
-d0046226:	e793      	b.n	d0046150 <setvbuf+0x24>
-d0046228:	4b22      	ldr	r3, [pc, #136]	; (d00462b4 <setvbuf+0x188>)
-d004622a:	429c      	cmp	r4, r3
-d004622c:	bf08      	it	eq
-d004622e:	68fc      	ldreq	r4, [r7, #12]
-d0046230:	e78e      	b.n	d0046150 <setvbuf+0x24>
-d0046232:	2e00      	cmp	r6, #0
-d0046234:	d0cd      	beq.n	d00461d2 <setvbuf+0xa6>
-d0046236:	69bb      	ldr	r3, [r7, #24]
-d0046238:	b913      	cbnz	r3, d0046240 <setvbuf+0x114>
-d004623a:	4638      	mov	r0, r7
-d004623c:	f7ff fdd8 	bl	d0045df0 <__sinit>
-d0046240:	f1b8 0f01 	cmp.w	r8, #1
-d0046244:	bf08      	it	eq
-d0046246:	89a3      	ldrheq	r3, [r4, #12]
-d0046248:	6026      	str	r6, [r4, #0]
-d004624a:	bf04      	itt	eq
-d004624c:	f043 0301 	orreq.w	r3, r3, #1
-d0046250:	81a3      	strheq	r3, [r4, #12]
-d0046252:	89a2      	ldrh	r2, [r4, #12]
-d0046254:	f012 0308 	ands.w	r3, r2, #8
-d0046258:	e9c4 6504 	strd	r6, r5, [r4, #16]
-d004625c:	d01c      	beq.n	d0046298 <setvbuf+0x16c>
-d004625e:	07d3      	lsls	r3, r2, #31
-d0046260:	bf41      	itttt	mi
-d0046262:	2300      	movmi	r3, #0
-d0046264:	426d      	negmi	r5, r5
-d0046266:	60a3      	strmi	r3, [r4, #8]
-d0046268:	61a5      	strmi	r5, [r4, #24]
-d004626a:	bf58      	it	pl
-d004626c:	60a5      	strpl	r5, [r4, #8]
-d004626e:	6e65      	ldr	r5, [r4, #100]	; 0x64
-d0046270:	f015 0501 	ands.w	r5, r5, #1
-d0046274:	d115      	bne.n	d00462a2 <setvbuf+0x176>
-d0046276:	f412 7f00 	tst.w	r2, #512	; 0x200
-d004627a:	e7c8      	b.n	d004620e <setvbuf+0xe2>
-d004627c:	4648      	mov	r0, r9
-d004627e:	f7ff fe7d 	bl	d0045f7c <malloc>
-d0046282:	4606      	mov	r6, r0
-d0046284:	2800      	cmp	r0, #0
-d0046286:	d0ae      	beq.n	d00461e6 <setvbuf+0xba>
-d0046288:	464d      	mov	r5, r9
-d004628a:	89a3      	ldrh	r3, [r4, #12]
-d004628c:	f043 0380 	orr.w	r3, r3, #128	; 0x80
-d0046290:	81a3      	strh	r3, [r4, #12]
-d0046292:	e7d0      	b.n	d0046236 <setvbuf+0x10a>
-d0046294:	2500      	movs	r5, #0
-d0046296:	e7a8      	b.n	d00461ea <setvbuf+0xbe>
-d0046298:	60a3      	str	r3, [r4, #8]
-d004629a:	e7e8      	b.n	d004626e <setvbuf+0x142>
-d004629c:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
-d00462a0:	e7b9      	b.n	d0046216 <setvbuf+0xea>
-d00462a2:	2500      	movs	r5, #0
-d00462a4:	e7b7      	b.n	d0046216 <setvbuf+0xea>
-d00462a6:	bf00      	nop
-d00462a8:	d00475d8 	.word	0xd00475d8
-d00462ac:	d0046de0 	.word	0xd0046de0
-d00462b0:	d0046e00 	.word	0xd0046e00
-d00462b4:	d0046dc0 	.word	0xd0046dc0
+d0046dd8 <setvbuf>:
+d0046dd8:	e92d 43f7 	stmdb	sp!, {r0, r1, r2, r4, r5, r6, r7, r8, r9, lr}
+d0046ddc:	461d      	mov	r5, r3
+d0046dde:	4b5d      	ldr	r3, [pc, #372]	; (d0046f54 <setvbuf+0x17c>)
+d0046de0:	681f      	ldr	r7, [r3, #0]
+d0046de2:	4604      	mov	r4, r0
+d0046de4:	460e      	mov	r6, r1
+d0046de6:	4690      	mov	r8, r2
+d0046de8:	b127      	cbz	r7, d0046df4 <setvbuf+0x1c>
+d0046dea:	69bb      	ldr	r3, [r7, #24]
+d0046dec:	b913      	cbnz	r3, d0046df4 <setvbuf+0x1c>
+d0046dee:	4638      	mov	r0, r7
+d0046df0:	f7ff fe54 	bl	d0046a9c <__sinit>
+d0046df4:	4b58      	ldr	r3, [pc, #352]	; (d0046f58 <setvbuf+0x180>)
+d0046df6:	429c      	cmp	r4, r3
+d0046df8:	d167      	bne.n	d0046eca <setvbuf+0xf2>
+d0046dfa:	687c      	ldr	r4, [r7, #4]
+d0046dfc:	f1b8 0f02 	cmp.w	r8, #2
+d0046e00:	d006      	beq.n	d0046e10 <setvbuf+0x38>
+d0046e02:	f1b8 0f01 	cmp.w	r8, #1
+d0046e06:	f200 809f 	bhi.w	d0046f48 <setvbuf+0x170>
+d0046e0a:	2d00      	cmp	r5, #0
+d0046e0c:	f2c0 809c 	blt.w	d0046f48 <setvbuf+0x170>
+d0046e10:	6e63      	ldr	r3, [r4, #100]	; 0x64
+d0046e12:	07db      	lsls	r3, r3, #31
+d0046e14:	d405      	bmi.n	d0046e22 <setvbuf+0x4a>
+d0046e16:	89a3      	ldrh	r3, [r4, #12]
+d0046e18:	0598      	lsls	r0, r3, #22
+d0046e1a:	d402      	bmi.n	d0046e22 <setvbuf+0x4a>
+d0046e1c:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d0046e1e:	f7ff fedc 	bl	d0046bda <__retarget_lock_acquire_recursive>
+d0046e22:	4621      	mov	r1, r4
+d0046e24:	4638      	mov	r0, r7
+d0046e26:	f7ff fda5 	bl	d0046974 <_fflush_r>
+d0046e2a:	6b61      	ldr	r1, [r4, #52]	; 0x34
+d0046e2c:	b141      	cbz	r1, d0046e40 <setvbuf+0x68>
+d0046e2e:	f104 0344 	add.w	r3, r4, #68	; 0x44
+d0046e32:	4299      	cmp	r1, r3
+d0046e34:	d002      	beq.n	d0046e3c <setvbuf+0x64>
+d0046e36:	4638      	mov	r0, r7
+d0046e38:	f7ff ff1c 	bl	d0046c74 <_free_r>
+d0046e3c:	2300      	movs	r3, #0
+d0046e3e:	6363      	str	r3, [r4, #52]	; 0x34
+d0046e40:	2300      	movs	r3, #0
+d0046e42:	61a3      	str	r3, [r4, #24]
+d0046e44:	6063      	str	r3, [r4, #4]
+d0046e46:	89a3      	ldrh	r3, [r4, #12]
+d0046e48:	0619      	lsls	r1, r3, #24
+d0046e4a:	d503      	bpl.n	d0046e54 <setvbuf+0x7c>
+d0046e4c:	6921      	ldr	r1, [r4, #16]
+d0046e4e:	4638      	mov	r0, r7
+d0046e50:	f7ff ff10 	bl	d0046c74 <_free_r>
+d0046e54:	89a3      	ldrh	r3, [r4, #12]
+d0046e56:	f423 634a 	bic.w	r3, r3, #3232	; 0xca0
+d0046e5a:	f023 0303 	bic.w	r3, r3, #3
+d0046e5e:	f1b8 0f02 	cmp.w	r8, #2
+d0046e62:	81a3      	strh	r3, [r4, #12]
+d0046e64:	d06c      	beq.n	d0046f40 <setvbuf+0x168>
+d0046e66:	ab01      	add	r3, sp, #4
+d0046e68:	466a      	mov	r2, sp
+d0046e6a:	4621      	mov	r1, r4
+d0046e6c:	4638      	mov	r0, r7
+d0046e6e:	f7ff feb6 	bl	d0046bde <__swhatbuf_r>
+d0046e72:	89a3      	ldrh	r3, [r4, #12]
+d0046e74:	4318      	orrs	r0, r3
+d0046e76:	81a0      	strh	r0, [r4, #12]
+d0046e78:	2d00      	cmp	r5, #0
+d0046e7a:	d130      	bne.n	d0046ede <setvbuf+0x106>
+d0046e7c:	9d00      	ldr	r5, [sp, #0]
+d0046e7e:	4628      	mov	r0, r5
+d0046e80:	f7ff fed2 	bl	d0046c28 <malloc>
+d0046e84:	4606      	mov	r6, r0
+d0046e86:	2800      	cmp	r0, #0
+d0046e88:	d155      	bne.n	d0046f36 <setvbuf+0x15e>
+d0046e8a:	f8dd 9000 	ldr.w	r9, [sp]
+d0046e8e:	45a9      	cmp	r9, r5
+d0046e90:	d14a      	bne.n	d0046f28 <setvbuf+0x150>
+d0046e92:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
+d0046e96:	2200      	movs	r2, #0
+d0046e98:	60a2      	str	r2, [r4, #8]
+d0046e9a:	f104 0247 	add.w	r2, r4, #71	; 0x47
+d0046e9e:	6022      	str	r2, [r4, #0]
+d0046ea0:	6122      	str	r2, [r4, #16]
+d0046ea2:	2201      	movs	r2, #1
+d0046ea4:	f9b4 300c 	ldrsh.w	r3, [r4, #12]
+d0046ea8:	6162      	str	r2, [r4, #20]
+d0046eaa:	6e62      	ldr	r2, [r4, #100]	; 0x64
+d0046eac:	f043 0302 	orr.w	r3, r3, #2
+d0046eb0:	07d2      	lsls	r2, r2, #31
+d0046eb2:	81a3      	strh	r3, [r4, #12]
+d0046eb4:	d405      	bmi.n	d0046ec2 <setvbuf+0xea>
+d0046eb6:	f413 7f00 	tst.w	r3, #512	; 0x200
+d0046eba:	d102      	bne.n	d0046ec2 <setvbuf+0xea>
+d0046ebc:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d0046ebe:	f7ff fe8d 	bl	d0046bdc <__retarget_lock_release_recursive>
+d0046ec2:	4628      	mov	r0, r5
+d0046ec4:	b003      	add	sp, #12
+d0046ec6:	e8bd 83f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, pc}
+d0046eca:	4b24      	ldr	r3, [pc, #144]	; (d0046f5c <setvbuf+0x184>)
+d0046ecc:	429c      	cmp	r4, r3
+d0046ece:	d101      	bne.n	d0046ed4 <setvbuf+0xfc>
+d0046ed0:	68bc      	ldr	r4, [r7, #8]
+d0046ed2:	e793      	b.n	d0046dfc <setvbuf+0x24>
+d0046ed4:	4b22      	ldr	r3, [pc, #136]	; (d0046f60 <setvbuf+0x188>)
+d0046ed6:	429c      	cmp	r4, r3
+d0046ed8:	bf08      	it	eq
+d0046eda:	68fc      	ldreq	r4, [r7, #12]
+d0046edc:	e78e      	b.n	d0046dfc <setvbuf+0x24>
+d0046ede:	2e00      	cmp	r6, #0
+d0046ee0:	d0cd      	beq.n	d0046e7e <setvbuf+0xa6>
+d0046ee2:	69bb      	ldr	r3, [r7, #24]
+d0046ee4:	b913      	cbnz	r3, d0046eec <setvbuf+0x114>
+d0046ee6:	4638      	mov	r0, r7
+d0046ee8:	f7ff fdd8 	bl	d0046a9c <__sinit>
+d0046eec:	f1b8 0f01 	cmp.w	r8, #1
+d0046ef0:	bf08      	it	eq
+d0046ef2:	89a3      	ldrheq	r3, [r4, #12]
+d0046ef4:	6026      	str	r6, [r4, #0]
+d0046ef6:	bf04      	itt	eq
+d0046ef8:	f043 0301 	orreq.w	r3, r3, #1
+d0046efc:	81a3      	strheq	r3, [r4, #12]
+d0046efe:	89a2      	ldrh	r2, [r4, #12]
+d0046f00:	f012 0308 	ands.w	r3, r2, #8
+d0046f04:	e9c4 6504 	strd	r6, r5, [r4, #16]
+d0046f08:	d01c      	beq.n	d0046f44 <setvbuf+0x16c>
+d0046f0a:	07d3      	lsls	r3, r2, #31
+d0046f0c:	bf41      	itttt	mi
+d0046f0e:	2300      	movmi	r3, #0
+d0046f10:	426d      	negmi	r5, r5
+d0046f12:	60a3      	strmi	r3, [r4, #8]
+d0046f14:	61a5      	strmi	r5, [r4, #24]
+d0046f16:	bf58      	it	pl
+d0046f18:	60a5      	strpl	r5, [r4, #8]
+d0046f1a:	6e65      	ldr	r5, [r4, #100]	; 0x64
+d0046f1c:	f015 0501 	ands.w	r5, r5, #1
+d0046f20:	d115      	bne.n	d0046f4e <setvbuf+0x176>
+d0046f22:	f412 7f00 	tst.w	r2, #512	; 0x200
+d0046f26:	e7c8      	b.n	d0046eba <setvbuf+0xe2>
+d0046f28:	4648      	mov	r0, r9
+d0046f2a:	f7ff fe7d 	bl	d0046c28 <malloc>
+d0046f2e:	4606      	mov	r6, r0
+d0046f30:	2800      	cmp	r0, #0
+d0046f32:	d0ae      	beq.n	d0046e92 <setvbuf+0xba>
+d0046f34:	464d      	mov	r5, r9
+d0046f36:	89a3      	ldrh	r3, [r4, #12]
+d0046f38:	f043 0380 	orr.w	r3, r3, #128	; 0x80
+d0046f3c:	81a3      	strh	r3, [r4, #12]
+d0046f3e:	e7d0      	b.n	d0046ee2 <setvbuf+0x10a>
+d0046f40:	2500      	movs	r5, #0
+d0046f42:	e7a8      	b.n	d0046e96 <setvbuf+0xbe>
+d0046f44:	60a3      	str	r3, [r4, #8]
+d0046f46:	e7e8      	b.n	d0046f1a <setvbuf+0x142>
+d0046f48:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
+d0046f4c:	e7b9      	b.n	d0046ec2 <setvbuf+0xea>
+d0046f4e:	2500      	movs	r5, #0
+d0046f50:	e7b7      	b.n	d0046ec2 <setvbuf+0xea>
+d0046f52:	bf00      	nop
+d0046f54:	d00482a0 	.word	0xd00482a0
+d0046f58:	d0047aa0 	.word	0xd0047aa0
+d0046f5c:	d0047ac0 	.word	0xd0047ac0
+d0046f60:	d0047a80 	.word	0xd0047a80
 
-d00462b8 <__sread>:
-d00462b8:	b510      	push	{r4, lr}
-d00462ba:	460c      	mov	r4, r1
-d00462bc:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
-d00462c0:	f000 f87e 	bl	d00463c0 <_read_r>
-d00462c4:	2800      	cmp	r0, #0
-d00462c6:	bfab      	itete	ge
-d00462c8:	6d63      	ldrge	r3, [r4, #84]	; 0x54
-d00462ca:	89a3      	ldrhlt	r3, [r4, #12]
-d00462cc:	181b      	addge	r3, r3, r0
-d00462ce:	f423 5380 	biclt.w	r3, r3, #4096	; 0x1000
-d00462d2:	bfac      	ite	ge
-d00462d4:	6563      	strge	r3, [r4, #84]	; 0x54
-d00462d6:	81a3      	strhlt	r3, [r4, #12]
-d00462d8:	bd10      	pop	{r4, pc}
+d0046f64 <__sread>:
+d0046f64:	b510      	push	{r4, lr}
+d0046f66:	460c      	mov	r4, r1
+d0046f68:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
+d0046f6c:	f000 f87e 	bl	d004706c <_read_r>
+d0046f70:	2800      	cmp	r0, #0
+d0046f72:	bfab      	itete	ge
+d0046f74:	6d63      	ldrge	r3, [r4, #84]	; 0x54
+d0046f76:	89a3      	ldrhlt	r3, [r4, #12]
+d0046f78:	181b      	addge	r3, r3, r0
+d0046f7a:	f423 5380 	biclt.w	r3, r3, #4096	; 0x1000
+d0046f7e:	bfac      	ite	ge
+d0046f80:	6563      	strge	r3, [r4, #84]	; 0x54
+d0046f82:	81a3      	strhlt	r3, [r4, #12]
+d0046f84:	bd10      	pop	{r4, pc}
 
-d00462da <__swrite>:
-d00462da:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
-d00462de:	461f      	mov	r7, r3
-d00462e0:	898b      	ldrh	r3, [r1, #12]
-d00462e2:	05db      	lsls	r3, r3, #23
-d00462e4:	4605      	mov	r5, r0
-d00462e6:	460c      	mov	r4, r1
-d00462e8:	4616      	mov	r6, r2
-d00462ea:	d505      	bpl.n	d00462f8 <__swrite+0x1e>
-d00462ec:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
-d00462f0:	2302      	movs	r3, #2
-d00462f2:	2200      	movs	r2, #0
-d00462f4:	f000 f846 	bl	d0046384 <_lseek_r>
-d00462f8:	89a3      	ldrh	r3, [r4, #12]
-d00462fa:	f9b4 100e 	ldrsh.w	r1, [r4, #14]
-d00462fe:	f423 5380 	bic.w	r3, r3, #4096	; 0x1000
-d0046302:	81a3      	strh	r3, [r4, #12]
-d0046304:	4632      	mov	r2, r6
-d0046306:	463b      	mov	r3, r7
-d0046308:	4628      	mov	r0, r5
-d004630a:	e8bd 41f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, lr}
-d004630e:	f7f9 bea1 	b.w	d0040054 <_write_r>
+d0046f86 <__swrite>:
+d0046f86:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+d0046f8a:	461f      	mov	r7, r3
+d0046f8c:	898b      	ldrh	r3, [r1, #12]
+d0046f8e:	05db      	lsls	r3, r3, #23
+d0046f90:	4605      	mov	r5, r0
+d0046f92:	460c      	mov	r4, r1
+d0046f94:	4616      	mov	r6, r2
+d0046f96:	d505      	bpl.n	d0046fa4 <__swrite+0x1e>
+d0046f98:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
+d0046f9c:	2302      	movs	r3, #2
+d0046f9e:	2200      	movs	r2, #0
+d0046fa0:	f000 f846 	bl	d0047030 <_lseek_r>
+d0046fa4:	89a3      	ldrh	r3, [r4, #12]
+d0046fa6:	f9b4 100e 	ldrsh.w	r1, [r4, #14]
+d0046faa:	f423 5380 	bic.w	r3, r3, #4096	; 0x1000
+d0046fae:	81a3      	strh	r3, [r4, #12]
+d0046fb0:	4632      	mov	r2, r6
+d0046fb2:	463b      	mov	r3, r7
+d0046fb4:	4628      	mov	r0, r5
+d0046fb6:	e8bd 41f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, lr}
+d0046fba:	f7f9 b84b 	b.w	d0040054 <_write_r>
 
-d0046312 <__sseek>:
-d0046312:	b510      	push	{r4, lr}
-d0046314:	460c      	mov	r4, r1
-d0046316:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
-d004631a:	f000 f833 	bl	d0046384 <_lseek_r>
-d004631e:	1c43      	adds	r3, r0, #1
-d0046320:	89a3      	ldrh	r3, [r4, #12]
-d0046322:	bf15      	itete	ne
-d0046324:	6560      	strne	r0, [r4, #84]	; 0x54
-d0046326:	f423 5380 	biceq.w	r3, r3, #4096	; 0x1000
-d004632a:	f443 5380 	orrne.w	r3, r3, #4096	; 0x1000
-d004632e:	81a3      	strheq	r3, [r4, #12]
-d0046330:	bf18      	it	ne
-d0046332:	81a3      	strhne	r3, [r4, #12]
-d0046334:	bd10      	pop	{r4, pc}
+d0046fbe <__sseek>:
+d0046fbe:	b510      	push	{r4, lr}
+d0046fc0:	460c      	mov	r4, r1
+d0046fc2:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
+d0046fc6:	f000 f833 	bl	d0047030 <_lseek_r>
+d0046fca:	1c43      	adds	r3, r0, #1
+d0046fcc:	89a3      	ldrh	r3, [r4, #12]
+d0046fce:	bf15      	itete	ne
+d0046fd0:	6560      	strne	r0, [r4, #84]	; 0x54
+d0046fd2:	f423 5380 	biceq.w	r3, r3, #4096	; 0x1000
+d0046fd6:	f443 5380 	orrne.w	r3, r3, #4096	; 0x1000
+d0046fda:	81a3      	strheq	r3, [r4, #12]
+d0046fdc:	bf18      	it	ne
+d0046fde:	81a3      	strhne	r3, [r4, #12]
+d0046fe0:	bd10      	pop	{r4, pc}
 
-d0046336 <__sclose>:
-d0046336:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
-d004633a:	f000 b801 	b.w	d0046340 <_close_r>
+d0046fe2 <__sclose>:
+d0046fe2:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
+d0046fe6:	f000 b801 	b.w	d0046fec <_close_r>
 	...
 
-d0046340 <_close_r>:
-d0046340:	b538      	push	{r3, r4, r5, lr}
-d0046342:	4d06      	ldr	r5, [pc, #24]	; (d004635c <_close_r+0x1c>)
-d0046344:	2300      	movs	r3, #0
-d0046346:	4604      	mov	r4, r0
-d0046348:	4608      	mov	r0, r1
-d004634a:	602b      	str	r3, [r5, #0]
-d004634c:	f7f9 febc 	bl	d00400c8 <_close>
-d0046350:	1c43      	adds	r3, r0, #1
-d0046352:	d102      	bne.n	d004635a <_close_r+0x1a>
-d0046354:	682b      	ldr	r3, [r5, #0]
-d0046356:	b103      	cbz	r3, d004635a <_close_r+0x1a>
-d0046358:	6023      	str	r3, [r4, #0]
-d004635a:	bd38      	pop	{r3, r4, r5, pc}
-d004635c:	d0132d6c 	.word	0xd0132d6c
+d0046fec <_close_r>:
+d0046fec:	b538      	push	{r3, r4, r5, lr}
+d0046fee:	4d06      	ldr	r5, [pc, #24]	; (d0047008 <_close_r+0x1c>)
+d0046ff0:	2300      	movs	r3, #0
+d0046ff2:	4604      	mov	r4, r0
+d0046ff4:	4608      	mov	r0, r1
+d0046ff6:	602b      	str	r3, [r5, #0]
+d0046ff8:	f7f9 f866 	bl	d00400c8 <_close>
+d0046ffc:	1c43      	adds	r3, r0, #1
+d0046ffe:	d102      	bne.n	d0047006 <_close_r+0x1a>
+d0047000:	682b      	ldr	r3, [r5, #0]
+d0047002:	b103      	cbz	r3, d0047006 <_close_r+0x1a>
+d0047004:	6023      	str	r3, [r4, #0]
+d0047006:	bd38      	pop	{r3, r4, r5, pc}
+d0047008:	d0133a8c 	.word	0xd0133a8c
 
-d0046360 <_fstat_r>:
-d0046360:	b538      	push	{r3, r4, r5, lr}
-d0046362:	4d07      	ldr	r5, [pc, #28]	; (d0046380 <_fstat_r+0x20>)
-d0046364:	2300      	movs	r3, #0
-d0046366:	4604      	mov	r4, r0
-d0046368:	4608      	mov	r0, r1
-d004636a:	4611      	mov	r1, r2
-d004636c:	602b      	str	r3, [r5, #0]
-d004636e:	f7f9 feaf 	bl	d00400d0 <_fstat>
-d0046372:	1c43      	adds	r3, r0, #1
-d0046374:	d102      	bne.n	d004637c <_fstat_r+0x1c>
-d0046376:	682b      	ldr	r3, [r5, #0]
-d0046378:	b103      	cbz	r3, d004637c <_fstat_r+0x1c>
-d004637a:	6023      	str	r3, [r4, #0]
-d004637c:	bd38      	pop	{r3, r4, r5, pc}
-d004637e:	bf00      	nop
-d0046380:	d0132d6c 	.word	0xd0132d6c
+d004700c <_fstat_r>:
+d004700c:	b538      	push	{r3, r4, r5, lr}
+d004700e:	4d07      	ldr	r5, [pc, #28]	; (d004702c <_fstat_r+0x20>)
+d0047010:	2300      	movs	r3, #0
+d0047012:	4604      	mov	r4, r0
+d0047014:	4608      	mov	r0, r1
+d0047016:	4611      	mov	r1, r2
+d0047018:	602b      	str	r3, [r5, #0]
+d004701a:	f7f9 f859 	bl	d00400d0 <_fstat>
+d004701e:	1c43      	adds	r3, r0, #1
+d0047020:	d102      	bne.n	d0047028 <_fstat_r+0x1c>
+d0047022:	682b      	ldr	r3, [r5, #0]
+d0047024:	b103      	cbz	r3, d0047028 <_fstat_r+0x1c>
+d0047026:	6023      	str	r3, [r4, #0]
+d0047028:	bd38      	pop	{r3, r4, r5, pc}
+d004702a:	bf00      	nop
+d004702c:	d0133a8c 	.word	0xd0133a8c
 
-d0046384 <_lseek_r>:
-d0046384:	b538      	push	{r3, r4, r5, lr}
-d0046386:	4d07      	ldr	r5, [pc, #28]	; (d00463a4 <_lseek_r+0x20>)
-d0046388:	4604      	mov	r4, r0
-d004638a:	4608      	mov	r0, r1
-d004638c:	4611      	mov	r1, r2
-d004638e:	2200      	movs	r2, #0
-d0046390:	602a      	str	r2, [r5, #0]
-d0046392:	461a      	mov	r2, r3
-d0046394:	f7f9 fea2 	bl	d00400dc <_lseek>
-d0046398:	1c43      	adds	r3, r0, #1
-d004639a:	d102      	bne.n	d00463a2 <_lseek_r+0x1e>
-d004639c:	682b      	ldr	r3, [r5, #0]
-d004639e:	b103      	cbz	r3, d00463a2 <_lseek_r+0x1e>
-d00463a0:	6023      	str	r3, [r4, #0]
-d00463a2:	bd38      	pop	{r3, r4, r5, pc}
-d00463a4:	d0132d6c 	.word	0xd0132d6c
+d0047030 <_lseek_r>:
+d0047030:	b538      	push	{r3, r4, r5, lr}
+d0047032:	4d07      	ldr	r5, [pc, #28]	; (d0047050 <_lseek_r+0x20>)
+d0047034:	4604      	mov	r4, r0
+d0047036:	4608      	mov	r0, r1
+d0047038:	4611      	mov	r1, r2
+d004703a:	2200      	movs	r2, #0
+d004703c:	602a      	str	r2, [r5, #0]
+d004703e:	461a      	mov	r2, r3
+d0047040:	f7f9 f84c 	bl	d00400dc <_lseek>
+d0047044:	1c43      	adds	r3, r0, #1
+d0047046:	d102      	bne.n	d004704e <_lseek_r+0x1e>
+d0047048:	682b      	ldr	r3, [r5, #0]
+d004704a:	b103      	cbz	r3, d004704e <_lseek_r+0x1e>
+d004704c:	6023      	str	r3, [r4, #0]
+d004704e:	bd38      	pop	{r3, r4, r5, pc}
+d0047050:	d0133a8c 	.word	0xd0133a8c
 
-d00463a8 <__malloc_lock>:
-d00463a8:	4801      	ldr	r0, [pc, #4]	; (d00463b0 <__malloc_lock+0x8>)
-d00463aa:	f7ff bdc0 	b.w	d0045f2e <__retarget_lock_acquire_recursive>
-d00463ae:	bf00      	nop
-d00463b0:	d0132d64 	.word	0xd0132d64
+d0047054 <__malloc_lock>:
+d0047054:	4801      	ldr	r0, [pc, #4]	; (d004705c <__malloc_lock+0x8>)
+d0047056:	f7ff bdc0 	b.w	d0046bda <__retarget_lock_acquire_recursive>
+d004705a:	bf00      	nop
+d004705c:	d0133a84 	.word	0xd0133a84
 
-d00463b4 <__malloc_unlock>:
-d00463b4:	4801      	ldr	r0, [pc, #4]	; (d00463bc <__malloc_unlock+0x8>)
-d00463b6:	f7ff bdbb 	b.w	d0045f30 <__retarget_lock_release_recursive>
-d00463ba:	bf00      	nop
-d00463bc:	d0132d64 	.word	0xd0132d64
+d0047060 <__malloc_unlock>:
+d0047060:	4801      	ldr	r0, [pc, #4]	; (d0047068 <__malloc_unlock+0x8>)
+d0047062:	f7ff bdbb 	b.w	d0046bdc <__retarget_lock_release_recursive>
+d0047066:	bf00      	nop
+d0047068:	d0133a84 	.word	0xd0133a84
 
-d00463c0 <_read_r>:
-d00463c0:	b538      	push	{r3, r4, r5, lr}
-d00463c2:	4d07      	ldr	r5, [pc, #28]	; (d00463e0 <_read_r+0x20>)
-d00463c4:	4604      	mov	r4, r0
-d00463c6:	4608      	mov	r0, r1
-d00463c8:	4611      	mov	r1, r2
-d00463ca:	2200      	movs	r2, #0
-d00463cc:	602a      	str	r2, [r5, #0]
-d00463ce:	461a      	mov	r2, r3
-d00463d0:	f7f9 fe70 	bl	d00400b4 <_read>
-d00463d4:	1c43      	adds	r3, r0, #1
-d00463d6:	d102      	bne.n	d00463de <_read_r+0x1e>
-d00463d8:	682b      	ldr	r3, [r5, #0]
-d00463da:	b103      	cbz	r3, d00463de <_read_r+0x1e>
-d00463dc:	6023      	str	r3, [r4, #0]
-d00463de:	bd38      	pop	{r3, r4, r5, pc}
-d00463e0:	d0132d6c 	.word	0xd0132d6c
+d004706c <_read_r>:
+d004706c:	b538      	push	{r3, r4, r5, lr}
+d004706e:	4d07      	ldr	r5, [pc, #28]	; (d004708c <_read_r+0x20>)
+d0047070:	4604      	mov	r4, r0
+d0047072:	4608      	mov	r0, r1
+d0047074:	4611      	mov	r1, r2
+d0047076:	2200      	movs	r2, #0
+d0047078:	602a      	str	r2, [r5, #0]
+d004707a:	461a      	mov	r2, r3
+d004707c:	f7f9 f81a 	bl	d00400b4 <_read>
+d0047080:	1c43      	adds	r3, r0, #1
+d0047082:	d102      	bne.n	d004708a <_read_r+0x1e>
+d0047084:	682b      	ldr	r3, [r5, #0]
+d0047086:	b103      	cbz	r3, d004708a <_read_r+0x1e>
+d0047088:	6023      	str	r3, [r4, #0]
+d004708a:	bd38      	pop	{r3, r4, r5, pc}
+d004708c:	d0133a8c 	.word	0xd0133a8c
 
-d00463e4 <sinf_poly>:
-d00463e4:	07cb      	lsls	r3, r1, #31
-d00463e6:	d412      	bmi.n	d004640e <sinf_poly+0x2a>
-d00463e8:	ee21 6b00 	vmul.f64	d6, d1, d0
-d00463ec:	ed90 5b1a 	vldr	d5, [r0, #104]	; 0x68
-d00463f0:	ed90 7b18 	vldr	d7, [r0, #96]	; 0x60
-d00463f4:	eea5 7b01 	vfma.f64	d7, d5, d1
-d00463f8:	ed90 5b16 	vldr	d5, [r0, #88]	; 0x58
-d00463fc:	ee21 1b06 	vmul.f64	d1, d1, d6
-d0046400:	eea5 0b06 	vfma.f64	d0, d5, d6
-d0046404:	eea7 0b01 	vfma.f64	d0, d7, d1
-d0046408:	eeb7 0bc0 	vcvt.f32.f64	s0, d0
-d004640c:	4770      	bx	lr
-d004640e:	ed90 5b14 	vldr	d5, [r0, #80]	; 0x50
-d0046412:	ee21 6b01 	vmul.f64	d6, d1, d1
-d0046416:	ed90 7b12 	vldr	d7, [r0, #72]	; 0x48
-d004641a:	ed90 0b0c 	vldr	d0, [r0, #48]	; 0x30
-d004641e:	eea1 7b05 	vfma.f64	d7, d1, d5
-d0046422:	ed90 5b0e 	vldr	d5, [r0, #56]	; 0x38
-d0046426:	eea1 0b05 	vfma.f64	d0, d1, d5
-d004642a:	ed90 5b10 	vldr	d5, [r0, #64]	; 0x40
-d004642e:	ee21 1b06 	vmul.f64	d1, d1, d6
-d0046432:	eea6 0b05 	vfma.f64	d0, d6, d5
-d0046436:	e7e5      	b.n	d0046404 <sinf_poly+0x20>
-
-d0046438 <cosf>:
-d0046438:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-d004643a:	ee10 4a10 	vmov	r4, s0
-d004643e:	f3c4 530a 	ubfx	r3, r4, #20, #11
-d0046442:	f5b3 7f7d 	cmp.w	r3, #1012	; 0x3f4
-d0046446:	eeb7 6ac0 	vcvt.f64.f32	d6, s0
-d004644a:	d20c      	bcs.n	d0046466 <cosf+0x2e>
-d004644c:	ee26 1b06 	vmul.f64	d1, d6, d6
-d0046450:	f5b3 7f66 	cmp.w	r3, #920	; 0x398
-d0046454:	d378      	bcc.n	d0046548 <cosf+0x110>
-d0046456:	eeb0 0b46 	vmov.f64	d0, d6
-d004645a:	483f      	ldr	r0, [pc, #252]	; (d0046558 <cosf+0x120>)
-d004645c:	2101      	movs	r1, #1
-d004645e:	e8bd 40f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, lr}
-d0046462:	f7ff bfbf 	b.w	d00463e4 <sinf_poly>
-d0046466:	f240 422e 	movw	r2, #1070	; 0x42e
-d004646a:	4293      	cmp	r3, r2
-d004646c:	d826      	bhi.n	d00464bc <cosf+0x84>
-d004646e:	4b3a      	ldr	r3, [pc, #232]	; (d0046558 <cosf+0x120>)
-d0046470:	ed93 7b08 	vldr	d7, [r3, #32]
-d0046474:	ee26 7b07 	vmul.f64	d7, d6, d7
-d0046478:	eefd 7bc7 	vcvt.s32.f64	s15, d7
-d004647c:	f103 0070 	add.w	r0, r3, #112	; 0x70
-d0046480:	ee17 1a90 	vmov	r1, s15
-d0046484:	f501 0100 	add.w	r1, r1, #8388608	; 0x800000
-d0046488:	1609      	asrs	r1, r1, #24
-d004648a:	ee07 1a90 	vmov	s15, r1
-d004648e:	f001 0203 	and.w	r2, r1, #3
-d0046492:	eb03 02c2 	add.w	r2, r3, r2, lsl #3
-d0046496:	eeb8 5be7 	vcvt.f64.s32	d5, s15
-d004649a:	ed92 0b00 	vldr	d0, [r2]
-d004649e:	ed93 7b0a 	vldr	d7, [r3, #40]	; 0x28
-d00464a2:	f011 0f02 	tst.w	r1, #2
-d00464a6:	eea5 6b47 	vfms.f64	d6, d5, d7
-d00464aa:	f081 0101 	eor.w	r1, r1, #1
-d00464ae:	bf08      	it	eq
-d00464b0:	4618      	moveq	r0, r3
-d00464b2:	ee26 1b06 	vmul.f64	d1, d6, d6
-d00464b6:	ee20 0b06 	vmul.f64	d0, d0, d6
-d00464ba:	e7d0      	b.n	d004645e <cosf+0x26>
-d00464bc:	f5b3 6fff 	cmp.w	r3, #2040	; 0x7f8
-d00464c0:	d23e      	bcs.n	d0046540 <cosf+0x108>
-d00464c2:	4b26      	ldr	r3, [pc, #152]	; (d004655c <cosf+0x124>)
-d00464c4:	f3c4 6283 	ubfx	r2, r4, #26, #4
-d00464c8:	eb03 0082 	add.w	r0, r3, r2, lsl #2
-d00464cc:	f3c4 0116 	ubfx	r1, r4, #0, #23
-d00464d0:	f3c4 55c2 	ubfx	r5, r4, #23, #3
-d00464d4:	6a06      	ldr	r6, [r0, #32]
-d00464d6:	6900      	ldr	r0, [r0, #16]
-d00464d8:	f441 0100 	orr.w	r1, r1, #8388608	; 0x800000
-d00464dc:	40a9      	lsls	r1, r5
-d00464de:	f853 5022 	ldr.w	r5, [r3, r2, lsl #2]
-d00464e2:	fba1 6706 	umull	r6, r7, r1, r6
-d00464e6:	fb05 f301 	mul.w	r3, r5, r1
-d00464ea:	463a      	mov	r2, r7
-d00464ec:	fbe0 2301 	umlal	r2, r3, r0, r1
-d00464f0:	1c11      	adds	r1, r2, #0
-d00464f2:	f143 5600 	adc.w	r6, r3, #536870912	; 0x20000000
-d00464f6:	2000      	movs	r0, #0
-d00464f8:	1a10      	subs	r0, r2, r0
-d00464fa:	f006 4140 	and.w	r1, r6, #3221225472	; 0xc0000000
-d00464fe:	eb63 0101 	sbc.w	r1, r3, r1
-d0046502:	f000 fbab 	bl	d0046c5c <__aeabi_l2d>
-d0046506:	0fb5      	lsrs	r5, r6, #30
-d0046508:	4b13      	ldr	r3, [pc, #76]	; (d0046558 <cosf+0x120>)
-d004650a:	eb05 74d4 	add.w	r4, r5, r4, lsr #31
-d004650e:	ed9f 0b10 	vldr	d0, [pc, #64]	; d0046550 <cosf+0x118>
-d0046512:	ec41 0b17 	vmov	d7, r0, r1
-d0046516:	f004 0203 	and.w	r2, r4, #3
-d004651a:	eb03 02c2 	add.w	r2, r3, r2, lsl #3
-d004651e:	ee27 0b00 	vmul.f64	d0, d7, d0
-d0046522:	ed92 7b00 	vldr	d7, [r2]
-d0046526:	ee20 1b00 	vmul.f64	d1, d0, d0
-d004652a:	f014 0f02 	tst.w	r4, #2
-d004652e:	f103 0070 	add.w	r0, r3, #112	; 0x70
-d0046532:	f085 0101 	eor.w	r1, r5, #1
-d0046536:	bf08      	it	eq
-d0046538:	4618      	moveq	r0, r3
-d004653a:	ee27 0b00 	vmul.f64	d0, d7, d0
-d004653e:	e78e      	b.n	d004645e <cosf+0x26>
-d0046540:	e8bd 40f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, lr}
-d0046544:	f000 b844 	b.w	d00465d0 <__math_invalidf>
-d0046548:	eeb7 0a00 	vmov.f32	s0, #112	; 0x3f800000  1.0
-d004654c:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
-d004654e:	bf00      	nop
-d0046550:	54442d18 	.word	0x54442d18
-d0046554:	3c1921fb 	.word	0x3c1921fb
-d0046558:	d00470f0 	.word	0xd00470f0
-d004655c:	d0047090 	.word	0xd0047090
-
-d0046560 <with_errnof>:
-d0046560:	b513      	push	{r0, r1, r4, lr}
-d0046562:	4604      	mov	r4, r0
-d0046564:	ed8d 0a01 	vstr	s0, [sp, #4]
-d0046568:	f7ff faae 	bl	d0045ac8 <__errno>
-d004656c:	ed9d 0a01 	vldr	s0, [sp, #4]
-d0046570:	6004      	str	r4, [r0, #0]
-d0046572:	b002      	add	sp, #8
-d0046574:	bd10      	pop	{r4, pc}
-
-d0046576 <xflowf>:
-d0046576:	b130      	cbz	r0, d0046586 <xflowf+0x10>
-d0046578:	eef1 7a40 	vneg.f32	s15, s0
-d004657c:	ee27 0a80 	vmul.f32	s0, s15, s0
-d0046580:	2022      	movs	r0, #34	; 0x22
-d0046582:	f7ff bfed 	b.w	d0046560 <with_errnof>
-d0046586:	eef0 7a40 	vmov.f32	s15, s0
-d004658a:	e7f7      	b.n	d004657c <xflowf+0x6>
-
-d004658c <__math_uflowf>:
-d004658c:	ed9f 0a01 	vldr	s0, [pc, #4]	; d0046594 <__math_uflowf+0x8>
-d0046590:	f7ff bff1 	b.w	d0046576 <xflowf>
-d0046594:	10000000 	.word	0x10000000
-
-d0046598 <__math_may_uflowf>:
-d0046598:	ed9f 0a01 	vldr	s0, [pc, #4]	; d00465a0 <__math_may_uflowf+0x8>
-d004659c:	f7ff bfeb 	b.w	d0046576 <xflowf>
-d00465a0:	1a200000 	.word	0x1a200000
-
-d00465a4 <__math_oflowf>:
-d00465a4:	ed9f 0a01 	vldr	s0, [pc, #4]	; d00465ac <__math_oflowf+0x8>
-d00465a8:	f7ff bfe5 	b.w	d0046576 <xflowf>
-d00465ac:	70000000 	.word	0x70000000
-
-d00465b0 <__math_divzerof>:
-d00465b0:	eeb7 0a00 	vmov.f32	s0, #112	; 0x3f800000  1.0
-d00465b4:	eeff 7a00 	vmov.f32	s15, #240	; 0xbf800000 -1.0
-d00465b8:	2800      	cmp	r0, #0
-d00465ba:	fe40 7a27 	vseleq.f32	s15, s0, s15
-d00465be:	ed9f 0a03 	vldr	s0, [pc, #12]	; d00465cc <__math_divzerof+0x1c>
-d00465c2:	2022      	movs	r0, #34	; 0x22
-d00465c4:	ee87 0a80 	vdiv.f32	s0, s15, s0
-d00465c8:	f7ff bfca 	b.w	d0046560 <with_errnof>
-d00465cc:	00000000 	.word	0x00000000
-
-d00465d0 <__math_invalidf>:
-d00465d0:	eef0 7a40 	vmov.f32	s15, s0
-d00465d4:	ee30 7a40 	vsub.f32	s14, s0, s0
-d00465d8:	eef4 7a67 	vcmp.f32	s15, s15
-d00465dc:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d00465e0:	ee87 0a07 	vdiv.f32	s0, s14, s14
-d00465e4:	d602      	bvs.n	d00465ec <__math_invalidf+0x1c>
-d00465e6:	2021      	movs	r0, #33	; 0x21
-d00465e8:	f7ff bfba 	b.w	d0046560 <with_errnof>
-d00465ec:	4770      	bx	lr
+d0047090 <sinf_poly>:
+d0047090:	07cb      	lsls	r3, r1, #31
+d0047092:	d412      	bmi.n	d00470ba <sinf_poly+0x2a>
+d0047094:	ee21 6b00 	vmul.f64	d6, d1, d0
+d0047098:	ed90 5b1a 	vldr	d5, [r0, #104]	; 0x68
+d004709c:	ed90 7b18 	vldr	d7, [r0, #96]	; 0x60
+d00470a0:	eea5 7b01 	vfma.f64	d7, d5, d1
+d00470a4:	ed90 5b16 	vldr	d5, [r0, #88]	; 0x58
+d00470a8:	ee21 1b06 	vmul.f64	d1, d1, d6
+d00470ac:	eea5 0b06 	vfma.f64	d0, d5, d6
+d00470b0:	eea7 0b01 	vfma.f64	d0, d7, d1
+d00470b4:	eeb7 0bc0 	vcvt.f32.f64	s0, d0
+d00470b8:	4770      	bx	lr
+d00470ba:	ed90 5b14 	vldr	d5, [r0, #80]	; 0x50
+d00470be:	ee21 6b01 	vmul.f64	d6, d1, d1
+d00470c2:	ed90 7b12 	vldr	d7, [r0, #72]	; 0x48
+d00470c6:	ed90 0b0c 	vldr	d0, [r0, #48]	; 0x30
+d00470ca:	eea1 7b05 	vfma.f64	d7, d1, d5
+d00470ce:	ed90 5b0e 	vldr	d5, [r0, #56]	; 0x38
+d00470d2:	eea1 0b05 	vfma.f64	d0, d1, d5
+d00470d6:	ed90 5b10 	vldr	d5, [r0, #64]	; 0x40
+d00470da:	ee21 1b06 	vmul.f64	d1, d1, d6
+d00470de:	eea6 0b05 	vfma.f64	d0, d6, d5
+d00470e2:	e7e5      	b.n	d00470b0 <sinf_poly+0x20>
+d00470e4:	0000      	movs	r0, r0
 	...
 
-d00465f0 <expf>:
-d00465f0:	ee10 2a10 	vmov	r2, s0
-d00465f4:	b470      	push	{r4, r5, r6}
-d00465f6:	f3c2 530a 	ubfx	r3, r2, #20, #11
-d00465fa:	f240 442a 	movw	r4, #1066	; 0x42a
-d00465fe:	42a3      	cmp	r3, r4
-d0046600:	eeb7 6ac0 	vcvt.f64.f32	d6, s0
-d0046604:	d92a      	bls.n	d004665c <expf+0x6c>
-d0046606:	f512 0f00 	cmn.w	r2, #8388608	; 0x800000
-d004660a:	d059      	beq.n	d00466c0 <expf+0xd0>
-d004660c:	f5b3 6fff 	cmp.w	r3, #2040	; 0x7f8
-d0046610:	d303      	bcc.n	d004661a <expf+0x2a>
-d0046612:	ee30 0a00 	vadd.f32	s0, s0, s0
-d0046616:	bc70      	pop	{r4, r5, r6}
-d0046618:	4770      	bx	lr
-d004661a:	eddf 7a2b 	vldr	s15, [pc, #172]	; d00466c8 <expf+0xd8>
-d004661e:	eeb4 0ae7 	vcmpe.f32	s0, s15
-d0046622:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0046626:	dd03      	ble.n	d0046630 <expf+0x40>
-d0046628:	bc70      	pop	{r4, r5, r6}
-d004662a:	2000      	movs	r0, #0
-d004662c:	f7ff bfba 	b.w	d00465a4 <__math_oflowf>
-d0046630:	eddf 7a26 	vldr	s15, [pc, #152]	; d00466cc <expf+0xdc>
-d0046634:	eeb4 0ae7 	vcmpe.f32	s0, s15
-d0046638:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d004663c:	d503      	bpl.n	d0046646 <expf+0x56>
-d004663e:	bc70      	pop	{r4, r5, r6}
-d0046640:	2000      	movs	r0, #0
-d0046642:	f7ff bfa3 	b.w	d004658c <__math_uflowf>
-d0046646:	eddf 7a22 	vldr	s15, [pc, #136]	; d00466d0 <expf+0xe0>
-d004664a:	eeb4 0ae7 	vcmpe.f32	s0, s15
-d004664e:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
-d0046652:	d503      	bpl.n	d004665c <expf+0x6c>
-d0046654:	bc70      	pop	{r4, r5, r6}
-d0046656:	2000      	movs	r0, #0
-d0046658:	f7ff bf9e 	b.w	d0046598 <__math_may_uflowf>
-d004665c:	4b1d      	ldr	r3, [pc, #116]	; (d00466d4 <expf+0xe4>)
-d004665e:	eeb7 0b00 	vmov.f64	d0, #112	; 0x3f800000  1.0
-d0046662:	ed93 5b4a 	vldr	d5, [r3, #296]	; 0x128
-d0046666:	ed93 4b48 	vldr	d4, [r3, #288]	; 0x120
-d004666a:	eeb0 7b44 	vmov.f64	d7, d4
-d004666e:	eea5 7b06 	vfma.f64	d7, d5, d6
-d0046672:	ee17 5a10 	vmov	r5, s14
-d0046676:	ee37 7b44 	vsub.f64	d7, d7, d4
-d004667a:	f005 021f 	and.w	r2, r5, #31
-d004667e:	eb03 02c2 	add.w	r2, r3, r2, lsl #3
-d0046682:	e9d2 4600 	ldrd	r4, r6, [r2]
-d0046686:	ee95 7b06 	vfnms.f64	d7, d5, d6
-d004668a:	ed93 4b50 	vldr	d4, [r3, #320]	; 0x140
-d004668e:	ed93 5b4c 	vldr	d5, [r3, #304]	; 0x130
-d0046692:	eea4 0b07 	vfma.f64	d0, d4, d7
-d0046696:	ed93 6b4e 	vldr	d6, [r3, #312]	; 0x138
-d004669a:	2300      	movs	r3, #0
-d004669c:	1918      	adds	r0, r3, r4
-d004669e:	ea4f 32c5 	mov.w	r2, r5, lsl #15
-d00466a2:	eb42 0106 	adc.w	r1, r2, r6
-d00466a6:	eea5 6b07 	vfma.f64	d6, d5, d7
-d00466aa:	ee27 5b07 	vmul.f64	d5, d7, d7
-d00466ae:	ec41 0b17 	vmov	d7, r0, r1
-d00466b2:	eea6 0b05 	vfma.f64	d0, d6, d5
-d00466b6:	ee20 0b07 	vmul.f64	d0, d0, d7
-d00466ba:	eeb7 0bc0 	vcvt.f32.f64	s0, d0
-d00466be:	e7aa      	b.n	d0046616 <expf+0x26>
-d00466c0:	ed9f 0a05 	vldr	s0, [pc, #20]	; d00466d8 <expf+0xe8>
-d00466c4:	e7a7      	b.n	d0046616 <expf+0x26>
-d00466c6:	bf00      	nop
-d00466c8:	42b17217 	.word	0x42b17217
-d00466cc:	c2cff1b4 	.word	0xc2cff1b4
-d00466d0:	c2ce8ecf 	.word	0xc2ce8ecf
-d00466d4:	d0046e28 	.word	0xd0046e28
-d00466d8:	00000000 	.word	0x00000000
+d00470e8 <cosf>:
+d00470e8:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+d00470ea:	ee10 4a10 	vmov	r4, s0
+d00470ee:	f3c4 530a 	ubfx	r3, r4, #20, #11
+d00470f2:	f5b3 7f7d 	cmp.w	r3, #1012	; 0x3f4
+d00470f6:	eeb7 6ac0 	vcvt.f64.f32	d6, s0
+d00470fa:	d20c      	bcs.n	d0047116 <cosf+0x2e>
+d00470fc:	ee26 1b06 	vmul.f64	d1, d6, d6
+d0047100:	f5b3 7f66 	cmp.w	r3, #920	; 0x398
+d0047104:	d378      	bcc.n	d00471f8 <cosf+0x110>
+d0047106:	eeb0 0b46 	vmov.f64	d0, d6
+d004710a:	483f      	ldr	r0, [pc, #252]	; (d0047208 <cosf+0x120>)
+d004710c:	2101      	movs	r1, #1
+d004710e:	e8bd 40f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, lr}
+d0047112:	f7ff bfbd 	b.w	d0047090 <sinf_poly>
+d0047116:	f240 422e 	movw	r2, #1070	; 0x42e
+d004711a:	4293      	cmp	r3, r2
+d004711c:	d826      	bhi.n	d004716c <cosf+0x84>
+d004711e:	4b3a      	ldr	r3, [pc, #232]	; (d0047208 <cosf+0x120>)
+d0047120:	ed93 7b08 	vldr	d7, [r3, #32]
+d0047124:	ee26 7b07 	vmul.f64	d7, d6, d7
+d0047128:	eefd 7bc7 	vcvt.s32.f64	s15, d7
+d004712c:	f103 0070 	add.w	r0, r3, #112	; 0x70
+d0047130:	ee17 1a90 	vmov	r1, s15
+d0047134:	f501 0100 	add.w	r1, r1, #8388608	; 0x800000
+d0047138:	1609      	asrs	r1, r1, #24
+d004713a:	ee07 1a90 	vmov	s15, r1
+d004713e:	f001 0203 	and.w	r2, r1, #3
+d0047142:	eb03 02c2 	add.w	r2, r3, r2, lsl #3
+d0047146:	eeb8 5be7 	vcvt.f64.s32	d5, s15
+d004714a:	ed92 0b00 	vldr	d0, [r2]
+d004714e:	ed93 7b0a 	vldr	d7, [r3, #40]	; 0x28
+d0047152:	f011 0f02 	tst.w	r1, #2
+d0047156:	eea5 6b47 	vfms.f64	d6, d5, d7
+d004715a:	f081 0101 	eor.w	r1, r1, #1
+d004715e:	bf08      	it	eq
+d0047160:	4618      	moveq	r0, r3
+d0047162:	ee26 1b06 	vmul.f64	d1, d6, d6
+d0047166:	ee20 0b06 	vmul.f64	d0, d0, d6
+d004716a:	e7d0      	b.n	d004710e <cosf+0x26>
+d004716c:	f5b3 6fff 	cmp.w	r3, #2040	; 0x7f8
+d0047170:	d23e      	bcs.n	d00471f0 <cosf+0x108>
+d0047172:	4b26      	ldr	r3, [pc, #152]	; (d004720c <cosf+0x124>)
+d0047174:	f3c4 6283 	ubfx	r2, r4, #26, #4
+d0047178:	eb03 0082 	add.w	r0, r3, r2, lsl #2
+d004717c:	f3c4 0116 	ubfx	r1, r4, #0, #23
+d0047180:	f3c4 55c2 	ubfx	r5, r4, #23, #3
+d0047184:	6a06      	ldr	r6, [r0, #32]
+d0047186:	6900      	ldr	r0, [r0, #16]
+d0047188:	f441 0100 	orr.w	r1, r1, #8388608	; 0x800000
+d004718c:	40a9      	lsls	r1, r5
+d004718e:	f853 5022 	ldr.w	r5, [r3, r2, lsl #2]
+d0047192:	fba1 6706 	umull	r6, r7, r1, r6
+d0047196:	fb05 f301 	mul.w	r3, r5, r1
+d004719a:	463a      	mov	r2, r7
+d004719c:	fbe0 2301 	umlal	r2, r3, r0, r1
+d00471a0:	1c11      	adds	r1, r2, #0
+d00471a2:	f143 5600 	adc.w	r6, r3, #536870912	; 0x20000000
+d00471a6:	2000      	movs	r0, #0
+d00471a8:	1a10      	subs	r0, r2, r0
+d00471aa:	f006 4140 	and.w	r1, r6, #3221225472	; 0xc0000000
+d00471ae:	eb63 0101 	sbc.w	r1, r3, r1
+d00471b2:	f000 fbab 	bl	d004790c <__aeabi_l2d>
+d00471b6:	0fb5      	lsrs	r5, r6, #30
+d00471b8:	4b13      	ldr	r3, [pc, #76]	; (d0047208 <cosf+0x120>)
+d00471ba:	eb05 74d4 	add.w	r4, r5, r4, lsr #31
+d00471be:	ed9f 0b10 	vldr	d0, [pc, #64]	; d0047200 <cosf+0x118>
+d00471c2:	ec41 0b17 	vmov	d7, r0, r1
+d00471c6:	f004 0203 	and.w	r2, r4, #3
+d00471ca:	eb03 02c2 	add.w	r2, r3, r2, lsl #3
+d00471ce:	ee27 0b00 	vmul.f64	d0, d7, d0
+d00471d2:	ed92 7b00 	vldr	d7, [r2]
+d00471d6:	ee20 1b00 	vmul.f64	d1, d0, d0
+d00471da:	f014 0f02 	tst.w	r4, #2
+d00471de:	f103 0070 	add.w	r0, r3, #112	; 0x70
+d00471e2:	f085 0101 	eor.w	r1, r5, #1
+d00471e6:	bf08      	it	eq
+d00471e8:	4618      	moveq	r0, r3
+d00471ea:	ee27 0b00 	vmul.f64	d0, d7, d0
+d00471ee:	e78e      	b.n	d004710e <cosf+0x26>
+d00471f0:	e8bd 40f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, lr}
+d00471f4:	f000 b844 	b.w	d0047280 <__math_invalidf>
+d00471f8:	eeb7 0a00 	vmov.f32	s0, #112	; 0x3f800000  1.0
+d00471fc:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+d00471fe:	bf00      	nop
+d0047200:	54442d18 	.word	0x54442d18
+d0047204:	3c1921fb 	.word	0x3c1921fb
+d0047208:	d0047db0 	.word	0xd0047db0
+d004720c:	d0047d50 	.word	0xd0047d50
 
-d00466dc <logf>:
-d00466dc:	ee10 3a10 	vmov	r3, s0
-d00466e0:	f1b3 5f7e 	cmp.w	r3, #1065353216	; 0x3f800000
-d00466e4:	b410      	push	{r4}
-d00466e6:	d055      	beq.n	d0046794 <logf+0xb8>
-d00466e8:	f5a3 0200 	sub.w	r2, r3, #8388608	; 0x800000
-d00466ec:	f1b2 4ffe 	cmp.w	r2, #2130706432	; 0x7f000000
-d00466f0:	d31a      	bcc.n	d0046728 <logf+0x4c>
-d00466f2:	005a      	lsls	r2, r3, #1
-d00466f4:	d104      	bne.n	d0046700 <logf+0x24>
-d00466f6:	f85d 4b04 	ldr.w	r4, [sp], #4
-d00466fa:	2001      	movs	r0, #1
-d00466fc:	f7ff bf58 	b.w	d00465b0 <__math_divzerof>
-d0046700:	f1b3 4fff 	cmp.w	r3, #2139095040	; 0x7f800000
-d0046704:	d043      	beq.n	d004678e <logf+0xb2>
-d0046706:	2b00      	cmp	r3, #0
-d0046708:	db02      	blt.n	d0046710 <logf+0x34>
-d004670a:	f1b2 4f7f 	cmp.w	r2, #4278190080	; 0xff000000
-d004670e:	d303      	bcc.n	d0046718 <logf+0x3c>
-d0046710:	f85d 4b04 	ldr.w	r4, [sp], #4
-d0046714:	f7ff bf5c 	b.w	d00465d0 <__math_invalidf>
-d0046718:	eddf 7a20 	vldr	s15, [pc, #128]	; d004679c <logf+0xc0>
-d004671c:	ee20 0a27 	vmul.f32	s0, s0, s15
-d0046720:	ee10 3a10 	vmov	r3, s0
-d0046724:	f1a3 6338 	sub.w	r3, r3, #192937984	; 0xb800000
-d0046728:	f103 4240 	add.w	r2, r3, #3221225472	; 0xc0000000
-d004672c:	491c      	ldr	r1, [pc, #112]	; (d00467a0 <logf+0xc4>)
-d004672e:	eebf 0b00 	vmov.f64	d0, #240	; 0xbf800000 -1.0
-d0046732:	f502 024d 	add.w	r2, r2, #13434880	; 0xcd0000
-d0046736:	f3c2 40c3 	ubfx	r0, r2, #19, #4
-d004673a:	0dd4      	lsrs	r4, r2, #23
-d004673c:	eb01 1000 	add.w	r0, r1, r0, lsl #4
-d0046740:	05e4      	lsls	r4, r4, #23
-d0046742:	ed90 6b00 	vldr	d6, [r0]
-d0046746:	1b1b      	subs	r3, r3, r4
-d0046748:	ee07 3a90 	vmov	s15, r3
-d004674c:	ed91 5b40 	vldr	d5, [r1, #256]	; 0x100
-d0046750:	eeb7 7ae7 	vcvt.f64.f32	d7, s15
-d0046754:	15d2      	asrs	r2, r2, #23
-d0046756:	eea6 0b07 	vfma.f64	d0, d6, d7
-d004675a:	ed90 6b02 	vldr	d6, [r0, #8]
-d004675e:	ee07 2a90 	vmov	s15, r2
-d0046762:	ed91 4b44 	vldr	d4, [r1, #272]	; 0x110
-d0046766:	eeb8 7be7 	vcvt.f64.s32	d7, s15
-d004676a:	eea7 6b05 	vfma.f64	d6, d7, d5
-d004676e:	ed91 7b46 	vldr	d7, [r1, #280]	; 0x118
-d0046772:	ee20 5b00 	vmul.f64	d5, d0, d0
-d0046776:	eea4 7b00 	vfma.f64	d7, d4, d0
-d004677a:	ed91 4b42 	vldr	d4, [r1, #264]	; 0x108
-d004677e:	ee30 0b06 	vadd.f64	d0, d0, d6
-d0046782:	eea4 7b05 	vfma.f64	d7, d4, d5
-d0046786:	eea5 0b07 	vfma.f64	d0, d5, d7
-d004678a:	eeb7 0bc0 	vcvt.f32.f64	s0, d0
-d004678e:	f85d 4b04 	ldr.w	r4, [sp], #4
-d0046792:	4770      	bx	lr
-d0046794:	ed9f 0a03 	vldr	s0, [pc, #12]	; d00467a4 <logf+0xc8>
-d0046798:	e7f9      	b.n	d004678e <logf+0xb2>
-d004679a:	bf00      	nop
-d004679c:	4b000000 	.word	0x4b000000
-d00467a0:	d0046f70 	.word	0xd0046f70
-d00467a4:	00000000 	.word	0x00000000
+d0047210 <with_errnof>:
+d0047210:	b513      	push	{r0, r1, r4, lr}
+d0047212:	4604      	mov	r4, r0
+d0047214:	ed8d 0a01 	vstr	s0, [sp, #4]
+d0047218:	f7ff faac 	bl	d0046774 <__errno>
+d004721c:	ed9d 0a01 	vldr	s0, [sp, #4]
+d0047220:	6004      	str	r4, [r0, #0]
+d0047222:	b002      	add	sp, #8
+d0047224:	bd10      	pop	{r4, pc}
 
-d00467a8 <sinf_poly>:
-d00467a8:	07cb      	lsls	r3, r1, #31
-d00467aa:	d412      	bmi.n	d00467d2 <sinf_poly+0x2a>
-d00467ac:	ee21 6b00 	vmul.f64	d6, d1, d0
-d00467b0:	ed90 5b1a 	vldr	d5, [r0, #104]	; 0x68
-d00467b4:	ed90 7b18 	vldr	d7, [r0, #96]	; 0x60
-d00467b8:	eea5 7b01 	vfma.f64	d7, d5, d1
-d00467bc:	ed90 5b16 	vldr	d5, [r0, #88]	; 0x58
-d00467c0:	ee21 1b06 	vmul.f64	d1, d1, d6
-d00467c4:	eea5 0b06 	vfma.f64	d0, d5, d6
-d00467c8:	eea7 0b01 	vfma.f64	d0, d7, d1
-d00467cc:	eeb7 0bc0 	vcvt.f32.f64	s0, d0
-d00467d0:	4770      	bx	lr
-d00467d2:	ed90 5b14 	vldr	d5, [r0, #80]	; 0x50
-d00467d6:	ee21 6b01 	vmul.f64	d6, d1, d1
-d00467da:	ed90 7b12 	vldr	d7, [r0, #72]	; 0x48
-d00467de:	ed90 0b0c 	vldr	d0, [r0, #48]	; 0x30
-d00467e2:	eea1 7b05 	vfma.f64	d7, d1, d5
-d00467e6:	ed90 5b0e 	vldr	d5, [r0, #56]	; 0x38
-d00467ea:	eea1 0b05 	vfma.f64	d0, d1, d5
-d00467ee:	ed90 5b10 	vldr	d5, [r0, #64]	; 0x40
-d00467f2:	ee21 1b06 	vmul.f64	d1, d1, d6
-d00467f6:	eea6 0b05 	vfma.f64	d0, d6, d5
-d00467fa:	e7e5      	b.n	d00467c8 <sinf_poly+0x20>
-d00467fc:	0000      	movs	r0, r0
+d0047226 <xflowf>:
+d0047226:	b130      	cbz	r0, d0047236 <xflowf+0x10>
+d0047228:	eef1 7a40 	vneg.f32	s15, s0
+d004722c:	ee27 0a80 	vmul.f32	s0, s15, s0
+d0047230:	2022      	movs	r0, #34	; 0x22
+d0047232:	f7ff bfed 	b.w	d0047210 <with_errnof>
+d0047236:	eef0 7a40 	vmov.f32	s15, s0
+d004723a:	e7f7      	b.n	d004722c <xflowf+0x6>
+
+d004723c <__math_uflowf>:
+d004723c:	ed9f 0a01 	vldr	s0, [pc, #4]	; d0047244 <__math_uflowf+0x8>
+d0047240:	f7ff bff1 	b.w	d0047226 <xflowf>
+d0047244:	10000000 	.word	0x10000000
+
+d0047248 <__math_may_uflowf>:
+d0047248:	ed9f 0a01 	vldr	s0, [pc, #4]	; d0047250 <__math_may_uflowf+0x8>
+d004724c:	f7ff bfeb 	b.w	d0047226 <xflowf>
+d0047250:	1a200000 	.word	0x1a200000
+
+d0047254 <__math_oflowf>:
+d0047254:	ed9f 0a01 	vldr	s0, [pc, #4]	; d004725c <__math_oflowf+0x8>
+d0047258:	f7ff bfe5 	b.w	d0047226 <xflowf>
+d004725c:	70000000 	.word	0x70000000
+
+d0047260 <__math_divzerof>:
+d0047260:	eeb7 0a00 	vmov.f32	s0, #112	; 0x3f800000  1.0
+d0047264:	eeff 7a00 	vmov.f32	s15, #240	; 0xbf800000 -1.0
+d0047268:	2800      	cmp	r0, #0
+d004726a:	fe40 7a27 	vseleq.f32	s15, s0, s15
+d004726e:	ed9f 0a03 	vldr	s0, [pc, #12]	; d004727c <__math_divzerof+0x1c>
+d0047272:	2022      	movs	r0, #34	; 0x22
+d0047274:	ee87 0a80 	vdiv.f32	s0, s15, s0
+d0047278:	f7ff bfca 	b.w	d0047210 <with_errnof>
+d004727c:	00000000 	.word	0x00000000
+
+d0047280 <__math_invalidf>:
+d0047280:	eef0 7a40 	vmov.f32	s15, s0
+d0047284:	ee30 7a40 	vsub.f32	s14, s0, s0
+d0047288:	eef4 7a67 	vcmp.f32	s15, s15
+d004728c:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0047290:	ee87 0a07 	vdiv.f32	s0, s14, s14
+d0047294:	d602      	bvs.n	d004729c <__math_invalidf+0x1c>
+d0047296:	2021      	movs	r0, #33	; 0x21
+d0047298:	f7ff bfba 	b.w	d0047210 <with_errnof>
+d004729c:	4770      	bx	lr
 	...
 
-d0046800 <sinf>:
-d0046800:	b5f7      	push	{r0, r1, r2, r4, r5, r6, r7, lr}
-d0046802:	ee10 4a10 	vmov	r4, s0
-d0046806:	f3c4 530a 	ubfx	r3, r4, #20, #11
-d004680a:	f5b3 7f7d 	cmp.w	r3, #1012	; 0x3f4
-d004680e:	eeb7 6ac0 	vcvt.f64.f32	d6, s0
-d0046812:	eef0 7a40 	vmov.f32	s15, s0
-d0046816:	ea4f 5214 	mov.w	r2, r4, lsr #20
-d004681a:	d218      	bcs.n	d004684e <sinf+0x4e>
-d004681c:	ee26 1b06 	vmul.f64	d1, d6, d6
-d0046820:	f5b3 7f66 	cmp.w	r3, #920	; 0x398
-d0046824:	d20a      	bcs.n	d004683c <sinf+0x3c>
-d0046826:	f412 6fff 	tst.w	r2, #2040	; 0x7f8
-d004682a:	d103      	bne.n	d0046834 <sinf+0x34>
-d004682c:	eeb7 1bc1 	vcvt.f32.f64	s2, d1
-d0046830:	ed8d 1a01 	vstr	s2, [sp, #4]
-d0046834:	eeb0 0a67 	vmov.f32	s0, s15
-d0046838:	b003      	add	sp, #12
-d004683a:	bdf0      	pop	{r4, r5, r6, r7, pc}
-d004683c:	483e      	ldr	r0, [pc, #248]	; (d0046938 <sinf+0x138>)
-d004683e:	eeb0 0b46 	vmov.f64	d0, d6
-d0046842:	2100      	movs	r1, #0
-d0046844:	b003      	add	sp, #12
-d0046846:	e8bd 40f0 	ldmia.w	sp!, {r4, r5, r6, r7, lr}
-d004684a:	f7ff bfad 	b.w	d00467a8 <sinf_poly>
-d004684e:	f240 422e 	movw	r2, #1070	; 0x42e
-d0046852:	4293      	cmp	r3, r2
-d0046854:	d824      	bhi.n	d00468a0 <sinf+0xa0>
-d0046856:	4b38      	ldr	r3, [pc, #224]	; (d0046938 <sinf+0x138>)
-d0046858:	ed93 7b08 	vldr	d7, [r3, #32]
-d004685c:	ee26 7b07 	vmul.f64	d7, d6, d7
-d0046860:	eefd 7bc7 	vcvt.s32.f64	s15, d7
-d0046864:	f103 0070 	add.w	r0, r3, #112	; 0x70
-d0046868:	ee17 1a90 	vmov	r1, s15
-d004686c:	f501 0100 	add.w	r1, r1, #8388608	; 0x800000
-d0046870:	1609      	asrs	r1, r1, #24
-d0046872:	ee07 1a90 	vmov	s15, r1
-d0046876:	f001 0203 	and.w	r2, r1, #3
-d004687a:	eb03 02c2 	add.w	r2, r3, r2, lsl #3
-d004687e:	eeb8 5be7 	vcvt.f64.s32	d5, s15
-d0046882:	ed92 0b00 	vldr	d0, [r2]
-d0046886:	ed93 7b0a 	vldr	d7, [r3, #40]	; 0x28
-d004688a:	f011 0f02 	tst.w	r1, #2
-d004688e:	eea5 6b47 	vfms.f64	d6, d5, d7
-d0046892:	bf08      	it	eq
-d0046894:	4618      	moveq	r0, r3
-d0046896:	ee26 1b06 	vmul.f64	d1, d6, d6
-d004689a:	ee20 0b06 	vmul.f64	d0, d0, d6
-d004689e:	e7d1      	b.n	d0046844 <sinf+0x44>
-d00468a0:	f5b3 6fff 	cmp.w	r3, #2040	; 0x7f8
-d00468a4:	d23d      	bcs.n	d0046922 <sinf+0x122>
-d00468a6:	4b25      	ldr	r3, [pc, #148]	; (d004693c <sinf+0x13c>)
-d00468a8:	f3c4 6283 	ubfx	r2, r4, #26, #4
-d00468ac:	eb03 0082 	add.w	r0, r3, r2, lsl #2
-d00468b0:	f3c4 0116 	ubfx	r1, r4, #0, #23
-d00468b4:	6a06      	ldr	r6, [r0, #32]
-d00468b6:	6900      	ldr	r0, [r0, #16]
-d00468b8:	f3c4 55c2 	ubfx	r5, r4, #23, #3
-d00468bc:	f441 0100 	orr.w	r1, r1, #8388608	; 0x800000
-d00468c0:	40a9      	lsls	r1, r5
-d00468c2:	f853 5022 	ldr.w	r5, [r3, r2, lsl #2]
-d00468c6:	fba1 6706 	umull	r6, r7, r1, r6
-d00468ca:	fb05 f301 	mul.w	r3, r5, r1
-d00468ce:	463a      	mov	r2, r7
-d00468d0:	fbe0 2301 	umlal	r2, r3, r0, r1
-d00468d4:	1c11      	adds	r1, r2, #0
-d00468d6:	f143 5600 	adc.w	r6, r3, #536870912	; 0x20000000
-d00468da:	2000      	movs	r0, #0
-d00468dc:	1a10      	subs	r0, r2, r0
-d00468de:	f006 4140 	and.w	r1, r6, #3221225472	; 0xc0000000
-d00468e2:	eb63 0101 	sbc.w	r1, r3, r1
-d00468e6:	f000 f9b9 	bl	d0046c5c <__aeabi_l2d>
-d00468ea:	0fb5      	lsrs	r5, r6, #30
-d00468ec:	4a12      	ldr	r2, [pc, #72]	; (d0046938 <sinf+0x138>)
-d00468ee:	eb05 73d4 	add.w	r3, r5, r4, lsr #31
-d00468f2:	ed9f 0b0f 	vldr	d0, [pc, #60]	; d0046930 <sinf+0x130>
-d00468f6:	ec41 0b17 	vmov	d7, r0, r1
-d00468fa:	f003 0103 	and.w	r1, r3, #3
-d00468fe:	eb02 01c1 	add.w	r1, r2, r1, lsl #3
-d0046902:	ee27 0b00 	vmul.f64	d0, d7, d0
-d0046906:	ed91 7b00 	vldr	d7, [r1]
-d004690a:	ee20 1b00 	vmul.f64	d1, d0, d0
-d004690e:	f013 0f02 	tst.w	r3, #2
-d0046912:	f102 0070 	add.w	r0, r2, #112	; 0x70
-d0046916:	4629      	mov	r1, r5
-d0046918:	bf08      	it	eq
-d004691a:	4610      	moveq	r0, r2
-d004691c:	ee27 0b00 	vmul.f64	d0, d7, d0
-d0046920:	e790      	b.n	d0046844 <sinf+0x44>
-d0046922:	b003      	add	sp, #12
-d0046924:	e8bd 40f0 	ldmia.w	sp!, {r4, r5, r6, r7, lr}
-d0046928:	f7ff be52 	b.w	d00465d0 <__math_invalidf>
-d004692c:	f3af 8000 	nop.w
-d0046930:	54442d18 	.word	0x54442d18
-d0046934:	3c1921fb 	.word	0x3c1921fb
-d0046938:	d00470f0 	.word	0xd00470f0
-d004693c:	d0047090 	.word	0xd0047090
+d00472a0 <expf>:
+d00472a0:	ee10 2a10 	vmov	r2, s0
+d00472a4:	b470      	push	{r4, r5, r6}
+d00472a6:	f3c2 530a 	ubfx	r3, r2, #20, #11
+d00472aa:	f240 442a 	movw	r4, #1066	; 0x42a
+d00472ae:	42a3      	cmp	r3, r4
+d00472b0:	eeb7 6ac0 	vcvt.f64.f32	d6, s0
+d00472b4:	d92a      	bls.n	d004730c <expf+0x6c>
+d00472b6:	f512 0f00 	cmn.w	r2, #8388608	; 0x800000
+d00472ba:	d059      	beq.n	d0047370 <expf+0xd0>
+d00472bc:	f5b3 6fff 	cmp.w	r3, #2040	; 0x7f8
+d00472c0:	d303      	bcc.n	d00472ca <expf+0x2a>
+d00472c2:	ee30 0a00 	vadd.f32	s0, s0, s0
+d00472c6:	bc70      	pop	{r4, r5, r6}
+d00472c8:	4770      	bx	lr
+d00472ca:	eddf 7a2b 	vldr	s15, [pc, #172]	; d0047378 <expf+0xd8>
+d00472ce:	eeb4 0ae7 	vcmpe.f32	s0, s15
+d00472d2:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00472d6:	dd03      	ble.n	d00472e0 <expf+0x40>
+d00472d8:	bc70      	pop	{r4, r5, r6}
+d00472da:	2000      	movs	r0, #0
+d00472dc:	f7ff bfba 	b.w	d0047254 <__math_oflowf>
+d00472e0:	eddf 7a26 	vldr	s15, [pc, #152]	; d004737c <expf+0xdc>
+d00472e4:	eeb4 0ae7 	vcmpe.f32	s0, s15
+d00472e8:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d00472ec:	d503      	bpl.n	d00472f6 <expf+0x56>
+d00472ee:	bc70      	pop	{r4, r5, r6}
+d00472f0:	2000      	movs	r0, #0
+d00472f2:	f7ff bfa3 	b.w	d004723c <__math_uflowf>
+d00472f6:	eddf 7a22 	vldr	s15, [pc, #136]	; d0047380 <expf+0xe0>
+d00472fa:	eeb4 0ae7 	vcmpe.f32	s0, s15
+d00472fe:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
+d0047302:	d503      	bpl.n	d004730c <expf+0x6c>
+d0047304:	bc70      	pop	{r4, r5, r6}
+d0047306:	2000      	movs	r0, #0
+d0047308:	f7ff bf9e 	b.w	d0047248 <__math_may_uflowf>
+d004730c:	4b1d      	ldr	r3, [pc, #116]	; (d0047384 <expf+0xe4>)
+d004730e:	eeb7 0b00 	vmov.f64	d0, #112	; 0x3f800000  1.0
+d0047312:	ed93 5b4a 	vldr	d5, [r3, #296]	; 0x128
+d0047316:	ed93 4b48 	vldr	d4, [r3, #288]	; 0x120
+d004731a:	eeb0 7b44 	vmov.f64	d7, d4
+d004731e:	eea5 7b06 	vfma.f64	d7, d5, d6
+d0047322:	ee17 5a10 	vmov	r5, s14
+d0047326:	ee37 7b44 	vsub.f64	d7, d7, d4
+d004732a:	f005 021f 	and.w	r2, r5, #31
+d004732e:	eb03 02c2 	add.w	r2, r3, r2, lsl #3
+d0047332:	e9d2 4600 	ldrd	r4, r6, [r2]
+d0047336:	ee95 7b06 	vfnms.f64	d7, d5, d6
+d004733a:	ed93 4b50 	vldr	d4, [r3, #320]	; 0x140
+d004733e:	ed93 5b4c 	vldr	d5, [r3, #304]	; 0x130
+d0047342:	eea4 0b07 	vfma.f64	d0, d4, d7
+d0047346:	ed93 6b4e 	vldr	d6, [r3, #312]	; 0x138
+d004734a:	2300      	movs	r3, #0
+d004734c:	1918      	adds	r0, r3, r4
+d004734e:	ea4f 32c5 	mov.w	r2, r5, lsl #15
+d0047352:	eb42 0106 	adc.w	r1, r2, r6
+d0047356:	eea5 6b07 	vfma.f64	d6, d5, d7
+d004735a:	ee27 5b07 	vmul.f64	d5, d7, d7
+d004735e:	ec41 0b17 	vmov	d7, r0, r1
+d0047362:	eea6 0b05 	vfma.f64	d0, d6, d5
+d0047366:	ee20 0b07 	vmul.f64	d0, d0, d7
+d004736a:	eeb7 0bc0 	vcvt.f32.f64	s0, d0
+d004736e:	e7aa      	b.n	d00472c6 <expf+0x26>
+d0047370:	ed9f 0a05 	vldr	s0, [pc, #20]	; d0047388 <expf+0xe8>
+d0047374:	e7a7      	b.n	d00472c6 <expf+0x26>
+d0047376:	bf00      	nop
+d0047378:	42b17217 	.word	0x42b17217
+d004737c:	c2cff1b4 	.word	0xc2cff1b4
+d0047380:	c2ce8ecf 	.word	0xc2ce8ecf
+d0047384:	d0047ae8 	.word	0xd0047ae8
+d0047388:	00000000 	.word	0x00000000
 
-d0046940 <__aeabi_drsub>:
-d0046940:	f081 4100 	eor.w	r1, r1, #2147483648	; 0x80000000
-d0046944:	e002      	b.n	d004694c <__adddf3>
-d0046946:	bf00      	nop
+d004738c <logf>:
+d004738c:	ee10 3a10 	vmov	r3, s0
+d0047390:	f1b3 5f7e 	cmp.w	r3, #1065353216	; 0x3f800000
+d0047394:	b410      	push	{r4}
+d0047396:	d055      	beq.n	d0047444 <logf+0xb8>
+d0047398:	f5a3 0200 	sub.w	r2, r3, #8388608	; 0x800000
+d004739c:	f1b2 4ffe 	cmp.w	r2, #2130706432	; 0x7f000000
+d00473a0:	d31a      	bcc.n	d00473d8 <logf+0x4c>
+d00473a2:	005a      	lsls	r2, r3, #1
+d00473a4:	d104      	bne.n	d00473b0 <logf+0x24>
+d00473a6:	f85d 4b04 	ldr.w	r4, [sp], #4
+d00473aa:	2001      	movs	r0, #1
+d00473ac:	f7ff bf58 	b.w	d0047260 <__math_divzerof>
+d00473b0:	f1b3 4fff 	cmp.w	r3, #2139095040	; 0x7f800000
+d00473b4:	d043      	beq.n	d004743e <logf+0xb2>
+d00473b6:	2b00      	cmp	r3, #0
+d00473b8:	db02      	blt.n	d00473c0 <logf+0x34>
+d00473ba:	f1b2 4f7f 	cmp.w	r2, #4278190080	; 0xff000000
+d00473be:	d303      	bcc.n	d00473c8 <logf+0x3c>
+d00473c0:	f85d 4b04 	ldr.w	r4, [sp], #4
+d00473c4:	f7ff bf5c 	b.w	d0047280 <__math_invalidf>
+d00473c8:	eddf 7a20 	vldr	s15, [pc, #128]	; d004744c <logf+0xc0>
+d00473cc:	ee20 0a27 	vmul.f32	s0, s0, s15
+d00473d0:	ee10 3a10 	vmov	r3, s0
+d00473d4:	f1a3 6338 	sub.w	r3, r3, #192937984	; 0xb800000
+d00473d8:	f103 4240 	add.w	r2, r3, #3221225472	; 0xc0000000
+d00473dc:	491c      	ldr	r1, [pc, #112]	; (d0047450 <logf+0xc4>)
+d00473de:	eebf 0b00 	vmov.f64	d0, #240	; 0xbf800000 -1.0
+d00473e2:	f502 024d 	add.w	r2, r2, #13434880	; 0xcd0000
+d00473e6:	f3c2 40c3 	ubfx	r0, r2, #19, #4
+d00473ea:	0dd4      	lsrs	r4, r2, #23
+d00473ec:	eb01 1000 	add.w	r0, r1, r0, lsl #4
+d00473f0:	05e4      	lsls	r4, r4, #23
+d00473f2:	ed90 6b00 	vldr	d6, [r0]
+d00473f6:	1b1b      	subs	r3, r3, r4
+d00473f8:	ee07 3a90 	vmov	s15, r3
+d00473fc:	ed91 5b40 	vldr	d5, [r1, #256]	; 0x100
+d0047400:	eeb7 7ae7 	vcvt.f64.f32	d7, s15
+d0047404:	15d2      	asrs	r2, r2, #23
+d0047406:	eea6 0b07 	vfma.f64	d0, d6, d7
+d004740a:	ed90 6b02 	vldr	d6, [r0, #8]
+d004740e:	ee07 2a90 	vmov	s15, r2
+d0047412:	ed91 4b44 	vldr	d4, [r1, #272]	; 0x110
+d0047416:	eeb8 7be7 	vcvt.f64.s32	d7, s15
+d004741a:	eea7 6b05 	vfma.f64	d6, d7, d5
+d004741e:	ed91 7b46 	vldr	d7, [r1, #280]	; 0x118
+d0047422:	ee20 5b00 	vmul.f64	d5, d0, d0
+d0047426:	eea4 7b00 	vfma.f64	d7, d4, d0
+d004742a:	ed91 4b42 	vldr	d4, [r1, #264]	; 0x108
+d004742e:	ee30 0b06 	vadd.f64	d0, d0, d6
+d0047432:	eea4 7b05 	vfma.f64	d7, d4, d5
+d0047436:	eea5 0b07 	vfma.f64	d0, d5, d7
+d004743a:	eeb7 0bc0 	vcvt.f32.f64	s0, d0
+d004743e:	f85d 4b04 	ldr.w	r4, [sp], #4
+d0047442:	4770      	bx	lr
+d0047444:	ed9f 0a03 	vldr	s0, [pc, #12]	; d0047454 <logf+0xc8>
+d0047448:	e7f9      	b.n	d004743e <logf+0xb2>
+d004744a:	bf00      	nop
+d004744c:	4b000000 	.word	0x4b000000
+d0047450:	d0047c30 	.word	0xd0047c30
+d0047454:	00000000 	.word	0x00000000
 
-d0046948 <__aeabi_dsub>:
-d0046948:	f083 4300 	eor.w	r3, r3, #2147483648	; 0x80000000
-
-d004694c <__adddf3>:
-d004694c:	b530      	push	{r4, r5, lr}
-d004694e:	ea4f 0441 	mov.w	r4, r1, lsl #1
-d0046952:	ea4f 0543 	mov.w	r5, r3, lsl #1
-d0046956:	ea94 0f05 	teq	r4, r5
-d004695a:	bf08      	it	eq
-d004695c:	ea90 0f02 	teqeq	r0, r2
-d0046960:	bf1f      	itttt	ne
-d0046962:	ea54 0c00 	orrsne.w	ip, r4, r0
-d0046966:	ea55 0c02 	orrsne.w	ip, r5, r2
-d004696a:	ea7f 5c64 	mvnsne.w	ip, r4, asr #21
-d004696e:	ea7f 5c65 	mvnsne.w	ip, r5, asr #21
-d0046972:	f000 80e2 	beq.w	d0046b3a <__adddf3+0x1ee>
-d0046976:	ea4f 5454 	mov.w	r4, r4, lsr #21
-d004697a:	ebd4 5555 	rsbs	r5, r4, r5, lsr #21
-d004697e:	bfb8      	it	lt
-d0046980:	426d      	neglt	r5, r5
-d0046982:	dd0c      	ble.n	d004699e <__adddf3+0x52>
-d0046984:	442c      	add	r4, r5
-d0046986:	ea80 0202 	eor.w	r2, r0, r2
-d004698a:	ea81 0303 	eor.w	r3, r1, r3
-d004698e:	ea82 0000 	eor.w	r0, r2, r0
-d0046992:	ea83 0101 	eor.w	r1, r3, r1
-d0046996:	ea80 0202 	eor.w	r2, r0, r2
-d004699a:	ea81 0303 	eor.w	r3, r1, r3
-d004699e:	2d36      	cmp	r5, #54	; 0x36
-d00469a0:	bf88      	it	hi
-d00469a2:	bd30      	pophi	{r4, r5, pc}
-d00469a4:	f011 4f00 	tst.w	r1, #2147483648	; 0x80000000
-d00469a8:	ea4f 3101 	mov.w	r1, r1, lsl #12
-d00469ac:	f44f 1c80 	mov.w	ip, #1048576	; 0x100000
-d00469b0:	ea4c 3111 	orr.w	r1, ip, r1, lsr #12
-d00469b4:	d002      	beq.n	d00469bc <__adddf3+0x70>
-d00469b6:	4240      	negs	r0, r0
-d00469b8:	eb61 0141 	sbc.w	r1, r1, r1, lsl #1
-d00469bc:	f013 4f00 	tst.w	r3, #2147483648	; 0x80000000
-d00469c0:	ea4f 3303 	mov.w	r3, r3, lsl #12
-d00469c4:	ea4c 3313 	orr.w	r3, ip, r3, lsr #12
-d00469c8:	d002      	beq.n	d00469d0 <__adddf3+0x84>
-d00469ca:	4252      	negs	r2, r2
-d00469cc:	eb63 0343 	sbc.w	r3, r3, r3, lsl #1
-d00469d0:	ea94 0f05 	teq	r4, r5
-d00469d4:	f000 80a7 	beq.w	d0046b26 <__adddf3+0x1da>
-d00469d8:	f1a4 0401 	sub.w	r4, r4, #1
-d00469dc:	f1d5 0e20 	rsbs	lr, r5, #32
-d00469e0:	db0d      	blt.n	d00469fe <__adddf3+0xb2>
-d00469e2:	fa02 fc0e 	lsl.w	ip, r2, lr
-d00469e6:	fa22 f205 	lsr.w	r2, r2, r5
-d00469ea:	1880      	adds	r0, r0, r2
-d00469ec:	f141 0100 	adc.w	r1, r1, #0
-d00469f0:	fa03 f20e 	lsl.w	r2, r3, lr
-d00469f4:	1880      	adds	r0, r0, r2
-d00469f6:	fa43 f305 	asr.w	r3, r3, r5
-d00469fa:	4159      	adcs	r1, r3
-d00469fc:	e00e      	b.n	d0046a1c <__adddf3+0xd0>
-d00469fe:	f1a5 0520 	sub.w	r5, r5, #32
-d0046a02:	f10e 0e20 	add.w	lr, lr, #32
-d0046a06:	2a01      	cmp	r2, #1
-d0046a08:	fa03 fc0e 	lsl.w	ip, r3, lr
-d0046a0c:	bf28      	it	cs
-d0046a0e:	f04c 0c02 	orrcs.w	ip, ip, #2
-d0046a12:	fa43 f305 	asr.w	r3, r3, r5
-d0046a16:	18c0      	adds	r0, r0, r3
-d0046a18:	eb51 71e3 	adcs.w	r1, r1, r3, asr #31
-d0046a1c:	f001 4500 	and.w	r5, r1, #2147483648	; 0x80000000
-d0046a20:	d507      	bpl.n	d0046a32 <__adddf3+0xe6>
-d0046a22:	f04f 0e00 	mov.w	lr, #0
-d0046a26:	f1dc 0c00 	rsbs	ip, ip, #0
-d0046a2a:	eb7e 0000 	sbcs.w	r0, lr, r0
-d0046a2e:	eb6e 0101 	sbc.w	r1, lr, r1
-d0046a32:	f5b1 1f80 	cmp.w	r1, #1048576	; 0x100000
-d0046a36:	d31b      	bcc.n	d0046a70 <__adddf3+0x124>
-d0046a38:	f5b1 1f00 	cmp.w	r1, #2097152	; 0x200000
-d0046a3c:	d30c      	bcc.n	d0046a58 <__adddf3+0x10c>
-d0046a3e:	0849      	lsrs	r1, r1, #1
-d0046a40:	ea5f 0030 	movs.w	r0, r0, rrx
-d0046a44:	ea4f 0c3c 	mov.w	ip, ip, rrx
-d0046a48:	f104 0401 	add.w	r4, r4, #1
-d0046a4c:	ea4f 5244 	mov.w	r2, r4, lsl #21
-d0046a50:	f512 0f80 	cmn.w	r2, #4194304	; 0x400000
-d0046a54:	f080 809a 	bcs.w	d0046b8c <__adddf3+0x240>
-d0046a58:	f1bc 4f00 	cmp.w	ip, #2147483648	; 0x80000000
-d0046a5c:	bf08      	it	eq
-d0046a5e:	ea5f 0c50 	movseq.w	ip, r0, lsr #1
-d0046a62:	f150 0000 	adcs.w	r0, r0, #0
-d0046a66:	eb41 5104 	adc.w	r1, r1, r4, lsl #20
-d0046a6a:	ea41 0105 	orr.w	r1, r1, r5
-d0046a6e:	bd30      	pop	{r4, r5, pc}
-d0046a70:	ea5f 0c4c 	movs.w	ip, ip, lsl #1
-d0046a74:	4140      	adcs	r0, r0
-d0046a76:	eb41 0101 	adc.w	r1, r1, r1
-d0046a7a:	3c01      	subs	r4, #1
-d0046a7c:	bf28      	it	cs
-d0046a7e:	f5b1 1f80 	cmpcs.w	r1, #1048576	; 0x100000
-d0046a82:	d2e9      	bcs.n	d0046a58 <__adddf3+0x10c>
-d0046a84:	f091 0f00 	teq	r1, #0
-d0046a88:	bf04      	itt	eq
-d0046a8a:	4601      	moveq	r1, r0
-d0046a8c:	2000      	moveq	r0, #0
-d0046a8e:	fab1 f381 	clz	r3, r1
-d0046a92:	bf08      	it	eq
-d0046a94:	3320      	addeq	r3, #32
-d0046a96:	f1a3 030b 	sub.w	r3, r3, #11
-d0046a9a:	f1b3 0220 	subs.w	r2, r3, #32
-d0046a9e:	da0c      	bge.n	d0046aba <__adddf3+0x16e>
-d0046aa0:	320c      	adds	r2, #12
-d0046aa2:	dd08      	ble.n	d0046ab6 <__adddf3+0x16a>
-d0046aa4:	f102 0c14 	add.w	ip, r2, #20
-d0046aa8:	f1c2 020c 	rsb	r2, r2, #12
-d0046aac:	fa01 f00c 	lsl.w	r0, r1, ip
-d0046ab0:	fa21 f102 	lsr.w	r1, r1, r2
-d0046ab4:	e00c      	b.n	d0046ad0 <__adddf3+0x184>
-d0046ab6:	f102 0214 	add.w	r2, r2, #20
-d0046aba:	bfd8      	it	le
-d0046abc:	f1c2 0c20 	rsble	ip, r2, #32
-d0046ac0:	fa01 f102 	lsl.w	r1, r1, r2
-d0046ac4:	fa20 fc0c 	lsr.w	ip, r0, ip
-d0046ac8:	bfdc      	itt	le
-d0046aca:	ea41 010c 	orrle.w	r1, r1, ip
-d0046ace:	4090      	lslle	r0, r2
-d0046ad0:	1ae4      	subs	r4, r4, r3
-d0046ad2:	bfa2      	ittt	ge
-d0046ad4:	eb01 5104 	addge.w	r1, r1, r4, lsl #20
-d0046ad8:	4329      	orrge	r1, r5
-d0046ada:	bd30      	popge	{r4, r5, pc}
-d0046adc:	ea6f 0404 	mvn.w	r4, r4
-d0046ae0:	3c1f      	subs	r4, #31
-d0046ae2:	da1c      	bge.n	d0046b1e <__adddf3+0x1d2>
-d0046ae4:	340c      	adds	r4, #12
-d0046ae6:	dc0e      	bgt.n	d0046b06 <__adddf3+0x1ba>
-d0046ae8:	f104 0414 	add.w	r4, r4, #20
-d0046aec:	f1c4 0220 	rsb	r2, r4, #32
-d0046af0:	fa20 f004 	lsr.w	r0, r0, r4
-d0046af4:	fa01 f302 	lsl.w	r3, r1, r2
-d0046af8:	ea40 0003 	orr.w	r0, r0, r3
-d0046afc:	fa21 f304 	lsr.w	r3, r1, r4
-d0046b00:	ea45 0103 	orr.w	r1, r5, r3
-d0046b04:	bd30      	pop	{r4, r5, pc}
-d0046b06:	f1c4 040c 	rsb	r4, r4, #12
-d0046b0a:	f1c4 0220 	rsb	r2, r4, #32
-d0046b0e:	fa20 f002 	lsr.w	r0, r0, r2
-d0046b12:	fa01 f304 	lsl.w	r3, r1, r4
-d0046b16:	ea40 0003 	orr.w	r0, r0, r3
-d0046b1a:	4629      	mov	r1, r5
-d0046b1c:	bd30      	pop	{r4, r5, pc}
-d0046b1e:	fa21 f004 	lsr.w	r0, r1, r4
-d0046b22:	4629      	mov	r1, r5
-d0046b24:	bd30      	pop	{r4, r5, pc}
-d0046b26:	f094 0f00 	teq	r4, #0
-d0046b2a:	f483 1380 	eor.w	r3, r3, #1048576	; 0x100000
-d0046b2e:	bf06      	itte	eq
-d0046b30:	f481 1180 	eoreq.w	r1, r1, #1048576	; 0x100000
-d0046b34:	3401      	addeq	r4, #1
-d0046b36:	3d01      	subne	r5, #1
-d0046b38:	e74e      	b.n	d00469d8 <__adddf3+0x8c>
-d0046b3a:	ea7f 5c64 	mvns.w	ip, r4, asr #21
-d0046b3e:	bf18      	it	ne
-d0046b40:	ea7f 5c65 	mvnsne.w	ip, r5, asr #21
-d0046b44:	d029      	beq.n	d0046b9a <__adddf3+0x24e>
-d0046b46:	ea94 0f05 	teq	r4, r5
-d0046b4a:	bf08      	it	eq
-d0046b4c:	ea90 0f02 	teqeq	r0, r2
-d0046b50:	d005      	beq.n	d0046b5e <__adddf3+0x212>
-d0046b52:	ea54 0c00 	orrs.w	ip, r4, r0
-d0046b56:	bf04      	itt	eq
-d0046b58:	4619      	moveq	r1, r3
-d0046b5a:	4610      	moveq	r0, r2
-d0046b5c:	bd30      	pop	{r4, r5, pc}
-d0046b5e:	ea91 0f03 	teq	r1, r3
-d0046b62:	bf1e      	ittt	ne
-d0046b64:	2100      	movne	r1, #0
-d0046b66:	2000      	movne	r0, #0
-d0046b68:	bd30      	popne	{r4, r5, pc}
-d0046b6a:	ea5f 5c54 	movs.w	ip, r4, lsr #21
-d0046b6e:	d105      	bne.n	d0046b7c <__adddf3+0x230>
-d0046b70:	0040      	lsls	r0, r0, #1
-d0046b72:	4149      	adcs	r1, r1
-d0046b74:	bf28      	it	cs
-d0046b76:	f041 4100 	orrcs.w	r1, r1, #2147483648	; 0x80000000
-d0046b7a:	bd30      	pop	{r4, r5, pc}
-d0046b7c:	f514 0480 	adds.w	r4, r4, #4194304	; 0x400000
-d0046b80:	bf3c      	itt	cc
-d0046b82:	f501 1180 	addcc.w	r1, r1, #1048576	; 0x100000
-d0046b86:	bd30      	popcc	{r4, r5, pc}
-d0046b88:	f001 4500 	and.w	r5, r1, #2147483648	; 0x80000000
-d0046b8c:	f045 41fe 	orr.w	r1, r5, #2130706432	; 0x7f000000
-d0046b90:	f441 0170 	orr.w	r1, r1, #15728640	; 0xf00000
-d0046b94:	f04f 0000 	mov.w	r0, #0
-d0046b98:	bd30      	pop	{r4, r5, pc}
-d0046b9a:	ea7f 5c64 	mvns.w	ip, r4, asr #21
-d0046b9e:	bf1a      	itte	ne
-d0046ba0:	4619      	movne	r1, r3
-d0046ba2:	4610      	movne	r0, r2
-d0046ba4:	ea7f 5c65 	mvnseq.w	ip, r5, asr #21
-d0046ba8:	bf1c      	itt	ne
-d0046baa:	460b      	movne	r3, r1
-d0046bac:	4602      	movne	r2, r0
-d0046bae:	ea50 3401 	orrs.w	r4, r0, r1, lsl #12
-d0046bb2:	bf06      	itte	eq
-d0046bb4:	ea52 3503 	orrseq.w	r5, r2, r3, lsl #12
-d0046bb8:	ea91 0f03 	teqeq	r1, r3
-d0046bbc:	f441 2100 	orrne.w	r1, r1, #524288	; 0x80000
-d0046bc0:	bd30      	pop	{r4, r5, pc}
-d0046bc2:	bf00      	nop
-
-d0046bc4 <__aeabi_ui2d>:
-d0046bc4:	f090 0f00 	teq	r0, #0
-d0046bc8:	bf04      	itt	eq
-d0046bca:	2100      	moveq	r1, #0
-d0046bcc:	4770      	bxeq	lr
-d0046bce:	b530      	push	{r4, r5, lr}
-d0046bd0:	f44f 6480 	mov.w	r4, #1024	; 0x400
-d0046bd4:	f104 0432 	add.w	r4, r4, #50	; 0x32
-d0046bd8:	f04f 0500 	mov.w	r5, #0
-d0046bdc:	f04f 0100 	mov.w	r1, #0
-d0046be0:	e750      	b.n	d0046a84 <__adddf3+0x138>
-d0046be2:	bf00      	nop
-
-d0046be4 <__aeabi_i2d>:
-d0046be4:	f090 0f00 	teq	r0, #0
-d0046be8:	bf04      	itt	eq
-d0046bea:	2100      	moveq	r1, #0
-d0046bec:	4770      	bxeq	lr
-d0046bee:	b530      	push	{r4, r5, lr}
-d0046bf0:	f44f 6480 	mov.w	r4, #1024	; 0x400
-d0046bf4:	f104 0432 	add.w	r4, r4, #50	; 0x32
-d0046bf8:	f010 4500 	ands.w	r5, r0, #2147483648	; 0x80000000
-d0046bfc:	bf48      	it	mi
-d0046bfe:	4240      	negmi	r0, r0
-d0046c00:	f04f 0100 	mov.w	r1, #0
-d0046c04:	e73e      	b.n	d0046a84 <__adddf3+0x138>
-d0046c06:	bf00      	nop
-
-d0046c08 <__aeabi_f2d>:
-d0046c08:	0042      	lsls	r2, r0, #1
-d0046c0a:	ea4f 01e2 	mov.w	r1, r2, asr #3
-d0046c0e:	ea4f 0131 	mov.w	r1, r1, rrx
-d0046c12:	ea4f 7002 	mov.w	r0, r2, lsl #28
-d0046c16:	bf1f      	itttt	ne
-d0046c18:	f012 437f 	andsne.w	r3, r2, #4278190080	; 0xff000000
-d0046c1c:	f093 4f7f 	teqne	r3, #4278190080	; 0xff000000
-d0046c20:	f081 5160 	eorne.w	r1, r1, #939524096	; 0x38000000
-d0046c24:	4770      	bxne	lr
-d0046c26:	f032 427f 	bics.w	r2, r2, #4278190080	; 0xff000000
-d0046c2a:	bf08      	it	eq
-d0046c2c:	4770      	bxeq	lr
-d0046c2e:	f093 4f7f 	teq	r3, #4278190080	; 0xff000000
-d0046c32:	bf04      	itt	eq
-d0046c34:	f441 2100 	orreq.w	r1, r1, #524288	; 0x80000
-d0046c38:	4770      	bxeq	lr
-d0046c3a:	b530      	push	{r4, r5, lr}
-d0046c3c:	f44f 7460 	mov.w	r4, #896	; 0x380
-d0046c40:	f001 4500 	and.w	r5, r1, #2147483648	; 0x80000000
-d0046c44:	f021 4100 	bic.w	r1, r1, #2147483648	; 0x80000000
-d0046c48:	e71c      	b.n	d0046a84 <__adddf3+0x138>
-d0046c4a:	bf00      	nop
-
-d0046c4c <__aeabi_ul2d>:
-d0046c4c:	ea50 0201 	orrs.w	r2, r0, r1
-d0046c50:	bf08      	it	eq
-d0046c52:	4770      	bxeq	lr
-d0046c54:	b530      	push	{r4, r5, lr}
-d0046c56:	f04f 0500 	mov.w	r5, #0
-d0046c5a:	e00a      	b.n	d0046c72 <__aeabi_l2d+0x16>
-
-d0046c5c <__aeabi_l2d>:
-d0046c5c:	ea50 0201 	orrs.w	r2, r0, r1
-d0046c60:	bf08      	it	eq
-d0046c62:	4770      	bxeq	lr
-d0046c64:	b530      	push	{r4, r5, lr}
-d0046c66:	f011 4500 	ands.w	r5, r1, #2147483648	; 0x80000000
-d0046c6a:	d502      	bpl.n	d0046c72 <__aeabi_l2d+0x16>
-d0046c6c:	4240      	negs	r0, r0
-d0046c6e:	eb61 0141 	sbc.w	r1, r1, r1, lsl #1
-d0046c72:	f44f 6480 	mov.w	r4, #1024	; 0x400
-d0046c76:	f104 0432 	add.w	r4, r4, #50	; 0x32
-d0046c7a:	ea5f 5c91 	movs.w	ip, r1, lsr #22
-d0046c7e:	f43f aed8 	beq.w	d0046a32 <__adddf3+0xe6>
-d0046c82:	f04f 0203 	mov.w	r2, #3
-d0046c86:	ea5f 0cdc 	movs.w	ip, ip, lsr #3
-d0046c8a:	bf18      	it	ne
-d0046c8c:	3203      	addne	r2, #3
-d0046c8e:	ea5f 0cdc 	movs.w	ip, ip, lsr #3
-d0046c92:	bf18      	it	ne
-d0046c94:	3203      	addne	r2, #3
-d0046c96:	eb02 02dc 	add.w	r2, r2, ip, lsr #3
-d0046c9a:	f1c2 0320 	rsb	r3, r2, #32
-d0046c9e:	fa00 fc03 	lsl.w	ip, r0, r3
-d0046ca2:	fa20 f002 	lsr.w	r0, r0, r2
-d0046ca6:	fa01 fe03 	lsl.w	lr, r1, r3
-d0046caa:	ea40 000e 	orr.w	r0, r0, lr
-d0046cae:	fa21 f102 	lsr.w	r1, r1, r2
-d0046cb2:	4414      	add	r4, r2
-d0046cb4:	e6bd      	b.n	d0046a32 <__adddf3+0xe6>
-d0046cb6:	bf00      	nop
-d0046cb8:	2e706661 	.word	0x2e706661
-d0046cbc:	00646f6d 	.word	0x00646f6d
-d0046cc0:	616c7369 	.word	0x616c7369
-d0046cc4:	2e78646e 	.word	0x2e78646e
-d0046cc8:	64336273 	.word	0x64336273
-d0046ccc:	00000000 	.word	0x00000000
-d0046cd0:	72726163 	.word	0x72726163
-d0046cd4:	2e726569 	.word	0x2e726569
-d0046cd8:	64336273 	.word	0x64336273
-d0046cdc:	00000000 	.word	0x00000000
-d0046ce0:	617a7573 	.word	0x617a7573
-d0046ce4:	2e656e6e 	.word	0x2e656e6e
-d0046ce8:	64336273 	.word	0x64336273
-d0046cec:	00000000 	.word	0x00000000
-d0046cf0:	ff5516e3 	.word	0xff5516e3
-d0046cf4:	ffffffff 	.word	0xffffffff
-d0046cf8:	ffff0000 	.word	0xffff0000
-d0046cfc:	ff00ff00 	.word	0xff00ff00
-d0046d00:	ff0000ff 	.word	0xff0000ff
-d0046d04:	ffffff00 	.word	0xffffff00
-d0046d08:	ffff00ff 	.word	0xffff00ff
-d0046d0c:	ff00ffff 	.word	0xff00ffff
-d0046d10:	ff808080 	.word	0xff808080
-d0046d14:	ffff8000 	.word	0xffff8000
-d0046d18:	ff8000ff 	.word	0xff8000ff
-d0046d1c:	ff0080ff 	.word	0xff0080ff
-d0046d20:	ff80ff00 	.word	0xff80ff00
-d0046d24:	ffff0080 	.word	0xffff0080
-d0046d28:	ff00ff80 	.word	0xff00ff80
-d0046d2c:	ffc0c0c0 	.word	0xffc0c0c0
-d0046d30:	3f800000 	.word	0x3f800000
-d0046d34:	3f400000 	.word	0x3f400000
-d0046d38:	3f0ccccd 	.word	0x3f0ccccd
-d0046d3c:	3eb33333 	.word	0x3eb33333
-d0046d40:	3e4ccccd 	.word	0x3e4ccccd
-d0046d44:	bf800000 	.word	0xbf800000
-d0046d48:	bf000000 	.word	0xbf000000
-d0046d4c:	3e99999a 	.word	0x3e99999a
-
-d0046d50 <bayer4x4>:
-d0046d50:	0a020800 060e040c 09010b03 050d070f     ................
-	...
-d0046d78:	3f800000 00000000 00000000 00000000     ...?............
-d0046d88:	3f800000 00000000 00000000 00000000     ...?............
-d0046d98:	3f800000 3a8312c5 3c23d70a 447a0000     ...?...:..#<..zD
+d0047458 <sinf_poly>:
+d0047458:	07cb      	lsls	r3, r1, #31
+d004745a:	d412      	bmi.n	d0047482 <sinf_poly+0x2a>
+d004745c:	ee21 6b00 	vmul.f64	d6, d1, d0
+d0047460:	ed90 5b1a 	vldr	d5, [r0, #104]	; 0x68
+d0047464:	ed90 7b18 	vldr	d7, [r0, #96]	; 0x60
+d0047468:	eea5 7b01 	vfma.f64	d7, d5, d1
+d004746c:	ed90 5b16 	vldr	d5, [r0, #88]	; 0x58
+d0047470:	ee21 1b06 	vmul.f64	d1, d1, d6
+d0047474:	eea5 0b06 	vfma.f64	d0, d5, d6
+d0047478:	eea7 0b01 	vfma.f64	d0, d7, d1
+d004747c:	eeb7 0bc0 	vcvt.f32.f64	s0, d0
+d0047480:	4770      	bx	lr
+d0047482:	ed90 5b14 	vldr	d5, [r0, #80]	; 0x50
+d0047486:	ee21 6b01 	vmul.f64	d6, d1, d1
+d004748a:	ed90 7b12 	vldr	d7, [r0, #72]	; 0x48
+d004748e:	ed90 0b0c 	vldr	d0, [r0, #48]	; 0x30
+d0047492:	eea1 7b05 	vfma.f64	d7, d1, d5
+d0047496:	ed90 5b0e 	vldr	d5, [r0, #56]	; 0x38
+d004749a:	eea1 0b05 	vfma.f64	d0, d1, d5
+d004749e:	ed90 5b10 	vldr	d5, [r0, #64]	; 0x40
+d00474a2:	ee21 1b06 	vmul.f64	d1, d1, d6
+d00474a6:	eea6 0b05 	vfma.f64	d0, d6, d5
+d00474aa:	e7e5      	b.n	d0047478 <sinf_poly+0x20>
+d00474ac:	0000      	movs	r0, r0
 	...
 
-d0046dc0 <__sf_fake_stderr>:
+d00474b0 <sinf>:
+d00474b0:	b5f7      	push	{r0, r1, r2, r4, r5, r6, r7, lr}
+d00474b2:	ee10 4a10 	vmov	r4, s0
+d00474b6:	f3c4 530a 	ubfx	r3, r4, #20, #11
+d00474ba:	f5b3 7f7d 	cmp.w	r3, #1012	; 0x3f4
+d00474be:	eeb7 6ac0 	vcvt.f64.f32	d6, s0
+d00474c2:	eef0 7a40 	vmov.f32	s15, s0
+d00474c6:	ea4f 5214 	mov.w	r2, r4, lsr #20
+d00474ca:	d218      	bcs.n	d00474fe <sinf+0x4e>
+d00474cc:	ee26 1b06 	vmul.f64	d1, d6, d6
+d00474d0:	f5b3 7f66 	cmp.w	r3, #920	; 0x398
+d00474d4:	d20a      	bcs.n	d00474ec <sinf+0x3c>
+d00474d6:	f412 6fff 	tst.w	r2, #2040	; 0x7f8
+d00474da:	d103      	bne.n	d00474e4 <sinf+0x34>
+d00474dc:	eeb7 1bc1 	vcvt.f32.f64	s2, d1
+d00474e0:	ed8d 1a01 	vstr	s2, [sp, #4]
+d00474e4:	eeb0 0a67 	vmov.f32	s0, s15
+d00474e8:	b003      	add	sp, #12
+d00474ea:	bdf0      	pop	{r4, r5, r6, r7, pc}
+d00474ec:	483e      	ldr	r0, [pc, #248]	; (d00475e8 <sinf+0x138>)
+d00474ee:	eeb0 0b46 	vmov.f64	d0, d6
+d00474f2:	2100      	movs	r1, #0
+d00474f4:	b003      	add	sp, #12
+d00474f6:	e8bd 40f0 	ldmia.w	sp!, {r4, r5, r6, r7, lr}
+d00474fa:	f7ff bfad 	b.w	d0047458 <sinf_poly>
+d00474fe:	f240 422e 	movw	r2, #1070	; 0x42e
+d0047502:	4293      	cmp	r3, r2
+d0047504:	d824      	bhi.n	d0047550 <sinf+0xa0>
+d0047506:	4b38      	ldr	r3, [pc, #224]	; (d00475e8 <sinf+0x138>)
+d0047508:	ed93 7b08 	vldr	d7, [r3, #32]
+d004750c:	ee26 7b07 	vmul.f64	d7, d6, d7
+d0047510:	eefd 7bc7 	vcvt.s32.f64	s15, d7
+d0047514:	f103 0070 	add.w	r0, r3, #112	; 0x70
+d0047518:	ee17 1a90 	vmov	r1, s15
+d004751c:	f501 0100 	add.w	r1, r1, #8388608	; 0x800000
+d0047520:	1609      	asrs	r1, r1, #24
+d0047522:	ee07 1a90 	vmov	s15, r1
+d0047526:	f001 0203 	and.w	r2, r1, #3
+d004752a:	eb03 02c2 	add.w	r2, r3, r2, lsl #3
+d004752e:	eeb8 5be7 	vcvt.f64.s32	d5, s15
+d0047532:	ed92 0b00 	vldr	d0, [r2]
+d0047536:	ed93 7b0a 	vldr	d7, [r3, #40]	; 0x28
+d004753a:	f011 0f02 	tst.w	r1, #2
+d004753e:	eea5 6b47 	vfms.f64	d6, d5, d7
+d0047542:	bf08      	it	eq
+d0047544:	4618      	moveq	r0, r3
+d0047546:	ee26 1b06 	vmul.f64	d1, d6, d6
+d004754a:	ee20 0b06 	vmul.f64	d0, d0, d6
+d004754e:	e7d1      	b.n	d00474f4 <sinf+0x44>
+d0047550:	f5b3 6fff 	cmp.w	r3, #2040	; 0x7f8
+d0047554:	d23d      	bcs.n	d00475d2 <sinf+0x122>
+d0047556:	4b25      	ldr	r3, [pc, #148]	; (d00475ec <sinf+0x13c>)
+d0047558:	f3c4 6283 	ubfx	r2, r4, #26, #4
+d004755c:	eb03 0082 	add.w	r0, r3, r2, lsl #2
+d0047560:	f3c4 0116 	ubfx	r1, r4, #0, #23
+d0047564:	6a06      	ldr	r6, [r0, #32]
+d0047566:	6900      	ldr	r0, [r0, #16]
+d0047568:	f3c4 55c2 	ubfx	r5, r4, #23, #3
+d004756c:	f441 0100 	orr.w	r1, r1, #8388608	; 0x800000
+d0047570:	40a9      	lsls	r1, r5
+d0047572:	f853 5022 	ldr.w	r5, [r3, r2, lsl #2]
+d0047576:	fba1 6706 	umull	r6, r7, r1, r6
+d004757a:	fb05 f301 	mul.w	r3, r5, r1
+d004757e:	463a      	mov	r2, r7
+d0047580:	fbe0 2301 	umlal	r2, r3, r0, r1
+d0047584:	1c11      	adds	r1, r2, #0
+d0047586:	f143 5600 	adc.w	r6, r3, #536870912	; 0x20000000
+d004758a:	2000      	movs	r0, #0
+d004758c:	1a10      	subs	r0, r2, r0
+d004758e:	f006 4140 	and.w	r1, r6, #3221225472	; 0xc0000000
+d0047592:	eb63 0101 	sbc.w	r1, r3, r1
+d0047596:	f000 f9b9 	bl	d004790c <__aeabi_l2d>
+d004759a:	0fb5      	lsrs	r5, r6, #30
+d004759c:	4a12      	ldr	r2, [pc, #72]	; (d00475e8 <sinf+0x138>)
+d004759e:	eb05 73d4 	add.w	r3, r5, r4, lsr #31
+d00475a2:	ed9f 0b0f 	vldr	d0, [pc, #60]	; d00475e0 <sinf+0x130>
+d00475a6:	ec41 0b17 	vmov	d7, r0, r1
+d00475aa:	f003 0103 	and.w	r1, r3, #3
+d00475ae:	eb02 01c1 	add.w	r1, r2, r1, lsl #3
+d00475b2:	ee27 0b00 	vmul.f64	d0, d7, d0
+d00475b6:	ed91 7b00 	vldr	d7, [r1]
+d00475ba:	ee20 1b00 	vmul.f64	d1, d0, d0
+d00475be:	f013 0f02 	tst.w	r3, #2
+d00475c2:	f102 0070 	add.w	r0, r2, #112	; 0x70
+d00475c6:	4629      	mov	r1, r5
+d00475c8:	bf08      	it	eq
+d00475ca:	4610      	moveq	r0, r2
+d00475cc:	ee27 0b00 	vmul.f64	d0, d7, d0
+d00475d0:	e790      	b.n	d00474f4 <sinf+0x44>
+d00475d2:	b003      	add	sp, #12
+d00475d4:	e8bd 40f0 	ldmia.w	sp!, {r4, r5, r6, r7, lr}
+d00475d8:	f7ff be52 	b.w	d0047280 <__math_invalidf>
+d00475dc:	f3af 8000 	nop.w
+d00475e0:	54442d18 	.word	0x54442d18
+d00475e4:	3c1921fb 	.word	0x3c1921fb
+d00475e8:	d0047db0 	.word	0xd0047db0
+d00475ec:	d0047d50 	.word	0xd0047d50
+
+d00475f0 <__aeabi_drsub>:
+d00475f0:	f081 4100 	eor.w	r1, r1, #2147483648	; 0x80000000
+d00475f4:	e002      	b.n	d00475fc <__adddf3>
+d00475f6:	bf00      	nop
+
+d00475f8 <__aeabi_dsub>:
+d00475f8:	f083 4300 	eor.w	r3, r3, #2147483648	; 0x80000000
+
+d00475fc <__adddf3>:
+d00475fc:	b530      	push	{r4, r5, lr}
+d00475fe:	ea4f 0441 	mov.w	r4, r1, lsl #1
+d0047602:	ea4f 0543 	mov.w	r5, r3, lsl #1
+d0047606:	ea94 0f05 	teq	r4, r5
+d004760a:	bf08      	it	eq
+d004760c:	ea90 0f02 	teqeq	r0, r2
+d0047610:	bf1f      	itttt	ne
+d0047612:	ea54 0c00 	orrsne.w	ip, r4, r0
+d0047616:	ea55 0c02 	orrsne.w	ip, r5, r2
+d004761a:	ea7f 5c64 	mvnsne.w	ip, r4, asr #21
+d004761e:	ea7f 5c65 	mvnsne.w	ip, r5, asr #21
+d0047622:	f000 80e2 	beq.w	d00477ea <__adddf3+0x1ee>
+d0047626:	ea4f 5454 	mov.w	r4, r4, lsr #21
+d004762a:	ebd4 5555 	rsbs	r5, r4, r5, lsr #21
+d004762e:	bfb8      	it	lt
+d0047630:	426d      	neglt	r5, r5
+d0047632:	dd0c      	ble.n	d004764e <__adddf3+0x52>
+d0047634:	442c      	add	r4, r5
+d0047636:	ea80 0202 	eor.w	r2, r0, r2
+d004763a:	ea81 0303 	eor.w	r3, r1, r3
+d004763e:	ea82 0000 	eor.w	r0, r2, r0
+d0047642:	ea83 0101 	eor.w	r1, r3, r1
+d0047646:	ea80 0202 	eor.w	r2, r0, r2
+d004764a:	ea81 0303 	eor.w	r3, r1, r3
+d004764e:	2d36      	cmp	r5, #54	; 0x36
+d0047650:	bf88      	it	hi
+d0047652:	bd30      	pophi	{r4, r5, pc}
+d0047654:	f011 4f00 	tst.w	r1, #2147483648	; 0x80000000
+d0047658:	ea4f 3101 	mov.w	r1, r1, lsl #12
+d004765c:	f44f 1c80 	mov.w	ip, #1048576	; 0x100000
+d0047660:	ea4c 3111 	orr.w	r1, ip, r1, lsr #12
+d0047664:	d002      	beq.n	d004766c <__adddf3+0x70>
+d0047666:	4240      	negs	r0, r0
+d0047668:	eb61 0141 	sbc.w	r1, r1, r1, lsl #1
+d004766c:	f013 4f00 	tst.w	r3, #2147483648	; 0x80000000
+d0047670:	ea4f 3303 	mov.w	r3, r3, lsl #12
+d0047674:	ea4c 3313 	orr.w	r3, ip, r3, lsr #12
+d0047678:	d002      	beq.n	d0047680 <__adddf3+0x84>
+d004767a:	4252      	negs	r2, r2
+d004767c:	eb63 0343 	sbc.w	r3, r3, r3, lsl #1
+d0047680:	ea94 0f05 	teq	r4, r5
+d0047684:	f000 80a7 	beq.w	d00477d6 <__adddf3+0x1da>
+d0047688:	f1a4 0401 	sub.w	r4, r4, #1
+d004768c:	f1d5 0e20 	rsbs	lr, r5, #32
+d0047690:	db0d      	blt.n	d00476ae <__adddf3+0xb2>
+d0047692:	fa02 fc0e 	lsl.w	ip, r2, lr
+d0047696:	fa22 f205 	lsr.w	r2, r2, r5
+d004769a:	1880      	adds	r0, r0, r2
+d004769c:	f141 0100 	adc.w	r1, r1, #0
+d00476a0:	fa03 f20e 	lsl.w	r2, r3, lr
+d00476a4:	1880      	adds	r0, r0, r2
+d00476a6:	fa43 f305 	asr.w	r3, r3, r5
+d00476aa:	4159      	adcs	r1, r3
+d00476ac:	e00e      	b.n	d00476cc <__adddf3+0xd0>
+d00476ae:	f1a5 0520 	sub.w	r5, r5, #32
+d00476b2:	f10e 0e20 	add.w	lr, lr, #32
+d00476b6:	2a01      	cmp	r2, #1
+d00476b8:	fa03 fc0e 	lsl.w	ip, r3, lr
+d00476bc:	bf28      	it	cs
+d00476be:	f04c 0c02 	orrcs.w	ip, ip, #2
+d00476c2:	fa43 f305 	asr.w	r3, r3, r5
+d00476c6:	18c0      	adds	r0, r0, r3
+d00476c8:	eb51 71e3 	adcs.w	r1, r1, r3, asr #31
+d00476cc:	f001 4500 	and.w	r5, r1, #2147483648	; 0x80000000
+d00476d0:	d507      	bpl.n	d00476e2 <__adddf3+0xe6>
+d00476d2:	f04f 0e00 	mov.w	lr, #0
+d00476d6:	f1dc 0c00 	rsbs	ip, ip, #0
+d00476da:	eb7e 0000 	sbcs.w	r0, lr, r0
+d00476de:	eb6e 0101 	sbc.w	r1, lr, r1
+d00476e2:	f5b1 1f80 	cmp.w	r1, #1048576	; 0x100000
+d00476e6:	d31b      	bcc.n	d0047720 <__adddf3+0x124>
+d00476e8:	f5b1 1f00 	cmp.w	r1, #2097152	; 0x200000
+d00476ec:	d30c      	bcc.n	d0047708 <__adddf3+0x10c>
+d00476ee:	0849      	lsrs	r1, r1, #1
+d00476f0:	ea5f 0030 	movs.w	r0, r0, rrx
+d00476f4:	ea4f 0c3c 	mov.w	ip, ip, rrx
+d00476f8:	f104 0401 	add.w	r4, r4, #1
+d00476fc:	ea4f 5244 	mov.w	r2, r4, lsl #21
+d0047700:	f512 0f80 	cmn.w	r2, #4194304	; 0x400000
+d0047704:	f080 809a 	bcs.w	d004783c <__adddf3+0x240>
+d0047708:	f1bc 4f00 	cmp.w	ip, #2147483648	; 0x80000000
+d004770c:	bf08      	it	eq
+d004770e:	ea5f 0c50 	movseq.w	ip, r0, lsr #1
+d0047712:	f150 0000 	adcs.w	r0, r0, #0
+d0047716:	eb41 5104 	adc.w	r1, r1, r4, lsl #20
+d004771a:	ea41 0105 	orr.w	r1, r1, r5
+d004771e:	bd30      	pop	{r4, r5, pc}
+d0047720:	ea5f 0c4c 	movs.w	ip, ip, lsl #1
+d0047724:	4140      	adcs	r0, r0
+d0047726:	eb41 0101 	adc.w	r1, r1, r1
+d004772a:	3c01      	subs	r4, #1
+d004772c:	bf28      	it	cs
+d004772e:	f5b1 1f80 	cmpcs.w	r1, #1048576	; 0x100000
+d0047732:	d2e9      	bcs.n	d0047708 <__adddf3+0x10c>
+d0047734:	f091 0f00 	teq	r1, #0
+d0047738:	bf04      	itt	eq
+d004773a:	4601      	moveq	r1, r0
+d004773c:	2000      	moveq	r0, #0
+d004773e:	fab1 f381 	clz	r3, r1
+d0047742:	bf08      	it	eq
+d0047744:	3320      	addeq	r3, #32
+d0047746:	f1a3 030b 	sub.w	r3, r3, #11
+d004774a:	f1b3 0220 	subs.w	r2, r3, #32
+d004774e:	da0c      	bge.n	d004776a <__adddf3+0x16e>
+d0047750:	320c      	adds	r2, #12
+d0047752:	dd08      	ble.n	d0047766 <__adddf3+0x16a>
+d0047754:	f102 0c14 	add.w	ip, r2, #20
+d0047758:	f1c2 020c 	rsb	r2, r2, #12
+d004775c:	fa01 f00c 	lsl.w	r0, r1, ip
+d0047760:	fa21 f102 	lsr.w	r1, r1, r2
+d0047764:	e00c      	b.n	d0047780 <__adddf3+0x184>
+d0047766:	f102 0214 	add.w	r2, r2, #20
+d004776a:	bfd8      	it	le
+d004776c:	f1c2 0c20 	rsble	ip, r2, #32
+d0047770:	fa01 f102 	lsl.w	r1, r1, r2
+d0047774:	fa20 fc0c 	lsr.w	ip, r0, ip
+d0047778:	bfdc      	itt	le
+d004777a:	ea41 010c 	orrle.w	r1, r1, ip
+d004777e:	4090      	lslle	r0, r2
+d0047780:	1ae4      	subs	r4, r4, r3
+d0047782:	bfa2      	ittt	ge
+d0047784:	eb01 5104 	addge.w	r1, r1, r4, lsl #20
+d0047788:	4329      	orrge	r1, r5
+d004778a:	bd30      	popge	{r4, r5, pc}
+d004778c:	ea6f 0404 	mvn.w	r4, r4
+d0047790:	3c1f      	subs	r4, #31
+d0047792:	da1c      	bge.n	d00477ce <__adddf3+0x1d2>
+d0047794:	340c      	adds	r4, #12
+d0047796:	dc0e      	bgt.n	d00477b6 <__adddf3+0x1ba>
+d0047798:	f104 0414 	add.w	r4, r4, #20
+d004779c:	f1c4 0220 	rsb	r2, r4, #32
+d00477a0:	fa20 f004 	lsr.w	r0, r0, r4
+d00477a4:	fa01 f302 	lsl.w	r3, r1, r2
+d00477a8:	ea40 0003 	orr.w	r0, r0, r3
+d00477ac:	fa21 f304 	lsr.w	r3, r1, r4
+d00477b0:	ea45 0103 	orr.w	r1, r5, r3
+d00477b4:	bd30      	pop	{r4, r5, pc}
+d00477b6:	f1c4 040c 	rsb	r4, r4, #12
+d00477ba:	f1c4 0220 	rsb	r2, r4, #32
+d00477be:	fa20 f002 	lsr.w	r0, r0, r2
+d00477c2:	fa01 f304 	lsl.w	r3, r1, r4
+d00477c6:	ea40 0003 	orr.w	r0, r0, r3
+d00477ca:	4629      	mov	r1, r5
+d00477cc:	bd30      	pop	{r4, r5, pc}
+d00477ce:	fa21 f004 	lsr.w	r0, r1, r4
+d00477d2:	4629      	mov	r1, r5
+d00477d4:	bd30      	pop	{r4, r5, pc}
+d00477d6:	f094 0f00 	teq	r4, #0
+d00477da:	f483 1380 	eor.w	r3, r3, #1048576	; 0x100000
+d00477de:	bf06      	itte	eq
+d00477e0:	f481 1180 	eoreq.w	r1, r1, #1048576	; 0x100000
+d00477e4:	3401      	addeq	r4, #1
+d00477e6:	3d01      	subne	r5, #1
+d00477e8:	e74e      	b.n	d0047688 <__adddf3+0x8c>
+d00477ea:	ea7f 5c64 	mvns.w	ip, r4, asr #21
+d00477ee:	bf18      	it	ne
+d00477f0:	ea7f 5c65 	mvnsne.w	ip, r5, asr #21
+d00477f4:	d029      	beq.n	d004784a <__adddf3+0x24e>
+d00477f6:	ea94 0f05 	teq	r4, r5
+d00477fa:	bf08      	it	eq
+d00477fc:	ea90 0f02 	teqeq	r0, r2
+d0047800:	d005      	beq.n	d004780e <__adddf3+0x212>
+d0047802:	ea54 0c00 	orrs.w	ip, r4, r0
+d0047806:	bf04      	itt	eq
+d0047808:	4619      	moveq	r1, r3
+d004780a:	4610      	moveq	r0, r2
+d004780c:	bd30      	pop	{r4, r5, pc}
+d004780e:	ea91 0f03 	teq	r1, r3
+d0047812:	bf1e      	ittt	ne
+d0047814:	2100      	movne	r1, #0
+d0047816:	2000      	movne	r0, #0
+d0047818:	bd30      	popne	{r4, r5, pc}
+d004781a:	ea5f 5c54 	movs.w	ip, r4, lsr #21
+d004781e:	d105      	bne.n	d004782c <__adddf3+0x230>
+d0047820:	0040      	lsls	r0, r0, #1
+d0047822:	4149      	adcs	r1, r1
+d0047824:	bf28      	it	cs
+d0047826:	f041 4100 	orrcs.w	r1, r1, #2147483648	; 0x80000000
+d004782a:	bd30      	pop	{r4, r5, pc}
+d004782c:	f514 0480 	adds.w	r4, r4, #4194304	; 0x400000
+d0047830:	bf3c      	itt	cc
+d0047832:	f501 1180 	addcc.w	r1, r1, #1048576	; 0x100000
+d0047836:	bd30      	popcc	{r4, r5, pc}
+d0047838:	f001 4500 	and.w	r5, r1, #2147483648	; 0x80000000
+d004783c:	f045 41fe 	orr.w	r1, r5, #2130706432	; 0x7f000000
+d0047840:	f441 0170 	orr.w	r1, r1, #15728640	; 0xf00000
+d0047844:	f04f 0000 	mov.w	r0, #0
+d0047848:	bd30      	pop	{r4, r5, pc}
+d004784a:	ea7f 5c64 	mvns.w	ip, r4, asr #21
+d004784e:	bf1a      	itte	ne
+d0047850:	4619      	movne	r1, r3
+d0047852:	4610      	movne	r0, r2
+d0047854:	ea7f 5c65 	mvnseq.w	ip, r5, asr #21
+d0047858:	bf1c      	itt	ne
+d004785a:	460b      	movne	r3, r1
+d004785c:	4602      	movne	r2, r0
+d004785e:	ea50 3401 	orrs.w	r4, r0, r1, lsl #12
+d0047862:	bf06      	itte	eq
+d0047864:	ea52 3503 	orrseq.w	r5, r2, r3, lsl #12
+d0047868:	ea91 0f03 	teqeq	r1, r3
+d004786c:	f441 2100 	orrne.w	r1, r1, #524288	; 0x80000
+d0047870:	bd30      	pop	{r4, r5, pc}
+d0047872:	bf00      	nop
+
+d0047874 <__aeabi_ui2d>:
+d0047874:	f090 0f00 	teq	r0, #0
+d0047878:	bf04      	itt	eq
+d004787a:	2100      	moveq	r1, #0
+d004787c:	4770      	bxeq	lr
+d004787e:	b530      	push	{r4, r5, lr}
+d0047880:	f44f 6480 	mov.w	r4, #1024	; 0x400
+d0047884:	f104 0432 	add.w	r4, r4, #50	; 0x32
+d0047888:	f04f 0500 	mov.w	r5, #0
+d004788c:	f04f 0100 	mov.w	r1, #0
+d0047890:	e750      	b.n	d0047734 <__adddf3+0x138>
+d0047892:	bf00      	nop
+
+d0047894 <__aeabi_i2d>:
+d0047894:	f090 0f00 	teq	r0, #0
+d0047898:	bf04      	itt	eq
+d004789a:	2100      	moveq	r1, #0
+d004789c:	4770      	bxeq	lr
+d004789e:	b530      	push	{r4, r5, lr}
+d00478a0:	f44f 6480 	mov.w	r4, #1024	; 0x400
+d00478a4:	f104 0432 	add.w	r4, r4, #50	; 0x32
+d00478a8:	f010 4500 	ands.w	r5, r0, #2147483648	; 0x80000000
+d00478ac:	bf48      	it	mi
+d00478ae:	4240      	negmi	r0, r0
+d00478b0:	f04f 0100 	mov.w	r1, #0
+d00478b4:	e73e      	b.n	d0047734 <__adddf3+0x138>
+d00478b6:	bf00      	nop
+
+d00478b8 <__aeabi_f2d>:
+d00478b8:	0042      	lsls	r2, r0, #1
+d00478ba:	ea4f 01e2 	mov.w	r1, r2, asr #3
+d00478be:	ea4f 0131 	mov.w	r1, r1, rrx
+d00478c2:	ea4f 7002 	mov.w	r0, r2, lsl #28
+d00478c6:	bf1f      	itttt	ne
+d00478c8:	f012 437f 	andsne.w	r3, r2, #4278190080	; 0xff000000
+d00478cc:	f093 4f7f 	teqne	r3, #4278190080	; 0xff000000
+d00478d0:	f081 5160 	eorne.w	r1, r1, #939524096	; 0x38000000
+d00478d4:	4770      	bxne	lr
+d00478d6:	f032 427f 	bics.w	r2, r2, #4278190080	; 0xff000000
+d00478da:	bf08      	it	eq
+d00478dc:	4770      	bxeq	lr
+d00478de:	f093 4f7f 	teq	r3, #4278190080	; 0xff000000
+d00478e2:	bf04      	itt	eq
+d00478e4:	f441 2100 	orreq.w	r1, r1, #524288	; 0x80000
+d00478e8:	4770      	bxeq	lr
+d00478ea:	b530      	push	{r4, r5, lr}
+d00478ec:	f44f 7460 	mov.w	r4, #896	; 0x380
+d00478f0:	f001 4500 	and.w	r5, r1, #2147483648	; 0x80000000
+d00478f4:	f021 4100 	bic.w	r1, r1, #2147483648	; 0x80000000
+d00478f8:	e71c      	b.n	d0047734 <__adddf3+0x138>
+d00478fa:	bf00      	nop
+
+d00478fc <__aeabi_ul2d>:
+d00478fc:	ea50 0201 	orrs.w	r2, r0, r1
+d0047900:	bf08      	it	eq
+d0047902:	4770      	bxeq	lr
+d0047904:	b530      	push	{r4, r5, lr}
+d0047906:	f04f 0500 	mov.w	r5, #0
+d004790a:	e00a      	b.n	d0047922 <__aeabi_l2d+0x16>
+
+d004790c <__aeabi_l2d>:
+d004790c:	ea50 0201 	orrs.w	r2, r0, r1
+d0047910:	bf08      	it	eq
+d0047912:	4770      	bxeq	lr
+d0047914:	b530      	push	{r4, r5, lr}
+d0047916:	f011 4500 	ands.w	r5, r1, #2147483648	; 0x80000000
+d004791a:	d502      	bpl.n	d0047922 <__aeabi_l2d+0x16>
+d004791c:	4240      	negs	r0, r0
+d004791e:	eb61 0141 	sbc.w	r1, r1, r1, lsl #1
+d0047922:	f44f 6480 	mov.w	r4, #1024	; 0x400
+d0047926:	f104 0432 	add.w	r4, r4, #50	; 0x32
+d004792a:	ea5f 5c91 	movs.w	ip, r1, lsr #22
+d004792e:	f43f aed8 	beq.w	d00476e2 <__adddf3+0xe6>
+d0047932:	f04f 0203 	mov.w	r2, #3
+d0047936:	ea5f 0cdc 	movs.w	ip, ip, lsr #3
+d004793a:	bf18      	it	ne
+d004793c:	3203      	addne	r2, #3
+d004793e:	ea5f 0cdc 	movs.w	ip, ip, lsr #3
+d0047942:	bf18      	it	ne
+d0047944:	3203      	addne	r2, #3
+d0047946:	eb02 02dc 	add.w	r2, r2, ip, lsr #3
+d004794a:	f1c2 0320 	rsb	r3, r2, #32
+d004794e:	fa00 fc03 	lsl.w	ip, r0, r3
+d0047952:	fa20 f002 	lsr.w	r0, r0, r2
+d0047956:	fa01 fe03 	lsl.w	lr, r1, r3
+d004795a:	ea40 000e 	orr.w	r0, r0, lr
+d004795e:	fa21 f102 	lsr.w	r1, r1, r2
+d0047962:	4414      	add	r4, r2
+d0047964:	e6bd      	b.n	d00476e2 <__adddf3+0xe6>
+d0047966:	bf00      	nop
+d0047968:	2e706661 	.word	0x2e706661
+d004796c:	00646f6d 	.word	0x00646f6d
+d0047970:	616c7369 	.word	0x616c7369
+d0047974:	2e78646e 	.word	0x2e78646e
+d0047978:	64336273 	.word	0x64336273
+d004797c:	00000000 	.word	0x00000000
+d0047980:	72726163 	.word	0x72726163
+d0047984:	2e726569 	.word	0x2e726569
+d0047988:	64336273 	.word	0x64336273
+d004798c:	00000000 	.word	0x00000000
+d0047990:	70696873 	.word	0x70696873
+d0047994:	732e3176 	.word	0x732e3176
+d0047998:	00643362 	.word	0x00643362
+d004799c:	ff5516e3 	.word	0xff5516e3
+d00479a0:	ffffffff 	.word	0xffffffff
+d00479a4:	ffff0000 	.word	0xffff0000
+d00479a8:	ff00ff00 	.word	0xff00ff00
+d00479ac:	ff0000ff 	.word	0xff0000ff
+d00479b0:	ffffff00 	.word	0xffffff00
+d00479b4:	ffff00ff 	.word	0xffff00ff
+d00479b8:	ff00ffff 	.word	0xff00ffff
+d00479bc:	ff808080 	.word	0xff808080
+d00479c0:	ffff8000 	.word	0xffff8000
+d00479c4:	ff8000ff 	.word	0xff8000ff
+d00479c8:	ff0080ff 	.word	0xff0080ff
+d00479cc:	ff80ff00 	.word	0xff80ff00
+d00479d0:	ffff0080 	.word	0xffff0080
+d00479d4:	ff00ff80 	.word	0xff00ff80
+d00479d8:	ffc0c0c0 	.word	0xffc0c0c0
+d00479dc:	3f800000 	.word	0x3f800000
+d00479e0:	3f400000 	.word	0x3f400000
+d00479e4:	3f0ccccd 	.word	0x3f0ccccd
+d00479e8:	3eb33333 	.word	0x3eb33333
+d00479ec:	3e4ccccd 	.word	0x3e4ccccd
+d00479f0:	bf800000 	.word	0xbf800000
+d00479f4:	bf000000 	.word	0xbf000000
+d00479f8:	3e99999a 	.word	0x3e99999a
+
+d00479fc <bayer4x4>:
+d00479fc:	0a020800 060e040c 09010b03 050d070f     ................
+	...
+d0047a38:	3f800000 00000000 00000000 00000000     ...?............
+d0047a48:	3f800000 00000000 00000000 00000000     ...?............
+d0047a58:	3f800000 3a8312c5 3c23d70a 447a0000     ...?...:..#<..zD
 	...
 
-d0046de0 <__sf_fake_stdin>:
+d0047a80 <__sf_fake_stderr>:
 	...
 
-d0046e00 <__sf_fake_stdout>:
+d0047aa0 <__sf_fake_stdin>:
 	...
 
-d0046e20 <_global_impure_ptr>:
-d0046e20:	d00475dc 00000000                       .u......
+d0047ac0 <__sf_fake_stdout>:
+	...
 
-d0046e28 <__exp2f_data>:
-d0046e28:	00000000 3ff00000 d3158574 3fefd9b0     .......?t......?
-d0046e38:	6cf9890f 3fefb558 d0125b51 3fef9301     ...lX..?Q[.....?
-d0046e48:	3c7d517b 3fef72b8 3168b9aa 3fef5487     {Q}<.r.?..h1.T.?
-d0046e58:	6e756238 3fef387a f51fdee1 3fef1e9d     8bunz8.?.......?
-d0046e68:	0a31b715 3fef06fe 373aa9cb 3feef1a7     ..1....?..:7...?
-d0046e78:	4c123422 3feedea6 6061892d 3feece08     "4.L...?-.a`...?
-d0046e88:	d5362a27 3feebfda 569d4f82 3feeb42b     '*6....?.O.V+..?
-d0046e98:	dd485429 3feeab07 b03a5585 3feea47e     )TH....?.U:.~..?
-d0046ea8:	667f3bcd 3feea09e e8ec5f74 3fee9f75     .;.f...?t_..u..?
-d0046eb8:	73eb0187 3feea114 994cce13 3feea589     ...s...?..L....?
-d0046ec8:	422aa0db 3feeace5 b0cdc5e5 3feeb737     ..*B...?....7..?
-d0046ed8:	82a3f090 3feec491 b23e255d 3feed503     .......?]%>....?
-d0046ee8:	995ad3ad 3feee89f f2fb5e47 3feeff76     ..Z....?G^..v..?
-d0046ef8:	dd85529c 3fef199b dcef9069 3fef3720     .R.....?i... 7.?
-d0046f08:	dcfba487 3fef5818 337b9b5f 3fef7c97     .....X.?_.{3.|.?
-d0046f18:	a2a490da 3fefa4af 5b6e4540 3fefd076     .......?@En[v..?
-d0046f28:	00000000 42e80000 4b912394 3fac6af8     .......B.#.K.j.?
-d0046f38:	50fac4f3 3fcebfce ff0c52d6 3fe62e42     ...P...?.R..B..?
-d0046f48:	00000000 43380000 652b82fe 40471547     ......8C..+eG.G@
-d0046f58:	4b912394 3ebc6af8 50fac4f3 3f2ebfce     .#.K.j.>...P...?
-d0046f68:	ff0c52d6 3f962e42                       .R..B..?
+d0047ae0 <_global_impure_ptr>:
+d0047ae0:	d00482a4 00000000                       ........
 
-d0046f70 <__logf_data>:
-d0046f70:	79f8f3be 3ff661ec 808caade bfd57bf7     ...y.a.?.....{..
-d0046f80:	4aaf883d 3ff571ed a7c06ddb bfd2bef0     =..J.q.?.m......
-d0046f90:	f0f010b0 3ff49539 7f513a67 bfd01eae     ....9..?g:Q.....
-d0046fa0:	b0b80385 3ff3c995 a68224e9 bfcb31d8     .......?.$...1..
-d0046fb0:	0c8864a5 3ff30d19 0ac07758 bfc6574f     .d.....?Xw..OW..
-d0046fc0:	7b0b8ea0 3ff25e22 c79c8100 bfc1aa2b     ...{"^.?....+...
-d0046fd0:	4a1a343f 3ff1bb4a ce8c0e5e bfba4e76     ?4.JJ..?^...vN..
-d0046fe0:	f08ae5ba 3ff12358 5a611ccc bfb1973c     ....X#.?..aZ<...
-d0046ff0:	419900a7 3ff0953f 38e10c1e bfa252f4     ...A?..?...8.R..
-d0047000:	00000000 3ff00000 00000000 00000000     .......?........
-d0047010:	fd9a47ac 3fee608c 5df25984 3faaa5aa     .G...`.?.Y.]...?
-d0047020:	1f026aa0 3feca4b3 aa362eb4 3fbc5e53     .j.....?..6.S^.?
-d0047030:	576afce6 3feb2036 7720db08 3fc526e5     ..jW6 .?.. w.&.?
-d0047040:	63a1aa2d 3fe9c2d1 0d224770 3fcbc286     -..c...?pG"....?
-d0047050:	037841ed 3fe886e6 c8a07ee1 3fd1058b     .Ax....?.~.....?
-d0047060:	f5534862 3fe767dc 57b6ee09 3fd40430     bHS..g.?...W0..?
-d0047070:	fefa39ef 3fe62e42 48b88334 bfd00ea3     .9..B..?4..H....
-d0047080:	0be00b6a 3fd5575b f20a4123 bfdffffe     j...[W.?#A......
+d0047ae8 <__exp2f_data>:
+d0047ae8:	00000000 3ff00000 d3158574 3fefd9b0     .......?t......?
+d0047af8:	6cf9890f 3fefb558 d0125b51 3fef9301     ...lX..?Q[.....?
+d0047b08:	3c7d517b 3fef72b8 3168b9aa 3fef5487     {Q}<.r.?..h1.T.?
+d0047b18:	6e756238 3fef387a f51fdee1 3fef1e9d     8bunz8.?.......?
+d0047b28:	0a31b715 3fef06fe 373aa9cb 3feef1a7     ..1....?..:7...?
+d0047b38:	4c123422 3feedea6 6061892d 3feece08     "4.L...?-.a`...?
+d0047b48:	d5362a27 3feebfda 569d4f82 3feeb42b     '*6....?.O.V+..?
+d0047b58:	dd485429 3feeab07 b03a5585 3feea47e     )TH....?.U:.~..?
+d0047b68:	667f3bcd 3feea09e e8ec5f74 3fee9f75     .;.f...?t_..u..?
+d0047b78:	73eb0187 3feea114 994cce13 3feea589     ...s...?..L....?
+d0047b88:	422aa0db 3feeace5 b0cdc5e5 3feeb737     ..*B...?....7..?
+d0047b98:	82a3f090 3feec491 b23e255d 3feed503     .......?]%>....?
+d0047ba8:	995ad3ad 3feee89f f2fb5e47 3feeff76     ..Z....?G^..v..?
+d0047bb8:	dd85529c 3fef199b dcef9069 3fef3720     .R.....?i... 7.?
+d0047bc8:	dcfba487 3fef5818 337b9b5f 3fef7c97     .....X.?_.{3.|.?
+d0047bd8:	a2a490da 3fefa4af 5b6e4540 3fefd076     .......?@En[v..?
+d0047be8:	00000000 42e80000 4b912394 3fac6af8     .......B.#.K.j.?
+d0047bf8:	50fac4f3 3fcebfce ff0c52d6 3fe62e42     ...P...?.R..B..?
+d0047c08:	00000000 43380000 652b82fe 40471547     ......8C..+eG.G@
+d0047c18:	4b912394 3ebc6af8 50fac4f3 3f2ebfce     .#.K.j.>...P...?
+d0047c28:	ff0c52d6 3f962e42                       .R..B..?
 
-d0047090 <__inv_pio4>:
-d0047090:	000000a2 0000a2f9 00a2f983 a2f9836e     ............n...
-d00470a0:	f9836e4e 836e4e44 6e4e4415 4e441529     Nn..DNn..DNn).DN
-d00470b0:	441529fc 1529fc27 29fc2757 fc2757d1     .).D'.).W'.).W'.
-d00470c0:	2757d1f5 57d1f534 d1f534dd f534ddc0     ..W'4..W.4....4.
-d00470d0:	34ddc0db ddc0db62 c0db6295 db629599     ...4b....b....b.
-d00470e0:	6295993c 95993c43 993c4390 3c439041     <..bC<...C<.A.C<
+d0047c30 <__logf_data>:
+d0047c30:	79f8f3be 3ff661ec 808caade bfd57bf7     ...y.a.?.....{..
+d0047c40:	4aaf883d 3ff571ed a7c06ddb bfd2bef0     =..J.q.?.m......
+d0047c50:	f0f010b0 3ff49539 7f513a67 bfd01eae     ....9..?g:Q.....
+d0047c60:	b0b80385 3ff3c995 a68224e9 bfcb31d8     .......?.$...1..
+d0047c70:	0c8864a5 3ff30d19 0ac07758 bfc6574f     .d.....?Xw..OW..
+d0047c80:	7b0b8ea0 3ff25e22 c79c8100 bfc1aa2b     ...{"^.?....+...
+d0047c90:	4a1a343f 3ff1bb4a ce8c0e5e bfba4e76     ?4.JJ..?^...vN..
+d0047ca0:	f08ae5ba 3ff12358 5a611ccc bfb1973c     ....X#.?..aZ<...
+d0047cb0:	419900a7 3ff0953f 38e10c1e bfa252f4     ...A?..?...8.R..
+d0047cc0:	00000000 3ff00000 00000000 00000000     .......?........
+d0047cd0:	fd9a47ac 3fee608c 5df25984 3faaa5aa     .G...`.?.Y.]...?
+d0047ce0:	1f026aa0 3feca4b3 aa362eb4 3fbc5e53     .j.....?..6.S^.?
+d0047cf0:	576afce6 3feb2036 7720db08 3fc526e5     ..jW6 .?.. w.&.?
+d0047d00:	63a1aa2d 3fe9c2d1 0d224770 3fcbc286     -..c...?pG"....?
+d0047d10:	037841ed 3fe886e6 c8a07ee1 3fd1058b     .Ax....?.~.....?
+d0047d20:	f5534862 3fe767dc 57b6ee09 3fd40430     bHS..g.?...W0..?
+d0047d30:	fefa39ef 3fe62e42 48b88334 bfd00ea3     .9..B..?4..H....
+d0047d40:	0be00b6a 3fd5575b f20a4123 bfdffffe     j...[W.?#A......
 
-d00470f0 <__sincosf_table>:
-d00470f0:	00000000 3ff00000 00000000 bff00000     .......?........
-d0047100:	00000000 bff00000 00000000 3ff00000     ...............?
-d0047110:	6dc9c883 41645f30 54442d18 3ff921fb     ...m0_dA.-DT.!.?
-d0047120:	00000000 3ff00000 fd0c621c bfdfffff     .......?.b......
-d0047130:	e1068f19 3fa55553 e89a359d bf56c087     ....SU.?.5....V.
-d0047140:	027bf8c3 3ef99343 5995a603 bfc55554     ..{.C..>...YTU..
-d0047150:	05230bc4 3f811076 3774cf24 bf2994eb     ..#.v..?$.t7..).
-d0047160:	00000000 3ff00000 00000000 bff00000     .......?........
-d0047170:	00000000 bff00000 00000000 3ff00000     ...............?
-d0047180:	6dc9c883 41645f30 54442d18 3ff921fb     ...m0_dA.-DT.!.?
-d0047190:	00000000 bff00000 fd0c621c 3fdfffff     .........b.....?
-d00471a0:	e1068f19 bfa55553 e89a359d 3f56c087     ....SU...5....V?
-d00471b0:	027bf8c3 bef99343 5995a603 bfc55554     ..{.C......YTU..
-d00471c0:	05230bc4 3f811076 3774cf24 bf2994eb     ..#.v..?$.t7..).
+d0047d50 <__inv_pio4>:
+d0047d50:	000000a2 0000a2f9 00a2f983 a2f9836e     ............n...
+d0047d60:	f9836e4e 836e4e44 6e4e4415 4e441529     Nn..DNn..DNn).DN
+d0047d70:	441529fc 1529fc27 29fc2757 fc2757d1     .).D'.).W'.).W'.
+d0047d80:	2757d1f5 57d1f534 d1f534dd f534ddc0     ..W'4..W.4....4.
+d0047d90:	34ddc0db ddc0db62 c0db6295 db629599     ...4b....b....b.
+d0047da0:	6295993c 95993c43 993c4390 3c439041     <..bC<...C<.A.C<
+
+d0047db0 <__sincosf_table>:
+d0047db0:	00000000 3ff00000 00000000 bff00000     .......?........
+d0047dc0:	00000000 bff00000 00000000 3ff00000     ...............?
+d0047dd0:	6dc9c883 41645f30 54442d18 3ff921fb     ...m0_dA.-DT.!.?
+d0047de0:	00000000 3ff00000 fd0c621c bfdfffff     .......?.b......
+d0047df0:	e1068f19 3fa55553 e89a359d bf56c087     ....SU.?.5....V.
+d0047e00:	027bf8c3 3ef99343 5995a603 bfc55554     ..{.C..>...YTU..
+d0047e10:	05230bc4 3f811076 3774cf24 bf2994eb     ..#.v..?$.t7..).
+d0047e20:	00000000 3ff00000 00000000 bff00000     .......?........
+d0047e30:	00000000 bff00000 00000000 3ff00000     ...............?
+d0047e40:	6dc9c883 41645f30 54442d18 3ff921fb     ...m0_dA.-DT.!.?
+d0047e50:	00000000 bff00000 fd0c621c 3fdfffff     .........b.....?
+d0047e60:	e1068f19 bfa55553 e89a359d 3f56c087     ....SU...5....V?
+d0047e70:	027bf8c3 bef99343 5995a603 bfc55554     ..{.C......YTU..
+d0047e80:	05230bc4 3f811076 3774cf24 bf2994eb     ..#.v..?$.t7..).
 
 Disassembly of section .init:
 
-d00471d0 <_init>:
-d00471d0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-d00471d2:	bf00      	nop
+d0047e90 <_init>:
+d0047e90:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+d0047e92:	bf00      	nop
 
 Disassembly of section .fini:
 
-d00471d4 <_fini>:
-d00471d4:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-d00471d6:	bf00      	nop
+d0047e94 <_fini>:
+d0047e94:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+d0047e96:	bf00      	nop

@@ -311,7 +311,7 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
 
     fclose(0);
 
-    mesh->boundsRadius = meshComputeBoundsRadius(mesh) * 4;
+    mesh->boundsRadius = meshComputeBoundsRadius(mesh) * 1;
     meshSetDefaultMaterial(mesh);
 
     return 1;

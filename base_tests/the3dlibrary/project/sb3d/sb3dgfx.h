@@ -24,6 +24,7 @@ typedef enum {
 #define MAX_PALETTE_SHADE_COUNT  (MAX_PALETTE_SHADE_INDEX)  // this is used when the light doesnt hit at all (uses)
 
 #define PALETTE_SHADE_OFFSETS    32
+#define WHITE_SHADE_PALETTE      255    
 #define BLACK_SHADE_PALETTE      16
 
 
