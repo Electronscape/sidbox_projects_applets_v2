@@ -21,7 +21,7 @@ void initSystem(){
     initMalloc();   // go memory!! yey
 
     // hardware preps //
-    gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_50);
+    gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_30);
     lcd_bright(0);
     gfx_mode(480, 320, 480, 320, DISPFLAG_SINGLELAYER | DISPFLAG_NOSCROLLABLE);
     set_audio_dma(512); // a few ms about 7ms enough for a full frame.
@@ -290,7 +290,8 @@ int main(int argc, char *argv[]) {
 
 
 
-    music_play("afp.mod", 0);
+    music_play("music2.mod", 0);
+    
 
 
     // setup scene
@@ -301,7 +302,25 @@ int main(int argc, char *argv[]) {
     lightEnable(SunlightId, 0);
 
 
-    
+    // sound effects, only for the thundies
+    uint32_t sampleLen;
+    uint8_t MEMALIGN32 *thund1;
+    uint8_t MEMALIGN32 *thund2;
+    sampleLen = LoadSFX("thunder1.wav", &thund1);
+    sound_assign(0, thund1, sampleLen, 0);
+    sound_setfrequency(0, 20100);
+    //sound_play(0);
+    sound_setvolume(0, 440);
+    sound_setpanning(0, -64);
+    sound_enableloop(0, 0);
+
+    sampleLen = LoadSFX("thunder2.wav", &thund2);
+    sound_assign(1, thund2, sampleLen, 0);
+    sound_setfrequency(1, 17100);
+    //sound_play(0);
+    sound_setvolume(1, 440);
+    sound_setpanning(1, 64);
+    sound_enableloop(1, 0);
     
 
     // horizon stuff
@@ -322,6 +341,10 @@ int main(int argc, char *argv[]) {
     Mesh islandMesh;
     loadMeshSB3D("islandx.sb3d", &islandMesh, 200.0f);
     int island0 = entityWorldSpawn(&islandMesh, vec3(0, 0, 0));
+
+    //Mesh theHouseMesh;
+    //loadMeshSB3D("building1.sb3d", &theHouseMesh, 50.0f);
+    //int theHouse0 = entityWorldSpawn(&theHouseMesh, vec3(-100, 50, 300));
 
     Mesh carrierMesh;
     loadMeshSB3D("carrier.sb3d", &carrierMesh, 50.0f);
@@ -449,6 +472,7 @@ int main(int argc, char *argv[]) {
         if (joybutts & BTN_FIRE)  cameraMove(&cam, 0, 0,  moveStep);
         if (joybutts & BTN_FIRE2) cameraMove(&cam, 0, 0, -moveStep);
 
+
         {
             gfx_lcdwait();
 
@@ -462,8 +486,44 @@ int main(int argc, char *argv[]) {
                 set3DRenderBuffer(bm1->bitmap);
             }
 
-            if(flash){
+            static uint8_t  thundOn[2] = {0, 0};
+            static uint32_t thundTime[2] = {0, 0};
+
+            static uint8_t nextSndCharge = 5;
+            static uint8_t altThund = 0;
+
+            for (uint8_t v = 0; v < 2; v++) {
+                if (thundOn[v]) {
+                    if (thundTime[v] > 0) {
+                        thundTime[v]--;
+
+                        if (thundTime[v] == 0) {
+                            sound_stop(v);
+                            sound_play(v);
+                            thundOn[v] = 0;
+                        }
+                    } else {
+                        sound_stop(v);
+                        sound_play(v);
+                        thundOn[v] = 0;
+                    }
+                }
+            }
+
+            if (flash) {
                 drawFakeHorizon(&cam, HosSky, 21, 5, 0);
+
+                
+                if(nextSndCharge == 0){
+                    nextSndCharge = 5; // prevents both sounds playing at the same time (tho meant to be staggered)
+                    altThund = 1 - altThund;
+                    if (thundOn[altThund] == 0) {
+                        thundOn[altThund] = 1;
+                        thundTime[altThund] = 30 * 4;
+                    }
+                } else {
+                    nextSndCharge--;
+                }
             } else {
                 drawFakeHorizon(&cam, HosSky, HosGround, HosHorizonLine, 0);
             }

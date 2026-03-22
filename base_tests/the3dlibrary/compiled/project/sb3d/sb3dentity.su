@@ -19,12 +19,12 @@ sb3dentity.c:198:6:entityResetAxes	0	static
 sb3dentity.c:208:6:entityTurnLocal	24	static
 sb3dentity.c:234:6:entityRotation	0	static
 sb3dentity.c:307:6:entityTurnGlobal	64	static
-sb3dentity.c:340:6:createBox	424	static
+sb3dentity.c:340:6:createBox	440	static
 sb3dentity.c:403:6:createSphere	192	static
 sb3dentity.c:448:6:createPlane	168	static
 sb3dentity.c:502:6:createCylinder	168	static
 sb3dentity.c:585:6:createCone	168	static
-sb3dentity.c:645:6:createPyramid	136	static
+sb3dentity.c:645:6:createPyramid	144	static
 sb3dentity.c:693:6:createTorus	192	static
 sb3dentity.c:744:6:meshSetVertex	24	static
 sb3dentity.c:752:6:meshOffsetVertex	24	static

@@ -52,6 +52,9 @@ typedef struct {
     int c;
     uint8_t color;
     uint8_t emission;
+
+    // v3 stuff
+    uint8_t transparency;
 } Tri;
 
 

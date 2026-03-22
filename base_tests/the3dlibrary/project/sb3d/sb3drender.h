@@ -8,7 +8,14 @@
 #define CLIP_MAX_VERTS 8
 #define SB3D_MAX_VERTS 4096
 
+// internal flaggy stuff
+// used for things that are special, transparency for now
+#define TRI_COLOUR_MASK         0x0F
 
+#define TRI_FLAG_TRANSPARENT    0x10
+#define TRI_FLAG_RESERVED2      0x20
+#define TRI_FLAG_RESERVED3      0x40
+#define TRI_FLAG_RESERVED4      0x80
 
 #define PROJ_F 200.0f
 
@@ -38,6 +45,7 @@ typedef struct align32 {
 
     uint8_t color;
     uint8_t emission;
+    uint8_t transparency;
 
     int16_t minY;
     int16_t maxY;
@@ -45,7 +53,8 @@ typedef struct align32 {
 
 
 int clipTriangleToFrustum(Vec3 a, Vec3 b, Vec3 c, Vec3 *outVerts, const Camera *cam);
-void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, uint8_t emission, float shadeF);
+//void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, uint8_t emission, float shadeF);
+void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, uint8_t emission, uint8_t trans, float shadeF);
 void entitySetBasis(int id, Vec3 right, Vec3 up, Vec3 forward);
 
 void setDefaultRenderMode();

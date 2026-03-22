@@ -421,7 +421,7 @@ static inline int triangleFacingCamera(Vec3 a, Vec3 b, Vec3 c)
 
 
 
-void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, uint8_t emission, float shadeF)
+void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, uint8_t emission, uint8_t trans, float shadeF)
 {
     Vec2 pa, pb, pc;
     const float nearPlane = cam->nearPlane;
@@ -468,6 +468,7 @@ void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, 
         rt->color    = color;
         rt->emission = emission;
         rt->shadeF   = shadeF;
+        rt->transparency = trans;
 
         rt->z0 = encodeZ(a.z, cam);
         rt->z1 = encodeZ(b.z, cam);
@@ -1076,18 +1077,37 @@ void Render3D(const Camera *cam)
         }
     }
     else {
+        // normal operation
         for (int i = 0; i < g_renderTriCount; i++) {
             RenderTri *rt = &g_renderTris[i];
 
-            fillTriangleDitherBayer(
-                rt->p0.x, rt->p0.y,
-                rt->p1.x, rt->p1.y,
-                rt->p2.x, rt->p2.y,
-                rt->z0, rt->z1, rt->z2,
-                rt->camz0, rt->camz1, rt->camz2,
-                rt->color,
-                rt->shadeF
-            );
+            if(rt->color & TRI_FLAG_TRANSPARENT){
+                uint8_t tStrenth = rt->transparency;
+
+                fillTriangleDitherBayerT(
+                    rt->p0.x, rt->p0.y,
+                    rt->p1.x, rt->p1.y,
+                    rt->p2.x, rt->p2.y,
+                    rt->z0, rt->z1, rt->z2,
+                    rt->camz0, rt->camz1, rt->camz2,
+                    rt->color,
+                    rt->transparency,
+                    //240,
+                    rt->shadeF
+                );
+            } else {
+                // ordinary triangle render
+                
+                fillTriangleDitherBayer(
+                    rt->p0.x, rt->p0.y,
+                    rt->p1.x, rt->p1.y,
+                    rt->p2.x, rt->p2.y,
+                    rt->z0, rt->z1, rt->z2,
+                    rt->camz0, rt->camz1, rt->camz2,
+                    rt->color,
+                    rt->shadeF
+                );
+            }
         }
     }
 }
@@ -1223,6 +1243,7 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
         float faceEmission;
         float brightness;
         float triShadeF;
+        uint8_t renderColor;
 
         int fullyInside;
 
@@ -1432,12 +1453,17 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
 
         triShadeF = brightnessToShadeF(brightness);
 
+        renderColor = (uint8_t)(t->color & TRI_COLOUR_MASK);
+        if(t->transparency > 0)
+            renderColor |= TRI_FLAG_TRANSPARENT;
+
         if (fullyInside) {
             submitClippedTri(
                 *a, *b, *c,
                 cam,
-                t->color,
+                renderColor,
                 t->emission,
+                t->transparency,
                 triShadeF
             );
         } else {
@@ -1454,8 +1480,9 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
                     clipped[k],
                     clipped[k + 1],
                     cam,
-                    t->color,
+                    renderColor,
                     t->emission,
+                    t->transparency,
                     triShadeF
                 );
             }

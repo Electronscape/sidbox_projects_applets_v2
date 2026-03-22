@@ -1,3 +1,5 @@
+// file: loader.c
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,7 +12,7 @@
 #include "sb3d.h"
 
 
-
+#if(0) // we're not using OBJ for 3D engine side, For now
 int loadMeshOBJ(const char *filename, Mesh *mesh, uint8_t colour, float scale)
 {
     FILE *fp;
@@ -162,10 +164,11 @@ int loadMeshOBJ(const char *filename, Mesh *mesh, uint8_t colour, float scale)
     return 1;
 }
 
+#endif 
+
 
 int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
 {
-    //FILE *fp;
     FRESULT res;
     int32_t ird;
 
@@ -192,7 +195,7 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
         return 0;
     }
 
-    if (memcmp(magic, "SB3D", 4) != FR_OK) {
+    if (memcmp(magic, "SB3D", 4) != 0) {
         fclose(0);
         return 0;
     }
@@ -202,7 +205,7 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
         return 0;
     }
 
-    if (version != 2) {
+    if (version != 2 && version != 3) {
         fclose(0);
         return 0;
     }
@@ -265,6 +268,7 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
         uint32_t a, b, c;
         uint8_t color;
         uint8_t emission;
+        uint8_t transparency = 0;
 
         if (sfread(0, &a, sizeof(uint32_t), &ird) != FR_OK) {
             freeMesh(mesh);
@@ -296,6 +300,14 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
             return 0;
         }
 
+        if (version >= 3) {
+            if (sfread(0, &transparency, sizeof(uint8_t), &ird) != FR_OK) {
+                freeMesh(mesh);
+                fclose(0);
+                return 0;
+            }
+        }
+
         if (a >= vertCount || b >= vertCount || c >= vertCount) {
             freeMesh(mesh);
             fclose(0);
@@ -305,18 +317,18 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
         mesh->tris[i].a = (int)a;
         mesh->tris[i].b = (int)b;
         mesh->tris[i].c = (int)c;
-        mesh->tris[i].color = color;
+        mesh->tris[i].color = (uint8_t)(color & TRI_COLOUR_MASK);
         mesh->tris[i].emission = emission;
+        mesh->tris[i].transparency = transparency;
     }
 
     fclose(0);
 
-    mesh->boundsRadius = meshComputeBoundsRadius(mesh) * 1;
+    mesh->boundsRadius = meshComputeBoundsRadius(mesh);
     meshSetDefaultMaterial(mesh);
 
     return 1;
 }
-
 
 
 
