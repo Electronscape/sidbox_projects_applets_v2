@@ -15,7 +15,7 @@
 
 #define USE_BACKFACE_CULL 1
 
-static Entity align32 *renderEntities[WORLD_MAX];
+//static Entity align32 *renderEntities[WORLD_MAX];
 static RenderTri align32 g_renderTris[MAX_RENDER_TRIS];
 
 // cache
@@ -534,21 +534,15 @@ static int entityVisibleCheck(const Entity *ent, const Camera *cam)
 
 void submitWorldEntities(const Camera *cam)
 {
-    int visibleCount = 0;
-
     for (int i = 0; i < WORLD_MAX; i++) {
         Entity *ent = &worldEntities[i];
 
         if (!ent->active) continue;
         if (!ent->mesh) continue;
         if ((ent->flags & ENTITY_VISIBLE) == 0) continue;
+        if (!entityVisibleCheck(ent, cam)) continue;
 
-        if (entityVisibleCheck(ent, cam)) {
-            renderEntities[visibleCount++] = ent;
-        }
-    }
-    for (int i = 0; i < visibleCount; i++) {
-        submitEntitySolid(renderEntities[i], cam);
+        submitEntitySolid(ent, cam);
     }
 }
 
@@ -566,17 +560,21 @@ static uint32_t sb3d_hash2i(int x, int z)
     return h;
 }
 
-
 void drawFakeHorizonDots(const Camera *cam, uint8_t dotCol, int spacing, float ylevel, uint8_t density)
 {
     if (!cam) return;
     if (spacing < 2) spacing = 2;
+    if (density == 0) return;
 
     const int rangeCells = 18;
-    const float jitter = spacing * 0.35f;
+    const int range2 = rangeCells * rangeCells;
 
-    const float inv255 = 1.0f / 255.0f;
-    const float jitterScale = (2.0f * jitter) * inv255;
+    /* start fading at about 75% of the radius */
+    const int fadeStart2 = (range2 * 3) >> 2;
+    const int fadeSpan2  = range2 - fadeStart2;
+
+    const float jitter = spacing * 0.35f;
+    const float jitterScale = (2.0f * jitter) * (1.0f / 255.0f);
 
     const float f = sb3d_proj_f();
     const float halfW = (float)(SCREEN_W * 0.5f);
@@ -605,35 +603,63 @@ void drawFakeHorizonDots(const Camera *cam, uint8_t dotCol, int spacing, float y
     const float yOff = ylevel - camPosY;
 
     for (int gz = baseCellZ - rangeCells; gz <= baseCellZ + rangeCells; gz++) {
+        const int dzCell = gz - baseCellZ;
+        const int dz2 = dzCell * dzCell;
         const float worldBaseZ = (float)(gz * spacing);
 
         for (int gx = baseCellX - rangeCells; gx <= baseCellX + rangeCells; gx++) {
-            const uint32_t h = sb3d_hash2i(gx, gz);
+            const int dxCell = gx - baseCellX;
+            const int dist2 = (dxCell * dxCell) + dz2;
 
-            if ((h & 255u) > density) continue;
+            uint8_t localDensity;
+            uint32_t h;
 
-            const float jx = ((float)((h >> 8)  & 255u) * jitterScale) - jitter;
-            const float jz = ((float)((h >> 16) & 255u) * jitterScale) - jitter;
+            /* hard circular cutoff */
+            if (dist2 > range2) {
+                continue;
+            }
 
-            const float dx = ((float)(gx * spacing) + jx) - camPosX;
-            const float dz = (worldBaseZ + jz) - camPosZ;
+            /* soft falloff near the edge, still integer-only */
+            if (dist2 <= fadeStart2) {
+                localDensity = density;
+            } else {
+                const int remain = range2 - dist2;
+                int d = (density * remain) / fadeSpan2;
+                if (d <= 0) continue;
+                if (d > 255) d = 255;
+                localDensity = (uint8_t)d;
+            }
 
-            const float camX = (dx * rx) + (yOff * ry) + (dz * rz);
-            const float camY = (dx * ux) + (yOff * uy) + (dz * uz);
-            const float camZ = (dx * fx) + (yOff * fy) + (dz * fz);
+            h = sb3d_hash2i(gx, gz);
+            if ((h & 255u) > localDensity) continue;
 
-            if (camZ <= nearPlane) continue;
+            {
+                const float jx = ((float)((h >> 8)  & 255u) * jitterScale) - jitter;
+                const float jz = ((float)((h >> 16) & 255u) * jitterScale) - jitter;
 
-            const float invZ = 1.0f / camZ;
-            const int sx = (int)(((camX * f) * invZ) + halfW + 0.5f);
-            const int sy = (int)(((-camY * f) * invZ) + halfH + 0.5f);
+                const float dx = ((float)(gx * spacing) + jx) - camPosX;
+                const float dz = (worldBaseZ + jz) - camPosZ;
 
-            if ((unsigned)sx < SCREEN_W && (unsigned)sy < SCREEN_H) {
-                putPixel(sx, sy, dotCol);
+                const float camX = (dx * rx) + (yOff * ry) + (dz * rz);
+                const float camY = (dx * ux) + (yOff * uy) + (dz * uz);
+                const float camZ = (dx * fx) + (yOff * fy) + (dz * fz);
+
+                if (camZ <= nearPlane) continue;
+
+                {
+                    const float invZ = 1.0f / camZ;
+                    const int sx = (int)((camX * f * invZ) + halfW + 0.5f);
+                    const int sy = (int)((-camY * f * invZ) + halfH + 0.5f);
+
+                    if ((unsigned)sx < SCREEN_W && (unsigned)sy < SCREEN_H) {
+                        putPixel(sx, sy, dotCol);
+                    }
+                }
             }
         }
     }
 }
+
 
 void drawFakeHorizon(const Camera *cam, uint8_t skyCol, uint8_t groundCol, uint8_t lineCol, float ylevel)
 {
@@ -1082,8 +1108,6 @@ void Render3D(const Camera *cam)
             RenderTri *rt = &g_renderTris[i];
 
             if(rt->color & TRI_FLAG_TRANSPARENT){
-                uint8_t tStrenth = rt->transparency;
-
                 fillTriangleDitherBayerT(
                     rt->p0.x, rt->p0.y,
                     rt->p1.x, rt->p1.y,
@@ -1111,8 +1135,6 @@ void Render3D(const Camera *cam)
         }
     }
 }
-
-
 
 
 void submitEntitySolid(const Entity *ent, const Camera *cam)
@@ -1146,6 +1168,9 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
     int hasSpec;
     int shiny8;
     int shiny16;
+
+    const Light *activeLights[MAX_LIGHTS];
+    int activeLightCount = 0;
 
     if (!ent || !cam) return;
     if (!ent->mesh) return;
@@ -1202,6 +1227,41 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
     cfy = cam->forward.y;
     cfz = cam->forward.z;
 
+    /*
+        Pre-filter lights once per entity.
+
+        Point light is skipped if the entity bounding sphere is fully outside
+        the light's "beyond" radius.
+    */
+    if ((hasDiffuse || hasSpec) && lightCount > 0) {
+        const float entityRadius = mesh->boundsRadius;
+
+        for (int li = 0; li < lightCount; li++) {
+            const Light *ls = &lights[li];
+
+            if (!ls->enabled) {
+                continue;
+            }
+
+            if (ls->type == LIGHT_DIRECTIONAL) {
+                activeLights[activeLightCount++] = ls;
+                continue;
+            }
+
+            {
+                const float dx = ls->pos.x - entPosX;
+                const float dy = ls->pos.y - entPosY;
+                const float dz = ls->pos.z - entPosZ;
+                const float maxDist = ls->beyond + entityRadius;
+                const float dist2 = (dx * dx) + (dy * dy) + (dz * dz);
+
+                if (dist2 <= (maxDist * maxDist)) {
+                    activeLights[activeLightCount++] = ls;
+                }
+            }
+        }
+    }
+
     /* build world-space + camera-space vertex caches once per entity */
     for (int vi = 0; vi < mesh->vertCount; vi++) {
         const Vec3 *lv = &mesh->verts[vi];
@@ -1246,8 +1306,13 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
         uint8_t renderColor;
 
         int fullyInside;
+        int fullyOutside;
 
         if (a->z > farPlane && b->z > farPlane && c->z > farPlane) {
+            continue;
+        }
+
+        if (a->z < nearPlane && b->z < nearPlane && c->z < nearPlane) {
             continue;
         }
 
@@ -1257,7 +1322,33 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
         }
     #endif
 
-        /* world-space face normal */
+        fullyOutside =
+            ((a->x < -a->z) && (b->x < -b->z) && (c->x < -c->z)) ||
+            ((a->x >  a->z) && (b->x >  b->z) && (c->x >  c->z)) ||
+            ((a->y < -(a->z * halfHOverW)) &&
+             (b->y < -(b->z * halfHOverW)) &&
+             (c->y < -(c->z * halfHOverW))) ||
+            ((a->y >  (a->z * halfHOverW)) &&
+             (b->y >  (b->z * halfHOverW)) &&
+             (c->y >  (c->z * halfHOverW)));
+
+        if (fullyOutside) {
+            continue;
+        }
+
+        fullyInside =
+            (a->z >= nearPlane) &&
+            (b->z >= nearPlane) &&
+            (c->z >= nearPlane) &&
+
+            (a->x >= -a->z) && (a->x <= a->z) &&
+            (b->x >= -b->z) && (b->x <= b->z) &&
+            (c->x >= -c->z) && (c->x <= c->z) &&
+
+            (a->y >= -(a->z * halfHOverW)) && (a->y <= (a->z * halfHOverW)) &&
+            (b->y >= -(b->z * halfHOverW)) && (b->y <= (b->z * halfHOverW)) &&
+            (c->y >= -(c->z * halfHOverW)) && (c->y <= (c->z * halfHOverW));
+
         abx = wb->x - wa->x;
         aby = wb->y - wa->y;
         abz = wb->z - wa->z;
@@ -1275,14 +1366,13 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
             continue;
         }
 
-        if (nlen2 < 0.999f || nlen2 > 1.001f) {
+        {
             const float invNLen = 1.0f / sqrtf(nlen2);
             nx *= invNLen;
             ny *= invNLen;
             nz *= invNLen;
         }
 
-        /* world-space face center */
         faceCX = (wa->x + wb->x + wc->x) * (1.0f / 3.0f);
         faceCY = (wa->y + wb->y + wc->y) * (1.0f / 3.0f);
         faceCZ = (wa->z + wb->z + wc->z) * (1.0f / 3.0f);
@@ -1290,20 +1380,7 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
         faceEmission = (float)t->emission * (1.0f / 255.0f);
         brightness = matAmbient + matEmissive;
 
-        fullyInside =
-            (a->z >= nearPlane) &&
-            (b->z >= nearPlane) &&
-            (c->z >= nearPlane) &&
-
-            (a->x >= -a->z) && (a->x <= a->z) &&
-            (b->x >= -b->z) && (b->x <= b->z) &&
-            (c->x >= -c->z) && (c->x <= c->z) &&
-
-            (a->y >= -(a->z * halfHOverW)) && (a->y <= (a->z * halfHOverW)) &&
-            (b->y >= -(b->z * halfHOverW)) && (b->y <= (b->z * halfHOverW)) &&
-            (c->y >= -(c->z * halfHOverW)) && (c->y <= (c->z * halfHOverW));
-
-        if ((hasDiffuse || hasSpec) && lightCount > 0) {
+        if (activeLightCount > 0) {
             float vx = 0.0f, vy = 0.0f, vz = 0.0f;
 
             if (hasSpec) {
@@ -1328,13 +1405,11 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
                 }
             }
 
-            for (int li = 0; li < lightCount; li++) {
-                const Light *ls = &lights[li];
+            for (int li = 0; li < activeLightCount; li++) {
+                const Light *ls = activeLights[li];
                 float lx, ly, lz;
                 float attenuation = 1.0f;
                 float ndotl;
-
-                if (!ls->enabled) continue;
 
                 if (ls->type == LIGHT_POINT) {
                     float dist2;
@@ -1434,7 +1509,7 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
                             specPow = s;
                         }
                         else {
-                            specPow = powf(rdotv, matShiny);
+                            specPow = powfxt(rdotv, matShiny);
                         }
 
                         brightness += specPow * matSpec * ls->intensity * attenuation;
@@ -1454,7 +1529,7 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
         triShadeF = brightnessToShadeF(brightness);
 
         renderColor = (uint8_t)(t->color & TRI_COLOUR_MASK);
-        if(t->transparency > 0)
+        if (t->transparency > 0)
             renderColor |= TRI_FLAG_TRANSPARENT;
 
         if (fullyInside) {
@@ -1599,7 +1674,8 @@ static int sb3dRayTriangleHitDetailed(
         const float nlen2 = (nx * nx) + (ny * ny) + (nz * nz);
 
         if (nlen2 > 0.000001f) {
-            if (nlen2 < 0.999f || nlen2 > 1.001f) {
+            if (nlen2 < 0.999f || nlen2 > 1.001f) 
+            {
                 const float invNLen = 1.0f / sqrtf(nlen2);
                 nx *= invNLen;
                 ny *= invNLen;

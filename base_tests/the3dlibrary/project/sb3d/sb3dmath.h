@@ -10,7 +10,7 @@ void sb3dInitTrigTable(void);
 
 float sbsinf(float radians);
 float sbcosf(float radians);
-float powf(float x, float y);
+float powfxt(float x, float y);
 
 
 Vec3 vec3Add(Vec3 a, Vec3 b);

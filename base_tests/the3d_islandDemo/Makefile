@@ -1,6 +1,6 @@
 # Applet Makefile for SIDBOX
 
-PROJECTNAME := the3duselib
+PROJECTNAME := island3DDemo
 
 BUILD_DIR := compiled
 PROJECT_DIR := project

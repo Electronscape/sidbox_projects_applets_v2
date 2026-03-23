@@ -290,7 +290,8 @@ int main(int argc, char *argv[]) {
 
 
 
-    music_play("music2.mod", 0);
+    //music_play("music2.mod", 0);
+    music_play("3_double_paula.mod", 0);
     
 
 

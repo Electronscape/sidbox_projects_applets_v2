@@ -11,4 +11,4 @@ sb3dmath.c:140:6:vec3	32	static
 sb3dmath.c:145:7:degrees	0	static
 sb3dmath.c:149:7:degToRad	0	static
 sb3dmath.c:154:7:radToDeg	0	static
-math.h:365:14:powf	16	static
+sb3dmath.c:165:7:powfxt	16	static

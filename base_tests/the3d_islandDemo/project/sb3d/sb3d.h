@@ -563,3 +563,38 @@ int sb3dRaycastFromCamera(
     // old worn metal
     meshSetMaterial(&mesh, 0.05f, 0.70f, 0.00f, 0.35f, 8.0f);
 */
+
+
+/*
+    Modelling in Blender:
+
+    Material names are used to define the palette index and optional face effects.
+
+    Format:
+        SBX_<paletteid>E<0-255>T<0-255>
+
+    Notes:
+        <paletteid>   = palette colour index
+        E<0-255>      = emission amount
+        T<0-255>      = transparency amount
+
+    Defaults:
+        E with no number = 255
+        T with no number = 128
+
+    Examples:
+        SBX_33
+            palette 33, no emission, no transparency
+
+        SBX_33E
+            palette 33, full emission
+
+        SBX_33T
+            palette 33, default transparency (128)
+
+        SBX_33ET
+            palette 33, full emission and default transparency
+
+        SBX_33E255T128
+            palette 33, full emission and 50% transparency
+*/

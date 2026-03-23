@@ -160,44 +160,44 @@ float radToDeg(float angle)
 
 
 
+// custom maths
 
-
-// aditional stuff
-#include <math.h>
-#include <stdint.h>
-
-float powf(float x, float y)
+float powfxt(float x, float y)
 {
-    /* common cheap cases */
+    /* very common fast cases */
     if (y == 0.0f) return 1.0f;
-    if (x == 1.0f) return 1.0f;
     if (y == 1.0f) return x;
+    if (x == 1.0f) return 1.0f;
 
     /* zero base */
     if (x == 0.0f) {
         if (y > 0.0f) return 0.0f;
-        return INFINITY; /* 0^negative */
+        return INFINITY;   /* 0^negative */
     }
 
-    /* fast integer exponent path */
-    {
-        int32_t yi = (int32_t)y;
-        if ((float)yi == y) {
-            int32_t n = yi;
-            float base = x;
-            float result = 1.0f;
-            uint32_t expAbs;
+    /* common fractional cases */
+    if (y == 0.5f)  return sqrtf(x);
+    if (y == -0.5f) return 1.0f / sqrtf(x);
 
-            /* negative exponent */
-            if (n < 0) {
-                base = 1.0f / base;
-                expAbs = (uint32_t)(-n);
+    /* integer exponent fast path */
+    {
+        const int32_t yi = (int32_t)y;
+
+        if ((float)yi == y) {
+            uint32_t expAbs;
+            float base;
+            float result = 1.0f;
+
+            /* integer exponents with negative base are valid */
+            if (yi < 0) {
+                base = 1.0f / x;
+                expAbs = (uint32_t)(-yi);
             } else {
-                expAbs = (uint32_t)n;
+                base = x;
+                expAbs = (uint32_t)yi;
             }
 
-            /* exponentiation by squaring */
-            while (expAbs) {
+            while (expAbs != 0u) {
                 if (expAbs & 1u) {
                     result *= base;
                 }
@@ -209,18 +209,11 @@ float powf(float x, float y)
         }
     }
 
-    /* negative base with non-integer exponent = invalid in real numbers */
+    /* negative base with non-integer exponent is not real */
     if (x < 0.0f) {
         return NAN;
     }
 
-    /* special common fractional exponents */
-    if (y == 0.5f)  return sqrtf(x);
-    if (y == -0.5f) return 1.0f / sqrtf(x);
-    if (y == 2.0f)  return x * x;
-    if (y == 3.0f)  return x * x * x;
-    if (y == 4.0f)  { x *= x; return x * x; }
-
-    /* general case */
+    /* general fallback */
     return expf(y * logf(x));
 }
