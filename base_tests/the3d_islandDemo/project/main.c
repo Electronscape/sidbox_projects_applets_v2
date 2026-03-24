@@ -21,17 +21,20 @@ void initSystem(){
     initMalloc();   // go memory!! yey
 
     // hardware preps //
-    gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_50);
+    gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_35);
+    //gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_40);
     lcd_bright(0);
     gfx_mode(480, 320, 480, 320, DISPFLAG_SINGLELAYER | DISPFLAG_NOSCROLLABLE);
     set_audio_dma(512); // a few ms about 7ms enough for a full frame.
     set_music_dma = 1;
 
+    initDepthBandMem();
+
     // get the default display buffers (OS assigned, from internal memory)
     bm1 = gfx_getdrawbuffer();
     bm2 = gfx_getshowbuffer();
 
-    lcd_bright(100);
+    
 
     //frontclut[0] = 0x00000000;  // ensure front palette index 0 is black and transparent
 }
@@ -379,30 +382,135 @@ uint8_t weatherLightning(float dt, int sunlightId)
 
 
 
+extern uint8_t presents[];
+extern uint8_t bigpic[];
 
+void goIntro(){
 
+    uint8_t gdb = 0;
+    float fadeTime = 0.0f;
 
+    gfx_showfbuffer(bm1);           // initial buffers
+    gfx_usebuffer(bm1);
+
+    // image 400 x 128
+    lcd_bright(0);    // need this back on
+
+    for(int pause = 0; pause < 40 * 3; pause++){
+        gfx_lcdwait();  // essentially vwait //
+    }
+
+    uint32_t imagei = 0;
+    for(int iy = 0; iy < 128; iy++ ){
+        for(int ix = 0; ix < 400; ix++ ){
+            bm1->bitmap[((ix + 40) * SCREEN_H) + (iy + 96)] = presents[imagei++];
+        }
+    }
+
+    for(;;){
+        {
+            gfx_lcdwait();  // essentially vwait //
+            fadeTime += 0.01f;
+            lcd_bright(fadeTime * 100.0);
+            gfx_displaynow();
+            if(fadeTime > 1.0f) {
+                fadeTime  = 1.0f;
+                music_play("boomd.mod", 0);
+                break;
+            }
+        }
+    }
+
+    for(int pause = 0; pause < 40 * 2; pause++){
+        gfx_lcdwait();  // essentially vwait //
+        gfx_displaynow();
+    }
+    for(;;){
+        gfx_lcdwait();  // essentially vwait //
+        fadeTime -= 0.02f;
+        lcd_bright(fadeTime * 100.0);
+        gfx_displaynow();
+        if(fadeTime < 0.0f) {
+            fadeTime  = 0.0f;
+            break;
+        }
+    }
+
+    // large pic time
+    imagei = 0;
+    for(int iy = 0; iy < 320; iy++ ){
+        for(int ix = 0; ix < 480; ix++ ){
+            bm1->bitmap[((ix) * SCREEN_H) + (iy)] = bigpic[imagei++];
+        }
+    }
+
+    fadeTime = 0;
+    for(;;){
+        gfx_lcdwait();  // essentially vwait //
+        fadeTime += 0.02f;
+        lcd_bright(fadeTime * 100.0);
+        gfx_displaynow();
+        if(fadeTime > 1.0f) {
+            fadeTime  = 1.0f;
+            break;
+        }
+    }
+
+    for(int pause = 0; pause < 40 * 2; pause++){
+        gfx_lcdwait();  // essentially vwait //
+        gfx_displaynow();
+    }
+
+    fadeTime = 1;
+    for(;;){
+        gfx_lcdwait();  // essentially vwait //
+        fadeTime -= 0.02f;
+        lcd_bright(fadeTime * 100.0);
+        gfx_displaynow();
+        if(fadeTime < 0.0f) {
+            fadeTime  = 0.0f;
+            break;
+        }
+    }
+
+    for(int clr = 0; clr < (SCREEN_H * SCREEN_W); clr++ ){
+        bm1->bitmap[clr] = 0x00;
+    }
+    gfx_displaynow();
+
+}
 
 
 int main(int argc, char *argv[]) {
     initSystem();
     
 
+    float fadeTime = 0.0f;
     char tfname[64];
 
-    
+    //music_play("music2.mod", 0);
+    //music_play("3_double_paula.mod", 0);
+
+
+    goIntro();
+    //music_play("boomd.mod", 0);
+    //lcd_bright(100);    // need this back on
+
+
+
+
+    // init world ------------- 3D here to come!!! -------------- ///
 
     worldClear();
     lightsClear();
-    sb3dParticlesClear();
-
-    // init world
+    sb3dParticlesClear();  
     setDefaultRenderMode();
     Camera cam = cameraCreate();
     cameraSetRange(&cam, 0.01, 5000.0f);
     cameraSetPosition(&cam, vec3(0, 50, 0));
     cameraNormalize(&cam);
 
+/// prepare the palette for use with the 3D engine
 
     uint32_t baseColors[16] = {
         0xFF5516e3, 0xFFFFFFFF, 0xFFFF0000, 0xFF00FF00,
@@ -424,9 +532,6 @@ int main(int argc, char *argv[]) {
 
 
 
-    //music_play("music2.mod", 0);
-    //music_play("3_double_paula.mod", 0);
-    music_play("boomd.mod", 0);
     
 
 
@@ -507,7 +612,7 @@ int main(int argc, char *argv[]) {
 
     Mesh textMesh;
     loadMeshSB3D("text.sb3d", &textMesh, 50.0f);
-    int text0 = entityWorldSpawn(&textMesh, vec3(2000, 340, 200));
+    int text0 = entityWorldSpawn(&textMesh, vec3(2000, 350, 200));
     meshSetMaterial(&textMesh, 0.00f, 0.55f, 0.00f, 1.50f, 64.0f);
 
 
@@ -516,36 +621,35 @@ int main(int argc, char *argv[]) {
         //        x       y         z // Our world here
 
         //        x       z         y // from blender
-        { {   -38.0f,   60.0f,     1.0f  }, 0.0f, 0.0f }, // waypoint 1
+        { {   -38.0f,   60.0f,     1.0f  }, 1.0f, 0.0f }, // waypoint 1
         { {   -38.0f,   72.0f,   700.0f  }, 0.0f, 0.0f }, // waypoint 2
         { {   -30.0f,  180.0f,  1080.0f  }, 0.0f, 0.4f }, // waypoint 3
         { {   760.0f,  189.0f,  2068.0f  }, 0.0f, 0.4f }, // waypoint 4
-        { {  1234.0f,  165.0f,  1165.0f  }, 0.0f, 0.4f }, // waypoint 5
+        { {  1333.0f,  052.0f,  1165.0f  }, 0.0f, 0.4f }, // waypoint 5
         { {  1257.0f,  200.0f,  -642.0f  }, 0.0f, 0.4f }, // waypoint 6
         { {   792.0f,  277.0f, -1650.0f  }, 0.0f, 0.4f }, // waypoint 7
         { {    36.0f,  440.0f, -1750.0f  }, 0.0f, 0.4f }, // waypoint 8
 
         { {   149.0f,  440.0f,  -256.0f  }, 0.0f, 0.4f }, // waypoint 9
         { {  -807.0f,  196.0f,   419.0f  }, 0.0f, 0.4f }, // waypoint 10
-        { { -1180.0f,  176.0f,   178.0f  }, 0.0f, 0.4f }, // waypoint 11
-        { {  -917.0f,   72.0f,    95.0f  }, 0.0f, 0.4f }, // waypoint 12
-        { {  -343.0f,   83.0f,   306.0f  }, 0.0f, 0.4f }, // waypoint 13
+        { { -1086.0f,  176.0f,   178.0f  }, 0.0f, 0.4f }, // waypoint 11
+        { {  -917.0f,  120.0f,    95.0f  }, 0.0f, 0.4f }, // waypoint 12
+        { {  -343.0f,   83.0f,   -22.0f  }, 0.0f, 0.4f }, // waypoint 13
         { {  -216.0f,   47.0f,    51.0f  }, 0.0f, 0.4f }, // waypoint 14
         { {   639.0f,   47.0f,   -47.0f  }, 0.0f, 0.4f }, // waypoint 15
-        { {  1801.0f,  368.0f,   -36.0f  }, 0.0f, 0.4f }, // waypoint 16
+        { {  1801.0f,  368.0f,   -60.0f  }, 2.0f, 0.4f }, // waypoint 16
 
         { {  1757.0f,  440.0f,   660.0f  }, 0.0f, 0.4f }, // waypoint 17
         { {   548.0f,  126.0f,  1067.0f  }, 0.0f, 0.4f }, // waypoint 18
         { {  -124.0f,   81.0f,  1407.0f  }, 0.0f, 0.4f }, // waypoint 19
-        { {  -157.0f,   57.0f,  1085.0f  }, 0.0f, 0.4f }, // waypoint 20
-        { {  -194.0f,   60.0f,   235.0f  }, 0.0f, 0.4f }, // waypoint 21
-
-
+        { {  -35.0f,   57.0f,  1085.0f  }, 0.0f, 0.4f },  // waypoint 20
+        { {  -35.0f,   60.0f,   235.0f  }, 0.0f, 0.4f },  // waypoint 21
+        { {  -173.0f,  60.0f,   194.0f  }, 0.0f, 0.4f },  // waypoint 22
     };
     SplineRail rail;
 
-    splineRailInit(&rail, museumRail, 21, 180.0f, 1);
-    splineRailSetTuning(&rail, 1.4f, 1.8f, 1.0f);
+    splineRailInit(&rail, museumRail, 22, 180.0f, 1);
+    splineRailSetTuning(&rail, 1.4f, 1.8f, 2.7f);
     splineRailSetBanking(&rail, 2.0f, 1.5f, 0.85f);
 
 
@@ -576,8 +680,16 @@ int main(int argc, char *argv[]) {
     char testout[32];
 
     uint8_t weathermode = 0;
+    uint8_t railmode = 1;
 
     for (;;) {
+
+
+        fadeTime += 0.004f;
+        if(fadeTime>1.0f) fadeTime = 1.0f;
+        lcd_bright(fadeTime * 100.0f);
+
+
         uint32_t nowTicks = getTicks();
         uint32_t tickDelta = nowTicks - lastTicks;
         lastTicks = nowTicks;
@@ -649,7 +761,10 @@ int main(int argc, char *argv[]) {
 
         clrmousedelta();
 
-        if (joybutts & BTN_FIRE)  cameraMove(&cam, 0, 0,  moveStep);
+        if (joybutts & BTN_FIRE)  {
+            cameraMove(&cam, 0, 0,  moveStep);
+            railmode = 0;
+        }
         if (joybutts & BTN_FIRE2) cameraMove(&cam, 0, 0, -moveStep);
         if ((joybutts & BTN_FIRE) && (joybutts & BTN_FIRE2)){
             cam.right.y = 0;
@@ -693,7 +808,8 @@ int main(int argc, char *argv[]) {
                 }
             }
 
-            splineRailUpdate(&rail, &cam, dt);
+            if(railmode)
+                splineRailUpdate(&rail, &cam, dt);
 
             if(weathermode==0){
                 if (flash) {
@@ -716,7 +832,7 @@ int main(int argc, char *argv[]) {
             } else {
                 lightEnable(SunlightId, 1);
                 lightSetIntensity(SunlightId, 1.0f);
-                drawFakeHorizon(&cam, 43, 36, HosHorizonLine, 0);
+                drawFakeHorizon(&cam, 43, 36, 1, 0);
                 
             }
 
@@ -762,6 +878,10 @@ int main(int argc, char *argv[]) {
 
             /* Render time in ms */
             uint8_t wpt = splineRailGetCurrentNode(&rail);
+            if (joybutts & BTN_FIRE) {
+                wpt = 20;
+            }
+            if ((joybutts & BTN_FIRE2)) wpt = 19;
             static uint8_t lwpt = 0;
             {
                 uint32_t ms_whole = tickr / 480000UL;

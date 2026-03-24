@@ -1,3 +1,4 @@
 main.c:17:6:initSystem	24	static
-main.c:185:9:weatherLightning	40	static
-main.c:387:5:main	17600	static
+main.c:188:9:weatherLightning	40	static
+main.c:388:6:goIntro	48	static
+main.c:484:5:main	17608	static

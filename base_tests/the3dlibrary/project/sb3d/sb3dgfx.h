@@ -8,6 +8,8 @@
 #define SCREEN_H  320
 
 
+
+
 #define FB_INDEX(x, y) (((x) * SCREEN_H) + (y))
 extern uint8_t *drawbuffer;    // framebuffer (interal)
 void set3DRenderBuffer(uint8_t *buffer);
@@ -44,9 +46,6 @@ void fillTriangleDither(int x0, int y0, int x1, int y1, int x2, int y2, uint8_t 
 
 // ZORDERED
 
-
-void resetDepthBufferBand(void);
-
 void fillTriangleFlat(int x0, int y0,  int x1, int y1,  int x2, int y2, uint16_t z0,  uint16_t z1,  uint16_t z2, float camz0, float camz1, float camz2, uint8_t baseColor,  float shadeF);
 
 void fillTriangleDitherBayer( int x0, int y0, int x1, int y1, int x2, int y2, uint16_t z0, uint16_t z1, uint16_t z2, float camz0, float camz1, float camz2, uint8_t baseColor, float shadeF);
@@ -55,5 +54,13 @@ void fillTriangleDitherBayerT(int x0, int y0, int x1, int y1, int x2, int y2, ui
 void fillTriangleDitherBayer2Mode(int x0, int y0, int x1, int y1, int x2, int y2, uint16_t z0, uint16_t z1, uint16_t z2, float camz0, float camz1, float camz2, uint8_t baseColor, float shadeF);
 
 void resetRand();
+
+
+
+#define ZBUF_BAND_H 32
+void initDepthBandMem(void);
+void beginDepthBand(int y0);
+int getDepthBandY0(void);
+int getDepthBandY1(void);
 
 #endif

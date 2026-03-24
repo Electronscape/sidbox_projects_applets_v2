@@ -145,6 +145,8 @@ typedef struct {
 	void     (*clrmousedelta) (void);
 	
 	uint8_t  (*getjoyport)	  (void);
+
+	uint16_t *(*get32kmem)	  (void);
 } API_HW ;
 
 
@@ -219,3 +221,5 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 
 // joy stick interfacing (usually just for the port Y1, Y2, X1, X2, BTn1, BTn2, up/down/left/right/fire1/fire2)
 #define getjoyport     HWKERNAL->getjoyport
+
+#define get32kmem()	   		(HWKERNAL->get32kmem())

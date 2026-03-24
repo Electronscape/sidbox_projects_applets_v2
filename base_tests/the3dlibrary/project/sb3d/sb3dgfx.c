@@ -6,7 +6,7 @@
 #include <string.h>
 #include <math.h>
 
-//#include "apis.h"
+#include "apis.h"
 #include "sb3dgfx.h"
 
 
@@ -29,10 +29,40 @@ static const uint8_t bayer4x4[4][4] = {
 //uint8_t fb[SCREEN_W * SCREEN_H] = {0};
 
 uint8_t *drawbuffer;
-static uint16_t align32 g_depthBuffer[SCREEN_W * SCREEN_H];
 
-void resetDepthBuffer(void){
-    memset(g_depthBuffer, 0xff, sizeof(g_depthBuffer));
+//static uint16_t align32 g_depthBufferBand[SCREEN_W * ZBUF_BAND_H];
+static uint16_t *g_depthBufferBand = NULL;
+static int g_depthBandY0 = 0;
+static int g_depthBandY1 = 0;
+
+void initDepthBandMem(){
+    g_depthBufferBand = get32kmem();
+}
+
+void beginDepthBand(int y0)
+{
+    int bandH;
+
+    g_depthBandY0 = y0;
+    g_depthBandY1 = y0 + ZBUF_BAND_H - 1;
+
+    if (g_depthBandY1 >= SCREEN_H) {
+        g_depthBandY1 = SCREEN_H - 1;
+    }
+
+    bandH = g_depthBandY1 - g_depthBandY0 + 1;
+
+    memset(g_depthBufferBand, 0xff, SCREEN_W * bandH * sizeof(uint16_t));
+}
+
+int getDepthBandY0(void)
+{
+    return g_depthBandY0;
+}
+
+int getDepthBandY1(void)
+{
+    return g_depthBandY1;
 }
 
 
@@ -291,8 +321,8 @@ void fillTriangleFlat(
         int yStart = (int)ceilf(v0.y);
         int yEnd   = (int)ceilf(v1.y) - 1;
 
-        if (yStart < 0) yStart = 0;
-        if (yEnd >= SCREEN_H) yEnd = SCREEN_H - 1;
+        if (yStart < g_depthBandY0) yStart = g_depthBandY0;
+        if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
 
         if (yStart <= yEnd) {
             const float py0 = (float)yStart + 0.5f;
@@ -345,7 +375,7 @@ void fillTriangleFlat(
                             zqStep = 0.0f;
                         }
 
-                        uint16_t *zbp = &g_depthBuffer[(y * SCREEN_W) + xStart];
+                        uint16_t *zbp = &g_depthBufferBand[((y - g_depthBandY0) * SCREEN_W) + xStart];
                         uint8_t  *dst = &drawbuffer[FB_INDEX(xStart, y)];
 
                         int x = xStart;
@@ -428,8 +458,8 @@ void fillTriangleFlat(
         int yStart = (int)ceilf(v1.y);
         int yEnd   = (int)ceilf(v2.y) - 1;
 
-        if (yStart < 0) yStart = 0;
-        if (yEnd >= SCREEN_H) yEnd = SCREEN_H - 1;
+        if (yStart < g_depthBandY0) yStart = g_depthBandY0;
+        if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
 
         if (yStart <= yEnd) {
             const float py0 = (float)yStart + 0.5f;
@@ -482,7 +512,7 @@ void fillTriangleFlat(
                             zqStep = 0.0f;
                         }
 
-                        uint16_t *zbp = &g_depthBuffer[(y * SCREEN_W) + xStart];
+                        uint16_t *zbp = &g_depthBufferBand[((y - g_depthBandY0) * SCREEN_W) + xStart];
                         uint8_t  *dst = &drawbuffer[FB_INDEX(xStart, y)];
 
                         int x = xStart;
@@ -663,8 +693,8 @@ void fillTriangleDitherBayer(
         int yStart = (int)ceilf(v0.y);
         int yEnd   = (int)ceilf(v1.y) - 1;
 
-        if (yStart < 0) yStart = 0;
-        if (yEnd >= SCREEN_H) yEnd = SCREEN_H - 1;
+        if (yStart < g_depthBandY0) yStart = g_depthBandY0;
+        if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
 
         if (yStart <= yEnd) {
             const float py0 = (float)yStart + 0.5f;
@@ -717,7 +747,7 @@ void fillTriangleDitherBayer(
                             zqStep = 0.0f;
                         }
 
-                        uint16_t *zbp = &g_depthBuffer[(y * SCREEN_W) + xStart];
+                        uint16_t *zbp = &g_depthBufferBand[((y - g_depthBandY0) * SCREEN_W) + xStart];
                         uint8_t  *dst = &drawbuffer[FB_INDEX(xStart, y)];
                         const uint8_t *brow = bayer4x4[y & 3];
 
@@ -802,8 +832,8 @@ void fillTriangleDitherBayer(
         int yStart = (int)ceilf(v1.y);
         int yEnd   = (int)ceilf(v2.y) - 1;
 
-        if (yStart < 0) yStart = 0;
-        if (yEnd >= SCREEN_H) yEnd = SCREEN_H - 1;
+        if (yStart < g_depthBandY0) yStart = g_depthBandY0;
+        if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
 
         if (yStart <= yEnd) {
             const float py0 = (float)yStart + 0.5f;
@@ -856,7 +886,7 @@ void fillTriangleDitherBayer(
                             zqStep = 0.0f;
                         }
 
-                        uint16_t *zbp = &g_depthBuffer[(y * SCREEN_W) + xStart];
+                        uint16_t *zbp = &g_depthBufferBand[((y - g_depthBandY0) * SCREEN_W) + xStart];
                         uint8_t  *dst = &drawbuffer[FB_INDEX(xStart, y)];
                         const uint8_t *brow = bayer4x4[y & 3];
 
@@ -1046,8 +1076,8 @@ void fillTriangleDitherBayerT(
         int yStart = (int)ceilf(v0.y);
         int yEnd   = (int)ceilf(v1.y) - 1;
 
-        if (yStart < 0) yStart = 0;
-        if (yEnd >= SCREEN_H) yEnd = SCREEN_H - 1;
+        if (yStart < g_depthBandY0) yStart = g_depthBandY0;
+        if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
 
         if (yStart <= yEnd) {
             const float py0 = (float)yStart + 0.5f;
@@ -1100,7 +1130,7 @@ void fillTriangleDitherBayerT(
                             zqStep = 0.0f;
                         }
 
-                        uint16_t *zbp = &g_depthBuffer[(y * SCREEN_W) + xStart];
+                        uint16_t *zbp = &g_depthBufferBand[((y - g_depthBandY0) * SCREEN_W) + xStart];
                         uint8_t  *dst = &drawbuffer[FB_INDEX(xStart, y)];
                         const uint8_t *brow = bayer4x4[y & 3];
 
@@ -1188,8 +1218,8 @@ void fillTriangleDitherBayerT(
         int yStart = (int)ceilf(v1.y);
         int yEnd   = (int)ceilf(v2.y) - 1;
 
-        if (yStart < 0) yStart = 0;
-        if (yEnd >= SCREEN_H) yEnd = SCREEN_H - 1;
+        if (yStart < g_depthBandY0) yStart = g_depthBandY0;
+        if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
 
         if (yStart <= yEnd) {
             const float py0 = (float)yStart + 0.5f;
@@ -1242,7 +1272,7 @@ void fillTriangleDitherBayerT(
                             zqStep = 0.0f;
                         }
 
-                        uint16_t *zbp = &g_depthBuffer[(y * SCREEN_W) + xStart];
+                        uint16_t *zbp = &g_depthBufferBand[((y - g_depthBandY0) * SCREEN_W) + xStart];
                         uint8_t  *dst = &drawbuffer[FB_INDEX(xStart, y)];
                         const uint8_t *brow = bayer4x4[y & 3];
 
@@ -1425,8 +1455,8 @@ void fillTriangleDitherBayer2Mode(
         int yStart = (int)ceilf(v0.y);
         int yEnd   = (int)ceilf(v1.y) - 1;
 
-        if (yStart < 0) yStart = 0;
-        if (yEnd >= SCREEN_H) yEnd = SCREEN_H - 1;
+        if (yStart < g_depthBandY0) yStart = g_depthBandY0;
+        if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
 
         if (yStart <= yEnd) {
             const float py0 = (float)yStart + 0.5f;
@@ -1479,7 +1509,7 @@ void fillTriangleDitherBayer2Mode(
                             zqStep = 0.0f;
                         }
 
-                        uint16_t *zbp = &g_depthBuffer[(y * SCREEN_W) + xStart];
+                        uint16_t *zbp = &g_depthBufferBand[((y - g_depthBandY0) * SCREEN_W) + xStart];
                         uint8_t  *dst = &drawbuffer[FB_INDEX(xStart, y)];
                         const uint8_t *brow = bayer4x4[y & 3];
 
@@ -1566,8 +1596,8 @@ void fillTriangleDitherBayer2Mode(
         int yStart = (int)ceilf(v1.y);
         int yEnd   = (int)ceilf(v2.y) - 1;
 
-        if (yStart < 0) yStart = 0;
-        if (yEnd >= SCREEN_H) yEnd = SCREEN_H - 1;
+        if (yStart < g_depthBandY0) yStart = g_depthBandY0;
+        if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
 
         if (yStart <= yEnd) {
             const float py0 = (float)yStart + 0.5f;
@@ -1620,7 +1650,7 @@ void fillTriangleDitherBayer2Mode(
                             zqStep = 0.0f;
                         }
 
-                        uint16_t *zbp = &g_depthBuffer[(y * SCREEN_W) + xStart];
+                        uint16_t *zbp = &g_depthBufferBand[((y - g_depthBandY0) * SCREEN_W) + xStart];
                         uint8_t  *dst = &drawbuffer[FB_INDEX(xStart, y)];
                         const uint8_t *brow = bayer4x4[y & 3];
 

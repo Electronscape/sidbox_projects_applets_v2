@@ -405,7 +405,6 @@ static inline int triangleFacingCamera(Vec3 a, Vec3 b, Vec3 c)
     return (d < 0.0f);
 }
 
-
 void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, uint8_t emission, uint8_t trans, float shadeF)
 {
     Vec2 pa, pb, pc;
@@ -457,8 +456,23 @@ void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, 
         rt->camz0 = a.z;
         rt->camz1 = b.z;
         rt->camz2 = c.z;
+
+        rt->minY = pa.y;
+        if (pb.y < rt->minY) rt->minY = pb.y;
+        if (pc.y < rt->minY) rt->minY = pc.y;
+
+        rt->maxY = pa.y;
+        if (pb.y > rt->maxY) rt->maxY = pb.y;
+        if (pc.y > rt->maxY) rt->maxY = pc.y;
+
+        if (rt->minY < 0) rt->minY = 0;
+        if (rt->maxY >= SCREEN_H) rt->maxY = SCREEN_H - 1;
+
+        rt->firstBand = (uint8_t)(rt->minY / ZBUF_BAND_H);
+        rt->lastBand  = (uint8_t)(rt->maxY / ZBUF_BAND_H);
     }
 }
+
 
 int projectPoint(Vec3 p, const Camera *cam, Vec2 *out)
 {
@@ -1937,7 +1951,6 @@ void drawFakeHorizonGrid(
     }
 }
 
-
 void Render3D(const Camera *cam)
 {
     resetRenderList();
@@ -1969,60 +1982,18 @@ void Render3D(const Camera *cam)
         return;
     }
 
-    resetDepthBuffer();
+    for (int band = 0; band < ((SCREEN_H + ZBUF_BAND_H - 1) / ZBUF_BAND_H); band++) {
+        const int bandY0 = band * ZBUF_BAND_H;
 
-    if (g_flatMode) {
-        for (int i = 0; i < g_renderTriCount; i++) {
-            RenderTri *rt = &g_renderTris[i];
+        beginDepthBand(bandY0);
 
-            fillTriangleFlat(
-                rt->p0.x, rt->p0.y,
-                rt->p1.x, rt->p1.y,
-                rt->p2.x, rt->p2.y,
-                rt->z0, rt->z1, rt->z2,
-                rt->camz0, rt->camz1, rt->camz2,
-                rt->color,
-                rt->shadeF
-            );
+        if (g_flatMode) {
+            for (int i = 0; i < g_renderTriCount; i++) {
+                RenderTri *rt = &g_renderTris[i];
 
-        }
-    }
-    else if (g_twoshadeMode) {
-        for (int i = 0; i < g_renderTriCount; i++) {
-            RenderTri *rt = &g_renderTris[i];
+                if (band < rt->firstBand || band > rt->lastBand) continue;
 
-            fillTriangleDitherBayer2Mode(
-                rt->p0.x, rt->p0.y,
-                rt->p1.x, rt->p1.y,
-                rt->p2.x, rt->p2.y,
-                rt->z0, rt->z1, rt->z2,
-                rt->camz0, rt->camz1, rt->camz2,
-                rt->color,
-                rt->shadeF
-            );
-        }
-    }
-    else {
-        // normal operation
-        for (int i = 0; i < g_renderTriCount; i++) {
-            RenderTri *rt = &g_renderTris[i];
-
-            if(rt->color & TRI_FLAG_TRANSPARENT){
-                fillTriangleDitherBayerT(
-                    rt->p0.x, rt->p0.y,
-                    rt->p1.x, rt->p1.y,
-                    rt->p2.x, rt->p2.y,
-                    rt->z0, rt->z1, rt->z2,
-                    rt->camz0, rt->camz1, rt->camz2,
-                    rt->color,
-                    rt->transparency,
-                    //240,
-                    rt->shadeF
-                );
-            } else {
-                // ordinary triangle render
-                
-                fillTriangleDitherBayer(
+                fillTriangleFlat(
                     rt->p0.x, rt->p0.y,
                     rt->p1.x, rt->p1.y,
                     rt->p2.x, rt->p2.y,
@@ -2031,6 +2002,53 @@ void Render3D(const Camera *cam)
                     rt->color,
                     rt->shadeF
                 );
+            }
+        }
+        else if (g_twoshadeMode) {
+            for (int i = 0; i < g_renderTriCount; i++) {
+                RenderTri *rt = &g_renderTris[i];
+
+                if (band < rt->firstBand || band > rt->lastBand) continue;
+
+                fillTriangleDitherBayer2Mode(
+                    rt->p0.x, rt->p0.y,
+                    rt->p1.x, rt->p1.y,
+                    rt->p2.x, rt->p2.y,
+                    rt->z0, rt->z1, rt->z2,
+                    rt->camz0, rt->camz1, rt->camz2,
+                    rt->color,
+                    rt->shadeF
+                );
+            }
+        }
+        else {
+            for (int i = 0; i < g_renderTriCount; i++) {
+                RenderTri *rt = &g_renderTris[i];
+
+                if (band < rt->firstBand || band > rt->lastBand) continue;
+
+                if (rt->color & TRI_FLAG_TRANSPARENT) {
+                    fillTriangleDitherBayerT(
+                        rt->p0.x, rt->p0.y,
+                        rt->p1.x, rt->p1.y,
+                        rt->p2.x, rt->p2.y,
+                        rt->z0, rt->z1, rt->z2,
+                        rt->camz0, rt->camz1, rt->camz2,
+                        rt->color,
+                        rt->transparency,
+                        rt->shadeF
+                    );
+                } else {
+                    fillTriangleDitherBayer(
+                        rt->p0.x, rt->p0.y,
+                        rt->p1.x, rt->p1.y,
+                        rt->p2.x, rt->p2.y,
+                        rt->z0, rt->z1, rt->z2,
+                        rt->camz0, rt->camz1, rt->camz2,
+                        rt->color,
+                        rt->shadeF
+                    );
+                }
             }
         }
     }

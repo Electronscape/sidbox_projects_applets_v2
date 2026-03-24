@@ -49,6 +49,9 @@ typedef struct align32 {
 
     int16_t minY;
     int16_t maxY;
+
+    uint8_t firstBand;
+    uint8_t lastBand;
 } RenderTri;
 
 

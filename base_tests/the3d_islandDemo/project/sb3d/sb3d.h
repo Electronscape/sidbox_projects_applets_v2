@@ -442,6 +442,7 @@ void sb3dParticlesRender(const Camera *cam);
     Low level graphics / raster
 ==============================================================================*/
 
+void initDepthBandMem(void);
 void set3DRenderBuffer(uint8_t *buffer);
 void resetRand(void);
 
