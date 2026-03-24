@@ -110,11 +110,11 @@ extern _largest_modfile;
 // USING THIS YOU open up an area of 1MB of CACHED and BUFFERED memory (SPEED)
 // and must follow an offset profile, ANY Music is loaded at 0xD0000000 (SDRAM) so if your program starts at 128k off set, use profile 1
 // eg. program uses 256k of mod music, your program would start at offset 256k, use profile 2...
-#define GAMEMODE_BANKSIZE		(128 * 1024)
+#define GAMEMODE_BANKSIZE		(256 * 2048)
 #define GAMEMODE_PROFILE_0		(0 * GAMEMODE_BANKSIZE)
 #define GAMEMODE_PROFILE_1		(1 * GAMEMODE_BANKSIZE)
 #define GAMEMODE_PROFILE_2		(2 * GAMEMODE_BANKSIZE)
-#define GAMEMODE_PROFILE_3		(3 * GAMEMODE_BANKSIZE)
+#define GAMEMODE_PROFILE_3		(3 * GAMEMODE_BANKSIZE)	// system with 256k at 2meg sections
 #define GAMEMODE_PROFILE_4		(4 * GAMEMODE_BANKSIZE)
 #define GAMEMODE_PROFILE_5		(5 * GAMEMODE_BANKSIZE)
 #define GAMEMODE_PROFILE_6		(6 * GAMEMODE_BANKSIZE)
@@ -212,6 +212,7 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 #define getmousedelta(x, y) (HWKERNAL->getmousedelta(x,y))
 #define clrmousedelta()	    (HWKERNAL->clrmousedelta())
 
+//#define CPU_HZ 480000000.0f
 #define CPU_HZ 480000000.0f
 #define TICK_TO_SECONDS     (1.0f / CPU_HZ)
 #define getTicks()			(HWKERNAL->getTicks())

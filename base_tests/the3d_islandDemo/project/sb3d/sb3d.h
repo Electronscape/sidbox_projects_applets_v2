@@ -462,6 +462,79 @@ void Render3D(const Camera *cam);   /* Call set3DRenderBuffer() before Render3D(
 /*==============================================================================
     Horizon helpers
 ==============================================================================*/
+// BIG ONE - heavy, use only for non fast paced stuff
+void drawFakeHorizonTex(
+    const Camera *cam,
+    const uint8_t *skyTex,
+    const uint8_t *groundTex,
+    uint8_t skySolidCol,
+    uint8_t groundSolidCol,
+    uint8_t lineCol,
+    float groundY,
+    float skyY,
+    float skyFadeDist,
+    float skyScale,
+    float groundScale,
+    int skyScrollU,
+    int skyScrollV,
+    int groundScrollU,
+    int groundScrollV,
+    uint8_t transparentZero,
+    uint8_t proceduralPatchMode,
+    uint8_t skyPatchDensity,
+    uint8_t groundPatchDensity
+);
+
+
+
+void drawFakeHorizonGroundTex(
+    const Camera *cam,
+    const uint8_t *groundTex,
+    uint8_t skySolidCol,
+    uint8_t groundSolidCol,
+    uint8_t lineCol,
+    float groundY,
+    float groundScale,
+    int groundScrollU,
+    int groundScrollV,
+    uint8_t transparentZero,
+    uint8_t proceduralPatchMode,
+    uint8_t groundPatchDensity
+);
+
+
+void drawFakeHorizonSkyTex(
+    const Camera *cam,
+    const uint8_t *skyTex,
+    uint8_t skySolidCol,
+    uint8_t groundSolidCol,
+    uint8_t lineCol,
+    float groundY,
+    float skyY,
+    float skyFadeDist,
+    float skyScale,
+    int skyScrollU,
+    int skyScrollV,
+    uint8_t transparentZero,
+    uint8_t proceduralPatchMode,
+    uint8_t skyPatchDensity
+);
+
+// demo test :)
+//drawFakeHorizonTex(&cam, skytex, seatex, HosSky, HosGround, HosHorizonLine, 0, 1600, 10000  ,0.02f, 0.04f, skyU, 0, 0, 0, 1, 1, 60, 255);
+//drawFakeHorizonGroundTex(&cam, seatex, HosSky,HosGround,HosHorizonLine, 0, 0.02f, 0, 0, 1, 1, 60);
+//drawFakeHorizonSkyTex(&cam, skytex, HosSky, HosGround, HosHorizonLine, 0, 1600, 10000, 0.02f, skyU, 0, 1, 1, 40);
+
+
+
+
+
+
+
+
+
+
+
 
 void drawFakeHorizonDots(const Camera *cam, uint8_t dotCol, int spacing, float ylevel, uint8_t density);
 

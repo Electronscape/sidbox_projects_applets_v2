@@ -17,6 +17,10 @@ typedef struct align32 {
     float invDepthRange;
     float nearPlane;
     float farPlane;
+
+    // projector
+    float projF;
+    float halfW, halfH, halfOverW;
 } Camera;
 
 

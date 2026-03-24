@@ -2,6 +2,7 @@
 #include <math.h>
 
 #include "sb3d.h"
+#include "sb3dgfx.h"
 
 void cameraNormalize(Camera *cam)
 {
@@ -68,7 +69,11 @@ Camera cameraCreate(void)
         .forward   = { 0.0f, 0.0f, 1.0f },
         .nearPlane = 0.01f,
         .farPlane  = 1000.0f,
-        .invDepthRange = 1.0f / (1000.0f - 0.01f)
+        .invDepthRange = 1.0f / (1000.0f - 0.01f),
+        .projF     = (float)(SCREEN_W * 0.5f),
+        .halfW     = (float)(SCREEN_W * 0.5f),
+        .halfH     = (float)(SCREEN_H * 0.5f),
+        .halfOverW = (float)SCREEN_H / (float)SCREEN_W
     };
 
     return cam;
@@ -164,6 +169,11 @@ void cameraSetRange(Camera *cam, float nearPlane, float farPlane)
     cam->nearPlane = nearPlane;
     cam->farPlane  = farPlane;
     cam->invDepthRange = 1.0f / (farPlane - nearPlane);
+
+    cam->projF     = (float)(SCREEN_W * 0.5f);
+    cam->halfW     = (float)(SCREEN_W * 0.5f);
+    cam->halfH     = (float)(SCREEN_H * 0.5f);
+    cam->halfOverW = (float)SCREEN_H / (float)SCREEN_W;
 }
 
 

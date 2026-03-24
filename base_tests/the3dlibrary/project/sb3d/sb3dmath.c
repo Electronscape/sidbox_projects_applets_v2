@@ -12,8 +12,7 @@ Vec3 vec3Add(Vec3 a, Vec3 b)
     };
 }
 
-Vec3 vec3Sub(Vec3 a, Vec3 b)
-{
+Vec3 vec3Sub(Vec3 a, Vec3 b){
     return (Vec3){
         a.x - b.x,
         a.y - b.y,
@@ -21,8 +20,7 @@ Vec3 vec3Sub(Vec3 a, Vec3 b)
     };
 }
 
-Vec3 vec3Scale(Vec3 v, float s)
-{
+Vec3 vec3Scale(Vec3 v, float s){
     return (Vec3){
         v.x * s,
         v.y * s,
@@ -30,8 +28,7 @@ Vec3 vec3Scale(Vec3 v, float s)
     };
 }
 
-float vec3Dot(Vec3 a, Vec3 b)
-{
+float vec3Dot(Vec3 a, Vec3 b){
     return
         (a.x * b.x) +
         (a.y * b.y) +

@@ -13,7 +13,10 @@ extern uint8_t *drawbuffer;    // framebuffer (interal)
 void set3DRenderBuffer(uint8_t *buffer);
 
 
-#define zbufferaccurate 48      // adjust this for Zbuffer accuracy, the higher the number, the less accurate, 4 is good, 32 is compromise, 64 cursed 
+// adjust this for Zbuffer accuracy, the higher the number, the less accurate, 4 is good, 32 is compromise, 64 cursed 
+// trade offs: HIGH - less work, faster
+//             LOW  - more work, slow, more accurate
+#define zbufferaccurate 48      
 
 
 typedef enum {

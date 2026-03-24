@@ -35,13 +35,6 @@ static int g_flatMode        = 0;
 static int g_twoshadeMode    = 0;
 static int g_wireframe       = 0;
 
-static inline float sb3d_proj_f(void)
-{
-    //const float fovRad = 90.0f * (float)(M_PI / 180.0f);
-    //return (SCREEN_W * 0.5f) / tanf(fovRad * 0.5f);
-    return (float)(SCREEN_W * 0.5f);
-}
-
 static inline Vec3 lerpVec3(Vec3 a, Vec3 b, float t)
 {
     Vec3 out;
@@ -50,11 +43,6 @@ static inline Vec3 lerpVec3(Vec3 a, Vec3 b, float t)
     out.z = a.z + ((b.z - a.z) * t);
     return out;
 }
-
-
-
-
-
 
 static inline uint16_t encodeZ(float z, const Camera *cam)
 {
@@ -80,14 +68,12 @@ void enableWireFrame(int en)     { g_wireframe = en; }
 
 static inline float planeEval(Vec3 p, ClipPlane plane, const Camera *cam)
 {
-    const float halfHOverF = (float)SCREEN_H / (float)SCREEN_W;
-
     switch (plane) {
         case PLANE_NEAR:   return p.z - cam->nearPlane;
         case PLANE_LEFT:   return p.x + p.z;
         case PLANE_RIGHT:  return p.z - p.x;
-        case PLANE_TOP:    return (p.z * halfHOverF) - p.y;
-        case PLANE_BOTTOM: return p.y + (p.z * halfHOverF);
+        case PLANE_TOP:    return (p.z * cam->halfOverW) - p.y;
+        case PLANE_BOTTOM: return p.y + (p.z * cam->halfOverW);
     }
 
     return -1.0f;
@@ -110,7 +96,7 @@ static int clipPolygonAgainstPlane(Vec3 *inVerts, int inCount, Vec3 *outVerts, C
 {
     int outCount = 0;
     const float nearPlane  = cam->nearPlane;
-    const float halfHOverW = (float)SCREEN_H / (float)SCREEN_W;
+    const float halfHOverW = cam->halfOverW;
 
     Vec3 prev = inVerts[inCount - 1];
     float prevDist;
@@ -120,7 +106,7 @@ static int clipPolygonAgainstPlane(Vec3 *inVerts, int inCount, Vec3 *outVerts, C
         case PLANE_LEFT:   prevDist = prev.x + prev.z; break;
         case PLANE_RIGHT:  prevDist = prev.z - prev.x; break;
         case PLANE_TOP:    prevDist = (prev.z * halfHOverW) - prev.y; break;
-        default:           prevDist = prev.y + (prev.z * halfHOverW); break; /* PLANE_BOTTOM */
+        default:           prevDist = prev.y + (prev.z * halfHOverW); break;
     }
 
     for (int i = 0; i < inCount; i++) {
@@ -132,7 +118,7 @@ static int clipPolygonAgainstPlane(Vec3 *inVerts, int inCount, Vec3 *outVerts, C
             case PLANE_LEFT:   currDist = curr.x + curr.z; break;
             case PLANE_RIGHT:  currDist = curr.z - curr.x; break;
             case PLANE_TOP:    currDist = (curr.z * halfHOverW) - curr.y; break;
-            default:           currDist = curr.y + (curr.z * halfHOverW); break; /* PLANE_BOTTOM */
+            default:           currDist = curr.y + (curr.z * halfHOverW); break;
         }
 
         const int prevInside = (prevDist >= 0.0f);
@@ -177,7 +163,7 @@ int clipTriangleToFrustum(Vec3 a, Vec3 b, Vec3 c, Vec3 *outVerts, const Camera *
     int count = 3;
 
     const float nearPlane = cam->nearPlane;
-    const float halfHOverW = (float)SCREEN_H / (float)SCREEN_W;
+    const float halfHOverW = cam->halfOverW;
 
     src[0] = a;
     src[1] = b;
@@ -420,19 +406,13 @@ static inline int triangleFacingCamera(Vec3 a, Vec3 b, Vec3 c)
 }
 
 
-
 void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, uint8_t emission, uint8_t trans, float shadeF)
 {
     Vec2 pa, pb, pc;
-    const float nearPlane = cam->nearPlane;
-    const float f = (float)(SCREEN_W * 0.5f);
-    const float halfW = (float)(SCREEN_W * 0.5f);
-    const float halfH = (float)(SCREEN_H * 0.5f);
-
     float invZa, invZb, invZc;
     int cross;
 
-    if (a.z <= nearPlane || b.z <= nearPlane || c.z <= nearPlane) {
+    if (a.z <= cam->nearPlane || b.z <= cam->nearPlane || c.z <= cam->nearPlane) {
         return;
     }
 
@@ -440,14 +420,14 @@ void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, 
     invZb = 1.0f / b.z;
     invZc = 1.0f / c.z;
 
-    pa.x = (int)((a.x * f * invZa) + halfW + 0.5f);
-    pa.y = (int)((-a.y * f * invZa) + halfH + 0.5f);
+    pa.x = (int)((a.x * cam->projF * invZa) + cam->halfW + 0.5f);
+    pa.y = (int)((-a.y * cam->projF * invZa) + cam->halfH + 0.5f);
 
-    pb.x = (int)((b.x * f * invZb) + halfW + 0.5f);
-    pb.y = (int)((-b.y * f * invZb) + halfH + 0.5f);
+    pb.x = (int)((b.x * cam->projF * invZb) + cam->halfW + 0.5f);
+    pb.y = (int)((-b.y * cam->projF * invZb) + cam->halfH + 0.5f);
 
-    pc.x = (int)((c.x * f * invZc) + halfW + 0.5f);
-    pc.y = (int)((-c.y * f * invZc) + halfH + 0.5f);
+    pc.x = (int)((c.x * cam->projF * invZc) + cam->halfW + 0.5f);
+    pc.y = (int)((-c.y * cam->projF * invZc) + cam->halfH + 0.5f);
 
     cross = (pb.x - pa.x) * (pc.y - pa.y) - (pb.y - pa.y) * (pc.x - pa.x);
     if (cross <= 0) {
@@ -465,9 +445,9 @@ void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, 
         rt->p1 = pb;
         rt->p2 = pc;
 
-        rt->color    = color;
-        rt->emission = emission;
-        rt->shadeF   = shadeF;
+        rt->color        = color;
+        rt->emission     = emission;
+        rt->shadeF       = shadeF;
         rt->transparency = trans;
 
         rt->z0 = encodeZ(a.z, cam);
@@ -480,18 +460,16 @@ void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, 
     }
 }
 
-
 int projectPoint(Vec3 p, const Camera *cam, Vec2 *out)
 {
     const float invZ = 1.0f / p.z;
-    const float f = sb3d_proj_f();
 
     if (p.z <= cam->nearPlane) {
         return 0;
     }
 
-    out->x = (int)((p.x * f * invZ) + (SCREEN_W * 0.5f) + 0.5f);
-    out->y = (int)((-p.y * f * invZ) + (SCREEN_H * 0.5f) + 0.5f);
+    out->x = (int)((p.x * cam->projF * invZ) + cam->halfW + 0.5f);
+    out->y = (int)((-p.y * cam->projF * invZ) + cam->halfH + 0.5f);
     return 1;
 }
 
@@ -523,11 +501,30 @@ void resetRenderList(void)
 
 static int entityVisibleCheck(const Entity *ent, const Camera *cam)
 {
-    Vec3 center = worldToCamera(ent->pos, *cam);
-    float r = ent->mesh->boundsRadius;
+    const float dx = ent->pos.x - cam->pos.x;
+    const float dy = ent->pos.y - cam->pos.y;
+    const float dz = ent->pos.z - cam->pos.z;
+    const float r  = ent->mesh->boundsRadius;
 
-    if (center.z - r > cam->farPlane) return 0;
+    Vec3 center;
+    center.x = (dx * cam->right.x)   + (dy * cam->right.y)   + (dz * cam->right.z);
+    center.y = (dx * cam->up.x)      + (dy * cam->up.y)      + (dz * cam->up.z);
+    center.z = (dx * cam->forward.x) + (dy * cam->forward.y) + (dz * cam->forward.z);
+
+    /* near / far */
+    if (center.z - r > cam->farPlane)  return 0;
     if (center.z + r < cam->nearPlane) return 0;
+
+    /* left / right */
+    if (center.x < (-center.z - r)) return 0;
+    if (center.x > ( center.z + r)) return 0;
+
+    /* top / bottom */
+    {
+        const float yLimit = center.z * cam->halfOverW;
+        if (center.y < (-yLimit - r)) return 0;
+        if (center.y > ( yLimit + r)) return 0;
+    }
 
     return 1;
 }
@@ -560,6 +557,8 @@ static uint32_t sb3d_hash2i(int x, int z)
     return h;
 }
 
+
+
 void drawFakeHorizonDots(const Camera *cam, uint8_t dotCol, int spacing, float ylevel, uint8_t density)
 {
     if (!cam) return;
@@ -568,18 +567,11 @@ void drawFakeHorizonDots(const Camera *cam, uint8_t dotCol, int spacing, float y
 
     const int rangeCells = 18;
     const int range2 = rangeCells * rangeCells;
-
-    /* start fading at about 75% of the radius */
     const int fadeStart2 = (range2 * 3) >> 2;
     const int fadeSpan2  = range2 - fadeStart2;
 
     const float jitter = spacing * 0.35f;
     const float jitterScale = (2.0f * jitter) * (1.0f / 255.0f);
-
-    const float f = sb3d_proj_f();
-    const float halfW = (float)(SCREEN_W * 0.5f);
-    const float halfH = (float)(SCREEN_H * 0.5f);
-    const float nearPlane = cam->nearPlane;
 
     const int baseCellX = (int)floorf(cam->pos.x / (float)spacing);
     const int baseCellZ = (int)floorf(cam->pos.z / (float)spacing);
@@ -614,12 +606,10 @@ void drawFakeHorizonDots(const Camera *cam, uint8_t dotCol, int spacing, float y
             uint8_t localDensity;
             uint32_t h;
 
-            /* hard circular cutoff */
             if (dist2 > range2) {
                 continue;
             }
 
-            /* soft falloff near the edge, still integer-only */
             if (dist2 <= fadeStart2) {
                 localDensity = density;
             } else {
@@ -644,12 +634,12 @@ void drawFakeHorizonDots(const Camera *cam, uint8_t dotCol, int spacing, float y
                 const float camY = (dx * ux) + (yOff * uy) + (dz * uz);
                 const float camZ = (dx * fx) + (yOff * fy) + (dz * fz);
 
-                if (camZ <= nearPlane) continue;
+                if (camZ <= cam->nearPlane) continue;
 
                 {
                     const float invZ = 1.0f / camZ;
-                    const int sx = (int)((camX * f * invZ) + halfW + 0.5f);
-                    const int sy = (int)((-camY * f * invZ) + halfH + 0.5f);
+                    const int sx = (int)((camX * cam->projF * invZ) + cam->halfW + 0.5f);
+                    const int sy = (int)((-camY * cam->projF * invZ) + cam->halfH + 0.5f);
 
                     if ((unsigned)sx < SCREEN_W && (unsigned)sy < SCREEN_H) {
                         putPixel(sx, sy, dotCol);
@@ -661,30 +651,971 @@ void drawFakeHorizonDots(const Camera *cam, uint8_t dotCol, int spacing, float y
 }
 
 
+void drawFakeHorizonTex(
+    const Camera *cam,
+    const uint8_t *skyTex,
+    const uint8_t *groundTex,
+    uint8_t skySolidCol,
+    uint8_t groundSolidCol,
+    uint8_t lineCol,
+    float groundY,
+    float skyY,
+    float skyFadeDist,
+    float skyScale,
+    float groundScale,
+    int skyScrollU,
+    int skyScrollV,
+    int groundScrollU,
+    int groundScrollV,
+    uint8_t transparentZero,
+    uint8_t proceduralPatchMode,
+    uint8_t skyPatchDensity,
+    uint8_t groundPatchDensity
+)
+{
+    if (!cam) return;
+    if (!skyTex || !groundTex) return;
+
+    const float f    = cam->projF;
+    const float cx   = cam->halfW;
+    const float cy   = cam->halfH;
+    const float invF = 1.0f / f;
+
+    const float camPosX = cam->pos.x;
+    const float camPosY = cam->pos.y;
+    const float camPosZ = cam->pos.z;
+
+    const float rx = cam->right.x;
+    const float ry = cam->right.y;
+    const float rz = cam->right.z;
+
+    const float ux = cam->up.x;
+    const float uy = cam->up.y;
+    const float uz = cam->up.z;
+
+    const float fx = cam->forward.x;
+    const float fy = cam->forward.y;
+    const float fz = cam->forward.z;
+
+    const float Ry = cam->right.y;
+    const float Uy = cam->up.y;
+    const float Fy = cam->forward.y;
+
+    const float groundNumer = groundY - camPosY;
+    const float skyNumer    = skyY    - camPosY;
+
+    const float skyFadeStart = skyFadeDist * 0.65f;
+    const float skyFadeEnd   = skyFadeDist;
+    const float skyFadeStart2 = skyFadeStart * skyFadeStart;
+    const float skyFadeEnd2   = skyFadeEnd   * skyFadeEnd;
+    const float skyFadeSpan2  = skyFadeEnd2 - skyFadeStart2;
+
+    const float skyScrollUf    = (float)skyScrollU;
+    const float skyScrollVf    = (float)skyScrollV;
+    const float groundScrollUf = (float)groundScrollU;
+    const float groundScrollVf = (float)groundScrollV;
+
+    const float dirStepX = -ux * invF;
+    const float dirStepY = -uy * invF;
+    const float dirStepZ = -uz * invF;
+
+    for (int x = 0; x < SCREEN_W; x++) {
+        const float sx = (((float)x - cx) * invF);
+        const float xTerm = sx * Ry;
+
+        const float topDirWorldY    = xTerm + (cy * invF * Uy) + Fy;
+        const float bottomDirWorldY = xTerm + (((cy - (float)(SCREEN_H - 1)) * invF) * Uy) + Fy;
+
+        int topGround = 0;
+        int botGround = 0;
+
+        if (fabsf(topDirWorldY) >= 0.0001f) {
+            topGround = ((groundNumer / topDirWorldY) > 0.0f);
+        }
+        if (fabsf(bottomDirWorldY) >= 0.0001f) {
+            botGround = ((groundNumer / bottomDirWorldY) > 0.0f);
+        }
+
+        uint8_t *dst = &drawbuffer[FB_INDEX(x, 0)];
+
+        const float sy0 = cy * invF;
+        float dirX = (sx * rx) + (sy0 * ux) + fx;
+        float dirY = (sx * ry) + (sy0 * uy) + fy;
+        float dirZ = (sx * rz) + (sy0 * uz) + fz;
+
+        int ySplit;
+        if (topGround == botGround) {
+            ySplit = topGround ? SCREEN_H : 0;
+        } else {
+            if (fabsf(Uy) < 0.0001f) {
+                ySplit = SCREEN_H / 2;
+            } else {
+                const float ySplitF = cy + (f / Uy) * (xTerm + Fy);
+                ySplit = (int)lroundf(ySplitF);
+            }
+
+            if (ySplit < 0) ySplit = 0;
+            if (ySplit > SCREEN_H) ySplit = SCREEN_H;
+        }
+
+        /* ---------- top segment ---------- */
+        {
+            const int topIsGround = (topGround != 0);
+
+            int cachedTileU = 0x7fffffff;
+            int cachedTileV = 0x7fffffff;
+            int cachedUseSolid = 0;
+            int cachedFlipX = 0;
+            int cachedFlipY = 0;
+            int cachedRot = 0;
+
+            for (int y = 0; y < ySplit; y++) {
+                if (fabsf(dirY) < 0.0001f) {
+                    *dst++ = topIsGround ? lineCol : skySolidCol;
+                    dirX += dirStepX;
+                    dirY += dirStepY;
+                    dirZ += dirStepZ;
+                    continue;
+                }
+
+                if (topIsGround) {
+                    const float t = groundNumer / dirY;
+                    const float hitX = camPosX + (dirX * t);
+                    const float hitZ = camPosZ + (dirZ * t);
+
+                    const float u = (hitX * groundScale) + groundScrollUf;
+                    const float v = (hitZ * groundScale) + groundScrollVf;
+
+                    int iu = (int)u;
+                    int iv = (int)v;
+                    if (u < (float)iu) iu--;
+                    if (v < (float)iv) iv--;
+
+                    int tu = iu & 31;
+                    int tv = iv & 31;
+
+                    uint8_t texCol;
+
+                    if (proceduralPatchMode) {
+                        const int tileU = iu >> 5;
+                        const int tileV = iv >> 5;
+
+                        if (tileU != cachedTileU || tileV != cachedTileV) {
+                            const uint32_t hDensity = sb3d_hash2i(tileU, tileV);
+                            const uint32_t hOrient  = sb3d_hash2i(tileU ^ 0x68bc21ebu, tileV ^ 0x02e5be93u);
+
+                            cachedTileU = tileU;
+                            cachedTileV = tileV;
+                            cachedUseSolid = ((hDensity & 255u) > groundPatchDensity);
+                            cachedFlipX = (hOrient & 1u) ? 1 : 0;
+                            cachedFlipY = (hOrient & 2u) ? 1 : 0;
+                            cachedRot   = (int)((hOrient >> 2) & 3u);
+                        }
+
+                        if (cachedUseSolid) {
+                            texCol = groundSolidCol;
+                        } else {
+                            int su = cachedFlipX ? (31 - tu) : tu;
+                            int sv = cachedFlipY ? (31 - tv) : tv;
+                            int ru, rv;
+
+                            switch (cachedRot) {
+                                default:
+                                case 0: ru = su;       rv = sv;       break;
+                                case 1: ru = 31 - sv;  rv = su;       break;
+                                case 2: ru = 31 - su;  rv = 31 - sv;  break;
+                                case 3: ru = sv;       rv = 31 - su;  break;
+                            }
+
+                            texCol = groundTex[(rv << 5) | ru];
+                            if (transparentZero && texCol == 0) texCol = groundSolidCol;
+                        }
+                    } else {
+                        texCol = groundTex[(tv << 5) | tu];
+                        if (transparentZero && texCol == 0) texCol = groundSolidCol;
+                    }
+
+                    *dst++ = texCol;
+                } else {
+                    const float t = skyNumer / dirY;
+
+                    if (t <= 0.0f) {
+                        *dst++ = skySolidCol;
+                    } else {
+                        const float hitX = camPosX + (dirX * t);
+                        const float hitZ = camPosZ + (dirZ * t);
+
+                        const float dx = hitX - camPosX;
+                        const float dz = hitZ - camPosZ;
+                        const float dist2 = (dx * dx) + (dz * dz);
+
+                        const float u = (hitX * skyScale) + skyScrollUf;
+                        const float v = (hitZ * skyScale) + skyScrollVf;
+
+                        int iu = (int)u;
+                        int iv = (int)v;
+                        if (u < (float)iu) iu--;
+                        if (v < (float)iv) iv--;
+
+                        int tu = iu & 31;
+                        int tv = iv & 31;
+
+                        uint8_t texCol;
+
+                        if (proceduralPatchMode) {
+                            const int tileU = iu >> 5;
+                            const int tileV = iv >> 5;
+
+                            if (tileU != cachedTileU || tileV != cachedTileV) {
+                                const uint32_t hDensity = sb3d_hash2i(tileU, tileV);
+                                const uint32_t hOrient  = sb3d_hash2i(tileU ^ 0x68bc21ebu, tileV ^ 0x02e5be93u);
+
+                                cachedTileU = tileU;
+                                cachedTileV = tileV;
+                                cachedUseSolid = ((hDensity & 255u) > skyPatchDensity);
+                                cachedFlipX = (hOrient & 1u) ? 1 : 0;
+                                cachedFlipY = (hOrient & 2u) ? 1 : 0;
+                                cachedRot   = (int)((hOrient >> 2) & 3u);
+                            }
+
+                            if (cachedUseSolid) {
+                                texCol = skySolidCol;
+                            } else {
+                                int su = cachedFlipX ? (31 - tu) : tu;
+                                int sv = cachedFlipY ? (31 - tv) : tv;
+                                int ru, rv;
+
+                                switch (cachedRot) {
+                                    default:
+                                    case 0: ru = su;       rv = sv;       break;
+                                    case 1: ru = 31 - sv;  rv = su;       break;
+                                    case 2: ru = 31 - su;  rv = 31 - sv;  break;
+                                    case 3: ru = sv;       rv = 31 - su;  break;
+                                }
+
+                                texCol = skyTex[(rv << 5) | ru];
+                                if (transparentZero && texCol == 0) texCol = skySolidCol;
+                            }
+                        } else {
+                            texCol = skyTex[(tv << 5) | tu];
+                            if (transparentZero && texCol == 0) texCol = skySolidCol;
+                        }
+
+                        if (dist2 <= skyFadeStart2) {
+                            *dst++ = texCol;
+                        } else if (dist2 >= skyFadeEnd2) {
+                            *dst++ = skySolidCol;
+                        } else {
+                            const float fadeT = (dist2 - skyFadeStart2) / skyFadeSpan2;
+                            const int dither = ((x & 3) + ((y & 3) << 2));
+                            *dst++ = ((int)(fadeT * 15.0f) > dither) ? skySolidCol : texCol;
+                        }
+                    }
+                }
+
+                dirX += dirStepX;
+                dirY += dirStepY;
+                dirZ += dirStepZ;
+            }
+        }
+
+        /* ---------- bottom segment ---------- */
+        {
+            const int botIsGround = (botGround != 0);
+
+            int cachedTileU = 0x7fffffff;
+            int cachedTileV = 0x7fffffff;
+            int cachedUseSolid = 0;
+            int cachedFlipX = 0;
+            int cachedFlipY = 0;
+            int cachedRot = 0;
+
+            for (int y = ySplit; y < SCREEN_H; y++) {
+                if (fabsf(dirY) < 0.0001f) {
+                    *dst++ = botIsGround ? lineCol : skySolidCol;
+                    dirX += dirStepX;
+                    dirY += dirStepY;
+                    dirZ += dirStepZ;
+                    continue;
+                }
+
+                if (botIsGround) {
+                    const float t = groundNumer / dirY;
+                    const float hitX = camPosX + (dirX * t);
+                    const float hitZ = camPosZ + (dirZ * t);
+
+                    const float u = (hitX * groundScale) + groundScrollUf;
+                    const float v = (hitZ * groundScale) + groundScrollVf;
+
+                    int iu = (int)u;
+                    int iv = (int)v;
+                    if (u < (float)iu) iu--;
+                    if (v < (float)iv) iv--;
+
+                    int tu = iu & 31;
+                    int tv = iv & 31;
+
+                    uint8_t texCol;
+
+                    if (proceduralPatchMode) {
+                        const int tileU = iu >> 5;
+                        const int tileV = iv >> 5;
+
+                        if (tileU != cachedTileU || tileV != cachedTileV) {
+                            const uint32_t hDensity = sb3d_hash2i(tileU, tileV);
+                            const uint32_t hOrient  = sb3d_hash2i(tileU ^ 0x68bc21ebu, tileV ^ 0x02e5be93u);
+
+                            cachedTileU = tileU;
+                            cachedTileV = tileV;
+                            cachedUseSolid = ((hDensity & 255u) > groundPatchDensity);
+                            cachedFlipX = (hOrient & 1u) ? 1 : 0;
+                            cachedFlipY = (hOrient & 2u) ? 1 : 0;
+                            cachedRot   = (int)((hOrient >> 2) & 3u);
+                        }
+
+                        if (cachedUseSolid) {
+                            texCol = groundSolidCol;
+                        } else {
+                            int su = cachedFlipX ? (31 - tu) : tu;
+                            int sv = cachedFlipY ? (31 - tv) : tv;
+                            int ru, rv;
+
+                            switch (cachedRot) {
+                                default:
+                                case 0: ru = su;       rv = sv;       break;
+                                case 1: ru = 31 - sv;  rv = su;       break;
+                                case 2: ru = 31 - su;  rv = 31 - sv;  break;
+                                case 3: ru = sv;       rv = 31 - su;  break;
+                            }
+
+                            texCol = groundTex[(rv << 5) | ru];
+                            if (transparentZero && texCol == 0) texCol = groundSolidCol;
+                        }
+                    } else {
+                        texCol = groundTex[(tv << 5) | tu];
+                        if (transparentZero && texCol == 0) texCol = groundSolidCol;
+                    }
+
+                    *dst++ = texCol;
+                } else {
+                    const float t = skyNumer / dirY;
+
+                    if (t <= 0.0f) {
+                        *dst++ = skySolidCol;
+                    } else {
+                        const float hitX = camPosX + (dirX * t);
+                        const float hitZ = camPosZ + (dirZ * t);
+
+                        const float dx = hitX - camPosX;
+                        const float dz = hitZ - camPosZ;
+                        const float dist2 = (dx * dx) + (dz * dz);
+
+                        const float u = (hitX * skyScale) + skyScrollUf;
+                        const float v = (hitZ * skyScale) + skyScrollVf;
+
+                        int iu = (int)u;
+                        int iv = (int)v;
+                        if (u < (float)iu) iu--;
+                        if (v < (float)iv) iv--;
+
+                        int tu = iu & 31;
+                        int tv = iv & 31;
+
+                        uint8_t texCol;
+
+                        if (proceduralPatchMode) {
+                            const int tileU = iu >> 5;
+                            const int tileV = iv >> 5;
+
+                            if (tileU != cachedTileU || tileV != cachedTileV) {
+                                const uint32_t hDensity = sb3d_hash2i(tileU, tileV);
+                                const uint32_t hOrient  = sb3d_hash2i(tileU ^ 0x68bc21ebu, tileV ^ 0x02e5be93u);
+
+                                cachedTileU = tileU;
+                                cachedTileV = tileV;
+                                cachedUseSolid = ((hDensity & 255u) > skyPatchDensity);
+                                cachedFlipX = (hOrient & 1u) ? 1 : 0;
+                                cachedFlipY = (hOrient & 2u) ? 1 : 0;
+                                cachedRot   = (int)((hOrient >> 2) & 3u);
+                            }
+
+                            if (cachedUseSolid) {
+                                texCol = skySolidCol;
+                            } else {
+                                int su = cachedFlipX ? (31 - tu) : tu;
+                                int sv = cachedFlipY ? (31 - tv) : tv;
+                                int ru, rv;
+
+                                switch (cachedRot) {
+                                    default:
+                                    case 0: ru = su;       rv = sv;       break;
+                                    case 1: ru = 31 - sv;  rv = su;       break;
+                                    case 2: ru = 31 - su;  rv = 31 - sv;  break;
+                                    case 3: ru = sv;       rv = 31 - su;  break;
+                                }
+
+                                texCol = skyTex[(rv << 5) | ru];
+                                if (transparentZero && texCol == 0) texCol = skySolidCol;
+                            }
+                        } else {
+                            texCol = skyTex[(tv << 5) | tu];
+                            if (transparentZero && texCol == 0) texCol = skySolidCol;
+                        }
+
+                        if (dist2 <= skyFadeStart2) {
+                            *dst++ = texCol;
+                        } else if (dist2 >= skyFadeEnd2) {
+                            *dst++ = skySolidCol;
+                        } else {
+                            const float fadeT = (dist2 - skyFadeStart2) / skyFadeSpan2;
+                            const int dither = ((x & 3) + ((y & 3) << 2));
+                            *dst++ = ((int)(fadeT * 15.0f) > dither) ? skySolidCol : texCol;
+                        }
+                    }
+                }
+
+                dirX += dirStepX;
+                dirY += dirStepY;
+                dirZ += dirStepZ;
+            }
+        }
+    }
+
+    if (fabsf(Uy) >= 0.0001f) {
+        int y0 = (int)lroundf(cy + ((((0.0f) - cx) * Ry) + (f * Fy)) / Uy);
+        int y1 = (int)lroundf(cy + (((((float)(SCREEN_W - 1)) - cx) * Ry) + (f * Fy)) / Uy);
+        drawLine(0, y0, SCREEN_W - 1, y1, lineCol);
+    }
+}
+
+void drawFakeHorizonSkyTex(
+    const Camera *cam,
+    const uint8_t *skyTex,
+    uint8_t skySolidCol,
+    uint8_t groundSolidCol,
+    uint8_t lineCol,
+    float groundY,
+    float skyY,
+    float skyFadeDist,
+    float skyScale,
+    int skyScrollU,
+    int skyScrollV,
+    uint8_t transparentZero,
+    uint8_t proceduralPatchMode,
+    uint8_t skyPatchDensity
+)
+{
+    if (!cam) return;
+    if (!skyTex) return;
+
+    const float f    = cam->projF;
+    const float cx   = cam->halfW;
+    const float cy   = cam->halfH;
+    const float invF = 1.0f / f;
+
+    const float camPosX = cam->pos.x;
+    const float camPosY = cam->pos.y;
+    const float camPosZ = cam->pos.z;
+
+    const float rx = cam->right.x;
+    const float ry = cam->right.y;
+    const float rz = cam->right.z;
+
+    const float ux = cam->up.x;
+    const float uy = cam->up.y;
+    const float uz = cam->up.z;
+
+    const float fx = cam->forward.x;
+    const float fy = cam->forward.y;
+    const float fz = cam->forward.z;
+
+    const float Ry = cam->right.y;
+    const float Uy = cam->up.y;
+    const float Fy = cam->forward.y;
+
+    const float groundNumer = groundY - camPosY;
+    const float skyNumer    = skyY    - camPosY;
+
+    const float skyFadeStart  = skyFadeDist * 0.65f;
+    const float skyFadeEnd    = skyFadeDist;
+    const float skyFadeStart2 = skyFadeStart * skyFadeStart;
+    const float skyFadeEnd2   = skyFadeEnd   * skyFadeEnd;
+    const float skyFadeSpan2  = skyFadeEnd2 - skyFadeStart2;
+
+    const float skyScrollUf = (float)skyScrollU;
+    const float skyScrollVf = (float)skyScrollV;
+
+    const float dirStepX = -ux * invF;
+    const float dirStepY = -uy * invF;
+    const float dirStepZ = -uz * invF;
+
+    for (int x = 0; x < SCREEN_W; x++) {
+        const float sx = (((float)x - cx) * invF);
+        const float xTerm = sx * Ry;
+
+        const float topDirWorldY    = xTerm + (cy * invF * Uy) + Fy;
+        const float bottomDirWorldY = xTerm + (((cy - (float)(SCREEN_H - 1)) * invF) * Uy) + Fy;
+
+        int topGround = 0;
+        int botGround = 0;
+
+        if (fabsf(topDirWorldY) >= 0.0001f) {
+            topGround = ((groundNumer / topDirWorldY) > 0.0f);
+        }
+        if (fabsf(bottomDirWorldY) >= 0.0001f) {
+            botGround = ((groundNumer / bottomDirWorldY) > 0.0f);
+        }
+
+        uint8_t *dst = &drawbuffer[FB_INDEX(x, 0)];
+
+        const float sy0 = cy * invF;
+        float dirX = (sx * rx) + (sy0 * ux) + fx;
+        float dirY = (sx * ry) + (sy0 * uy) + fy;
+        float dirZ = (sx * rz) + (sy0 * uz) + fz;
+
+        int ySplit;
+        if (topGround == botGround) {
+            ySplit = topGround ? SCREEN_H : 0;
+        } else {
+            if (fabsf(Uy) < 0.0001f) {
+                ySplit = SCREEN_H / 2;
+            } else {
+                const float ySplitF = cy + (f / Uy) * (xTerm + Fy);
+                ySplit = (int)lroundf(ySplitF);
+            }
+
+            if (ySplit < 0) ySplit = 0;
+            if (ySplit > SCREEN_H) ySplit = SCREEN_H;
+        }
+
+        /* ---------- top segment ---------- */
+        {
+            const int topIsGround = (topGround != 0);
+
+            int cachedTileU = 0x7fffffff;
+            int cachedTileV = 0x7fffffff;
+            int cachedUseSolid = 0;
+            int cachedFlipX = 0;
+            int cachedFlipY = 0;
+            int cachedRot = 0;
+
+            for (int y = 0; y < ySplit; y++) {
+                if (fabsf(dirY) < 0.0001f) {
+                    *dst++ = topIsGround ? lineCol : skySolidCol;
+                    dirX += dirStepX;
+                    dirY += dirStepY;
+                    dirZ += dirStepZ;
+                    continue;
+                }
+
+                if (topIsGround) {
+                    *dst++ = groundSolidCol;
+                } else {
+                    const float t = skyNumer / dirY;
+
+                    if (t <= 0.0f) {
+                        *dst++ = skySolidCol;
+                    } else {
+                        const float hitX = camPosX + (dirX * t);
+                        const float hitZ = camPosZ + (dirZ * t);
+
+                        const float dx = hitX - camPosX;
+                        const float dz = hitZ - camPosZ;
+                        const float dist2 = (dx * dx) + (dz * dz);
+
+                        const float u = (hitX * skyScale) + skyScrollUf;
+                        const float v = (hitZ * skyScale) + skyScrollVf;
+
+                        int iu = (int)u;
+                        int iv = (int)v;
+                        if (u < (float)iu) iu--;
+                        if (v < (float)iv) iv--;
+
+                        int tu = iu & 31;
+                        int tv = iv & 31;
+
+                        uint8_t texCol;
+
+                        if (proceduralPatchMode) {
+                            const int tileU = iu >> 5;
+                            const int tileV = iv >> 5;
+
+                            if (tileU != cachedTileU || tileV != cachedTileV) {
+                                const uint32_t hDensity = sb3d_hash2i(tileU, tileV);
+                                const uint32_t hOrient  = sb3d_hash2i(tileU ^ 0x68bc21ebu, tileV ^ 0x02e5be93u);
+
+                                cachedTileU = tileU;
+                                cachedTileV = tileV;
+                                cachedUseSolid = ((hDensity & 255u) > skyPatchDensity);
+                                cachedFlipX = (hOrient & 1u) ? 1 : 0;
+                                cachedFlipY = (hOrient & 2u) ? 1 : 0;
+                                cachedRot   = (int)((hOrient >> 2) & 3u);
+                            }
+
+                            if (cachedUseSolid) {
+                                texCol = skySolidCol;
+                            } else {
+                                int su = cachedFlipX ? (31 - tu) : tu;
+                                int sv = cachedFlipY ? (31 - tv) : tv;
+                                int ru, rv;
+
+                                switch (cachedRot) {
+                                    default:
+                                    case 0: ru = su;       rv = sv;       break;
+                                    case 1: ru = 31 - sv;  rv = su;       break;
+                                    case 2: ru = 31 - su;  rv = 31 - sv;  break;
+                                    case 3: ru = sv;       rv = 31 - su;  break;
+                                }
+
+                                texCol = skyTex[(rv << 5) | ru];
+                                if (transparentZero && texCol == 0) texCol = skySolidCol;
+                            }
+                        } else {
+                            texCol = skyTex[(tv << 5) | tu];
+                            if (transparentZero && texCol == 0) texCol = skySolidCol;
+                        }
+
+                        if (dist2 <= skyFadeStart2) {
+                            *dst++ = texCol;
+                        } else if (dist2 >= skyFadeEnd2) {
+                            *dst++ = skySolidCol;
+                        } else {
+                            const float fadeT = (dist2 - skyFadeStart2) / skyFadeSpan2;
+                            const int dither = ((x & 3) + ((y & 3) << 2));
+                            *dst++ = ((int)(fadeT * 15.0f) > dither) ? skySolidCol : texCol;
+                        }
+                    }
+                }
+
+                dirX += dirStepX;
+                dirY += dirStepY;
+                dirZ += dirStepZ;
+            }
+        }
+
+        /* ---------- bottom segment ---------- */
+        {
+            const int botIsGround = (botGround != 0);
+
+            int cachedTileU = 0x7fffffff;
+            int cachedTileV = 0x7fffffff;
+            int cachedUseSolid = 0;
+            int cachedFlipX = 0;
+            int cachedFlipY = 0;
+            int cachedRot = 0;
+
+            for (int y = ySplit; y < SCREEN_H; y++) {
+                if (fabsf(dirY) < 0.0001f) {
+                    *dst++ = botIsGround ? lineCol : skySolidCol;
+                    dirX += dirStepX;
+                    dirY += dirStepY;
+                    dirZ += dirStepZ;
+                    continue;
+                }
+
+                if (botIsGround) {
+                    *dst++ = groundSolidCol;
+                } else {
+                    const float t = skyNumer / dirY;
+
+                    if (t <= 0.0f) {
+                        *dst++ = skySolidCol;
+                    } else {
+                        const float hitX = camPosX + (dirX * t);
+                        const float hitZ = camPosZ + (dirZ * t);
+
+                        const float dx = hitX - camPosX;
+                        const float dz = hitZ - camPosZ;
+                        const float dist2 = (dx * dx) + (dz * dz);
+
+                        const float u = (hitX * skyScale) + skyScrollUf;
+                        const float v = (hitZ * skyScale) + skyScrollVf;
+
+                        int iu = (int)u;
+                        int iv = (int)v;
+                        if (u < (float)iu) iu--;
+                        if (v < (float)iv) iv--;
+
+                        int tu = iu & 31;
+                        int tv = iv & 31;
+
+                        uint8_t texCol;
+
+                        if (proceduralPatchMode) {
+                            const int tileU = iu >> 5;
+                            const int tileV = iv >> 5;
+
+                            if (tileU != cachedTileU || tileV != cachedTileV) {
+                                const uint32_t hDensity = sb3d_hash2i(tileU, tileV);
+                                const uint32_t hOrient  = sb3d_hash2i(tileU ^ 0x68bc21ebu, tileV ^ 0x02e5be93u);
+
+                                cachedTileU = tileU;
+                                cachedTileV = tileV;
+                                cachedUseSolid = ((hDensity & 255u) > skyPatchDensity);
+                                cachedFlipX = (hOrient & 1u) ? 1 : 0;
+                                cachedFlipY = (hOrient & 2u) ? 1 : 0;
+                                cachedRot   = (int)((hOrient >> 2) & 3u);
+                            }
+
+                            if (cachedUseSolid) {
+                                texCol = skySolidCol;
+                            } else {
+                                int su = cachedFlipX ? (31 - tu) : tu;
+                                int sv = cachedFlipY ? (31 - tv) : tv;
+                                int ru, rv;
+
+                                switch (cachedRot) {
+                                    default:
+                                    case 0: ru = su;       rv = sv;       break;
+                                    case 1: ru = 31 - sv;  rv = su;       break;
+                                    case 2: ru = 31 - su;  rv = 31 - sv;  break;
+                                    case 3: ru = sv;       rv = 31 - su;  break;
+                                }
+
+                                texCol = skyTex[(rv << 5) | ru];
+                                if (transparentZero && texCol == 0) texCol = skySolidCol;
+                            }
+                        } else {
+                            texCol = skyTex[(tv << 5) | tu];
+                            if (transparentZero && texCol == 0) texCol = skySolidCol;
+                        }
+
+                        if (dist2 <= skyFadeStart2) {
+                            *dst++ = texCol;
+                        } else if (dist2 >= skyFadeEnd2) {
+                            *dst++ = skySolidCol;
+                        } else {
+                            const float fadeT = (dist2 - skyFadeStart2) / skyFadeSpan2;
+                            const int dither = ((x & 3) + ((y & 3) << 2));
+                            *dst++ = ((int)(fadeT * 15.0f) > dither) ? skySolidCol : texCol;
+                        }
+                    }
+                }
+
+                dirX += dirStepX;
+                dirY += dirStepY;
+                dirZ += dirStepZ;
+            }
+        }
+    }
+
+    if (fabsf(Uy) >= 0.0001f) {
+        int y0 = (int)lroundf(cy + ((((0.0f) - cx) * Ry) + (f * Fy)) / Uy);
+        int y1 = (int)lroundf(cy + (((((float)(SCREEN_W - 1)) - cx) * Ry) + (f * Fy)) / Uy);
+        drawLine(0, y0, SCREEN_W - 1, y1, lineCol);
+    }
+}
+
+void drawFakeHorizonGroundTex(
+    const Camera *cam,
+    const uint8_t *groundTex,
+    uint8_t skySolidCol,
+    uint8_t groundSolidCol,
+    uint8_t lineCol,
+    float groundY,
+    float groundScale,
+    int groundScrollU,
+    int groundScrollV,
+    uint8_t transparentZero,
+    uint8_t proceduralPatchMode,
+    uint8_t groundPatchDensity
+)
+{
+    if (!cam) return;
+    if (!groundTex) return;
+
+    const float f    = cam->projF;
+    const float cx   = cam->halfW;
+    const float cy   = cam->halfH;
+    const float invF = 1.0f / f;
+
+    const float camPosX = cam->pos.x;
+    const float camPosY = cam->pos.y;
+    const float camPosZ = cam->pos.z;
+
+    const float rx = cam->right.x;
+    const float ry = cam->right.y;
+    const float rz = cam->right.z;
+
+    const float ux = cam->up.x;
+    const float uy = cam->up.y;
+    const float uz = cam->up.z;
+
+    const float fx = cam->forward.x;
+    const float fy = cam->forward.y;
+    const float fz = cam->forward.z;
+
+    const float Ry = cam->right.y;
+    const float Uy = cam->up.y;
+    const float Fy = cam->forward.y;
+
+    const float groundNumer = groundY - camPosY;
+    const float groundScrollUf = (float)groundScrollU;
+    const float groundScrollVf = (float)groundScrollV;
+
+    for (int x = 0; x < SCREEN_W; x++) {
+        const float sx = (((float)x - cx) * invF);
+        const float xTerm = sx * Ry;
+
+        const float topDirWorldY    = xTerm + (cy * invF * Uy) + Fy;
+        const float bottomDirWorldY = xTerm + (((cy - (float)(SCREEN_H - 1)) * invF) * Uy) + Fy;
+
+        int topGround = 0;
+        int botGround = 0;
+
+        if (fabsf(topDirWorldY) >= 0.0001f) {
+            topGround = ((groundNumer / topDirWorldY) > 0.0f);
+        }
+        if (fabsf(bottomDirWorldY) >= 0.0001f) {
+            botGround = ((groundNumer / bottomDirWorldY) > 0.0f);
+        }
+
+        int ySplit;
+        if (topGround == botGround) {
+            ySplit = topGround ? SCREEN_H : 0;
+        } else {
+            if (fabsf(Uy) < 0.0001f) {
+                ySplit = SCREEN_H / 2;
+            } else {
+                const float ySplitF = cy + (f / Uy) * (xTerm + Fy);
+                ySplit = (int)lroundf(ySplitF);
+            }
+
+            if (ySplit < 0) ySplit = 0;
+            if (ySplit > SCREEN_H) ySplit = SCREEN_H;
+        }
+
+        uint8_t *dst = &drawbuffer[FB_INDEX(x, 0)];
+
+        for (int y = 0; y < SCREEN_H; y++) {
+            const int isGround = (y < ySplit) ? topGround : botGround;
+
+            if (!isGround) {
+                *dst = skySolidCol;
+                dst++;
+                continue;
+            }
+
+            {
+                const float sy = (cy - (float)y) * invF;
+
+                const float dirX = (sx * rx) + (sy * ux) + fx;
+                const float dirY = (sx * ry) + (sy * uy) + fy;
+                const float dirZ = (sx * rz) + (sy * uz) + fz;
+
+                if (fabsf(dirY) < 0.0001f) {
+                    *dst = lineCol;
+                    dst++;
+                    continue;
+                }
+
+                {
+                    const float t = groundNumer / dirY;
+                    const float hitX = camPosX + (dirX * t);
+                    const float hitZ = camPosZ + (dirZ * t);
+
+                    const float u = (hitX * groundScale) + groundScrollUf;
+                    const float v = (hitZ * groundScale) + groundScrollVf;
+
+                    int iu = (int)u;
+                    int iv = (int)v;
+                    if (u < (float)iu) iu--;
+                    if (v < (float)iv) iv--;
+
+                    int tu = iu & 31;
+                    int tv = iv & 31;
+
+                    uint8_t texCol;
+
+                    if (proceduralPatchMode) {
+                        const int tileU = iu >> 5;
+                        const int tileV = iv >> 5;
+
+                        const uint32_t hDensity = sb3d_hash2i(tileU, tileV);
+                        const uint32_t hOrient  = sb3d_hash2i(tileU ^ 0x68bc21ebu, tileV ^ 0x02e5be93u);
+
+                        if ((hDensity & 255u) > groundPatchDensity) {
+                            texCol = groundSolidCol;
+                        } else {
+                            int su = tu;
+                            int sv = tv;
+                            int ru, rv;
+
+                            if (hOrient & 1u) su = 31 - su;
+                            if (hOrient & 2u) sv = 31 - sv;
+
+                            switch ((hOrient >> 2) & 3u) {
+                                default:
+                                case 0: ru = su;       rv = sv;       break;
+                                case 1: ru = 31 - sv;  rv = su;       break;
+                                case 2: ru = 31 - su;  rv = 31 - sv;  break;
+                                case 3: ru = sv;       rv = 31 - su;  break;
+                            }
+
+                            texCol = groundTex[(rv << 5) | ru];
+                            if (transparentZero && texCol == 0) texCol = groundSolidCol;
+                        }
+                    } else {
+                        texCol = groundTex[(tv << 5) | tu];
+                        if (transparentZero && texCol == 0) texCol = groundSolidCol;
+                    }
+
+                    *dst = texCol;
+                }
+            }
+
+            dst++;
+        }
+    }
+
+    if (fabsf(Uy) >= 0.0001f) {
+        int y0 = (int)lroundf(cy + ((((0.0f) - cx) * Ry) + (f * Fy)) / Uy);
+        int y1 = (int)lroundf(cy + (((((float)(SCREEN_W - 1)) - cx) * Ry) + (f * Fy)) / Uy);
+        drawLine(0, y0, SCREEN_W - 1, y1, lineCol);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void drawFakeHorizon(const Camera *cam, uint8_t skyCol, uint8_t groundCol, uint8_t lineCol, float ylevel)
 {
     if (!cam) return;
-    const float f  = sb3d_proj_f();
-    const float cx = (float)(SCREEN_W * 0.5f);
-    const float cy = (float)(SCREEN_H * 0.5f);
+
+    const float f  = cam->projF;
+    const float cx = cam->halfW;
+    const float cy = cam->halfH;
 
     const float Ry = cam->right.y;
     const float Uy = cam->up.y;
     const float Fy = cam->forward.y;
 
     const float invF = 1.0f / f;
-
     const float groundNumer = ylevel - cam->pos.y;
-
-    /*
-        For a screen x position, world-space Y of the ray direction is:
-            dirY = (((x - cx)/f) * Ry) + (((cy - y)/f) * Uy) + Fy
-
-        Rearranged to solve for y where dirY crosses the ground plane:
-            y = cy - (f / Uy) * (groundNumer / t - (((x - cx)/f) * Ry + Fy))
-        but rather than solving directly from t, we keep the same sign test logic
-        used before and only compute a split when needed.
-    */
 
     for (int x = 0; x < SCREEN_W; x++) {
         const float xTerm = (((float)x - cx) * invF) * Ry;
@@ -716,11 +1647,6 @@ void drawFakeHorizon(const Camera *cam, uint8_t skyCol, uint8_t groundCol, uint8
             if (fabsf(Uy) < 0.0001f) {
                 ySplit = SCREEN_H / 2;
             } else {
-                /*
-                    Solve dirY = 0 for this column.
-                    dirY = xTerm + (((cy - y)/f) * Uy) + Fy
-                    => y = cy + (f / Uy) * (xTerm + Fy)
-                */
                 const float ySplitF = cy + (f / Uy) * (xTerm + Fy);
                 ySplit = (int)lroundf(ySplitF);
             }
@@ -729,30 +1655,18 @@ void drawFakeHorizon(const Camera *cam, uint8_t skyCol, uint8_t groundCol, uint8
             if (ySplit > SCREEN_H) ySplit = SCREEN_H;
 
             if (topGround) {
-                for (int y = 0; y < ySplit; y++) {
-                    *dst++ = groundCol;
-                }
-                for (int y = ySplit; y < SCREEN_H; y++) {
-                    *dst++ = skyCol;
-                }
+                for (int y = 0; y < ySplit; y++) *dst++ = groundCol;
+                for (int y = ySplit; y < SCREEN_H; y++) *dst++ = skyCol;
             } else {
-                for (int y = 0; y < ySplit; y++) {
-                    *dst++ = skyCol;
-                }
-                for (int y = ySplit; y < SCREEN_H; y++) {
-                    *dst++ = groundCol;
-                }
+                for (int y = 0; y < ySplit; y++) *dst++ = skyCol;
+                for (int y = ySplit; y < SCREEN_H; y++) *dst++ = groundCol;
             }
         }
     }
 
-    /*
-        Horizon line, still drawn in screen space.
-        drawLine() already uses putPixel/FB_INDEX now, so it is safe.
-    */
     if (fabsf(Uy) >= 0.0001f) {
-        int y0 = (int)lroundf(cy + ((((0.0f) - cx) * invF * f * Ry) + (f * Fy)) / Uy);
-        int y1 = (int)lroundf(cy + (((((float)(SCREEN_W - 1)) - cx) * invF * f * Ry) + (f * Fy)) / Uy);
+        int y0 = (int)lroundf(cy + ((((0.0f) - cx) * Ry) + (f * Fy)) / Uy);
+        int y1 = (int)lroundf(cy + (((((float)(SCREEN_W - 1)) - cx) * Ry) + (f * Fy)) / Uy);
         drawLine(0, y0, SCREEN_W - 1, y1, lineCol);
     }
 }
@@ -839,7 +1753,6 @@ static int sb3d_clipLineToScreen(int *x0, int *y0, int *x1, int *y1)
 
 
 
-
 void drawFakeHorizonGrid(
     const Camera *cam,
     uint8_t gridCol,
@@ -862,9 +1775,6 @@ void drawFakeHorizonGrid(
     const int minGZ = baseCellZ - rangeCells - padCells;
     const int maxGZ = baseCellZ + rangeCells + padCells;
 
-    const float f = sb3d_proj_f();
-    const float halfW = (float)(SCREEN_W * 0.5f);
-    const float halfH = (float)(SCREEN_H * 0.5f);
     const float nearPlane = cam->nearPlane;
 
     const float camPosX = cam->pos.x;
@@ -886,23 +1796,16 @@ void drawFakeHorizonGrid(
     const float yOff = ylevel - camPosY;
 
     const float minWorldX = (float)(minGX * spacing);
-    //const float maxWorldX = (float)(maxGX * spacing);
     const float minWorldZ = (float)(minGZ * spacing);
-    //const float maxWorldZ = (float)(maxGZ * spacing);
 
-    /* step one grid cell in +X */
     const float stepX_camX = (float)spacing * rx;
     const float stepX_camY = (float)spacing * ux;
     const float stepX_camZ = (float)spacing * fx;
 
-    /* step one grid cell in +Z */
     const float stepZ_camX = (float)spacing * rz;
     const float stepZ_camY = (float)spacing * uz;
     const float stepZ_camZ = (float)spacing * fz;
 
-    /*
-        Rows: constant Z, X changes
-    */
     for (int gz = minGZ; gz <= maxGZ; gz++) {
         const float wz = (float)(gz * spacing);
         const float dz = wz - camPosZ;
@@ -945,10 +1848,10 @@ void drawFakeHorizonGrid(
                     }
 
                     if (az > nearPlane && bz > nearPlane) {
-                        int x0 = (int)(((ax * f) / az) + halfW + 0.5f);
-                        int y0 = (int)(((-ay * f) / az) + halfH + 0.5f);
-                        int x1 = (int)(((bx * f) / bz) + halfW + 0.5f);
-                        int y1 = (int)(((-by * f) / bz) + halfH + 0.5f);
+                        int x0 = (int)(((ax * cam->projF) / az) + cam->halfW + 0.5f);
+                        int y0 = (int)(((-ay * cam->projF) / az) + cam->halfH + 0.5f);
+                        int x1 = (int)(((bx * cam->projF) / bz) + cam->halfW + 0.5f);
+                        int y1 = (int)(((-by * cam->projF) / bz) + cam->halfH + 0.5f);
 
                         if (sb3d_clipLineToScreen(&x0, &y0, &x1, &y1)) {
                             drawLine(x0, y0, x1, y1, gridCol);
@@ -968,9 +1871,6 @@ void drawFakeHorizonGrid(
         }
     }
 
-    /*
-        Columns: constant X, Z changes
-    */
     for (int gx = minGX; gx <= maxGX; gx++) {
         const float wx = (float)(gx * spacing);
         const float dx = wx - camPosX;
@@ -1013,10 +1913,10 @@ void drawFakeHorizonGrid(
                     }
 
                     if (az > nearPlane && bz > nearPlane) {
-                        int x0 = (int)(((ax * f) / az) + halfW + 0.5f);
-                        int y0 = (int)(((-ay * f) / az) + halfH + 0.5f);
-                        int x1 = (int)(((bx * f) / bz) + halfW + 0.5f);
-                        int y1 = (int)(((-by * f) / bz) + halfH + 0.5f);
+                        int x0 = (int)(((ax * cam->projF) / az) + cam->halfW + 0.5f);
+                        int y0 = (int)(((-ay * cam->projF) / az) + cam->halfH + 0.5f);
+                        int x1 = (int)(((bx * cam->projF) / bz) + cam->halfW + 0.5f);
+                        int y1 = (int)(((-by * cam->projF) / bz) + cam->halfH + 0.5f);
 
                         if (sb3d_clipLineToScreen(&x0, &y0, &x1, &y1)) {
                             drawLine(x0, y0, x1, y1, gridCol);
@@ -1263,26 +2163,49 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
     }
 
     /* build world-space + camera-space vertex caches once per entity */
-    for (int vi = 0; vi < mesh->vertCount; vi++) {
-        const Vec3 *lv = &mesh->verts[vi];
-        float wx, wy, wz;
-        float dx, dy, dz;
+    /* ------------------------------------------------------------
+       Build world-space verts as before, but precompute one
+       local->camera transform for the whole entity.
+       ------------------------------------------------------------ */
+    {
+        const float dpx = entPosX - camPosX;
+        const float dpy = entPosY - camPosY;
+        const float dpz = entPosZ - camPosZ;
 
-        wx = entPosX + (erx * lv->x) + (eux * lv->y) + (efx * lv->z);
-        wy = entPosY + (ery * lv->x) + (euy * lv->y) + (efy * lv->z);
-        wz = entPosZ + (erz * lv->x) + (euz * lv->y) + (efz * lv->z);
+        /* M = C^T * E */
+        const float m00 = (crx * erx) + (cry * ery) + (crz * erz);
+        const float m01 = (crx * eux) + (cry * euy) + (crz * euz);
+        const float m02 = (crx * efx) + (cry * efy) + (crz * efz);
 
-        g_worldVertsCache[vi].x = wx;
-        g_worldVertsCache[vi].y = wy;
-        g_worldVertsCache[vi].z = wz;
+        const float m10 = (cux * erx) + (cuy * ery) + (cuz * erz);
+        const float m11 = (cux * eux) + (cuy * euy) + (cuz * euz);
+        const float m12 = (cux * efx) + (cuy * efy) + (cuz * efz);
 
-        dx = wx - camPosX;
-        dy = wy - camPosY;
-        dz = wz - camPosZ;
+        const float m20 = (cfx * erx) + (cfy * ery) + (cfz * erz);
+        const float m21 = (cfx * eux) + (cfy * euy) + (cfz * euz);
+        const float m22 = (cfx * efx) + (cfy * efy) + (cfz * efz);
 
-        g_camVertsCache[vi].x = (dx * crx) + (dy * cry) + (dz * crz);
-        g_camVertsCache[vi].y = (dx * cux) + (dy * cuy) + (dz * cuz);
-        g_camVertsCache[vi].z = (dx * cfx) + (dy * cfy) + (dz * cfz);
+        /* T = C^T * (entPos - camPos) */
+        const float tx = (dpx * crx) + (dpy * cry) + (dpz * crz);
+        const float ty = (dpx * cux) + (dpy * cuy) + (dpz * cuz);
+        const float tz = (dpx * cfx) + (dpy * cfy) + (dpz * cfz);
+
+        for (int vi = 0; vi < mesh->vertCount; vi++) {
+            const Vec3 *lv = &mesh->verts[vi];
+            const float lx = lv->x;
+            const float ly = lv->y;
+            const float lz = lv->z;
+
+            /* local -> world (still needed for lighting) */
+            g_worldVertsCache[vi].x = entPosX + (erx * lx) + (eux * ly) + (efx * lz);
+            g_worldVertsCache[vi].y = entPosY + (ery * lx) + (euy * ly) + (efy * lz);
+            g_worldVertsCache[vi].z = entPosZ + (erz * lx) + (euz * ly) + (efz * lz);
+
+            /* local -> camera using precomputed transform */
+            g_camVertsCache[vi].x = (m00 * lx) + (m01 * ly) + (m02 * lz) + tx;
+            g_camVertsCache[vi].y = (m10 * lx) + (m11 * ly) + (m12 * lz) + ty;
+            g_camVertsCache[vi].z = (m20 * lx) + (m21 * ly) + (m22 * lz) + tz;
+        }
     }
 
     for (int i = 0; i < mesh->triCount; i++) {

@@ -155,6 +155,8 @@ typedef struct  {
 
     void (*drawbob)       (gfxbob_t *bob);    // process Blit object ;)
     uint8_t (*bcollide)   (gfxbob_t *a, gfxbob_t *b);
+
+    void  (*drawtext)     (long x, long y, const char *textptr);
 } API_GFX_PRIMATIVES;
 
 typedef struct  {
@@ -224,6 +226,7 @@ typedef struct  {
 
 // primatives
 #define gfx_plot(x, y)          (GFXP->plot(x,y))
+#define gfx_drawtext(x,y,text)  (GFXP->drawtext(x,y,text))
 
 // set the current draw colour
 #define gfx_setcolour(c)        (GFXP->setcolour((c)))

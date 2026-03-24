@@ -1,0 +1,13 @@
+splinerail.c:441:13:sr_steer_camera_to_tangent	48	static
+splinerail.c:139:13:sr_segment_dir	32	static
+splinerail.c:171:6:splineRailBuildTable	20	static
+splinerail.c:206:7:splineRailDistanceToT	8	static
+splinerail.c:241:6:splineRailSamplePos	32	static
+splinerail.c:275:6:splineRailSampleTangent	48	static
+splinerail.c:325:6:splineRailInit	16	static
+splinerail.c:365:6:splineRailReset	0	static
+splinerail.c:382:6:splineRailSetSpeed	0	static
+splinerail.c:388:6:splineRailSetTuning	0	static
+splinerail.c:397:6:splineRailSetBanking	0	static
+splinerail.c:486:6:splineRailUpdate	72	static
+splinerail.c:576:5:splineRailGetCurrentNode	0	static

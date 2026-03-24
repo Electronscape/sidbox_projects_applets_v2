@@ -31,11 +31,10 @@ static const uint8_t bayer4x4[4][4] = {
 uint8_t *drawbuffer;
 static uint16_t align32 g_depthBuffer[SCREEN_W * SCREEN_H];
 
-
-
 void resetDepthBuffer(void){
-    memset(g_depthBuffer, 0xFF, sizeof(g_depthBuffer));
+    memset(g_depthBuffer, 0xff, sizeof(g_depthBuffer));
 }
+
 
 void set3DRenderBuffer(uint8_t *buffer){
     drawbuffer = buffer;
@@ -796,6 +795,7 @@ void fillTriangleDitherBayer(
             }
         }
     }
+    
 
     /* ---------------- bottom half ---------------- */
     if ((v2.y - v1.y) > 0.0001f) {
