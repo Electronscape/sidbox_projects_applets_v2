@@ -139,6 +139,8 @@ typedef struct __attribute__((aligned(32))) {
 
     void    (*usepalettef)        (uint32_t *pal);  // new front palette
     void    (*usepaletteb)        (uint32_t *pal);  // new front palette
+    // custom functions!
+    void    (*BlitChunk)          (const uint8_t  *buffer, uint32_t offset);
 } API_GFX_HARDWARE;
 
 typedef struct  {
@@ -199,6 +201,8 @@ typedef struct  {
 
 #define gfx_dispfbuffer(p_sbuffer, p_dbuffer) (GFXHW->dispfbuffers(p_sbuffer, p_dbuffer))
 #define gfx_dispbbuffer(p_sbuffer, p_dbuffer) (GFXHW->dispbbuffers(p_sbuffer, p_dbuffer))
+
+#define gfx_blitchunk(buffer, yoffset)        (GFXHW->BlitChunk(buffer, yoffset))
 
 // SET the LCD output mode, rotations, flips, output frame rate (25hz, 50hz, 60hz)
 #define gfx_setlcd(mode, rate)  (GFXHW->setlcd(mode, rate))

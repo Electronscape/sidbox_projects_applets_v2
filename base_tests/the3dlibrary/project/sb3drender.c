@@ -5,8 +5,6 @@
 #include <string.h>
 #include <math.h>
 
-#include "apis.h"
-#include "memalign.h"
 
 #include "sb3dgfx.h"
 #include "sb3d.h"
@@ -21,6 +19,12 @@ static RenderTri align32 g_renderTris[MAX_RENDER_TRIS];
 // cache
 static Vec3 align32 g_worldVertsCache[SB3D_MAX_VERTS];
 static Vec3 align32 g_camVertsCache[SB3D_MAX_VERTS];
+
+#define TRI_SORT_BUCKETS 32
+
+static int g_triBucketHead[TRI_SORT_BUCKETS];
+static int g_triBucketNext[MAX_RENDER_TRIS];
+static RenderTri align32 g_renderTriSortTmp[MAX_RENDER_TRIS];
 
 
 static int g_renderTriCount = 0;
@@ -153,17 +157,31 @@ static int clipPolygonAgainstPlane(Vec3 *inVerts, int inCount, Vec3 *outVerts, C
     return outCount;
 }
 
+
+static Vec3 *g_clipScratchA = NULL;
+static Vec3 *g_clipScratchB = NULL;
+
+void initClipScratch(void)
+{
+    uint8_t *p = get16k8mem();
+    if (!p) return;
+
+    g_clipScratchA = (Vec3 *)p;
+    g_clipScratchB = (Vec3 *)(p + sizeof(Vec3) * CLIP_MAX_VERTS);
+}
+
+
 int clipTriangleToFrustum(Vec3 a, Vec3 b, Vec3 c, Vec3 *outVerts, const Camera *cam)
 {
-    Vec3 srcA[CLIP_MAX_VERTS];
-    Vec3 srcB[CLIP_MAX_VERTS];
-    Vec3 *src = srcA;
-    Vec3 *dst = srcB;
+    Vec3 *src = g_clipScratchA;
+    Vec3 *dst = g_clipScratchB;
     Vec3 *tmp;
     int count = 3;
 
-    const float nearPlane = cam->nearPlane;
+    const float nearPlane  = cam->nearPlane;
     const float halfHOverW = cam->halfOverW;
+
+    if (!src || !dst) return 0;
 
     src[0] = a;
     src[1] = b;
@@ -380,7 +398,6 @@ int clipTriangleToFrustum(Vec3 a, Vec3 b, Vec3 c, Vec3 *outVerts, const Camera *
 
     return count;
 }
-
 
 static inline int triangleFacingScreen(Vec2 a, Vec2 b, Vec2 c){
     int cross = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
@@ -1951,11 +1968,67 @@ void drawFakeHorizonGrid(
     }
 }
 
+static void sortRenderTrisNearestFirst(const Camera *cam)
+{
+    int b;
+    int out = 0;
+
+    if (!cam) return;
+    if (g_renderTriCount <= 1) return;
+
+    for (b = 0; b < TRI_SORT_BUCKETS; b++) {
+        g_triBucketHead[b] = -1;
+    }
+
+    for (int i = 0; i < g_renderTriCount; i++) {
+        RenderTri *rt = &g_renderTris[i];
+
+        float zkey = rt->camz0;
+        if (rt->camz1 < zkey) zkey = rt->camz1;
+        if (rt->camz2 < zkey) zkey = rt->camz2;
+
+        if (zkey < cam->nearPlane) zkey = cam->nearPlane;
+        if (zkey > cam->farPlane)  zkey = cam->farPlane;
+
+        {
+            float t;
+            int bucket;
+
+            t = (zkey - cam->nearPlane) / (cam->farPlane - cam->nearPlane);
+
+            if (t < 0.0f) t = 0.0f;
+            if (t > 1.0f) t = 1.0f;
+
+            bucket = (int)(t * (float)(TRI_SORT_BUCKETS - 1) + 0.5f);
+
+            g_triBucketNext[i] = g_triBucketHead[bucket];
+            g_triBucketHead[bucket] = i;
+        }
+    }
+
+    for (b = 0; b < TRI_SORT_BUCKETS; b++) {
+        int idx = g_triBucketHead[b];
+
+        while (idx >= 0) {
+            g_renderTriSortTmp[out++] = g_renderTris[idx];
+            idx = g_triBucketNext[idx];
+        }
+    }
+
+    for (int i = 0; i < out; i++) {
+        g_renderTris[i] = g_renderTriSortTmp[i];
+    }
+}
+
+
+
 void Render3D(const Camera *cam)
 {
+    initClipScratch();
     resetRenderList();
     submitWorldEntities(cam);
     sb3dParticlesRender(cam);
+    //sortRenderTrisNearestFirst(cam);
 
     if (g_wireframe) {
         for (int i = 0; i < g_renderTriCount; i++) {
@@ -2054,6 +2127,46 @@ void Render3D(const Camera *cam)
     }
 }
 
+
+static inline int triArea2Screen(int x0, int y0, int x1, int y1, int x2, int y2)
+{
+    int a = ((x1 - x0) * (y2 - y0)) - ((y1 - y0) * (x2 - x0));
+    return (a < 0) ? -a : a;
+}
+
+static inline int triangleTooSmallToMatter(
+    const Vec3 *a,
+    const Vec3 *b,
+    const Vec3 *c,
+    const Camera *cam)
+{
+    float invZa, invZb, invZc;
+    int x0, y0, x1, y1, x2, y2;
+    int area2;
+
+    if (a->z <= cam->nearPlane || b->z <= cam->nearPlane || c->z <= cam->nearPlane)
+        return 0; /* let clip path deal with it */
+
+    invZa = 1.0f / a->z;
+    invZb = 1.0f / b->z;
+    invZc = 1.0f / c->z;
+
+    x0 = (int)((a->x * cam->projF * invZa) + cam->halfW + 0.5f);
+    y0 = (int)((-a->y * cam->projF * invZa) + cam->halfH + 0.5f);
+
+    x1 = (int)((b->x * cam->projF * invZb) + cam->halfW + 0.5f);
+    y1 = (int)((-b->y * cam->projF * invZb) + cam->halfH + 0.5f);
+
+    x2 = (int)((c->x * cam->projF * invZc) + cam->halfW + 0.5f);
+    y2 = (int)((-c->y * cam->projF * invZc) + cam->halfH + 0.5f);
+
+    area2 = triArea2Screen(x0, y0, x1, y1, x2, y2);
+
+    /* 2x area in pixels.
+       0,1,2 = basically dust.
+       try 2 first, then 4 if you want more aggression. */
+    return (area2 <= 2);
+}
 
 void submitEntitySolid(const Entity *ent, const Camera *cam)
 {
@@ -2289,6 +2402,14 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
             (a->y >= -(a->z * halfHOverW)) && (a->y <= (a->z * halfHOverW)) &&
             (b->y >= -(b->z * halfHOverW)) && (b->y <= (b->z * halfHOverW)) &&
             (c->y >= -(c->z * halfHOverW)) && (c->y <= (c->z * halfHOverW));
+
+        /* THIS is good, but it kills fine details, (road markings)
+        if (fullyInside) {
+            if (triangleTooSmallToMatter(a, b, c, cam)) {
+                continue;
+            }
+        }
+        */
 
         abx = wb->x - wa->x;
         aby = wb->y - wa->y;
@@ -2862,10 +2983,11 @@ int sb3dRaycastWorld(
         const Tri *tris;
         int triCount;
 
-        float px, py, pz;
-        float rx, ry, rz;
-        float ux, uy, uz;
-        float fx, fy, fz;
+        Vec3 localRayOrig;
+        Vec3 localRayDir;
+
+        float dx, dy, dz;
+        float hitT;
 
         if (!ent->active) continue;
         if (!ent->mesh) continue;
@@ -2874,59 +2996,45 @@ int sb3dRaycastWorld(
 
         mesh = ent->mesh;
         verts = mesh->verts;
-        tris = mesh->tris;
+        tris  = mesh->tris;
         triCount = mesh->triCount;
 
         if (!verts || !tris || triCount <= 0) continue;
 
-        px = ent->pos.x;
-        py = ent->pos.y;
-        pz = ent->pos.z;
+        /* world ray -> entity local */
+        dx = rayOrig.x - ent->pos.x;
+        dy = rayOrig.y - ent->pos.y;
+        dz = rayOrig.z - ent->pos.z;
 
-        rx = ent->right.x;
-        ry = ent->right.y;
-        rz = ent->right.z;
+        localRayOrig.x = (dx * ent->right.x) + (dy * ent->right.y) + (dz * ent->right.z);
+        localRayOrig.y = (dx * ent->up.x)    + (dy * ent->up.y)    + (dz * ent->up.z);
+        localRayOrig.z = (dx * ent->forward.x) + (dy * ent->forward.y) + (dz * ent->forward.z);
 
-        ux = ent->up.x;
-        uy = ent->up.y;
-        uz = ent->up.z;
-
-        fx = ent->forward.x;
-        fy = ent->forward.y;
-        fz = ent->forward.z;
+        localRayDir.x = (rayDir.x * ent->right.x) + (rayDir.y * ent->right.y) + (rayDir.z * ent->right.z);
+        localRayDir.y = (rayDir.x * ent->up.x)    + (rayDir.y * ent->up.y)    + (rayDir.z * ent->up.z);
+        localRayDir.z = (rayDir.x * ent->forward.x) + (rayDir.y * ent->forward.y) + (rayDir.z * ent->forward.z);
 
         for (int ti = 0; ti < triCount; ti++) {
             const Tri *t = &tris[ti];
-            const Vec3 *la = &verts[t->a];
-            const Vec3 *lb = &verts[t->b];
-            const Vec3 *lc = &verts[t->c];
+            const Vec3 *v0 = &verts[t->a];
+            const Vec3 *v1 = &verts[t->b];
+            const Vec3 *v2 = &verts[t->c];
 
-            Vec3 w0, w1, w2;
-            float hitT;
-            Vec3 hitNormal;
-
-            w0.x = px + (rx * la->x) + (ux * la->y) + (fx * la->z);
-            w0.y = py + (ry * la->x) + (uy * la->y) + (fy * la->z);
-            w0.z = pz + (rz * la->x) + (uz * la->y) + (fz * la->z);
-
-            w1.x = px + (rx * lb->x) + (ux * lb->y) + (fx * lb->z);
-            w1.y = py + (ry * lb->x) + (uy * lb->y) + (fy * lb->z);
-            w1.z = pz + (rz * lb->x) + (uz * lb->y) + (fz * lb->z);
-
-            w2.x = px + (rx * lc->x) + (ux * lc->y) + (fx * lc->z);
-            w2.y = py + (ry * lc->x) + (uy * lc->y) + (fy * lc->z);
-            w2.z = pz + (rz * lc->x) + (uz * lc->y) + (fz * lc->z);
+            Vec3 localHitNormal;
 
             if (sb3dRayTriangleHitDetailed(
-                    rayOrig,
-                    rayDir,
+                    localRayOrig,
+                    localRayDir,
                     bestT,
-                    w0,
-                    w1,
-                    w2,
+                    *v0,
+                    *v1,
+                    *v2,
                     &hitT,
-                    &hitNormal))
+                    &localHitNormal))
             {
+                Vec3 worldNormal;
+                Vec3 preferredForward;
+
                 bestT = hitT;
                 found = 1;
 
@@ -2935,34 +3043,65 @@ int sb3dRaycastWorld(
                 outHit->triIndex = ti;
                 outHit->distance = hitT;
 
-                outHit->point.x = rayOrig.x + (rayDir.x * hitT);
-                outHit->point.y = rayOrig.y + (rayDir.y * hitT);
-                outHit->point.z = rayOrig.z + (rayDir.z * hitT);
-
-                outHit->normal = hitNormal;
-
+                /* hit point back to world */
                 {
-                    Vec3 preferredForward;
+                    const Vec3 localHit = {
+                        localRayOrig.x + (localRayDir.x * hitT),
+                        localRayOrig.y + (localRayDir.y * hitT),
+                        localRayOrig.z + (localRayDir.z * hitT)
+                    };
 
-                    preferredForward.x = -rayDir.x;
-                    preferredForward.y = -rayDir.y;
-                    preferredForward.z = -rayDir.z;
+                    outHit->point.x = ent->pos.x
+                                    + (ent->right.x   * localHit.x)
+                                    + (ent->up.x      * localHit.y)
+                                    + (ent->forward.x * localHit.z);
 
-                    sb3dBuildHitBasis(
-                        hitNormal,
-                        preferredForward,
-                        &outHit->right,
-                        &outHit->up,
-                        &outHit->forward
-                    );
+                    outHit->point.y = ent->pos.y
+                                    + (ent->right.y   * localHit.x)
+                                    + (ent->up.y      * localHit.y)
+                                    + (ent->forward.y * localHit.z);
+
+                    outHit->point.z = ent->pos.z
+                                    + (ent->right.z   * localHit.x)
+                                    + (ent->up.z      * localHit.y)
+                                    + (ent->forward.z * localHit.z);
                 }
+
+                /* normal back to world */
+                worldNormal.x =
+                    (ent->right.x   * localHitNormal.x) +
+                    (ent->up.x      * localHitNormal.y) +
+                    (ent->forward.x * localHitNormal.z);
+
+                worldNormal.y =
+                    (ent->right.y   * localHitNormal.x) +
+                    (ent->up.y      * localHitNormal.y) +
+                    (ent->forward.y * localHitNormal.z);
+
+                worldNormal.z =
+                    (ent->right.z   * localHitNormal.x) +
+                    (ent->up.z      * localHitNormal.y) +
+                    (ent->forward.z * localHitNormal.z);
+
+                outHit->normal = worldNormal;
+
+                preferredForward.x = -rayDir.x;
+                preferredForward.y = -rayDir.y;
+                preferredForward.z = -rayDir.z;
+
+                sb3dBuildHitBasis(
+                    worldNormal,
+                    preferredForward,
+                    &outHit->right,
+                    &outHit->up,
+                    &outHit->forward
+                );
             }
         }
     }
 
     return found;
 }
-
 
 int sb3dRaycastFromCamera(
     const Camera *cam,

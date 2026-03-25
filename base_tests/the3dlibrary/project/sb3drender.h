@@ -1,9 +1,7 @@
 #ifndef RENDER3D_H
 #define RENDER3D_H
 
-#include "memalign.h"
 #include "sb3dworld.h"
-#include "../gfx.h"
 
 #define CLIP_MAX_VERTS 8
 #define SB3D_MAX_VERTS 4096
@@ -53,6 +51,10 @@ typedef struct align32 {
     uint8_t firstBand;
     uint8_t lastBand;
 } RenderTri;
+
+
+// internals
+void initClipScratch(void);
 
 
 int clipTriangleToFrustum(Vec3 a, Vec3 b, Vec3 c, Vec3 *outVerts, const Camera *cam);

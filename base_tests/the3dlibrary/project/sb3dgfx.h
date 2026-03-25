@@ -1,7 +1,6 @@
 #ifndef _SIDBOX_3D_GRAPHICS_H_
 #define _SIDBOX_3D_GRAPHICS_H_
 
-#include "memalign.h"
 #include <stdint.h>
 
 #define SCREEN_W  480
@@ -60,6 +59,7 @@ void resetRand();
 #define ZBUF_BAND_H 32
 void initDepthBandMem(void);
 void beginDepthBand(int y0);
+void initCoarseDepth8Mem(void);
 int getDepthBandY0(void);
 int getDepthBandY1(void);
 

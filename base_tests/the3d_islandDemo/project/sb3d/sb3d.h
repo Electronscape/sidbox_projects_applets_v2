@@ -445,13 +445,14 @@ void sb3dParticlesRender(const Camera *cam);
 void initDepthBandMem(void);
 void set3DRenderBuffer(uint8_t *buffer);
 void resetRand(void);
-
+void test_render_chunk(uint8_t *buffer, uint32_t bandY0);
 
 /*==============================================================================
     Render pipeline
 ==============================================================================*/
 
 int getRenderTriCount(void);
+void initCoarseDepth8Mem(void);
 
 void setDefaultRenderMode(void);
 void enableFlatMode(int en);

@@ -1,6 +1,7 @@
 #ifndef _SIDBOX_3D_LIB_H_
 #define _SIDBOX_3D_LIB_H_
 
+#include "apis.h"
 #include "sb3dmath.h"
 #include "sb3dcamera.h"
 
@@ -13,8 +14,6 @@
 
 
 #include "sb3drender.h"
-
-#include "memalign.h"
 
 
 typedef struct align32 {

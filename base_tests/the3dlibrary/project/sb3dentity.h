@@ -1,7 +1,7 @@
 #ifndef _SIDBOX_3D_ENTITIES_H_
 #define _SIDBOX_3D_ENTITIES_H_
 
-#include "memalign.h"
+
 #include <stdint.h>
 
 #include "sb3dworld.h"

@@ -146,7 +146,8 @@ typedef struct {
 	
 	uint8_t  (*getjoyport)	  (void);
 
-	uint16_t *(*get32kmem)	  (void);
+	uint16_t *(*get32kmem)     (void);  // 16 bit memory specific
+    uint8_t  *(*get16kmem8)    (void);  // 8 bit memory specific
 } API_HW ;
 
 
@@ -176,7 +177,8 @@ typedef struct {
 
 #include "sys/sys.h"
 
-#define alignmem4 __attribute__((aligned(4)))
+#define alignmem4 	__attribute__((aligned(4)))
+#define align32 	__attribute__((aligned(32)))
 
 //// # API ROOT DIRECTORY # ///#
 typedef struct __attribute__((aligned(4))) {
@@ -220,6 +222,7 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 #define getTicks()			(HWKERNAL->getTicks())
 
 // joy stick interfacing (usually just for the port Y1, Y2, X1, X2, BTn1, BTn2, up/down/left/right/fire1/fire2)
-#define getjoyport     HWKERNAL->getjoyport
+#define getjoyport     		 HWKERNAL->getjoyport
 
 #define get32kmem()	   		(HWKERNAL->get32kmem())
+#define get16k8mem()		(HWKERNAL->get16kmem8())

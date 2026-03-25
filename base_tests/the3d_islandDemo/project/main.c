@@ -23,6 +23,7 @@ void initSystem(){
     // hardware preps //
     gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_35);
     //gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_40);
+    //gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_50);
     lcd_bright(0);
     gfx_mode(480, 320, 480, 320, DISPFLAG_SINGLELAYER | DISPFLAG_NOSCROLLABLE);
     set_audio_dma(512); // a few ms about 7ms enough for a full frame.
@@ -488,19 +489,23 @@ int main(int argc, char *argv[]) {
     float fadeTime = 0.0f;
     char tfname[64];
 
+    //uint8_t *dispChunky = get16k8mem();
+    //memset(dispChunky, 0x3, 480 * 32);
+
     //music_play("music2.mod", 0);
     //music_play("3_double_paula.mod", 0);
 
 
-    goIntro();
-    //music_play("boomd.mod", 0);
-    //lcd_bright(100);    // need this back on
+    //goIntro();
+    music_play("boomd.mod", 0);
+    lcd_bright(100);    // need this back on
 
 
 
 
     // init world ------------- 3D here to come!!! -------------- ///
 
+    //initCoarseDepth8Mem();
     worldClear();
     lightsClear();
     sb3dParticlesClear();  
@@ -582,6 +587,12 @@ int main(int argc, char *argv[]) {
     Mesh islandMesh;
     loadMeshSB3D("islandx.sb3d", &islandMesh, 200.0f);
     int island0 = entityWorldSpawn(&islandMesh, vec3(0, 0, 0));
+    entityAllowHit(island0, 1); // enable for raycast hit test
+
+    Mesh hitCubeMesh = createBox(10,10,10);
+    Vec3 startPos = {0,0,0};
+    int hitCube0 = entityWorldSpawn(&hitCubeMesh, startPos);
+
 
     //Mesh theHouseMesh;
     //loadMeshSB3D("building1.sb3d", &theHouseMesh, 50.0f);
@@ -679,8 +690,8 @@ int main(int argc, char *argv[]) {
 
     char testout[32];
 
-    uint8_t weathermode = 0;
-    uint8_t railmode = 1;
+    uint8_t weathermode = 1;    // daylight
+    uint8_t railmode = 0;
 
     for (;;) {
 
@@ -740,6 +751,7 @@ int main(int argc, char *argv[]) {
 
 
 
+
         // ship yard test
         entityMoveForward(shipTest, 166.3f * dt);//vec3(0,0,0.7f));
         Vec3 theShipPos = entityGetPosition(shipTest);
@@ -770,6 +782,21 @@ int main(int argc, char *argv[]) {
             cam.right.y = 0;
         }
 
+
+        // HIT TESTING 
+        //*
+        static SB3DRaycastHit hit;
+        entitySetPosition(hitCube0, vec3(999999.0f, 999999.0f, 999999.0f));
+        if (sb3dRaycastFromCamera(&cam, 2200.0f, &hit)) {
+            entitySetPosition(hitCube0, vec3(hit.point.x, hit.point.y, hit.point.z));
+            //entitySetBasis(hitSphere0, hit.right, hit.up, hit.forward);
+            entityAlignToHit(hitCube0, &hit); // same as entitySetBasis, just more convenient
+        }
+
+        // point at test
+        Vec3 pv1 = entityLookAt(shipYardID[1], hitCube0, 0);
+        entityRotation(shipYardID[1], pv1.y, 0, 0, 1);
+        entityRotation(shipYardID[1], 0, pv1.x, 0, 0);
 
         {
             gfx_lcdwait();
@@ -807,6 +834,9 @@ int main(int argc, char *argv[]) {
                     }
                 }
             }
+
+            // raycast hit test
+
 
             if(railmode)
                 splineRailUpdate(&rail, &cam, dt);
@@ -879,9 +909,9 @@ int main(int argc, char *argv[]) {
             /* Render time in ms */
             uint8_t wpt = splineRailGetCurrentNode(&rail);
             if (joybutts & BTN_FIRE) {
-                wpt = 20;
+                //wpt = 20;
             }
-            if ((joybutts & BTN_FIRE2)) wpt = 19;
+            //if ((joybutts & BTN_FIRE2)) wpt = 19;
             static uint8_t lwpt = 0;
             {
                 uint32_t ms_whole = tickr / 480000UL;
@@ -904,6 +934,9 @@ int main(int argc, char *argv[]) {
 
                 
             }
+
+            //gfx_blitchunk(dispChunky, 0);
+            //test_render_chunk(dispChunky, 0);
 
             gfx_drawtext(0, 0, strout);
             

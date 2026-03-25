@@ -2,7 +2,6 @@
 #define _SIDBOX_3D_MATERIALS_H_
 
 #include <stdint.h>
-#include "memalign.h"
 
 // meshSetMaterial(&textMesh, 0.00f, 0.55f, 0.0f, 1.50f, 64.0f);   // shiny metal
 /*

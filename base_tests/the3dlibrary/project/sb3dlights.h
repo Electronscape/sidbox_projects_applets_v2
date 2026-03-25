@@ -1,7 +1,6 @@
 #ifndef LIGHTS_H
 #define LIGHTS_H
 
-#include "memalign.h"
 #include "sb3dworld.h"
 #include "sb3dmath.h"
 

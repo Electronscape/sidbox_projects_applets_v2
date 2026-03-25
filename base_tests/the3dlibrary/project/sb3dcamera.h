@@ -2,7 +2,6 @@
 #define _SIDBOX_3D_CAMERA_H_
 
 
-#include "memalign.h"
 #include "sb3dworld.h"
 #include "sb3dmath.h"
 
