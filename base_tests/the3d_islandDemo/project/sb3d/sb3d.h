@@ -278,15 +278,13 @@ int  loadMeshOBJ(const char *filename, Mesh *mesh, uint8_t colour, float scale);
 int  loadMeshSB3D(const char *filename, Mesh *mesh, float scale);
 void freeMesh(Mesh *mesh);
 
+
+// MATERIALS //
 void meshSetDefaultMaterial(Mesh *mesh);
-void meshSetMaterial(
-    Mesh *mesh,
-    float ambient,
-    float diffuse,
-    float emissive,
-    float specularStrength,
-    float shininess
-);
+void meshSetMaterial(Mesh *mesh, float ambient, float diffuse, float emissive, float specularStrength, float shininess);
+
+
+
 
 float meshComputeBoundsRadius(const Mesh *mesh);
 
@@ -535,7 +533,7 @@ void drawFakeHorizonSkyTex(
 
 
 
-
+void drawFakeSkyDots(const Camera *cam, uint8_t dotCol, int azSteps, int elSteps, uint8_t density);
 
 
 void drawFakeHorizonDots(const Camera *cam, uint8_t dotCol, int spacing, float ylevel, uint8_t density);
@@ -640,36 +638,142 @@ int sb3dRaycastFromCamera(
 */
 
 
-/*
-    Modelling in Blender:
 
-    Material names are used to define the palette index and optional face effects.
 
-    Format:
-        SBX_<paletteid>E<0-255>T<0-255>
 
-    Notes:
-        <paletteid>   = palette colour index
-        E<0-255>      = emission amount
-        T<0-255>      = transparency amount
 
-    Defaults:
-        E with no number = 255
-        T with no number = 128
 
-    Examples:
+
+
+
+
+
+/* --- REFRESHER NOTES: ---------
+    SIDBOX material setup:
+
+    - Put SBX_<paletteid> somewhere in the material name
+      Example: Grass_SBX_39
+
+    - Base Colour is ignored
+
+    - Alpha controls transparency
+
+    - Emission + Emission Strength control glow
+
+    - The converter reads the digits immediately after SBX_
+      Example:
+          SBX_33        -> colour 33
+          Rock_SBX_12   -> colour 12
+          Bark-SBX_61   -> colour 61
+*/
+
+/* --- FULL Material Setup Notes: --------
+    ============================================================
+        SIDBOX SB3D MATERIAL SETUP
+    ============================================================
+
+    Modelling in Blender (or another modelling app):
+
+    The material name is used to choose the SIDBOX palette colour.
+
+    The name can be anything, as long as it contains:
+
+        SBX_<paletteid>
+
+    ------------------------------------------------------------
+    MATERIAL NAME
+    ------------------------------------------------------------
+
+    Examples of valid material names:
+
         SBX_33
-            palette 33, no emission, no transparency
+        Grass_SBX_39
+        SBX_12_Leaves
+        Rock-SBX_44
+        PalmTreeBark_SBX_61_Mat
+        Sand,SBX_20
 
-        SBX_33E
-            palette 33, full emission
+    Rules:
 
-        SBX_33T
-            palette 33, default transparency (128)
+        - The converter scans the material name for "SBX_"
+        - The digits immediately after it are used as the palette index
+        - Valid palette index range is 0 to 255
+        - Anything before or after that is ignored
 
-        SBX_33ET
-            palette 33, full emission and default transparency
+    Example:
 
-        SBX_33E255T128
-            palette 33, full emission and 50% transparency
+        "Grass_SBX_39"
+            -> palette index 39
+
+        "SBX_12_Leaves"
+            -> palette index 12
+
+        "Rock-SBX_44"
+            -> palette index 44
+
+    If no valid SBX_<number> is found:
+        the converter falls back to the default colour index
+
+    ------------------------------------------------------------
+    MATERIAL VALUES
+    ------------------------------------------------------------
+
+    Base Colour:
+        ignored by the converter
+
+    Alpha:
+        used as transparency
+
+    Emission:
+        used as emissive/glow strength
+
+    ------------------------------------------------------------
+    BLENDER NOTES
+    ------------------------------------------------------------
+
+    Base Color:
+        does nothing for SB3D export colour selection
+
+    Alpha:
+        controls triangle transparency
+
+    Emission:
+        controls triangle emissive strength
+
+        For full emissive range:
+            at least one of R, G, or B should be 1.0
+
+        Then:
+            Emission Strength controls the final brightness
+
+    ------------------------------------------------------------
+    SUMMARY
+    ------------------------------------------------------------
+
+    Colour:
+        comes from the material name
+        via SBX_<paletteid>
+
+    Transparency:
+        comes from Alpha
+
+    Glow / Emission:
+        comes from Emission + Emission Strength
+
+    ------------------------------------------------------------
+    QUICK EXAMPLE
+    ------------------------------------------------------------
+
+    Material name:
+        Grass_SBX_39
+
+    Blender settings:
+        Alpha = 0.50
+        Emission Color = (1.0, 1.0, 1.0)
+        Emission Strength = 1.00
+
+    Result:
+        palette colour index = 39
+        semi-transparent
+        emissive/glowing
 */

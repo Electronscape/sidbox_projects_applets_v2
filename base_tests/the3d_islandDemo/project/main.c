@@ -530,19 +530,14 @@ int main(int argc, char *argv[]) {
     buildLightingCLUT(clut, baseColors, 16, lightTarget, shades);
 
 
-
-
     gfx_usefpalette(clut);
-
-
-
 
     
 
 
     // setup scene
     uint8_t Camlightid = addPointLight(vec3(0,0,0), 0.01, 1);
-    uint8_t SunlightId = addDirectionalLight((Vec3){ -1.0, -0.50f, 0.30}, 1.0, 1);
+    uint8_t SunlightId = addDirectionalLight((Vec3){ -1.0, -0.50f, 0.30}, 1, 1);
     lightSetIntensity(SunlightId, 1.0);
 
     lightEnable(SunlightId, 0);
@@ -569,12 +564,7 @@ int main(int argc, char *argv[]) {
     sound_enableloop(1, 0);
     
 
-    // horizon stuff
-    // day time
-    HosSky         = 9;   
-    HosGround      = 59;
-    HosHorizonLine = 43;
-    SeaDots = 2;
+
 
     // night time
     HosSky         = 19;   
@@ -582,12 +572,19 @@ int main(int argc, char *argv[]) {
     HosHorizonLine = 21;
     SeaDots = 23;
 
+        // horizon stuff
+    // day time
+    HosSky         = 9;   
+    HosGround      = 59;
+    HosHorizonLine = 43;
+    SeaDots = 2;
 
 
     Mesh islandMesh;
     loadMeshSB3D("islandx.sb3d", &islandMesh, 200.0f);
     int island0 = entityWorldSpawn(&islandMesh, vec3(0, 0, 0));
     entityAllowHit(island0, 1); // enable for raycast hit test
+    meshSetMaterial(&islandMesh, 0.00f, 1.0f, 0.00f, 0.20f, 0.0f);
 
     Mesh hitCubeMesh = createBox(10,10,10);
     Vec3 startPos = {0,0,0};
@@ -624,7 +621,10 @@ int main(int argc, char *argv[]) {
     Mesh textMesh;
     loadMeshSB3D("text.sb3d", &textMesh, 50.0f);
     int text0 = entityWorldSpawn(&textMesh, vec3(2000, 350, 200));
-    meshSetMaterial(&textMesh, 0.00f, 0.55f, 0.00f, 1.50f, 64.0f);
+    meshSetMaterial(&textMesh, 0.00f, 0.45f, 0.00f, 2.00f, 96.0f);
+
+    
+    
 
 
     // spline test
@@ -783,6 +783,7 @@ int main(int argc, char *argv[]) {
         }
 
 
+        #if(0)
         // HIT TESTING 
         //*
         static SB3DRaycastHit hit;
@@ -798,6 +799,7 @@ int main(int argc, char *argv[]) {
         entityRotation(shipYardID[1], pv1.y, 0, 0, 1);
         entityRotation(shipYardID[1], 0, pv1.x, 0, 0);
 
+        #endif
         {
             gfx_lcdwait();
 
@@ -873,6 +875,9 @@ int main(int argc, char *argv[]) {
             //drawFakeHorizonGroundTex(&cam, seatex, HosSky,HosGround,HosHorizonLine, 0, 0.02f, 0, 0, 1, 1, 60);
             //drawFakeHorizonSkyTex(&cam, skytex, HosSky, HosGround, HosHorizonLine, 0, 1600, 10000, 0.02f, skyU, 0, 1, 1, 40);
             #endif
+
+
+            if(!weathermode) drawFakeSkyDots(&cam, 5, 128, 32, 8);
             drawFakeHorizonDots(&cam, SeaDots, 128, 0, 110);
             
             static float fpsTimer = 0.0f;
@@ -881,7 +886,7 @@ int main(int argc, char *argv[]) {
             static uint32_t fpsFrac  = 0;
 
             static uint32_t ticka, tickb, tickr;
-            static char strout[64] = "FPS: 0.00  MS: 0.000  WP: 0";
+            static char strout[64] = "FPS: 0.00  MS: 0.000  WP: 0 !!";
 
             ticka = getTicks();
             Render3D(&cam);
@@ -909,7 +914,7 @@ int main(int argc, char *argv[]) {
             /* Render time in ms */
             uint8_t wpt = splineRailGetCurrentNode(&rail);
             if (joybutts & BTN_FIRE) {
-                //wpt = 20;
+                wpt = 20;
             }
             //if ((joybutts & BTN_FIRE2)) wpt = 19;
             static uint8_t lwpt = 0;
@@ -924,10 +929,20 @@ int main(int argc, char *argv[]) {
                 if(wpt != lwpt){
                     if(wpt == 20){
                         weathermode = 1 - weathermode;
-                        if(weathermode == 1)
+                        if(weathermode == 1){
+                            // day time
+                            HosSky         = 9;   
+                            HosGround      = 59;
+                            HosHorizonLine = 43;
                             SeaDots = 2;
-                        else 
+                        }
+                        else{ 
+                                // night time
+                            HosSky         = 19;   
+                            HosGround      = 18;
+                            HosHorizonLine = 21;
                             SeaDots = 23;
+                        }
                     }
                 }
                 lwpt = wpt;

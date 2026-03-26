@@ -183,12 +183,14 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
 
     if (!filename || !mesh) return 0;
 
+    memset(mesh, 0, sizeof(Mesh));
+
     res = sfopen(0, filename, SD_READ);
     if (res != FR_OK) {
         return 0;
     }
 
-    if (sfread(0, magic, 4, &ird) != FR_OK) {
+    if (sfread(0, magic, 4, &ird) != FR_OK || ird != 4) {
         fclose(0);
         return 0;
     }
@@ -198,22 +200,22 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
         return 0;
     }
 
-    if (sfread(0, &version, 4, &ird) != FR_OK) {
+    if (sfread(0, &version, 4, &ird) != FR_OK || ird != 4) {
         fclose(0);
         return 0;
     }
 
-    if (version != 2 && version != 3) {
+    if (version != 5) {
         fclose(0);
         return 0;
     }
 
-    if (sfread(0, &vertCount, 4, &ird) != FR_OK) {
+    if (sfread(0, &vertCount, 4, &ird) != FR_OK || ird != 4) {
         fclose(0);
         return 0;
     }
 
-    if (sfread(0, &triCount, 4, &ird) != FR_OK) {
+    if (sfread(0, &triCount, 4, &ird) != FR_OK || ird != 4) {
         fclose(0);
         return 0;
     }
@@ -232,16 +234,7 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
     mesh->edges = NULL;
 
     if (!mesh->verts || !mesh->tris) {
-        if (mesh->verts) free(mesh->verts);
-        if (mesh->tris)  free(mesh->tris);
-
-        mesh->verts = NULL;
-        mesh->tris  = NULL;
-        mesh->edges = NULL;
-        mesh->edgeCount = 0;
-        mesh->vertCount = 0;
-        mesh->triCount  = 0;
-
+        freeMesh(mesh);
         fclose(0);
         return 0;
     }
@@ -250,7 +243,9 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
     for (uint32_t i = 0; i < vertCount; i++) {
         SB3DVec3File v;
 
-        if (sfread(0, &v, sizeof(SB3DVec3File), &ird) != FR_OK) {
+        if (sfread(0, &v, sizeof(SB3DVec3File), &ird) != FR_OK ||
+            ird != (int32_t)sizeof(SB3DVec3File))
+        {
             freeMesh(mesh);
             fclose(0);
             return 0;
@@ -266,44 +261,63 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
         uint32_t a, b, c;
         uint8_t color;
         uint8_t emission;
-        uint8_t transparency = 0;
+        uint8_t transparency;
+        uint8_t roughness;
 
-        if (sfread(0, &a, sizeof(uint32_t), &ird) != FR_OK) {
+        if (sfread(0, &a, sizeof(uint32_t), &ird) != FR_OK ||
+            ird != (int32_t)sizeof(uint32_t))
+        {
             freeMesh(mesh);
             fclose(0);
             return 0;
         }
 
-        if (sfread(0, &b, sizeof(uint32_t), &ird) != FR_OK) {
+        if (sfread(0, &b, sizeof(uint32_t), &ird) != FR_OK ||
+            ird != (int32_t)sizeof(uint32_t))
+        {
             freeMesh(mesh);
             fclose(0);
             return 0;
         }
 
-        if (sfread(0, &c, sizeof(uint32_t), &ird) != FR_OK) {
+        if (sfread(0, &c, sizeof(uint32_t), &ird) != FR_OK ||
+            ird != (int32_t)sizeof(uint32_t))
+        {
             freeMesh(mesh);
             fclose(0);
             return 0;
         }
 
-        if (sfread(0, &color, sizeof(uint8_t), &ird) != FR_OK) {
+        if (sfread(0, &color, sizeof(uint8_t), &ird) != FR_OK ||
+            ird != (int32_t)sizeof(uint8_t))
+        {
             freeMesh(mesh);
             fclose(0);
             return 0;
         }
 
-        if (sfread(0, &emission, sizeof(uint8_t), &ird) != FR_OK) {
+        if (sfread(0, &emission, sizeof(uint8_t), &ird) != FR_OK ||
+            ird != (int32_t)sizeof(uint8_t))
+        {
             freeMesh(mesh);
             fclose(0);
             return 0;
         }
 
-        if (version >= 3) {
-            if (sfread(0, &transparency, sizeof(uint8_t), &ird) != FR_OK) {
-                freeMesh(mesh);
-                fclose(0);
-                return 0;
-            }
+        if (sfread(0, &transparency, sizeof(uint8_t), &ird) != FR_OK ||
+            ird != (int32_t)sizeof(uint8_t))
+        {
+            freeMesh(mesh);
+            fclose(0);
+            return 0;
+        }
+
+        if (sfread(0, &roughness, sizeof(uint8_t), &ird) != FR_OK ||
+            ird != (int32_t)sizeof(uint8_t))
+        {
+            freeMesh(mesh);
+            fclose(0);
+            return 0;
         }
 
         if (a >= vertCount || b >= vertCount || c >= vertCount) {
@@ -318,6 +332,7 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
         mesh->tris[i].color = (uint8_t)(color & TRI_COLOUR_MASK);
         mesh->tris[i].emission = emission;
         mesh->tris[i].transparency = transparency;
+        mesh->tris[i].roughness    = roughness; /// NOTE: the file is the inverse. at file convert time (255-roughness_output)
     }
 
     fclose(0);
@@ -326,7 +341,7 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
     meshSetDefaultMaterial(mesh);
 
     return 1;
-}
+}    
 
 
 

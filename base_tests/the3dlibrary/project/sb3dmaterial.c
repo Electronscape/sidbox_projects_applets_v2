@@ -16,8 +16,8 @@ void meshSetDefaultMaterial(Mesh *mesh)
     mesh->material.ambient          = 0.00f;
     mesh->material.diffuse          = 1.00f;
     mesh->material.emissive         = 0.00f;
-    mesh->material.specularStrength = 0.00f;
-    mesh->material.shininess        = 8.0f;
+    mesh->material.specularStrength = 0.00f;    // specular >0.0f enables per triangle shininess control
+    mesh->material.shininess        = 8.0f;     // specular needs to be > 0.0f to work shininess
 }
 
 void meshSetMaterial(

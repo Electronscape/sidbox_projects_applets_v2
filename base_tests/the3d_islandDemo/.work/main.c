@@ -7,6 +7,16 @@
 #define MAX_FACE_VERTS 64
 #define MAX_MATERIALS  256
 
+
+/*   /// BLENDER MAPPING ///
+Ka -> Metallic   -> ambient (sadly this is the better way for engine FOR NOW)
+d  -> Alpha      -> transparency
+Ks -> Specular   -> specularStrength
+Ni -> IOR        -> diffuse   // if you want to use it that way
+Ke -> Emission   -> emissive
+Ns -> Roughness  -> shininess
+*/
+
 typedef struct {
     float x;
     float y;
@@ -17,17 +27,96 @@ typedef struct {
     uint32_t a;
     uint32_t b;
     uint32_t c;
-    uint8_t  color;
-    uint8_t  emission;
-    uint8_t  transparency;
+    uint16_t materialIndex;
 } TriFile;
 
 typedef struct {
     char     name[256];
     uint8_t  color;
-    uint8_t  emission;
     uint8_t  transparency;
+    uint8_t  active;
+    uint8_t  _pad0;
+
+    float ambient;
+    float diffuse;
+    float specularStrength;
+    float shininess;
+    float emissive;
 } MaterialInfo;
+
+
+
+
+/// @brief  a copy from the engine for reference //
+typedef struct align32 {
+    uint8_t color;          // palette index
+    uint8_t transparency;   // 0..255
+    uint8_t active;         // active, so if freed using EntityFreeMaterials, (basically clear the materials off the material)
+    uint8_t _pad0;
+
+    float ambient;          // 0.0 .. 1.0
+    float diffuse;          // 0.0 .. 2.0
+    float specularStrength; // 0.0 .. 2.0
+    float shininess;        // 4, 8, 16, 32 ...
+    float emissive;         // 0.0 .. 1.0  
+} Material;
+
+
+
+
+
+
+
+
+static float clamp01(float v)
+{
+    if (v < 0.0f) return 0.0f;
+    if (v > 1.0f) return 1.0f;
+    return v;
+}
+
+static float clamp02(float v)
+{
+    if (v < 0.0f) return 0.0f;
+    if (v > 2.0f) return 2.0f;
+    return v;
+}
+
+static uint8_t alpha_to_transparency(float d)
+{
+    d = clamp01(d);
+    return (uint8_t)((1.0f - d) * 255.0f + 0.5f);
+}
+
+static float rgb_max(float r, float g, float b)
+{
+    float v = r;
+    if (g > v) v = g;
+    if (b > v) v = b;
+    return v;
+}
+
+/* Ns is carrying roughness in your pipeline, not classic MTL shininess */
+static float roughness_to_shininess(float ns)
+{
+    
+    ns = clamp01(ns/1000.0);
+    printf("ns: %f::::", ns);
+
+    if (ns <  0.25f) return 0.0f;
+    if (ns >= 0.75f) return 4.0f;
+    if (ns >= 0.50f) return 8.0f;
+    if (ns >= 0.25f) return 16.0f;
+    return 32.0f;
+}
+
+
+
+
+
+
+
+
 
 static int has_obj_extension(const char *filename)
 {
@@ -111,19 +200,16 @@ static int find_material(MaterialInfo *materials, int materialCount, const char 
     return -1;
 }
 
-
 static int parse_sbx_material_name(
     const char *name,
-    uint8_t *outColor,
-    uint8_t *outEmission,
-    uint8_t *outTransparency
+    uint8_t *outColor
 )
 {
     const char *p;
     char *endptr;
     long colorVal;
 
-    if (!name || !outColor || !outEmission || !outTransparency) return 0;
+    if (!name || !outColor) return 0;
     if (strncmp(name, "SBX_", 4) != 0) return 0;
 
     p = name + 4;
@@ -133,56 +219,15 @@ static int parse_sbx_material_name(
     if (colorVal < 0 || colorVal > 255) return 0;
 
     *outColor = (uint8_t)colorVal;
-    *outEmission = 0;
-    *outTransparency = 0;
-
-    p = endptr;
-
-    while (*p) {
-        if (*p == 'E') {
-            p++;
-
-            if (*p >= '0' && *p <= '9') {
-                long emissionVal = strtol(p, &endptr, 10);
-
-                if (endptr == p) return 0;
-                if (emissionVal < 0) emissionVal = 0;
-                if (emissionVal > 255) emissionVal = 255;
-
-                *outEmission = (uint8_t)emissionVal;
-                p = endptr;
-            } else {
-                *outEmission = 255;
-            }
-        }
-        else if (*p == 'T') {
-            p++;
-
-            if (*p >= '0' && *p <= '9') {
-                long transparencyVal = strtol(p, &endptr, 10);
-
-                if (endptr == p) return 0;
-                if (transparencyVal < 0) transparencyVal = 0;
-                if (transparencyVal > 255) transparencyVal = 255;
-
-                *outTransparency = (uint8_t)transparencyVal;
-                p = endptr;
-            } else {
-                *outTransparency = 128;
-            }
-        }
-        else {
-            return 0;
-        }
-    }
-
     return 1;
 }
+
 
 static int load_mtl_file(const char *mtlPath, MaterialInfo *materials, int *materialCount)
 {
     FILE *fp;
     char line[MAX_LINE_LEN];
+    int current = -1;
 
     if (!mtlPath || !materials || !materialCount) return 0;
 
@@ -197,30 +242,101 @@ static int load_mtl_file(const char *mtlPath, MaterialInfo *materials, int *mate
         if (strncmp(line, "newmtl ", 7) == 0) {
             char name[256];
 
+            /* print previous material before starting next one */
+            if (current >= 0) {
+                printf("MAT %-24s col=%3u tr=%3u amb=%.3f diff=%.3f spec=%.3f shiny=%.3f emis=%.3f\n",
+                    materials[current].name,
+                    materials[current].color,
+                    materials[current].transparency,
+                    materials[current].ambient,
+                    materials[current].diffuse,
+                    materials[current].specularStrength,
+                    materials[current].shininess,
+                    materials[current].emissive);
+            }
+
             if (sscanf(line + 7, "%255s", name) == 1) {
                 if (*materialCount >= MAX_MATERIALS) {
                     fclose(fp);
                     return 0;
                 }
 
-                memset(&materials[*materialCount], 0, sizeof(MaterialInfo));
-                strncpy(materials[*materialCount].name, name, sizeof(materials[*materialCount].name) - 1);
-                materials[*materialCount].name[sizeof(materials[*materialCount].name) - 1] = '\0';
+                current = *materialCount;
+                memset(&materials[current], 0, sizeof(MaterialInfo));
 
-                materials[*materialCount].color = 32;
-                materials[*materialCount].emission = 0;
-                materials[*materialCount].transparency = 0;
+                strncpy(materials[current].name, name, sizeof(materials[current].name) - 1);
+                materials[current].name[sizeof(materials[current].name) - 1] = '\0';
 
-                parse_sbx_material_name(
-                    materials[*materialCount].name,
-                    &materials[*materialCount].color,
-                    &materials[*materialCount].emission,
-                    &materials[*materialCount].transparency
-                );
+                materials[current].color = 32;
+                materials[current].transparency = 0;
+                materials[current].active = 1;
+                materials[current]._pad0 = 0;
+
+                materials[current].ambient = 0.0f;
+                materials[current].diffuse = 1.0f;
+                materials[current].specularStrength = 0.0f;
+                materials[current].shininess = 8.0f;
+                materials[current].emissive = 0.0f;
+
+                parse_sbx_material_name(materials[current].name, &materials[current].color);
 
                 (*materialCount)++;
             }
         }
+        else if (current >= 0) {
+            float r, g, b;
+            float v;
+
+            if (strncmp(line, "Ka ", 3) == 0) {
+                if (sscanf(line + 3, "%f %f %f", &r, &g, &b) == 3) {
+                    materials[current].ambient = clamp01(rgb_max(r, g, b));
+                }
+            }
+            else if (strncmp(line, "Ks ", 3) == 0) {
+                if (sscanf(line + 3, "%f %f %f", &r, &g, &b) == 3) {
+                    materials[current].specularStrength = clamp02(rgb_max(r, g, b));
+                }
+            }
+            else if (strncmp(line, "Ke ", 3) == 0) {
+                if (sscanf(line + 3, "%f %f %f", &r, &g, &b) == 3) {
+                    materials[current].emissive = clamp01(rgb_max(r, g, b));
+                }
+            }
+            else if (strncmp(line, "d ", 2) == 0) {
+                if (sscanf(line + 2, "%f", &v) == 1) {
+                    materials[current].transparency = alpha_to_transparency(v);
+                }
+            }
+            else if (strncmp(line, "Tr ", 3) == 0) {
+                if (sscanf(line + 3, "%f", &v) == 1) {
+                    v = 1.0f - v;
+                    materials[current].transparency = alpha_to_transparency(v);
+                }
+            }
+            else if (strncmp(line, "Ni ", 3) == 0) {
+                if (sscanf(line + 3, "%f", &v) == 1) {
+                    materials[current].diffuse = clamp02(v);
+                }
+            }
+            else if (strncmp(line, "Ns ", 3) == 0) {
+                if (sscanf(line + 3, "%f", &v) == 1) {
+                    materials[current].shininess = roughness_to_shininess(v);
+                }
+            }
+        }
+    }
+
+    /* print final material */
+    if (current >= 0) {
+        printf("MAT %-24s col=%3u tr=%3u amb=%.3f diff=%.3f spec=%.3f shiny=%.3f emis=%.3f\n",
+            materials[current].name,
+            materials[current].color,
+            materials[current].transparency,
+            materials[current].ambient,
+            materials[current].diffuse,
+            materials[current].specularStrength,
+            materials[current].shininess,
+            materials[current].emissive);
     }
 
     fclose(fp);
@@ -260,6 +376,9 @@ static int load_materials_from_obj(const char *objPath, MaterialInfo *materials,
     fclose(fp);
     return 1; /* no mtllib is fine */
 }
+
+
+
 
 static int count_obj(FILE *fp, uint32_t *vertCount, uint32_t *triCount)
 {
@@ -314,9 +433,7 @@ static int parse_obj(
     char line[MAX_LINE_LEN];
     uint32_t vi = 0;
     uint32_t ti = 0;
-    uint8_t currentColor = 32;
-    uint8_t currentEmission = 0;
-    uint8_t currentTransparency = 0;
+    uint16_t currentMaterialIndex = 0;
 
     while (fgets(line, sizeof(line), fp)) {
         if (line[0] == 'v' && line[1] == ' ') {
@@ -344,28 +461,9 @@ static int parse_obj(
                 matIndex = find_material(materials, materialCount, matName);
 
                 if (matIndex >= 0) {
-                    currentColor = materials[matIndex].color;
-                    currentEmission = materials[matIndex].emission;
-                    currentTransparency = materials[matIndex].transparency;
+                    currentMaterialIndex = (uint16_t)matIndex;
                 } else {
-                    uint8_t parsedColor;
-                    uint8_t parsedEmission;
-                    uint8_t parsedTransparency;
-
-                    if (parse_sbx_material_name(
-                            matName,
-                            &parsedColor,
-                            &parsedEmission,
-                            &parsedTransparency))
-                    {
-                        currentColor = parsedColor;
-                        currentEmission = parsedEmission;
-                        currentTransparency = parsedTransparency;
-                    } else {
-                        currentColor = 32;
-                        currentEmission = 0;
-                        currentTransparency = 0;
-                    }
+                    currentMaterialIndex = 0;
                 }
             }
         }
@@ -408,9 +506,7 @@ static int parse_obj(
                     tris[ti].a = (uint32_t)a0;
                     tris[ti].b = (uint32_t)a2;
                     tris[ti].c = (uint32_t)a1;
-                    tris[ti].color = currentColor;
-                    tris[ti].emission = currentEmission;
-                    tris[ti].transparency = currentTransparency;
+                    tris[ti].materialIndex = currentMaterialIndex;
                     ti++;
                 }
             }
@@ -432,17 +528,21 @@ static int parse_obj(
     return 1;
 }
 
+
+
 static int write_sb3d(
     const char *filename,
     const Vec3File *verts,
     uint32_t vertCount,
     const TriFile *tris,
-    uint32_t triCount
+    uint32_t triCount,
+    const MaterialInfo *materials,
+    uint32_t materialCount
 )
 {
     FILE *fp;
     const char magic[4] = { 'S', 'B', '3', 'D' };
-    uint32_t version = 3;
+    uint32_t version = 4;
 
     fp = fopen(filename, "wb");
     if (!fp) {
@@ -454,9 +554,27 @@ static int write_sb3d(
     if (fwrite(&version, sizeof(version), 1, fp) != 1) goto write_fail;
     if (fwrite(&vertCount, sizeof(vertCount), 1, fp) != 1) goto write_fail;
     if (fwrite(&triCount, sizeof(triCount), 1, fp) != 1) goto write_fail;
+    if (fwrite(&materialCount, sizeof(materialCount), 1, fp) != 1) goto write_fail;
 
     if (vertCount > 0) {
         if (fwrite(verts, sizeof(Vec3File), vertCount, fp) != vertCount) goto write_fail;
+    }
+
+    if (materialCount > 0) {
+        for (uint32_t i = 0; i < materialCount; i++) {
+            const MaterialInfo *m = &materials[i];
+
+            if (fwrite(&m->color, sizeof(uint8_t), 1, fp) != 1) goto write_fail;
+            if (fwrite(&m->transparency, sizeof(uint8_t), 1, fp) != 1) goto write_fail;
+            if (fwrite(&m->active, sizeof(uint8_t), 1, fp) != 1) goto write_fail;
+            if (fwrite(&m->_pad0, sizeof(uint8_t), 1, fp) != 1) goto write_fail;
+
+            if (fwrite(&m->ambient, sizeof(float), 1, fp) != 1) goto write_fail;
+            if (fwrite(&m->diffuse, sizeof(float), 1, fp) != 1) goto write_fail;
+            if (fwrite(&m->specularStrength, sizeof(float), 1, fp) != 1) goto write_fail;
+            if (fwrite(&m->shininess, sizeof(float), 1, fp) != 1) goto write_fail;
+            if (fwrite(&m->emissive, sizeof(float), 1, fp) != 1) goto write_fail;
+        }
     }
 
     if (triCount > 0) {
@@ -464,9 +582,7 @@ static int write_sb3d(
             if (fwrite(&tris[i].a, sizeof(uint32_t), 1, fp) != 1) goto write_fail;
             if (fwrite(&tris[i].b, sizeof(uint32_t), 1, fp) != 1) goto write_fail;
             if (fwrite(&tris[i].c, sizeof(uint32_t), 1, fp) != 1) goto write_fail;
-            if (fwrite(&tris[i].color, sizeof(uint8_t), 1, fp) != 1) goto write_fail;
-            if (fwrite(&tris[i].emission, sizeof(uint8_t), 1, fp) != 1) goto write_fail;
-            if (fwrite(&tris[i].transparency, sizeof(uint8_t), 1, fp) != 1) goto write_fail;
+            if (fwrite(&tris[i].materialIndex, sizeof(uint16_t), 1, fp) != 1) goto write_fail;
         }
     }
 
@@ -511,8 +627,13 @@ int main(int argc, char *argv[])
     }
 
     if (!load_materials_from_obj(inputName, materials, &materialCount)) {
-        fprintf(stderr, "WARNING: could not load MTL data, continuing without emission/material lookup\n");
-        materialCount = 0;
+        fprintf(stderr, "ERROR: could not load MTL data\n");
+        return 1;
+    }
+
+    if (materialCount <= 0) {
+        fprintf(stderr, "ERROR: no materials found in MTL\n");
+        return 1;
     }
 
     fp = fopen(inputName, "r");
@@ -549,7 +670,15 @@ int main(int argc, char *argv[])
 
     fclose(fp);
 
-    ok = write_sb3d(outputName, verts, vertCount, tris, triCount);
+    ok = write_sb3d(
+        outputName,
+        verts,
+        vertCount,
+        tris,
+        triCount,
+        materials,
+        (uint32_t)materialCount
+    );
 
     if (!ok) {
         free(verts);

@@ -55,6 +55,7 @@ typedef struct {
 
     // v3 stuff
     uint8_t transparency;
+    uint8_t roughness;
 } Tri;
 
 
