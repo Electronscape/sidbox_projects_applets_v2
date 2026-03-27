@@ -118,6 +118,34 @@ Vec3 entityGetPosition(int id)
     return worldEntities[id].pos;
 }
 
+
+Vec3 entityGetForward(int id)
+{
+    if (!entityIdValid(id)) {
+        return (Vec3){ 0.0f, 0.0f, 1.0f };
+    }
+
+    return worldEntities[id].forward;
+}
+Vec3 entityGetRight(int id)
+{
+    if (!entityIdValid(id)) {
+        return (Vec3){ 1.0f, 0.0f, 0.0f };
+    }
+
+    return worldEntities[id].right;
+}
+
+Vec3 entityGetUp(int id)
+{
+    if (!entityIdValid(id)) {
+        return (Vec3){ 0.0f, 1.0f, 0.0f };
+    }
+
+    return worldEntities[id].up;
+}
+
+
 void entityMoveForward(int id, float dist)
 {
     if (!entityIdValid(id)) return;
@@ -160,7 +188,7 @@ void entityColour(int id, uint8_t colour) {
     }
 }
 
-static void setMeshColour(Mesh *mesh, uint8_t colour){
+void meshColour(Mesh *mesh, uint8_t colour){
     if (!mesh || !mesh->tris) return;
 
     for (int i = 0; i < mesh->triCount; i++) {
@@ -949,6 +977,74 @@ Vec3 entityLookAt(int aId, int bId, uint8_t rotate)
     return ang;
 }
 
+Vec3 positionLookAt(Vec3 a, Vec3 b)
+{
+    Vec3 ang;
+    float dx, dy, dz;
+    float horiz;
+
+    dx = b.x - a.x;
+    dy = b.y - a.y;
+    dz = b.z - a.z;
+
+    if ((dx == 0.0f) && (dy == 0.0f) && (dz == 0.0f)) {
+        return (Vec3){ 0.0f, 0.0f, 0.0f };
+    }
+
+    /*
+        Absolute yaw:
+        forward = +Z
+        yaw 0 faces +Z
+        positive yaw turns toward +X
+    */
+    ang.y = atan2f(dx, dz);
+
+    /*
+        Absolute pitch from horizontal plane
+    */
+    horiz = sqrtf((dx * dx) + (dz * dz));
+    ang.x = -atan2f(dy, horiz);
+
+    /*
+        Roll cannot be derived from just two positions.
+        Keep it at zero.
+    */
+    ang.z = 0.0f;
+
+    return ang;
+}
+
+Vec3 entityLookAtPosition(int entityId, Vec3 target, uint8_t rotate)
+{
+    Vec3 ang;
+    float dx, dy, dz;
+    float horiz;
+
+    if (!entityIdValid(entityId)) {
+        return (Vec3){ 0.0f, 0.0f, 0.0f };
+    }
+
+    dx = target.x - worldEntities[entityId].pos.x;
+    dy = target.y - worldEntities[entityId].pos.y;
+    dz = target.z - worldEntities[entityId].pos.z;
+
+    if ((dx == 0.0f) && (dy == 0.0f) && (dz == 0.0f)) {
+        return (Vec3){ 0.0f, 0.0f, 0.0f };
+    }
+
+    ang.y = atan2f(dx, dz);
+
+    horiz = sqrtf((dx * dx) + (dz * dz));
+    ang.x = -atan2f(dy, horiz);
+
+    ang.z = 0.0f;
+
+    if (rotate) {
+        entityRotation(entityId, ang.y, ang.x, ang.z, 1);
+    }
+
+    return ang;
+}
 
 
 void entitySetBasis(int id, Vec3 right, Vec3 up, Vec3 forward)

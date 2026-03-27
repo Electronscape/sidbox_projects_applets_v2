@@ -10,6 +10,10 @@
 
 
 // Display Bitmap Buffers
+extern uint8_t c64cat[];
+extern uint8_t targetr[];
+
+
 volatile gfx_bitmap_t MEMALIGN32 *bm1, *bm2;               // front Buffers 1 and 2
 volatile gfx_bitmap_t MEMALIGN32 backbitmap;    // background image
 volatile uint8_t gdb = 0;   // Buffer index
@@ -482,6 +486,144 @@ void goIntro(){
 }
 
 
+#define MAX_LASERS 8
+
+typedef struct {
+    uint8_t  active;
+    uint8_t  _pad;
+    uint16_t timer;
+    uint16_t entityID;
+} Laser;
+
+Mesh LaserBlast;
+Laser Lasers[MAX_LASERS];
+
+void InitLasers(void)
+{
+    memset(Lasers, 0, sizeof(Lasers));
+
+    LaserBlast = createBox(10.0f, 10.0f, 50.0f);
+
+    /* adjust to your real parameter order */
+    meshSetMaterial(&LaserBlast, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f);
+    meshColour(&LaserBlast, 34);
+
+    for (int l = 0; l < MAX_LASERS; l++) {
+        Lasers[l].entityID = entityWorldSpawn(&LaserBlast, vec3(0, 0, 0));
+        Lasers[l].active = 0;
+        Lasers[l].timer = 0;
+        entityVisible(Lasers[l].entityID, 0);
+    }
+}
+
+void FireTurret(uint16_t turret, Vec3 target)
+{
+    Vec3 pos;
+    Vec3 rot;
+    Vec3 spawnPos;
+
+    pos = entityGetPosition(turret);
+    target.y -= 50.0f;
+    rot = entityLookAtPosition(turret, target, 0);
+
+    for (int l = 0; l < MAX_LASERS; l++) {
+        if (!Lasers[l].active) {
+            Lasers[l].active = 1;
+            Lasers[l].timer  = 50;   /* frames alive */
+
+            /*
+                Spawn slightly forward so beam starts in front of turret.
+                Assumes forward is +Z in local space and entityForward()
+                returns a normalized forward vector.
+            */
+            {
+                Vec3 fwd = entityGetForward(turret);
+                spawnPos.x = pos.x;// + (fwd.x * 1.6f);
+                spawnPos.y = pos.y + 50.0f;//(fwd.y * 1.6f);
+                spawnPos.z = pos.z;// + (fwd.z * 1.6f);
+            }
+
+            entitySetPosition(Lasers[l].entityID, spawnPos);
+
+            /* use same angle order as your existing engine expects */
+            //entityRotation(Lasers[l].entityID, rot.y, rot.x, rot.z, 0);
+            entityRotation(Lasers[l].entityID,rot.y, 0, 0, 1);
+            entityRotation(Lasers[l].entityID, 0, rot.x, 0, 0);
+
+            entityVisible(Lasers[l].entityID, 1);
+            return;
+        }
+    }
+}
+
+void UpdateLasers(float deltatime)
+{
+    for (int l = 0; l < MAX_LASERS; l++) {
+        if (Lasers[l].active) {
+            if (Lasers[l].timer > 0) {
+                Lasers[l].timer--;
+                // this is where we move things
+                entityMoveForward(Lasers[l].entityID, deltatime * 2000.0f);
+            }
+
+            if (Lasers[l].timer == 0) {
+                Lasers[l].active = 0;
+                entityVisible(Lasers[l].entityID, 0);
+            }
+        }
+    }
+}
+
+static Camera cam;
+static int turret0;
+static int carrier0;
+
+static int16_t turretShotTimer = 0;
+static int16_t turretBurstShotsLeft = 0;
+
+static int irand_range(int minv, int maxv)
+{
+    return minv + (rand() % (maxv - minv + 1));
+}
+
+void UpdateTurretTest(float deltatime)
+{
+    (void)deltatime;
+
+    UpdateLasers(deltatime);
+
+    turretShotTimer--;
+
+    if (turretShotTimer > 0) {
+        return;
+    }
+
+    if (turretBurstShotsLeft <= 0) {
+        /* start a new burst */
+        turretBurstShotsLeft = irand_range(3, 6);   /* shots in this burst */
+        turretShotTimer = irand_range(20, 90);      /* pause before burst starts */
+        return;
+    }
+
+    /* fire one shot */
+    if(irand_range(0, 10)< 3){
+        Vec3 carrierpos = entityGetPosition(carrier0);
+
+        FireTurret(turret0, carrierpos);
+    }
+    else
+        FireTurret(turret0, cam.pos);
+
+
+    turretBurstShotsLeft--;
+
+    if (turretBurstShotsLeft > 0) {
+        turretShotTimer = irand_range(4, 8);       /* short gap inside burst */
+    } else {
+        turretShotTimer = irand_range(15, 20);     /* longer pause after burst */
+    }
+}
+
 int main(int argc, char *argv[]) {
     initSystem();
     
@@ -496,9 +638,9 @@ int main(int argc, char *argv[]) {
     //music_play("3_double_paula.mod", 0);
 
 
-    //goIntro();
-    music_play("boomd.mod", 0);
-    lcd_bright(100);    // need this back on
+    goIntro();
+    //music_play("boomd.mod", 0);
+    //lcd_bright(100);    // need this back on
 
 
 
@@ -510,7 +652,7 @@ int main(int argc, char *argv[]) {
     lightsClear();
     sb3dParticlesClear();  
     setDefaultRenderMode();
-    Camera cam = cameraCreate();
+    cam = cameraCreate();
     cameraSetRange(&cam, 0.01, 5000.0f);
     cameraSetPosition(&cam, vec3(0, 50, 0));
     cameraNormalize(&cam);
@@ -542,7 +684,6 @@ int main(int argc, char *argv[]) {
 
     lightEnable(SunlightId, 0);
 
-
     // sound effects, only for the thundies
     uint32_t sampleLen;
     uint8_t MEMALIGN32 *thund1;
@@ -566,18 +707,12 @@ int main(int argc, char *argv[]) {
 
 
 
-    // night time
-    HosSky         = 19;   
-    HosGround      = 18;
-    HosHorizonLine = 21;
-    SeaDots = 23;
 
-        // horizon stuff
-    // day time
-    HosSky         = 9;   
-    HosGround      = 59;
-    HosHorizonLine = 43;
-    SeaDots = 2;
+    Mesh turretMesh;
+    loadMeshSB3D("turret1.sb3d", &turretMesh, 25.0f);
+    turret0 = entityWorldSpawn(&turretMesh, vec3(-272*2, 40*2, 396*2));
+    meshSetMaterial(&turretMesh, 0.00f, 0.45f, 0.00f, 2.00f, 96.0f);
+    InitLasers();
 
 
     Mesh islandMesh;
@@ -597,7 +732,7 @@ int main(int argc, char *argv[]) {
 
     Mesh carrierMesh;
     loadMeshSB3D("carrier.sb3d", &carrierMesh, 50.0f);
-    int carrier0 = entityWorldSpawn(&carrierMesh, vec3(1950, 0, -100));
+    carrier0 = entityWorldSpawn(&carrierMesh, vec3(1950, 0, -100));
 
 
     // ship yard part
@@ -690,8 +825,24 @@ int main(int argc, char *argv[]) {
 
     char testout[32];
 
-    uint8_t weathermode = 1;    // daylight
-    uint8_t railmode = 0;
+    uint8_t weathermode = 0;    // daylight
+    uint8_t railmode = 1;
+
+            // horizon stuff
+    // day time
+    HosSky         = 9;   
+    HosGround      = 59;
+    HosHorizonLine = 43;
+    SeaDots = 2;
+
+
+        // night time
+    HosSky         = 19;   
+    HosGround      = 18;
+    HosHorizonLine = 21;
+    SeaDots = 23;
+
+
 
     for (;;) {
 
@@ -782,6 +933,7 @@ int main(int argc, char *argv[]) {
             cam.right.y = 0;
         }
 
+        UpdateTurretTest(dt);
 
         #if(0)
         // HIT TESTING 
@@ -952,6 +1104,9 @@ int main(int argc, char *argv[]) {
 
             //gfx_blitchunk(dispChunky, 0);
             //test_render_chunk(dispChunky, 0);
+
+            gfx_blit(c64cat, 10, 256, 64, 64);
+            if(gdb)gfx_blit(targetr, 208, 128, 64, 64);
 
             gfx_drawtext(0, 0, strout);
             

@@ -296,6 +296,8 @@ void meshSetVertexRecalc(Mesh *mesh, int index, Vec3 v);
 void meshOffsetVertexRecalc(Mesh *mesh, int index, Vec3 delta);
 void meshResetFromSource(Mesh *dst, const Mesh *src);
 
+
+void meshColour(Mesh *mesh, uint8_t colour);
 Mesh copyMesh(const Mesh *src);
 
 /* Primitive mesh factories */
@@ -339,6 +341,10 @@ int entityBuildWorldCache(Entity *ent);
 void entitySetPosition(int id, Vec3 pos);
 Vec3 entityGetPosition(int id);
 
+Vec3 entityGetForward(int id);
+Vec3 entityGetRight(int id);
+Vec3 entityGetUp(int id);
+
 void entityMove(int id, Vec3 delta);
 void entityMoveForward(int id, float dist);
 void entityMoveRight(int id, float dist);
@@ -354,8 +360,13 @@ void entitySetBasis(int id, Vec3 right, Vec3 up, Vec3 forward);
 
 Vec3 entityLocalToWorld(const Entity *e, Vec3 v);
 void entityFollowCameraXZ(int id, const Camera *cam, float worldY, float snap);
-Vec3 entityLookAt(int aId, int bId, uint8_t rotate);
 void entityAlignToHit(int id, const SB3DRaycastHit *hit);
+
+Vec3 entityLookAt(int aId, int bId, uint8_t rotate);    // entity to entity
+Vec3 positionLookAt(Vec3 a, Vec3 b);                    // position to position
+Vec3 entityLookAtPosition(int entityId, Vec3 target, uint8_t rotate); // entity to position!!
+
+
 
 /*==============================================================================
     Entity collision
