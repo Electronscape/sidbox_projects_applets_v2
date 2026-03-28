@@ -8,4 +8,9 @@ Entity align32 worldEntities[WORLD_MAX];
 
 void worldClear(void){
     memset(worldEntities, 0, sizeof(worldEntities));
+    // should really clear everything, lights, camera, action !!
+    lightsClear();
+    sb3dParticlesClear();  
+    initClipScratch();
+    
 }

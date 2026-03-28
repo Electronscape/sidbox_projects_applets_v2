@@ -95,8 +95,8 @@ extern _largest_modfile;
 // all this does is press and hold a button to exit a program, not strictly required, but handy for a quick QUIT :)
 #define EXITME	\
 	uint8_t exiter = ExitCode();\
-	if(exiter) return(exiter);
-#endif
+	if(exiter) return(exiter); 
+
 
 
 
@@ -169,7 +169,19 @@ typedef struct {
 
 
 
-//#include "sb3dengine/sb3d.h"
+#include "graphics/sb3dapi.h"
+
+typedef struct {
+    int     (*clipTriangleToFrustum)     (Vec3_api a, Vec3_api b, Vec3_api c, Vec3_api *outVerts, const Camera_api *cam, Vec3_api *src, Vec3_api *dst );
+	uint8_t (*entitySweepRaycastTestAPI) (int movingId, int targetId, Vec3_api *hitPos, Tri_api *triHit, Entity_api *worldEntities);
+} API_3D_RENDER;
+
+typedef struct {
+    const API_3D_RENDER *renderer;
+} API_3D;
+
+
+
 
 
 
@@ -186,7 +198,7 @@ typedef struct __attribute__((aligned(4))) {
 	const API_SYSTEMS 	*system;	// operating system stuffs
     const API_GUI     	*gui;   	// always here
     const API_GFX     	*gfx;   	// graphics library system
-	//const API_3D        *sb3d;		// the 3D graphics system
+	const API_3D        *sb3d;		// the 3D graphics system
 	const API_AUDIO   	*audio;		// audio systems
 	
 } API_Root;
@@ -222,7 +234,17 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 #define getTicks()			(HWKERNAL->getTicks())
 
 // joy stick interfacing (usually just for the port Y1, Y2, X1, X2, BTn1, BTn2, up/down/left/right/fire1/fire2)
-#define getjoyport     		 HWKERNAL->getjoyport
+#define getjoyport()   		(HWKERNAL->getjoyport())
 
 #define get32kmem()	   		(HWKERNAL->get32kmem())
 #define get16k8mem()		(HWKERNAL->get16kmem8())
+
+
+// dedicated 3D math
+#define sb3D_clipTriangleToFrustum(a, b, c, outVerts, cam, src, dst) (API->sb3d->renderer->clipTriangleToFrustum(a, b, c, outVerts, cam, src, dst))
+#define sb3D_entitySweepRaycastTestAPI(movingId, targetId, hitPos, triHit, worldEntities) (API->sb3d->renderer->entitySweepRaycastTestAPI(movingId, targetId, hitPos, triHit, worldEntities))
+
+
+
+
+#endif //SIDBOX_OS_API_H_

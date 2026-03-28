@@ -86,6 +86,7 @@ int lightsGetCount(void)
 void lightsClear(void)
 {
     g_lightCount = 0;
+    memset(g_lights, 0, sizeof(g_lights)); // empty memory! 
 }
 
 void lightEnable(uint8_t lightIndex, uint8_t enable){

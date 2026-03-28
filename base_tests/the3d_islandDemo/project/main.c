@@ -500,6 +500,189 @@ static int16_t turretShotTimer = 0;
 static int16_t turretBurstShotsLeft = 0;
 
 
+//// Impact Hot spots
+#define IMPACT_MAX            8
+#define IMPACT_PARTS_PER      4
+#define IMPACT_TOTAL_PARTS    (IMPACT_MAX * IMPACT_PARTS_PER)
+
+typedef struct {
+    uint8_t active;
+    uint8_t _pad[3];
+    Vec3    pos;
+    float   age;
+    float   life;
+    float   scale;
+} ImpactFlame;
+
+static int impactParticleIds[IMPACT_TOTAL_PARTS];
+static ImpactFlame impactFlames[IMPACT_MAX];
+
+
+void initImpactFlames(void)
+{
+    for (int i = 0; i < IMPACT_MAX; i++) {
+        impactFlames[i].active = 0;
+        impactFlames[i].pos = (Vec3){ 0.0f, 0.0f, 0.0f };
+        impactFlames[i].age = 0.0f;
+        impactFlames[i].life = 0.0f;
+        impactFlames[i].scale = 1.0f;
+    }
+
+    for (int i = 0; i < IMPACT_TOTAL_PARTS; i++) {
+        impactParticleIds[i] = sb3dParticleSpawnQuad(
+            (Vec3){ 0.0f, 0.0f, 0.0f },
+            1.0f,
+            COLOUR_OFFSET + 2,   /* start orange/yellow-ish */
+            2.0f,
+            1,                   /* emission on */
+            1.0f
+        );
+
+        if (impactParticleIds[i] >= 0) {
+            sb3dParticleSetPosition(impactParticleIds[i], (Vec3){ 999999.0f, 999999.0f, 999999.0f });
+            sb3dParticleSetSize(impactParticleIds[i], 0.0f);
+            sb3dParticleSetShade(impactParticleIds[i], 4.0f);
+            sb3dParticleSetEmission(impactParticleIds[i], 0);
+        }
+    }
+}
+
+void updateImpactFlames(float dt)
+{
+    for (int imp = 0; imp < IMPACT_MAX; imp++) {
+        ImpactFlame *fx = &impactFlames[imp];
+        const int base = imp * IMPACT_PARTS_PER;
+
+        if (!fx->active) {
+            for (int j = 0; j < IMPACT_PARTS_PER; j++) {
+                int pid = impactParticleIds[base + j];
+                if (pid >= 0) {
+                    sb3dParticleSetPosition(pid, (Vec3){ 999999.0f, 999999.0f, 999999.0f });
+                    sb3dParticleSetSize(pid, 0.0f);
+                    sb3dParticleSetShade(pid, 4.0f);
+                    sb3dParticleSetEmission(pid, 0);
+                }
+            }
+            continue;
+        }
+
+        fx->age += dt;
+
+        if (fx->age >= fx->life) {
+            fx->active = 0;
+
+            for (int j = 0; j < IMPACT_PARTS_PER; j++) {
+                int pid = impactParticleIds[base + j];
+                if (pid >= 0) {
+                    sb3dParticleSetPosition(pid, (Vec3){ 999999.0f, 999999.0f, 999999.0f });
+                    sb3dParticleSetSize(pid, 0.0f);
+                    sb3dParticleSetShade(pid, 4.0f);
+                    sb3dParticleSetEmission(pid, 0);
+                }
+            }
+            continue;
+        }
+
+        {
+            float t = fx->age / fx->life;       /* 0..1 */
+            float invT = 1.0f - t;
+            float scale = fx->scale;
+
+            for (int j = 0; j < IMPACT_PARTS_PER; j++) {
+                int pid = impactParticleIds[base + j];
+                Vec3 p;
+                float ang;
+                float ring;
+                float rise;
+                float flicker;
+                float size;
+                float shade;
+                uint8_t col;
+
+                if (pid < 0) continue;
+
+                /*
+                    spread:
+                    early = tight hot burst
+                    later = opens outward a bit
+                */
+                ang = ((float)j / (float)IMPACT_PARTS_PER) * 6.28318530718f;
+                ang += fx->age * (3.0f + (float)(j & 3));
+
+                ring = (2.0f + (t * 8.0f)) * scale;
+                rise = (t * 28.0f) * scale;
+
+                flicker = 0.7f + 0.3f * sinf((fx->age * 40.0f) + ((float)j * 1.7f));
+
+                p.x = fx->pos.x + cosf(ang) * ring * (0.35f + 0.65f * invT);
+                p.y = fx->pos.y + rise;
+                p.z = fx->pos.z + sinf(ang) * ring * (0.35f + 0.65f * invT);
+
+                size = (8.0f + (12.0f * invT) + ((float)(j & 1) * 2.0f)) * scale * flicker;
+
+                /*
+                    shade:
+                    low = bright
+                    higher = darker
+                */
+                shade = 0.01f + (t * 0.5f);
+
+                /*
+                    colour ramp by age:
+                    46 = bright yellow/greenish if that's your palette
+                    34 = red
+                    tweak these two to your palette reality
+                */
+                if (t < 0.35f) {
+                    col = COLOUR_OFFSET + 37;   /* hottest */
+                } else if (t < 0.70f) {
+                    col = COLOUR_OFFSET + 34;   /* orange/red */
+                } else {
+                    col = COLOUR_OFFSET + 49;   /* darker smoke ember */
+                }
+
+                sb3dParticleSetPosition(pid, p);
+                sb3dParticleSetSize(pid, size);
+                sb3dParticleSetShade(pid, shade);
+                sb3dParticleSetColor(pid, col);
+                sb3dParticleSetEmission(pid, 200);//(t < 0.55f) ? 1 : 0);
+            }
+        }
+    }
+}
+
+
+void spawnImpactFlame(Vec3 pos, float scale)
+{
+    int best = -1;
+    float oldest = -1.0f;
+
+    for (int i = 0; i < IMPACT_MAX; i++) {
+        if (!impactFlames[i].active) {
+            best = i;
+            break;
+        }
+
+        if (impactFlames[i].age > oldest) {
+            oldest = impactFlames[i].age;
+            best = i;
+        }
+    }
+
+    if (best < 0) return;
+
+    impactFlames[best].active = 1;
+    impactFlames[best].pos = pos;
+    impactFlames[best].age = 0.0f;
+    impactFlames[best].life = 1.05f;   /* short hot flash */
+    impactFlames[best].scale = scale;
+}
+
+
+
+
+
+
 
 #define MAX_LASERS 8
 
@@ -682,7 +865,8 @@ void UpdateLasers(float deltatime)
 
                 if(hit){
                     CameraLasers[l].timer = 0;
-                    entitySetPosition(hitCube0, vec3(hitPoint.x, hitPoint.y, hitPoint.z));
+                    //entitySetPosition(hitCube0, vec3(hitPoint.x, hitPoint.y, hitPoint.z));
+                    spawnImpactFlame(vec3(hitPoint.x, hitPoint.y, hitPoint.z), 0.7f);
                 }
             }
 
@@ -783,10 +967,79 @@ void UpdateTurretTest(float deltatime)
 }
 
 uint32_t sampleLen;
-uint8_t MEMALIGN32 *thund1;
-uint8_t MEMALIGN32 *thund2;
-uint8_t MEMALIGN32 *pewpew;
-uint8_t MEMALIGN32 *mantaeng;
+// sound memory buffers
+uint8_t MEMALIGN32 *thund1;     // thunder 1 sfx
+uint8_t MEMALIGN32 *thund2;     // thunder 2 sfx
+uint8_t MEMALIGN32 *pewpew;     // Laser blast sfx
+uint8_t MEMALIGN32 *mantaeng;   // the Mantas- engine ambience sfx
+
+
+
+int smokeIds[32];
+
+void initSmoke(void)
+{
+    for (int i = 0; i < 32; i++) {
+        smokeIds[i] = sb3dParticleSpawnQuad(
+            (Vec3){ 0.0f, 0.0f, 0.0f },
+            0.5f,
+            COLOUR_OFFSET + 1,
+            3.0f,
+            0,
+            0.5
+        );
+    }
+}
+
+
+
+void updateSmoke(float t, Vec3 origin)
+{
+    float scale = 16.0f;
+
+    for (int i = 0; i < 32; i++) {
+        Vec3 p;
+        float age;
+        float rise;
+        float driftX;
+        float driftZ;
+        float size;
+        float shade;
+
+        if (smokeIds[i] < 0) continue;
+
+        age = fmodf((t * 0.35f) + ((float)i / 32.0f), 1.0f);
+
+        /* taller plume */
+        rise = (age * 14.0f) * scale;
+
+        /* wider sideways drift */
+        driftX =
+            sinf((t * 1.2f) + (float)i * 1.37f) *
+            ((0.35f + age * 1.25f) * scale);
+
+        driftZ =
+            cosf((t * 0.9f) + (float)i * 1.91f) *
+            ((0.35f + age * 1.00f) * scale);
+
+        p.x = origin.x + driftX;
+        p.y = origin.y + rise;
+        p.z = origin.z + driftZ;
+
+        /* bigger puffs */
+        size = (1.2f + (age * 3.5f)) * scale;
+
+        shade = 2.0f + (age * 2.0f);
+
+        sb3dParticleSetPosition(smokeIds[i], p);
+        sb3dParticleSetSize(smokeIds[i], size);
+        sb3dParticleSetShade(smokeIds[i], shade);
+        sb3dParticleSetColor(smokeIds[i], COLOUR_OFFSET + 1);
+        sb3dParticleSetEmission(smokeIds[i], 0);
+    }
+}
+
+
 
 int main(int argc, char *argv[]) {
     initSystem();
@@ -805,7 +1058,7 @@ int main(int argc, char *argv[]) {
 
 
     //goIntro();
-    music_play("black_absorber.mod", 0);
+    //music_play("black_absorber.mod", 0);
     lcd_bright(100);    // need this back on
 
 
@@ -815,13 +1068,18 @@ int main(int argc, char *argv[]) {
 
     //initCoarseDepth8Mem();
     worldClear();
-    lightsClear();
-    sb3dParticlesClear();  
+    //lightsClear();
+    //sb3dParticlesClear();  
+    
     setDefaultRenderMode();
     cam = cameraCreate();
     cameraSetRange(&cam, 0.01, 5000.0f);
     cameraSetPosition(&cam, vec3(0, 50, 0));
     cameraNormalize(&cam);
+
+
+    initSmoke();
+    initImpactFlames();
 
 /// prepare the palette for use with the 3D engine
 
@@ -1107,8 +1365,12 @@ int main(int argc, char *argv[]) {
         lightSetRanges(Camlightid, 100.0f, 320.0f, 530.0f);
 
         uint8_t flash = 0;
-        if(weathermode==0)
+        if(weathermode==0){
+            lightEnable(Camlightid, 1);
             flash = weatherLightning(dt, SunlightId);
+        } else {
+            lightEnable(Camlightid, 0);
+        }
 
 
         clrmousedelta();
@@ -1131,6 +1393,7 @@ int main(int argc, char *argv[]) {
 
 
         UpdateTurretTest(dt);
+        updateImpactFlames(dt);
 
         #if(0)
         // HIT TESTING 
@@ -1149,6 +1412,11 @@ int main(int argc, char *argv[]) {
         entityRotation(shipYardID[1], 0, pv1.x, 0, 0);
 
         #endif
+
+        static float worldTime;
+        worldTime += 0.01;
+        updateSmoke(worldTime, vec3(-565,430,-800));
+
         {
             gfx_lcdwait();
 

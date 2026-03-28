@@ -11,22 +11,101 @@
 
 
 
-static const uint8_t bayer4x4[4][4] = {
+static const uint8_t align32 bayer4x4[4][4] = {
     {  0,  8,  2, 10 },
     { 12,  4, 14,  6 },
     {  3, 11,  1,  9 },
     { 15,  7, 13,  5 }
 };
 
+static uint8_t *g_depthBufferBandAlloc = NULL;
+
+static inline uint16_t *align32_ptr_u16(void *p)
+{
+    uintptr_t v = (uintptr_t)p;
+    v = (v + 31u) & ~(uintptr_t)31u;
+    return (uint16_t *)v;
+}
+
+static inline int fastCeilToInt(float x)
+{
+    const int i = (int)x;
+    return (x <= (float)i) ? i : (i + 1);
+}
 
 
 
+static const float align32 g_invBlockMinus1[zbufferaccurate + 1] = {
+    0.0f,
+    0.0f,
+    1.0f,
+    0.5f,
+    0.333333333f,
+    0.25f,
+    0.2f,
+    0.166666667f,
+    0.142857143f,
+    0.125f,
+    0.111111111f,
+    0.1f,
+    0.0909090909f,
+    0.0833333333f,
+    0.0769230769f,
+    0.0714285714f,
+    0.0666666667f,
+    0.0625f,
+    0.0588235294f,
+    0.0555555556f,
+    0.0526315789f,
+    0.05f,
+    0.0476190476f,
+    0.0454545455f,
+    0.0434782609f,
+    0.0416666667f,
+    0.04f,
+    0.0384615385f,
+    0.037037037f,
+    0.0357142857f,
+    0.0344827586f,
+    0.0333333333f,
+    0.0322580645f,
+    0.03125f,
+    0.0303030303f,
+    0.0294117647f,
+    0.0285714286f,
+    0.0277777778f,
+    0.027027027f,
+    0.0263157895f,
+    0.0256410256f,
+    0.025f,
+    0.0243902439f,
+    0.0238095238f,
+    0.023255814f,
+    0.0227272727f,
+    0.0222222222f,
+    0.0217391304f,
+    0.0212765957f
+};
 
-/* keep your existing clut[] here */
-/* keep your existing bayer4x4[][] here */
-/* keep your existing font[][] here */
+// this proven to be a pig on memory cache drops /// its a bit of a pig :(
+/*
+float *g_invBlockMinus1 = 0;
 
-//uint8_t fb[SCREEN_W * SCREEN_H] = {0};
+void InitInvBlockMem(void)
+{
+    uint8_t *base = (uint8_t *)get16k8mem();
+    uintptr_t addr = (uintptr_t)(base + 4096);
+
+    // force 32-byte alignment just in case
+    addr = (addr + 31u) & ~(uintptr_t)31u;
+
+    g_invBlockMinus1 = (float *)addr;
+
+    for (int i = 0; i < (zbufferaccurate + 1); i++) {
+        g_invBlockMinus1[i] = g_invBlockMinus1Src[i];
+    }
+}
+*/
 
 uint8_t *drawbuffer;
 
@@ -36,8 +115,14 @@ static int g_depthBandY0 = 0;
 static int g_depthBandY1 = 0;
 
 
-void initDepthBandMem(){
-    g_depthBufferBand = get32kmem();
+void initDepthBandMem(void)
+{
+    if (g_depthBufferBand) return;
+
+    g_depthBufferBandAlloc = get32kmem();
+    if (!g_depthBufferBandAlloc) return;
+
+    g_depthBufferBand = align32_ptr_u16(g_depthBufferBandAlloc);
 }
 
 void beginDepthBand(int y0)
@@ -312,8 +397,8 @@ void fillTriangleFlat(
 
     /* ---------------- top half ---------------- */
     if ((v1.y - v0.y) > 0.0001f) {
-        int yStart = (int)ceilf(v0.y);
-        int yEnd   = (int)ceilf(v1.y) - 1;
+        int yStart = fastCeilToInt(v0.y);
+        int yEnd   = fastCeilToInt(v1.y) - 1;
 
         if (yStart < g_depthBandY0) yStart = g_depthBandY0;
         if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
@@ -343,8 +428,8 @@ void fillTriangleFlat(
                 }
 
                 {
-                    int xStart = (int)ceilf(ax);
-                    int xEnd   = (int)ceilf(bx) - 1;
+                    int xStart = fastCeilToInt(ax);
+                    int xEnd   = fastCeilToInt(bx) - 1;
 
                     if (xStart < 0) xStart = 0;
                     if (xEnd >= SCREEN_W) xEnd = SCREEN_W - 1;
@@ -399,7 +484,7 @@ void fillTriangleFlat(
 
                                 if (q1 > 0.0000001f) {
                                     z1 = zq1 / q1;
-                                    zStep = (z1 - z0) * (1.0f / (float)(block - 1));
+                                    zStep = (z1 - z0) * g_invBlockMinus1[block];
                                 } else {
                                     zStep = 0.0f;
                                 }
@@ -449,8 +534,8 @@ void fillTriangleFlat(
 
     /* ---------------- bottom half ---------------- */
     if ((v2.y - v1.y) > 0.0001f) {
-        int yStart = (int)ceilf(v1.y);
-        int yEnd   = (int)ceilf(v2.y) - 1;
+        int yStart = fastCeilToInt(v1.y);
+        int yEnd   = fastCeilToInt(v2.y) - 1;
 
         if (yStart < g_depthBandY0) yStart = g_depthBandY0;
         if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
@@ -480,8 +565,8 @@ void fillTriangleFlat(
                 }
 
                 {
-                    int xStart = (int)ceilf(ax);
-                    int xEnd   = (int)ceilf(bx) - 1;
+                    int xStart = fastCeilToInt(ax);
+                    int xEnd   = fastCeilToInt(bx) - 1;
 
                     if (xStart < 0) xStart = 0;
                     if (xEnd >= SCREEN_W) xEnd = SCREEN_W - 1;
@@ -536,7 +621,7 @@ void fillTriangleFlat(
 
                                 if (q1 > 0.0000001f) {
                                     z1 = zq1 / q1;
-                                    zStep = (z1 - z0) * (1.0f / (float)(block - 1));
+                                    zStep = (z1 - z0) * g_invBlockMinus1[block];
                                 } else {
                                     zStep = 0.0f;
                                 }
@@ -684,8 +769,8 @@ void fillTriangleDitherBayer(
 
     /* ---------------- top half ---------------- */
     if ((v1.y - v0.y) > 0.0001f) {
-        int yStart = (int)ceilf(v0.y);
-        int yEnd   = (int)ceilf(v1.y) - 1;
+        int yStart = fastCeilToInt(v0.y);
+        int yEnd   = fastCeilToInt(v1.y) - 1;
 
         if (yStart < g_depthBandY0) yStart = g_depthBandY0;
         if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
@@ -715,8 +800,8 @@ void fillTriangleDitherBayer(
                 }
 
                 {
-                    int xStart = (int)ceilf(ax);
-                    int xEnd   = (int)ceilf(bx) - 1;
+                    int xStart = fastCeilToInt(ax);
+                    int xEnd   = fastCeilToInt(bx) - 1;
 
                     if (xStart < 0) xStart = 0;
                     if (xEnd >= SCREEN_W) xEnd = SCREEN_W - 1;
@@ -771,7 +856,7 @@ void fillTriangleDitherBayer(
 
                                 if (q1 > 0.0000001f) {
                                     z1 = zq1 / q1;
-                                    zStep = (z1 - z0) * (1.0f / (float)(block - 1));
+                                    zStep = (z1 - z0) * g_invBlockMinus1[block];
                                 } else {
                                     zStep = 0.0f;
                                 }
@@ -842,8 +927,8 @@ void fillTriangleDitherBayer(
 
     /* ---------------- bottom half ---------------- */
     if ((v2.y - v1.y) > 0.0001f) {
-        int yStart = (int)ceilf(v1.y);
-        int yEnd   = (int)ceilf(v2.y) - 1;
+        int yStart = fastCeilToInt(v1.y);
+        int yEnd   = fastCeilToInt(v2.y) - 1;
 
         if (yStart < g_depthBandY0) yStart = g_depthBandY0;
         if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
@@ -873,8 +958,8 @@ void fillTriangleDitherBayer(
                 }
 
                 {
-                    int xStart = (int)ceilf(ax);
-                    int xEnd   = (int)ceilf(bx) - 1;
+                    int xStart = fastCeilToInt(ax);
+                    int xEnd   = fastCeilToInt(bx) - 1;
 
                     if (xStart < 0) xStart = 0;
                     if (xEnd >= SCREEN_W) xEnd = SCREEN_W - 1;
@@ -929,7 +1014,7 @@ void fillTriangleDitherBayer(
 
                                 if (q1 > 0.0000001f) {
                                     z1 = zq1 / q1;
-                                    zStep = (z1 - z0) * (1.0f / (float)(block - 1));
+                                    zStep = (z1 - z0) * g_invBlockMinus1[block];
                                 } else {
                                     zStep = 0.0f;
                                 }
@@ -1105,8 +1190,8 @@ void fillTriangleDitherBayerT(
 
     /* ---------------- top half ---------------- */
     if ((v1.y - v0.y) > 0.0001f) {
-        int yStart = (int)ceilf(v0.y);
-        int yEnd   = (int)ceilf(v1.y) - 1;
+        int yStart = fastCeilToInt(v0.y);
+        int yEnd   = fastCeilToInt(v1.y) - 1;
 
         if (yStart < g_depthBandY0) yStart = g_depthBandY0;
         if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
@@ -1136,8 +1221,8 @@ void fillTriangleDitherBayerT(
                 }
 
                 {
-                    int xStart = (int)ceilf(ax);
-                    int xEnd   = (int)ceilf(bx) - 1;
+                    int xStart = fastCeilToInt(ax);
+                    int xEnd   = fastCeilToInt(bx) - 1;
 
                     if (xStart < 0) xStart = 0;
                     if (xEnd >= SCREEN_W) xEnd = SCREEN_W - 1;
@@ -1195,7 +1280,7 @@ void fillTriangleDitherBayerT(
 
                                         if (q1 > 0.0000001f) {
                                             z1 = zq1 / q1;
-                                            zStep = (z1 - z0) * (1.0f / (float)(block - 1));
+                                            zStep = (z1 - z0) * g_invBlockMinus1[block];
                                         } else {
                                             zStep = 0.0f;
                                         }
@@ -1279,8 +1364,8 @@ void fillTriangleDitherBayerT(
 
     /* ---------------- bottom half ---------------- */
     if ((v2.y - v1.y) > 0.0001f) {
-        int yStart = (int)ceilf(v1.y);
-        int yEnd   = (int)ceilf(v2.y) - 1;
+        int yStart = fastCeilToInt(v1.y);
+        int yEnd   = fastCeilToInt(v2.y) - 1;
 
         if (yStart < g_depthBandY0) yStart = g_depthBandY0;
         if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
@@ -1310,8 +1395,8 @@ void fillTriangleDitherBayerT(
                 }
 
                 {
-                    int xStart = (int)ceilf(ax);
-                    int xEnd   = (int)ceilf(bx) - 1;
+                    int xStart = fastCeilToInt(ax);
+                    int xEnd   = fastCeilToInt(bx) - 1;
 
                     if (xStart < 0) xStart = 0;
                     if (xEnd >= SCREEN_W) xEnd = SCREEN_W - 1;
@@ -1369,7 +1454,7 @@ void fillTriangleDitherBayerT(
 
                                         if (q1 > 0.0000001f) {
                                             z1 = zq1 / q1;
-                                            zStep = (z1 - z0) * (1.0f / (float)(block - 1));
+                                            zStep = (z1 - z0) * g_invBlockMinus1[block];
                                         } else {
                                             zStep = 0.0f;
                                         }
@@ -1548,8 +1633,8 @@ void fillTriangleDitherBayer2Mode(
 
     /* ---------------- top half ---------------- */
     if ((v1.y - v0.y) > 0.0001f) {
-        int yStart = (int)ceilf(v0.y);
-        int yEnd   = (int)ceilf(v1.y) - 1;
+        int yStart = fastCeilToInt(v0.y);
+        int yEnd   = fastCeilToInt(v1.y) - 1;
 
         if (yStart < g_depthBandY0) yStart = g_depthBandY0;
         if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
@@ -1579,8 +1664,8 @@ void fillTriangleDitherBayer2Mode(
                 }
 
                 {
-                    int xStart = (int)ceilf(ax);
-                    int xEnd   = (int)ceilf(bx) - 1;
+                    int xStart = fastCeilToInt(ax);
+                    int xEnd   = fastCeilToInt(bx) - 1;
 
                     if (xStart < 0) xStart = 0;
                     if (xEnd >= SCREEN_W) xEnd = SCREEN_W - 1;
@@ -1636,7 +1721,7 @@ void fillTriangleDitherBayer2Mode(
 
                                 if (q1 > 0.0000001f) {
                                     z1 = zq1 / q1;
-                                    zStep = (z1 - z0) * (1.0f / (float)(block - 1));
+                                    zStep = (z1 - z0) * g_invBlockMinus1[block];
                                 } else {
                                     zStep = 0.0f;
                                 }
@@ -1689,8 +1774,8 @@ void fillTriangleDitherBayer2Mode(
 
     /* ---------------- bottom half ---------------- */
     if ((v2.y - v1.y) > 0.0001f) {
-        int yStart = (int)ceilf(v1.y);
-        int yEnd   = (int)ceilf(v2.y) - 1;
+        int yStart = fastCeilToInt(v1.y);
+        int yEnd   = fastCeilToInt(v2.y) - 1;
 
         if (yStart < g_depthBandY0) yStart = g_depthBandY0;
         if (yEnd > g_depthBandY1) yEnd = g_depthBandY1;
@@ -1720,8 +1805,8 @@ void fillTriangleDitherBayer2Mode(
                 }
 
                 {
-                    int xStart = (int)ceilf(ax);
-                    int xEnd   = (int)ceilf(bx) - 1;
+                    int xStart = fastCeilToInt(ax);
+                    int xEnd   = fastCeilToInt(bx) - 1;
 
                     if (xStart < 0) xStart = 0;
                     if (xEnd >= SCREEN_W) xEnd = SCREEN_W - 1;
@@ -1777,7 +1862,7 @@ void fillTriangleDitherBayer2Mode(
 
                                 if (q1 > 0.0000001f) {
                                     z1 = zq1 / q1;
-                                    zStep = (z1 - z0) * (1.0f / (float)(block - 1));
+                                    zStep = (z1 - z0) * g_invBlockMinus1[block];
                                 } else {
                                     zStep = 0.0f;
                                 }

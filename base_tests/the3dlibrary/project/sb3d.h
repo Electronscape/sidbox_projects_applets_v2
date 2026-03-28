@@ -49,7 +49,7 @@ int sb3dRaycastFromCamera(
     SB3DRaycastHit *outHit
 );
 
-
+int entityMoveWithCollision(int moverId, Vec3 moveDelta, int *outHitId, uint8_t global);
 int sb3dRaycastFromCamera(const Camera *cam, float maxDist, SB3DRaycastHit *outHit);
 int sb3dRaycastWorld(Vec3 rayOrig, Vec3 rayDir, float maxDist, SB3DRaycastHit *outHit);
 
