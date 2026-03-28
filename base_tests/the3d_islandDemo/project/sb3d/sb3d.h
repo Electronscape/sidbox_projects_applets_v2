@@ -113,6 +113,10 @@ typedef struct {
     int c;
     uint8_t color;
     uint8_t emission;
+
+    // v3 stuff
+    uint8_t transparency;
+    uint8_t roughness;
 } Tri;
 
 typedef struct {
@@ -322,6 +326,8 @@ void cameraMove(Camera *cam, float x, float y, float z);
 void cameraRotate(Camera *cam, float yaw, float pitch, float roll);
 void cameraTurn(Camera *cam, float x, float y, float z, uint8_t global);
 
+Vec3 cameraGetRotation(Camera *cam, uint8_t local);
+
 /*==============================================================================
     Entity world management
 ==============================================================================*/
@@ -371,6 +377,9 @@ Vec3 entityLookAtPosition(int entityId, Vec3 target, uint8_t rotate); // entity 
 /*==============================================================================
     Entity collision
 ==============================================================================*/
+uint8_t entityIntersectTest(int a, int b);
+uint8_t entitySweepRaycastTest(int movingId, int targetId, Vec3 *hitPos, Tri *triHit);
+
 
 void entityEnableCollision(int id, uint8_t colenable);
 int entityMoveWithCollision(int moverId, Vec3 moveDelta, int *outHitId, uint8_t global);

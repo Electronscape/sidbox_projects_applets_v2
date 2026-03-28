@@ -3191,3 +3191,685 @@ int sb3dRaycastFromCamera(
     if (!cam || !outHit) return 0;
     return sb3dRaycastWorld(cam->pos, cam->forward, maxDist, outHit);
 }
+
+
+////////////// collision DE-PIGGING MODE ///////////////////////////////
+////////////// collision DE-PIGGING MODE ///////////////////////////////
+////////////// collision DE-PIGGING MODE ///////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////// collision DE-PIGGING MODE ///////////////////////////////
+////////////// collision DE-PIGGING MODE ///////////////////////////////
+////////////// collision DE-PIGGING MODE ///////////////////////////////
+// file render.c (this is part)
+////////////// collision DE-PIGGING MODE ///////////////////////////////
+
+static Vec3 g_intersectWorldVertsA[SB3D_MAX_VERTS];
+static Vec3 g_intersectWorldVertsB[SB3D_MAX_VERTS];
+
+static SB3DTriBounds g_intersectBoundsA[SB3D_MAX_TRIS];
+static SB3DTriBounds g_intersectBoundsB[SB3D_MAX_TRIS];
+
+static inline float sb3d_min3f(float a, float b, float c)
+{
+    float m = a;
+    if (b < m) m = b;
+    if (c < m) m = c;
+    return m;
+}
+
+static inline float sb3d_max3f(float a, float b, float c)
+{
+    float m = a;
+    if (b > m) m = b;
+    if (c > m) m = c;
+    return m;
+}
+
+static void sb3dBuildWorldVertsCache(
+    const Entity *ent,
+    const Mesh *mesh,
+    Vec3 *outWorldVerts
+)
+{
+    for (int i = 0; i < mesh->vertCount; i++) {
+        const Vec3 p = mesh->verts[i];
+
+        outWorldVerts[i].x =
+            ent->pos.x +
+            (ent->right.x   * p.x) +
+            (ent->up.x      * p.y) +
+            (ent->forward.x * p.z);
+
+        outWorldVerts[i].y =
+            ent->pos.y +
+            (ent->right.y   * p.x) +
+            (ent->up.y      * p.y) +
+            (ent->forward.y * p.z);
+
+        outWorldVerts[i].z =
+            ent->pos.z +
+            (ent->right.z   * p.x) +
+            (ent->up.z      * p.y) +
+            (ent->forward.z * p.z);
+    }
+}
+
+static void sb3dBuildTriBoundsCache(
+    const Mesh *mesh,
+    const Vec3 *worldVerts,
+    SB3DTriBounds *outBounds
+)
+{
+    for (int i = 0; i < mesh->triCount; i++) {
+        const Tri *t = &mesh->tris[i];
+
+        const Vec3 *a = &worldVerts[t->a];
+        const Vec3 *b = &worldVerts[t->b];
+        const Vec3 *c = &worldVerts[t->c];
+
+        SB3DTriBounds *bb = &outBounds[i];
+
+        bb->minx = sb3d_min3f(a->x, b->x, c->x);
+        bb->miny = sb3d_min3f(a->y, b->y, c->y);
+        bb->minz = sb3d_min3f(a->z, b->z, c->z);
+
+        bb->maxx = sb3d_max3f(a->x, b->x, c->x);
+        bb->maxy = sb3d_max3f(a->y, b->y, c->y);
+        bb->maxz = sb3d_max3f(a->z, b->z, c->z);
+    }
+}
+
+static void sb3dBuildMeshBoundsFromTriBounds(
+    const SB3DTriBounds *triBounds,
+    int triCount,
+    SB3DTriBounds *outBounds
+)
+{
+    if (!triBounds || triCount <= 0 || !outBounds) return;
+
+    *outBounds = triBounds[0];
+
+    for (int i = 1; i < triCount; i++) {
+        const SB3DTriBounds *b = &triBounds[i];
+
+        if (b->minx < outBounds->minx) outBounds->minx = b->minx;
+        if (b->miny < outBounds->miny) outBounds->miny = b->miny;
+        if (b->minz < outBounds->minz) outBounds->minz = b->minz;
+
+        if (b->maxx > outBounds->maxx) outBounds->maxx = b->maxx;
+        if (b->maxy > outBounds->maxy) outBounds->maxy = b->maxy;
+        if (b->maxz > outBounds->maxz) outBounds->maxz = b->maxz;
+    }
+}
+
+static inline uint8_t sb3dTriBoundsOverlap(
+    const SB3DTriBounds *a,
+    const SB3DTriBounds *b
+)
+{
+    if (a->maxx < b->minx || b->maxx < a->minx) return 0;
+    if (a->maxy < b->miny || b->maxy < a->miny) return 0;
+    if (a->maxz < b->minz || b->maxz < a->minz) return 0;
+    return 1;
+}
+
+static inline uint8_t sb3dBoundsOverlap(
+    const SB3DTriBounds *a,
+    const SB3DTriBounds *b
+)
+{
+    if (a->maxx < b->minx || b->maxx < a->minx) return 0;
+    if (a->maxy < b->miny || b->maxy < a->miny) return 0;
+    if (a->maxz < b->minz || b->maxz < a->minz) return 0;
+    return 1;
+}
+
+static uint8_t sb3dSegmentTriangleHit(
+    Vec3 p0,
+    Vec3 p1,
+    Vec3 v0,
+    Vec3 v1,
+    Vec3 v2)
+{
+    const float EPS = 0.0001f;
+
+    Vec3 dir;
+    float segLen;
+    float segLen2;
+    float tHit;
+
+    dir.x = p1.x - p0.x;
+    dir.y = p1.y - p0.y;
+    dir.z = p1.z - p0.z;
+
+    segLen2 = (dir.x * dir.x) + (dir.y * dir.y) + (dir.z * dir.z);
+    if (segLen2 <= EPS) {
+        return 0;
+    }
+
+    segLen = sqrtf(segLen2);
+    dir.x /= segLen;
+    dir.y /= segLen;
+    dir.z /= segLen;
+
+    if (!sb3dRayTriangleHitDetailed(p0, dir, segLen, v0, v1, v2, &tHit, NULL)) {
+        return 0;
+    }
+
+    return (tHit >= 0.0f && tHit <= segLen);
+}
+
+static uint8_t sb3dPointInTriangle3D(Vec3 p, Vec3 a, Vec3 b, Vec3 c)
+{
+    const float EPS = 0.0001f;
+
+    Vec3 ab, bc, ca;
+    Vec3 ap, bp, cp;
+    Vec3 c0, c1, c2;
+    Vec3 n;
+    float d0, d1, d2;
+
+    ab.x = b.x - a.x; ab.y = b.y - a.y; ab.z = b.z - a.z;
+    bc.x = c.x - b.x; bc.y = c.y - b.y; bc.z = c.z - b.z;
+    ca.x = a.x - c.x; ca.y = a.y - c.y; ca.z = a.z - c.z;
+
+    ap.x = p.x - a.x; ap.y = p.y - a.y; ap.z = p.z - a.z;
+    bp.x = p.x - b.x; bp.y = p.y - b.y; bp.z = p.z - b.z;
+    cp.x = p.x - c.x; cp.y = p.y - c.y; cp.z = p.z - c.z;
+
+    n.x = (ab.y * (c.z - a.z)) - (ab.z * (c.y - a.y));
+    n.y = (ab.z * (c.x - a.x)) - (ab.x * (c.z - a.z));
+    n.z = (ab.x * (c.y - a.y)) - (ab.y * (c.x - a.x));
+
+    c0.x = (ab.y * ap.z) - (ab.z * ap.y);
+    c0.y = (ab.z * ap.x) - (ab.x * ap.z);
+    c0.z = (ab.x * ap.y) - (ab.y * ap.x);
+
+    c1.x = (bc.y * bp.z) - (bc.z * bp.y);
+    c1.y = (bc.z * bp.x) - (bc.x * bp.z);
+    c1.z = (bc.x * bp.y) - (bc.y * bp.x);
+
+    c2.x = (ca.y * cp.z) - (ca.z * cp.y);
+    c2.y = (ca.z * cp.x) - (ca.x * cp.z);
+    c2.z = (ca.x * cp.y) - (ca.y * cp.x);
+
+    d0 = (c0.x * n.x) + (c0.y * n.y) + (c0.z * n.z);
+    d1 = (c1.x * n.x) + (c1.y * n.y) + (c1.z * n.z);
+    d2 = (c2.x * n.x) + (c2.y * n.y) + (c2.z * n.z);
+
+    if (d0 < -EPS) return 0;
+    if (d1 < -EPS) return 0;
+    if (d2 < -EPS) return 0;
+
+    return 1;
+}
+
+static uint8_t sb3dCoplanarTriOverlapFallback(
+    Vec3 a0, Vec3 a1, Vec3 a2,
+    Vec3 b0, Vec3 b1, Vec3 b2)
+{
+    if (sb3dPointInTriangle3D(a0, b0, b1, b2)) return 1;
+    if (sb3dPointInTriangle3D(a1, b0, b1, b2)) return 1;
+    if (sb3dPointInTriangle3D(a2, b0, b1, b2)) return 1;
+
+    if (sb3dPointInTriangle3D(b0, a0, a1, a2)) return 1;
+    if (sb3dPointInTriangle3D(b1, a0, a1, a2)) return 1;
+    if (sb3dPointInTriangle3D(b2, a0, a1, a2)) return 1;
+
+    return 0;
+}
+
+static uint8_t sb3dTriTriIntersectFast(
+    Vec3 a0, Vec3 a1, Vec3 a2,
+    Vec3 b0, Vec3 b1, Vec3 b2)
+{
+    Vec3 na, nb;
+    float da0, da1, da2;
+    float db0, db1, db2;
+    const float EPS = 0.0001f;
+
+    na.x = ((a1.y - a0.y) * (a2.z - a0.z)) - ((a1.z - a0.z) * (a2.y - a0.y));
+    na.y = ((a1.z - a0.z) * (a2.x - a0.x)) - ((a1.x - a0.x) * (a2.z - a0.z));
+    na.z = ((a1.x - a0.x) * (a2.y - a0.y)) - ((a1.y - a0.y) * (a2.x - a0.x));
+
+    da0 = ((b0.x - a0.x) * na.x) + ((b0.y - a0.y) * na.y) + ((b0.z - a0.z) * na.z);
+    da1 = ((b1.x - a0.x) * na.x) + ((b1.y - a0.y) * na.y) + ((b1.z - a0.z) * na.z);
+    da2 = ((b2.x - a0.x) * na.x) + ((b2.y - a0.y) * na.y) + ((b2.z - a0.z) * na.z);
+
+    if ((da0 > EPS && da1 > EPS && da2 > EPS) ||
+        (da0 < -EPS && da1 < -EPS && da2 < -EPS)) {
+        return 0;
+    }
+
+    nb.x = ((b1.y - b0.y) * (b2.z - b0.z)) - ((b1.z - b0.z) * (b2.y - b0.y));
+    nb.y = ((b1.z - b0.z) * (b2.x - b0.x)) - ((b1.x - b0.x) * (b2.z - b0.z));
+    nb.z = ((b1.x - b0.x) * (b2.y - b0.y)) - ((b1.y - b0.y) * (b2.x - b0.x));
+
+    db0 = ((a0.x - b0.x) * nb.x) + ((a0.y - b0.y) * nb.y) + ((a0.z - b0.z) * nb.z);
+    db1 = ((a1.x - b0.x) * nb.x) + ((a1.y - b0.y) * nb.y) + ((a1.z - b0.z) * nb.z);
+    db2 = ((a2.x - b0.x) * nb.x) + ((a2.y - b0.y) * nb.y) + ((a2.z - b0.z) * nb.z);
+
+    if ((db0 > EPS && db1 > EPS && db2 > EPS) ||
+        (db0 < -EPS && db1 < -EPS && db2 < -EPS)) {
+        return 0;
+    }
+
+    if (sb3dSegmentTriangleHit(a0, a1, b0, b1, b2)) return 1;
+    if (sb3dSegmentTriangleHit(a1, a2, b0, b1, b2)) return 1;
+    if (sb3dSegmentTriangleHit(a2, a0, b0, b1, b2)) return 1;
+
+    if (sb3dSegmentTriangleHit(b0, b1, a0, a1, a2)) return 1;
+    if (sb3dSegmentTriangleHit(b1, b2, a0, a1, a2)) return 1;
+    if (sb3dSegmentTriangleHit(b2, b0, a0, a1, a2)) return 1;
+
+    if (fabsf(da0) <= EPS && fabsf(da1) <= EPS && fabsf(da2) <= EPS &&
+        fabsf(db0) <= EPS && fabsf(db1) <= EPS && fabsf(db2) <= EPS) {
+        return sb3dCoplanarTriOverlapFallback(a0, a1, a2, b0, b1, b2);
+    }
+
+    return 0;
+}
+
+
+uint8_t entityIntersectTest(int a, int b)
+{
+    Entity *ea;
+    Entity *eb;
+    Mesh *ma;
+    Mesh *mb;
+
+    Vec3 *worldVertsA = g_intersectWorldVertsA;
+    Vec3 *worldVertsB = g_intersectWorldVertsB;
+    SB3DTriBounds *boundsA = g_intersectBoundsA;
+    SB3DTriBounds *boundsB = g_intersectBoundsB;
+
+    SB3DTriBounds meshBoundsA;
+    SB3DTriBounds meshBoundsB;
+
+    static uint16_t candidateBig[SB3D_MAX_TRIS];
+    int candidateCount = 0;
+
+    if (!entityIdValid(a) || !entityIdValid(b)) return 0;
+    if (a == b) return 0;
+
+    ea = &worldEntities[a];
+    eb = &worldEntities[b];
+
+    if (!ea->active || !eb->active) return 0;
+    if (!ea->mesh || !eb->mesh) return 0;
+
+    ma = ea->mesh;
+    mb = eb->mesh;
+
+    if (!ma->verts || !ma->tris || ma->vertCount <= 0 || ma->triCount <= 0) return 0;
+    if (!mb->verts || !mb->tris || mb->vertCount <= 0 || mb->triCount <= 0) return 0;
+
+    if (ma->vertCount > SB3D_MAX_VERTS || mb->vertCount > SB3D_MAX_VERTS) return 0;
+    if (ma->triCount  > SB3D_MAX_TRIS  || mb->triCount  > SB3D_MAX_TRIS)  return 0;
+
+    /* broad phase 1: sphere vs sphere */
+    {
+        const float dx = eb->pos.x - ea->pos.x;
+        const float dy = eb->pos.y - ea->pos.y;
+        const float dz = eb->pos.z - ea->pos.z;
+        const float rr = ma->boundsRadius + mb->boundsRadius;
+        const float dist2 = (dx * dx) + (dy * dy) + (dz * dz);
+
+        if (dist2 > (rr * rr)) {
+            return 0;
+        }
+    }
+
+    /* smaller mesh goes outer loop automatically */
+    if (mb->triCount < ma->triCount) {
+        Entity *tmpE = ea; ea = eb; eb = tmpE;
+        Mesh   *tmpM = ma; ma = mb; mb = tmpM;
+    }
+
+    /* A = smaller mesh, B = bigger mesh */
+    sb3dBuildWorldVertsCache(ea, ma, worldVertsA);
+    sb3dBuildWorldVertsCache(eb, mb, worldVertsB);
+
+    sb3dBuildTriBoundsCache(ma, worldVertsA, boundsA);
+    sb3dBuildTriBoundsCache(mb, worldVertsB, boundsB);
+
+    sb3dBuildMeshBoundsFromTriBounds(boundsA, ma->triCount, &meshBoundsA);
+    sb3dBuildMeshBoundsFromTriBounds(boundsB, mb->triCount, &meshBoundsB);
+
+    /* broad phase 2: whole mesh AABB */
+    if (!sb3dBoundsOverlap(&meshBoundsA, &meshBoundsB)) {
+        return 0;
+    }
+
+    /* build candidate list from BIG mesh once */
+    for (int tb = 0; tb < mb->triCount; tb++) {
+        if (sb3dTriBoundsOverlap(&meshBoundsA, &boundsB[tb])) {
+            candidateBig[candidateCount++] = (uint16_t)tb;
+        }
+    }
+
+    if (candidateCount == 0) {
+        return 0;
+    }
+
+    /* now only test small tris against candidate big tris */
+    for (int ta = 0; ta < ma->triCount; ta++) {
+        const Tri *tria = &ma->tris[ta];
+        const SB3DTriBounds *ba = &boundsA[ta];
+
+        const Vec3 a0 = worldVertsA[tria->a];
+        const Vec3 a1 = worldVertsA[tria->b];
+        const Vec3 a2 = worldVertsA[tria->c];
+
+        for (int ci = 0; ci < candidateCount; ci++) {
+            const int tb = candidateBig[ci];
+            const Tri *trib = &mb->tris[tb];
+            const SB3DTriBounds *bb = &boundsB[tb];
+
+            if (!sb3dTriBoundsOverlap(ba, bb)) {
+                continue;
+            }
+
+            {
+                const Vec3 b0 = worldVertsB[trib->a];
+                const Vec3 b1 = worldVertsB[trib->b];
+                const Vec3 b2 = worldVertsB[trib->c];
+
+                if (sb3dTriTriIntersectFast(a0, a1, a2, b0, b1, b2)) {
+                    return 1;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+static Vec3 sb3dEntityWorldToLocalPoint(const Entity *ent, Vec3 p)
+{
+    Vec3 d;
+    Vec3 out;
+
+    d.x = p.x - ent->pos.x;
+    d.y = p.y - ent->pos.y;
+    d.z = p.z - ent->pos.z;
+
+    out.x = (d.x * ent->right.x)   + (d.y * ent->right.y)   + (d.z * ent->right.z);
+    out.y = (d.x * ent->up.x)      + (d.y * ent->up.y)      + (d.z * ent->up.z);
+    out.z = (d.x * ent->forward.x) + (d.y * ent->forward.y) + (d.z * ent->forward.z);
+
+    return out;
+}
+
+static Vec3 sb3dEntityWorldToLocalDir(const Entity *ent, Vec3 v)
+{
+    Vec3 out;
+
+    out.x = (v.x * ent->right.x)   + (v.y * ent->right.y)   + (v.z * ent->right.z);
+    out.y = (v.x * ent->up.x)      + (v.y * ent->up.y)      + (v.z * ent->up.z);
+    out.z = (v.x * ent->forward.x) + (v.y * ent->forward.y) + (v.z * ent->forward.z);
+
+    return out;
+}
+
+static float sb3dVec3Length(Vec3 v)
+{
+    return sqrtf((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
+}
+
+static Vec3 sb3dVec3NormalizeSafe(Vec3 v)
+{
+    float len = sb3dVec3Length(v);
+
+    if (len <= 0.00001f) {
+        return (Vec3){ 0.0f, 0.0f, 1.0f };
+    }
+
+    v.x /= len;
+    v.y /= len;
+    v.z /= len;
+    return v;
+}
+
+static float sb3dDistancePointToSegmentSq(Vec3 p, Vec3 a, Vec3 b)
+{
+    Vec3 ab, ap;
+    float abLen2, t;
+    Vec3 q;
+    float dx, dy, dz;
+
+    ab.x = b.x - a.x;
+    ab.y = b.y - a.y;
+    ab.z = b.z - a.z;
+
+    ap.x = p.x - a.x;
+    ap.y = p.y - a.y;
+    ap.z = p.z - a.z;
+
+    abLen2 = (ab.x * ab.x) + (ab.y * ab.y) + (ab.z * ab.z);
+    if (abLen2 <= 0.00001f) {
+        dx = p.x - a.x;
+        dy = p.y - a.y;
+        dz = p.z - a.z;
+        return (dx * dx) + (dy * dy) + (dz * dz);
+    }
+
+    t = ((ap.x * ab.x) + (ap.y * ab.y) + (ap.z * ab.z)) / abLen2;
+    if (t < 0.0f) t = 0.0f;
+    if (t > 1.0f) t = 1.0f;
+
+    q.x = a.x + (ab.x * t);
+    q.y = a.y + (ab.y * t);
+    q.z = a.z + (ab.z * t);
+
+    dx = p.x - q.x;
+    dy = p.y - q.y;
+    dz = p.z - q.z;
+
+    return (dx * dx) + (dy * dy) + (dz * dz);
+}
+
+
+static inline Vec3 sb3dEntityLocalToWorldPoint(const Entity *ent, Vec3 p)
+{
+    Vec3 out;
+
+    out.x = ent->pos.x + (ent->right.x * p.x) + (ent->up.x * p.y) + (ent->forward.x * p.z);
+    out.y = ent->pos.y + (ent->right.y * p.x) + (ent->up.y * p.y) + (ent->forward.y * p.z);
+    out.z = ent->pos.z + (ent->right.z * p.x) + (ent->up.z * p.y) + (ent->forward.z * p.z);
+
+    return out;
+}
+
+
+uint8_t entitySweepRaycastTest(int movingId, int targetId, Vec3 *hitPos, Tri *triHit)
+{
+    Entity *em;
+    Entity *et;
+    Mesh *mt;
+    Vec3 startPos;
+    Vec3 endPos;
+    Vec3 moveVec;
+    Vec3 rayDir;
+    Vec3 castEnd;
+    float rayLen;
+    float extraLen;
+
+    if (hitPos) {
+        hitPos->x = 0.0f;
+        hitPos->y = 0.0f;
+        hitPos->z = 0.0f;
+    }
+
+    if (triHit) {
+        memset(triHit, 0, sizeof(Tri));
+    }
+
+    if (!entityIdValid(movingId) || !entityIdValid(targetId)) return 0;
+    if (movingId == targetId) return 0;
+
+    em = &worldEntities[movingId];
+    et = &worldEntities[targetId];
+
+    if (!em->active || !et->active) return 0;
+    if (!em->mesh || !et->mesh) return 0;
+
+    mt = et->mesh;
+    if (!mt->verts || !mt->tris || mt->triCount <= 0) return 0;
+
+    startPos = em->prevPos;
+    endPos   = em->pos;
+
+    moveVec.x = endPos.x - startPos.x;
+    moveVec.y = endPos.y - startPos.y;
+    moveVec.z = endPos.z - startPos.z;
+
+    rayLen = sb3dVec3Length(moveVec);
+
+    /* extend by moving object's approximate size */
+    extraLen = em->mesh->boundsRadius;
+
+    /* if almost stationary, still cast a little forward */
+    if (rayLen <= 0.0001f) {
+        rayDir = sb3dVec3NormalizeSafe(em->forward);
+        rayLen = extraLen;
+    } else {
+        rayDir = sb3dVec3NormalizeSafe(moveVec);
+        rayLen += extraLen;
+    }
+
+    castEnd.x = startPos.x + (rayDir.x * rayLen);
+    castEnd.y = startPos.y + (rayDir.y * rayLen);
+    castEnd.z = startPos.z + (rayDir.z * rayLen);
+
+    /* broad phase: swept segment against target sphere */
+    {
+        const float rr = em->mesh->boundsRadius + et->mesh->boundsRadius;
+        const float dist2 = sb3dDistancePointToSegmentSq(et->pos, startPos, castEnd);
+
+        if (dist2 > (rr * rr)) {
+            return 0;
+        }
+    }
+
+    /* ray into target local space */
+    {
+        Vec3 localRayOrig = sb3dEntityWorldToLocalPoint(et, startPos);
+        Vec3 localRayDir  = sb3dEntityWorldToLocalDir(et, rayDir);
+
+        float bestHitT = rayLen + 1.0f;
+        int found = 0;
+        const Tri *bestTri = NULL;
+
+        localRayDir = sb3dVec3NormalizeSafe(localRayDir);
+
+        for (int ti = 0; ti < mt->triCount; ti++) {
+            const Tri *t = &mt->tris[ti];
+            const Vec3 v0 = mt->verts[t->a];
+            const Vec3 v1 = mt->verts[t->b];
+            const Vec3 v2 = mt->verts[t->c];
+            float hitT;
+
+            if (sb3dRayTriangleHitDetailed(
+                    localRayOrig,
+                    localRayDir,
+                    rayLen,
+                    v0, v1, v2,
+                    &hitT,
+                    NULL))
+            {
+                if (hitT < bestHitT) {
+                    bestHitT = hitT;
+                    bestTri = t;
+                    found = 1;
+                }
+            }
+        }
+
+        if (found) {
+            if (hitPos) {
+                Vec3 localHit;
+                localHit.x = localRayOrig.x + (localRayDir.x * bestHitT);
+                localHit.y = localRayOrig.y + (localRayDir.y * bestHitT);
+                localHit.z = localRayOrig.z + (localRayDir.z * bestHitT);
+
+                hitPos->x =
+                    et->pos.x +
+                    (et->right.x   * localHit.x) +
+                    (et->up.x      * localHit.y) +
+                    (et->forward.x * localHit.z);
+
+                hitPos->y =
+                    et->pos.y +
+                    (et->right.y   * localHit.x) +
+                    (et->up.y      * localHit.y) +
+                    (et->forward.y * localHit.z);
+
+                hitPos->z =
+                    et->pos.z +
+                    (et->right.z   * localHit.x) +
+                    (et->up.z      * localHit.y) +
+                    (et->forward.z * localHit.z);
+            }
+
+            if (triHit && bestTri) {
+                *triHit = *bestTri;
+            }
+
+            return 1;
+        }
+    }
+
+    return 0;
+}

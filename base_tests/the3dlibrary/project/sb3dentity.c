@@ -8,7 +8,7 @@
 
 #include "sb3d.h"
 
-static int entityIdValid(int id)
+int entityIdValid(int id)
 {
     if (id < 0 || id >= WORLD_MAX) return 0;
     if (!worldEntities[id].active) return 0;
@@ -60,6 +60,7 @@ int entityWorldSpawn(Mesh *mesh, Vec3 pos)
         if (!worldEntities[id].active) {
             worldEntities[id].mesh = mesh;
             worldEntities[id].pos = pos;
+            worldEntities[id].prevPos = pos;    // the same
 
             worldEntities[id].right   = (Vec3){ 1.0f, 0.0f, 0.0f };
             worldEntities[id].up      = (Vec3){ 0.0f, 1.0f, 0.0f };
@@ -90,6 +91,7 @@ void entityWorldDestroy(int *id)
     worldEntities[*id].active = 0;
     worldEntities[*id].mesh = NULL;
     worldEntities[*id].pos = (Vec3){ 0.0f, 0.0f, 0.0f };
+    worldEntities[*id].prevPos = (Vec3){ 0.0f, 0.0f, 0.0f };
     worldEntities[*id].right = (Vec3){ 1.0f, 0.0f, 0.0f };
     worldEntities[*id].up = (Vec3){ 0.0f, 1.0f, 0.0f };
     worldEntities[*id].forward = (Vec3){ 0.0f, 0.0f, 1.0f };
@@ -102,11 +104,13 @@ void entitySetPosition(int id, Vec3 pos)
 {
     if (!entityIdValid(id)) return;
     worldEntities[id].pos = pos;
+    worldEntities[id].prevPos = pos;
 }
 
 void entityMove(int id, Vec3 delta)
 {
     if (!entityIdValid(id)) return;
+    worldEntities[id].prevPos = worldEntities[id].pos;
     worldEntities[id].pos = vec3Add(worldEntities[id].pos, delta);
 }
 
@@ -149,6 +153,7 @@ Vec3 entityGetUp(int id)
 void entityMoveForward(int id, float dist)
 {
     if (!entityIdValid(id)) return;
+    worldEntities[id].prevPos = worldEntities[id].pos;
     worldEntities[id].pos = vec3Add(
         worldEntities[id].pos,
         vec3Scale(worldEntities[id].forward, dist)
@@ -159,6 +164,7 @@ void entityMoveForward(int id, float dist)
 void entityMoveRight(int id, float dist)
 {
     if (!entityIdValid(id)) return;
+    worldEntities[id].prevPos = worldEntities[id].pos;
     worldEntities[id].pos = vec3Add(
         worldEntities[id].pos,
         vec3Scale(worldEntities[id].right, dist)
@@ -168,6 +174,7 @@ void entityMoveRight(int id, float dist)
 void entityMoveUp(int id, float dist)
 {
     if (!entityIdValid(id)) return;
+    worldEntities[id].prevPos = worldEntities[id].pos;
     worldEntities[id].pos = vec3Add(
         worldEntities[id].pos,
         vec3Scale(worldEntities[id].up, dist)

@@ -95,7 +95,63 @@ void cameraRotate(Camera *cam, float yaw, float pitch, float roll){
 }
 
 
+Vec3 cameraGetRotation(Camera *cam, uint8_t local)
+{
+    Vec3 ang = { 0.0f, 0.0f, 0.0f };
 
+    if (!cam) {
+        return ang;
+    }
+
+    if (local) {
+        /* Camera has no parent/local frame in this codebase.
+           So local rotation is the same conceptually as none / identity. */
+        return ang;
+    }
+
+    /* Rebuild yaw/pitch from forward vector */
+    {
+        const float fx = cam->forward.x;
+        const float fy = cam->forward.y;
+        const float fz = cam->forward.z;
+
+        const float horiz = sqrtf((fx * fx) + (fz * fz));
+
+        /* Match your rebuildCameraBasis convention:
+           forward.x = sin(yaw)*cos(pitch)
+           forward.y = sin(pitch)
+           forward.z = cos(yaw)*cos(pitch)
+        */
+        ang.x = atan2f(fx, fz);        /* yaw   */
+        ang.y = atan2f(fy, horiz);     /* pitch */
+    }
+
+    /* Rebuild roll from right/up relative to an unrolled basis */
+    {
+        Vec3 baseRight;
+        Vec3 baseUp;
+        Vec3 worldUp = vec3(0.0f, 1.0f, 0.0f);
+
+        baseRight = vec3Cross(worldUp, cam->forward);
+        if (vec3Dot(baseRight, baseRight) < 0.00000001f) {
+            baseRight = vec3(1.0f, 0.0f, 0.0f);
+        } else {
+            baseRight = vec3Normalize(baseRight);
+        }
+
+        baseUp = vec3Cross(cam->forward, baseRight);
+        baseUp = vec3Normalize(baseUp);
+
+        /* Signed roll around forward axis */
+        {
+            const float cr = vec3Dot(cam->right, baseRight);
+            const float sr = vec3Dot(cam->right, baseUp);
+            ang.z = atan2f(sr, cr);
+        }
+    }
+
+    return ang;
+}
 
 void cameraTurn(Camera *cam, float x, float y, float z, uint8_t global)
 {

@@ -1,4 +1,9 @@
 sb3drender.c:1811:12:sb3d_clipLineToScreen	48	static
+sb3drender.c:3401:16:sb3dPointInTriangle3D	88	static
+sb3drender.c:3267:13:sb3dBuildWorldVertsCache.isra.0	0	static
+sb3drender.c:3296:13:sb3dBuildTriBoundsCache.isra.0	12	static
+sb3drender.c:3321:13:sb3dBuildMeshBoundsFromTriBounds	16	static
+sb3drender.c:3366:16:sb3dSegmentTriangleHit	88	static
 sb3drender.c:60:6:setDefaultRenderMode	0	static
 sb3drender.c:69:6:enableFlatMode	0	static
 sb3drender.c:70:6:enableTwoShade	0	static
@@ -25,3 +30,5 @@ sb3drender.c:2726:6:drawEntity	56	static
 sb3drender.c:2738:6:drawEntitySolid	0	static
 sb3drender.c:3018:5:sb3dRaycastWorld	120	static
 sb3drender.c:3185:5:sb3dRaycastFromCamera	0	static
+sb3drender.c:3513:9:entityIntersectTest	424	static
+sb3drender.c:3736:9:entitySweepRaycastTest	168	static

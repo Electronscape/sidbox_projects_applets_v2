@@ -5,6 +5,8 @@
 
 #define CLIP_MAX_VERTS 8
 #define SB3D_MAX_VERTS 4096
+#define SB3D_MAX_TRIS 2048
+
 
 // internal flaggy stuff
 // used for things that are special, transparency for now

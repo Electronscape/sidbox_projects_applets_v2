@@ -420,7 +420,10 @@ void goIntro(){
             gfx_displaynow();
             if(fadeTime > 1.0f) {
                 fadeTime  = 1.0f;
-                music_play("boomd.mod", 0);
+                //music_play("boomd.mod", 0);
+                //music_play("red_lights.mod", 0);
+                    music_play("black_absorber.mod", 0);
+
                 break;
             }
         }
@@ -486,6 +489,18 @@ void goIntro(){
 }
 
 
+
+static Camera cam;
+static int turret0;
+static int carrier0;
+static int island0;
+static int hitCube0;
+
+static int16_t turretShotTimer = 0;
+static int16_t turretBurstShotsLeft = 0;
+
+
+
 #define MAX_LASERS 8
 
 typedef struct {
@@ -495,24 +510,38 @@ typedef struct {
     uint16_t entityID;
 } Laser;
 
-Mesh LaserBlast;
+Mesh LaserBlast, PlayerLaser;
 Laser Lasers[MAX_LASERS];
+Laser CameraLasers[MAX_LASERS];
 
 void InitLasers(void)
 {
     memset(Lasers, 0, sizeof(Lasers));
+    memset(CameraLasers, 0, sizeof(CameraLasers));
 
     LaserBlast = createBox(10.0f, 10.0f, 50.0f);
+    PlayerLaser = createBox(10.0f, 10.0f, 50.0f);
 
     /* adjust to your real parameter order */
     meshSetMaterial(&LaserBlast, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f);
     meshColour(&LaserBlast, 34);
+
+    meshSetMaterial(&PlayerLaser, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f);
+    meshColour(&PlayerLaser, 39);    // (players are good guys, so green lasers!)
 
     for (int l = 0; l < MAX_LASERS; l++) {
         Lasers[l].entityID = entityWorldSpawn(&LaserBlast, vec3(0, 0, 0));
         Lasers[l].active = 0;
         Lasers[l].timer = 0;
         entityVisible(Lasers[l].entityID, 0);
+    }
+
+
+    for (int l = 0; l < MAX_LASERS; l++) {
+        CameraLasers[l].entityID = entityWorldSpawn(&PlayerLaser, vec3(0, 0, 0));
+        CameraLasers[l].active = 0;
+        CameraLasers[l].timer = 0;
+        entityVisible(CameraLasers[l].entityID, 0);
     }
 }
 
@@ -556,6 +585,73 @@ void FireTurret(uint16_t turret, Vec3 target)
     }
 }
 
+
+Vec3 makeCameraGunSpawn(float sideOffset, float forwardOffset, float upOffset)
+{
+    Vec3 p = cam.pos;
+
+    p.x += cam.right.x   * sideOffset;
+    p.y += cam.right.y   * sideOffset;
+    p.z += cam.right.z   * sideOffset;
+
+    p.x += cam.forward.x * forwardOffset;
+    p.y += cam.forward.y * forwardOffset;
+    p.z += cam.forward.z * forwardOffset;
+
+    p.x += cam.up.x      * upOffset;
+    p.y += cam.up.y      * upOffset;
+    p.z += cam.up.z      * upOffset;
+
+    return p;
+}
+
+static uint8_t sndside = 0;
+static uint8_t FireOnePlayerLaserFrom(Vec3 spawnPos, Vec3 rot)
+{
+    for (int l = 0; l < MAX_LASERS; l++) {
+        if (!CameraLasers[l].active) {
+            CameraLasers[l].active = 1;
+            CameraLasers[l].timer  = 50;
+
+            entitySetPosition(CameraLasers[l].entityID, spawnPos);
+
+            entityRotation(CameraLasers[l].entityID, rot.x, 0, 0, 1);
+            entityRotation(CameraLasers[l].entityID, 0, -rot.y, 0, 0);
+
+            entityVisible(CameraLasers[l].entityID, 1);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+void FirePlayerLaser(void)
+{
+    uint8_t something = 0;
+    Vec3 rot = cameraGetRotation(&cam, 0);
+
+    Vec3 leftSpawn  = makeCameraGunSpawn(-58.0f, 30.0f, -4.0f);
+    Vec3 rightSpawn = makeCameraGunSpawn( 58.0f, 30.0f, -4.0f);
+
+    
+    something += FireOnePlayerLaserFrom(leftSpawn, rot);
+    something += FireOnePlayerLaserFrom(rightSpawn, rot);
+    if(something){
+        sndside = 1 - sndside;
+        if(sndside){
+            sound_stop(3);
+            sound_play(3);
+        }
+        else{
+            sound_stop(4);
+            sound_play(4);
+        }
+    }
+}
+
+
+
 void UpdateLasers(float deltatime)
 {
     for (int l = 0; l < MAX_LASERS; l++) {
@@ -572,14 +668,76 @@ void UpdateLasers(float deltatime)
             }
         }
     }
+
+    // update Player Lasers!!
+    for (int l = 0; l < MAX_LASERS; l++) {
+        if (CameraLasers[l].active) {
+            if (CameraLasers[l].timer > 0) {
+                CameraLasers[l].timer--;
+                // this is where we move things
+                entityMoveForward(CameraLasers[l].entityID, deltatime * 2000.0f);
+                //uint8_t hit = entityIntersectTest(CameraLasers[l].entityID, island0);
+                Vec3 hitPoint;
+                uint8_t hit = entitySweepRaycastTest(CameraLasers[l].entityID, island0, &hitPoint, NULL);
+
+                if(hit){
+                    CameraLasers[l].timer = 0;
+                    entitySetPosition(hitCube0, vec3(hitPoint.x, hitPoint.y, hitPoint.z));
+                }
+            }
+
+            if (CameraLasers[l].timer == 0) {
+                CameraLasers[l].active = 0;
+                entityVisible(CameraLasers[l].entityID, 0);
+            }
+        }
+    }
+
 }
 
-static Camera cam;
-static int turret0;
-static int carrier0;
+void drawPlayerLaserCooldownHUD(int x, int y, int cellW, int cellH, int gap, uint8_t borderCol, uint8_t readyCol, uint8_t coolCol)
+{
+    for (int i = 0; i < MAX_LASERS; i++) {
+        const int cy = y + (i * (cellH + gap));
 
-static int16_t turretShotTimer = 0;
-static int16_t turretBurstShotsLeft = 0;
+        /* outline */
+        gfx_setcolour(borderCol);
+        gfx_rectf(x, cy, cellW, cellH);
+
+        /* inner area */
+        const int ix = x + 1;
+        const int iy = cy + 1;
+        const int iw = cellW - 2;
+        const int ih = cellH - 2;
+
+        int fillH;
+
+        if (iw <= 0 || ih <= 0) continue;
+
+        if (!CameraLasers[i].active) {
+            fillH = ih;   /* ready */
+        } else {
+            /*
+                timer goes from 50 -> 0
+                so fill rises smoothly from 0 -> full
+            */
+            fillH = (ih * (50 - (int)CameraLasers[i].timer)) / 50;
+
+            if (fillH < 0)  fillH = 0;
+            if (fillH > ih) fillH = ih;
+        }
+
+        /* background / empty part */
+        gfx_setcolour(0);
+        gfx_rectf(ix, iy, iw, ih);
+
+        /* filled part grows upward */
+        if (fillH > 0) {
+            gfx_setcolour(CameraLasers[i].active ? coolCol : readyCol);
+            gfx_rectf(ix, iy + (ih - fillH), iw, fillH);
+        }
+    }
+}
 
 static int irand_range(int minv, int maxv)
 {
@@ -624,6 +782,12 @@ void UpdateTurretTest(float deltatime)
     }
 }
 
+uint32_t sampleLen;
+uint8_t MEMALIGN32 *thund1;
+uint8_t MEMALIGN32 *thund2;
+uint8_t MEMALIGN32 *pewpew;
+uint8_t MEMALIGN32 *mantaeng;
+
 int main(int argc, char *argv[]) {
     initSystem();
     
@@ -636,11 +800,13 @@ int main(int argc, char *argv[]) {
 
     //music_play("music2.mod", 0);
     //music_play("3_double_paula.mod", 0);
-
-
-    goIntro();
     //music_play("boomd.mod", 0);
-    //lcd_bright(100);    // need this back on
+    //music_play("red_lights.mod", 0);
+
+
+    //goIntro();
+    music_play("black_absorber.mod", 0);
+    lcd_bright(100);    // need this back on
 
 
 
@@ -685,9 +851,7 @@ int main(int argc, char *argv[]) {
     lightEnable(SunlightId, 0);
 
     // sound effects, only for the thundies
-    uint32_t sampleLen;
-    uint8_t MEMALIGN32 *thund1;
-    uint8_t MEMALIGN32 *thund2;
+
     sampleLen = LoadSFX("thunder1.wav", &thund1);
     sound_assign(0, thund1, sampleLen, 0);
     sound_setfrequency(0, 20100);
@@ -703,6 +867,31 @@ int main(int argc, char *argv[]) {
     sound_setvolume(1, 440);
     sound_setpanning(1, 64);
     sound_enableloop(1, 0);
+
+
+    //*pewpew;
+    //*mantaeng;
+    sampleLen = LoadSFX("manta_eng1.wav", &mantaeng);
+    sound_assign(2, mantaeng, sampleLen, 0);
+    sound_setfrequency(2, 44100);
+    sound_setvolume(2, 40);
+    sound_setpanning(2, 0);
+    sound_enableloop(2, 1);
+    sound_setloop(2, 0, sampleLen);
+    sound_play(2);
+    
+    sampleLen = LoadSFX("pewpew.wav", &pewpew);
+    sound_assign(3, pewpew, sampleLen, 0);
+    sound_assign(4, pewpew, sampleLen, 0);
+    sound_setfrequency(3, 44100);
+    sound_setfrequency(4, 44100);
+    sound_setvolume(3, 320);
+    sound_setvolume(4, 320);
+    sound_setpanning(3, -40);
+    sound_setpanning(4, 40);
+    sound_enableloop(3, 0);
+    sound_enableloop(4, 0);
+    //sound_play(3);
     
 
 
@@ -717,13 +906,13 @@ int main(int argc, char *argv[]) {
 
     Mesh islandMesh;
     loadMeshSB3D("islandx.sb3d", &islandMesh, 200.0f);
-    int island0 = entityWorldSpawn(&islandMesh, vec3(0, 0, 0));
+    island0 = entityWorldSpawn(&islandMesh, vec3(0, 0, 0));
     entityAllowHit(island0, 1); // enable for raycast hit test
     meshSetMaterial(&islandMesh, 0.00f, 1.0f, 0.00f, 0.20f, 0.0f);
 
     Mesh hitCubeMesh = createBox(10,10,10);
     Vec3 startPos = {0,0,0};
-    int hitCube0 = entityWorldSpawn(&hitCubeMesh, startPos);
+    hitCube0 = entityWorldSpawn(&hitCubeMesh, startPos);
 
 
     //Mesh theHouseMesh;
@@ -843,7 +1032,7 @@ int main(int argc, char *argv[]) {
     SeaDots = 23;
 
 
-
+    
     for (;;) {
 
 
@@ -876,6 +1065,7 @@ int main(int argc, char *argv[]) {
         float rx = 0.0f;
         float rz = 0.0f;
         float ryGlobal = 0.0f;
+        float targetOffsetX = 0.0f;
 
         /* mouse delta is already frame-relative input */
         rx += (float)(-dy) * mousePitchScale;
@@ -884,19 +1074,18 @@ int main(int argc, char *argv[]) {
         cameraTurn(&cam, rx, 0.0f, rz, 0);
 
         /* auto-turn is simulation, so this DOES use dt */
-        ryGlobal += cam.right.y * autoYawSpeed * dt;
+        targetOffsetX = cam.right.y * autoYawSpeed;
+        ryGlobal += targetOffsetX * dt;
 
         if (ryGlobal != 0.0f) {
             cameraTurn(&cam, 0.0f, -ryGlobal, 0.0f, 1);
         }
 
 
-        
         entityTurnLocal(carrier0, -0.003f * speed, 0, 0);
         entityMoveForward(carrier0, 6.8f * speed);//vec3(0,0,0.7f));
 
         entityTurnLocal(text0, 1.2f * dt,0,0);
-
         //entityTurnLocal(suzzie0, 1.0f * dt, 0, 0);
         
 
@@ -924,14 +1113,22 @@ int main(int argc, char *argv[]) {
 
         clrmousedelta();
 
-        if (joybutts & BTN_FIRE)  {
+        static joyfireLatch = 0;
+        if ((joybutts & BTN_FIRE) & (!joyfireLatch)){   // PEW PEW...
+            joyfireLatch = 1;
+            FirePlayerLaser();
+        }
+        if(!(joybutts & BTN_FIRE)){
+            joyfireLatch = 0;
+        }
+
+
+        if (joybutts & BTN_FIRE2)  {
             cameraMove(&cam, 0, 0,  moveStep);
             railmode = 0;
         }
-        if (joybutts & BTN_FIRE2) cameraMove(&cam, 0, 0, -moveStep);
-        if ((joybutts & BTN_FIRE) && (joybutts & BTN_FIRE2)){
-            cam.right.y = 0;
-        }
+        //if (joybutts & BTN_FIRE2) cameraMove(&cam, 0, 0, -moveStep);
+
 
         UpdateTurretTest(dt);
 
@@ -1065,7 +1262,7 @@ int main(int argc, char *argv[]) {
 
             /* Render time in ms */
             uint8_t wpt = splineRailGetCurrentNode(&rail);
-            if (joybutts & BTN_FIRE) {
+            if (joybutts & BTN_FIRE2) {
                 wpt = 20;
             }
             //if ((joybutts & BTN_FIRE2)) wpt = 19;
@@ -1105,10 +1302,35 @@ int main(int argc, char *argv[]) {
             //gfx_blitchunk(dispChunky, 0);
             //test_render_chunk(dispChunky, 0);
 
-            gfx_blit(c64cat, 10, 256, 64, 64);
-            if(gdb)gfx_blit(targetr, 208, 128, 64, 64);
 
-            gfx_drawtext(0, 0, strout);
+            gfx_setcolour(1 + (weathermode * 16));
+            gfx_drawtext(8, 8, strout);
+
+
+            //Vec3 camrot = cameraGetRotation(&cam, 0);
+            //targetOffsetX = camrot.z;
+            //int32_t rollMilli = (int32_t)(targetOffsetX * 100.0f);
+            static float targetRollVisual = 0.0f;
+            static float rollPressure;
+
+            rollPressure = fabs(targetOffsetX * 1150.0f);
+            
+
+            sound_setfrequency(2, 44100 + rollPressure);
+
+            float targetRollWanted = targetOffsetX * 50.0f;
+            float follow = 12.0f * dt;
+            if (follow > 1.0f) follow = 1.0f;
+            targetRollVisual += (targetRollWanted - targetRollVisual) * follow;
+            int32_t rollz = (int32_t)(targetRollVisual + (targetRollVisual >= 0.0f ? 0.5f : -0.5f));
+            gfx_blit(c64cat, 10, 256, 64, 64);
+            if (gdb)
+                gfx_blit(targetr, (-rollz) + 208, 128, 64, 64);
+            drawPlayerLaserCooldownHUD(8, 50, 8, 20, 2, 27, 27, 14);
+
+            
+            //sprintf(strout, "R: %ld", -(long)rollMilli);
+            //gfx_drawtext(8, 28, strout);
             
 
             gfx_displaynow();

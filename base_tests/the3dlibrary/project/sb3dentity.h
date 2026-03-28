@@ -41,9 +41,21 @@ typedef enum {
 /* Entity                                                                     */
 /* -------------------------------------------------------------------------- */
 
+typedef struct {
+    float minx, miny, minz;
+    float maxx, maxy, maxz;
+} SB3DTriBounds;
+
+typedef struct {
+    uint8_t valid;
+    uint8_t dirty;
+    uint8_t _pad[2];
+    SB3DTriBounds meshBounds;
+} EntityCollisionCache;
 
 typedef struct align32 {
     Vec3 pos;
+    Vec3 prevPos; // this should only be used for the engine
     Mesh *mesh;
     
     Vec3 forward;
@@ -57,8 +69,15 @@ typedef struct align32 {
     EntityCollisionType collisionType;
     float collisionRadius;
     Vec3  collisionHalfSize;
+
+    EntityCollisionCache cache;
 } Entity;
 
+
+typedef struct {
+    float minx, miny, minz;
+    float maxx, maxy, maxz;
+} SB3DBounds;
 
 
 extern Entity worldEntities[WORLD_MAX];
