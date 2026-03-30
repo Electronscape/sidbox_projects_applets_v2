@@ -53,6 +53,8 @@ typedef struct {
     SB3DTriBounds meshBounds;
 } EntityCollisionCache;
 
+
+
 typedef struct align32 {
     Vec3 pos;
     Vec3 prevPos; // this should only be used for the engine
@@ -87,6 +89,7 @@ extern Entity worldEntities[WORLD_MAX];
 /* Entity world management                                                    */
 /* -------------------------------------------------------------------------- */
 
+int  entityIdValid(int id);
 int  entityWorldSpawn(Mesh *mesh, Vec3 pos);
 void entityWorldDestroy(int *id);
 
@@ -95,44 +98,60 @@ void entityVisible(int id, uint8_t viewenable);
 
 // collision
 void entityEnableCollision(int id, uint8_t colenable);
-int entityMoveWithCollision(int moverId, Vec3 moveDelta, int *outHitId, uint8_t global);
+int  entityMoveWithCollision(int moverId, Vec3 moveDelta, int *outHitId, uint8_t global);
 
-int entityCollisionTestSphereMesh(int idSphere, int idMesh);
+int  entityCollisionTestSphereMesh(int idSphere, int idMesh);
 void entitySetCollisionType(int id, EntityCollisionType type);
 void entitySetCollisionRadius(int id, float radius);
 void entitySetCollisionHalfSize(int id, Vec3 halfSize);
 
+/* World-space helper */
+Vec3 positionLookAt(Vec3 a, Vec3 b);
 
 /* -------------------------------------------------------------------------- */
 /* Entity transforms / movement                                               */
 /* -------------------------------------------------------------------------- */
 
-void entitySetPosition(int id, Vec3 pos);
+// Entity transforms / motion
+void entitySetPosition(int id, Vec3 pos);   // new position, without setting previous position to new 
+void entitySetPositionAbs(int id, Vec3 pos);       /// sets both new position and previous position
 Vec3 entityGetPosition(int id);
 
+float entityDistanceToPosition(int id, Vec3 target);
+float entityDistanceToEntity(int aId, int bId);
+
+void entityMatchOrientation(int id, int targetId);
+void entityMatchOrientationCamera(int id, const Camera *cam);
+
+void entityTranslate(int id, Vec3 delta, uint8_t global);
 void entityMove(int id, Vec3 delta);
 void entityMoveForward(int id, float dist);
 void entityMoveRight(int id, float dist);
 void entityMoveUp(int id, float dist);
+void entityMoveTowardsPosition(int id, Vec3 target, float step);
+void entityMoveTowardsEntity(int id, int targetId, float step);
 
+// assistance with sound changes
+//float dopplerValueEntityToEntity(int idA, int idB, float deltaTime, float strength);
+float dopplerValueEntityToEntity(int idA, int idB, float deltaTime, float strength, float distanceMin, float distanceMax);
+void entityAudio(int listenerId, int sourceId, float panStrength, float distanceMin, float distanceMax, float *pan, float *volume);
+
+/* Entity basis / orientation helpers */
 void entityTurnLocal(int id, float yaw, float pitch, float roll);
 void entityTurnGlobal(int id, float yaw, float pitch, float roll);
-
 void entityRotation(int id, float yaw, float pitch, float roll, uint8_t global);
-
-
-void normalizeEntity(Entity *e);
 void entityResetAxes(Entity *e);
-
 Vec3 entityLocalToWorld(const Entity *e, Vec3 v);
 void entityFollowCameraXZ(int id, const Camera *cam, float worldY, float snap);
-
 Vec3 entityLookAt(int aId, int bId, uint8_t rotate);
+void normalizeEntity(Entity *e);
+
 
 /* -------------------------------------------------------------------------- */
-/* Entity collision testings                                                  */
+/* Entity collision tests                                                     */
 /* -------------------------------------------------------------------------- */
-// internals
+// collision testers
+// public available if knowing exactly what is needed by the programmer
 int entityCollisionTestSphereSphere(int idA, int idB);
 int entityCollisionTestAABBAABB(int idA, int idB);
 int entityCollisionTestSphereAABB(int idSphere, int idBox);
@@ -143,11 +162,11 @@ int entityCollision(int id, int *outOtherId);
 
 
 /* -------------------------------------------------------------------------- */
-/* Entity / mesh colour helpers                                               */
+/* Entity colour helpers                                                      */
 /* -------------------------------------------------------------------------- */
-
 void entityColour(int id, uint8_t colour);
 void entityColourFace(int id, int faceId, uint8_t colour);
+
 
 
 /* -------------------------------------------------------------------------- */
@@ -155,22 +174,22 @@ void entityColourFace(int id, int faceId, uint8_t colour);
 /* -------------------------------------------------------------------------- */
 
 void meshSetDefaultMaterial(Mesh *mesh);
-
-void meshSetMaterial(
-    Mesh *mesh,
-    float ambient,
-    float diffuse,
-    float emissive,
-    float specularStrength,
-    float shininess
-);
+void meshSetMaterial(Mesh *mesh, float ambient, float diffuse, float emissive, float specularStrength, float shininess);
+void meshColour(Mesh *mesh, uint8_t colour);
+void meshColourFace(Mesh *mesh, int faceId, uint8_t colour);
 
 
 /* -------------------------------------------------------------------------- */
 /* Mesh utilities                                                             */
 /* -------------------------------------------------------------------------- */
 
+// calculations
+void meshRecalcBounds(Mesh *mesh);
 float meshComputeBoundsRadius(const Mesh *mesh);
+
+
+uint8_t entityHasLineOfSightToPosition(int fromId, Vec3 pos);
+uint8_t entityHasLineOfSightToEntity(int fromId, int toId);
 
 void meshSetVertex(Mesh *mesh, int index, Vec3 v);
 void meshOffsetVertex(Mesh *mesh, int index, Vec3 delta);
@@ -179,6 +198,20 @@ Vec3 meshGetVertex(const Mesh *mesh, int index);
 void meshSetVertexRecalc(Mesh *mesh, int index, Vec3 v);
 void meshOffsetVertexRecalc(Mesh *mesh, int index, Vec3 delta);
 void meshResetFromSource(Mesh *dst, const Mesh *src);
+
+void meshAnchorToBounds(Mesh *mesh, Vec3 anchor);
+void meshTranslate(Mesh *mesh, Vec3 delta);
+void meshScale(Mesh *mesh, Vec3 scale);
+
+// WARNING:
+// Separates all triangles into private vertices.
+// Very useful for shattering / explode-face effects.
+// Very bad if you enjoy having free RAM.
+// ram goblin enabled.
+Mesh meshSeparateTriangles(const Mesh *src);
+
+// restore separated faces to their positions without welding the vertices
+void refaceMesh(const Mesh *src, Mesh *target);
 
 Mesh copyMesh(const Mesh *src);
 
@@ -195,9 +228,6 @@ Mesh createCylinder(float radius, float height, int segments);
 Mesh createCone(float radius, float height, int segments);
 Mesh createPyramid(float width, float height);
 Mesh createTorus(float majorRadius, float minorRadius, int majorSegs, int minorSegs);
-
-
-int entityBuildWorldCache(Entity *ent);
 
 #endif
 

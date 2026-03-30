@@ -6,7 +6,7 @@ sb3dmath.c:38:6:vec3Cross	56	static
 sb3dmath.c:47:7:fastRecipf	0	static
 sb3dmath.c:67:6:vec3Normalize	48	static
 sb3dmath.c:106:6:rotateAroundAxis	112	static
-sb3dmath.c:126:7:triangleCenter	72	static
+sb3dmath.c:126:6:triangleCenter	72	static
 sb3dmath.c:137:6:vec3	32	static
 sb3dmath.c:142:7:degrees	0	static
 sb3dmath.c:146:7:degToRad	0	static

@@ -12,10 +12,12 @@
 // used for things that are special, transparency for now
 #define TRI_COLOUR_MASK         0x0F
 
-#define TRI_FLAG_TRANSPARENT    0x10
-#define TRI_FLAG_RESERVED2      0x20
-#define TRI_FLAG_RESERVED3      0x40
-#define TRI_FLAG_RESERVED4      0x80
+
+#define TRI_FLAG_DEFAULT        0x00
+#define TRI_FLAG_NOBFACECULL    0x10
+#define TRI_FLAG_RESERVED3      0x20
+#define TRI_FLAG_RESERVED4      0x40
+#define TRI_FLAG_TRANSPARENT    0x80    // TODO: sadly this is required to ensure transparent faces to be flagged in runtime... will fix this later
 
 #define PROJ_F 200.0f
 
@@ -28,6 +30,12 @@ typedef enum {
 } ClipPlane;
 
 
+typedef enum {
+    REND_MODE_WIREFRAME = 0,
+    REND_MODE_STANDARD,
+    REND_MODE_FLAT,
+    REND_MODE_TWOSHADE
+} RENDERMODE;
 
 typedef struct align32 {
     Vec2 p0;
@@ -65,15 +73,11 @@ void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, 
 void entitySetBasis(int id, Vec3 right, Vec3 up, Vec3 forward);
 
 void setDefaultRenderMode();
-void enableZOrdering(int enable);
-void enableFlatMode(int en);
-void enableTwoShade(int en);
-void enableWireFrame(int en);
+void setRenderMode(RENDERMODE mode);
 
 
 int projectPoint(Vec3 p, const Camera *cam, Vec2 *out);
 int clipLineToNearPlane(Vec3 *a, Vec3 *b, const Camera *cam);
-void resetRenderList(void);
 
 int getRenderTriCount(void);
 void Render3D(const Camera *cam);
@@ -83,19 +87,12 @@ void sortEntitiesByDepth(Entity *entities, int count, const Camera *cam);
 
 void submitWorldEntities(const Camera *cam);
 void submitEntitySolid(const Entity *ent, const Camera *cam);
-void drawEntitySolid(const Entity *ent, const Camera *cam);
 void drawEntity(const Entity *ent, const Camera *cam, uint8_t color);
 void drawWorldLine(Vec3 a, Vec3 b, const Camera *cam, uint8_t color);
 
 void drawFakeSkyDots(const Camera *cam, uint8_t dotCol, int azSteps, int elSteps, uint8_t density);
 void drawFakeHorizonDots(const Camera *cam, uint8_t dotCol, int spacing, float ylevel, uint8_t density);
 void drawFakeHorizon(const Camera *cam, uint8_t skyCol, uint8_t groundCol, uint8_t lineCol, float ylevel);
-void drawFakeHorizonGrid(
-    const Camera *cam,
-    uint8_t gridCol,
-    int spacing,
-    float ylevel,
-    int rangeCells
-);
+void drawFakeHorizonGrid(const Camera *cam, uint8_t gridCol, int spacing, float ylevel, int rangeCells);
 
 #endif

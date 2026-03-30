@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 
+/// THESE must match from the library, we do not use THESE as reference FOR the library
 typedef enum {
     COLLISION_NONE_API = 0,
     COLLISION_SPHERE_API,

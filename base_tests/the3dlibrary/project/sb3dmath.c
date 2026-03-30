@@ -123,7 +123,7 @@ Vec3 rotateAroundAxis(Vec3 v, Vec3 axis, float angle)
     }
 }
 
- Vec3 triangleCenter(Vec3 a, Vec3 b, Vec3 c)
+Vec3 triangleCenter(Vec3 a, Vec3 b, Vec3 c)
 {
     Vec3 out;
     const float k = 0.33333334f;

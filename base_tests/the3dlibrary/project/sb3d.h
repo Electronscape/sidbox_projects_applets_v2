@@ -3,6 +3,8 @@
 
 #include "apis.h"
 #include "sb3dmath.h"
+
+#include "sb3daudio.h"
 #include "sb3dcamera.h"
 
 #include "sb3dmaterial.h"

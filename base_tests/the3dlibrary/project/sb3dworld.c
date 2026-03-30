@@ -12,5 +12,8 @@ void worldClear(void){
     lightsClear();
     sb3dParticlesClear();  
     initClipScratch();
+
+    // reset audio
+    sb3dWorldAudioDefaults();
     
 }

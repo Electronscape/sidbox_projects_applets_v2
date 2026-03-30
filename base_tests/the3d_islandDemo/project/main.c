@@ -9,6 +9,9 @@
 #include "splinerail.h"
 
 
+#define DAY_SEA_DOT_COL     2
+#define NIGHT_SEA_DOT_COL   25
+
 // Display Bitmap Buffers
 extern uint8_t c64cat[];
 extern uint8_t targetr[];
@@ -25,11 +28,12 @@ void initSystem(){
     initMalloc();   // go memory!! yey
 
     // hardware preps //
-    gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_35);
+    gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_30);
     //gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_40);
     //gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_50);
     lcd_bright(0);
     gfx_mode(480, 320, 480, 320, DISPFLAG_SINGLELAYER | DISPFLAG_NOSCROLLABLE);
+    //gfx_mode(480, 320, 480, 320, DISPFLAG_DUALLAYER | DISPFLAG_NOSCROLLABLE);
     set_audio_dma(512); // a few ms about 7ms enough for a full frame.
     set_music_dma = 1;
 
@@ -823,12 +827,12 @@ void FirePlayerLaser(void)
     if(something){
         sndside = 1 - sndside;
         if(sndside){
-            sound_stop(3);
-            sound_play(3);
+            sound_stop(SNDC_LASER_CANON1);
+            sound_play(SNDC_LASER_CANON1);
         }
         else{
-            sound_stop(4);
-            sound_play(4);
+            sound_stop(SNDC_LASER_CANON2);
+            sound_play(SNDC_LASER_CANON2);
         }
     }
 }
@@ -1041,6 +1045,39 @@ void updateSmoke(float t, Vec3 origin)
 
 
 
+
+// spline test
+static const SplineRailNode museumRail[] = {
+    //        x       y         z // Our world here
+
+    //        x       z         y // from blender
+    { {   -38.0f,   60.0f,     1.0f  }, 1.0f, 0.0f }, // waypoint 1
+    { {   -38.0f,   72.0f,   700.0f  }, 0.0f, 0.0f }, // waypoint 2
+    { {   -30.0f,  180.0f,  1080.0f  }, 0.0f, 0.4f }, // waypoint 3
+    { {   760.0f,  189.0f,  2068.0f  }, 0.0f, 0.4f }, // waypoint 4
+    { {  1333.0f,  052.0f,  1165.0f  }, 0.0f, 0.4f }, // waypoint 5
+    { {  1257.0f,  200.0f,  -642.0f  }, 0.0f, 0.4f }, // waypoint 6
+    { {   792.0f,  277.0f, -1650.0f  }, 0.0f, 0.4f }, // waypoint 7
+    { {    36.0f,  440.0f, -1750.0f  }, 0.0f, 0.4f }, // waypoint 8
+
+    { {   149.0f,  440.0f,  -256.0f  }, 0.0f, 0.4f }, // waypoint 9
+    { {  -807.0f,  196.0f,   419.0f  }, 0.0f, 0.4f }, // waypoint 10
+    { { -1086.0f,  176.0f,   178.0f  }, 0.0f, 0.4f }, // waypoint 11
+    { {  -917.0f,  120.0f,    95.0f  }, 0.0f, 0.4f }, // waypoint 12
+    { {  -343.0f,   83.0f,   -22.0f  }, 0.0f, 0.4f }, // waypoint 13
+    { {  -216.0f,   47.0f,    51.0f  }, 0.0f, 0.4f }, // waypoint 14
+    { {   639.0f,   47.0f,   -47.0f  }, 0.0f, 0.4f }, // waypoint 15
+    { {  1801.0f,  368.0f,   -60.0f  }, 2.0f, 0.4f }, // waypoint 16
+
+    { {  1757.0f,  440.0f,   660.0f  }, 0.0f, 0.4f }, // waypoint 17
+    { {   548.0f,  126.0f,  1067.0f  }, 0.0f, 0.4f }, // waypoint 18
+    { {  -124.0f,   81.0f,  1407.0f  }, 0.0f, 0.4f }, // waypoint 19
+    { {  -35.0f,   57.0f,  1085.0f  }, 0.0f, 0.4f },  // waypoint 20
+    { {  -35.0f,   60.0f,   235.0f  }, 0.0f, 0.4f },  // waypoint 21
+    { {  -173.0f,  60.0f,   194.0f  }, 0.0f, 0.4f },  // waypoint 22
+};
+
+
 int main(int argc, char *argv[]) {
     initSystem();
     
@@ -1065,17 +1102,17 @@ int main(int argc, char *argv[]) {
 
 
     // init world ------------- 3D here to come!!! -------------- ///
-
-    //initCoarseDepth8Mem();
-    worldClear();
-    //lightsClear();
-    //sb3dParticlesClear();  
-    
+    worldClear();   
     setDefaultRenderMode();
+
     cam = cameraCreate();
     cameraSetRange(&cam, 0.01, 5000.0f);
     cameraSetPosition(&cam, vec3(0, 50, 0));
     cameraNormalize(&cam);
+
+    Mesh camBoxMesh = createBox(1,1,1);
+    int camBox0 = entityWorldSpawn(&camBox0, vec3(0,0,0));
+    
 
 
     initSmoke();
@@ -1110,45 +1147,54 @@ int main(int argc, char *argv[]) {
 
     // sound effects, only for the thundies
 
+
     sampleLen = LoadSFX("thunder1.wav", &thund1);
-    sound_assign(0, thund1, sampleLen, 0);
-    sound_setfrequency(0, 20100);
-    //sound_play(0);
-    sound_setvolume(0, 440);
-    sound_setpanning(0, -64);
-    sound_enableloop(0, 0);
+    sound_assign(SNDC_THUNDER_1, thund1, sampleLen, 0);
+    sound_setfrequency(SNDC_THUNDER_1, 20100);
+    sound_setvolume(SNDC_THUNDER_1, 440);
+    sound_setpanning(SNDC_THUNDER_1, -64);
+    sound_enableloop(SNDC_THUNDER_1, 0);
 
     sampleLen = LoadSFX("thunder2.wav", &thund2);
-    sound_assign(1, thund2, sampleLen, 0);
-    sound_setfrequency(1, 17100);
-    //sound_play(0);
-    sound_setvolume(1, 440);
-    sound_setpanning(1, 64);
-    sound_enableloop(1, 0);
+    sound_assign(SNDC_THUNDER_2, thund2, sampleLen, 0);
+    sound_setfrequency(SNDC_THUNDER_2, 17100);
+    sound_setvolume(SNDC_THUNDER_2, 440);
+    sound_setpanning(SNDC_THUNDER_2, 64);
+    sound_enableloop(SNDC_THUNDER_2, 0);
 
 
     //*pewpew;
     //*mantaeng;
     sampleLen = LoadSFX("manta_eng1.wav", &mantaeng);
-    sound_assign(2, mantaeng, sampleLen, 0);
-    sound_setfrequency(2, 44100);
-    sound_setvolume(2, 40);
-    sound_setpanning(2, 0);
-    sound_enableloop(2, 1);
-    sound_setloop(2, 0, sampleLen);
-    sound_play(2);
+    sound_assign(SNDC_MANTA, mantaeng, sampleLen, 0);
+    sound_setfrequency(SNDC_MANTA, 44100);
+    sound_setvolume(SNDC_MANTA, 40);
+    sound_setpanning(SNDC_MANTA, 0);
+    sound_enableloop(SNDC_MANTA, 1);
+    sound_setloop(SNDC_MANTA, 0, sampleLen);
+    sound_play(SNDC_MANTA);
+
+    // manta 2 sound effect
+    sound_assign(SNDC_MANTA2, mantaeng, sampleLen, 0);
+    sound_setfrequency(SNDC_MANTA2, 44100);
+    sound_setvolume(SNDC_MANTA2, 40);
+    sound_setpanning(SNDC_MANTA2, 0);
+    sound_enableloop(SNDC_MANTA2, 1);
+    sound_setloop(SNDC_MANTA2, 0, sampleLen);
+    sound_play(SNDC_MANTA2);
+
     
     sampleLen = LoadSFX("pewpew.wav", &pewpew);
-    sound_assign(3, pewpew, sampleLen, 0);
-    sound_assign(4, pewpew, sampleLen, 0);
-    sound_setfrequency(3, 44100);
-    sound_setfrequency(4, 44100);
-    sound_setvolume(3, 320);
-    sound_setvolume(4, 320);
-    sound_setpanning(3, -40);
-    sound_setpanning(4, 40);
-    sound_enableloop(3, 0);
-    sound_enableloop(4, 0);
+    sound_assign(SNDC_LASER_CANON1, pewpew, sampleLen, 0);
+    sound_assign(SNDC_LASER_CANON2, pewpew, sampleLen, 0);
+    sound_setfrequency(SNDC_LASER_CANON1, 44100);
+    sound_setfrequency(SNDC_LASER_CANON2, 44100);
+    sound_setvolume(SNDC_LASER_CANON1, 320);
+    sound_setvolume(SNDC_LASER_CANON2, 320);
+    sound_setpanning(SNDC_LASER_CANON1, -40);
+    sound_setpanning(SNDC_LASER_CANON2, 40);
+    sound_enableloop(SNDC_LASER_CANON1, 0);
+    sound_enableloop(SNDC_LASER_CANON2, 0);
     //sound_play(3);
     
 
@@ -1208,37 +1254,6 @@ int main(int argc, char *argv[]) {
     
     
 
-
-    // spline test
-    static const SplineRailNode museumRail[] = {
-        //        x       y         z // Our world here
-
-        //        x       z         y // from blender
-        { {   -38.0f,   60.0f,     1.0f  }, 1.0f, 0.0f }, // waypoint 1
-        { {   -38.0f,   72.0f,   700.0f  }, 0.0f, 0.0f }, // waypoint 2
-        { {   -30.0f,  180.0f,  1080.0f  }, 0.0f, 0.4f }, // waypoint 3
-        { {   760.0f,  189.0f,  2068.0f  }, 0.0f, 0.4f }, // waypoint 4
-        { {  1333.0f,  052.0f,  1165.0f  }, 0.0f, 0.4f }, // waypoint 5
-        { {  1257.0f,  200.0f,  -642.0f  }, 0.0f, 0.4f }, // waypoint 6
-        { {   792.0f,  277.0f, -1650.0f  }, 0.0f, 0.4f }, // waypoint 7
-        { {    36.0f,  440.0f, -1750.0f  }, 0.0f, 0.4f }, // waypoint 8
-
-        { {   149.0f,  440.0f,  -256.0f  }, 0.0f, 0.4f }, // waypoint 9
-        { {  -807.0f,  196.0f,   419.0f  }, 0.0f, 0.4f }, // waypoint 10
-        { { -1086.0f,  176.0f,   178.0f  }, 0.0f, 0.4f }, // waypoint 11
-        { {  -917.0f,  120.0f,    95.0f  }, 0.0f, 0.4f }, // waypoint 12
-        { {  -343.0f,   83.0f,   -22.0f  }, 0.0f, 0.4f }, // waypoint 13
-        { {  -216.0f,   47.0f,    51.0f  }, 0.0f, 0.4f }, // waypoint 14
-        { {   639.0f,   47.0f,   -47.0f  }, 0.0f, 0.4f }, // waypoint 15
-        { {  1801.0f,  368.0f,   -60.0f  }, 2.0f, 0.4f }, // waypoint 16
-
-        { {  1757.0f,  440.0f,   660.0f  }, 0.0f, 0.4f }, // waypoint 17
-        { {   548.0f,  126.0f,  1067.0f  }, 0.0f, 0.4f }, // waypoint 18
-        { {  -124.0f,   81.0f,  1407.0f  }, 0.0f, 0.4f }, // waypoint 19
-        { {  -35.0f,   57.0f,  1085.0f  }, 0.0f, 0.4f },  // waypoint 20
-        { {  -35.0f,   60.0f,   235.0f  }, 0.0f, 0.4f },  // waypoint 21
-        { {  -173.0f,  60.0f,   194.0f  }, 0.0f, 0.4f },  // waypoint 22
-    };
     SplineRail rail;
 
     splineRailInit(&rail, museumRail, 22, 180.0f, 1);
@@ -1251,7 +1266,7 @@ int main(int argc, char *argv[]) {
     //int suzzie0 = entityWorldSpawn(&SuzanneMesh, vec3(00, 200, 2300));
     //meshSetMaterial(&SuzanneMesh, 0.00f, 0.55f, 0.00f, 3.40f, 64.0f);
 
-    enableFlatMode(0);  // sidbox display doesnt like the floyd effect yet
+    //setRenderMode(REND_MODE_WIREFRAME);  // sidbox display doesnt like the floyd effect yet
 
     
     gfx_showfbuffer(bm1);           // initial buffers
@@ -1280,24 +1295,19 @@ int main(int argc, char *argv[]) {
     HosSky         = 9;   
     HosGround      = 59;
     HosHorizonLine = 43;
-    SeaDots = 2;
+    SeaDots = DAY_SEA_DOT_COL;
 
-
+    
         // night time
     HosSky         = 19;   
     HosGround      = 18;
     HosHorizonLine = 21;
-    SeaDots = 23;
+    SeaDots = NIGHT_SEA_DOT_COL;
 
-
-    
     for (;;) {
-
-
         fadeTime += 0.004f;
         if(fadeTime>1.0f) fadeTime = 1.0f;
         lcd_bright(fadeTime * 100.0f);
-
 
         uint32_t nowTicks = getTicks();
         uint32_t tickDelta = nowTicks - lastTicks;
@@ -1350,14 +1360,24 @@ int main(int argc, char *argv[]) {
 
 
 
-        // ship yard test
-        entityMoveForward(shipTest, 166.3f * dt);//vec3(0,0,0.7f));
+        // ship yard test -- the ship that is launching, over and over again ;)
+        entityMoveForward(shipTest, 266.3f * dt);//vec3(0,0,0.7f));
         Vec3 theShipPos = entityGetPosition(shipTest);
         if(theShipPos.z > 2500){
             entitySetPosition(shipTest, vec3(-135, 50, -400));
         }
-
         lightSetPosition(fighterLightId, theShipPos);
+        entitySetPosition(camBox0, cam.pos);
+        entityMatchOrientationCamera(camBox0, &cam);
+
+
+        SB3DAudioData ao = sb3dEntityAudioInfoDefault(camBox0, shipTest, dt);
+        sound_setpanning(SNDC_MANTA2, (int8_t)(ao.pan * 127.0f));
+        sound_setfrequency(SNDC_MANTA2, 44100 + (int16_t)(ao.doppler * 5500.0f));
+        sound_setvolume(SNDC_MANTA2, (uint8_t)(ao.volume * 140.0f));
+        
+
+
 
 
         lightSetPosition(Camlightid, cam.pos);
@@ -1437,18 +1457,19 @@ int main(int argc, char *argv[]) {
             static uint8_t altThund = 0;
 
             for (uint8_t v = 0; v < 2; v++) {
+                uint8_t sndT = SNDC_THUNDER_1 + v; 
                 if (thundOn[v]) {
                     if (thundTime[v] > 0) {
                         thundTime[v]--;
 
                         if (thundTime[v] == 0) {
-                            sound_stop(v);
-                            sound_play(v);
+                            sound_stop(sndT);
+                            sound_play(sndT);
                             thundOn[v] = 0;
                         }
                     } else {
-                        sound_stop(v);
-                        sound_play(v);
+                        sound_stop(sndT);
+                        sound_play(sndT);
                         thundOn[v] = 0;
                     }
                 }
@@ -1551,14 +1572,14 @@ int main(int argc, char *argv[]) {
                             HosSky         = 9;   
                             HosGround      = 59;
                             HosHorizonLine = 43;
-                            SeaDots = 2;
+                            SeaDots = DAY_SEA_DOT_COL;
                         }
                         else{ 
                                 // night time
                             HosSky         = 19;   
                             HosGround      = 18;
                             HosHorizonLine = 21;
-                            SeaDots = 23;
+                            SeaDots = NIGHT_SEA_DOT_COL;
                         }
                     }
                 }
@@ -1584,7 +1605,7 @@ int main(int argc, char *argv[]) {
             rollPressure = fabs(targetOffsetX * 1150.0f);
             
 
-            sound_setfrequency(2, 44100 + rollPressure);
+            sound_setfrequency(SNDC_MANTA, 44100 + rollPressure);
 
             float targetRollWanted = targetOffsetX * 50.0f;
             float follow = 12.0f * dt;

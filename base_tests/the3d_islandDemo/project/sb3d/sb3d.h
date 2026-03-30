@@ -274,6 +274,39 @@ float degrees(float angle);
 float degToRad(float angle);
 float radToDeg(float angle);
 
+
+
+
+/*==============================================================================
+    Audio assistance                               
+==============================================================================*/
+
+
+
+typedef struct {
+    float dopplerStrength;
+    float panStrength;
+    float distanceMin;
+    float distanceMax;
+} SB3DAudioInfo;
+
+
+typedef struct {
+    float doppler;  // effect on the doppler results
+    float pan;      // effect pan results
+    float volume;   // effect volule result
+    float _pad;
+} SB3DAudioData;
+
+
+// used if you just want to use the world audio info
+void sb3dWorldAudioSetup(float dopplerStrength, float panStrength, float distanceMin, float distanceMax);
+void sb3dAudioInfoSetup(SB3DAudioInfo *info, float dopplerStrength, float panStrength, float distanceMin, float distanceMax);
+
+SB3DAudioData sb3dEntityAudioInfo(int listenerId, int sourceId, float deltaTime, const SB3DAudioInfo *info);
+SB3DAudioData sb3dEntityAudioInfoDefault(int listenerId, int sourceId, float deltaTime);
+
+
 /*==============================================================================
     Mesh loading / mesh utilities
 ==============================================================================*/
@@ -345,6 +378,7 @@ int entityBuildWorldCache(Entity *ent);
 ==============================================================================*/
 
 void entitySetPosition(int id, Vec3 pos);
+void entitySetPositionAbs(int id, Vec3 pos);       /// sets both new position and previous position
 Vec3 entityGetPosition(int id);
 
 Vec3 entityGetForward(int id);
@@ -395,6 +429,13 @@ int entityCollisionTestSphereMesh(int idSphere, int idMesh);
 
 int entityCollisionTest(int idA, int idB);
 int entityCollision(int id, int *outOtherId);
+
+void entityMatchOrientation(int id, int targetId);
+void entityMatchOrientationCamera(int id, const Camera *cam);
+
+// assistance with sound changes
+float dopplerValueEntityToEntity(int idA, int idB, float deltaTime, float strength, float distanceMin, float distanceMax);
+void entityAudio(int listenerId, int sourceId, float panStrength, float distanceMin, float distanceMax, float *pan, float *volume);
 
 /*==============================================================================
     Entity / mesh colour helpers
@@ -472,10 +513,14 @@ void test_render_chunk(uint8_t *buffer, uint32_t bandY0);
 int getRenderTriCount(void);
 void initCoarseDepth8Mem(void);
 
-void setDefaultRenderMode(void);
-void enableFlatMode(int en);
-void enableTwoShade(int en);
-void enableWireFrame(int en);
+typedef enum {
+    REND_MODE_WIREFRAME = 0,
+    REND_MODE_STANDARD,
+    REND_MODE_FLAT,
+    REND_MODE_TWOSHADE
+} RENDERMODE;
+
+void setRenderMode(RENDERMODE mode);
 
 void Render3D(const Camera *cam);   /* Call set3DRenderBuffer() before Render3D(). */
 

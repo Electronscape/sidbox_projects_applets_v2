@@ -91,9 +91,10 @@ void lightsClear(void)
 
 void lightEnable(uint8_t lightIndex, uint8_t enable){
     if(lightIndex >= g_lightCount) return;
-
     g_lights[lightIndex].enabled = enable;
 }
+
+
 
 int addPointLight(Vec3 pos, float intensity, int enabled)
 {
@@ -105,9 +106,10 @@ int addPointLight(Vec3 pos, float intensity, int enabled)
     g_lights[g_lightCount].pos = pos;
     g_lights[g_lightCount].dir = (Vec3){0.0f, 0.0f, 0.0f};
     g_lights[g_lightCount].intensity = intensity;
-    g_lights[g_lightCount].near = 100.0f;
-    g_lights[g_lightCount].far = 230.0f;
-    g_lights[g_lightCount].beyond = 520.0f;
+
+    g_lights[g_lightCount].near = LIT_DEFAULT_NEAR;
+    g_lights[g_lightCount].far = LIT_DEFAULT_FAR;
+    g_lights[g_lightCount].beyond = LIT_DETAULT_TOTALLIGHTFALLOFF;
 
     g_lights[g_lightCount].enabled = enabled;
 

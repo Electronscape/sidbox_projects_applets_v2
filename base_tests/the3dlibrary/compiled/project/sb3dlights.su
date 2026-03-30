@@ -5,8 +5,8 @@ sb3dlights.c:76:8:lightsGet	0	static
 sb3dlights.c:81:5:lightsGetCount	0	static
 sb3dlights.c:86:6:lightsClear	0	static
 sb3dlights.c:92:6:lightEnable	0	static
-sb3dlights.c:98:5:addPointLight	40	static
-sb3dlights.c:119:5:addDirectionalLight	48	static
-sb3dlights.c:141:6:lightSetPosition	16	static
-sb3dlights.c:150:6:setLightDirection	24	static
-sb3dlights.c:157:6:lightSetIntensity	0	static
+sb3dlights.c:99:5:addPointLight	40	static
+sb3dlights.c:121:5:addDirectionalLight	48	static
+sb3dlights.c:143:6:lightSetPosition	16	static
+sb3dlights.c:152:6:setLightDirection	24	static
+sb3dlights.c:159:6:lightSetIntensity	0	static

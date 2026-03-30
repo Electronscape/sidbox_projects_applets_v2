@@ -4,6 +4,10 @@
 #include "sb3dworld.h"
 #include "sb3dmath.h"
 
+#define LIT_DEFAULT_NEAR    100.0f
+#define LIT_DEFAULT_FAR     230.0f
+#define LIT_DETAULT_TOTALLIGHTFALLOFF   520.0f
+
 typedef struct align32 {
     LightType type;
     Vec3  pos;

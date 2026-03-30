@@ -3,6 +3,12 @@
 
 #include <stdint.h>
 
+#define MAT_DEFAULT_AMBIENT     0.00f
+#define MAT_DEFAULT_DIFFUSE     1.00f
+#define MAT_DEFAULT_EMISSIVE    0.00f
+#define MAT_DEFAULT_SPECULAR    0.00f
+#define MAT_DEFAULT_SHININESS   8.0f
+
 // meshSetMaterial(&textMesh, 0.00f, 0.55f, 0.0f, 1.50f, 64.0f);   // shiny metal
 /*
     Material guide:

@@ -16,6 +16,7 @@ void worldClear(void);
 #define M_PI    3.14159265358979323846f
 
 #define MAX_RENDER_TRIS 1024 * 8    
+
 #define MAX_LIGHTS 8
 
 
@@ -74,7 +75,6 @@ typedef struct {
     int triCount;
 
     float boundsRadius;
-
     Material material;
 } Mesh;
 

@@ -1,0 +1,7 @@
+sb3daudio.c:7:6:sb3dWorldAudioSetup	0	static
+sb3daudio.c:25:6:sb3dWorldAudioDefaults	4	static
+sb3daudio.c:30:6:sb3dAudioInfoSetup	0	static
+sb3daudio.c:48:7:dopplerValueEntityToEntity	32	static
+sb3daudio.c:128:6:entityAudio	40	static
+sb3daudio.c:203:15:sb3dEntityAudioInfo	80	static
+sb3daudio.c:239:15:sb3dEntityAudioInfoDefault	80	static

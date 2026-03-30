@@ -10,7 +10,7 @@
 #include "sb3dgfx.h"
 
 
-
+// small enough to fit in mem-cache
 static const uint8_t align32 bayer4x4[4][4] = {
     {  0,  8,  2, 10 },
     { 12,  4, 14,  6 },
@@ -158,12 +158,6 @@ void set3DRenderBuffer(uint8_t *buffer){
 
 static uint32_t g_ditherSeed = 0x12345678;
 
-static inline void putPixelFast(int32_t x, int32_t y, uint8_t colIndex)
-{
-    //fb[(y * SCREEN_W) + x] = colIndex;
-    drawbuffer[FB_INDEX(x, y)] = colIndex;
-}
-
 static inline int clampi(int v, int lo, int hi)
 {
     if (v < lo) return lo;
@@ -247,32 +241,24 @@ uint8_t shadeColor(uint8_t baseColor, int shade)
 {
     if (shade < 0) shade = 0;
     if (shade >= MAX_PALETTE_SHADE_COUNT) return BLACK_SHADE_PALETTE;
-
     return (uint8_t)(PALETTE_SHADE_OFFSETS + (baseColor & 15) + (shade * 16));
 }
 
+/*
 static uint8_t ditherShadeColor(uint8_t baseColor, float shadeF, int x, int y, DitherMode mode)
 {
+    int s;
+    int t = (mode == DITHER_RANDOM) ? hashNoise4bit(x, y) : bayer4x4[y & 3][x & 3];
+
     if (shadeF < 0.0f) shadeF = 0.0f;
     if (shadeF > (float)MAX_PALETTE_SHADE_INDEX) shadeF = (float)MAX_PALETTE_SHADE_INDEX;
 
-    int s0 = (int)shadeF;
-    int s1 = s0 + 1;
-    if (s1 > (int)MAX_PALETTE_SHADE_COUNT) s1 = (int)MAX_PALETTE_SHADE_COUNT;
+    s = (int)shadeF;
+    s += (((shadeF - (float)s) * 16.0f) > (float)t);
 
-    const float frac = shadeF - (float)s0;
-
-    int threshold;
-    if (mode == DITHER_RANDOM) {
-        threshold = hashNoise4bit(x, y);
-    } else {
-        threshold = bayer4x4[y & 3][x & 3];
-    }
-
-    return ((frac * 16.0f) > (float)threshold)
-        ? shadeColor(baseColor, s1)
-        : shadeColor(baseColor, s0);
+    return (uint8_t)(PALETTE_SHADE_OFFSETS + (baseColor & 15) + (s << 4));
 }
+*/
 
 /* ========================================================================= */
 /* triangle helpers                                                          */
@@ -670,7 +656,6 @@ void fillTriangleFlat(
     }
 }
 
-
 void fillTriangleDitherBayer(
     int x0, int y0,
     int x1, int y1,
@@ -702,6 +687,11 @@ void fillTriangleDitherBayer(
     float long_dxdy, long_dqdy, long_dzqdy;
     float top_dxdy,  top_dqdy,  top_dzqdy;
     float bot_dxdy,  bot_dqdy,  bot_dzqdy;
+
+    const int dstStep = SCREEN_H;
+    const float qEps = 0.0000001f;
+    const float zFixScale = 256.0f;
+    const int zFixRound = 128;
 
     v0.x = (float)x0; v0.y = (float)y0;
     v1.x = (float)x1; v1.y = (float)y1;
@@ -835,15 +825,17 @@ void fillTriangleDitherBayer(
                             int block = xEnd - x + 1;
                             if (block > zbufferaccurate) block = zbufferaccurate;
 
+                            const float fblock = (float)block;
                             float q0 = q;
                             float zq0 = zq;
-                            float z0, z1, zStep;
+                            float z0, z1;
+                            int32_t zFix, zStepFix;
 
-                            if (q0 <= 0.0000001f) {
-                                q  += qStep  * (float)block;
-                                zq += zqStep * (float)block;
+                            if (q0 <= qEps) {
+                                q  += qStep  * fblock;
+                                zq += zqStep * fblock;
                                 zbp += block;
-                                dst += SCREEN_H * block;
+                                dst += dstStep * block;
                                 x   += block;
                                 continue;
                             }
@@ -851,64 +843,94 @@ void fillTriangleDitherBayer(
                             z0 = zq0 / q0;
 
                             if (block > 1) {
-                                float q1  = q  + (qStep  * (float)(block - 1));
-                                float zq1 = zq + (zqStep * (float)(block - 1));
+                                const float fblockm1 = (float)(block - 1);
+                                const float q1  = q  + (qStep  * fblockm1);
+                                const float zq1 = zq + (zqStep * fblockm1);
 
-                                if (q1 > 0.0000001f) {
+                                if (q1 > qEps) {
                                     z1 = zq1 / q1;
-                                    zStep = (z1 - z0) * g_invBlockMinus1[block];
                                 } else {
-                                    zStep = 0.0f;
+                                    z1 = z0;
                                 }
                             } else {
-                                zStep = 0.0f;
+                                z1 = z0;
+                            }
+
+                            if (z0 < 0.0f) z0 = 0.0f;
+                            if (z0 > 65535.0f) z0 = 65535.0f;
+                            if (z1 < 0.0f) z1 = 0.0f;
+                            if (z1 > 65535.0f) z1 = 65535.0f;
+
+                            zFix = (int32_t)(z0 * zFixScale + 0.5f);
+                            if (block > 1) {
+                                const float stepf = (z1 - z0) * (zFixScale * g_invBlockMinus1[block]);
+                                zStepFix = (int32_t)(stepf + ((stepf >= 0.0f) ? 0.5f : -0.5f));
+                            } else {
+                                zStepFix = 0;
                             }
 
                             if (solidFill) {
-                                float z = z0;
-                                for (int i = 0; i < block; i++) {
-                                    float zc = z;
-                                    uint16_t zi;
+                                if (zStepFix == 0) {
+                                    const uint16_t zi = (uint16_t)((uint32_t)(zFix + zFixRound) >> 8);
 
-                                    if (zc < 0.0f) zc = 0.0f;
-                                    if (zc > 65535.0f) zc = 65535.0f;
-                                    zi = (uint16_t)(zc + 0.5f);
+                                    for (int i = 0; i < block; i++) {
+                                        if (zi < *zbp) {
+                                            *zbp = zi;
+                                            *dst = col0;
+                                        }
 
-                                    if (zi < *zbp) {
-                                        *zbp = zi;
-                                        *dst = col0;
+                                        zbp += 1;
+                                        dst += dstStep;
                                     }
+                                } else {
+                                    for (int i = 0; i < block; i++) {
+                                        const uint16_t zi = (uint16_t)((uint32_t)(zFix + zFixRound) >> 8);
 
-                                    z += zStep;
-                                    zbp += 1;
-                                    dst += SCREEN_H;
+                                        if (zi < *zbp) {
+                                            *zbp = zi;
+                                            *dst = col0;
+                                        }
+
+                                        zFix += zStepFix;
+                                        zbp += 1;
+                                        dst += dstStep;
+                                    }
                                 }
                             } else {
-                                float z = z0;
                                 int pat = x & 3;
 
-                                for (int i = 0; i < block; i++) {
-                                    float zc = z;
-                                    uint16_t zi;
+                                if (zStepFix == 0) {
+                                    const uint16_t zi = (uint16_t)((uint32_t)(zFix + zFixRound) >> 8);
 
-                                    if (zc < 0.0f) zc = 0.0f;
-                                    if (zc > 65535.0f) zc = 65535.0f;
-                                    zi = (uint16_t)(zc + 0.5f);
+                                    for (int i = 0; i < block; i++) {
+                                        if (zi < *zbp) {
+                                            *zbp = zi;
+                                            *dst = (brow[pat] < threshold16) ? col1 : col0;
+                                        }
 
-                                    if (zi < *zbp) {
-                                        *zbp = zi;
-                                        *dst = (brow[pat] < threshold16) ? col1 : col0;
+                                        zbp += 1;
+                                        dst += dstStep;
+                                        pat = (pat + 1) & 3;
                                     }
+                                } else {
+                                    for (int i = 0; i < block; i++) {
+                                        const uint16_t zi = (uint16_t)((uint32_t)(zFix + zFixRound) >> 8);
 
-                                    z += zStep;
-                                    zbp += 1;
-                                    dst += SCREEN_H;
-                                    pat = (pat + 1) & 3;
+                                        if (zi < *zbp) {
+                                            *zbp = zi;
+                                            *dst = (brow[pat] < threshold16) ? col1 : col0;
+                                        }
+
+                                        zFix += zStepFix;
+                                        zbp += 1;
+                                        dst += dstStep;
+                                        pat = (pat + 1) & 3;
+                                    }
                                 }
                             }
 
-                            q  += qStep  * (float)block;
-                            zq += zqStep * (float)block;
+                            q  += qStep  * fblock;
+                            zq += zqStep * fblock;
                             x  += block;
                         }
                     }
@@ -993,15 +1015,17 @@ void fillTriangleDitherBayer(
                             int block = xEnd - x + 1;
                             if (block > zbufferaccurate) block = zbufferaccurate;
 
+                            const float fblock = (float)block;
                             float q0 = q;
                             float zq0 = zq;
-                            float z0, z1, zStep;
+                            float z0, z1;
+                            int32_t zFix, zStepFix;
 
-                            if (q0 <= 0.0000001f) {
-                                q  += qStep  * (float)block;
-                                zq += zqStep * (float)block;
+                            if (q0 <= qEps) {
+                                q  += qStep  * fblock;
+                                zq += zqStep * fblock;
                                 zbp += block;
-                                dst += SCREEN_H * block;
+                                dst += dstStep * block;
                                 x   += block;
                                 continue;
                             }
@@ -1009,64 +1033,94 @@ void fillTriangleDitherBayer(
                             z0 = zq0 / q0;
 
                             if (block > 1) {
-                                float q1  = q  + (qStep  * (float)(block - 1));
-                                float zq1 = zq + (zqStep * (float)(block - 1));
+                                const float fblockm1 = (float)(block - 1);
+                                const float q1  = q  + (qStep  * fblockm1);
+                                const float zq1 = zq + (zqStep * fblockm1);
 
-                                if (q1 > 0.0000001f) {
+                                if (q1 > qEps) {
                                     z1 = zq1 / q1;
-                                    zStep = (z1 - z0) * g_invBlockMinus1[block];
                                 } else {
-                                    zStep = 0.0f;
+                                    z1 = z0;
                                 }
                             } else {
-                                zStep = 0.0f;
+                                z1 = z0;
+                            }
+
+                            if (z0 < 0.0f) z0 = 0.0f;
+                            if (z0 > 65535.0f) z0 = 65535.0f;
+                            if (z1 < 0.0f) z1 = 0.0f;
+                            if (z1 > 65535.0f) z1 = 65535.0f;
+
+                            zFix = (int32_t)(z0 * zFixScale + 0.5f);
+                            if (block > 1) {
+                                const float stepf = (z1 - z0) * (zFixScale * g_invBlockMinus1[block]);
+                                zStepFix = (int32_t)(stepf + ((stepf >= 0.0f) ? 0.5f : -0.5f));
+                            } else {
+                                zStepFix = 0;
                             }
 
                             if (solidFill) {
-                                float z = z0;
-                                for (int i = 0; i < block; i++) {
-                                    float zc = z;
-                                    uint16_t zi;
+                                if (zStepFix == 0) {
+                                    const uint16_t zi = (uint16_t)((uint32_t)(zFix + zFixRound) >> 8);
 
-                                    if (zc < 0.0f) zc = 0.0f;
-                                    if (zc > 65535.0f) zc = 65535.0f;
-                                    zi = (uint16_t)(zc + 0.5f);
+                                    for (int i = 0; i < block; i++) {
+                                        if (zi < *zbp) {
+                                            *zbp = zi;
+                                            *dst = col0;
+                                        }
 
-                                    if (zi < *zbp) {
-                                        *zbp = zi;
-                                        *dst = col0;
+                                        zbp += 1;
+                                        dst += dstStep;
                                     }
+                                } else {
+                                    for (int i = 0; i < block; i++) {
+                                        const uint16_t zi = (uint16_t)((uint32_t)(zFix + zFixRound) >> 8);
 
-                                    z += zStep;
-                                    zbp += 1;
-                                    dst += SCREEN_H;
+                                        if (zi < *zbp) {
+                                            *zbp = zi;
+                                            *dst = col0;
+                                        }
+
+                                        zFix += zStepFix;
+                                        zbp += 1;
+                                        dst += dstStep;
+                                    }
                                 }
                             } else {
-                                float z = z0;
                                 int pat = x & 3;
 
-                                for (int i = 0; i < block; i++) {
-                                    float zc = z;
-                                    uint16_t zi;
+                                if (zStepFix == 0) {
+                                    const uint16_t zi = (uint16_t)((uint32_t)(zFix + zFixRound) >> 8);
 
-                                    if (zc < 0.0f) zc = 0.0f;
-                                    if (zc > 65535.0f) zc = 65535.0f;
-                                    zi = (uint16_t)(zc + 0.5f);
+                                    for (int i = 0; i < block; i++) {
+                                        if (zi < *zbp) {
+                                            *zbp = zi;
+                                            *dst = (brow[pat] < threshold16) ? col1 : col0;
+                                        }
 
-                                    if (zi < *zbp) {
-                                        *zbp = zi;
-                                        *dst = (brow[pat] < threshold16) ? col1 : col0;
+                                        zbp += 1;
+                                        dst += dstStep;
+                                        pat = (pat + 1) & 3;
                                     }
+                                } else {
+                                    for (int i = 0; i < block; i++) {
+                                        const uint16_t zi = (uint16_t)((uint32_t)(zFix + zFixRound) >> 8);
 
-                                    z += zStep;
-                                    zbp += 1;
-                                    dst += SCREEN_H;
-                                    pat = (pat + 1) & 3;
+                                        if (zi < *zbp) {
+                                            *zbp = zi;
+                                            *dst = (brow[pat] < threshold16) ? col1 : col0;
+                                        }
+
+                                        zFix += zStepFix;
+                                        zbp += 1;
+                                        dst += dstStep;
+                                        pat = (pat + 1) & 3;
+                                    }
                                 }
                             }
 
-                            q  += qStep  * (float)block;
-                            zq += zqStep * (float)block;
+                            q  += qStep  * fblock;
+                            zq += zqStep * fblock;
                             x  += block;
                         }
                     }
@@ -1083,6 +1137,7 @@ void fillTriangleDitherBayer(
         }
     }
 }
+
 
 
 void fillTriangleDitherBayerT(

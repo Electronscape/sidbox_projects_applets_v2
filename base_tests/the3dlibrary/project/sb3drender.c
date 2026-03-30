@@ -10,9 +10,8 @@
 #include "sb3d.h"
 
 
-
+// crazy amount of cachables to speed L1 an ARM calculation cache pipeline (I may even be talking out my ass right now!)
 #define USE_BACKFACE_CULL 1
-
 //static Entity align32 *renderEntities[WORLD_MAX];
 static RenderTri align32 g_renderTris[MAX_RENDER_TRIS];
 
@@ -21,7 +20,6 @@ static Vec3 align32 g_worldVertsCache[SB3D_MAX_VERTS];
 static Vec3 align32 g_camVertsCache[SB3D_MAX_VERTS];
 
 #define TRI_SORT_BUCKETS 32
-
 static int g_triBucketHead[TRI_SORT_BUCKETS];
 static int g_triBucketNext[MAX_RENDER_TRIS];
 static RenderTri align32 g_renderTriSortTmp[MAX_RENDER_TRIS];
@@ -31,13 +29,6 @@ static int g_renderTriCount = 0;
 
 
 // 480 x 320 * 2
-//uint16_t g_depthBufferBand[SCREEN_W * ZBUF_BAND_H];
-//uint16_t align32 g_depthBuffer[SCREEN_W * SCREEN_H];
-
-//static int g_enableZOrdering = 0;
-static int g_flatMode        = 0;
-static int g_twoshadeMode    = 0;
-static int g_wireframe       = 0;
 
 static inline Vec3 lerpVec3(Vec3 a, Vec3 b, float t)
 {
@@ -51,24 +42,47 @@ static inline Vec3 lerpVec3(Vec3 a, Vec3 b, float t)
 static inline uint16_t encodeZ(float z, const Camera *cam)
 {
     float t = (z - cam->nearPlane) * cam->invDepthRange;
-    if (t < 0.0f) t = 0.0f;
-    if (t > 1.0f) t = 1.0f;
+
+    t = fmaxf(0.0f, t);
+    t = fminf(1.0f, t);
+
     return (uint16_t)(t * 65535.0f);
 }
 
 
+// prototypes these are further down the file
+void Render3DFlatMode(const Camera *cam);
+void Render3DStandard(const Camera *cam);
+void Render3DTwoShade(const Camera *cam);
+void Render3DWireFrame(const Camera *cam);
+
+// Render Pipeline output func-pointer (commented because: comments are fun!)
+void (*RenderPipe)(const Camera *cam);
+
 void setDefaultRenderMode(void)
 {
-    //g_enableZOrdering = 1;
-    g_flatMode        = 0;
-    g_twoshadeMode    = 0;
-    g_wireframe       = 0;
+    RenderPipe = Render3DStandard;
 }
 
-//void enableZOrdering(int enable) { g_enableZOrdering = enable; }
-void enableFlatMode(int en)      { g_flatMode = en; }
-void enableTwoShade(int en)      { g_twoshadeMode = en; }
-void enableWireFrame(int en)     { g_wireframe = en; }
+void setRenderMode(RENDERMODE mode){
+    switch (mode){
+        case REND_MODE_WIREFRAME:
+            RenderPipe = Render3DWireFrame;
+        break;
+
+        case REND_MODE_FLAT:
+            RenderPipe = Render3DFlatMode;
+        break;
+
+        case REND_MODE_TWOSHADE:
+            RenderPipe = Render3DTwoShade;
+        break;
+
+        default:
+            RenderPipe = Render3DStandard;
+        break;
+    }
+}
 
 static inline float planeEval(Vec3 p, ClipPlane plane, const Camera *cam)
 {
@@ -79,7 +93,6 @@ static inline float planeEval(Vec3 p, ClipPlane plane, const Camera *cam)
         case PLANE_TOP:    return (p.z * cam->halfOverW) - p.y;
         case PLANE_BOTTOM: return p.y + (p.z * cam->halfOverW);
     }
-
     return -1.0f;
 }
 
@@ -201,6 +214,7 @@ static inline int clipTriangleToFrustum(Vec3 a, Vec3 b, Vec3 c, Vec3 *outVerts, 
     );
 }
 
+#if(0)  // int clipTriangleToFrustum_MOVED_TO_API(Vec3 a, Vec3 b, Vec3 c, Vec3 *outVerts, const Camera *cam)
 int clipTriangleToFrustum_MOVED_TO_API(Vec3 a, Vec3 b, Vec3 c, Vec3 *outVerts, const Camera *cam)
 {
     Vec3 *src = g_clipScratchA;
@@ -428,11 +442,14 @@ int clipTriangleToFrustum_MOVED_TO_API(Vec3 a, Vec3 b, Vec3 c, Vec3 *outVerts, c
 
     return count;
 }
+#endif
 
+/*
 static inline int triangleFacingScreen(Vec2 a, Vec2 b, Vec2 c){
     int cross = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
     return (cross > 0);
 }
+*/
 
 static inline int triangleFacingCamera(Vec3 a, Vec3 b, Vec3 c)
 {
@@ -452,15 +469,18 @@ static inline int triangleFacingCamera(Vec3 a, Vec3 b, Vec3 c)
     return (d < 0.0f);
 }
 
+
+
 void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, uint8_t emission, uint8_t trans, float shadeF)
 {
     Vec2 pa, pb, pc;
     float invZa, invZb, invZc;
     int cross;
 
-    if (a.z <= cam->nearPlane || b.z <= cam->nearPlane || c.z <= cam->nearPlane) {
-        return;
-    }
+    // this is already checked prior in the render path
+    //if (a.z <= cam->nearPlane || b.z <= cam->nearPlane || c.z <= cam->nearPlane) {
+        //return;
+    //}
 
     invZa = 1.0f / a.z;
     invZb = 1.0f / b.z;
@@ -475,10 +495,12 @@ void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, 
     pc.x = (int)((c.x * cam->projF * invZc) + cam->halfW + 0.5f);
     pc.y = (int)((-c.y * cam->projF * invZc) + cam->halfH + 0.5f);
 
+    /* - backface cull, removed as render path already checks this BEFORE this function is called
     cross = (pb.x - pa.x) * (pc.y - pa.y) - (pb.y - pa.y) * (pc.x - pa.x);
     if (cross <= 0) {
         return;
     }
+    */
 
     if (g_renderTriCount >= MAX_RENDER_TRIS) {
         return;
@@ -555,12 +577,12 @@ int clipLineToNearPlane(Vec3 *a, Vec3 *b, const Camera *cam)
     return 1;
 }
 
-void resetRenderList(void)
+static inline void resetRenderList(void)
 {
     g_renderTriCount = 0;
 }
 
-static int entityVisibleCheck(const Entity *ent, const Camera *cam)
+static inline int entityVisibleCheck(const Entity *ent, const Camera *cam)
 {
     const float dx = ent->pos.x - cam->pos.x;
     const float dy = ent->pos.y - cam->pos.y;
@@ -710,8 +732,6 @@ void drawFakeHorizonDots(const Camera *cam, uint8_t dotCol, int spacing, float y
         }
     }
 }
-
-
 
 void drawFakeSkyDots(const Camera *cam, uint8_t dotCol, int azSteps, int elSteps, uint8_t density)
 {
@@ -2129,6 +2149,108 @@ static void sortRenderTrisNearestFirst(const Camera *cam)
     }
 }
 
+void Render3DFlatMode(const Camera *cam){
+    for (int band = 0; band < ((SCREEN_H + ZBUF_BAND_H - 1) / ZBUF_BAND_H); band++) {
+        const int bandY0 = band * ZBUF_BAND_H;
+        beginDepthBand(bandY0);
+        for (int i = 0; i < g_renderTriCount; i++) {
+            RenderTri *rt = &g_renderTris[i];
+
+            if (band < rt->firstBand || band > rt->lastBand) continue;
+
+            fillTriangleFlat(
+                rt->p0.x, rt->p0.y,
+                rt->p1.x, rt->p1.y,
+                rt->p2.x, rt->p2.y,
+                rt->z0, rt->z1, rt->z2,
+                rt->camz0, rt->camz1, rt->camz2,
+                rt->color,
+                rt->shadeF
+            );
+        }
+    }
+}
+
+void Render3DStandard(const Camera *cam){
+    for (int band = 0; band < ((SCREEN_H + ZBUF_BAND_H - 1) / ZBUF_BAND_H); band++) {
+        const int bandY0 = band * ZBUF_BAND_H;
+        beginDepthBand(bandY0);
+        for (int i = 0; i < g_renderTriCount; i++) {
+            RenderTri *rt = &g_renderTris[i];
+
+            if (band < rt->firstBand || band > rt->lastBand) continue;
+
+            if (rt->color & TRI_FLAG_TRANSPARENT) {
+                fillTriangleDitherBayerT(
+                    rt->p0.x, rt->p0.y,
+                    rt->p1.x, rt->p1.y,
+                    rt->p2.x, rt->p2.y,
+                    rt->z0, rt->z1, rt->z2,
+                    rt->camz0, rt->camz1, rt->camz2,
+                    rt->color,
+                    rt->transparency,
+                    rt->shadeF
+                );
+            } else {
+                fillTriangleDitherBayer(
+                    rt->p0.x, rt->p0.y,
+                    rt->p1.x, rt->p1.y,
+                    rt->p2.x, rt->p2.y,
+                    rt->z0, rt->z1, rt->z2,
+                    rt->camz0, rt->camz1, rt->camz2,
+                    rt->color,
+                    rt->shadeF
+                );
+            }
+        }
+    }
+}
+
+void Render3DTwoShade(const Camera *cam){
+    for (int band = 0; band < ((SCREEN_H + ZBUF_BAND_H - 1) / ZBUF_BAND_H); band++) {
+        const int bandY0 = band * ZBUF_BAND_H;
+        beginDepthBand(bandY0);
+        for (int i = 0; i < g_renderTriCount; i++) {
+            RenderTri *rt = &g_renderTris[i];
+
+            if (band < rt->firstBand || band > rt->lastBand) continue;
+
+            fillTriangleDitherBayer2Mode(
+                rt->p0.x, rt->p0.y,
+                rt->p1.x, rt->p1.y,
+                rt->p2.x, rt->p2.y,
+                rt->z0, rt->z1, rt->z2,
+                rt->camz0, rt->camz1, rt->camz2,
+                rt->color,
+                rt->shadeF
+            );
+        }
+    }
+}
+
+void Render3DWireFrame(const Camera *cam){
+    for (int i = 0; i < g_renderTriCount; i++) {
+        RenderTri *rt = &g_renderTris[i];
+        int shade = (int)(rt->shadeF + 0.5f);
+
+        if (shade < 0) shade = 0;
+        if (shade > 4) shade = 4;
+
+        if (rt->emission > 0) {
+            const float emissiveF = (float)rt->emission * (1.0f / 255.0f);
+            int emissiveShade = (int)MAX_PALETTE_SHADE_INDEX - (int)(emissiveF * MAX_PALETTE_SHADE_INDEX + 0.5f);
+            if (emissiveShade < 0) emissiveShade = 0;
+            if (emissiveShade < shade) shade = emissiveShade;
+        }
+
+        {
+            const uint8_t col = shadeColor(rt->color, shade);
+            drawLine(rt->p0.x, rt->p0.y, rt->p1.x, rt->p1.y, col);
+            drawLine(rt->p1.x, rt->p1.y, rt->p2.x, rt->p2.y, col);
+            drawLine(rt->p2.x, rt->p2.y, rt->p0.x, rt->p0.y, col);
+        }
+    }
+}
 
 
 void Render3D(const Camera *cam)
@@ -2139,101 +2261,7 @@ void Render3D(const Camera *cam)
     sb3dParticlesRender(cam);
     //sortRenderTrisNearestFirst(cam);
 
-    if (g_wireframe) {
-        for (int i = 0; i < g_renderTriCount; i++) {
-            RenderTri *rt = &g_renderTris[i];
-            int shade = (int)(rt->shadeF + 0.5f);
-
-            if (shade < 0) shade = 0;
-            if (shade > 4) shade = 4;
-
-            if (rt->emission > 0) {
-                const float emissiveF = (float)rt->emission * (1.0f / 255.0f);
-                int emissiveShade = (int)MAX_PALETTE_SHADE_INDEX - (int)(emissiveF * MAX_PALETTE_SHADE_INDEX + 0.5f);
-                if (emissiveShade < 0) emissiveShade = 0;
-                if (emissiveShade < shade) shade = emissiveShade;
-            }
-
-            {
-                const uint8_t col = shadeColor(rt->color, shade);
-                drawLine(rt->p0.x, rt->p0.y, rt->p1.x, rt->p1.y, col);
-                drawLine(rt->p1.x, rt->p1.y, rt->p2.x, rt->p2.y, col);
-                drawLine(rt->p2.x, rt->p2.y, rt->p0.x, rt->p0.y, col);
-            }
-        }
-        return;
-    }
-
-    for (int band = 0; band < ((SCREEN_H + ZBUF_BAND_H - 1) / ZBUF_BAND_H); band++) {
-        const int bandY0 = band * ZBUF_BAND_H;
-
-        beginDepthBand(bandY0);
-
-        if (g_flatMode) {
-            for (int i = 0; i < g_renderTriCount; i++) {
-                RenderTri *rt = &g_renderTris[i];
-
-                if (band < rt->firstBand || band > rt->lastBand) continue;
-
-                fillTriangleFlat(
-                    rt->p0.x, rt->p0.y,
-                    rt->p1.x, rt->p1.y,
-                    rt->p2.x, rt->p2.y,
-                    rt->z0, rt->z1, rt->z2,
-                    rt->camz0, rt->camz1, rt->camz2,
-                    rt->color,
-                    rt->shadeF
-                );
-            }
-        }
-        else if (g_twoshadeMode) {
-            for (int i = 0; i < g_renderTriCount; i++) {
-                RenderTri *rt = &g_renderTris[i];
-
-                if (band < rt->firstBand || band > rt->lastBand) continue;
-
-                fillTriangleDitherBayer2Mode(
-                    rt->p0.x, rt->p0.y,
-                    rt->p1.x, rt->p1.y,
-                    rt->p2.x, rt->p2.y,
-                    rt->z0, rt->z1, rt->z2,
-                    rt->camz0, rt->camz1, rt->camz2,
-                    rt->color,
-                    rt->shadeF
-                );
-            }
-        }
-        else {
-            for (int i = 0; i < g_renderTriCount; i++) {
-                RenderTri *rt = &g_renderTris[i];
-
-                if (band < rt->firstBand || band > rt->lastBand) continue;
-
-                if (rt->color & TRI_FLAG_TRANSPARENT) {
-                    fillTriangleDitherBayerT(
-                        rt->p0.x, rt->p0.y,
-                        rt->p1.x, rt->p1.y,
-                        rt->p2.x, rt->p2.y,
-                        rt->z0, rt->z1, rt->z2,
-                        rt->camz0, rt->camz1, rt->camz2,
-                        rt->color,
-                        rt->transparency,
-                        rt->shadeF
-                    );
-                } else {
-                    fillTriangleDitherBayer(
-                        rt->p0.x, rt->p0.y,
-                        rt->p1.x, rt->p1.y,
-                        rt->p2.x, rt->p2.y,
-                        rt->z0, rt->z1, rt->z2,
-                        rt->camz0, rt->camz1, rt->camz2,
-                        rt->color,
-                        rt->shadeF
-                    );
-                }
-            }
-        }
-    }
+    RenderPipe(cam);
 }
 
 
@@ -2302,7 +2330,7 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
 
     const float farPlane   = cam->farPlane;
     const float nearPlane  = cam->nearPlane;
-    const float halfHOverW = (float)SCREEN_H / (float)SCREEN_W;
+    const float halfHOverW = cam->halfOverW;// (float)SCREEN_H / (float)SCREEN_W;
 
     int hasDiffuse;
     int hasSpec;
@@ -2373,6 +2401,7 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
         Point light is skipped if the entity bounding sphere is fully outside
         the light's "beyond" radius.
     */
+    // light cache
     if ((hasDiffuse || hasSpec) && lightCount > 0) {
         const float entityRadius = mesh->boundsRadius;
 
@@ -2479,11 +2508,14 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
             continue;
         }
 
-    #if USE_BACKFACE_CULL
-        if (!triangleFacingCamera(*a, *b, *c)) {
-            continue;
+        // check to see if the flag says "turn off facecull"
+        const int backfaceCull = (t->color & TRI_FLAG_NOBFACECULL) == 0;
+
+        if (backfaceCull) {
+            if (!triangleFacingCamera(*a, *b, *c)) {
+                continue;
+            }
         }
-    #endif
 
         fullyOutside =
             ((a->x < -a->z) && (b->x < -b->z) && (c->x < -c->z)) ||
@@ -2520,6 +2552,7 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
         }
         */
 
+
         abx = wb->x - wa->x;
         aby = wb->y - wa->y;
         abz = wb->z - wa->z;
@@ -2537,159 +2570,165 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
             continue;
         }
 
-        {
-            const float invNLen = 1.0f / sqrtf(nlen2);
-            nx *= invNLen;
-            ny *= invNLen;
-            nz *= invNLen;
-        }
-
-        faceCX = (wa->x + wb->x + wc->x) * (1.0f / 3.0f);
-        faceCY = (wa->y + wb->y + wc->y) * (1.0f / 3.0f);
-        faceCZ = (wa->z + wb->z + wc->z) * (1.0f / 3.0f);
-
         faceEmission = (float)t->emission * (1.0f / 255.0f);
-        brightness = matAmbient + matEmissive;
 
-        if (activeLightCount > 0) {
-            float vx = 0.0f, vy = 0.0f, vz = 0.0f;
+        // fully bright, no point in messing about with lighting calculation, just get this triangle out.
+        if(t->emission > 248) brightness = 255;   // over conpensating. ensure 255 brightness check - (do not remove)
 
-            if (hasSpec) {
-                float vlen2;
 
-                vx = camPosX - faceCX;
-                vy = camPosY - faceCY;
-                vz = camPosZ - faceCZ;
-
-                vlen2 = (vx * vx) + (vy * vy) + (vz * vz);
-                if (vlen2 > 0.000001f) {
-                    if (vlen2 < 0.999f || vlen2 > 1.001f) {
-                        const float invVLen = 1.0f / sqrtf(vlen2);
-                        vx *= invVLen;
-                        vy *= invVLen;
-                        vz *= invVLen;
-                    }
-                } else {
-                    vx = 0.0f;
-                    vy = 0.0f;
-                    vz = 0.0f;
-                }
+        if(brightness!=255){
+            {
+                const float invNLen = 1.0f / sqrtf(nlen2);
+                nx *= invNLen;
+                ny *= invNLen;
+                nz *= invNLen;
             }
 
-            for (int li = 0; li < activeLightCount; li++) {
-                const Light *ls = activeLights[li];
-                float lx, ly, lz;
-                float attenuation = 1.0f;
-                float ndotl;
+            faceCX = (wa->x + wb->x + wc->x) * 0.3334f;//(1.0f / 3.0f);
+            faceCY = (wa->y + wb->y + wc->y) * 0.3334f;//(1.0f / 3.0f);
+            faceCZ = (wa->z + wb->z + wc->z) * 0.3334f;//(1.0f / 3.0f);
+            brightness = matAmbient + matEmissive;
 
-                if (ls->type == LIGHT_POINT) {
-                    float dist2;
-                    const float near2   = ls->near   * ls->near;
-                    const float beyond2 = ls->beyond * ls->beyond;
+            if (activeLightCount > 0) {
+                float vx = 0.0f, vy = 0.0f, vz = 0.0f;
 
-                    lx = ls->pos.x - faceCX;
-                    ly = ls->pos.y - faceCY;
-                    lz = ls->pos.z - faceCZ;
+                if (hasSpec) {
+                    float vlen2;
 
-                    dist2 = (lx * lx) + (ly * ly) + (lz * lz);
+                    vx = camPosX - faceCX;
+                    vy = camPosY - faceCY;
+                    vz = camPosZ - faceCZ;
 
-                    if (dist2 >= beyond2) {
-                        continue;
+                    vlen2 = (vx * vx) + (vy * vy) + (vz * vz);
+                    if (vlen2 > 0.000001f) {
+                        if (vlen2 < 0.999f || vlen2 > 1.001f) {
+                            const float invVLen = 1.0f / sqrtf(vlen2);
+                            vx *= invVLen;
+                            vy *= invVLen;
+                            vz *= invVLen;
+                        }
+                    } else {
+                        vx = 0.0f;
+                        vy = 0.0f;
+                        vz = 0.0f;
                     }
+                }
 
-                    if (dist2 > 0.000001f) {
-                        const float invDist = 1.0f / sqrtf(dist2);
-                        const float dist = dist2 * invDist;
+                for (int li = 0; li < activeLightCount; li++) {
+                    const Light *ls = activeLights[li];
+                    float lx, ly, lz;
+                    float attenuation = 1.0f;
+                    float ndotl;
 
-                        lx *= invDist;
-                        ly *= invDist;
-                        lz *= invDist;
+                    if (ls->type == LIGHT_POINT) {
+                        float dist2;
+                        const float near2   = ls->near   * ls->near;
+                        const float beyond2 = ls->beyond * ls->beyond;
 
-                        if (dist2 > near2) {
-                            if (ls->far <= ls->near) {
-                                continue;
-                            }
+                        lx = ls->pos.x - faceCX;
+                        ly = ls->pos.y - faceCY;
+                        lz = ls->pos.z - faceCZ;
 
-                            if (ls->beyond <= ls->far) {
-                                float tval;
+                        dist2 = (lx * lx) + (ly * ly) + (lz * lz);
 
-                                if (dist >= ls->far) {
+                        if (dist2 >= beyond2) {
+                            continue;
+                        }
+
+                        if (dist2 > 0.000001f) {
+                            const float invDist = 1.0f / sqrtf(dist2);
+                            const float dist = dist2 * invDist;
+
+                            lx *= invDist;
+                            ly *= invDist;
+                            lz *= invDist;
+
+                            if (dist2 > near2) {
+                                if (ls->far <= ls->near) {
                                     continue;
                                 }
 
-                                tval = (dist - ls->near) / (ls->far - ls->near);
-                                if (tval < 0.0f) tval = 0.0f;
-                                if (tval > 1.0f) tval = 1.0f;
-                                attenuation = 1.0f - tval;
-                            } else if (dist <= ls->far) {
-                                float tval = (dist - ls->near) / (ls->far - ls->near);
-                                if (tval < 0.0f) tval = 0.0f;
-                                if (tval > 1.0f) tval = 1.0f;
-                                attenuation = 1.0f - (tval * 0.75f);
-                            } else {
-                                float tval = (dist - ls->far) / (ls->beyond - ls->far);
-                                if (tval < 0.0f) tval = 0.0f;
-                                if (tval > 1.0f) tval = 1.0f;
-                                attenuation = 0.25f * (1.0f - tval);
-                            }
+                                if (ls->beyond <= ls->far) {
+                                    float tval;
 
-                            if (attenuation <= 0.0f) {
-                                continue;
+                                    if (dist >= ls->far) {
+                                        continue;
+                                    }
+
+                                    tval = (dist - ls->near) / (ls->far - ls->near);
+                                    if (tval < 0.0f) tval = 0.0f;
+                                    if (tval > 1.0f) tval = 1.0f;
+                                    attenuation = 1.0f - tval;
+                                } else if (dist <= ls->far) {
+                                    float tval = (dist - ls->near) / (ls->far - ls->near);
+                                    if (tval < 0.0f) tval = 0.0f;
+                                    if (tval > 1.0f) tval = 1.0f;
+                                    attenuation = 1.0f - (tval * 0.75f);
+                                } else {
+                                    float tval = (dist - ls->far) / (ls->beyond - ls->far);
+                                    if (tval < 0.0f) tval = 0.0f;
+                                    if (tval > 1.0f) tval = 1.0f;
+                                    attenuation = 0.25f * (1.0f - tval);
+                                }
+
+                                if (attenuation <= 0.0f) {
+                                    continue;
+                                }
                             }
+                        } else {
+                            lx = 0.0f;
+                            ly = 0.0f;
+                            lz = 0.0f;
                         }
                     } else {
-                        lx = 0.0f;
-                        ly = 0.0f;
-                        lz = 0.0f;
+                        lx = -ls->dir.x;
+                        ly = -ls->dir.y;
+                        lz = -ls->dir.z;
                     }
-                } else {
-                    lx = -ls->dir.x;
-                    ly = -ls->dir.y;
-                    lz = -ls->dir.z;
-                }
 
-                ndotl = (nx * lx) + (ny * ly) + (nz * lz);
-                if (ndotl <= 0.0f) {
-                    continue;
-                }
-
-                if (hasDiffuse) {
-                    brightness += ndotl * ls->intensity * attenuation * matDiffuse;
-                }
-
-                if (hasSpec) {
-                    const float rdx = (2.0f * ndotl * nx) - lx;
-                    const float rdy = (2.0f * ndotl * ny) - ly;
-                    const float rdz = (2.0f * ndotl * nz) - lz;
-                    const float rdotv = (rdx * vx) + (rdy * vy) + (rdz * vz);
-
-                    if (rdotv > 0.0f) {
-                        float specPow;
-
-                        if (shiny8) {
-                            float s = rdotv * rdotv;
-                            s *= s;
-                            s *= s;
-                            specPow = s;
-                        }
-                        else if (shiny16) {
-                            float s = rdotv * rdotv;
-                            s *= s;
-                            s *= s;
-                            s *= s;
-                            specPow = s;
-                        }
-                        else {
-                            specPow = powfxt(rdotv, matShiny);
-                        }
-
-                        brightness += specPow * matSpec * ls->intensity * attenuation;
+                    ndotl = (nx * lx) + (ny * ly) + (nz * lz);
+                    if (ndotl <= 0.0f) {
+                        continue;
                     }
-                }
 
-                if (brightness >= 1.0f) {
-                    brightness = 1.0f;
-                    break;
+                    if (hasDiffuse) {
+                        brightness += ndotl * ls->intensity * attenuation * matDiffuse;
+                    }
+
+                    if (hasSpec) {
+                        const float rdx = (2.0f * ndotl * nx) - lx;
+                        const float rdy = (2.0f * ndotl * ny) - ly;
+                        const float rdz = (2.0f * ndotl * nz) - lz;
+                        const float rdotv = (rdx * vx) + (rdy * vy) + (rdz * vz);
+
+                        if (rdotv > 0.0f) {
+                            float specPow;
+
+                            if (shiny8) {
+                                float s = rdotv * rdotv;
+                                s *= s;
+                                s *= s;
+                                specPow = s;
+                            }
+                            else if (shiny16) {
+                                float s = rdotv * rdotv;
+                                s *= s;
+                                s *= s;
+                                s *= s;
+                                specPow = s;
+                            }
+                            else {
+                                specPow = powfxt(rdotv, matShiny);
+                            }
+
+                            brightness += specPow * matSpec * ls->intensity * attenuation;
+                        }
+                    }
+
+                    if (brightness >= 1.0f) {
+                        brightness = 1.0f;
+                        break;
+                    }
                 }
             }
         }
@@ -2699,15 +2738,15 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
 
         triShadeF = brightnessToShadeF(brightness);
 
-        renderColor = (uint8_t)(t->color & TRI_COLOUR_MASK);
-        if (t->transparency > 0)
-            renderColor |= TRI_FLAG_TRANSPARENT;
+        //renderColor = (uint8_t)(t->color & TRI_COLOUR_MASK);
+        //if (t->transparency > 0) renderColor |= TRI_FLAG_TRANSPARENT;
 
         if (fullyInside) {
             submitClippedTri(
                 *a, *b, *c,
                 cam,
-                renderColor,
+                //renderColor,
+                t->color,
                 t->emission,
                 t->transparency,
                 triShadeF
@@ -2726,7 +2765,8 @@ void submitEntitySolid(const Entity *ent, const Camera *cam)
                     clipped[k],
                     clipped[k + 1],
                     cam,
-                    renderColor,
+                    //renderColor,
+                    t->color,
                     t->emission,
                     t->transparency,
                     triShadeF
@@ -2763,11 +2803,6 @@ void drawEntity(const Entity *ent, const Camera *cam, uint8_t color)
 
         drawWorldLine(a, b, cam, color);
     }
-}
-
-void drawEntitySolid(const Entity *ent, const Camera *cam)
-{
-    submitEntitySolid(ent, cam);
 }
 
 

@@ -165,6 +165,9 @@ int loadMeshOBJ(const char *filename, Mesh *mesh, uint8_t colour, float scale)
 #endif 
 
 
+#define SIDBOX_MESH_FILE_VERSION    5
+
+
 int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
 {
     FRESULT res;
@@ -205,7 +208,7 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
         return 0;
     }
 
-    if (version != 5) {
+    if (version != SIDBOX_MESH_FILE_VERSION) { 
         fclose(0);
         return 0;
     }
@@ -259,6 +262,7 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
     /* read triangles */
     for (uint32_t i = 0; i < triCount; i++) {
         uint32_t a, b, c;
+        uint8_t flags;
         uint8_t color;
         uint8_t emission;
         uint8_t transparency;
@@ -288,6 +292,7 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
             return 0;
         }
 
+        // packed colour info (high nibble, flags, low nibble colour index 0-15)
         if (sfread(0, &color, sizeof(uint8_t), &ird) != FR_OK ||
             ird != (int32_t)sizeof(uint8_t))
         {
@@ -329,7 +334,7 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
         mesh->tris[i].a = (int)a;
         mesh->tris[i].b = (int)b;
         mesh->tris[i].c = (int)c;
-        mesh->tris[i].color = (uint8_t)(color & TRI_COLOUR_MASK);
+        mesh->tris[i].color = color;//(uint8_t)(color & TRI_COLOUR_MASK);
         mesh->tris[i].emission = emission;
         mesh->tris[i].transparency = transparency;
         mesh->tris[i].roughness    = roughness; /// NOTE: the file is the inverse. at file convert time (255-roughness_output)
@@ -344,21 +349,3 @@ int loadMeshSB3D(const char *filename, Mesh *mesh, float scale)
 }    
 
 
-
-void freeMesh(Mesh *mesh)
-{
-    if (!mesh) return;
-
-    if (mesh->verts) free(mesh->verts);
-    if (mesh->tris)  free(mesh->tris);
-    if (mesh->edges) free(mesh->edges);
-
-    mesh->verts = NULL;
-    mesh->tris  = NULL;
-    mesh->edges = NULL;
-
-    mesh->vertCount = 0;
-    mesh->triCount  = 0;
-    mesh->edgeCount = 0;
-    mesh->boundsRadius = 0.0f;
-}

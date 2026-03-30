@@ -17,6 +17,23 @@ int entityIdValid(int id)
 }
 
 
+void freeMesh(Mesh *mesh)
+{
+    if (!mesh) return;
+
+    if (mesh->verts) free(mesh->verts);
+    if (mesh->tris)  free(mesh->tris);
+    if (mesh->edges) free(mesh->edges);
+
+    mesh->verts = NULL;
+    mesh->tris  = NULL;
+    mesh->edges = NULL;
+
+    mesh->vertCount = 0;
+    mesh->triCount  = 0;
+    mesh->edgeCount = 0;
+    mesh->boundsRadius = 0.0f;
+}
 
 /*
 Vec3 entityLocalToWorld(const Entity *e, Vec3 v)
@@ -85,12 +102,9 @@ int entityWorldSpawn(Mesh *mesh, Vec3 pos)
             worldEntities[id].collisionType = COLLISION_NONE;
             worldEntities[id].collisionHalfSize = (Vec3) {0.0f, 0.0f, 0.0f};
             worldEntities[id].collisionRadius = 0.0f;
-
-
             return id;
         }
     }
-
     return -1;
 }
 
@@ -116,6 +130,13 @@ void entityWorldDestroy(int *id)
 
 void entitySetPosition(int id, Vec3 pos)
 {
+    if (!entityIdValid(id)) return;
+    worldEntities[id].prevPos = worldEntities[id].pos;  // capture current position
+    worldEntities[id].pos = pos;    // new position
+}
+
+// does the same thing, but clears the prevPos to absolute new position
+void entitySetPositionAbs(int id, Vec3 pos){
     if (!entityIdValid(id)) return;
     worldEntities[id].pos = pos;
     worldEntities[id].prevPos = pos;
@@ -198,7 +219,7 @@ void entityMoveUp(int id, float dist)
 
 // note colour palette SHOULD be 5 shades available, BUT not STRICTLY required ;)
 // Set the whole mesh to a single colour
-void entityColour(int id, uint8_t colour) {
+void entityColour(int id, uint8_t colour) { // this will accept flags! caution
     if (!entityIdValid(id)) return;
 
     Mesh *m = worldEntities[id].mesh;
@@ -209,7 +230,7 @@ void entityColour(int id, uint8_t colour) {
     }
 }
 
-void meshColour(Mesh *mesh, uint8_t colour){
+void meshColour(Mesh *mesh, uint8_t colour){    // this will accept flags! caution
     if (!mesh || !mesh->tris) return;
 
     for (int i = 0; i < mesh->triCount; i++) {
@@ -218,8 +239,7 @@ void meshColour(Mesh *mesh, uint8_t colour){
 }
 
 // Set a specific face / triangle to a colour
-void entityColourFace(int id, int faceId, uint8_t colour)
-{
+void entityColourFace(int id, int faceId, uint8_t colour){
     if (!entityIdValid(id)) return;
 
     Mesh *m = worldEntities[id].mesh;
@@ -229,6 +249,13 @@ void entityColourFace(int id, int faceId, uint8_t colour)
     m->tris[faceId].color = colour;
 }
 
+void meshColourFace(Mesh *mesh, int faceId, uint8_t colour){    // will accept flags! caution
+    if(!mesh) return;   // nothing here, bugger off.
+    if(!mesh->tris) return; // no tris in the modal, go away
+    if(faceId < 0 || faceId >= mesh->triCount) return; // out of bounds
+
+    mesh->tris[faceId].color = colour;
+}
 
 void normalizeEntity(Entity *e)
 {
@@ -2710,3 +2737,501 @@ uint8_t entitySweepRaycastTest_OLD(int movingId, int targetId, Vec3 *hitPos, Tri
     return 0;
 }
 #endif
+
+
+
+
+//// QUALITY OF LIFE FUNCTIONS ///
+// V1.0 //
+// Prottypes...
+
+// Automation
+void entityMoveTowardsPosition(int id, Vec3 target, float step)
+{
+    Entity *e;
+    Vec3 d;
+    float dist2;
+    float dist;
+    float invDist;
+
+    if (!entityIdValid(id)) return;
+    if (step <= 0.0f) return;
+
+    e = &worldEntities[id];
+
+    d.x = target.x - e->pos.x;
+    d.y = target.y - e->pos.y;
+    d.z = target.z - e->pos.z;
+
+    dist2 = (d.x * d.x) + (d.y * d.y) + (d.z * d.z);
+
+    if (dist2 <= 0.000001f) {
+        return;
+    }
+
+    dist = sqrtf(dist2);
+
+    e->prevPos = e->pos;
+
+    if (dist <= step) {
+        e->pos = target;
+        return;
+    }
+
+    invDist = step / dist;
+
+    e->pos.x += d.x * invDist;
+    e->pos.y += d.y * invDist;
+    e->pos.z += d.z * invDist;
+}
+
+void entityMoveTowardsEntity(int id, int targetId, float step)
+{
+    if (!entityIdValid(id)) return;
+    if (!entityIdValid(targetId)) return;
+
+    entityMoveTowardsPosition(id, worldEntities[targetId].pos, step);
+}
+
+
+// Calculators
+float entityDistanceToPosition(int id, Vec3 target)
+{
+    float dx, dy, dz;
+
+    if (!entityIdValid(id)) return 0.0f;
+
+    dx = target.x - worldEntities[id].pos.x;
+    dy = target.y - worldEntities[id].pos.y;
+    dz = target.z - worldEntities[id].pos.z;
+
+    return sqrtf((dx * dx) + (dy * dy) + (dz * dz));
+}
+
+float entityDistanceToEntity(int aId, int bId)
+{
+    float dx, dy, dz;
+
+    if (!entityIdValid(aId)) return 0.0f;
+    if (!entityIdValid(bId)) return 0.0f;
+
+    dx = worldEntities[bId].pos.x - worldEntities[aId].pos.x;
+    dy = worldEntities[bId].pos.y - worldEntities[aId].pos.y;
+    dz = worldEntities[bId].pos.z - worldEntities[aId].pos.z;
+
+    return sqrtf((dx * dx) + (dy * dy) + (dz * dz));
+}
+
+// Checkers
+uint8_t entityHasLineOfSightToPosition(int fromId, Vec3 pos)
+{
+    Entity *fromEnt;
+    Vec3 rayOrig;
+    Vec3 rayDir;
+    float rayLen;
+    const float EPS = 0.0001f;
+
+    if (!entityIdValid(fromId)) return 0;
+
+    fromEnt = &worldEntities[fromId];
+
+    rayOrig = fromEnt->pos;
+
+    rayDir.x = pos.x - rayOrig.x;
+    rayDir.y = pos.y - rayOrig.y;
+    rayDir.z = pos.z - rayOrig.z;
+
+    rayLen = sqrtf((rayDir.x * rayDir.x) + (rayDir.y * rayDir.y) + (rayDir.z * rayDir.z));
+    if (rayLen <= EPS) return 1;
+
+    rayDir.x /= rayLen;
+    rayDir.y /= rayLen;
+    rayDir.z /= rayLen;
+
+    for (int i = 0; i < WORLD_MAX; i++) {
+        Entity *et;
+        Mesh *mt;
+        Vec3 localRayOrig;
+        Vec3 localRayDir;
+
+        if (i == fromId) continue;
+        if (!worldEntities[i].active) continue;
+        if (!worldEntities[i].mesh) continue;
+        if (!(worldEntities[i].flags & ENTITY_HITTEST)) continue;
+
+        et = &worldEntities[i];
+        mt = et->mesh;
+
+        if (!mt->verts || !mt->tris || mt->triCount <= 0) continue;
+
+        /* broad phase against entity bounds sphere */
+        {
+            float dist2;
+            float rr;
+
+            rr = mt->boundsRadius;
+            dist2 = sb3dDistancePointToSegmentSq(et->pos, rayOrig, pos);
+
+            if (dist2 > (rr * rr)) {
+                continue;
+            }
+        }
+
+        localRayOrig = sb3dEntityWorldToLocalPoint(et, rayOrig);
+        localRayDir  = sb3dEntityWorldToLocalDir(et, rayDir);
+        localRayDir  = sb3dVec3NormalizeSafe(localRayDir);
+
+        for (int ti = 0; ti < mt->triCount; ti++) {
+            const Tri *t = &mt->tris[ti];
+            float hitT;
+
+            if (sb3dRayTriangleHitDetailed(
+                    localRayOrig,
+                    localRayDir,
+                    rayLen,
+                    mt->verts[t->a],
+                    mt->verts[t->b],
+                    mt->verts[t->c],
+                    &hitT,
+                    NULL))
+            {
+                if (hitT > EPS && hitT < rayLen) {
+                    return 0;
+                }
+            }
+        }
+    }
+
+    return 1;
+}
+
+uint8_t entityHasLineOfSightToEntity(int fromId, int toId)
+{
+    Entity *fromEnt;
+    Entity *toEnt;
+    Vec3 rayOrig;
+    Vec3 targetPos;
+    Vec3 rayDir;
+    float rayLen;
+    const float EPS = 0.0001f;
+
+    if (!entityIdValid(fromId)) return 0;
+    if (!entityIdValid(toId)) return 0;
+    if (fromId == toId) return 1;
+
+    fromEnt = &worldEntities[fromId];
+    toEnt   = &worldEntities[toId];
+
+    rayOrig   = fromEnt->pos;
+    targetPos = toEnt->pos;
+
+    rayDir.x = targetPos.x - rayOrig.x;
+    rayDir.y = targetPos.y - rayOrig.y;
+    rayDir.z = targetPos.z - rayOrig.z;
+
+    rayLen = sqrtf((rayDir.x * rayDir.x) + (rayDir.y * rayDir.y) + (rayDir.z * rayDir.z));
+    if (rayLen <= EPS) return 1;
+
+    rayDir.x /= rayLen;
+    rayDir.y /= rayLen;
+    rayDir.z /= rayLen;
+
+    for (int i = 0; i < WORLD_MAX; i++) {
+        Entity *et;
+        Mesh *mt;
+        Vec3 localRayOrig;
+        Vec3 localRayDir;
+
+        if (i == fromId) continue;
+        if (i == toId) continue;
+        if (!worldEntities[i].active) continue;
+        if (!worldEntities[i].mesh) continue;
+        if (!(worldEntities[i].flags & ENTITY_HITTEST)) continue;
+
+        et = &worldEntities[i];
+        mt = et->mesh;
+
+        if (!mt->verts || !mt->tris || mt->triCount <= 0) continue;
+
+        /* broad phase against entity bounds sphere */
+        {
+            float dist2;
+            float rr;
+
+            rr = mt->boundsRadius;
+            dist2 = sb3dDistancePointToSegmentSq(et->pos, rayOrig, targetPos);
+
+            if (dist2 > (rr * rr)) {
+                continue;
+            }
+        }
+
+        localRayOrig = sb3dEntityWorldToLocalPoint(et, rayOrig);
+        localRayDir  = sb3dEntityWorldToLocalDir(et, rayDir);
+        localRayDir  = sb3dVec3NormalizeSafe(localRayDir);
+
+        for (int ti = 0; ti < mt->triCount; ti++) {
+            const Tri *t = &mt->tris[ti];
+            float hitT;
+
+            if (sb3dRayTriangleHitDetailed(
+                    localRayOrig,
+                    localRayDir,
+                    rayLen,
+                    mt->verts[t->a],
+                    mt->verts[t->b],
+                    mt->verts[t->c],
+                    &hitT,
+                    NULL))
+            {
+                if (hitT > EPS && hitT < rayLen) {
+                    return 0;
+                }
+            }
+        }
+    }
+
+    return 1;
+}
+
+
+
+
+void meshScale(Mesh *mesh, Vec3 scale)
+{
+    if (!mesh) return;
+    if (!mesh->verts) return;
+    if (mesh->vertCount <= 0) return;
+
+    for (int i = 0; i < mesh->vertCount; i++) {
+        mesh->verts[i].x *= scale.x;
+        mesh->verts[i].y *= scale.y;
+        mesh->verts[i].z *= scale.z;
+    }
+
+    mesh->boundsRadius = meshComputeBoundsRadius(mesh);
+}
+
+void meshRecalcBounds(Mesh *mesh)
+{
+    if (!mesh) return;
+    mesh->boundsRadius = meshComputeBoundsRadius(mesh);
+}
+
+void meshAnchorToBounds(Mesh *mesh, Vec3 anchor)
+{
+    float minx, miny, minz;
+    float maxx, maxy, maxz;
+    float ax, ay, az;
+    Vec3 offset;
+
+    if (!mesh) return;
+    if (!mesh->verts) return;
+    if (mesh->vertCount <= 0) return;
+
+    if (anchor.x < -1.0f) anchor.x = -1.0f;
+    if (anchor.x >  1.0f) anchor.x =  1.0f;
+
+    if (anchor.y < -1.0f) anchor.y = -1.0f;
+    if (anchor.y >  1.0f) anchor.y =  1.0f;
+
+    if (anchor.z < -1.0f) anchor.z = -1.0f;
+    if (anchor.z >  1.0f) anchor.z =  1.0f;
+
+    minx = maxx = mesh->verts[0].x;
+    miny = maxy = mesh->verts[0].y;
+    minz = maxz = mesh->verts[0].z;
+
+    for (int i = 1; i < mesh->vertCount; i++) {
+        const Vec3 v = mesh->verts[i];
+
+        if (v.x < minx) minx = v.x;
+        if (v.x > maxx) maxx = v.x;
+
+        if (v.y < miny) miny = v.y;
+        if (v.y > maxy) maxy = v.y;
+
+        if (v.z < minz) minz = v.z;
+        if (v.z > maxz) maxz = v.z;
+    }
+
+    ax = minx + ((anchor.x + 1.0f) * 0.5f * (maxx - minx));
+    ay = miny + ((anchor.y + 1.0f) * 0.5f * (maxy - miny));
+    az = minz + ((anchor.z + 1.0f) * 0.5f * (maxz - minz));
+
+    offset.x = -ax;
+    offset.y = -ay;
+    offset.z = -az;
+
+    for (int i = 0; i < mesh->vertCount; i++) {
+        mesh->verts[i].x += offset.x;
+        mesh->verts[i].y += offset.y;
+        mesh->verts[i].z += offset.z;
+    }
+
+    mesh->boundsRadius = meshComputeBoundsRadius(mesh);
+}
+
+// Movement
+void meshTranslate(Mesh *mesh, Vec3 delta)
+{
+    if (!mesh) return;
+    if (!mesh->verts) return;
+    if (mesh->vertCount <= 0) return;
+
+    for (int i = 0; i < mesh->vertCount; i++) {
+        mesh->verts[i].x += delta.x;
+        mesh->verts[i].y += delta.y;
+        mesh->verts[i].z += delta.z;
+    }
+
+    mesh->boundsRadius = meshComputeBoundsRadius(mesh);
+}
+
+
+
+void entityTranslate(int id, Vec3 delta, uint8_t global)
+{
+    Entity *e;
+    Vec3 applied;
+
+    if (!entityIdValid(id)) return;
+
+    e = &worldEntities[id];
+    e->prevPos = e->pos;
+
+    if (global) {
+        applied = delta;
+    } else {
+        applied.x =
+            (e->right.x   * delta.x) +
+            (e->up.x      * delta.y) +
+            (e->forward.x * delta.z);
+
+        applied.y =
+            (e->right.y   * delta.x) +
+            (e->up.y      * delta.y) +
+            (e->forward.y * delta.z);
+
+        applied.z =
+            (e->right.z   * delta.x) +
+            (e->up.z      * delta.y) +
+            (e->forward.z * delta.z);
+    }
+
+    e->pos.x += applied.x;
+    e->pos.y += applied.y;
+    e->pos.z += applied.z;
+}
+
+
+
+// deformers
+Mesh meshSeparateTriangles(const Mesh *src)
+{
+    Mesh dst = {0};
+
+    if (!src) return dst;
+    if (!src->verts || !src->tris) return dst;
+    if (src->triCount <= 0) return dst;
+
+    dst.vertCount = src->triCount * 3;
+    dst.triCount  = src->triCount;
+    dst.edgeCount = 0;
+
+    dst.verts = malloc(sizeof(Vec3) * dst.vertCount);
+    dst.tris  = malloc(sizeof(Tri)  * dst.triCount);
+    dst.edges = NULL;
+
+    if (!dst.verts || !dst.tris) {
+        free(dst.verts);
+        free(dst.tris);
+        dst.verts = NULL;
+        dst.tris  = NULL;
+        dst.vertCount = 0;
+        dst.triCount = 0;
+        return dst;
+    }
+
+    for (int i = 0; i < src->triCount; i++) {
+        const Tri *st = &src->tris[i];
+        const int vi = i * 3;
+
+        dst.verts[vi + 0] = src->verts[st->a];
+        dst.verts[vi + 1] = src->verts[st->b];
+        dst.verts[vi + 2] = src->verts[st->c];
+
+        dst.tris[i].a = vi + 0;
+        dst.tris[i].b = vi + 1;
+        dst.tris[i].c = vi + 2;
+
+        dst.tris[i].color        = st->color;
+        dst.tris[i].emission     = st->emission;
+        dst.tris[i].transparency = st->transparency;
+        dst.tris[i].roughness    = st->roughness;
+    }
+
+    dst.boundsRadius = meshComputeBoundsRadius(&dst);
+    dst.material = src->material;
+
+    return dst;
+}
+
+void refaceMesh(const Mesh *src, Mesh *target)
+{
+    if (!src || !target) return;
+    if (!src->verts || !src->tris) return;
+    if (!target->verts || !target->tris) return;
+
+    if (src->triCount <= 0) return;
+    if (target->triCount != src->triCount) return;
+    if (target->vertCount != (src->triCount * 3)) return;
+
+    for (int i = 0; i < src->triCount; i++) {
+        const Tri *st = &src->tris[i];
+        const int vi = i * 3;
+
+        target->verts[vi + 0] = src->verts[st->a];
+        target->verts[vi + 1] = src->verts[st->b];
+        target->verts[vi + 2] = src->verts[st->c];
+
+        target->tris[i].color        = st->color;
+        target->tris[i].emission     = st->emission;
+        target->tris[i].transparency = st->transparency;
+        target->tris[i].roughness    = st->roughness;
+    }
+
+    target->boundsRadius = src->boundsRadius;
+    target->material = src->material;
+}
+
+
+void entityMatchOrientation(int id, int targetId)
+{
+    Entity *e;
+    Entity *t;
+
+    if (!entityIdValid(id)) return;
+    if (!entityIdValid(targetId)) return;
+
+    e = &worldEntities[id];
+    t = &worldEntities[targetId];
+
+    e->right   = t->right;
+    e->up      = t->up;
+    e->forward = t->forward;
+}
+
+void entityMatchOrientationCamera(int id, const Camera *cam)
+{
+    Entity *e;
+
+    if (!entityIdValid(id)) return;
+    if (!cam) return;
+
+    e = &worldEntities[id];
+
+    e->right   = cam->right;
+    e->up      = cam->up;
+    e->forward = cam->forward;
+}
