@@ -86,6 +86,11 @@ void cameraSetPosition(Camera *cam, Vec3 pos)
     cam->pos = pos;
 }
 
+Vec3 cameraGetPosition(Camera *cam){    // pretty useless but here anyway.
+    if (!cam) return (Vec3){ 0.0f, 0.0f, 0.0f };;
+    return cam->pos;
+}
+
 void cameraRotate(Camera *cam, float yaw, float pitch, float roll){
     if (!cam) return;
     cam->rotation.x = yaw;

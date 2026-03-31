@@ -14,4 +14,4 @@ main.c:886:6:drawPlayerLaserCooldownHUD	96	static
 main.c:935:6:UpdateTurretTest	16	static
 main.c:984:6:initSmoke	32	static
 main.c:1000:6:updateSmoke	112	static
-main.c:1081:5:main	17832	static
+main.c:1081:5:main	17920	static

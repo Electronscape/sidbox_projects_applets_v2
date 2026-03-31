@@ -149,7 +149,7 @@ void lightSetPosition(int index, Vec3 pos)
     g_lights[index].pos = pos;
 }
 
-void setLightDirection(int index, Vec3 dir)
+void lightSetDirection(int index, Vec3 dir)
 {
     if (index < 0 || index >= g_lightCount) return;
     g_lights[index].dir = vec3Normalize(dir);

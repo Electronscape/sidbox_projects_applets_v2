@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIDBOX 3D Library Manual</title>
+  <style>
+    :root {
+      --bg: #f6f1ff;
+      --bg2: #efe6ff;
+      --panel: rgba(255,255,255,0.78);
+      --panel-strong: rgba(255,255,255,0.9);
+      --text: #24163a;
+      --muted: #5f4c7a;
+      --border: rgba(123, 82, 179, 0.26);
+      --accent: #7b52b3;
+      --accent-2: #9a6fe0;
+      --code-bg: #f1e8ff;
+      --code-text: #432568;
+      --shadow: 0 10px 30px rgba(88, 54, 130, 0.12);
+      --ok: #4a8a6b;
+      --warn: #9c5f33;
+      color-scheme: light;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #140f1f;
+        --bg2: #1c1430;
+        --panel: rgba(37, 28, 58, 0.78);
+        --panel-strong: rgba(44, 33, 69, 0.9);
+        --text: #f3edff;
+        --muted: #c8b6ea;
+        --border: rgba(170, 132, 227, 0.22);
+        --accent: #b788ff;
+        --accent-2: #d0a9ff;
+        --code-bg: #1a1330;
+        --code-text: #eadbff;
+        --shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
+        --ok: #8ee0b2;
+        --warn: #ffc187;
+        color-scheme: dark;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
+      background:
+        radial-gradient(1000px 500px at 10% -10%, rgba(183,136,255,0.18), transparent 60%),
+        radial-gradient(800px 400px at 100% 0%, rgba(154,111,224,0.16), transparent 50%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      color: var(--text);
+    }
+    .shell {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      min-height: 100vh;
+    }
+    aside {
+      position: sticky;
+      top: 0;
+      align-self: start;
+      height: 100vh;
+      padding: 20px 16px;
+      border-right: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(10px);
+    }
+    .brand {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      background: linear-gradient(180deg, rgba(183,136,255,0.16), rgba(154,111,224,0.08));
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+    .brand h1 {
+      margin: 0 0 8px;
+      font-size: 1.4rem;
+      line-height: 1.1;
+    }
+    .brand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .nav {
+      overflow: auto;
+      height: calc(100vh - 170px);
+      padding-right: 4px;
+    }
+    .nav a {
+      display: block;
+      text-decoration: none;
+      color: var(--muted);
+      padding: 10px 12px;
+      margin: 4px 0;
+      border-radius: 0;
+      border: 1px solid transparent;
+      transition: 0.2s ease;
+      font-size: 0.95rem;
+    }
+    .nav a:hover {
+      color: var(--text);
+      border-color: var(--border);
+      background: rgba(183,136,255,0.1);
+    }
+    main {
+      padding: 28px;
+      max-width: 1100px;
+    }
+    .hero {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      background: linear-gradient(180deg, var(--panel-strong), var(--panel));
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+    .hero h2 {
+      margin: 0 0 10px;
+      font-size: 2rem;
+      line-height: 1.05;
+    }
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 72ch;
+    }
+    section {
+      margin: 22px 0;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      background: linear-gradient(180deg, var(--panel), rgba(255,255,255,0.02));
+      box-shadow: var(--shadow);
+    }
+    h2 {
+      margin: 0 0 14px;
+      font-size: 1.45rem;
+    }
+    h3 {
+      margin: 24px 0 10px;
+      font-size: 1.08rem;
+    }
+    p, li {
+      line-height: 1.6;
+      color: var(--text);
+    }
+    .muted { color: var(--muted); }
+    .callout {
+      margin: 14px 0;
+      padding: 14px 16px;
+      border-left: 4px solid var(--accent);
+      border-radius: 0;
+      background: rgba(183,136,255,0.1);
+      color: var(--text);
+    }
+    .warn {
+      border-left-color: var(--warn);
+      background: rgba(255, 183, 120, 0.12);
+    }
+    .ok {
+      border-left-color: var(--ok);
+      background: rgba(120, 224, 178, 0.12);
+    }
+    .func {
+      margin: 18px 0;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      background: rgba(255,255,255,0.03);
+    }
+    .sig {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      display: inline-block;
+      padding: 10px 12px;
+      border-radius: 0;
+      background: var(--code-bg);
+      color: var(--code-text);
+      border: 1px solid var(--border);
+      overflow-wrap: anywhere;
+    }
+    pre {
+      margin: 12px 0 0;
+      padding: 14px 16px;
+      border-radius: 0;
+      background: var(--code-bg);
+      color: var(--code-text);
+      border: 1px solid var(--border);
+      overflow: auto;
+      line-height: 1.45;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    ul { padding-left: 20px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .mini {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      background: rgba(255,255,255,0.04);
+    }
+    .mini strong { display: block; margin-bottom: 6px; }
+    .footer {
+      margin: 26px 0 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    @media (max-width: 900px) {
+      .shell { grid-template-columns: 1fr; }
+      aside {
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav { height: auto; }
+      main { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside>
+      <div class="brand">
+        <h1>SIDBOX 3D Manual</h1>
+        <p>Reference guide for the helper layer: movement, mesh tools, collision, ray helpers, and deformation tools.</p>
+      </div>
+      <nav class="nav">
+        <a href="#core">1. Core Ideas</a>
+        <a href="#types">2. Core Types</a>
+        <a href="#entity">3. Entity Helpers</a>
+        <a href="#movement">4. Movement Helpers</a>
+        <a href="#distance">5. Distance / Automation</a>
+        <a href="#los">6. Line of Sight</a>
+        <a href="#mesh">7. Mesh Helpers</a>
+        <a href="#anchor">8. Bounds Anchoring</a>
+        <a href="#deform">9. Deform / Shatter Tools</a>
+        <a href="#collision">10. Collision / Ray Notes</a>
+        <a href="#notes">11. Gotchas</a>
+      </nav>
+    </aside>
+
+    <main>
+      <div class="hero">
+        <h2>SIDBOX 3D Library Manual</h2>
+        <p>This is a practical guide for the current helper layer. It is meant to make the library easier to use without having to remember every function from memory. The focus is gameplay-facing helpers, mesh utilities, and deformation tools.</p>
+      </div>
+
+      <section id="core">
+        <h2>1. Core Ideas</h2>
+        <div class="grid">
+          <div class="mini">
+            <strong>Entity movement</strong>
+            Moves an object in the world by changing <code>Entity.pos</code> and often <code>Entity.prevPos</code>. This is normal gameplay movement.
+          </div>
+          <div class="mini">
+            <strong>Mesh movement</strong>
+            Moves or changes the actual vertex data inside the mesh. This changes the shape, not the world position of the entity.
+          </div>
+          <div class="mini">
+            <strong>Local vs Global</strong>
+            Global means world axes. Local means entity axes. For example, local +Z means “forward relative to current facing.”
+          </div>
+        </div>
+        <div class="callout warn">
+          <strong>Important:</strong> <code>entityTranslate()</code> and <code>meshTranslate()</code> are not the same kind of operation. One moves the object in the world. The other shoves the raw mesh vertices around.
+        </div>
+      </section>
+
+      <section id="types">
+        <h2>2. Core Types</h2>
+        <div class="func">
+          <div class="sig">Vec3</div>
+          <p>Basic 3D vector with <code>x</code>, <code>y</code>, and <code>z</code>. Used for positions, directions, deltas, scales, and angles in some helpers.</p>
+        </div>
+        <div class="func">
+          <div class="sig">Tri</div>
+          <p>Triangle face. Holds indices <code>a</code>, <code>b</code>, <code>c</code> and visual fields like <code>color</code>, <code>emission</code>, <code>transparency</code>, and <code>roughness</code>.</p>
+        </div>
+        <div class="func">
+          <div class="sig">Mesh</div>
+          <p>Raw geometry container. Holds vertices, triangles, edges, bounds radius, and material.</p>
+        </div>
+        <div class="func">
+          <div class="sig">Entity</div>
+          <p>World instance of a mesh. Holds world position, previous position, basis vectors, flags, collision setup, and a pointer to the mesh.</p>
+        </div>
+      </section>
+
+      <section id="entity">
+        <h2>3. Entity Helpers</h2>
+
+        <div class="func">
+          <div class="sig">int entityIdValid(int id)</div>
+          <p>Checks whether an entity slot is in range, active, and has a mesh.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">int entityWorldSpawn(Mesh *mesh, Vec3 pos)</div>
+          <p>Creates a new entity in the world, sets default basis axes, default visibility, and clears collision values.</p>
+          <p class="muted">Returns the entity id on success, or <code>-1</code> if no free slot exists.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">void entityWorldDestroy(int *id)</div>
+          <p>Destroys an entity and resets the slot. Also sets the caller’s id to <code>-1</code>.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">void entitySetPosition(int id, Vec3 pos)</div>
+          <p>Hard-sets the world position. Also updates <code>prevPos</code> to the same value.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">Vec3 entityGetPosition(int id)</div>
+          <p>Returns the entity position. Invalid ids return <code>{0,0,0}</code>.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">Vec3 entityGetForward(int id)</div>
+          <div class="sig">Vec3 entityGetRight(int id)</div>
+          <div class="sig">Vec3 entityGetUp(int id)</div>
+          <p>Returns entity basis vectors. Invalid ids return sensible defaults.</p>
+        </div>
+      </section>
+
+      <section id="movement">
+        <h2>4. Movement Helpers</h2>
+
+        <div class="func">
+          <div class="sig">void entityMove(int id, Vec3 delta)</div>
+          <p>Moves the entity in world space by a delta.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">void entityMoveForward(int id, float dist)</div>
+          <div class="sig">void entityMoveRight(int id, float dist)</div>
+          <div class="sig">void entityMoveUp(int id, float dist)</div>
+          <p>Moves the entity along its local basis vectors.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">void entityTranslate(int id, Vec3 delta, uint8_t global)</div>
+          <p>Moves an entity either in world space or in local space.</p>
+          <ul>
+            <li><code>global = 1</code> → <code>delta</code> is treated as world-axis movement</li>
+            <li><code>global = 0</code> → <code>delta</code> is treated as local-axis movement</li>
+          </ul>
+          <pre><code>entityTranslate(id, (Vec3){ 1.0f, 0.0f, 0.0f }, 1); // world +X
+entityTranslate(id, (Vec3){ 0.0f, 0.0f, 1.0f }, 0); // local forward</code></pre>
+        </div>
+
+        <div class="func">
+          <div class="sig">void entityTurnLocal(int id, float yaw, float pitch, float roll)</div>
+          <div class="sig">void entityTurnGlobal(int id, float yaw, float pitch, float roll)</div>
+          <div class="sig">void entityRotation(int id, float yaw, float pitch, float roll, uint8_t global)</div>
+          <p>Rotation helpers for local or world-style turning.</p>
+        </div>
+      </section>
+
+      <section id="distance">
+        <h2>5. Distance / Automation</h2>
+
+        <div class="func">
+          <div class="sig">void entityMoveTowardsPosition(int id, Vec3 target, float step)</div>
+          <p>Moves the entity toward a target position by up to <code>step</code> units. Snaps exactly onto target if already close enough.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">void entityMoveTowardsEntity(int id, int targetId, float step)</div>
+          <p>Same idea as above, but targets another entity’s position.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">float entityDistanceToPosition(int id, Vec3 target)</div>
+          <div class="sig">float entityDistanceToEntity(int aId, int bId)</div>
+          <p>Simple distance calculators for gameplay logic.</p>
+        </div>
+      </section>
+
+      <section id="los">
+        <h2>6. Line of Sight</h2>
+
+        <div class="func">
+          <div class="sig">uint8_t entityHasLineOfSightToEntity(int fromId, int toId)</div>
+          <p>Checks whether anything marked for hit testing blocks a direct ray between two entities.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">uint8_t entityHasLineOfSightToPosition(int fromId, Vec3 pos)</div>
+          <p>Checks whether anything marked for hit testing blocks a direct ray from an entity to an arbitrary point in world space.</p>
+        </div>
+
+        <div class="callout ok">
+          These are very useful for AI, triggers, turrets, interactables, and cheap indoor chunk visibility logic.
+        </div>
+
+        <div class="callout warn">
+          The current logic uses <code>ENTITY_HITTEST</code> style blockers. If you want line-of-sight to use colliders instead, the implementation can be changed to test <code>ENTITY_COLLIDABLE</code> instead.
+        </div>
+      </section>
+
+      <section id="mesh">
+        <h2>7. Mesh Helpers</h2>
+
+        <div class="func">
+          <div class="sig">void meshSetVertex(Mesh *mesh, int index, Vec3 v)</div>
+          <div class="sig">void meshOffsetVertex(Mesh *mesh, int index, Vec3 delta)</div>
+          <div class="sig">void meshSetVertexRecalc(Mesh *mesh, int index, Vec3 v)</div>
+          <div class="sig">void meshOffsetVertexRecalc(Mesh *mesh, int index, Vec3 delta)</div>
+          <p>Vertex editing helpers. The <code>Recalc</code> versions update bounds radius afterward.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">Vec3 meshGetVertex(const Mesh *mesh, int index)</div>
+          <p>Returns a mesh vertex or <code>{0,0,0}</code> on invalid access.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">void meshTranslate(Mesh *mesh, Vec3 delta)</div>
+          <p>Moves the raw mesh vertices directly by a delta. This does not move an entity in world space. It changes the mesh itself.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">void meshScale(Mesh *mesh, Vec3 scale)</div>
+          <p>Scales all mesh vertices by X/Y/Z scale values. Recalculates bounds radius afterward.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">void meshRecalcBounds(Mesh *mesh)</div>
+          <p>Recomputes <code>boundsRadius</code> from the current vertex positions.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">void meshResetFromSource(Mesh *dst, const Mesh *src)</div>
+          <p>Copies vertex positions back from a source mesh into a destination mesh with matching vertex count.</p>
+        </div>
+      </section>
+
+      <section id="anchor">
+        <h2>8. Bounds Anchoring</h2>
+
+        <div class="func">
+          <div class="sig">void meshAnchorToBounds(Mesh *mesh, Vec3 anchor)</div>
+          <p>Moves the mesh so a chosen point within its own min/max bounds becomes the origin. This works like a practical pivot-from-bounds helper.</p>
+          <ul>
+            <li><code>x = -1</code> left, <code>0</code> center, <code>1</code> right</li>
+            <li><code>y = -1</code> bottom, <code>0</code> center, <code>1</code> top</li>
+            <li><code>z = -1</code> back, <code>0</code> center, <code>1</code> front</li>
+          </ul>
+          <pre><code>meshAnchorToBounds(&human, (Vec3){ 0.0f, -1.0f, 0.0f }); // bottom-center / feet
+meshAnchorToBounds(&human, (Vec3){ 0.0f,  0.0f, 0.0f }); // center
+meshAnchorToBounds(&human, (Vec3){ 0.0f,  1.0f, 0.0f }); // top-center / head</code></pre>
+        </div>
+      </section>
+
+      <section id="deform">
+        <h2>9. Deform / Shatter Tools</h2>
+
+        <div class="func">
+          <div class="sig">Mesh meshSeparateTriangles(const Mesh *src)</div>
+          <p>Creates a new mesh where every triangle gets its own private 3 vertices. This is perfect for effects like shattering, exploding faces outward, or per-face animation.</p>
+          <div class="callout warn">
+            Warning: this is RAM goblin mode. Triangle count stays the same, but vertex count becomes <code>triCount * 3</code>.
+          </div>
+        </div>
+
+        <div class="func">
+          <div class="sig">void refaceMesh(const Mesh *src, Mesh *target)</div>
+          <p>Restores a separated/exploded target mesh back to the original face positions from a source mesh, but does <strong>not</strong> weld shared vertices back together.</p>
+          <p>Also restores per-face values like color, emission, transparency, roughness, and mesh material.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">void meshDeformWaveY(Mesh *mesh, float time, float amount, float freq)</div>
+          <div class="sig">void meshDeformWavePlaneY(Mesh *mesh, float time, float amp, float freqX, float freqZ, float speed)</div>
+          <p>Simple built-in deformation helpers for wavy effects.</p>
+        </div>
+      </section>
+
+      <section id="collision">
+        <h2>10. Collision / Ray Notes</h2>
+
+        <div class="func">
+          <div class="sig">int entityCollisionTest(...)</div>
+          <div class="sig">int entityCollision(...)</div>
+          <div class="sig">int entityMoveWithCollision(...)</div>
+          <p>Main collision helpers for gameplay movement and collision testing.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">uint8_t entitySweepRaycastTest(int movingId, int targetId, Vec3 *hitPos, Tri *triHit)</div>
+          <p>Accelerated sweep raycast helper. In the current setup this routes through the SIDBOX API/hardware side.</p>
+        </div>
+
+        <div class="func">
+          <div class="sig">uint8_t entityIntersectTest(int a, int b)</div>
+          <p>Mesh-vs-mesh style triangle intersection test with broad-phase checks and candidate filtering.</p>
+        </div>
+      </section>
+
+      <section id="notes">
+        <h2>11. Gotchas</h2>
+
+        <div class="callout warn">
+          <strong><code>entityTranslate()</code> vs <code>meshTranslate()</code></strong><br>
+          <code>entityTranslate()</code> moves the object instance in the world.<br>
+          <code>meshTranslate()</code> edits the actual mesh vertices.
+        </div>
+
+        <div class="callout warn">
+          <strong>Bounds anchoring is not “real pivot storage”</strong><br>
+          <code>meshAnchorToBounds()</code> is a practical pivot-style helper that repositions the mesh based on its own min/max bounds.
+        </div>
+
+        <div class="callout warn">
+          <strong>Separated triangle meshes use much more RAM</strong><br>
+          Use <code>meshSeparateTriangles()</code> for effects, not for every mesh all the time.
+        </div>
+
+        <div class="callout ok">
+          <strong>Good effect workflow</strong><br>
+          1. Start with source mesh<br>
+          2. Make a separated copy with <code>meshSeparateTriangles()</code><br>
+          3. Apply per-face effects<br>
+          4. Restore with <code>refaceMesh()</code> when needed
+        </div>
+
+        <div class="callout ok">
+          <strong>Indoor / chunk logic</strong><br>
+          The engine already does frustum work, but game code can still cheaply hide or show chunked sections of the world using line-of-sight checks, chunk flags, or scripted room logic.
+        </div>
+      </section>
+
+      <p class="footer">SIDBOX 3D manual — reference build for current helper layer.</p>
+    </main>
+  </div>
+</body>
+</html>

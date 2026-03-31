@@ -37,7 +37,7 @@ void initSystem(){
     set_audio_dma(512); // a few ms about 7ms enough for a full frame.
     set_music_dma = 1;
 
-    initDepthBandMem();
+    //initDepthBandMem();
 
     // get the default display buffers (OS assigned, from internal memory)
     bm1 = gfx_getdrawbuffer();
@@ -1095,7 +1095,7 @@ int main(int argc, char *argv[]) {
 
 
     //goIntro();
-    //music_play("black_absorber.mod", 0);
+    music_play("black_absorber.mod", 0);
     lcd_bright(100);    // need this back on
 
 
@@ -1206,6 +1206,14 @@ int main(int argc, char *argv[]) {
     turret0 = entityWorldSpawn(&turretMesh, vec3(-272*2, 40*2, 396*2));
     meshSetMaterial(&turretMesh, 0.00f, 0.45f, 0.00f, 2.00f, 96.0f);
     InitLasers();
+
+    Mesh torusMesh;
+    torusMesh = createTorus(100, 20, 24, 10);
+    meshColour(&torusMesh, 37);
+
+    int torus0 = entityWorldSpawn(&torusMesh, vec3(-500, 300, 0));
+    meshSetMaterial(&torusMesh, 0.00f, 0.45f, 0.00f, 1.50f, 96.0f);
+    
 
 
     Mesh islandMesh;
@@ -1436,6 +1444,10 @@ int main(int argc, char *argv[]) {
         static float worldTime;
         worldTime += 0.01;
         updateSmoke(worldTime, vec3(-565,430,-800));
+
+
+        entityTurnLocal(torus0, 0, 0, 2 * dt);
+        entityTurnLocal(torus0, 0, 1 * dt, 0);
 
         {
             gfx_lcdwait();

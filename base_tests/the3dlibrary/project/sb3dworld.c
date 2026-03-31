@@ -10,6 +10,7 @@ void worldClear(void){
     memset(worldEntities, 0, sizeof(worldEntities));
     // should really clear everything, lights, camera, action !!
     lightsClear();
+    initDepthBandMem(); // reset render banding
     sb3dParticlesClear();  
     initClipScratch();
 

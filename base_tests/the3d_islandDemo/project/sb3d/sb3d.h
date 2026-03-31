@@ -283,7 +283,7 @@ float radToDeg(float angle);
 
 
 
-typedef struct {
+typedef struct {    // internal
     float dopplerStrength;
     float panStrength;
     float distanceMin;
@@ -291,7 +291,7 @@ typedef struct {
 } SB3DAudioInfo;
 
 
-typedef struct {
+typedef struct {    // external
     float doppler;  // effect on the doppler results
     float pan;      // effect pan results
     float volume;   // effect volule result

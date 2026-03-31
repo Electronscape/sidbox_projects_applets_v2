@@ -24,13 +24,18 @@ typedef struct align32 {
 
 
 Camera cameraCreate(void);  //
-void cameraNormalize(Camera *cam);
-Vec3 worldToCamera(Vec3 p, Camera cam);
 void cameraSetRange(Camera *cam, float nearPlane, float farPlane);
+
 void cameraSetPosition(Camera *cam, Vec3 pos);
+Vec3 cameraGetPosition(Camera *cam);
+
+
 void cameraMove(Camera *cam, float x, float y, float z);
 void cameraRotate(Camera *cam, float yaw, float pitch, float roll);
 void cameraTurn(Camera *cam, float x, float y, float z, uint8_t global);
 
+
+void cameraNormalize(Camera *cam);
+Vec3 worldToCamera(Vec3 p, Camera cam); // should be hidden - but used for other sourcefiles.c
 
 #endif
