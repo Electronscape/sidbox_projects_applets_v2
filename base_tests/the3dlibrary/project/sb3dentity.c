@@ -257,7 +257,7 @@ void meshColourFace(Mesh *mesh, int faceId, uint8_t colour){    // will accept f
     mesh->tris[faceId].color = colour;
 }
 
-void normalizeEntity(Entity *e)
+static inline void normalizeEntity(Entity *e)
 {
     if (!e) return;
 
@@ -271,6 +271,8 @@ void normalizeEntity(Entity *e)
     e->right = vec3Normalize(e->right);
 }
 
+
+/*
 void entityResetAxes(Entity *e)
 {
     if (!e) return;
@@ -279,28 +281,44 @@ void entityResetAxes(Entity *e)
     e->up      = (Vec3){ 0.0f, 1.0f, 0.0f };
     e->forward = (Vec3){ 0.0f, 0.0f, 1.0f };
 }
+*/
 
-
-void entityTurnLocal(int id, float yaw, float pitch, float roll)
+void entityTurn(int id, float yaw, float pitch, float roll, uint8_t global)
 {
-    Entity *e;
-
     if (!entityIdValid(id)) return;
-    e = &worldEntities[id];
+
+    Entity *e = &worldEntities[id];
+
+    Vec3 axisYaw;
+    Vec3 axisPitch;
+    Vec3 axisRoll;
+
+    if (global) {
+        axisYaw   = (Vec3){ 0.0f, 1.0f, 0.0f };
+        axisPitch = (Vec3){ 1.0f, 0.0f, 0.0f };
+        axisRoll  = (Vec3){ 0.0f, 0.0f, 1.0f };
+    } else {
+        axisYaw   = e->up;
+        axisPitch = e->right;
+        axisRoll  = e->forward;
+    }
 
     if (yaw != 0.0f) {
-        e->forward = rotateAroundAxis(e->forward, e->up, yaw);
-        e->right   = rotateAroundAxis(e->right,   e->up, yaw);
+        e->forward = rotateAroundAxis(e->forward, axisYaw, yaw);
+        e->right   = rotateAroundAxis(e->right,   axisYaw, yaw);
+        e->up      = rotateAroundAxis(e->up,      axisYaw, yaw);
     }
 
     if (pitch != 0.0f) {
-        e->forward = rotateAroundAxis(e->forward, e->right, pitch);
-        e->up      = rotateAroundAxis(e->up,      e->right, pitch);
+        e->forward = rotateAroundAxis(e->forward, axisPitch, pitch);
+        e->right   = rotateAroundAxis(e->right,   axisPitch, pitch);
+        e->up      = rotateAroundAxis(e->up,      axisPitch, pitch);
     }
 
     if (roll != 0.0f) {
-        e->right = rotateAroundAxis(e->right,   e->forward, roll);
-        e->up    = rotateAroundAxis(e->up,      e->forward, roll);
+        e->forward = rotateAroundAxis(e->forward, axisRoll, roll);
+        e->right   = rotateAroundAxis(e->right,   axisRoll, roll);
+        e->up      = rotateAroundAxis(e->up,      axisRoll, roll);
     }
 
     normalizeEntity(e);
@@ -380,36 +398,6 @@ void entityRotation(int id, float yaw, float pitch, float roll, uint8_t global)
     normalizeEntity(e);
 }
 
-void entityTurnGlobal(int id, float yaw, float pitch, float roll)
-{
-    Entity *e;
-    Vec3 worldX = { 1.0f, 0.0f, 0.0f };
-    Vec3 worldY = { 0.0f, 1.0f, 0.0f };
-    Vec3 worldZ = { 0.0f, 0.0f, 1.0f };
-
-    if (!entityIdValid(id)) return;
-    e = &worldEntities[id];
-
-    if (yaw != 0.0f) {
-        e->forward = rotateAroundAxis(e->forward, worldY, yaw);
-        e->right   = rotateAroundAxis(e->right,   worldY, yaw);
-        e->up      = rotateAroundAxis(e->up,      worldY, yaw);
-    }
-
-    if (pitch != 0.0f) {
-        e->forward = rotateAroundAxis(e->forward, worldX, pitch);
-        e->right   = rotateAroundAxis(e->right,   worldX, pitch);
-        e->up      = rotateAroundAxis(e->up,      worldX, pitch);
-    }
-
-    if (roll != 0.0f) {
-        e->forward = rotateAroundAxis(e->forward, worldZ, roll);
-        e->right   = rotateAroundAxis(e->right,   worldZ, roll);
-        e->up      = rotateAroundAxis(e->up,      worldZ, roll);
-    }
-
-    normalizeEntity(e);
-}
 
 //////////// primative creator factory /////////////////////////////////
 // Create a box mesh at origin with given width, height, depth
@@ -959,7 +947,7 @@ Mesh copyMesh(const Mesh *src)
 }
 
 
-
+#if(0)
 void entityFollowCameraXZ(int id, const Camera *cam, float worldY, float snap)
 {
     float px;
@@ -979,8 +967,9 @@ void entityFollowCameraXZ(int id, const Camera *cam, float worldY, float snap)
     worldEntities[id].pos.y = worldY;
     worldEntities[id].pos.z = pz;
 }
+#endif
 
-Vec3 entityLookAt(int aId, int bId, uint8_t rotate)
+Vec3 entityLookAtEntity(int aId, int bId, uint8_t rotate)
 {
     Vec3 ang;
     float dx, dy, dz;
@@ -1025,7 +1014,7 @@ Vec3 entityLookAt(int aId, int bId, uint8_t rotate)
     return ang;
 }
 
-Vec3 positionLookAt(Vec3 a, Vec3 b)
+Vec3 LookAtPointToPoint(Vec3 a, Vec3 b)
 {
     Vec3 ang;
     float dx, dy, dz;
@@ -1094,7 +1083,7 @@ Vec3 entityLookAtPosition(int entityId, Vec3 target, uint8_t rotate)
     return ang;
 }
 
-
+#if(0)
 void entitySetBasis(int id, Vec3 right, Vec3 up, Vec3 forward)
 {
     Entity *e;
@@ -1159,6 +1148,7 @@ void entitySetBasis(int id, Vec3 right, Vec3 up, Vec3 forward)
     e->up = up;
     e->forward = forward;
 }
+#endif
 
 void entityAlignToHit(int id, const SB3DRaycastHit *hit){
     Entity *e;

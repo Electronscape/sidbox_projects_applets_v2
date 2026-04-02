@@ -70,7 +70,7 @@ void initClipScratch(void);
 //int clipTriangleToFrustum(Vec3 a, Vec3 b, Vec3 c, Vec3 *outVerts, const Camera *cam);
 //void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, uint8_t emission, float shadeF);
 void submitClippedTri(Vec3 a, Vec3 b, Vec3 c, const Camera *cam, uint8_t color, uint8_t emission, uint8_t trans, float shadeF);
-void entitySetBasis(int id, Vec3 right, Vec3 up, Vec3 forward);
+//void entitySetBasis(int id, Vec3 right, Vec3 up, Vec3 forward);
 
 void setDefaultRenderMode();
 void setRenderMode(RENDERMODE mode);

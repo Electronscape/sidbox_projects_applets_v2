@@ -38,7 +38,7 @@ void lightSetDirection(int index, Vec3 dir);
 void lightSetIntensity(int index, float bright);
 void lightSetRanges(int lightId, float near, float far, float beyond);
 
-float brightnessToShadeF(float brightness);
+//float brightnessToShadeF(float brightness); // is moved to render.c as inline static
 
 // controls
 void buildLightingCLUT(uint32_t *clut, uint32_t *baseColors, int numColors, uint32_t target, float shades[5]);

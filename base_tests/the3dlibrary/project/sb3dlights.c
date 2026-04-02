@@ -37,6 +37,7 @@ static inline uint32_t lerpColor(uint32_t c1, uint32_t c2, float t)
 }
 
 // generate a CLUT from baseColors towards a target colour
+// EXTERN FUNCTION ONLY, engine doesnt use this, its for the programmer
 void buildLightingCLUT(uint32_t *tclut, uint32_t *baseColors, int numColors, uint32_t target, float shades[5])
 {
     // palette starts at COLOUR_OFFSET
@@ -50,17 +51,6 @@ void buildLightingCLUT(uint32_t *tclut, uint32_t *baseColors, int numColors, uin
 
 
 
-float brightnessToShadeF(float brightness)
-{
-    if (brightness < 0.0f) brightness = 0.0f;
-    if (brightness > 1.0f) brightness = 1.0f;
-
-    //brightness = sqrtf(brightness);
-    brightness = brightness * (1.5f - (0.5f * brightness));
-
-    return (1.0f - brightness) * 5.0f;
-}
-
 
 
 
@@ -72,7 +62,7 @@ void lightSetRanges(int lightId, float near, float far, float beyond)
     g_lights[lightId].beyond = beyond;
 }
 
-
+// gets the array address holding the lights data (could be useful for speed updates maybe)
 Light *lightsGet(void)
 {
     return g_lights;

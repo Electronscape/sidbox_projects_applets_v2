@@ -65,7 +65,7 @@
     WORLD
 ==============================================================================*/
 
-void worldClear(void);
+void worldClear(void);//
 
 /*==============================================================================
     Basic types
@@ -184,7 +184,7 @@ typedef enum {
     COLLISION_SPHERE,
     COLLISION_AABB,
     COLLISION_MESH
-} EntityCollisionType;
+} EntityCollisionType;//
 
 
 
@@ -260,19 +260,19 @@ void  sb3dInitTrigTable(void);
 float sbsinf(float radians);
 float sbcosf(float radians);
 
-Vec3  vec3(float x, float y, float z);
-Vec3  vec3Add(Vec3 a, Vec3 b);
-Vec3  vec3Sub(Vec3 a, Vec3 b);
-Vec3  vec3Scale(Vec3 v, float s);
-float vec3Dot(Vec3 a, Vec3 b);
-Vec3  vec3Cross(Vec3 a, Vec3 b);
-Vec3  vec3Normalize(Vec3 v);
-Vec3  triangleCenter(Vec3 a, Vec3 b, Vec3 c);
-Vec3  rotateAroundAxis(Vec3 v, Vec3 axis, float angle);
+Vec3  vec3(float x, float y, float z);//
+Vec3  vec3Add(Vec3 a, Vec3 b);//
+Vec3  vec3Sub(Vec3 a, Vec3 b);//
+Vec3  vec3Scale(Vec3 v, float s);//
+float vec3Dot(Vec3 a, Vec3 b);//
+Vec3  vec3Cross(Vec3 a, Vec3 b);//
+Vec3  vec3Normalize(Vec3 v);//
+Vec3  triangleCenter(Vec3 a, Vec3 b, Vec3 c);//
+Vec3  rotateAroundAxis(Vec3 v, Vec3 axis, float angle);//
 
-float degrees(float angle);
-float degToRad(float angle);
-float radToDeg(float angle);
+float degrees(float angle);//
+float degToRad(float angle);//
+float radToDeg(float angle);//
 
 
 
@@ -300,11 +300,16 @@ typedef struct {    // external
 
 
 // used if you just want to use the world audio info
-void sb3dWorldAudioSetup(float dopplerStrength, float panStrength, float distanceMin, float distanceMax);
-void sb3dAudioInfoSetup(SB3DAudioInfo *info, float dopplerStrength, float panStrength, float distanceMin, float distanceMax);
+void sb3dWorldAudioSetup(float dopplerStrength, float panStrength, float distanceMin, float distanceMax);//
+void sb3dAudioInfoSetup(SB3DAudioInfo *info, float dopplerStrength, float panStrength, float distanceMin, float distanceMax);//
 
-SB3DAudioData sb3dEntityAudioInfo(int listenerId, int sourceId, float deltaTime, const SB3DAudioInfo *info);
-SB3DAudioData sb3dEntityAudioInfoDefault(int listenerId, int sourceId, float deltaTime);
+SB3DAudioData sb3dEntityAudioInfo(int listenerId, int sourceId, float deltaTime, const SB3DAudioInfo *info);//
+SB3DAudioData sb3dEntityAudioInfoDefault(int listenerId, int sourceId, float deltaTime);//
+
+// assistance with sound changes
+float dopplerValueEntityToEntity(int idA, int idB, float deltaTime, float strength, float distanceMin, float distanceMax);
+void entityAudio(int listenerId, int sourceId, float panStrength, float distanceMin, float distanceMax, float *pan, float *volume);
+
 
 
 /*==============================================================================
@@ -312,165 +317,144 @@ SB3DAudioData sb3dEntityAudioInfoDefault(int listenerId, int sourceId, float del
 ==============================================================================*/
 
 int  loadMeshOBJ(const char *filename, Mesh *mesh, uint8_t colour, float scale);
-int  loadMeshSB3D(const char *filename, Mesh *mesh, float scale);
-void freeMesh(Mesh *mesh);
+int  loadMeshSB3D(const char *filename, Mesh *mesh, float scale);//
+void freeMesh(Mesh *mesh);//
 
 
 // MATERIALS //
-void meshSetDefaultMaterial(Mesh *mesh);
-void meshSetMaterial(Mesh *mesh, float ambient, float diffuse, float emissive, float specularStrength, float shininess);
-
+void meshSetDefaultMaterial(Mesh *mesh);//
+void meshSetMaterial(Mesh *mesh, float ambient, float diffuse, float emissive, float specularStrength, float shininess);//
+void meshColour(Mesh *mesh, uint8_t colour);//
 
 
 
 float meshComputeBoundsRadius(const Mesh *mesh);
 
-void meshSetVertex(Mesh *mesh, int index, Vec3 v);
-void meshOffsetVertex(Mesh *mesh, int index, Vec3 delta);
-Vec3 meshGetVertex(const Mesh *mesh, int index);
+void meshSetVertex(Mesh *mesh, int index, Vec3 v);//
+Vec3 meshGetVertex(const Mesh *mesh, int index);//
+void meshOffsetVertex(Mesh *mesh, int index, Vec3 delta);//
 
-void meshSetVertexRecalc(Mesh *mesh, int index, Vec3 v);
-void meshOffsetVertexRecalc(Mesh *mesh, int index, Vec3 delta);
-void meshResetFromSource(Mesh *dst, const Mesh *src);
+void meshSetVertexRecalc(Mesh *mesh, int index, Vec3 v);//
+void meshOffsetVertexRecalc(Mesh *mesh, int index, Vec3 delta);//
+void meshResetFromSource(Mesh *dst, const Mesh *src);//
 
 
-void meshColour(Mesh *mesh, uint8_t colour);
-Mesh copyMesh(const Mesh *src);
+Mesh copyMesh(const Mesh *src);//
 
 /* Primitive mesh factories */
-Mesh createBox(float width, float height, float depth);
-Mesh createSphere(float radius, int stacks, int slices);
-Mesh createPlane(float sizeX, float sizeZ, int divisions);
-Mesh createCylinder(float radius, float height, int segments);
-Mesh createCone(float radius, float height, int segments);
-Mesh createPyramid(float width, float height);
-Mesh createTorus(float majorRadius, float minorRadius, int majorSegs, int minorSegs);
+Mesh createBox(float width, float height, float depth);//
+Mesh createSphere(float radius, int stacks, int slices);//
+Mesh createPlane(float sizeX, float sizeZ, int divisions);//
+Mesh createCylinder(float radius, float height, int segments);//
+Mesh createCone(float radius, float height, int segments);//
+Mesh createPyramid(float width, float height);//
+Mesh createTorus(float majorRadius, float minorRadius, int majorSegs, int minorSegs);//
 
 /*==============================================================================
     Camera API
 ==============================================================================*/
 
-Camera cameraCreate(void);
-void cameraNormalize(Camera *cam);
-Vec3 worldToCamera(Vec3 p, Camera cam);
-void cameraSetRange(Camera *cam, float nearPlane, float farPlane);
-void cameraSetPosition(Camera *cam, Vec3 pos);
-void cameraMove(Camera *cam, float x, float y, float z);
-void cameraRotate(Camera *cam, float yaw, float pitch, float roll);
-void cameraTurn(Camera *cam, float x, float y, float z, uint8_t global);
+Camera cameraCreate(void);//
+Vec3 worldToCamera(Vec3 p, Camera cam);//
+void cameraSetRange(Camera *cam, float nearPlane, float farPlane);//
+void cameraSetPosition(Camera *cam, Vec3 pos);//
+Vec3 cameraGetPosition(Camera *cam);//
+void cameraMove(Camera *cam, float x, float y, float z);//
 
-Vec3 cameraGetRotation(Camera *cam, uint8_t local);
+void cameraRotate(Camera *cam, float yaw, float pitch, float roll);//
+Vec3 cameraGetRotation(Camera *cam, uint8_t local);//
+void cameraTurn(Camera *cam, float x, float y, float z, uint8_t global);//
+
 
 /*==============================================================================
     Entity world management
 ==============================================================================*/
 
-int entityWorldSpawn(Mesh *mesh, Vec3 pos);
-void entityWorldDestroy(int *id);
+int entityWorldSpawn(Mesh *mesh, Vec3 pos);//
+void entityWorldDestroy(int *id);//
 
 void entityAllowHit(int id, uint8_t hitenable);
 void entityVisible(int id, uint8_t viewenable);
 
-int entityBuildWorldCache(Entity *ent);
-
 /*==============================================================================
     Entity transform / movement
 ==============================================================================*/
+void entitySetPosition(int id, Vec3 pos);//
+void entitySetPositionAbs(int id, Vec3 pos);//       /// sets both new position and previous position
+Vec3 entityGetPosition(int id);//
 
-void entitySetPosition(int id, Vec3 pos);
-void entitySetPositionAbs(int id, Vec3 pos);       /// sets both new position and previous position
-Vec3 entityGetPosition(int id);
+Vec3 entityGetForward(int id);//
+Vec3 entityGetRight(int id);//
+Vec3 entityGetUp(int id);//
 
-Vec3 entityGetForward(int id);
-Vec3 entityGetRight(int id);
-Vec3 entityGetUp(int id);
+void entityMove(int id, Vec3 delta);//
+void entityMoveForward(int id, float dist);//
+void entityMoveRight(int id, float dist);//
+void entityMoveUp(int id, float dist);//
 
-void entityMove(int id, Vec3 delta);
-void entityMoveForward(int id, float dist);
-void entityMoveRight(int id, float dist);
-void entityMoveUp(int id, float dist);
+void entityTurn(int id, float yaw, float pitch, float roll, uint8_t global);//
+void entityRotation(int id, float yaw, float pitch, float roll, uint8_t global);//
 
-void entityTurnLocal(int id, float yaw, float pitch, float roll);
-void entityTurnGlobal(int id, float yaw, float pitch, float roll);
-void entityRotation(int id, float yaw, float pitch, float roll, uint8_t global);
-
-void normalizeEntity(Entity *e);
-void entityResetAxes(Entity *e);
-void entitySetBasis(int id, Vec3 right, Vec3 up, Vec3 forward);
-
-Vec3 entityLocalToWorld(const Entity *e, Vec3 v);
-void entityFollowCameraXZ(int id, const Camera *cam, float worldY, float snap);
-void entityAlignToHit(int id, const SB3DRaycastHit *hit);
-
-Vec3 entityLookAt(int aId, int bId, uint8_t rotate);    // entity to entity
-Vec3 positionLookAt(Vec3 a, Vec3 b);                    // position to position
-Vec3 entityLookAtPosition(int entityId, Vec3 target, uint8_t rotate); // entity to position!!
-
+Vec3 entityLookAtEntity(int aId, int bId, uint8_t rotate);//    
+Vec3 entityLookAtPosition(int entityId, Vec3 target, uint8_t rotate);//
+Vec3 LookAtPointToPoint(Vec3 a, Vec3 b);//                    
 
 
 /*==============================================================================
     Entity collision
 ==============================================================================*/
-uint8_t entityIntersectTest(int a, int b);
-uint8_t entitySweepRaycastTest(int movingId, int targetId, Vec3 *hitPos, Tri *triHit);
+void entityEnableCollision(int id, uint8_t enable);//
+void entitySetCollisionType(int id, EntityCollisionType type);//
+void entitySetCollisionRadius(int id, float radius);//
+void entitySetCollisionHalfSize(int id, Vec3 halfSize);//
+
+// advanced calls
+uint8_t entityIntersectTest(int a, int b);//
+void entityAlignToHit(int id, const SB3DRaycastHit *hit);//
+
+int entityMoveWithCollision(int moverId, Vec3 moveDelta, int *outHitId, uint8_t global);//
+uint8_t entitySweepRaycastTest(int movingId, int targetId, Vec3 *hitPos, Tri *triHit);//
 
 
-void entityEnableCollision(int id, uint8_t colenable);
-int entityMoveWithCollision(int moverId, Vec3 moveDelta, int *outHitId, uint8_t global);
+int entityCollisionTestSphereSphere(int idA, int idB);//
+int entityCollisionTestAABBAABB(int idA, int idB);//
+int entityCollisionTestSphereAABB(int idSphere, int idBox);//
+int entityCollisionTestSphereMesh(int idSphere, int idMesh);//
 
-void entitySetCollisionType(int id, EntityCollisionType type);
-void entitySetCollisionRadius(int id, float radius);
-void entitySetCollisionHalfSize(int id, Vec3 halfSize);
+int entityCollisionTest(int idA, int idB);//
+int entityCollision(int id, int *outOtherId);//
 
-int entityCollisionTestSphereSphere(int idA, int idB);
-int entityCollisionTestAABBAABB(int idA, int idB);
-int entityCollisionTestSphereAABB(int idSphere, int idBox);
-int entityCollisionTestSphereMesh(int idSphere, int idMesh);
 
-int entityCollisionTest(int idA, int idB);
-int entityCollision(int id, int *outOtherId);
+void entityMatchOrientation(int id, int targetId);//
+void entityMatchOrientationCamera(int id, const Camera *cam);//
 
-void entityMatchOrientation(int id, int targetId);
-void entityMatchOrientationCamera(int id, const Camera *cam);
 
-// assistance with sound changes
-float dopplerValueEntityToEntity(int idA, int idB, float deltaTime, float strength, float distanceMin, float distanceMax);
-void entityAudio(int listenerId, int sourceId, float panStrength, float distanceMin, float distanceMax, float *pan, float *volume);
 
 /*==============================================================================
     Entity / mesh colour helpers
 ==============================================================================*/
+void entityColour(int id, uint8_t colour);//
+void entityColourFace(int id, int faceId, uint8_t colour);//
 
-void entityColour(int id, uint8_t colour);
-void entityColourFace(int id, int faceId, uint8_t colour);
 
 /*==============================================================================
     Lighting API
 ==============================================================================*/
+int addPointLight(Vec3 pos, float intensity, int enabled);//
+int addDirectionalLight(Vec3 dir, float intensity, int enabled);//
 
-Light *lightsGet(void);
-int lightsGetCount(void);
-void lightsClear(void);
+void lightEnable(uint8_t lightIndex, uint8_t enable);//
+Light *lightsGet(void);//
+int lightsGetCount(void);//
+void lightsClear(void);//
 
-void lightEnable(uint8_t lightIndex, uint8_t enable);
+void lightSetPosition(int index, Vec3 pos);//
+void lightSetDirection(int index, Vec3 dir);//
+void lightSetIntensity(int index, float bright);//
+void lightSetRanges(int lightId, float near, float far, float beyond);//
 
-int addPointLight(Vec3 pos, float intensity, int enabled);
-int addDirectionalLight(Vec3 dir, float intensity, int enabled);
 
-void lightSetPosition(int index, Vec3 pos);
-void lightSetDirection(int index, Vec3 dir);
-void lightSetIntensity(int index, float bright);
-void lightSetRanges(int lightId, float near, float far, float beyond);
-
-float brightnessToShadeF(float brightness);
-
-void buildLightingCLUT(
-    uint32_t *clut,
-    uint32_t *baseColors,
-    int numColors,
-    uint32_t target,
-    float shades[5]
-);
+void buildLightingCLUT(uint32_t *clut, uint32_t *baseColors, int numColors, uint32_t target, float shades[5]);//
 
 /*==============================================================================
     Particle API
@@ -487,15 +471,16 @@ int sb3dParticleSpawnQuad(
     float lightStrength
 );
 
-void sb3dParticleSetPosition(int id, Vec3 pos);
-void sb3dParticleSetSize(int id, float size);
-void sb3dParticleSetShade(int id, float shadeF);
-void sb3dParticleSetLightStrength(int id, float lightStrength);
-void sb3dParticleSetColor(int id, uint8_t color);
-void sb3dParticleSetEmission(int id, uint8_t emission);
-void sb3dParticleEnable(int id, uint8_t enable);
+void sb3dParticleSetPosition(int id, Vec3 pos);//
+void sb3dParticleSetSize(int id, float size);//
 
-void sb3dParticlesRender(const Camera *cam);
+void sb3dParticleSetShade(int id, float shadeF);//
+void sb3dParticleSetLightStrength(int id, float lightStrength);//
+void sb3dParticleSetColor(int id, uint8_t color);//
+void sb3dParticleSetEmission(int id, uint8_t emission);//
+void sb3dParticleEnable(int id, uint8_t enable);//
+
+void sb3dParticlesRender(const Camera *cam);    // INTERNAL should NOT be used for outside access
 
 /*==============================================================================
     Low level graphics / raster
@@ -520,14 +505,14 @@ typedef enum {
     REND_MODE_TWOSHADE
 } RENDERMODE;
 
-void setRenderMode(RENDERMODE mode);
+void setRenderMode(RENDERMODE mode);//
 
-void Render3D(const Camera *cam);   /* Call set3DRenderBuffer() before Render3D(). */
+void Render3D(const Camera *cam);//   /* Call set3DRenderBuffer() before Render3D(). */
 
 /*==============================================================================
     Horizon helpers
 ==============================================================================*/
-// BIG ONE - heavy, use only for non fast paced stuff
+// very slow for STM32 - use sparingly
 void drawFakeHorizonTex(
     const Camera *cam,
     const uint8_t *skyTex,
@@ -548,10 +533,10 @@ void drawFakeHorizonTex(
     uint8_t proceduralPatchMode,
     uint8_t skyPatchDensity,
     uint8_t groundPatchDensity
-);
+);//
 
 
-
+// very slow for STM32
 void drawFakeHorizonGroundTex(
     const Camera *cam,
     const uint8_t *groundTex,
@@ -565,7 +550,7 @@ void drawFakeHorizonGroundTex(
     uint8_t transparentZero,
     uint8_t proceduralPatchMode,
     uint8_t groundPatchDensity
-);
+);//
 
 
 void drawFakeHorizonSkyTex(
@@ -583,58 +568,19 @@ void drawFakeHorizonSkyTex(
     uint8_t transparentZero,
     uint8_t proceduralPatchMode,
     uint8_t skyPatchDensity
-);
+);//
 
-// demo test :)
-//drawFakeHorizonTex(&cam, skytex, seatex, HosSky, HosGround, HosHorizonLine, 0, 1600, 10000  ,0.02f, 0.04f, skyU, 0, 0, 0, 1, 1, 60, 255);
-//drawFakeHorizonGroundTex(&cam, seatex, HosSky,HosGround,HosHorizonLine, 0, 0.02f, 0, 0, 1, 1, 60);
-//drawFakeHorizonSkyTex(&cam, skytex, HosSky, HosGround, HosHorizonLine, 0, 1600, 10000, 0.02f, skyU, 0, 1, 1, 40);
-
-
-
-
-
-
-
-
-
-void drawFakeSkyDots(const Camera *cam, uint8_t dotCol, int azSteps, int elSteps, uint8_t density);
-
-
-void drawFakeHorizonDots(const Camera *cam, uint8_t dotCol, int spacing, float ylevel, uint8_t density);
-
-void drawFakeHorizon(
-    const Camera *cam,
-    uint8_t skyCol,
-    uint8_t groundCol,
-    uint8_t lineCol,
-    float ylevel
-);
-
-void drawFakeHorizonGrid(
-    const Camera *cam,
-    uint8_t gridCol,
-    int spacing,
-    float ylevel,
-    int rangeCells
-);
+void drawFakeSkyDots(const Camera *cam, uint8_t dotCol, int azSteps, int elSteps, uint8_t density);//
+void drawFakeHorizonDots(const Camera *cam, uint8_t dotCol, int spacing, float ylevel, uint8_t density);//
+void drawFakeHorizon(const Camera *cam, uint8_t skyCol, uint8_t groundCol, uint8_t lineCol, float ylevel);//
+void drawFakeHorizonGrid(const Camera *cam, uint8_t gridCol, int spacing, float ylevel, int rangeCells);//
 
 /*==============================================================================
     Raycast API
 ==============================================================================*/
 
-int sb3dRaycastWorld(
-    Vec3 rayOrig,
-    Vec3 rayDir,
-    float maxDist,
-    SB3DRaycastHit *outHit
-);
-
-int sb3dRaycastFromCamera(
-    const Camera *cam,
-    float maxDist,
-    SB3DRaycastHit *outHit
-);
+int sb3dRaycastWorld(Vec3 rayOrig, Vec3 rayDir, float maxDist, SB3DRaycastHit *outHit);//
+int sb3dRaycastFromCamera(const Camera *cam, float maxDist, SB3DRaycastHit *outHit);//
 
 #endif /* _SIDBOX_3D_LIB_H_ */
 
@@ -704,20 +650,16 @@ int sb3dRaycastFromCamera(
 
 
 
-
-
-
-
-
-
-
-
-
 /* --- REFRESHER NOTES: ---------
+
+    FLAGS: 1 = no backface culling
+
     SIDBOX material setup:
 
-    - Put SBX_<paletteid> somewhere in the material name
-      Example: Grass_SBX_39
+    - Put SBX_<paletteid> or SBX<flag>_<paletteid> somewhere in the material name
+      Examples:
+          Grass_SBX_39
+          Grass_SBX1_39
 
     - Base Colour is ignored
 
@@ -725,12 +667,17 @@ int sb3dRaycastFromCamera(
 
     - Emission + Emission Strength control glow
 
-    - The converter reads the digits immediately after SBX_
-      Example:
-          SBX_33        -> colour 33
-          Rock_SBX_12   -> colour 12
-          Bark-SBX_61   -> colour 61
+    - The converter reads:
+          SBX_<colour>
+      or
+          SBX<flag>_<colour>
+
+      Examples:
+          SBX_33       -> colour 33, no flag
+          SBX1_39      -> flag 1, colour 39
+          Rock_SBX2_12 -> flag 2, colour 12
 */
+
 
 /* --- FULL Material Setup Notes: --------
     ============================================================
@@ -739,11 +686,14 @@ int sb3dRaycastFromCamera(
 
     Modelling in Blender (or another modelling app):
 
-    The material name is used to choose the SIDBOX palette colour.
+    The material name is used to choose the SIDBOX palette colour,
+    and may also include an optional SIDBOX material flag.
 
-    The name can be anything, as long as it contains:
+    The name can contain either:
 
         SBX_<paletteid>
+    or
+        SBX<flag>_<paletteid>
 
     ------------------------------------------------------------
     MATERIAL NAME
@@ -753,31 +703,71 @@ int sb3dRaycastFromCamera(
 
         SBX_33
         Grass_SBX_39
-        SBX_12_Leaves
-        Rock-SBX_44
-        PalmTreeBark_SBX_61_Mat
+        SBX1_12
+        Rock-SBX2_44
+        PalmTreeBark_SBX3_61_Mat
         Sand,SBX_20
 
     Rules:
 
-        - The converter scans the material name for "SBX_"
-        - The digits immediately after it are used as the palette index
+        - The converter scans the material name for "SBX"
+        - Legacy format:
+              SBX_<colour>
+        - Flagged format:
+              SBX<flag>_<colour>
+        - The digits before the underscore are treated as the SIDBOX flag
+        - The digits after the underscore are treated as the palette colour index
         - Valid palette index range is 0 to 255
-        - Anything before or after that is ignored
+        - Anything before or after that token is ignored
+
+    Examples:
+
+        "Grass_SBX_39"
+            -> flag 0
+            -> palette index 39
+
+        "SBX1_12_Leaves"
+            -> flag 1
+            -> palette index 12
+
+        "Rock-SBX2_44"
+            -> flag 2
+            -> palette index 44
+
+        "PalmTreeBark_SBX3_61_Mat"
+            -> flag 3
+            -> palette index 61
+
+    If no valid SBX token is found:
+        the converter falls back to the default colour index
+
+    ------------------------------------------------------------
+    TOKEN FORMAT
+    ------------------------------------------------------------
+
+    Legacy format:
+
+        SBX_<colour>
 
     Example:
 
-        "Grass_SBX_39"
-            -> palette index 39
+        SBX_39
+            -> flag 0
+            -> colour 39
 
-        "SBX_12_Leaves"
-            -> palette index 12
+    Flagged format:
 
-        "Rock-SBX_44"
-            -> palette index 44
+        SBX<flag>_<colour>
 
-    If no valid SBX_<number> is found:
-        the converter falls back to the default colour index
+    Example:
+
+        SBX1_39
+            -> flag 1
+            -> colour 39
+
+    Meaning:
+
+        SBXflag_colour
 
     ------------------------------------------------------------
     MATERIAL VALUES
@@ -818,6 +808,11 @@ int sb3dRaycastFromCamera(
     Colour:
         comes from the material name
         via SBX_<paletteid>
+        or SBX<flag>_<paletteid>
+
+    Flag:
+        optional
+        comes from the digits between SBX and the underscore
 
     Transparency:
         comes from Alpha
@@ -826,11 +821,22 @@ int sb3dRaycastFromCamera(
         comes from Emission + Emission Strength
 
     ------------------------------------------------------------
-    QUICK EXAMPLE
+    QUICK EXAMPLES
     ------------------------------------------------------------
 
     Material name:
         Grass_SBX_39
+
+    Result:
+        flag = 0
+        palette colour index = 39
+
+    Material name:
+        Grass_SBX1_39
+
+    Result:
+        flag = 1
+        palette colour index = 39
 
     Blender settings:
         Alpha = 0.50
@@ -838,7 +844,6 @@ int sb3dRaycastFromCamera(
         Emission Strength = 1.00
 
     Result:
-        palette colour index = 39
         semi-transparent
         emissive/glowing
 */

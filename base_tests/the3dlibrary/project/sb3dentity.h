@@ -106,15 +106,18 @@ void entitySetCollisionRadius(int id, float radius);
 void entitySetCollisionHalfSize(int id, Vec3 halfSize);
 
 /* World-space helper */
-Vec3 positionLookAt(Vec3 a, Vec3 b);
+Vec3 LookAtPointToPoint(Vec3 a, Vec3 b);
 
 /* -------------------------------------------------------------------------- */
 /* Entity transforms / movement                                               */
 /* -------------------------------------------------------------------------- */
 
 // Entity transforms / motion
-void entitySetPosition(int id, Vec3 pos);   // new position, without setting previous position to new 
-void entitySetPositionAbs(int id, Vec3 pos);       /// sets both new position and previous position
+Vec3 entityLocalToWorld(const Entity *e, Vec3 v);   // INTERNAL FUNCTION, but SHARED across other source files.
+
+
+void entitySetPosition(int id, Vec3 pos);           // new position, without setting previous position to new 
+void entitySetPositionAbs(int id, Vec3 pos);        // sets both new position and previous position
 Vec3 entityGetPosition(int id);
 
 float entityDistanceToPosition(int id, Vec3 target);
@@ -122,6 +125,10 @@ float entityDistanceToEntity(int aId, int bId);
 
 void entityMatchOrientation(int id, int targetId);
 void entityMatchOrientationCamera(int id, const Camera *cam);
+
+void entityTurn(int id, float yaw, float pitch, float roll, uint8_t global);
+void entityRotation(int id, float yaw, float pitch, float roll, uint8_t global);
+Vec3 entityLookAtEntity(int aId, int bId, uint8_t rotate);
 
 void entityTranslate(int id, Vec3 delta, uint8_t global);
 void entityMove(int id, Vec3 delta);
@@ -132,19 +139,9 @@ void entityMoveTowardsPosition(int id, Vec3 target, float step);
 void entityMoveTowardsEntity(int id, int targetId, float step);
 
 // assistance with sound changes
-//float dopplerValueEntityToEntity(int idA, int idB, float deltaTime, float strength);
 float dopplerValueEntityToEntity(int idA, int idB, float deltaTime, float strength, float distanceMin, float distanceMax);
 void entityAudio(int listenerId, int sourceId, float panStrength, float distanceMin, float distanceMax, float *pan, float *volume);
 
-/* Entity basis / orientation helpers */
-void entityTurnLocal(int id, float yaw, float pitch, float roll);
-void entityTurnGlobal(int id, float yaw, float pitch, float roll);
-void entityRotation(int id, float yaw, float pitch, float roll, uint8_t global);
-void entityResetAxes(Entity *e);
-Vec3 entityLocalToWorld(const Entity *e, Vec3 v);
-void entityFollowCameraXZ(int id, const Camera *cam, float worldY, float snap);
-Vec3 entityLookAt(int aId, int bId, uint8_t rotate);
-void normalizeEntity(Entity *e);
 
 
 /* -------------------------------------------------------------------------- */

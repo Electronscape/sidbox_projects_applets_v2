@@ -91,6 +91,8 @@ Vec3 cameraGetPosition(Camera *cam){    // pretty useless but here anyway.
     return cam->pos;
 }
 
+
+
 void cameraRotate(Camera *cam, float yaw, float pitch, float roll){
     if (!cam) return;
     cam->rotation.x = yaw;

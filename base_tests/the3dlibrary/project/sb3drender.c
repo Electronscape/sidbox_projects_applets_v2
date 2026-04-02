@@ -2305,6 +2305,20 @@ static inline int triangleTooSmallToMatter(
     return (area2 <= 2);
 }
 
+static inline float brightnessToShadeF(float brightness) // internal function
+{
+    if (brightness < 0.0f) brightness = 0.0f;
+    if (brightness > 1.0f) brightness = 1.0f;
+
+    //brightness = sqrtf(brightness);
+    brightness = brightness * (1.5f - (0.5f * brightness));
+
+    return (1.0f - brightness) * 5.0f;
+}
+
+
+
+
 void submitEntitySolid(const Entity *ent, const Camera *cam)
 {
     const Mesh *mesh;

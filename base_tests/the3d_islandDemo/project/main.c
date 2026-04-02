@@ -187,13 +187,6 @@ uint8_t skytex[] = {
 };
 
 
-
-
-
-
-
-
-
 uint8_t weatherLightning(float dt, int sunlightId)
 {
     enum {
@@ -1108,10 +1101,10 @@ int main(int argc, char *argv[]) {
     cam = cameraCreate();
     cameraSetRange(&cam, 0.01, 5000.0f);
     cameraSetPosition(&cam, vec3(0, 50, 0));
-    cameraNormalize(&cam);
+    //cameraNormalize(&cam);
 
     Mesh camBoxMesh = createBox(1,1,1);
-    int camBox0 = entityWorldSpawn(&camBox0, vec3(0,0,0));
+    int camBox0 = entityWorldSpawn(&camBoxMesh, vec3(0,0,0));
     
 
 
@@ -1358,10 +1351,10 @@ int main(int argc, char *argv[]) {
         }
 
 
-        entityTurnLocal(carrier0, -0.003f * speed, 0, 0);
+        entityTurn(carrier0, -0.003f * speed, 0, 0, 0);
         entityMoveForward(carrier0, 6.8f * speed);//vec3(0,0,0.7f));
 
-        entityTurnLocal(text0, 1.2f * dt,0,0);
+        entityTurn(text0, 1.2f * dt,0,0,0);
         //entityTurnLocal(suzzie0, 1.0f * dt, 0, 0);
         
 
@@ -1446,8 +1439,8 @@ int main(int argc, char *argv[]) {
         updateSmoke(worldTime, vec3(-565,430,-800));
 
 
-        entityTurnLocal(torus0, 0, 0, 2 * dt);
-        entityTurnLocal(torus0, 0, 1 * dt, 0);
+        entityTurn(torus0, 0, 0, 2 * dt, 0);
+        entityTurn(torus0, 0, 1 * dt, 0, 0);
 
         {
             gfx_lcdwait();
