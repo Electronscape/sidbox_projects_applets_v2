@@ -3,6 +3,7 @@
 
 #include "sb3d.h"
 
+// sb3dworld.c
 
 Entity align32 worldEntities[WORLD_MAX];
 
