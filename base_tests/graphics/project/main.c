@@ -404,8 +404,8 @@ int main(int argc, char *argv[]) {
         
         gdb = 1 - gdb;
         
-        if(gdb) gfx_dispbuffer(bm1, bm2);
-        else    gfx_dispbuffer(bm2, bm1);
+        if(gdb) gfx_dispfbuffer(bm1, bm2);
+        else    gfx_dispfbuffer(bm2, bm1);
         
         gfx_cls();
         //sbx_update_draw_worms();
