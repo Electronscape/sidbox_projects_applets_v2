@@ -4,9 +4,9 @@
     Profile: desktop
     SDRAM base: 0xD0000000
     Usable SDRAM: 6 MB / 0x600000
-    Reserved before applet: 6128 KB / 0x5FC000
-    Applet origin: 0xD05FC000
-    Applet allowance: 16 KB / 0x4000
+    Reserved before applet: 6016 KB / 0x5E0000
+    Applet origin: 0xD05E0000
+    Applet allowance: 128 KB / 0x20000
 */
 
 /* Base and limits */
@@ -16,8 +16,8 @@ _stack_size        = 0x2000;
 
 /* Wizard choices, all in bytes. Do not multiply these by 1024 again. :) */
 _profile_is_desktop = 1;
-_requested_app_size = 0x4000;
-_largest_modfile    = 0x5FC000;
+_requested_app_size = 0x20000;
+_largest_modfile    = 0x5E0000;
 _largest_resource   = 0x0;
 
 /* Desktop apps are parked near the end of SDRAM.

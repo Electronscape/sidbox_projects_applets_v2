@@ -103,9 +103,15 @@ extern _largest_modfile;
 //// [ SODBOX STDLIB ] ////////////////////////////////////////////////////////
 // EXTREME BASICS                                                           ///
 ////////////////////////////////////////////////////////////////////////////////////////////////
+// graphics hardware-access
 #include "graphics/graphics.h"
+
+// gui
 #include "gui/console.h"
 #include "gui/window.h"
+#include "gui/gadgets.h"
+
+
 
 // USING THIS YOU open up an area of 1MB of CACHED and BUFFERED memory (SPEED)
 // and must follow an offset profile, ANY Music is loaded at 0xD0000000 (SDRAM) so if your program starts at 128k off set, use profile 1
@@ -157,6 +163,7 @@ typedef struct  {
     const API_GUI_Console *console;
 	const API_GUI_Windows *windows;
 	void (*osupdate) (void);
+	const API_GUI_Gadgets *gadgets;
 } API_GUI;
 
 #include "audio/audio.h"
