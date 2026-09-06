@@ -8,6 +8,76 @@ extern "C" {
 #endif
 
 typedef uint8_t CGWindow;
+typedef uint32_t CGGadget;
+
+typedef uint32_t CGMsgType;
+#define CGMSG_NONE                  0x00u
+#define CGMSG_GADGET                0x10u
+#define CGMSG_WINDOW                0x20u
+#define CGMSG_TIMER                 0x30u
+#define CGMSG_MOUSE                 0x40u
+#define CGMSG_KEY                   0x50u
+#define CGMSG_SYSTEM                0x60u
+
+typedef uint32_t CGEventType;
+
+#define CGEVT_GAD_PRESSED           0x100u
+#define CGEVT_GAD_ACTIVATED         0x101u
+#define CGEVT_GAD_FOCUS_LOST        0x102u
+#define CGEVT_GAD_FOCUS_GAINED      0x103u
+#define CGEVT_GAD_KEY               0x104u
+#define CGEVT_GAD_MOUSE_MOVE        0x105u
+#define CGEVT_GAD_MOUSE_DOWN        CGEVT_GAD_PRESSED
+#define CGEVT_GAD_MOUSE_UP          0x107u
+
+#define CGEVT_GAD_GRID_CHANGED      0x200u
+#define CGEVT_GAD_LISTBOX_CHANGED   0x300u
+#define CGEVT_GAD_LISTBOX_SCROLLED  0x301u
+#define CGEVT_GAD_RADIO_CHANGED     0x400u
+#define CGEVT_GAD_CHECKBOX_CHANGED  0x500u
+#define CGEVT_GAD_SLIDERVAL_CHANGED 0x600u
+#define CGEVT_GAD_CARET_MOVED       0x700u
+#define CGEVT_GAD_TEXT_CHANGED      CGEVT_GAD_CARET_MOVED
+
+#define CGEVT_WIN_CLOSE_REQUEST     0x1000u
+#define CGEVT_WIN_MOVE              0x1001u
+#define CGEVT_WIN_MOVED             0x1002u
+#define CGEVT_WIN_RESIZE            0x1003u
+#define CGEVT_WIN_RESIZED           0x1004u
+#define CGEVT_WIN_ZORDER            0x1005u
+#define CGEVT_WIN_MAXRESTORED       0x1006u
+#define CGEVT_WIN_MINIMISE          0x1007u
+#define CGEVT_WIN_GOTFOCUS          0x1008u
+#define CGEVT_WIN_LOSTFOCUS         0x1010u
+
+#define CGEVT_KEY_PRESSED           0x2000u
+#define CGEVT_KEY_RELEASED          0x2001u
+
+#define CGEVT_SYS_FILERQ_DONE       0x8000u
+#define CGEVT_SYS_FILERQ_CHANGED    0x8001u
+#define CGEVT_SYS_MSGBOX_DONE       0x8002u
+#define CGEVT_SYS_INFOBOX_DONE      0x8003u
+#define CGEVT_SYS_REPAINT           0x8004u
+
+typedef struct CGMessage_t {
+    CGMsgType       mtype;
+    CGWindow        winhnd;
+    CGGadget        gadget;
+    CGEventType     eventClass;
+    int32_t         a, b, c, d;
+} CGMessage_t;
+
+#define MSG_PTR(p)      ((int32_t)(uintptr_t)(p))
+#define MSG_AS_PTR(t,p) ((t*)(uintptr_t)(p))
+
+typedef enum {
+    CGPROC_DEFAULT = 0x00u,
+    CGPROC_NORMAL  = 0x01u,
+    CGPROC_HANDLED = 0xF0u,
+    CGPROC_END     = 0xFFu
+} CGWindowProcRes;
+
+typedef CGWindowProcRes (*MSGWndProc)(CGWindow win, const CGMessage_t *m);
 
 //// API ----------------------------------------------------------------------------------------------------
 #define    SBX_WF_VISIBLE          0x00000001u   // window button frame settings
@@ -44,8 +114,12 @@ typedef uint8_t CGWindow;
 
 
 typedef struct {
-    void (*window_create) (CGWindow *WinHandle, int16_t x, int16_t y, uint16_t width, uint16_t height, const char *title, uint32_t flags);
-    void (*window_close)  (CGWindow id);
+    CGWindow (*window_create) (CGWindow *WinHandle, int16_t x, int16_t y, uint16_t width, uint16_t height, const char *title, uint32_t flags);
+    void     (*window_close)  (CGWindow id);
+    void     (*set_proc)      (CGWindow win, MSGWndProc proc);
+    void     (*to_front)      (CGWindow id);
+    void     (*to_back)       (CGWindow id);
+    void     (*set_focus)     (CGWindow id);
 } API_GUI_Windows;
 
 
@@ -54,8 +128,12 @@ typedef struct {
 #define GUICoderGirl      (API->gui)
 /////////////////////////////////////////////////////////
 
-#define SBOS_CreateWindow(...) (GUICoderGirl->windows->window_create(__VA_ARGS__))
-#define SBOS_CloseWindow(id)   (GUICoderGirl->windows->window_close(id))
+#define SBOS_CreateWindow(...)  (GUICoderGirl->windows->window_create(__VA_ARGS__))
+#define SBOS_CloseWindow(id)    (GUICoderGirl->windows->window_close(id))
+#define SBOS_SetWindowProc(win, proc) (GUICoderGirl->windows->set_proc(win, proc))
+#define SBOS_WindowToFront(id)  (GUICoderGirl->windows->to_front(id))
+#define SBOS_WindowToBack(id)   (GUICoderGirl->windows->to_back(id))
+#define SBOS_WindowSetFocus(id) (GUICoderGirl->windows->set_focus(id))
 
 
 #ifdef __cplusplus

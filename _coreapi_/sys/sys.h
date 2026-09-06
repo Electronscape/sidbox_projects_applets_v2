@@ -46,7 +46,8 @@ typedef struct {
     FRESULT (*sbopen)     (uint8_t filenum, char *filename, uint8_t filemode);
     uint32_t (*sbfilelen) (uint8_t filenum);
     FRESULT (*sbread)     (uint8_t filename, void *buffer, uint32_t length, uint32_t *bytesread);
-    void (*sbclose)       (uint8_t filenum);
+    FRESULT (*sbclose)    (uint8_t filenum);
+    FRESULT (*sbwrite)    (uint8_t filenum, const void *buffer, uint32_t length, uint32_t *byteswritten);
 } API_FILEIO;
 
 
@@ -60,7 +61,8 @@ typedef struct  {
 // system defines
 #define sfopen(u8_filenum, s_filename, u8_filemode)       (SYSFileSystem->sbopen(u8_filenum, s_filename, u8_filemode))
 #define sfread(u8_filenum, ptr_buffer, u32_len, u32_retb) (SYSFileSystem->sbread(u8_filenum, ptr_buffer, u32_len, u32_retb))
-#define sfclose(u8_filenum) (SYSFileSystem->sbclose(u8_filenum))
+#define sfclose(u8_filenum)                               (SYSFileSystem->sbclose(u8_filenum))
+#define sfwrite(u8_filenum, ptr_buffer, u32_len, u32_retb) (SYSFileSystem->sbwrite(u8_filenum, ptr_buffer, u32_len, u32_retb))
 
 
 

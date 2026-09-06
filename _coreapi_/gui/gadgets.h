@@ -64,7 +64,10 @@ typedef struct API_GUI_GADGETS {
     void     (*set_group_visible)     (CGWindow hwin, uint8_t groupid, uint8_t visible);
     void     (*set_group_id)          (CGGadget gad, uint8_t newgroupid);
     uint8_t  (*get_group_id)          (CGGadget gad);
-} API_GUI_Gadgets;
+    uint32_t (*textarea_get_text)     (CGGadget hTa, char *out, uint32_t outCap);
+} API_GUI_GADGETS;
+
+typedef API_GUI_GADGETS API_GUI_Gadgets;
 
 //extern const API_GUI_GADGETS API_gui_gadgets;
 
@@ -104,9 +107,30 @@ typedef struct {
 /////////////////////////////////////////////////////////
 
 //#define SBOS_CreateButton(win, x, y, w, h, text, flags) (GUICoderGirl->gadgets->button_create(__VA_ARGS__))
-#define SBOS_CreateButton(win, x, y, w, h, text, flags) (GUICoderGirl->gadgets->button_create(win, x, y, w, h, text, flags))
+#define SBOS_CreateButton(win, x, y, w, h, text, flags) \
+    (GUICoderGirl->gadgets->button_create(win, x, y, w, h, text, flags))
 
-#define SBOS_GadgetSetCallBack(h, fnOnActive, fnOnChange) (GUICoderGirl->gadgets->set_callback(h, fnOnActive, fnOnChange))
+#define SBOS_CreateLabel(win, x, y, w, h, text, flags) \
+    (GUICoderGirl->gadgets->label_create(win, x, y, w, h, text, flags))
+
+#define SBOS_CreateTextArea(win, x, y, w, h, text, text_flags, flags) \
+    (GUICoderGirl->gadgets->textarea_create(win, x, y, w, h, text, text_flags, flags))
+
+#define SBOS_DestroyGadget(gadget) \
+    (GUICoderGirl->gadgets->destroy(gadget))
+
+#define SBOS_GadgetRepaint(gadget) \
+    (GUICoderGirl->gadgets->repaint(gadget))
+
+#define SBOS_GadgetSetFocus(gadget) \
+    (GUICoderGirl->gadgets->set_focus(gadget))
+
+
+#define SBOS_GadgetSetCallBack(h, fnOnActive, fnOnChange) \
+    (GUICoderGirl->gadgets->set_callback(h, fnOnActive, fnOnChange))
+
+#define SBOS_TextAreaGetText(hTa, out, outCap) \
+    (GUICoderGirl->gadgets->textarea_get_text(hTa, out, outCap))
 
 
 
