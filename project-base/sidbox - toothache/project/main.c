@@ -9,355 +9,93 @@
 #define SCREEN_W        480
 #define SCREEN_H        320
 #define METER_COUNT     16
+#define FONT_W          8
 
-#define PLAYLIST_X      28
-#define PLAYLIST_Y      222
-#define PLAYLIST_W      294
-#define PLAYLIST_H      70
-#define TRANSPORT_X     340
-#define TRANSPORT_Y     222
-#define TRANSPORT_W     110
-#define TRANSPORT_H     70
-#define SCRUB_X         360
-#define SCRUB_Y         277
-#define SCRUB_W         84
-#define SCRUB_H         9
-
-enum {
-    COL_BLACK = 0,
-    COL_BG,
-    COL_BG_2,
-    COL_PANEL,
-    COL_PANEL_HI,
-    COL_TEXT,
-    COL_TEXT_DIM,
-    COL_CYAN,
-    COL_GREEN,
-    COL_YELLOW,
-    COL_RED,
-    COL_BLUE,
-    COL_MAGENTA,
-    COL_WHITE,
-    COL_SHADOW,
-    COL_SCAN
+MEMALIGN32 const uint32_t clut[256] = {
+    0x00000000, 0xFFAFAFAF, 0xFFFFFFFF, 0xFF3B67A2, 0xFFAA907C, 0xFF959595, 0xFF7B7B7B, 0xFFFFA997,
+    0xFF37A91D, 0xFF7CA9FF, 0xFFBF8112, 0xFFEBBF66, 0xFF78C178, 0xFF3D9318, 0xFFB33418, 0xFFD9311C,
+    0xFF000000, 0xFF00000E, 0xFF00001D, 0xFF00002B, 0xFF000139, 0xFF000147, 0xFF000156, 0xFF000164,
+    0xFF0001D2, 0xFF0001FF, 0xFFCECECE, 0xFF00FF00, 0xFFB2FF00, 0xFFFFE700, 0xFFFF9600, 0xFFFF1100,
+    0xFF491200, 0xFF491355, 0xFF4914AA, 0xFF4916FF, 0xFF5B1700, 0xFF5B1855, 0xFF5B19AA, 0xFF5B1AFF,
+    0xFF6D1B00, 0xFF6D1C55, 0xFF00E300, 0xFF85FF54, 0xFFC4FF00, 0xFFFFD900, 0xFFFFA41F, 0xFFE05400,
+    0xFFFF0000, 0xFF922655, 0xFF9227AA, 0xFF9228FF, 0xFFA42900, 0xFFA42A55, 0xFFA42BAA, 0xFFA42CFF,
+    0xFFB62D00, 0xFFB62F55, 0xFFB630AA, 0xFFB631FF, 0xFFC93200, 0xFFC93355, 0xFFC934AA, 0xFFC935FF,
+    0xFFDB3700, 0xFFDB3855, 0xFFDB39AA, 0xFFDB3AFF, 0xFFED3B00, 0xFFED3C55, 0xFFED3DAA, 0xFFED3FFF,
+    0xFFFF4000, 0xFFFF4155, 0xFFFF42AA, 0xFFFF43FF, 0xFF004400, 0xFF004555, 0xFF0046AA, 0xFF0048FF,
+    0xFFFFFF00, 0xFF12FF55, 0xFF12EE55, 0xFF12B6FF, 0xFF001FFF, 0xFF9D0EC7, 0xFFF10000, 0xFFFF7700,
+    0xFF375200, 0xFF375355, 0xFF3754AA, 0xFF3755FF, 0xFF495600, 0xFF495855, 0xFF4959AA, 0xFF495AFF,
+    0xFF5B5B00, 0xFF5B5C55, 0xFF5B5DAA, 0xFF5B5EFF, 0xFF6D6000, 0xFF6D6155, 0xFF6D62AA, 0xFF6D63FF,
+    0xFF6D6400, 0xFF806555, 0xFF8066AA, 0xFF8067FF, 0xFF926900, 0xFF926A55, 0xFF926BAA, 0xFF926CFF,
+    0xFFA46D00, 0xFFA46E55, 0xFFA46FAA, 0xFFA471FF, 0xFFB67200, 0xFFB67355, 0xFFB674AA, 0xFFB675FF,
+    0xFFC97600, 0xFFC97755, 0xFFC979AA, 0xFFC97AFF, 0xFFDB7B00, 0xFFDB7C55, 0xFFDB7DAA, 0xFFDB7EFF,
+    0xFFED7F00, 0xFFED8055, 0xFFED82AA, 0xFFED83FF, 0xFFFF8400, 0xFFFF8555, 0xFFFF86AA, 0xFFFF87FF,
+    0xFF008800, 0xFF008A55, 0xFF008BAA, 0xFF008CFF, 0xFF128D00, 0xFF128E55, 0xFF128FAA, 0xFF1290FF,
+    0xFF249200, 0xFF249355, 0xFF2494AA, 0xFF2495FF, 0xFF379600, 0xFF379755, 0xFF3798AA, 0xFF3799FF,
+    0xFF499B00, 0xFF499C55, 0xFF499DAA, 0xFF499EFF, 0xFF5B9F00, 0xFF5BA055, 0xFF5BA1AA, 0xFF5BA3FF,
+    0xFFA4B5D5, 0xFFA0B0F8, 0xFF94A3E6, 0xFF7C89C1, 0xFF6281C0, 0xFF1C62A1, 0xFF4254EA, 0xFF62A1BD,
+    0xFF7093C0, 0xFF4977A1, 0xFF003FAA, 0xFF1554FF, 0xFF1C50B9, 0xFF00B3FF, 0xFF0088AA, 0xFF00B5FF,
+    0xFF0E62FF, 0xFF5EB7E3, 0xFFBDC0B9, 0xFF85B9FF, 0xFF006CAF, 0xFF1F81B9, 0xFF3F5BAA, 0xFFC9BEFF,
+    0xFF5BAFCB, 0xFFDBC055, 0xFFDBC1AA, 0xFFBDC0C0, 0xFFEDC400, 0xFFEDC555, 0xFFEDC6AA, 0xFFEDC7FF,
+    0xFFFFC800, 0xFFFFC955, 0xFFFFCAAA, 0xFFFFCCFF, 0xFF00CD00, 0xFF00CE55, 0xFF00CFAA, 0xFF00D0FF,
+    0xFF12D100, 0xFF12D255, 0xFF12D3AA, 0xFF12D5FF, 0xFF24D600, 0xFF24D755, 0xFF24D8AA, 0xFF24D9FF,
+    0xFF37DA00, 0xFF37DB55, 0xFF37DDAA, 0xFF37DEFF, 0xFF49DF00, 0xFF49E055, 0xFF49E1AA, 0xFF49E2FF,
+    0xFF5BE300, 0xFF5BE555, 0xFF5BE6AA, 0xFF5BE7FF, 0xFF6DE800, 0xFF6DE955, 0xFF6DEAAA, 0xFF6DEBFF,
+    0xFF6DEC00, 0xFF80EE55, 0xFF80EFAA, 0xFF80F0FF, 0xFF93CEA2, 0xFF92F255, 0xFF92F3AA, 0xFF92F4FF,
+    0xFFA4F600, 0xFFA4F755, 0xFFA4F8AA, 0xFFA4F9FF, 0xFFB6FA00, 0xFFB6FB55, 0xFFB6FCAA, 0xFFB6FEFF,
+    0xFFC9FF00, 0xFFC9FF55, 0xFFC9FFAA, 0xFFC9FFFF, 0xFFDBFF00, 0xFFDBFF55, 0xFFDBFFAA, 0xFFDBFFFF,
+    0xFFEDFF00, 0xFFEDFF55, 0xFFEDFFAA, 0xFFEDFFFF, 0xFFFFFF00, 0xFFFFFF55, 0xFFFFFFAA, 0xFFFFFFFF
 };
+
+extern const char txtTitle[];
 
 MEMALIGN32 volatile gfx_bitmap_t *front_a;
 MEMALIGN32 volatile gfx_bitmap_t *front_b;
-volatile static uint8_t draw_side;
+volatile static uint8_t db;
 
-static uint32_t MEMALIGN32 palette[256];
-static int16_t touch_x;
-static int16_t touch_y;
-static uint8_t touch_down;
-static uint8_t last_touch_down;
-static uint8_t touch_flash;
-static uint8_t selected_track;
-static uint8_t player_paused;
-static uint8_t play_pos;
 
 static uint32_t argb(uint8_t r, uint8_t g, uint8_t b)
 {
     return 0xFF000000u | ((uint32_t)r << 16) | ((uint32_t)g << 8) | b;
 }
 
-static void build_palette(void)
-{
-    memset(palette, 0, sizeof(palette));
 
-    palette[COL_BLACK]    = argb(0, 0, 0);
-    palette[COL_BG]       = argb(4, 8, 18);
-    palette[COL_BG_2]     = argb(8, 16, 30);
-    palette[COL_PANEL]    = argb(18, 29, 42);
-    palette[COL_PANEL_HI] = argb(31, 50, 66);
-    palette[COL_TEXT]     = argb(226, 241, 239);
-    palette[COL_TEXT_DIM] = argb(117, 145, 151);
-    palette[COL_CYAN]     = argb(0, 215, 224);
-    palette[COL_GREEN]    = argb(51, 232, 144);
-    palette[COL_YELLOW]   = argb(255, 207, 82);
-    palette[COL_RED]      = argb(247, 91, 91);
-    palette[COL_BLUE]     = argb(63, 129, 255);
-    palette[COL_MAGENTA]  = argb(227, 89, 255);
-    palette[COL_WHITE]    = argb(255, 255, 255);
-    palette[COL_SHADOW]   = argb(2, 4, 10);
-    palette[COL_SCAN]     = argb(21, 80, 87);
+static int32_t scrollx_title = SCREEN_W;
+static int32_t scrollwidth_title = 0;
 
-    for (uint16_t i = 0; i < 32; ++i) {
-        palette[32 + i] = argb((uint8_t)(4 + i),
-                               (uint8_t)(10 + (i * 2)),
-                               (uint8_t)(22 + (i * 3)));
+static void draw_top_scrolly(){
+    scrollx_title-=2;
+    if(scrollx_title <= -scrollwidth_title) {
+        scrollx_title = SCREEN_W;
     }
 
-    for (uint16_t i = 0; i < 32; ++i) {
-        palette[64 + i] = argb((uint8_t)(0 + (i / 3)),
-                               (uint8_t)(88 + (i * 4)),
-                               (uint8_t)(108 + (i * 3)));
-    }
-
-    for (uint16_t i = 0; i < 32; ++i) {
-        palette[96 + i] = argb((uint8_t)(80 + (i * 5)),
-                               (uint8_t)(40 + (i * 3)),
-                               (uint8_t)(210 - (i * 2)));
-    }
-}
-
-static uint8_t meter_level(uint32_t frame, uint8_t meter)
-{
-    uint8_t phase = (uint8_t)((frame * 3u + (uint32_t)meter * 13u) & 63u);
-    uint8_t tri = (phase < 32u) ? phase : (uint8_t)(63u - phase);
-
-    return (uint8_t)(14u + (tri * 2u));
-}
-
-static uint8_t hit_rect(int16_t x, int16_t y, int16_t w, int16_t h)
-{
-    return (touch_x >= x && touch_y >= y &&
-            touch_x < (int16_t)(x + w) && touch_y < (int16_t)(y + h));
-}
-
-static void poll_touch(void)
-{
-    uint8_t state = touch_getxy(&touch_x, &touch_y);
-    touch_down = (state != 0u);
-
-    if (touch_x < 0) {
-        touch_x = 0;
-    } else if (touch_x >= SCREEN_W) {
-        touch_x = SCREEN_W - 1;
-    }
-
-    if (touch_y < 0) {
-        touch_y = 0;
-    } else if (touch_y >= SCREEN_H) {
-        touch_y = SCREEN_H - 1;
-    }
-}
-
-static void process_touch(void)
-{
-    uint8_t pressed = (uint8_t)(touch_down && !last_touch_down);
-
-    if (touch_flash > 0u) {
-        --touch_flash;
-    }
-
-    if (!pressed) {
-        last_touch_down = touch_down;
-        return;
-    }
-
-    touch_flash = 10;
-
-    if (hit_rect(PLAYLIST_X + 11, PLAYLIST_Y + 25, PLAYLIST_W - 22, 39)) {
-        selected_track = (uint8_t)((touch_y - (PLAYLIST_Y + 25)) / 13);
-        if (selected_track > 2u) {
-            selected_track = 2u;
-        }
-        play_pos = 0;
-        player_paused = 0;
-    } else if (hit_rect(SCRUB_X, SCRUB_Y - 3, SCRUB_W, SCRUB_H + 6)) {
-        play_pos = (uint8_t)(((uint32_t)(touch_x - SCRUB_X) * 100u) / SCRUB_W);
-    } else if (hit_rect(TRANSPORT_X, TRANSPORT_Y, TRANSPORT_W, TRANSPORT_H)) {
-        player_paused = (uint8_t)!player_paused;
-    }
-
-    last_touch_down = touch_down;
-}
-
-static void draw_text_shadow(int16_t x, int16_t y, const char *text)
-{
-    gfx_setcolour(COL_SHADOW);
-    gfx_drawtext((long)(x + 1), (long)(y + 1), text);
-    gfx_setcolour(COL_TEXT);
-    gfx_drawtext(x, y, text);
-}
-
-static void draw_panel(int16_t x, int16_t y, int16_t w, int16_t h)
-{
-    gfx_setcolour(COL_SHADOW);
-    gfx_rectf((int16_t)(x + 3), (int16_t)(y + 3), w, h);
-    gfx_setcolour(COL_PANEL);
-    gfx_rectf(x, y, w, h);
-    gfx_setcolour(COL_PANEL_HI);
-    gfx_rectf(x, y, w, 2);
-    gfx_rectf(x, y, 2, h);
-}
-
-static void draw_background(uint32_t frame)
-{
-    uint8_t offset = (uint8_t)((frame >> 2) & 31u);
-
-    for (int16_t y = 0; y < SCREEN_H; y = (int16_t)(y + 8)) {
-        gfx_setcolour((uint8_t)(32u + (((uint16_t)y >> 3) + offset) % 32u));
-        gfx_rectf(0, y, SCREEN_W, 8);
-    }
-
-    gfx_setcolour(COL_SCAN);
-    for (int16_t y = (int16_t)(frame & 15u); y < SCREEN_H; y = (int16_t)(y + 16)) {
-        gfx_rectf(0, y, SCREEN_W, 1);
-    }
-
-    for (uint8_t i = 0; i < 36; ++i) {
-        int16_t x = (int16_t)(((uint32_t)i * 73u + frame * 2u) % SCREEN_W);
-        int16_t y = (int16_t)(52u + (((uint32_t)i * 47u) % 148u));
-        gfx_setcolour((uint8_t)(COL_CYAN + ((i + frame) & 3u)));
-        gfx_plot(x, y);
-    }
-}
-
-static void draw_header(uint32_t frame)
-{
-    gfx_setcolour(COL_PANEL);
-    gfx_rectf(0, 0, SCREEN_W, 42);
-    gfx_setcolour(COL_CYAN);
-    gfx_rectf(0, 40, SCREEN_W, 2);
-
-    draw_text_shadow(18, 13, "SIDBOX MUSIC BOX");
-
-    gfx_setcolour((frame & 32u) ? COL_GREEN : COL_YELLOW);
-    gfx_rectf(362, 12, 10, 10);
-    gfx_setcolour(COL_TEXT_DIM);
-    gfx_drawtext(380, 13, touch_down ? "TOUCH ACTIVE" : "BOOT FRONTEND");
-}
-
-static void draw_meters(uint32_t frame)
-{
-    const int16_t x0 = 30;
-    const int16_t y0 = 64;
-    const int16_t w = 420;
-    const int16_t h = 138;
-    const int16_t base_y = (int16_t)(y0 + h - 18);
-    const int16_t bar_w = 18;
-    const int16_t gap = 8;
-
-    draw_panel(x0, y0, w, h);
-
-    gfx_setcolour(COL_TEXT_DIM);
-    gfx_drawtext(x0 + 14, y0 + 12, "GRAPHICS PRIMITIVE TEST");
-
-    for (uint8_t i = 0; i < METER_COUNT; ++i) {
-        int16_t x = (int16_t)(x0 + 14 + (int16_t)i * (bar_w + gap));
-        uint8_t height = meter_level(frame, i);
-
-        gfx_setcolour(COL_BG_2);
-        gfx_rectf(x, (int16_t)(base_y - 96), bar_w, 96);
-
-        for (uint8_t seg = 0; seg < height; seg = (uint8_t)(seg + 8)) {
-            uint8_t colour = COL_GREEN;
-            if (seg > 64u) {
-                colour = COL_RED;
-            } else if (seg > 42u) {
-                colour = COL_YELLOW;
-            }
-
-            gfx_setcolour(colour);
-            gfx_rectf(x, (int16_t)(base_y - seg - 6), bar_w, 5);
-        }
-    }
-
-    gfx_setcolour(COL_CYAN);
-    gfx_rectf(x0 + 14, base_y + 11, (int16_t)(80 + (frame % 318u)), 3);
-}
-
-static void draw_playlist(void)
-{
-    draw_panel(PLAYLIST_X, PLAYLIST_Y, PLAYLIST_W, PLAYLIST_H);
-    gfx_setcolour(COL_TEXT_DIM);
-    gfx_drawtext(42, 234, "TAP A TRACK");
-
-    for (uint8_t row = 0; row < 3; ++row) {
-        int16_t y = (int16_t)(250 + row * 13);
-
-        if (row == selected_track) {
-            gfx_setcolour(COL_BLUE);
-            gfx_rectf(39, (int16_t)(y - 2), 270, 11);
-        }
-
-        gfx_setcolour(row == selected_track ? COL_WHITE : COL_TEXT_DIM);
-        if (row == 0) {
-            gfx_drawtext(46, y, "01  BOOT_TEST.MOD");
-        } else if (row == 1) {
-            gfx_drawtext(46, y, "02  SD CARD SCAN SOON");
-        } else {
-            gfx_drawtext(46, y, "03  TOOTHACHE.APP");
-        }
-    }
-}
-
-static void draw_transport(uint32_t frame)
-{
-    int16_t pos_w = (int16_t)(((uint16_t)play_pos * SCRUB_W) / 100u);
-
-    draw_panel(TRANSPORT_X, TRANSPORT_Y, TRANSPORT_W, TRANSPORT_H);
-
-    if (touch_down && hit_rect(TRANSPORT_X, TRANSPORT_Y, TRANSPORT_W, TRANSPORT_H)) {
-        gfx_setcolour(COL_PANEL_HI);
-        gfx_rectf(TRANSPORT_X + 4, TRANSPORT_Y + 4, TRANSPORT_W - 8, TRANSPORT_H - 8);
-    }
-
-    if (player_paused) {
-        gfx_setcolour(COL_GREEN);
-        for (int16_t i = 0; i < 18; ++i) {
-            gfx_rectf((int16_t)(368 + i), (int16_t)(244 - (i / 2)), 1, (int16_t)(10 + i));
-        }
-    } else {
-        gfx_setcolour(COL_YELLOW);
-        gfx_rectf(376, 239, 5, 30);
-        gfx_rectf(389, 239, 5, 30);
-    }
-
-    gfx_setcolour(COL_BG_2);
-    gfx_rectf(SCRUB_X, SCRUB_Y, SCRUB_W, 3);
-
-    gfx_setcolour(COL_CYAN);
-    gfx_rectf(SCRUB_X, SCRUB_Y, pos_w, 3);
-
-    gfx_setcolour(COL_TEXT_DIM);
-    gfx_drawtext(358, 228, player_paused ? "PAUSED" : "PLAYING");
-}
-
-static void draw_touch_marker(void)
-{
-    if (!touch_down && touch_flash == 0u) {
-        return;
-    }
-
-    gfx_setcolour(touch_down ? COL_WHITE : COL_CYAN);
-    gfx_rectf((int16_t)(touch_x - 8), touch_y, 17, 1);
-    gfx_rectf(touch_x, (int16_t)(touch_y - 8), 1, 17);
-
-    if (touch_flash > 0u) {
-        gfx_setcolour(COL_MAGENTA);
-        gfx_rectf((int16_t)(touch_x - 2), (int16_t)(touch_y - 2), 5, 5);
-    }
+    gfx_setcolour(11);
+    //gfx_drawtextf(scrollx_title, 8, txtTitle,2,2);
+    gfx_drawtextfc(scrollx_title, 8, txtTitle,2,2, 80,87, 12);
 }
 
 static void draw_scene(uint32_t frame)
 {
-    draw_background(frame);
-    draw_header(frame);
-    draw_meters(frame);
-    draw_playlist();
-    draw_transport(frame);
-    draw_touch_marker();
-
-    gfx_setcolour(COL_TEXT_DIM);
-    gfx_drawtext(18, 304, "TOUCH PLAYLIST / TRANSPORT - CORE GRAPHICS ONLY");
+    draw_top_scrolly();
 }
 
-static void flip_to_next_draw_buffer(void)
+static void flip_front_buffer(void)
 {
-    draw_side = (uint8_t)(1u - draw_side);
+    db = (uint8_t)(1u - db);
 
-    if (draw_side) { gfx_dispfbuffer(front_a, front_b);
-    } else {         gfx_dispfbuffer(front_b, front_a);
+    if (db) { gfx_dispfbuffer(front_a, front_b);
+    } else {  gfx_dispfbuffer(front_b, front_a);
     }
+}
+
+static void init_scene(){
+    scrollwidth_title = (int32_t)strlen(txtTitle) * FONT_W * 2;
+    if(scrollwidth_title <= 0) scrollwidth_title = FONT_W;
+
+    scrollx_title = SCREEN_W;
 }
 
 int main(int argc, char *argv[])
 {
-    uint32_t frame = 0;
-
     (void)argc;
     (void)argv;
 
@@ -374,29 +112,40 @@ int main(int argc, char *argv[])
     front_a = gfx_getdrawbuffer();
     front_b = gfx_getshowbuffer();
 
-    build_palette();
-    gfx_usefpalette(palette);
+    gfx_usefpalette(clut);
     touch_init();
+
+
+    gfx_palcycleon();
+    gfx_palcyclerange(80,87);
+    gfx_palcyclerate(4);
+
 
     gfx_showfbuffer(front_a);
     gfx_usebuffer(front_b);
-    lcd_bright(100);
+    //lcd_bright(100);
 
-    music_play("sdcard:/level1.mod", 0);
+    init_scene();
+
+    //music_play("sdcard:/level1.mod", 0);
 
     for (;;) {
-        poll_touch();
-        process_touch();
+        //poll_touch();
+        //process_touch();
 
-        if (!player_paused && ((frame & 3u) == 0u)) {
-            play_pos = (uint8_t)((play_pos + 1u) % 101u);
-        }
 
         gfx_lcdwait();
-        flip_to_next_draw_buffer();
-        draw_scene(frame++);
+        gfx_cls();
+        draw_scene(0);
+        flip_front_buffer();
         gfx_displaynow();
     }
 
     return 0x00;
 }
+
+
+
+const char txtTitle[] = {
+    "this is a test scrolly, something to test for now, but will make it a little better filly texty stuff\0"
+};

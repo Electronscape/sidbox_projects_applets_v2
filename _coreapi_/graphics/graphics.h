@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-#define GFXAPI_VERSION  100
+#define GFXAPI_VERSION  101
 
 // [setlcd frame rate] //
 // these are base tested, but you can use any 8bit value with various results. some good, some funny
@@ -138,7 +138,14 @@ typedef struct __attribute__((aligned(32))) {
     
 
     void    (*usepalettef)        (uint32_t *pal);  // new front palette
-    void    (*usepaletteb)        (uint32_t *pal);  // new front palette
+    void    (*usepaletteb)        (uint32_t *pal);  // new back palette
+
+    void    (*palcycleon)         (void);
+    void    (*palcycleoff)        (void);
+    void    (*palcycleset)        (uint8_t enabled);
+    void    (*palcyclerange)      (uint8_t fromcol, uint8_t tocol);
+    void    (*palcyclerate)       (uint8_t tick);
+
     // custom functions!
     void    (*BlitChunk)          (const uint8_t  *buffer, uint32_t offset);
 } API_GFX_HARDWARE;
@@ -159,6 +166,8 @@ typedef struct  {
     uint8_t (*bcollide)   (gfxbob_t *a, gfxbob_t *b);
 
     void  (*drawtext)     (long x, long y, const char *textptr);
+    void  (*drawtextf)    (long x, long y, const char *textptr, uint8_t sizex, uint8_t sizey);
+    void  (*drawtextfc)   (long x, long y, const char *textptr, uint8_t sizex, uint8_t sizey, uint8_t colstart, uint8_t colend, uint8_t step);
 } API_GFX_PRIMATIVES;
 
 typedef struct  {
@@ -231,6 +240,8 @@ typedef struct  {
 // primatives
 #define gfx_plot(x, y)          (GFXP->plot(x,y))
 #define gfx_drawtext(x,y,text)  (GFXP->drawtext(x,y,text))
+#define gfx_drawtextf(x,y,text,sizex,sizey)  (GFXP->drawtextf(x,y,text,sizex,sizey))
+#define gfx_drawtextfc(x,y,text,sizex,sizey,colstart,colend,step)  (GFXP->drawtextfc(x,y,text,sizex,sizey,colstart,colend,step))
 
 // set the current draw colour
 #define gfx_setcolour(c)        (GFXP->setcolour((c)))
@@ -249,6 +260,11 @@ typedef struct  {
 // PALETTE use
 #define gfx_usefpalette(pal) (GFXHW->usepalettef(pal))
 #define gfx_usebpalette(pal) (GFXHW->usepaletteb(pal))
+#define gfx_palcycleon()     (GFXHW->palcycleon())
+#define gfx_palcycleoff()    (GFXHW->palcycleoff())
+#define gfx_palcycleset(en)  (GFXHW->palcycleset(en))
+#define gfx_palcyclerange(fromcol, tocol) (GFXHW->palcyclerange(fromcol, tocol))
+#define gfx_palcyclerate(tick)            (GFXHW->palcyclerate(tick))
 
 
 
