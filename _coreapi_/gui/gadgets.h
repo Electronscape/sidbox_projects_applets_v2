@@ -9,6 +9,7 @@ extern "C" {
 
 
 typedef uint32_t    CNV_FLAGS_T;
+typedef uint32_t    BMV_FLAGS_T;
 typedef uint32_t    GAD_TOOL_FLAGS;
 typedef uint32_t    CGGadget;
 
@@ -65,6 +66,8 @@ typedef struct API_GUI_GADGETS {
     void     (*set_group_id)          (CGGadget gad, uint8_t newgroupid);
     uint8_t  (*get_group_id)          (CGGadget gad);
     uint32_t (*textarea_get_text)     (CGGadget hTa, char *out, uint32_t outCap);
+    void     (*bitmapview_set_bitmap) (CGGadget bitmapview, void *bitmap);
+    void     (*bitmapview_set_size)   (CGGadget bitmapview, uint16_t width, uint16_t height);
 } API_GUI_GADGETS;
 
 typedef API_GUI_GADGETS API_GUI_Gadgets;
@@ -87,6 +90,19 @@ typedef API_GUI_GADGETS API_GUI_Gadgets;
 #define GAD_TOOL_ALIGN_TOP      (1 << 12)   // align the text below the gadget
 #define GAD_TOOL_OPAQUE_TEXT    (1 << 13)   // make the text background opaque
 #define GAD_TOOL_TOGGLE         (1 << 14)   // allows for toggling
+
+//// BITMAP VIEW FLAGS
+#define BVF_SHOW_FRAME          (1 << 0)
+#define BVF_PAN                 (1 << 1)
+#define BVF_SRC_ROWMAJOR        (1 << 2)    // src = pixels[y*stride + x]
+#define BVF_SRC_XMAJOR          (1 << 3)    // src = pixels[x*stride + y]
+#define BVF_WRAP                (1 << 4)
+
+//// Gadget Canvas draw type
+#define CNV_LINE                (0)
+#define CNV_RECT                (1)
+#define CNV_RECTF               (2)
+#define CNV_BEVEL               (2)
 
 
 //CGGadget SBOS_CreateButton     (CGWindow win, int16_t x, int16_t y, int16_t w, int16_t h, const char *text, GAD_TOOL_FLAGS flags);
@@ -116,6 +132,12 @@ typedef struct {
 #define SBOS_CreateTextArea(win, x, y, w, h, text, text_flags, flags) \
     (GUICoderGirl->gadgets->textarea_create(win, x, y, w, h, text, text_flags, flags))
 
+#define SBOS_CreateBitmapView(win, x, y, w, h, bmp_w, bmp_h, bv_flags, flags) \
+    (GUICoderGirl->gadgets->bitmapview_create(win, x, y, w, h, bmp_w, bmp_h, bv_flags, flags))
+
+#define SBOS_CreateCanvas(win, x, y, w, h, drawtype, flags) \
+    (GUICoderGirl->gadgets->canvas_create(win, x, y, w, h, drawtype, flags))
+
 #define SBOS_DestroyGadget(gadget) \
     (GUICoderGirl->gadgets->destroy(gadget))
 
@@ -131,6 +153,12 @@ typedef struct {
 
 #define SBOS_TextAreaGetText(hTa, out, outCap) \
     (GUICoderGirl->gadgets->textarea_get_text(hTa, out, outCap))
+
+#define SBOS_BitmapviewSetBitmap(bitmapview, bitmap) \
+    (GUICoderGirl->gadgets->bitmapview_set_bitmap(bitmapview, bitmap))
+
+#define SBOS_BitmapviewSetImageSize(bitmapview, width, height) \
+    (GUICoderGirl->gadgets->bitmapview_set_size(bitmapview, width, height))
 
 
 

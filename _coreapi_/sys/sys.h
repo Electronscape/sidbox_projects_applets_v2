@@ -48,6 +48,10 @@ typedef struct {
     FRESULT (*sbread)     (uint8_t filename, void *buffer, uint32_t length, uint32_t *bytesread);
     FRESULT (*sbclose)    (uint8_t filenum);
     FRESULT (*sbwrite)    (uint8_t filenum, const void *buffer, uint32_t length, uint32_t *byteswritten);
+    FRESULT (*sblseek)    (uint8_t filenum, uint32_t offset);
+    FRESULT (*sbchdir)    (char *path);
+    FRESULT (*sbgetcwd)   (char *buffer, uint32_t length);
+    FRESULT (*sbcopy)     (char *source, char *dest);
 } API_FILEIO;
 
 
@@ -63,6 +67,10 @@ typedef struct  {
 #define sfread(u8_filenum, ptr_buffer, u32_len, u32_retb) (SYSFileSystem->sbread(u8_filenum, ptr_buffer, u32_len, u32_retb))
 #define sfclose(u8_filenum)                               (SYSFileSystem->sbclose(u8_filenum))
 #define sfwrite(u8_filenum, ptr_buffer, u32_len, u32_retb) (SYSFileSystem->sbwrite(u8_filenum, ptr_buffer, u32_len, u32_retb))
+#define sflseek(u8_filenum, u32_offset)                   (SYSFileSystem->sblseek(u8_filenum, u32_offset))
+#define sfchdir(s_path)                                   (SYSFileSystem->sbchdir(s_path))
+#define sfgetcwd(ptr_buffer, u32_len)                     (SYSFileSystem->sbgetcwd(ptr_buffer, u32_len))
+#define sfcopy(s_source, s_dest)                          (SYSFileSystem->sbcopy(s_source, s_dest))
 
 
 

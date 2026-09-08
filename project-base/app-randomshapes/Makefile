@@ -1,7 +1,7 @@
 # Applet Makefile for SIDBOX
 
 # GIVE YOUR PROJECT A NAME (this name will be copied to the target drive)
-PROJECTNAME := test2
+PROJECTNAME := theShapes
 
 # LOCATION of the compile output, can be safely deleted / cleaned after
 BUILD_DIR := compiled

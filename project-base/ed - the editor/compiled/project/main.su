@@ -1,0 +1,16 @@
+main.c:105:13:show_drag_ghost	40	static
+main.c:188:13:set_status	40	static
+main.c:219:13:set_document	40	static
+main.c:397:13:on_text_changed	0	static
+main.c:460:13:on_load_clicked	16	static
+main.c:492:13:on_save_clicked	16	static
+main.c:150:13:finish_icon_drag.part.0.constprop	16	static
+main.c:529:13:on_close_clicked	16	static
+main.c:412:13:on_icon_active	24	static
+main.c:431:13:on_icon_changed	24	static
+main.c:171:13:handle_drag_event	24	static
+main.c:265:13:load_file	40	static
+main.c:599:24:editor_proc	32	static
+main.c:478:13:on_sample_clicked	40	static
+main.c:446:13:on_new_clicked	40	static
+main.c:705:5:main	64	static

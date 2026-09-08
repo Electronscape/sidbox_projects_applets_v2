@@ -7,14 +7,34 @@ Makefile
        OPT_APP := -Ofast
 
 ### applet.ld wizard ###
-Run this from the project folder to generate an applet.ld safely:
+Run this from the project folder to open the GUI generator:
 
-    python3 tools/applet_ld_wizard.py
+    python3 tools/ld_wizard.py
 
-Preview without writing:
+Use the terminal wizard instead:
 
-    python3 tools/applet_ld_wizard.py --dry-run
+    python3 tools/ld_wizard.py --cli
 
-Write somewhere else for testing:
+Preview from the terminal without writing:
 
-    python3 tools/applet_ld_wizard.py --output /tmp/applet.ld
+    python3 tools/ld_wizard.py --cli --dry-run
+
+Set a different output path:
+
+    python3 tools/ld_wizard.py --output /tmp/applet.ld
+
+Build the native Linux GTK version:
+
+    make -C tools
+
+Run the GTK version:
+
+    ./tools/ld_wizard_gtk
+
+Clean the GTK build:
+
+    make -C tools clean
+
+If GTK headers are missing on Debian/Ubuntu:
+
+    sudo apt install libgtk-3-dev
