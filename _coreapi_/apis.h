@@ -118,15 +118,22 @@ extern _largest_modfile;
 // USING THIS YOU open up an area of 1MB of CACHED and BUFFERED memory (SPEED)
 // and must follow an offset profile, ANY Music is loaded at 0xD0000000 (SDRAM) so if your program starts at 128k off set, use profile 1
 // eg. program uses 256k of mod music, your program would start at offset 256k, use profile 2...
-#define GAMEMODE_BANKSIZE		(256 * 2048)
-#define GAMEMODE_PROFILE_0		(0 * GAMEMODE_BANKSIZE)
-#define GAMEMODE_PROFILE_1		(1 * GAMEMODE_BANKSIZE)
-#define GAMEMODE_PROFILE_2		(2 * GAMEMODE_BANKSIZE)
-#define GAMEMODE_PROFILE_3		(3 * GAMEMODE_BANKSIZE)	// system with 256k at 2meg sections
-#define GAMEMODE_PROFILE_4		(4 * GAMEMODE_BANKSIZE)
-#define GAMEMODE_PROFILE_5		(5 * GAMEMODE_BANKSIZE)
-#define GAMEMODE_PROFILE_6		(6 * GAMEMODE_BANKSIZE)
-#define GAMEMODE_PROFILE_7		(7 * GAMEMODE_BANKSIZE)
+#define GAMEMODE_BANKSIZE		(256 * 2048)			// bytes
+#define GAMEMODE_PROFILE_0		(0 * GAMEMODE_BANKSIZE)	// 0kb
+#define GAMEMODE_PROFILE_1		(1 * GAMEMODE_BANKSIZE)	// 1  - 512k; 
+#define GAMEMODE_PROFILE_2		(2 * GAMEMODE_BANKSIZE) // 2  - 1 meg
+#define GAMEMODE_PROFILE_3		(3 * GAMEMODE_BANKSIZE)	// 3  - 1.5 Meg
+#define GAMEMODE_PROFILE_4		(4 * GAMEMODE_BANKSIZE)	// 4  - 2 meg
+#define GAMEMODE_PROFILE_5		(5 * GAMEMODE_BANKSIZE)	// 5  - 2.5 meg
+#define GAMEMODE_PROFILE_6		(6 * GAMEMODE_BANKSIZE)	// 6  - 3 meg
+#define GAMEMODE_PROFILE_7		(7 * GAMEMODE_BANKSIZE) // 7  - 3.5 meg
+#define GAMEMODE_PROFILE_8		(7 * GAMEMODE_BANKSIZE) // 8  - 4 meg
+#define GAMEMODE_PROFILE_9		(7 * GAMEMODE_BANKSIZE) // 9  - 4.5 meg
+#define GAMEMODE_PROFILE_10		(7 * GAMEMODE_BANKSIZE) // 10 - 5 meg
+#define GAMEMODE_PROFILE_11		(7 * GAMEMODE_BANKSIZE) // 11 - 5.5 meg
+#define GAMEMODE_PROFILE_12		(7 * GAMEMODE_BANKSIZE) // 12 - 6 meg
+
+
 
 //// # JOYSTICK PORT # ////
 #define BTN_NULL	0x00
@@ -178,6 +185,14 @@ typedef struct {
 	const API_SOUND *sound;
 } API_AUDIO;
 
+typedef struct {
+    void     (*init)        (void);
+    uint8_t  (*ispressed)   (void);
+    uint8_t  (*getxy)       (int16_t *x, int16_t *y);
+    uint8_t  (*getrawxy)    (uint16_t *x, uint16_t *y);
+    uint16_t (*getpressure) (void);
+} API_TOUCH;
+
 
 
 #include "graphics/sb3dapi.h"
@@ -208,9 +223,10 @@ typedef struct __attribute__((aligned(4))) {
 	const API_HW 		*hwl;		// hardware level flaps
 	const API_SYSTEMS 	*system;	// operating system stuffs
     const API_GUI     	*gui;   	// always here
-    const API_GFX     	*gfx;   	// graphics library system
+	const API_GFX     	*gfx;   	// graphics library system
 	const API_3D        *sb3d;		// the 3D graphics system
 	const API_AUDIO   	*audio;		// audio systems
+	const API_TOUCH     *touch;     // touch screen systems
 	
 } API_Root;
 
@@ -249,6 +265,14 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 
 #define get32kmem()	   		(HWKERNAL->get32kmem())
 #define get16k8mem()		(HWKERNAL->get16kmem8())
+
+// touch screen interfacing
+#define TOUCHBase           (API->touch)
+#define touch_init()        (TOUCHBase->init())
+#define touch_down()        (TOUCHBase->ispressed())
+#define touch_getxy(x, y)   (TOUCHBase->getxy(x,y))
+#define touch_getrawxy(x,y) (TOUCHBase->getrawxy(x,y))
+#define touch_pressure()    (TOUCHBase->getpressure())
 
 
 // dedicated 3D math
