@@ -168,6 +168,8 @@ typedef struct  {
     void  (*drawtext)     (long x, long y, const char *textptr);
     void  (*drawtextf)    (long x, long y, const char *textptr, uint8_t sizex, uint8_t sizey);
     void  (*drawtextfc)   (long x, long y, const char *textptr, uint8_t sizex, uint8_t sizey, uint8_t colstart, uint8_t colend, uint8_t step);
+    void  (*circle)       (int16_t cx, int16_t cy, int16_t r);
+    void  (*circlef)      (int16_t cx, int16_t cy, int16_t r);
 } API_GFX_PRIMATIVES;
 
 typedef struct  {
@@ -236,6 +238,8 @@ typedef struct  {
 
 // draw a filled rectactangle on the drawbuffer
 #define gfx_rectf(x, y, w, h)	(GFXP->rectf(x,y,w,h))
+#define gfx_circle(cx, cy, r)   (GFXP->circle(cx,cy,r))
+#define gfx_circlef(cx, cy, r)  (GFXP->circlef(cx,cy,r))
 
 // primatives
 #define gfx_plot(x, y)          (GFXP->plot(x,y))

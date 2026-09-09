@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../../_coreapi_"
+		},
+		{
+			"path": "../../../electronics/SidBox5.6"
 		}
 	],
 	"settings": {
