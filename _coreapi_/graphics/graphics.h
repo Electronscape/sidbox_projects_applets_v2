@@ -266,7 +266,8 @@ typedef struct  {
 #define gfx_palcyclerange(fromcol, tocol) (GFXHW->palcyclerange(fromcol, tocol))
 #define gfx_palcyclerate(tick)            (GFXHW->palcyclerate(tick))
 
-
+/// API KIT Function calls
+void gfx_createBitmap(gfx_bitmap_t *bitmap, int16_t w, int16_t h);
 
 #ifdef __cplusplus
 }

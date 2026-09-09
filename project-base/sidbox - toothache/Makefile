@@ -28,7 +28,7 @@ TARGET_BIN := applet.app
 TARGET_FINAL_BIN := $(PROJECTNAME).app
 TARGET_ASM := applet.asm
 
-CORE_SRCS := $(wildcard $(CORE_DIR)/*.c)
+CORE_SRCS := $(shell find $(CORE_DIR) -type f -name '*.c')
 CORE_OBJS := $(patsubst $(CORE_DIR)/%.c,$(BUILD_DIR)/%.o,$(CORE_SRCS))
 
 PROJECT_SRCS := $(shell find $(PROJECT_DIR) -type f -name '*.c')
@@ -71,6 +71,7 @@ endef
 # Compile core sources (no progress bar for core files)
 $(BUILD_DIR)/%.o: $(CORE_DIR)/%.c
 	@echo -e "\033[1;35mCompiling core file $< \033[0m"
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(OPT_CORE) -o $@ $<
 
 # Compile project sources with progress bar

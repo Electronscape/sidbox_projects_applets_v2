@@ -25,4 +25,13 @@ void LoadPPB(char *filename, uint8_t *img){
     sfclose(0);
 }
 
+// initMalloc(); MUST be used before calling this
+void gfx_createBitmap(gfx_bitmap_t *bitmap, int16_t w, int16_t h){
 
+    bitmap->memspacelen = (w * h);
+    bitmap->width = w;
+    bitmap->height = h;
+    bitmap->stride = h;   // should be the height of the bitmap
+    bitmap->bitmap = malloc(w * h);//bitground;
+
+}
