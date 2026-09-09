@@ -178,6 +178,7 @@ typedef struct  {
 } API_GUI;
 
 #include "audio/audio.h"
+#include "crt/crt.h"
 
 typedef struct {
 	const API_AUDIO_HARDWARE *audhl;
@@ -227,6 +228,7 @@ typedef struct __attribute__((aligned(4))) {
 	const API_3D        *sb3d;		// the 3D graphics system
 	const API_AUDIO   	*audio;		// audio systems
 	const API_TOUCH     *touch;     // touch screen systems
+	const API_CRT       *crt;       // CRT RGBI output
 	
 } API_Root;
 
