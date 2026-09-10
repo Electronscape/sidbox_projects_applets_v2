@@ -54,6 +54,7 @@ typedef struct {
 #define crt_enabled() (CRTBase->enabled())
 #define crt_setborder(colour) (CRTBase->setborder(colour))
 #define crt_getborder() (CRTBase->getborder())
+#define crt_vsync()   (CRTBase->waitframe())
 #define crt_waitframe() (CRTBase->waitframe())
 #define crt_render(pixels, border) (CRTBase->render(pixels, border))
 #define crt_clear(colour) (CRTBase->clear(colour))
