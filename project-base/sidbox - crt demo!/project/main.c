@@ -12,6 +12,12 @@
 #define LCD_H           320
 #define STAR_COUNT      72u
 #define SCOPE_POINTS    96u
+#define BARS_H          24
+#define GRID_TOP        32
+#define GRID_BOTTOM     220
+#define GRID_HEIGHT     (GRID_BOTTOM - GRID_TOP)
+#define GRID_MID_Y      (GRID_TOP + (GRID_HEIGHT / 2))
+#define STATUS_TOP      224
 
 typedef struct {
     uint16_t x;
@@ -269,7 +275,7 @@ static void draw_crt_text(uint16_t x, uint16_t y, const char *text,
 static void reset_star(uint8_t i, uint16_t min_x)
 {
     stars[i].x = (uint16_t)(min_x + rnd_range((uint16_t)(SCREEN_W * 16u)));
-    stars[i].y = (uint8_t)(34u + rnd_range(154u));
+    stars[i].y = (uint8_t)((GRID_TOP + 2u) + rnd_range((uint16_t)(GRID_HEIGHT - 4u)));
     stars[i].speed = (uint8_t)(2u + rnd_range(12u));
     stars[i].colour = (stars[i].speed > 9u) ? API_CRT_COLOUR_BWHITE :
                       (stars[i].speed > 6u) ? API_CRT_COLOUR_BCYAN :
@@ -303,36 +309,37 @@ static void draw_colour_bars(uint32_t frame)
 
     for (uint8_t i = 0; i < 16u; ++i) {
         uint8_t colour = bars[(uint8_t)((i + (frame >> 1)) & 0x0fu)];
-        fill_rect((int16_t)(i * bar_w), 0, bar_w, 24, colour);
+        fill_rect((int16_t)(i * bar_w), 0, bar_w, BARS_H, colour);
     }
 
-    fill_rect(0, 24, SCREEN_W, 2, API_CRT_COLOUR_BWHITE);
+    fill_rect(0, BARS_H, SCREEN_W, 2, API_CRT_COLOUR_BWHITE);
 }
 
 static void draw_grid(void)
 {
-    for (int16_t y = 40; y < 184; y = (int16_t)(y + 16)) {
+    for (int16_t y = (int16_t)(GRID_TOP + 8); y < (int16_t)GRID_BOTTOM;
+         y = (int16_t)(y + 16)) {
         draw_hline(0, y, SCREEN_W, API_CRT_COLOUR_BLUE);
     }
 
     for (int16_t x = 0; x < (int16_t)SCREEN_W; x = (int16_t)(x + 16)) {
-        draw_vline(x, 32, 152, API_CRT_COLOUR_BLUE);
+        draw_vline(x, GRID_TOP, GRID_HEIGHT, API_CRT_COLOUR_BLUE);
     }
 
-    draw_hline(0, 104, SCREEN_W, API_CRT_COLOUR_CYAN);
-    draw_vline(160, 32, 152, API_CRT_COLOUR_CYAN);
+    draw_hline(0, GRID_MID_Y, SCREEN_W, API_CRT_COLOUR_CYAN);
+    draw_vline(160, GRID_TOP, GRID_HEIGHT, API_CRT_COLOUR_CYAN);
 }
 
 static void draw_scope(uint32_t frame)
 {
     int16_t last_x = 0;
-    int16_t last_y = 104;
+    int16_t last_y = GRID_MID_Y;
 
     for (uint16_t i = 0; i < SCOPE_POINTS; ++i) {
         int16_t x = (int16_t)((i * (SCREEN_W - 1u)) / (SCOPE_POINTS - 1u));
-        int16_t y = (int16_t)(104 +
-            tri_wave((uint16_t)((i * 9u) + frame), 28) +
-            tri_wave((uint16_t)((i * 19u) + (frame * 2u)), 9));
+        int16_t y = (int16_t)(GRID_MID_Y +
+            tri_wave((uint16_t)((i * 9u) + frame), 42) +
+            tri_wave((uint16_t)((i * 19u) + (frame * 2u)), 13));
 
         if (i != 0u) {
             draw_line(last_x, last_y, x, y, API_CRT_COLOUR_BGREEN);
@@ -345,9 +352,9 @@ static void draw_scope(uint32_t frame)
 static void draw_movers(uint32_t frame)
 {
     int16_t box_x = (int16_t)(1 + tri_wave((uint16_t)(frame * 2u), 128));
-    int16_t box_y = (int16_t)(90 + tri_wave((uint16_t)(frame * 3u), 64));
+    int16_t box_y = (int16_t)(112 + tri_wave((uint16_t)(frame * 3u), 84));
     int16_t orb_x = (int16_t)(248 + tri_wave((uint16_t)(frame * 2u + 64u), 48));
-    int16_t orb_y = (int16_t)(106 + tri_wave((uint16_t)(frame * 5u), 38));
+    int16_t orb_y = (int16_t)(128 + tri_wave((uint16_t)(frame * 5u), 58));
 
     fill_rect((int16_t)(160 + box_x), box_y, 24, 18, API_CRT_COLOUR_BMAGENTA);
     fill_rect((int16_t)(164 + box_x), (int16_t)(box_y + 4), 16, 10,
@@ -361,13 +368,13 @@ static void draw_movers(uint32_t frame)
 
 static void draw_scan_noise(uint32_t frame)
 {
-    uint8_t y = (uint8_t)(32u + ((frame * 3u) % 152u));
+    uint8_t y = (uint8_t)(GRID_TOP + ((frame * 3u) % GRID_HEIGHT));
 
     draw_hline(0, y, SCREEN_W, API_CRT_COLOUR_BWHITE);
 
     for (uint8_t i = 0; i < 28u; ++i) {
         int16_t x = (int16_t)rnd_range(SCREEN_W);
-        int16_t yy = (int16_t)(32u + rnd_range(152u));
+        int16_t yy = (int16_t)(GRID_TOP + rnd_range(GRID_HEIGHT));
         put_pixel(x, yy, (i & 1u) ? API_CRT_COLOUR_BBLUE : API_CRT_COLOUR_BRIGHT);
     }
 }
@@ -382,7 +389,7 @@ static void draw_demo_frame(uint32_t frame)
     draw_movers(frame);
     draw_scan_noise(frame);
 
-    fill_rect(0, 184, SCREEN_W, 16, API_CRT_COLOUR_BLUE);
+    fill_rect(0, STATUS_TOP, SCREEN_W, 16, API_CRT_COLOUR_BLUE);
     fill_rect(4, 4, 160, 12, API_CRT_COLOUR_BLACK);
     fill_rect(168, 4, 148, 12, API_CRT_COLOUR_BLACK);
 }
@@ -416,11 +423,11 @@ static void show_lcd_notice(void)
     gfx_setcolour(16);
     gfx_rectf(0, 0, LCD_W, LCD_H);
     gfx_setcolour(3);
-    gfx_rectf(0, 132, LCD_W, 58);
+    gfx_rectf(0, 128, LCD_W, 64);
     gfx_setcolour(11);
     gfx_rectf(0, 190, LCD_W, 3);
     gfx_setcolour(11);
-    gfx_rectf(0, 127, LCD_W, 3);
+    gfx_rectf(0, 125, LCD_W, 3);
 
     draw_lcd_centered(140, lcd_msg_top, 2);
     draw_lcd_centered(164, lcd_msg_bottom, 11);
@@ -471,11 +478,11 @@ int main(int argc, char *argv[])
         draw_demo_frame(frame);
         draw_crt_text(8, 7, APP_TITLE, API_CRT_COLOUR_BWHITE,
                       API_CRT_COLOUR_BLACK);
-        draw_crt_text(176, 7, "RGBI 320x200 50HZ", API_CRT_COLOUR_BYELLOW,
+        draw_crt_text(176, 7, "RGBI 320x240 50HZ", API_CRT_COLOUR_BYELLOW,
                       API_CRT_COLOUR_BLACK);
         snprintf(status_line, sizeof(status_line), "FRAME %lu  HOLD FIRE+OK TO EXIT",
                  (unsigned long)frame);
-        draw_crt_text(8, 188, status_line, API_CRT_COLOUR_BCYAN,
+        draw_crt_text(8, 228, status_line, API_CRT_COLOUR_BCYAN,
                       API_CRT_COLOUR_BLACK);
 
         crt_vsync();

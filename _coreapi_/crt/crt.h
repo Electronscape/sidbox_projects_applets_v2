@@ -8,7 +8,7 @@ extern "C" {
 #endif
 
 #define API_CRT_WIDTH        320u
-#define API_CRT_HEIGHT       200u
+#define API_CRT_HEIGHT       240u
 
 #define API_CRT_COLOUR_BLACK    0x00u
 #define API_CRT_COLOUR_BLUE     0x01u

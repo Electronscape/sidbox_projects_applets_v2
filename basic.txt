@@ -1,0 +1,13 @@
+setupgraphics()
+cls
+setcolour 14
+x=24
+y=24
+start:
+print at x,y;"hello world",block
+setcolour 11
+for i=0 to 4 step 1
+print at 24,48;"looping",transparent
+next i
+end:
+goto end

@@ -12,6 +12,7 @@ FINAL_COPY_PATH := /media/ben/16GDEM/applets/$(PROJECTNAME).app
 
 # Locate the CoreAPI directory here
 CORE_DIR := ../../_coreapi_
+# CORE_DIR := /home/kbox/sidbox-applet-compiler/_coreapi_
 
 # Toolchain
 # Use STM32-provided GCC 9.3.1 toolchain (OR DOWNLOAD IT)
