@@ -20,6 +20,22 @@
 #define GRID_MID_Y      (GRID_TOP + (GRID_HEIGHT / 2))
 #define STATUS_TOP      224
 
+extern const uint8_t ctr_c64cat[];
+extern const uint8_t crtimage[];
+extern const uint8_t crtimage2[];
+extern const uint8_t crtimage3[];
+extern const uint8_t crtimage4[];
+extern const uint8_t crtimage5[];
+extern const uint8_t crtimage6[];
+extern const uint8_t crt_samfox[];
+
+
+#define imagelen 8
+
+const uint8_t *images[] = {
+    ctr_c64cat, crtimage, crtimage2, crtimage3, crtimage4, crtimage5, 
+    crtimage6, crt_samfox
+};
 
 typedef struct {
     uint16_t x;
@@ -450,6 +466,9 @@ static void restore_lcd_desktop_mode(void)
 
 void RenderBouncingCube(uint8_t colour);
 void RenderBouncingCubeFilled(uint8_t fallback_colour) ;
+
+
+uint8_t MEMALIGN32 *sndSamFox;
 int main(int argc, char *argv[])
 {
     uint32_t frame = 0;
@@ -466,11 +485,59 @@ int main(int argc, char *argv[])
     //music_play("sdcard:/music/sid/1_67YT-Turrican_III_Remix.sid",0);
     //music_play("sdcard:/music/sid/Adventure_2SID.sid", 0);
     //music_play("sdcard:/music/xm/(Z00)_Nwhere (+).xm",0);
+
+    uint32_t samplelen;
+    samplelen = LoadSFX("sdcard:/ohhlaalaa.wav", &sndSamFox);
+    sound_assign(0, sndSamFox, samplelen, 0);
+    sound_setfrequency(0, 22080);
+    //sound_play(0);
+    sound_setvolume(0, 840);
+    sound_setpanning(0, 0);
+    sound_setloop(0, 200, 4433);
+    sound_enableloop(0, 0);
+
+
+    //music_play("sdcard:/music/sba/nephie_ag.sba", 0);
+
+
     show_lcd_notice();
 
     if (API->crt == 0 || !crt_enable()) {
         dbug("CRT API unavailable\n");
         return 1;
+    }
+
+    uint8_t imageid = 0;
+    uint16_t swapimage = 0;
+
+    for(;;){
+        fill_rect(0, 0, SCREEN_W, SCREEN_H, API_CRT_COLOUR_BLACK);  // clear screen
+        //if(imageid == 0)CRT_DrawImage(crtimage, 0, 0, 320, 240, crt_pixels);
+        //if(imageid == 1)CRT_DrawImage(crtimage2, 0, 0, 320, 240, crt_pixels);
+
+        //CRT_DrawImage(images[imageid], 0, 0, 320, 240, crt_pixels);
+        CRT_FrameImage(images[imageid], crt_pixels);
+        
+        RenderBouncingCubeFilled(4);
+        RenderBouncingCube(0);
+
+        crt_vsync();
+        crt_render(crt_pixels, 0);
+
+        for(uint16_t i = 0; i < 50 * 3; i++){
+            //crt_vsync();
+        }
+        swapimage++;
+        if(swapimage > (50 *3)){
+            swapimage=0;
+            imageid ++;
+            if(imageid > imagelen-1) imageid = 0;
+            if(imageid == 7){
+                sound_stop(0);
+                sound_play(0);
+            }
+        }
+        
     }
 
 
