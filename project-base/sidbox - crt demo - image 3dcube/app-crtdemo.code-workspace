@@ -5,17 +5,14 @@
 		},
 		{
 			"path": "../../_coreapi_"
-		},
-		{
-			"path": "../../../electronics/SidBox5.6"
 		}
 	],
 	"settings": {
 		"files.associations": {
 			"main.h": "c",
 			"stat.h": "c",
-			"game.h": "c"
+			"game.h": "c",
+			"*.ld": "ld"
 		}
-		
 	}
 }

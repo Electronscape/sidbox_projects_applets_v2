@@ -20,7 +20,7 @@
 #define GRID_MID_Y      (GRID_TOP + (GRID_HEIGHT / 2))
 #define STATUS_TOP      224
 
-extern const uint8_t ctr_c64cat[];
+extern const uint8_t crt_c64cat[];
 extern const uint8_t crtimage[];
 extern const uint8_t crtimage2[];
 extern const uint8_t crtimage3[];
@@ -28,13 +28,13 @@ extern const uint8_t crtimage4[];
 extern const uint8_t crtimage5[];
 extern const uint8_t crtimage6[];
 extern const uint8_t crt_samfox[];
+extern const uint8_t crt_garf[];
 
-
-#define imagelen 8
+#define imagelen 9
 
 const uint8_t *images[] = {
-    ctr_c64cat, crtimage, crtimage2, crtimage3, crtimage4, crtimage5, 
-    crtimage6, crt_samfox
+    crt_c64cat, crtimage, crtimage2, crtimage3, crtimage4, crtimage5, 
+    crtimage6, crt_samfox, crt_garf
 };
 
 typedef struct {
@@ -549,14 +549,10 @@ int main(int argc, char *argv[])
         border = bars[(frame >>3) & 0x0fu];
 
         draw_demo_frame(frame);
-        draw_crt_text(8, 7, APP_TITLE, API_CRT_COLOUR_BWHITE,
-                      API_CRT_COLOUR_BLACK);
-        draw_crt_text(176, 7, "RGBI 320x240 50HZ", API_CRT_COLOUR_BYELLOW,
-                      API_CRT_COLOUR_BLACK);
-        snprintf(status_line, sizeof(status_line), "FRAME %lu  HOLD FIRE+OK TO EXIT",
-                 (unsigned long)frame);
-        draw_crt_text(8, 228, status_line, API_CRT_COLOUR_BCYAN,
-                      API_CRT_COLOUR_BLACK);
+        draw_crt_text(8, 7, APP_TITLE, API_CRT_COLOUR_BWHITE, API_CRT_COLOUR_BLACK);
+        draw_crt_text(176, 7, "RGBI 320x240 50HZ", API_CRT_COLOUR_BYELLOW, API_CRT_COLOUR_BLACK);
+        snprintf(status_line, sizeof(status_line), "FRAME %lu  HOLD FIRE+OK TO EXIT", (unsigned long)frame);
+        draw_crt_text(8, 228, status_line, API_CRT_COLOUR_BCYAN, API_CRT_COLOUR_BLACK);
 
         crt_vsync();
         crt_render(crt_pixels, border);

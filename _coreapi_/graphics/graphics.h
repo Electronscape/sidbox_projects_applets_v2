@@ -108,6 +108,30 @@ typedef struct __attribute__((aligned(32))) {
     uint8_t     _pad1[4];       // trail padding :)
 } gfxbob_t;    // Blitter Objects
 
+
+
+// Minimal dest bitmap description (matches your gfx_bitmap_t concept)
+typedef struct __attribute__((aligned(32))) {
+    uint8_t  *bitmap;
+
+    uint16_t width;
+    uint16_t height;
+
+    uint16_t stride;         	// bytes per row
+    uint16_t _pad0;			 	// padding bytes
+} gfx_dstbitmap_t;
+
+// Minimal sprite description (8-bit indexed pixels)
+typedef struct ATTR_ALIGN32 {
+    const uint8_t *bitmap;   	// sprite pixels
+
+    uint16_t w;              	// width in pixels (bytes per row)
+    uint16_t h;              	// height in rows
+
+    uint16_t stride;         	// bytes per row in sprite source
+    uint16_t _pad0;			 	// padding bytes
+} gfx_sprite_t;
+
 //_Static_assert(sizeof(gfxbob_t) == 32, "gfxbob_t must be 32 bytes");
 
 typedef struct __attribute__((aligned(32))) {
@@ -148,6 +172,11 @@ typedef struct __attribute__((aligned(32))) {
 
     // custom functions!
     void    (*BlitChunk)          (const uint8_t  *buffer, uint32_t offset);
+
+    // hw sprites
+    gfx_sprite_t*(*createSprite)    (uint8_t *img, int16_t width, int16_t height);
+    int          (*submitSprite)    (const gfx_sprite_t *spr, int16_t x, int16_t y, const gfx_dstbitmap_t *dstbmp);
+    void         (*popSprites)      (void);
 } API_GFX_HARDWARE;
 
 typedef struct  {
@@ -213,7 +242,14 @@ typedef struct  {
 #define gfx_dispfbuffer(p_sbuffer, p_dbuffer) (GFXHW->dispfbuffers(p_sbuffer, p_dbuffer))
 #define gfx_dispbbuffer(p_sbuffer, p_dbuffer) (GFXHW->dispbbuffers(p_sbuffer, p_dbuffer))
 
-#define gfx_blitchunk(buffer, yoffset)        (GFXHW->BlitChunk(buffer, yoffset))
+//#define gfx_blitchunk(buffer, yoffset)        (GFXHW->BlitChunk(buffer, yoffset))
+
+//const gfx_sprite_t *spr, int16_t x, int16_t y, const gfx_dstbitmap_t *dstbmp
+// NOTE: sprites work differently, images are rotated CCW and FLIPPED.
+// to correct for this, FLIP on X, THEN rotate COUNTER CLOCK WISE
+#define gfx_createSprite(ptrImage, width, height)  (GFXHW->createSprite(ptrImage, width, height))
+#define gfx_submitSprite(sprite, x, y, destBitmap) (GFXHW->submitSprite(sprite, x, y, destBitmap))
+#define gfx_popSprites() (GFXHW->popSprites())
 
 // SET the LCD output mode, rotations, flips, output frame rate (25hz, 50hz, 60hz)
 #define gfx_setlcd(mode, rate)  (GFXHW->setlcd(mode, rate))

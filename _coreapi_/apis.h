@@ -153,21 +153,25 @@ typedef struct {
 	gamemode setsup the MPU to allow for cached ram access to software loaded in the selected offset. gives speed and higher access
 	it comes with some caution: cached ram instructions need care
 	*/
-    void     (*gamemode)      (uint32_t offset);  // MPU 256k exec memory offset location.
-    void     (*exitgamemode)  (void);
-	uint32_t (*getTicks)      (void);			// get system ticks
-	void     (*dbug)		  (char *string);
+    void     (*gamemode)         (uint32_t offset);  // MPU 256k exec memory offset location.
+    void     (*exitgamemode)     (void);
+	uint32_t (*getTicks)         (void);			// get system ticks
+	void     (*dbug)		     (char *string);
 
 
-	uint8_t  (*getmousepos)   (int16_t *mx, int16_t *my);
-	void     (*setmousepos)   (int16_t  mx, int16_t  my);
-	void     (*getmousedelta) (int32_t *dx, int32_t *dy);
-	void     (*clrmousedelta) (void);
+	uint8_t  (*getmousepos)      (int16_t *mx, int16_t *my);
+	void     (*setmousepos)      (int16_t  mx, int16_t  my);
+	void     (*getmousedelta)    (int32_t *dx, int32_t *dy);
+	void     (*clrmousedelta)    (void);
 	
-	uint8_t  (*getjoyport)	  (void);
+	uint8_t  (*getjoyport)	     (void);
 
-	uint16_t *(*get32kmem)     (void);  // 16 bit memory specific
-    uint8_t  *(*get16kmem8)    (void);  // 8 bit memory specific
+	uint16_t *(*get32kmem)       (void);  // 16 bit memory specific
+    uint8_t  *(*get16kmem8)      (void);  // 8 bit memory specific
+
+
+	void     (*lcd_disp_disable) (void);    // to disarm the LCD
+    void     (*lcd_disp_enable)  (void);    // to re-enable the LCD
 } API_HW ;
 
 
@@ -251,8 +255,10 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 /////////////////// hardware level stuff ################
 #define HWKERNAL	(API->hwl)
 
-// conf
+// conf and hardware setups
 #define configure_runmode(profile)	(HWKERNAL->gamemode(profile))
+#define hw_disarm_lcd()				(HWKERNAL->lcd_disp_disable())
+#define hw_rearm_lcd()				(HWKERNAL->lcd_disp_enable())
 
 #define dbug(s) 	        (API->hwl->dbug(s))
 

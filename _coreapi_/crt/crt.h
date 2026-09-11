@@ -7,6 +7,8 @@
 extern "C" {
 #endif
 
+#define API_CRT_OVERSCAN_WIDTH      448u
+#define API_CRT_OVERSCAN_HEIGHT     312u
 #define API_CRT_WIDTH        320u
 #define API_CRT_HEIGHT       240u
 
