@@ -106,6 +106,7 @@ extern _largest_modfile;
 // graphics hardware-access
 #include "graphics/graphics.h"
 
+#include "crt/crt.h"
 // gui
 #include "gui/console.h"
 #include "gui/window.h"
@@ -148,7 +149,11 @@ extern _largest_modfile;
 
 //// # HARDWARE LEVEL # ///////#
 typedef struct {
-    void     (*gamemode)      (uint32_t offset);  // fill rect
+	/*
+	gamemode setsup the MPU to allow for cached ram access to software loaded in the selected offset. gives speed and higher access
+	it comes with some caution: cached ram instructions need care
+	*/
+    void     (*gamemode)      (uint32_t offset);  // MPU 256k exec memory offset location.
     void     (*exitgamemode)  (void);
 	uint32_t (*getTicks)      (void);			// get system ticks
 	void     (*dbug)		  (char *string);

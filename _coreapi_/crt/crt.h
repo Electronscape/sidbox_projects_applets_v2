@@ -65,6 +65,10 @@ typedef struct {
 #define crt_testcard() (CRTBase->testcard())
 #define crt_zxsplash() (CRTBase->zxsplash())
 
+// SDK functions 
+void CRT_DrawImage(uint8_t *src, int16_t x, int16_t y, uint16_t width, uint16_t height, uint8_t *crt_pixel_buffer);
+void CRT_FrameImage(uint8_t *src, uint8_t *crt_pixel_buffer);
+
 #ifdef __cplusplus
 }
 #endif

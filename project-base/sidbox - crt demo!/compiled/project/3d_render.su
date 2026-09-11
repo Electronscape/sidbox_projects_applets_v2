@@ -1,0 +1,4 @@
+3d_render.c:69:13:draw_filled_triangle	72	static
+3d_render.c:102:15:project_vertex	24	static
+3d_render.c:142:6:RenderBouncingCube	136	static
+3d_render.c:189:6:RenderBouncingCubeFilled	136	static

@@ -5,6 +5,7 @@
 #include "main.h"
 #include "apis.h"
 
+
 #define APP_TITLE       "SIDBOX CRT DEMO"
 #define SCREEN_W        API_CRT_WIDTH
 #define SCREEN_H        API_CRT_HEIGHT
@@ -18,6 +19,20 @@
 #define GRID_HEIGHT     (GRID_BOTTOM - GRID_TOP)
 #define GRID_MID_Y      (GRID_TOP + (GRID_HEIGHT / 2))
 #define STATUS_TOP      224
+
+extern const uint8_t crtimage[];
+extern const uint8_t crtimage2[];
+extern const uint8_t crtimage3[];
+extern const uint8_t crtimage4[];
+extern const uint8_t crtimage5[];
+extern const uint8_t crtimage6[];
+
+#define imagelen 6
+
+const uint8_t *images[] = {
+    crtimage, crtimage2, crtimage3, crtimage4, crtimage5, 
+    crtimage6
+};
 
 typedef struct {
     uint16_t x;
@@ -168,7 +183,7 @@ static void draw_vline(int16_t x, int16_t y, int16_t h, uint8_t colour)
     fill_rect(x, y, 1, h, colour);
 }
 
-static void draw_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
+void draw_line(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
                       uint8_t colour)
 {
     int16_t dx = (x1 > x0) ? (int16_t)(x1 - x0) : (int16_t)(x0 - x1);
@@ -446,6 +461,8 @@ static void restore_lcd_desktop_mode(void)
     gfx_lcdwait();
 }
 
+void RenderBouncingCube(uint8_t colour);
+void RenderBouncingCubeFilled(uint8_t fallback_colour) ;
 int main(int argc, char *argv[])
 {
     uint32_t frame = 0;
@@ -468,6 +485,37 @@ int main(int argc, char *argv[])
         dbug("CRT API unavailable\n");
         return 1;
     }
+
+    uint8_t imageid = 0;
+    uint16_t swapimage = 0;
+
+    for(;;){
+        fill_rect(0, 0, SCREEN_W, SCREEN_H, API_CRT_COLOUR_BLACK);  // clear screen
+        //if(imageid == 0)CRT_DrawImage(crtimage, 0, 0, 320, 240, crt_pixels);
+        //if(imageid == 1)CRT_DrawImage(crtimage2, 0, 0, 320, 240, crt_pixels);
+
+        //CRT_DrawImage(images[imageid], 0, 0, 320, 240, crt_pixels);
+        CRT_FrameImage(images[imageid], crt_pixels);
+        
+        RenderBouncingCubeFilled(4);
+        RenderBouncingCube(0);
+
+        crt_vsync();
+        crt_render(crt_pixels, 0);
+
+        for(uint16_t i = 0; i < 50 * 3; i++){
+            //crt_vsync();
+        }
+        swapimage++;
+        if(swapimage > (50 *3)){
+            swapimage=0;
+            imageid ++;
+            if(imageid > imagelen-1) imageid = 0;
+        }
+        
+    }
+
+
 
     rng_state ^= getTicks();
     init_stars();
@@ -498,3 +546,4 @@ int main(int argc, char *argv[])
     HWKERNAL->exitgamemode();
     return 0;
 }
+
