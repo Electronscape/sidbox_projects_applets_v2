@@ -442,10 +442,7 @@ static void restore_lcd_desktop_mode(void)
 {
     gfx_lcdwait();
     gfx_mode(LCD_W, LCD_H, LCD_W, LCD_H, DISPFLAG_DUALLAYER | DISPFLAG_NOSCROLLABLE);
-    gfx_showfbuffer(gfx_getfbuffer1());
-    gfx_showbbuffer(gfx_getbbuffer1());
-    gfx_usebuffer(gfx_getbbuffer1());
-    gfx_displaynow();
+    restore_desktop();
     gfx_lcdwait();
 }
 
@@ -475,9 +472,18 @@ int main(int argc, char *argv[])
     configure_runmode(GAMEMODE_PROFILE_1);
     
     initMalloc();
+    disable_irq_audiosampler();
+    disable_irq_emulator();
+    disable_irq_joystick();
+    disable_irq_mouse();
+    disable_irq_usb();
+    //disable_irq_mdma();
+    
 
-    set_audio_dma(512);
+    set_audio_dma(64);
     set_music_dma = 1;
+
+    //disable_audio_dma();
     //music_play("sdcard:/music/sid/1_67YT-Turrican_III_Remix.sid",0);
     //music_play("sdcard:/music/sid/Adventure_2SID.sid", 0);
     //music_play("sdcard:/music/xm/(Z00)_Nwhere (+).xm",0);
@@ -491,7 +497,7 @@ int main(int argc, char *argv[])
     crt_sprite_dst._pad0  = 0;
 
     mousePointer1 = *gfx_createSprite((uint8_t *)sprite, 64, 64);
-    //hw_disarm_lcd();
+    hw_disarm_lcd();
 
     if (API->crt == 0 || !crt_enable()) {
         dbug("CRT API unavailable\n");
@@ -517,6 +523,7 @@ int main(int argc, char *argv[])
         draw_crt_text(8, 228, status_line, API_CRT_COLOUR_BCYAN, API_CRT_COLOUR_BLACK);
 
         gfx_submitSprite(&mousePointer1, x, (int16_t)(44 + y), &crt_sprite_dst);
+        gfx_submitSprite(&mousePointer1, 20, 20, &crt_sprite_dst);
 
         x+= sx;
         y+= sy;
@@ -534,6 +541,13 @@ int main(int argc, char *argv[])
     }
 
     crt_disable();
+    enable_irq_audiosampler();
+    enable_irq_emulator();
+    enable_irq_joystick();
+    enable_irq_mouse();
+    enable_irq_usb();
+    enable_audio_dma();
+    enable_irq_mdma();
     restore_lcd_desktop_mode();
     HWKERNAL->exitgamemode();
     return 0;

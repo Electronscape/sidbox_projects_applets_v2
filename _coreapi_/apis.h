@@ -172,7 +172,20 @@ typedef struct {
 
 	void     (*lcd_disp_disable) (void);    // to disarm the LCD
     void     (*lcd_disp_enable)  (void);    // to re-enable the LCD
-} API_HW ;
+
+    void     (*irq_usb_disable)  (void);
+    void     (*irq_usb_enable)   (void);
+    void     (*irq_joy_disable)  (void);
+    void     (*irq_joy_enable)   (void);
+    void     (*irq_audio_disable)(void);
+    void     (*irq_audio_enable) (void);
+    void     (*irq_emu_disable)  (void);
+    void     (*irq_emu_enable)   (void);
+    void     (*irq_uart_disable) (void);
+    void     (*irq_uart_enable)  (void);
+    void     (*irq_mdma_disable) (void);
+    void     (*irq_mdma_enable)  (void);
+		} API_HW ;
 
 
 
@@ -259,6 +272,35 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 #define configure_runmode(profile)	(HWKERNAL->gamemode(profile))
 #define hw_disarm_lcd()				(HWKERNAL->lcd_disp_disable())
 #define hw_rearm_lcd()				(HWKERNAL->lcd_disp_enable())
+#define hw_disable_irq_usb()		(HWKERNAL->irq_usb_disable())
+#define hw_enable_irq_usb()			(HWKERNAL->irq_usb_enable())
+#define hw_disable_irq_joystick()	(HWKERNAL->irq_joy_disable())
+#define hw_enable_irq_joystick()	(HWKERNAL->irq_joy_enable())
+#define hw_disable_irq_mouse()		(HWKERNAL->irq_joy_disable())
+#define hw_enable_irq_mouse()		(HWKERNAL->irq_joy_enable())
+#define hw_disable_irq_audiosampler() (HWKERNAL->irq_audio_disable())
+#define hw_enable_irq_audiosampler()	(HWKERNAL->irq_audio_enable())
+#define hw_disable_irq_emulator()	(HWKERNAL->irq_emu_disable())
+#define hw_enable_irq_emulator()	(HWKERNAL->irq_emu_enable())
+#define hw_disable_irq_uart()		(HWKERNAL->irq_uart_disable())
+#define hw_enable_irq_uart()		(HWKERNAL->irq_uart_enable())
+#define hw_disable_irq_mdma()		(HWKERNAL->irq_mdma_disable())
+#define hw_enable_irq_mdma()		(HWKERNAL->irq_mdma_enable())
+
+#define disable_irq_usb()			hw_disable_irq_usb()
+#define enable_irq_usb()			hw_enable_irq_usb()
+#define disable_irq_joystick()		hw_disable_irq_joystick()
+#define enable_irq_joystick()		hw_enable_irq_joystick()
+#define disable_irq_mouse()			hw_disable_irq_mouse()
+#define enable_irq_mouse()			hw_enable_irq_mouse()
+#define disable_irq_audiosampler()	hw_disable_irq_audiosampler()
+#define enable_irq_audiosampler()	hw_enable_irq_audiosampler()
+#define disable_irq_emulator()		hw_disable_irq_emulator()
+#define enable_irq_emulator()		hw_enable_irq_emulator()
+#define disable_irq_uart()			hw_disable_irq_uart()
+#define enable_irq_uart()			hw_enable_irq_uart()
+#define disable_irq_mdma()			hw_disable_irq_mdma()
+#define enable_irq_mdma()			hw_enable_irq_mdma()
 
 #define dbug(s) 	        (API->hwl->dbug(s))
 

@@ -2,4 +2,4 @@ main.c:211:13:draw_circle	72	static
 main.c:408:13:draw_lcd_centered	40	static
 main.c:252:13:draw_text_cell.constprop	16	static
 main.c:174:6:draw_line	64	static
-main.c:467:5:main	120	static
+main.c:464:5:main	120	static

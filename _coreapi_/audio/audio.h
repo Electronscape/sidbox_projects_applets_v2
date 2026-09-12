@@ -37,6 +37,8 @@ typedef struct {
 typedef struct {
     void (*setbuffsize) (uint32_t size);
     uint8_t *musicdmaenable;
+    void (*dmadisable) (void);
+    void (*dmaenable)  (void);
 } API_AUDIO_HARDWARE;
 
 
@@ -79,6 +81,10 @@ uint32_t LoadSFX(char *filename, uint8_t **snddata);
 // AUDIO HARDWARE SETUP //
 #define set_audio_dma(size)  (AUDIOBase->audhl->setbuffsize(size))
 #define set_music_dma (*(AUDIOBase->audhl->musicdmaenable))
+#define audio_dma_disable() (AUDIOBase->audhl->dmadisable())
+#define audio_dma_enable()  (AUDIOBase->audhl->dmaenable())
+#define disable_audio_dma() audio_dma_disable()
+#define enable_audio_dma()  audio_dma_enable()
 
 // opens a music file and begins playing
 #define music_play(filename, subsong) (AUDIOMUSIC->play(filename, subsong))

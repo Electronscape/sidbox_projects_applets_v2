@@ -57,12 +57,14 @@ typedef struct {
 
 typedef struct  {
     const API_FILEIO   *sys_fileio;
+    void (*desktop_restore)(void);
 } API_SYSTEMS;
 
 
 #define SYSBase (API->system)
 #define SYSFileSystem (SYSBase->sys_fileio)
 // system defines
+#define restore_desktop()                                  (SYSBase->desktop_restore())
 #define sfopen(u8_filenum, s_filename, u8_filemode)       (SYSFileSystem->sbopen(u8_filenum, s_filename, u8_filemode))
 #define sfread(u8_filenum, ptr_buffer, u32_len, u32_retb) (SYSFileSystem->sbread(u8_filenum, ptr_buffer, u32_len, u32_retb))
 #define sfclose(u8_filenum)                               (SYSFileSystem->sbclose(u8_filenum))
