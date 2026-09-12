@@ -480,6 +480,12 @@ int main(int argc, char *argv[])
     configure_runmode(GAMEMODE_PROFILE_1);
     initMalloc();
 
+    disable_irq_audiosampler();
+    disable_irq_emulator();
+    disable_irq_joystick();
+    disable_irq_mouse();
+    disable_irq_usb();
+
     set_audio_dma(512);
     set_music_dma = 1;
     //music_play("sdcard:/music/sid/1_67YT-Turrican_III_Remix.sid",0);
@@ -510,7 +516,7 @@ int main(int argc, char *argv[])
     uint8_t imageid = 0;
     uint16_t swapimage = 0;
 
-    for(;;){
+    while (!should_exit()) {
         fill_rect(0, 0, SCREEN_W, SCREEN_H, API_CRT_COLOUR_BLACK);  // clear screen
         //if(imageid == 0)CRT_DrawImage(crtimage, 0, 0, 320, 240, crt_pixels);
         //if(imageid == 1)CRT_DrawImage(crtimage2, 0, 0, 320, 240, crt_pixels);
@@ -539,7 +545,7 @@ int main(int argc, char *argv[])
         }
         
     }
-
+goto exit;
 
 
     rng_state ^= getTicks();
@@ -562,7 +568,14 @@ int main(int argc, char *argv[])
         ++frame;
     }
 
-    crt_disable();
+    exit:
+    enable_irq_audiosampler();
+    enable_irq_emulator();
+    enable_irq_joystick();
+    enable_irq_mouse();
+    enable_irq_usb();
+    enable_audio_dma();
+    enable_irq_mdma();
     restore_lcd_desktop_mode();
     HWKERNAL->exitgamemode();
     return 0;
