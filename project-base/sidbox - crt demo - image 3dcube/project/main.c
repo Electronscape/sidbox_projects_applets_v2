@@ -29,12 +29,13 @@ extern const uint8_t crtimage5[];
 extern const uint8_t crtimage6[];
 extern const uint8_t crt_samfox[];
 extern const uint8_t crt_garf[];
+extern const uint8_t crt_worldburn[];
 
-#define imagelen 9
+#define imagelen 13
 
 const uint8_t *images[] = {
     crt_c64cat, crtimage, crtimage2, crtimage3, crtimage4, crtimage5, 
-    crtimage6, crt_samfox, crt_garf
+    crtimage6, crt_samfox, crt_garf, crt_worldburn, crt_worldburn, crt_worldburn, crt_worldburn
 };
 
 typedef struct {
@@ -524,8 +525,10 @@ int main(int argc, char *argv[])
         //CRT_DrawImage(images[imageid], 0, 0, 320, 240, crt_pixels);
         CRT_FrameImage(images[imageid], crt_pixels);
         
-        RenderBouncingCubeFilled(4);
-        RenderBouncingCube(0);
+        if(imageid==1){
+            RenderBouncingCubeFilled(4);
+            RenderBouncingCube(0);
+        }
 
         crt_vsync();
         crt_render(crt_pixels, 0);
