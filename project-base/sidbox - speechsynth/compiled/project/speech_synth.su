@@ -1,0 +1,9 @@
+speech_synth.c:181:13:emit_phone.constprop	24	static
+speech_synth.c:287:16:has_magic_e	4	static
+speech_synth.c:207:13:emit_ay.constprop	24	static
+speech_synth.c:195:13:emit_ey.constprop	24	static
+speech_synth.c:225:16:emit_known_word.constprop	48	static
+speech_synth.c:750:10:speech_synth_render	328	static
+speech_synth.c:777:10:speech_synth_samples	0	static
+speech_synth.c:782:10:speech_synth_sample_count	0	static
+speech_synth.c:787:13:speech_synth_phoneme_trace	0	static
