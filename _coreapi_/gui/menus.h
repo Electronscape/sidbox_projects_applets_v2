@@ -23,7 +23,7 @@ typedef void (*SBOS_MenuCallback)(cg_menu_t menu, cg_menuitem_t item, void *user
 typedef struct API_GUI_MENUS {
     cg_menu_t     (*create_title)           (const char *titlestring);
     cg_menuitem_t (*create_item)            (cg_menu_t *menuid, uint8_t menutitleindex, const char *itemstring);
-    void          (*destroy)                (cg_menu_t menuid);
+    void          (*destroy)                (cg_menu_t *menuid);
     void          (*attach_to_window)       (cg_menu_t menuid, CGWindow windowid);
     int16_t       (*attach_images_itemlist) (cg_menu_t *menuid, ItemLists_t *imageitemlist);
     void          (*set_callback)           (cg_menuitem_t menuitemid, SBOS_MenuCallback callback, void *userdata);

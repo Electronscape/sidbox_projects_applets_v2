@@ -414,8 +414,7 @@ static void app_shutdown(void)
     }
 
     if (demo_menu != CG_MENU_INVALID) {
-        SBOS_DestroyMenu(demo_menu);
-        demo_menu = CG_MENU_INVALID;
+        SBOS_DestroyMenu(&demo_menu);
         menu_pause = CG_MENUITEM_INVALID;
         menu_burst = CG_MENUITEM_INVALID;
         menu_clear = CG_MENUITEM_INVALID;
