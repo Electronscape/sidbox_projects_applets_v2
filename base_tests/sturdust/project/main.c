@@ -28,7 +28,7 @@ gfxbob_t tunnelsect[8];
 int8_t pillrt = 0;
 int8_t pilltmr = 0;
 
-#define TUNNEL_DEMO 1
+#define TUNNEL_DEMO 0
 
 
 int main(int argc, char *argv[]) {

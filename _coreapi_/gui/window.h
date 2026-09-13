@@ -18,6 +18,7 @@ typedef uint32_t CGMsgType;
 #define CGMSG_MOUSE                 0x40u
 #define CGMSG_KEY                   0x50u
 #define CGMSG_SYSTEM                0x60u
+#define CGMSG_MENU                  0x70u
 
 typedef uint32_t CGEventType;
 
@@ -38,6 +39,8 @@ typedef uint32_t CGEventType;
 #define CGEVT_GAD_SLIDERVAL_CHANGED 0x600u
 #define CGEVT_GAD_CARET_MOVED       0x700u
 #define CGEVT_GAD_TEXT_CHANGED      CGEVT_GAD_CARET_MOVED
+
+#define CGEVT_MENU_SELECTED         0x900u
 
 #define CGEVT_WIN_CLOSE_REQUEST     0x1000u
 #define CGEVT_WIN_MOVE              0x1001u

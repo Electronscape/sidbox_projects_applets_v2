@@ -540,6 +540,8 @@ int main(int argc, char *argv[])
         ++frame;
     }
 
+    while(should_exit());// prevents wierd clicking back on the app again xD
+
     crt_disable();
     enable_irq_audiosampler();
     enable_irq_emulator();

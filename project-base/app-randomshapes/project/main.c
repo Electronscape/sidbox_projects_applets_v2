@@ -58,6 +58,12 @@ static CGGadget btn_burst;
 static CGGadget btn_clear;
 static CGGadget btn_close;
 static CGTimer draw_timer = CGTIMER_INVALID;
+static cg_menu_t demo_menu = CG_MENU_INVALID;
+static cg_menuitem_t menu_pause = CG_MENUITEM_INVALID;
+static cg_menuitem_t menu_burst = CG_MENUITEM_INVALID;
+static cg_menuitem_t menu_clear = CG_MENUITEM_INVALID;
+static cg_menuitem_t menu_about = CG_MENUITEM_INVALID;
+static cg_menuitem_t menu_exit  = CG_MENUITEM_INVALID;
 
 static volatile uint8_t app_running;
 static uint8_t paused;
@@ -71,7 +77,9 @@ static char status_buffer[96];
 static void draw_demo_frame(uint8_t shape_count);
 static void repaint_bitmapview(void);
 static void set_status(void);
+static void set_paused_state(uint8_t enabled);
 static CGWindowProcRes editor_proc(CGWindow win, const CGMessage_t *m);
+static void setup_demo_menu(void);
 
 static uint32_t rng_u32(void)
 {
@@ -372,6 +380,21 @@ static void set_status(void)
     SBOS_GadgetRepaint(status_label);
 }
 
+static void set_paused_state(uint8_t enabled)
+{
+    paused = enabled ? 1u : 0u;
+
+    if (menu_pause != CG_MENUITEM_INVALID) {
+        if (paused) {
+            SBOS_MenuSetFlags(&menu_pause, 0, CG_MENUITEMF_TICKED);
+        } else {
+            SBOS_MenuSetFlags(&menu_pause, CG_MENUITEMF_TICKED, 0);
+        }
+    }
+
+    set_status();
+}
+
 static void app_shutdown(void)
 {
     if (!app_running) {
@@ -388,6 +411,16 @@ static void app_shutdown(void)
     if (editor_win) {
         SBOS_CloseWindow(editor_win);
         editor_win = 0;
+    }
+
+    if (demo_menu != CG_MENU_INVALID) {
+        SBOS_DestroyMenu(demo_menu);
+        demo_menu = CG_MENU_INVALID;
+        menu_pause = CG_MENUITEM_INVALID;
+        menu_burst = CG_MENUITEM_INVALID;
+        menu_clear = CG_MENUITEM_INVALID;
+        menu_about = CG_MENUITEM_INVALID;
+        menu_exit  = CG_MENUITEM_INVALID;
     }
 
     //printf(TXTAPP_TITLE ": closing\n");
@@ -412,8 +445,7 @@ static void on_pause_clicked(void *g, int32_t a, int32_t b, int32_t c, int32_t d
     (void)c;
     (void)d;
 
-    paused = (uint8_t)!paused;
-    set_status();
+    set_paused_state((uint8_t)!paused);
 }
 
 static void on_burst_clicked(void *g, int32_t a, int32_t b, int32_t c, int32_t d)
@@ -449,6 +481,42 @@ static void on_close_clicked(void *g, int32_t a, int32_t b, int32_t c, int32_t d
     app_shutdown();
 }
 
+static void on_menu_pause(cg_menu_t menu, cg_menuitem_t item, void *userdata)
+{
+    (void)menu;
+    (void)item;
+    (void)userdata;
+
+    set_paused_state((uint8_t)!paused);
+}
+
+static void on_menu_burst(cg_menu_t menu, cg_menuitem_t item, void *userdata)
+{
+    (void)menu;
+    (void)item;
+    (void)userdata;
+
+    draw_demo_frame(24);
+}
+
+static void on_menu_clear(cg_menu_t menu, cg_menuitem_t item, void *userdata)
+{
+    (void)menu;
+    (void)item;
+    (void)userdata;
+
+    clear_demo();
+}
+
+static void on_menu_about(cg_menu_t menu, cg_menuitem_t item, void *userdata)
+{
+    (void)menu;
+    (void)item;
+    (void)userdata;
+
+    SBOS_InfoBox(editor_win, TXTAPP_TITLE, "Dummy menu test via the SIDBOX API.");
+}
+
 static CGWindowProcRes editor_proc(CGWindow win, const CGMessage_t *m)
 {
     (void)win;
@@ -473,7 +541,57 @@ static CGWindowProcRes editor_proc(CGWindow win, const CGMessage_t *m)
         }
     }
 
+    if (m->mtype == CGMSG_MENU && m->eventClass == CGEVT_MENU_SELECTED) {
+        if ((cg_menu_t)m->a != demo_menu) {
+            return CGPROC_DEFAULT;
+        }
+
+        if ((cg_menuitem_t)m->b == menu_exit) {
+            app_shutdown();
+            return CGPROC_HANDLED;
+        }
+    }
+
     return CGPROC_DEFAULT;
+}
+
+static void setup_demo_menu(void)
+{
+    cg_menuitem_t item;
+
+    if (demo_menu != CG_MENU_INVALID) {
+        return;
+    }
+
+    demo_menu = SBOS_CreateMenuTitle("Shapes|Options|About");
+    if (demo_menu == CG_MENU_INVALID) {
+        return;
+    }
+
+    menu_burst = SBOS_CreateMenuItem(&demo_menu, 0, "Burst");
+    SBOS_MenuCallBack(menu_burst, on_menu_burst, NULL);
+
+    menu_clear = SBOS_CreateMenuItem(&demo_menu, 0, "Clear");
+    SBOS_MenuCallBack(menu_clear, on_menu_clear, NULL);
+
+    item = SBOS_CreateMenuItem(&demo_menu, 0, "");
+    SBOS_MenuSetFlags(&item, 0, CG_MENUITEMF_SEPARATOR);
+
+    menu_exit = SBOS_CreateMenuItem(&demo_menu, 0, "Exit"); // handled by CGMSG_MENU in editor_proc()
+
+    menu_pause = SBOS_CreateMenuItem(&demo_menu, 1, "Paused");
+    SBOS_MenuCallBack(menu_pause, on_menu_pause, NULL);
+    if (paused) {
+        SBOS_MenuSetFlags(&menu_pause, 0, CG_MENUITEMF_TICKED);
+    }
+
+    //item = SBOS_CreateMenuItem(&demo_menu, 1, "");
+    //SBOS_MenuSetFlags(&item, 0, CG_MENUITEMF_SEPARATOR);
+
+    menu_about = SBOS_CreateMenuItem(&demo_menu, 2, "About Random Shapes");
+    SBOS_MenuCallBack(menu_about, on_menu_about, NULL);
+
+    SBOS_AttachMenuToWindow(demo_menu, editor_win);
 }
 
 static void build_editor(void)
@@ -481,6 +599,7 @@ static void build_editor(void)
     SBOS_CreateWindow(&editor_win, EDITOR_WIN_X, EDITOR_WIN_Y, EDITOR_WIN_W,
                       EDITOR_WIN_H, TXTAPP_TITLE, WIN_DEFAULT);
     SBOS_SetWindowProc(editor_win, editor_proc);
+    setup_demo_menu();
 
     btn_pause = SBOS_CreateButton(editor_win, BTN_PAUSE_X, BTN_Y, BTN_W,
                                   BTN_H, "Pause", GAD_TOOL_DEFAULT);
@@ -518,12 +637,10 @@ static void build_editor(void)
         if (SBOS_TimerSet(draw_timer, 50, 50, on_timer_tick, NULL) != 0) {
             SBOS_FreeTimer(draw_timer);
             draw_timer = CGTIMER_INVALID;
-            paused = 1;
-            set_status();
+            set_paused_state(1);
         }
     } else {
-        paused = 1;
-        set_status();
+        set_paused_state(1);
     }
 
     SBOS_WindowToFront(editor_win);

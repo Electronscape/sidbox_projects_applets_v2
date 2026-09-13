@@ -113,6 +113,7 @@ extern _largest_modfile;
 #include "gui/gadgets.h"
 #include "gui/dialogs.h"
 #include "gui/timers.h"
+#include "gui/menus.h"
 
 
 
@@ -197,6 +198,7 @@ typedef struct  {
 	const API_GUI_Gadgets *gadgets;
 	const API_GUI_DIALOGS *dialogs;
 	const API_SYS_TIMERS  *timers;
+	const API_GUI_Menus   *menus;
 } API_GUI;
 
 #include "audio/audio.h"
