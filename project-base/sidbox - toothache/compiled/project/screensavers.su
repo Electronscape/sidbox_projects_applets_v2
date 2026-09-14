@@ -1,0 +1,9 @@
+screensavers.c:24:10:star_rand	4	static
+screensavers.c:29:6:reset_star	16	static
+screensavers.c:55:6:init_star_fields	36	static
+screensavers.c:64:6:draw_star_pixel	8	static
+screensavers.c:73:9:star_tail_width	0	static
+screensavers.c:83:6:draw_star_shape	24	static
+screensavers.c:103:6:draw_star_speed_range	40	static
+screensavers.c:122:6:draw_star_fields_layer1	0	static
+screensavers.c:127:6:draw_star_fields_layer2	0	static
