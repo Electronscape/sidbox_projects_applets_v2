@@ -11,7 +11,8 @@ PROJECT_DIR := project
 FINAL_COPY_PATH := /media/ben/16GDEM/applets/$(PROJECTNAME).app
 
 # Locate the CoreAPI directory here
-CORE_DIR := ../../_coreapi_
+#CORE_DIR := ../../_coreapi_
+CORE_DIR := /home/kbox/sidbox-applet-compiler/_coreapi_
 
 # Toolchain
 # Use STM32-provided GCC 9.3.1 toolchain (OR DOWNLOAD IT)
@@ -121,7 +122,11 @@ postbuild: $(TARGET_ELF)
 	@echo -e "\033[1;32m---- COMPILE COMPLETED ----\033[0m"
 	@echo
 	@$(MAKE) show-size --no-print-directory
-	@cp $(TARGET_FINAL_BIN) $(FINAL_COPY_PATH) > /dev/null 2>&1
+	@if [ -d "$$(dirname "$(FINAL_COPY_PATH)")" ]; then \
+		cp $(TARGET_FINAL_BIN) $(FINAL_COPY_PATH) > /dev/null 2>&1 || true; \
+	else \
+		echo "Skipping final copy: $(FINAL_COPY_PATH) not mounted"; \
+	fi
 
 # Pretty-print size
 show-size:

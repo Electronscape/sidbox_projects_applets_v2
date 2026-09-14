@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define SPEECH_SYNTH_SAMPLE_RATE 22050u
+#define SPEECH_SYNTH_SAMPLE_RATE 22200u
 #define SPEECH_SYNTH_MAX_SECONDS 12u
 
 uint32_t speech_synth_render(const char *text);

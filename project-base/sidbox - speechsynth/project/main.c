@@ -11,8 +11,7 @@
 #define SPEECH_CHANNEL  0
 
 static const char *demo_text =
-    "Hello. I am a speech synthesizer for Sidbox. "
-    "No samples. Just phonemes, formants, and questionable eighties charm.";
+    "/HEH4LOW WER4LD. AY4 AEM AH4 MIYGAH NEH4REYTER. NOW4 AY SPIY4K WIHDH FOW4RMAENTS.";
 
 
 int main(int argc, char *argv[])
@@ -31,9 +30,10 @@ int main(int argc, char *argv[])
     
     initMalloc();
     
-    set_audio_dma(64);
-    set_music_dma = 1;
+    //set_audio_dma(64);
+    //set_music_dma = 1;
 
+    /*
     crt_enable();
     crt_clear(API_CRT_COLOUR_BLACK);
     crt_setborder(API_CRT_COLOUR_BLUE);
@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
     crt_text(8, 46, "Press FIRE to replay.", API_CRT_COLOUR_BYELLOW);
     crt_text(8, 72, say_text, API_CRT_COLOUR_BGREEN);
     crt_flush();
+    */
 
     sample_count = speech_synth_render(say_text);
     sound_assign(SPEECH_CHANNEL, speech_synth_samples(), sample_count, SAMP_S8);
@@ -68,4 +69,3 @@ int main(int argc, char *argv[])
     HWKERNAL->exitgamemode();
     return 0;
 }
-

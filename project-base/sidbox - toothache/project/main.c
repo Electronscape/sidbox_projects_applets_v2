@@ -775,6 +775,15 @@ static void init_scene(){
     init_star_fields();
 }
 
+static void restore_lcd_desktop_mode(void)
+{
+    gfx_lcdwait();
+    gfx_mode(480, 320, 480, 320, DISPFLAG_DUALLAYER | DISPFLAG_NOSCROLLABLE);
+    restore_desktop();
+    gfx_lcdwait();
+}
+
+
 int main(int argc, char *argv[])
 {
     (void)argc;
@@ -787,8 +796,8 @@ int main(int argc, char *argv[])
 
     gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_50);
     gfx_mode(SCREEN_W, SCREEN_H, SCREEN_W, SCREEN_H, DISPFLAG_DUALLAYER);
-    set_audio_dma(512); // a few ms about 7ms enough for a full frame.
-    set_music_dma = 1;
+    //set_audio_dma(512); // a few ms about 7ms enough for a full frame.
+    //set_music_dma = 1;
 
     front_a = gfx_getdrawbuffer();
     front_b = gfx_getshowbuffer();
@@ -806,16 +815,17 @@ int main(int argc, char *argv[])
     gfx_showbbuffer(&backbitmap);
     gfx_showfbuffer(front_a);
     gfx_usebuffer(front_b);
-    //lcd_bright(100);
+    //lcd_bright(23);
 
     init_scene();
 
     //music_play("sdcard:/level1.mod", 0);
-
-    for (;;) {
+    uint8_t joy = 0;
+    while(joy = getjoyport()){
         //poll_touch();
         //process_touch();
 
+        
 
         gfx_lcdwait();
 
@@ -826,7 +836,18 @@ int main(int argc, char *argv[])
         draw_scene(0);
         flip_front_buffer();
         gfx_displaynow();
+        music_update();
+
+        if ((joy & BTN_FIRE) && (joy & BTN_FIRE2)){
+            while((getjoyport() & BTN_FIRE) && (getjoyport() & BTN_FIRE2));
+            break;
+        }
+        
     }
+
+    printf("Yupp Toothache desktop Ended :)\n");
+    restore_lcd_desktop_mode();
+    HWKERNAL->exitgamemode();
 
     return 0x00;
 }

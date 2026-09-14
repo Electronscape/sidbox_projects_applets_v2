@@ -3,13 +3,11 @@
 #include <string.h>
 
 #define SPEECH_MAX_SAMPLES (SPEECH_SYNTH_SAMPLE_RATE * SPEECH_SYNTH_MAX_SECONDS)
-#define MAX_PHONES 768u
-#define TRACE_CAP 2048u
-#define VOICED 1u
-#define STOP 2u
-
-#define MAC_BASE_PITCH 152u
-#define MAC_CONTROL_HZ 35u
+#define MAX_PHONES  768u
+#define TRACE_CAP   2048u
+#define LIQUID      0x10u
+#define VOICED      1u
+#define STOP        2u
 
 typedef enum {
     PH_PAUSE,
@@ -52,6 +50,7 @@ typedef enum {
 typedef struct {
     PhoneCode code;
     uint16_t ms;
+    uint8_t stress;
 } PhoneToken;
 
 typedef struct {
@@ -72,6 +71,29 @@ static PhoneToken g_phones[MAX_PHONES];
 static char g_trace[TRACE_CAP];
 static uint32_t g_sample_count;
 static uint32_t g_rng = 0x1234abcdul;
+
+typedef struct {
+    uint16_t pitch;
+    uint16_t rate;
+    uint8_t robotic;
+    int8_t f1adj;
+    int8_t f2adj;
+    int8_t f3adj;
+    int8_t a1adj;
+    int8_t a2adj;
+    int8_t a3adj;
+    int8_t avbias;
+    int8_t afbias;
+    uint8_t f0perturb;
+} NarratorVoice;
+
+static const NarratorVoice g_voice = {
+    112, 128, 0,
+    -1, 2, 3,
+    2, 10, 4,
+    10, -10,
+    7
+};
 
 static const PhoneSpec g_specs[] = {
     {"_",   0,    0,    0,   0,   0,   0,   0, 0,          70},
@@ -94,7 +116,7 @@ static const PhoneSpec g_specs[] = {
     {"H",  520, 1500, 2600,  55,  38,  25,  70, VOICED,    55},
     {"J",  360, 1700, 2700,  80,  70,  55,  72, VOICED|STOP, 85},
     {"K",  300, 1700, 2800,   0,  45,  55,  92, STOP,      70},
-    {"L",  400, 2400, 3000, 180,  80,  42,   0, VOICED,    78},
+    {"L",  360,  1080, 2600, 92,  56,  30,   1, VOICED | LIQUID,       82},
     {"M",  250, 1200, 2200, 185,  42,  22,   0, VOICED,    82},
     {"N",  250, 1700, 2600, 180,  55,  28,   0, VOICED,    75},
     {"NG", 250, 2000, 2750, 180,  58,  30,   0, VOICED,    90},
@@ -107,6 +129,7 @@ static const PhoneSpec g_specs[] = {
     {"V",  300, 1300, 2600, 100,  30,  25,  75, VOICED,    72},
     {"W",  300,  760, 2200, 195,  75,  35,   0, VOICED,    82},
     {"Y",  280, 2200, 3000, 165, 105,  50,   0, VOICED,    70},
+    //{"Y",  750, 1350, 2500, 165, 105,  50,   0, VOICED,    70},
     {"Z",  320, 3000, 4100,  90,  45,  75,  70, VOICED,    82},
     {"ZH", 320, 2100, 3000,  80,  65,  70,  68, VOICED,    86}
 };
@@ -139,11 +162,33 @@ static uint8_t is_hard_vowel(char c)
                      c == 'o' || c == 'u');
 }
 
+static uint8_t is_digit(char c)
+{
+    return (uint8_t)(c >= '0' && c <= '9');
+}
+
+static uint8_t is_vowel_phone(PhoneCode code)
+{
+    return (uint8_t)(code >= PH_AH && code <= PH_UW);
+}
+
 static uint8_t starts_with(const char *word, uint16_t len, uint16_t pos, const char *prefix)
 {
     uint16_t i = 0;
     while (prefix[i]) {
         if ((pos + i) >= len || lower_char(word[pos + i]) != prefix[i]) {
+            return 0;
+        }
+        i++;
+    }
+    return 1;
+}
+
+static uint8_t starts_with_text(const char *text, uint16_t pos, const char *prefix)
+{
+    uint16_t i = 0;
+    while (prefix[i]) {
+        if (!text[pos + i] || lower_char(text[pos + i]) != lower_char(prefix[i])) {
             return 0;
         }
         i++;
@@ -188,8 +233,20 @@ static void emit_phone(PhoneToken *out, uint16_t *count, PhoneCode code, uint16_
     }
     out[*count].code = code;
     out[*count].ms = ms;
+    out[*count].stress = 0;
     (*count)++;
     trace_phone(code);
+}
+
+static void stress_last_vowel(PhoneToken *out, uint16_t count, uint8_t stress)
+{
+    while (count != 0u) {
+        count--;
+        if (is_vowel_phone(out[count].code)) {
+            out[count].stress = stress;
+            break;
+        }
+    }
 }
 
 static void emit_ey(PhoneToken *out, uint16_t *count)
@@ -439,12 +496,162 @@ static void emit_word(const char *word, uint16_t len, PhoneToken *out, uint16_t 
     }
 }
 
+static uint8_t emit_phonetic_symbol(const char *text, uint16_t *pos, PhoneToken *out, uint16_t *count)
+{
+    if (starts_with_text(text, *pos, "/H")) {
+        emit_phone(out, count, PH_H, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "SH")) {
+        emit_phone(out, count, PH_SH, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "TH")) {
+        emit_phone(out, count, PH_TH, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "DH")) {
+        emit_phone(out, count, PH_DH, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "CH")) {
+        emit_phone(out, count, PH_CH, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "ZH")) {
+        emit_phone(out, count, PH_ZH, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "NG") || starts_with_text(text, *pos, "NX")) {
+        emit_phone(out, count, PH_NG, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "IY")) {
+        emit_phone(out, count, PH_IY, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "IH") || starts_with_text(text, *pos, "IX")) {
+        emit_phone(out, count, PH_IH, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "EH")) {
+        emit_phone(out, count, PH_EH, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "AE")) {
+        emit_phone(out, count, PH_AE, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "AA")) {
+        emit_phone(out, count, PH_AA, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "AH") || starts_with_text(text, *pos, "AX")) {
+        emit_phone(out, count, PH_AH, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "AO")) {
+        emit_phone(out, count, PH_AO, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "UH")) {
+        emit_phone(out, count, PH_UH, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "UW") || starts_with_text(text, *pos, "UX")) {
+        emit_phone(out, count, PH_UW, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "ER")) {
+        emit_phone(out, count, PH_ER, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "EY")) {
+        emit_ey(out, count); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "AY")) {
+        emit_ay(out, count); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "OY")) {
+        emit_oy(out, count); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "AW")) {
+        emit_aw(out, count); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "OW") || starts_with_text(text, *pos, "OH")) {
+        emit_ow(out, count); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "UL")) {
+        emit_phone(out, count, PH_AH, 70); emit_phone(out, count, PH_L, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "UM")) {
+        emit_phone(out, count, PH_AH, 70); emit_phone(out, count, PH_M, 0); *pos += 2u; return 1;
+    }
+    if (starts_with_text(text, *pos, "UN")) {
+        emit_phone(out, count, PH_AH, 70); emit_phone(out, count, PH_N, 0); *pos += 2u; return 1;
+    }
+
+    switch (lower_char(text[*pos])) {
+        case 'b': emit_phone(out, count, PH_B, 0); break;
+        case 'd': emit_phone(out, count, PH_D, 0); break;
+        case 'f': emit_phone(out, count, PH_F, 0); break;
+        case 'g': emit_phone(out, count, PH_G, 0); break;
+        case 'h': emit_phone(out, count, PH_H, 0); break;
+        case 'j': emit_phone(out, count, PH_J, 0); break;
+        case 'k': emit_phone(out, count, PH_K, 0); break;
+        case 'l': emit_phone(out, count, PH_L, 0); break;
+        case 'm': emit_phone(out, count, PH_M, 0); break;
+        case 'n': emit_phone(out, count, PH_N, 0); break;
+        case 'p': emit_phone(out, count, PH_P, 0); break;
+        case 'q': emit_phone(out, count, PH_PAUSE, 35); break;
+        case 'r': emit_phone(out, count, PH_R, 0); break;
+        case 's': emit_phone(out, count, PH_S, 0); break;
+        case 't': emit_phone(out, count, PH_T, 0); break;
+        case 'v': emit_phone(out, count, PH_V, 0); break;
+        case 'w': emit_phone(out, count, PH_W, 0); break;
+        case 'x': emit_phone(out, count, PH_K, 0); emit_phone(out, count, PH_S, 0); break;
+        case 'y': emit_phone(out, count, PH_Y, 0); break;
+        case 'z': emit_phone(out, count, PH_Z, 0); break;
+        default: return 0;
+    }
+
+    (*pos)++;
+    return 1;
+}
+
+static uint16_t phonemize_amiga(const char *text, PhoneToken *out)
+{
+    uint16_t count = 0;
+    uint16_t i = 0;
+
+    g_trace[0] = 0;
+
+    while (text[i] && count < MAX_PHONES) {
+        if (text[i] == '/') {
+            i++;
+            continue;
+        }
+        if (is_digit(text[i])) {
+            stress_last_vowel(out, count, (uint8_t)(text[i] - '0'));
+            i++;
+            continue;
+        }
+        if (text[i] == '.' || text[i] == '!' || text[i] == '?') {
+            emit_phone(out, &count, PH_PAUSE, 185);
+            i++;
+            continue;
+        }
+        if (text[i] == ',' || text[i] == ';' || text[i] == ':') {
+            emit_phone(out, &count, PH_PAUSE, 115);
+            i++;
+            continue;
+        }
+        if (text[i] == ' ' || text[i] == '\t') {
+            emit_phone(out, &count, PH_PAUSE, 48);
+            i++;
+            continue;
+        }
+        if (!emit_phonetic_symbol(text, &i, out, &count)) {
+            i++;
+        }
+    }
+
+    return count;
+}
+
 static uint16_t phonemize(const char *text, PhoneToken *out)
 {
     uint16_t count = 0;
     uint16_t i = 0;
 
     g_trace[0] = 0;
+
+    if (text[0] == '/') {
+        return phonemize_amiga(text, out);
+    }
 
     while (text[i] && count < MAX_PHONES) {
         if (is_alpha(text[i])) {
@@ -490,6 +697,29 @@ static uint8_t lerp_u8(uint8_t a, uint8_t b, uint16_t t)
     return (uint8_t)(a + (((int16_t)b - (int16_t)a) * (int16_t)t) / 255);
 }
 
+static uint16_t voice_adjust_freq(uint16_t hz, int8_t adjust)
+{
+    int32_t scale = 100 + (int32_t)adjust * 5;
+    int32_t out;
+
+    if (scale < 45) {
+        scale = 45;
+    }
+    out = ((int32_t)hz * scale) / 100;
+    if (out < 60) out = 60;
+    if (out > 6500) out = 6500;
+    return (uint16_t)out;
+}
+
+static uint8_t voice_adjust_amp(uint8_t amp, int8_t adjust)
+{
+    int32_t out = (int32_t)amp + (int32_t)adjust * 2;
+
+    if (out < 0) out = 0;
+    if (out > 255) out = 255;
+    return (uint8_t)out;
+}
+
 typedef struct {
     float low;
     float band;
@@ -497,15 +727,15 @@ typedef struct {
 
 typedef struct {
     uint32_t pitch_phase;
-    uint32_t control_count;
-    uint16_t control_pitch;
+    uint32_t control_step;
+    uint16_t frame_pitch;
     float prev_glottal;
+    float voice_ring;
     float source_tilt;
     float lip_last;
     SvfState f1;
     SvfState f2;
     SvfState f3;
-    SvfState nasal;
     SvfState n2;
     SvfState n3;
 } SynthState;
@@ -533,12 +763,12 @@ static float glottal_pulse(uint32_t phase)
     float p = (float)(phase >> 16) * (1.0f / 65536.0f);
     float x;
 
-    if (p < 0.46f) {
-        x = p * (1.0f / 0.46f);
+    if (p < 0.58f) {
+        x = p * (1.0f / 0.58f);
         return x * x * (3.0f - 2.0f * x);
     }
-    if (p < 0.78f) {
-        x = (p - 0.46f) * (1.0f / 0.32f);
+    if (p < 0.82f) {
+        x = (p - 0.58f) * (1.0f / 0.24f);
         return 1.0f - (x * x * (3.0f - 2.0f * x));
     }
     return 0.0f;
@@ -565,64 +795,43 @@ static float svf_bandpass(SvfState *s, float input, uint16_t hz, uint16_t bandwi
 
 static void bandwidths_for(PhoneCode code, uint16_t *b1, uint16_t *b2, uint16_t *b3)
 {
-    *b1 = 55;
-    *b2 = 78;
-    *b3 = 115;
+    *b1 = 70;
+    *b2 = 95;
+    *b3 = 135;
 
     if (code == PH_M || code == PH_N || code == PH_NG) {
-        *b1 = 42;
-        *b2 = 150;
-        *b3 = 210;
+        *b1 = 45;
+        *b2 = 170;
+        *b3 = 230;
     } else if (code == PH_R || code == PH_L || code == PH_W || code == PH_Y) {
-        *b1 = 68;
-        *b2 = 105;
-        *b3 = 150;
+        *b1 = 80;
+        *b2 = 120;
+        *b3 = 160;
     } else if (code == PH_S || code == PH_Z || code == PH_SH || code == PH_ZH ||
                code == PH_F || code == PH_V || code == PH_TH || code == PH_DH) {
-        *b1 = 190;
-        *b2 = 255;
-        *b3 = 360;
+        *b1 = 220;
+        *b2 = 300;
+        *b3 = 420;
     } else if (code == PH_P || code == PH_T || code == PH_K ||
                code == PH_B || code == PH_D || code == PH_G ||
                code == PH_CH || code == PH_J) {
-        *b1 = 155;
-        *b2 = 230;
-        *b3 = 325;
+        *b1 = 180;
+        *b2 = 260;
+        *b3 = 360;
     }
 }
 
-static uint8_t phone_is_nasal(PhoneCode code)
-{
-    return (uint8_t)(code == PH_M || code == PH_N || code == PH_NG);
-}
-
-static uint8_t phone_is_liquid(PhoneCode code)
-{
-    return (uint8_t)(code == PH_R || code == PH_L || code == PH_W || code == PH_Y);
-}
-
-static uint16_t macintosh_pitch(SynthState *state, uint32_t write_at)
-{
-    uint32_t control_frame = SPEECH_SYNTH_SAMPLE_RATE / MAC_CONTROL_HZ;
-
-    if (state->control_pitch == 0u || state->control_count >= control_frame) {
-        uint16_t step = (uint16_t)((write_at / control_frame) & 15u);
-        int16_t bend = (step < 8u) ? (int16_t)step : (int16_t)(15u - step);
-
-        state->control_count = 0;
-        state->control_pitch = (uint16_t)(MAC_BASE_PITCH + bend - 3);
-    }
-
-    state->control_count++;
-    return state->control_pitch;
-}
+#define voice_deepness  0.75f
+#define voice_resonance 0.88f
 
 static uint8_t render_phone(PhoneCode cur_code, PhoneCode next_code,
                             const PhoneSpec *cur, const PhoneSpec *next,
-                            uint32_t samples, SynthState *state, uint32_t *write_at)
+                            uint32_t samples, uint8_t stress,
+                            SynthState *state, uint32_t *write_at)
 {
     uint32_t i;
-    uint32_t blend_samples = SPEECH_SYNTH_SAMPLE_RATE / 32u;
+    uint32_t blend_samples = SPEECH_SYNTH_SAMPLE_RATE / 28u;
+    uint32_t control_frame = SPEECH_SYNTH_SAMPLE_RATE / 100u;
 
     if (cur_code == PH_PAUSE) {
         for (i = 0; i < samples && *write_at < SPEECH_MAX_SAMPLES; i++) {
@@ -639,23 +848,25 @@ static uint8_t render_phone(PhoneCode cur_code, PhoneCode next_code,
     for (i = 0; i < samples && *write_at < SPEECH_MAX_SAMPLES; i++) {
         uint16_t t = 0;
         PhoneCode active_code = cur_code;
-        uint16_t f1 = cur->f1;
-        uint16_t f2 = cur->f2;
-        uint16_t f3 = cur->f3;
-        uint8_t a1 = cur->a1;
-        uint8_t a2 = cur->a2;
-        uint8_t a3 = cur->a3;
-        uint8_t noise = cur->noise;
+        uint16_t f1 = lerp_u16(cur->f1, next->f1, t);
+        uint16_t f2 = lerp_u16(cur->f2, next->f2, t);
+        uint16_t f3 = lerp_u16(cur->f3, next->f3, t);
+        uint8_t a1 = lerp_u8(cur->a1, next->a1, t);
+        uint8_t a2 = lerp_u8(cur->a2, next->a2, t);
+        uint8_t a3 = lerp_u8(cur->a3, next->a3, t);
+        uint8_t noise = lerp_u8(cur->noise, next->noise, t);
         uint8_t voiced;
         uint16_t b1;
         uint16_t b2;
+        uint32_t control_i = i;
+        uint32_t pitch_old;
         uint16_t b3;
         float pulse;
+        float impulse = 0.0f;
         float excitation;
         float voiced_src = 0.0f;
         float fric_src = 0.0f;
         float aspiration = 0.0f;
-        float nasal;
         float bp1;
         float bp2;
         float bp3;
@@ -664,11 +875,17 @@ static uint8_t render_phone(PhoneCode cur_code, PhoneCode next_code,
         float mouth;
         float lip;
         float amp;
-        float vowel_gain;
-        float consonant_gate = 1.0f;
+        uint16_t pitch = (uint16_t)(g_voice.pitch * voice_deepness);
 
+        if (control_frame != 0u) {
+            control_i = (i / control_frame) * control_frame;
+        }
         if (blend_samples != 0u && i + blend_samples >= samples) {
-            t = (uint16_t)(((i + blend_samples - samples) * 255u) / blend_samples);
+            if (control_i + blend_samples < samples) {
+                t = 0;
+            } else {
+                t = (uint16_t)(((control_i + blend_samples - samples) * 255u) / blend_samples);
+            }
             active_code = (t < 128u) ? cur_code : next_code;
             f1 = lerp_u16(cur->f1, next->f1, t);
             f2 = lerp_u16(cur->f2, next->f2, t);
@@ -681,66 +898,99 @@ static uint8_t render_phone(PhoneCode cur_code, PhoneCode next_code,
         voiced = (((t < 128u) ? cur->flags : next->flags) & VOICED) ? 1u : 0u;
         bandwidths_for(active_code, &b1, &b2, &b3);
 
-        state->pitch_phase += phase_step(macintosh_pitch(state, *write_at));
+        f1 = (uint16_t)(voice_adjust_freq(f1, g_voice.f1adj) * voice_resonance);
+        f2 = (uint16_t)(voice_adjust_freq(f2, g_voice.f2adj) * voice_resonance);
+        f3 = (uint16_t)(voice_adjust_freq(f3, g_voice.f3adj) * voice_resonance);
+        a1 = voice_adjust_amp(a1, g_voice.a1adj);
+        a2 = voice_adjust_amp(a2, g_voice.a2adj);
+        a3 = voice_adjust_amp(a3, g_voice.a3adj);
+
+        if (stress != 0u) {
+            pitch = (uint16_t)(pitch + (uint16_t)stress * 5u);
+        }
+        if (i == 0u || state->control_step >= control_frame) {
+            state->control_step = 0;
+            state->frame_pitch = pitch;
+            if (!g_voice.robotic) {
+                int32_t wobble = (int32_t)((*write_at >> 11) & 7u) - 3;
+                int32_t perturb = ((int32_t)next_noise() * (int32_t)g_voice.f0perturb) >> 17;
+                int32_t p = (int32_t)pitch + wobble + perturb;
+                if (p < 35) p = 35;
+                if (p > 320) p = 320;
+                state->frame_pitch = (uint16_t)p;
+            }
+        }
+        state->control_step++;
+        pitch = state->frame_pitch;
+
+        pitch_old = state->pitch_phase;
+        state->pitch_phase += phase_step(pitch);
+        if (state->pitch_phase < pitch_old) {
+            impulse = 1.0f;
+            state->voice_ring += 1.0f;
+        }
+        state->voice_ring *= voiced ? 0.835f : 0.08f;
         pulse = glottal_pulse(state->pitch_phase);
 
         if (voiced) {
-            voiced_src = (pulse - state->prev_glottal) * 3.85f + pulse * 0.34f;
-            voiced_src *= 0.96f + ((float)a1 * (1.0f / 390.0f));
+            float av = 1.0f + ((float)g_voice.avbias * (1.0f / 64.0f)) + (float)stress * 0.045f;
+            voiced_src = state->voice_ring * 0.82f +
+                         (pulse - state->prev_glottal) * 2.45f +
+                         pulse * 0.24f +
+                         impulse * 0.16f;
+            voiced_src *= (float)a1 * (1.0f / 255.0f) * av;
         }
         state->prev_glottal = pulse;
 
         if (noise != 0u) {
-            float burst = (float)noise * (1.0f / 255.0f) * 0.25f;
+            float af = 1.0f + ((float)g_voice.afbias * (1.0f / 64.0f));
+            float burst;
+
+            if (af < 0.15f) {
+                af = 0.15f;
+            }
+            burst = (float)noise * (1.0f / 255.0f) * 0.29f * af;
             if ((cur->flags & STOP) && i < samples / 3u) {
-                voiced_src *= 0.04f;
-                consonant_gate = 0.10f;
-                burst *= 0.10f;
+                voiced_src *= 0.03f;
+                state->voice_ring *= 0.18f;
+                burst *= 0.12f;
             } else if ((cur->flags & STOP) && i > samples / 2u) {
-                burst *= 0.78f;
+                burst *= 0.72f;
             }
             fric_src = noise_float() * burst;
         }
 
         if (active_code == PH_H) {
-            aspiration = noise_float() * 0.038f;
+            aspiration = noise_float() * 0.055f;
         } else if (voiced) {
-            aspiration = noise_float() * 0.0025f;
+            aspiration = noise_float() * 0.004f;
         }
 
         excitation = voiced_src + aspiration;
-        state->source_tilt += (excitation - state->source_tilt) * 0.31f;
-        excitation = state->source_tilt + (excitation - state->source_tilt) * 0.13f;
+        state->source_tilt += (excitation - state->source_tilt) * 0.42f;
+        excitation = state->source_tilt + (excitation - state->source_tilt) * 0.28f;
 
         bp1 = svf_bandpass(&state->f1, excitation, f1, b1);
         bp2 = svf_bandpass(&state->f2, excitation, f2, b2);
         bp3 = svf_bandpass(&state->f3, excitation, f3, b3);
         n2 = svf_bandpass(&state->n2, fric_src, f2, (uint16_t)(b2 + 220u));
         n3 = svf_bandpass(&state->n3, fric_src, f3, (uint16_t)(b3 + 260u));
-        nasal = svf_bandpass(&state->nasal, excitation, 1120, 175);
 
-        vowel_gain = voiced ? 1.0f : 0.0f;
-        if (phone_is_liquid(active_code)) {
-            vowel_gain = 0.72f;
-        }
-
-        mouth = bp1 * ((float)a1 * (1.0f / 126.0f)) +
-                bp2 * ((float)a2 * (1.0f / 82.0f)) +
-                bp3 * ((float)a3 * (1.0f / 118.0f)) +
-                n2 * ((float)a2 * (1.0f / 270.0f)) +
-                n3 * ((float)a3 * (1.0f / 245.0f)) +
-                nasal * (phone_is_nasal(active_code) ? 0.78f : 0.16f) +
-                excitation * (0.045f + vowel_gain * 0.025f);
-        mouth *= consonant_gate;
+        mouth = bp1 * ((float)a1 * (1.0f / 118.0f)) +
+                bp2 * ((float)a2 * (1.0f / 88.0f)) +
+                bp3 * ((float)a3 * (1.0f / 112.0f)) +
+                n2 * ((float)a2 * (1.0f / 360.0f)) +
+                n3 * ((float)a3 * (1.0f / 330.0f)) +
+                excitation * 0.08f;
 
         lip = mouth - state->lip_last;
         state->lip_last = mouth;
 
-        amp = mouth * 1.24f + lip * 0.12f;
-        amp = soft_clip(amp * 1.28f);
+        amp = mouth * 1.16f + lip * 0.16f;
+        amp = soft_clip(amp * 1.38f);
         amp = clampf_fast(amp, -0.98f, 0.98f);
 
-        g_samples[*write_at] = (uint8_t)(128 + (int32_t)(amp * 124.0f));
+        g_samples[*write_at] = (uint8_t)(128 + (int32_t)(amp * 126.0f));
         (*write_at)++;
     }
 
@@ -763,9 +1013,15 @@ uint32_t speech_synth_render(const char *text)
         PhoneCode next_code = (p + 1u < count) ? g_phones[p + 1u].code : PH_PAUSE;
         const PhoneSpec *cur = &g_specs[cur_code];
         const PhoneSpec *next = &g_specs[next_code];
-        uint32_t samples = ((uint32_t)g_phones[p].ms * SPEECH_SYNTH_SAMPLE_RATE) / 1000u;
+        uint32_t ms = ((uint32_t)g_phones[p].ms * 150u) / g_voice.rate;
+        uint32_t samples;
 
-        if (!render_phone(cur_code, next_code, cur, next, samples, &state, &write_at)) {
+        if (g_phones[p].stress != 0u && cur_code != PH_PAUSE) {
+            ms += (uint32_t)g_phones[p].stress * (is_vowel_phone(cur_code) ? 12u : 3u);
+        }
+        samples = (ms * SPEECH_SYNTH_SAMPLE_RATE) / 1000u;
+
+        if (!render_phone(cur_code, next_code, cur, next, samples, g_phones[p].stress, &state, &write_at)) {
             break;
         }
     }
