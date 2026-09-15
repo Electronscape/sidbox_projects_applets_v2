@@ -12,16 +12,16 @@ d0080016:	4604      	mov	r4, r0
 d0080018:	2100      	movs	r1, #0
 d008001a:	6833      	ldr	r3, [r6, #0]
 d008001c:	6898      	ldr	r0, [r3, #8]
-d008001e:	f001 f9c5 	bl	d00813ac <setbuf>
+d008001e:	f001 fb11 	bl	d0081644 <setbuf>
 d0080022:	6833      	ldr	r3, [r6, #0]
 d0080024:	2100      	movs	r1, #0
 d0080026:	68d8      	ldr	r0, [r3, #12]
-d0080028:	f001 f9c0 	bl	d00813ac <setbuf>
+d0080028:	f001 fb0c 	bl	d0081644 <setbuf>
 d008002c:	4629      	mov	r1, r5
 d008002e:	4620      	mov	r0, r4
 d0080030:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
 d0080034:	f000 b96a 	b.w	d008030c <main>
-d0080038:	d009b5f0 	.word	0xd009b5f0
+d0080038:	d009c670 	.word	0xd009c670
 
 d008003c <gfx_createBitmap>:
 d008003c:	b510      	push	{r4, lr}
@@ -32,7 +32,7 @@ d0080046:	80a1      	strh	r1, [r4, #4]
 d0080048:	60e0      	str	r0, [r4, #12]
 d008004a:	80e2      	strh	r2, [r4, #6]
 d008004c:	8122      	strh	r2, [r4, #8]
-d008004e:	f001 f87d 	bl	d008114c <malloc>
+d008004e:	f001 f9c9 	bl	d00813e4 <malloc>
 d0080052:	6020      	str	r0, [r4, #0]
 d0080054:	bd10      	pop	{r4, pc}
 d0080056:	bf00      	nop
@@ -206,9 +206,9 @@ d0080228:	4a03      	ldr	r2, [pc, #12]	; (d0080238 <initMalloc+0x14>)
 d008022a:	1a5b      	subs	r3, r3, r1
 d008022c:	6013      	str	r3, [r2, #0]
 d008022e:	4770      	bx	lr
-d0080230:	d009d998 	.word	0xd009d998
+d0080230:	d009ec00 	.word	0xd009ec00
 d0080234:	d0600000 	.word	0xd0600000
-d0080238:	d009b8dc 	.word	0xd009b8dc
+d0080238:	d009cb8c 	.word	0xd009cb8c
 
 d008023c <_write_r>:
 d008023c:	3901      	subs	r1, #1
@@ -242,18 +242,18 @@ d008027c:	4620      	mov	r0, r4
 d008027e:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
 d0080280:	2000      	movs	r0, #0
 d0080282:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
-d0080284:	f000 ff5c 	bl	d0081140 <__errno>
+d0080284:	f001 f8a8 	bl	d00813d8 <__errno>
 d0080288:	2209      	movs	r2, #9
 d008028a:	4603      	mov	r3, r0
 d008028c:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
 d0080290:	601a      	str	r2, [r3, #0]
 d0080292:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
-d0080294:	d009b664 	.word	0xd009b664
+d0080294:	d009c6e4 	.word	0xd009c6e4
 d0080298:	2001f000 	.word	0x2001f000
 
 d008029c <_read>:
 d008029c:	b508      	push	{r3, lr}
-d008029e:	f000 ff4f 	bl	d0081140 <__errno>
+d008029e:	f001 f89b 	bl	d00813d8 <__errno>
 d00802a2:	2258      	movs	r2, #88	; 0x58
 d00802a4:	4603      	mov	r3, r0
 d00802a6:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
@@ -294,15 +294,15 @@ d00802e2:	4291      	cmp	r1, r2
 d00802e4:	d301      	bcc.n	d00802ea <_sbrk_r+0x22>
 d00802e6:	6019      	str	r1, [r3, #0]
 d00802e8:	bd10      	pop	{r4, pc}
-d00802ea:	f000 ff29 	bl	d0081140 <__errno>
+d00802ea:	f001 f875 	bl	d00813d8 <__errno>
 d00802ee:	220c      	movs	r2, #12
 d00802f0:	4603      	mov	r3, r0
 d00802f2:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
 d00802f6:	601a      	str	r2, [r3, #0]
 d00802f8:	bd10      	pop	{r4, pc}
 d00802fa:	bf00      	nop
-d00802fc:	d009b660 	.word	0xd009b660
-d0080300:	d009d998 	.word	0xd009d998
+d00802fc:	d009c6e0 	.word	0xd009c6e0
+d0080300:	d009ec00 	.word	0xd009ec00
 d0080304:	d0600000 	.word	0xd0600000
 
 d0080308 <_isatty>:
@@ -447,7 +447,7 @@ d0080466:	f44f 71f0 	mov.w	r1, #480	; 0x1e0
 d008046a:	f44f 72a0 	mov.w	r2, #320	; 0x140
 d008046e:	483f      	ldr	r0, [pc, #252]	; (d008056c <main+0x260>)
 d0080470:	f7ff fde4 	bl	d008003c <gfx_createBitmap>
-d0080474:	f000 fa78 	bl	d0080968 <setup_background_bub>
+d0080474:	f000 fa8e 	bl	d0080994 <setup_background_bub>
 d0080478:	7b23      	ldrb	r3, [r4, #12]
 d008047a:	7b62      	ldrb	r2, [r4, #13]
 d008047c:	483b      	ldr	r0, [pc, #236]	; (d008056c <main+0x260>)
@@ -485,7 +485,7 @@ d00804cc:	f44f 62ca 	mov.w	r2, #1616	; 0x650
 d00804d0:	f44f 73f0 	mov.w	r3, #480	; 0x1e0
 d00804d4:	f8cb 2000 	str.w	r2, [fp]
 d00804d8:	6033      	str	r3, [r6, #0]
-d00804da:	f000 f9d3 	bl	d0080884 <init_star_fields>
+d00804da:	f000 f9e9 	bl	d00808b0 <init_star_fields>
 d00804de:	7820      	ldrb	r0, [r4, #0]
 d00804e0:	7861      	ldrb	r1, [r4, #1]
 d00804e2:	78a2      	ldrb	r2, [r4, #2]
@@ -518,7 +518,7 @@ d0080528:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
 d008052c:	685b      	ldr	r3, [r3, #4]
 d008052e:	681b      	ldr	r3, [r3, #0]
 d0080530:	4798      	blx	r3
-d0080532:	f000 fb81 	bl	d0080c38 <do_bubbastix_playdemo_screensaver>
+d0080532:	f000 fbdf 	bl	d0080cf4 <do_bubbastix_playdemo_screensaver>
 d0080536:	f8d9 1000 	ldr.w	r1, [r9]
 d008053a:	3902      	subs	r1, #2
 d008053c:	f111 0f43 	cmn.w	r1, #67	; 0x43
@@ -530,15 +530,15 @@ d008054e:	4808      	ldr	r0, [pc, #32]	; (d0080570 <main+0x264>)
 d0080550:	e017      	b.n	d0080582 <main+0x276>
 d0080552:	bf00      	nop
 d0080554:	2001f000 	.word	0x2001f000
-d0080558:	d009b900 	.word	0xd009b900
-d008055c:	d009b920 	.word	0xd009b920
-d0080560:	d009b560 	.word	0xd009b560
-d0080564:	d0082900 	.word	0xd0082900
-d0080568:	d0081c60 	.word	0xd0081c60
-d008056c:	d009b8e0 	.word	0xd009b8e0
-d0080570:	d0082060 	.word	0xd0082060
-d0080574:	d009b670 	.word	0xd009b670
-d0080578:	d009b66c 	.word	0xd009b66c
+d0080558:	d009cbc0 	.word	0xd009cbc0
+d008055c:	d009cbe0 	.word	0xd009cbe0
+d0080560:	d009c5e0 	.word	0xd009c5e0
+d0080564:	d0083300 	.word	0xd0083300
+d0080568:	d0082660 	.word	0xd0082660
+d008056c:	d009cba0 	.word	0xd009cba0
+d0080570:	d0082a60 	.word	0xd0082a60
+d0080574:	d009c6f0 	.word	0xd009c6f0
+d0080578:	d009c6ec 	.word	0xd009c6ec
 d008057c:	f8d9 1000 	ldr.w	r1, [r9]
 d0080580:	487d      	ldr	r0, [pc, #500]	; (d0080778 <main+0x46c>)
 d0080582:	f894 e00c 	ldrb.w	lr, [r4, #12]
@@ -735,11 +735,11 @@ d008076c:	4798      	blx	r3
 d008076e:	f1b8 0f03 	cmp.w	r8, #3
 d0080772:	f47f aeb4 	bne.w	d00804de <main+0x1d2>
 d0080776:	e017      	b.n	d00807a8 <main+0x49c>
-d0080778:	d0082060 	.word	0xd0082060
-d008077c:	d0082d00 	.word	0xd0082d00
-d0080780:	d009b668 	.word	0xd009b668
-d0080784:	d009b900 	.word	0xd009b900
-d0080788:	d009b920 	.word	0xd009b920
+d0080778:	d0082a60 	.word	0xd0082a60
+d008077c:	d0083700 	.word	0xd0083700
+d0080780:	d009c6e8 	.word	0xd009c6e8
+d0080784:	d009cbc0 	.word	0xd009cbc0
+d0080788:	d009cbe0 	.word	0xd009cbe0
 d008078c:	7820      	ldrb	r0, [r4, #0]
 d008078e:	7861      	ldrb	r1, [r4, #1]
 d0080790:	78a2      	ldrb	r2, [r4, #2]
@@ -764,7 +764,7 @@ d00807c0:	07c2      	lsls	r2, r0, #31
 d00807c2:	d4e3      	bmi.n	d008078c <main+0x480>
 d00807c4:	482c      	ldr	r0, [pc, #176]	; (d0080878 <main+0x56c>)
 d00807c6:	2602      	movs	r6, #2
-d00807c8:	f000 fde8 	bl	d008139c <puts>
+d00807c8:	f000 ff34 	bl	d0081634 <puts>
 d00807cc:	7b23      	ldrb	r3, [r4, #12]
 d00807ce:	7b62      	ldrb	r2, [r4, #13]
 d00807d0:	7ba1      	ldrb	r1, [r4, #14]
@@ -831,7549 +831,8646 @@ d0080870:	6809      	ldr	r1, [r1, #0]
 d0080872:	4803      	ldr	r0, [pc, #12]	; (d0080880 <main+0x574>)
 d0080874:	e759      	b.n	d008072a <main+0x41e>
 d0080876:	bf00      	nop
-d0080878:	d00828e0 	.word	0xd00828e0
-d008087c:	d009b920 	.word	0xd009b920
-d0080880:	d009b900 	.word	0xd009b900
+d0080878:	d00832e0 	.word	0xd00832e0
+d008087c:	d009cbe0 	.word	0xd009cbe0
+d0080880:	d009cbc0 	.word	0xd009cbc0
 
-d0080884 <init_star_fields>:
-d0080884:	4b33      	ldr	r3, [pc, #204]	; (d0080954 <init_star_fields+0xd0>)
-d0080886:	f8df c0d4 	ldr.w	ip, [pc, #212]	; d008095c <init_star_fields+0xd8>
-d008088a:	6819      	ldr	r1, [r3, #0]
-d008088c:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d0080890:	2600      	movs	r6, #0
-d0080892:	4c31      	ldr	r4, [pc, #196]	; (d0080958 <init_star_fields+0xd4>)
-d0080894:	f243 0e39 	movw	lr, #12345	; 0x3039
-d0080898:	f240 1b19 	movw	fp, #281	; 0x119
-d008089c:	f8df a0c0 	ldr.w	sl, [pc, #192]	; d0080960 <init_star_fields+0xdc>
-d00808a0:	f8df 90c0 	ldr.w	r9, [pc, #192]	; d0080964 <init_star_fields+0xe0>
-d00808a4:	e006      	b.n	d00808b4 <init_star_fields+0x30>
-d00808a6:	2306      	movs	r3, #6
-d00808a8:	f04f 0201 	mov.w	r2, #1
-d00808ac:	7163      	strb	r3, [r4, #5]
-d00808ae:	7122      	strb	r2, [r4, #4]
-d00808b0:	3601      	adds	r6, #1
-d00808b2:	3406      	adds	r4, #6
-d00808b4:	fb0c e101 	mla	r1, ip, r1, lr
-d00808b8:	2e1f      	cmp	r6, #31
-d00808ba:	b2f5      	uxtb	r5, r6
-d00808bc:	ea4f 4011 	mov.w	r0, r1, lsr #16
-d00808c0:	fb0c e101 	mla	r1, ip, r1, lr
-d00808c4:	fbaa 2300 	umull	r2, r3, sl, r0
-d00808c8:	ea4f 4811 	mov.w	r8, r1, lsr #16
-d00808cc:	eba0 0203 	sub.w	r2, r0, r3
-d00808d0:	eb03 0352 	add.w	r3, r3, r2, lsr #1
-d00808d4:	fba9 7208 	umull	r7, r2, r9, r8
-d00808d8:	ea4f 2313 	mov.w	r3, r3, lsr #8
-d00808dc:	ea4f 02d2 	mov.w	r2, r2, lsr #3
-d00808e0:	ebc3 1703 	rsb	r7, r3, r3, lsl #4
-d00808e4:	fb0b 8212 	mls	r2, fp, r2, r8
-d00808e8:	ebc3 1347 	rsb	r3, r3, r7, lsl #5
-d00808ec:	f102 0226 	add.w	r2, r2, #38	; 0x26
-d00808f0:	eba0 0003 	sub.w	r0, r0, r3
-d00808f4:	8062      	strh	r2, [r4, #2]
-d00808f6:	8020      	strh	r0, [r4, #0]
-d00808f8:	d9d5      	bls.n	d00808a6 <init_star_fields+0x22>
-d00808fa:	2d35      	cmp	r5, #53	; 0x35
-d00808fc:	d805      	bhi.n	d008090a <init_star_fields+0x86>
-d00808fe:	2306      	movs	r3, #6
-d0080900:	f04f 0202 	mov.w	r2, #2
-d0080904:	7163      	strb	r3, [r4, #5]
-d0080906:	7122      	strb	r2, [r4, #4]
-d0080908:	e7d2      	b.n	d00808b0 <init_star_fields+0x2c>
-d008090a:	2d47      	cmp	r5, #71	; 0x47
-d008090c:	d804      	bhi.n	d0080918 <init_star_fields+0x94>
-d008090e:	2203      	movs	r2, #3
-d0080910:	2305      	movs	r3, #5
-d0080912:	7122      	strb	r2, [r4, #4]
-d0080914:	7163      	strb	r3, [r4, #5]
-d0080916:	e7cb      	b.n	d00808b0 <init_star_fields+0x2c>
-d0080918:	2d53      	cmp	r5, #83	; 0x53
-d008091a:	d805      	bhi.n	d0080928 <init_star_fields+0xa4>
-d008091c:	2305      	movs	r3, #5
-d008091e:	f04f 0201 	mov.w	r2, #1
-d0080922:	7123      	strb	r3, [r4, #4]
-d0080924:	7162      	strb	r2, [r4, #5]
-d0080926:	e7c3      	b.n	d00808b0 <init_star_fields+0x2c>
-d0080928:	2d5b      	cmp	r5, #91	; 0x5b
-d008092a:	d806      	bhi.n	d008093a <init_star_fields+0xb6>
-d008092c:	f04f 0307 	mov.w	r3, #7
-d0080930:	7123      	strb	r3, [r4, #4]
-d0080932:	f04f 0301 	mov.w	r3, #1
-d0080936:	7163      	strb	r3, [r4, #5]
-d0080938:	e7ba      	b.n	d00808b0 <init_star_fields+0x2c>
-d008093a:	f04f 0309 	mov.w	r3, #9
-d008093e:	2d5f      	cmp	r5, #95	; 0x5f
-d0080940:	7123      	strb	r3, [r4, #4]
-d0080942:	f04f 0302 	mov.w	r3, #2
-d0080946:	7163      	strb	r3, [r4, #5]
-d0080948:	d1b2      	bne.n	d00808b0 <init_star_fields+0x2c>
-d008094a:	4b02      	ldr	r3, [pc, #8]	; (d0080954 <init_star_fields+0xd0>)
-d008094c:	6019      	str	r1, [r3, #0]
-d008094e:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-d0080952:	bf00      	nop
-d0080954:	d009b580 	.word	0xd009b580
-d0080958:	d009b680 	.word	0xd009b680
-d008095c:	41c64e6d 	.word	0x41c64e6d
-d0080960:	11a3019b 	.word	0x11a3019b
-d0080964:	0749cb29 	.word	0x0749cb29
+d0080884 <star_rand>:
+d0080884:	4908      	ldr	r1, [pc, #32]	; (d00808a8 <star_rand+0x24>)
+d0080886:	f243 0239 	movw	r2, #12345	; 0x3039
+d008088a:	b410      	push	{r4}
+d008088c:	680b      	ldr	r3, [r1, #0]
+d008088e:	4c07      	ldr	r4, [pc, #28]	; (d00808ac <star_rand+0x28>)
+d0080890:	fb04 2303 	mla	r3, r4, r3, r2
+d0080894:	f85d 4b04 	ldr.w	r4, [sp], #4
+d0080898:	0c1a      	lsrs	r2, r3, #16
+d008089a:	600b      	str	r3, [r1, #0]
+d008089c:	fbb2 f3f0 	udiv	r3, r2, r0
+d00808a0:	fb03 2010 	mls	r0, r3, r0, r2
+d00808a4:	b280      	uxth	r0, r0
+d00808a6:	4770      	bx	lr
+d00808a8:	d009c600 	.word	0xd009c600
+d00808ac:	41c64e6d 	.word	0x41c64e6d
 
-d0080968 <setup_background_bub>:
-d0080968:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d008096c:	4c9a      	ldr	r4, [pc, #616]	; (d0080bd8 <setup_background_bub+0x270>)
-d008096e:	20c8      	movs	r0, #200	; 0xc8
-d0080970:	4d9a      	ldr	r5, [pc, #616]	; (d0080bdc <setup_background_bub+0x274>)
-d0080972:	2100      	movs	r1, #0
-d0080974:	7b23      	ldrb	r3, [r4, #12]
-d0080976:	b087      	sub	sp, #28
-d0080978:	7b62      	ldrb	r2, [r4, #13]
-d008097a:	f04f 0825 	mov.w	r8, #37	; 0x25
-d008097e:	8028      	strh	r0, [r5, #0]
-d0080980:	460d      	mov	r5, r1
-d0080982:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
-d0080986:	7ba2      	ldrb	r2, [r4, #14]
-d0080988:	4f95      	ldr	r7, [pc, #596]	; (d0080be0 <setup_background_bub+0x278>)
-d008098a:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
-d008098e:	7be2      	ldrb	r2, [r4, #15]
-d0080990:	f8df 92a0 	ldr.w	r9, [pc, #672]	; d0080c34 <setup_background_bub+0x2cc>
-d0080994:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
-d0080998:	4a92      	ldr	r2, [pc, #584]	; (d0080be4 <setup_background_bub+0x27c>)
-d008099a:	681b      	ldr	r3, [r3, #0]
-d008099c:	8310      	strh	r0, [r2, #24]
-d008099e:	699e      	ldr	r6, [r3, #24]
-d00809a0:	4b91      	ldr	r3, [pc, #580]	; (d0080be8 <setup_background_bub+0x280>)
-d00809a2:	4892      	ldr	r0, [pc, #584]	; (d0080bec <setup_background_bub+0x284>)
-d00809a4:	60d3      	str	r3, [r2, #12]
-d00809a6:	6113      	str	r3, [r2, #16]
-d00809a8:	4b91      	ldr	r3, [pc, #580]	; (d0080bf0 <setup_background_bub+0x288>)
-d00809aa:	6017      	str	r7, [r2, #0]
-d00809ac:	2720      	movs	r7, #32
-d00809ae:	8001      	strh	r1, [r0, #0]
-d00809b0:	8019      	strh	r1, [r3, #0]
-d00809b2:	4890      	ldr	r0, [pc, #576]	; (d0080bf4 <setup_background_bub+0x28c>)
-d00809b4:	47b0      	blx	r6
-d00809b6:	7b23      	ldrb	r3, [r4, #12]
-d00809b8:	7b62      	ldrb	r2, [r4, #13]
-d00809ba:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
-d00809be:	7ba2      	ldrb	r2, [r4, #14]
-d00809c0:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
-d00809c4:	7be2      	ldrb	r2, [r4, #15]
-d00809c6:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
-d00809ca:	685b      	ldr	r3, [r3, #4]
-d00809cc:	681b      	ldr	r3, [r3, #0]
-d00809ce:	4798      	blx	r3
-d00809d0:	e057      	b.n	d0080a82 <setup_background_bub+0x11a>
-d00809d2:	f894 e00c 	ldrb.w	lr, [r4, #12]
-d00809d6:	4638      	mov	r0, r7
-d00809d8:	f894 c00d 	ldrb.w	ip, [r4, #13]
-d00809dc:	7ba2      	ldrb	r2, [r4, #14]
-d00809de:	ea4e 2c0c 	orr.w	ip, lr, ip, lsl #8
-d00809e2:	7be3      	ldrb	r3, [r4, #15]
-d00809e4:	f819 ac01 	ldrb.w	sl, [r9, #-1]
-d00809e8:	ea4c 4202 	orr.w	r2, ip, r2, lsl #16
-d00809ec:	9105      	str	r1, [sp, #20]
-d00809ee:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
-d00809f2:	685b      	ldr	r3, [r3, #4]
-d00809f4:	68db      	ldr	r3, [r3, #12]
-d00809f6:	4798      	blx	r3
-d00809f8:	7b22      	ldrb	r2, [r4, #12]
-d00809fa:	f894 c00d 	ldrb.w	ip, [r4, #13]
-d00809fe:	465b      	mov	r3, fp
-d0080a00:	7ba0      	ldrb	r0, [r4, #14]
-d0080a02:	ea42 2c0c 	orr.w	ip, r2, ip, lsl #8
-d0080a06:	f894 e00f 	ldrb.w	lr, [r4, #15]
-d0080a0a:	9905      	ldr	r1, [sp, #20]
-d0080a0c:	f44f 72f0 	mov.w	r2, #480	; 0x1e0
-d0080a10:	ea4c 4c00 	orr.w	ip, ip, r0, lsl #16
-d0080a14:	2000      	movs	r0, #0
-d0080a16:	ea4c 6e0e 	orr.w	lr, ip, lr, lsl #24
-d0080a1a:	f8de c004 	ldr.w	ip, [lr, #4]
-d0080a1e:	f8dc b004 	ldr.w	fp, [ip, #4]
-d0080a22:	47d8      	blx	fp
-d0080a24:	45ba      	cmp	sl, r7
-d0080a26:	d024      	beq.n	d0080a72 <setup_background_bub+0x10a>
-d0080a28:	9b04      	ldr	r3, [sp, #16]
-d0080a2a:	4650      	mov	r0, sl
-d0080a2c:	4543      	cmp	r3, r8
-d0080a2e:	dd20      	ble.n	d0080a72 <setup_background_bub+0x10a>
-d0080a30:	7b27      	ldrb	r7, [r4, #12]
-d0080a32:	7b61      	ldrb	r1, [r4, #13]
-d0080a34:	7ba2      	ldrb	r2, [r4, #14]
-d0080a36:	ea47 2101 	orr.w	r1, r7, r1, lsl #8
-d0080a3a:	7be3      	ldrb	r3, [r4, #15]
-d0080a3c:	ea41 4202 	orr.w	r2, r1, r2, lsl #16
-d0080a40:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
-d0080a44:	685b      	ldr	r3, [r3, #4]
-d0080a46:	68db      	ldr	r3, [r3, #12]
-d0080a48:	4798      	blx	r3
-d0080a4a:	7b22      	ldrb	r2, [r4, #12]
-d0080a4c:	7b67      	ldrb	r7, [r4, #13]
-d0080a4e:	1cb1      	adds	r1, r6, #2
-d0080a50:	7ba6      	ldrb	r6, [r4, #14]
-d0080a52:	2302      	movs	r3, #2
-d0080a54:	ea42 2007 	orr.w	r0, r2, r7, lsl #8
-d0080a58:	f894 c00f 	ldrb.w	ip, [r4, #15]
-d0080a5c:	b209      	sxth	r1, r1
-d0080a5e:	f44f 72f0 	mov.w	r2, #480	; 0x1e0
-d0080a62:	ea40 4706 	orr.w	r7, r0, r6, lsl #16
-d0080a66:	2000      	movs	r0, #0
-d0080a68:	ea47 660c 	orr.w	r6, r7, ip, lsl #24
-d0080a6c:	6876      	ldr	r6, [r6, #4]
-d0080a6e:	6876      	ldr	r6, [r6, #4]
-d0080a70:	47b0      	blx	r6
-d0080a72:	b2ab      	uxth	r3, r5
-d0080a74:	2b11      	cmp	r3, #17
-d0080a76:	d041      	beq.n	d0080afc <setup_background_bub+0x194>
-d0080a78:	3501      	adds	r5, #1
-d0080a7a:	f108 0806 	add.w	r8, r8, #6
-d0080a7e:	f819 7f01 	ldrb.w	r7, [r9, #1]!
-d0080a82:	fa1f f688 	uxth.w	r6, r8
-d0080a86:	2d11      	cmp	r5, #17
-d0080a88:	f04f 0b06 	mov.w	fp, #6
-d0080a8c:	fa0f fa85 	sxth.w	sl, r5
-d0080a90:	f106 0305 	add.w	r3, r6, #5
-d0080a94:	f106 31ff 	add.w	r1, r6, #4294967295	; 0xffffffff
-d0080a98:	b21b      	sxth	r3, r3
-d0080a9a:	b209      	sxth	r1, r1
-d0080a9c:	9304      	str	r3, [sp, #16]
-d0080a9e:	d026      	beq.n	d0080aee <setup_background_bub+0x186>
-d0080aa0:	f1ba 0f00 	cmp.w	sl, #0
-d0080aa4:	d195      	bne.n	d00809d2 <setup_background_bub+0x6a>
-d0080aa6:	7b20      	ldrb	r0, [r4, #12]
-d0080aa8:	7b66      	ldrb	r6, [r4, #13]
-d0080aaa:	7ba2      	ldrb	r2, [r4, #14]
-d0080aac:	ea40 2606 	orr.w	r6, r0, r6, lsl #8
-d0080ab0:	7be3      	ldrb	r3, [r4, #15]
-d0080ab2:	f899 0000 	ldrb.w	r0, [r9]
-d0080ab6:	ea46 4202 	orr.w	r2, r6, r2, lsl #16
-d0080aba:	9104      	str	r1, [sp, #16]
-d0080abc:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
-d0080ac0:	685b      	ldr	r3, [r3, #4]
-d0080ac2:	68db      	ldr	r3, [r3, #12]
-d0080ac4:	4798      	blx	r3
-d0080ac6:	f894 c00c 	ldrb.w	ip, [r4, #12]
-d0080aca:	7b66      	ldrb	r6, [r4, #13]
-d0080acc:	4650      	mov	r0, sl
-d0080ace:	7ba7      	ldrb	r7, [r4, #14]
-d0080ad0:	2306      	movs	r3, #6
-d0080ad2:	ea4c 2c06 	orr.w	ip, ip, r6, lsl #8
-d0080ad6:	7be6      	ldrb	r6, [r4, #15]
-d0080ad8:	9904      	ldr	r1, [sp, #16]
-d0080ada:	f44f 72f0 	mov.w	r2, #480	; 0x1e0
-d0080ade:	ea4c 4707 	orr.w	r7, ip, r7, lsl #16
-d0080ae2:	ea47 6606 	orr.w	r6, r7, r6, lsl #24
-d0080ae6:	6876      	ldr	r6, [r6, #4]
-d0080ae8:	6876      	ldr	r6, [r6, #4]
-d0080aea:	47b0      	blx	r6
-d0080aec:	e7c4      	b.n	d0080a78 <setup_background_bub+0x110>
-d0080aee:	f1c6 0b7d 	rsb	fp, r6, #125	; 0x7d
-d0080af2:	237c      	movs	r3, #124	; 0x7c
-d0080af4:	fa0f fb8b 	sxth.w	fp, fp
-d0080af8:	9304      	str	r3, [sp, #16]
-d0080afa:	e76a      	b.n	d00809d2 <setup_background_bub+0x6a>
-d0080afc:	7b23      	ldrb	r3, [r4, #12]
-d0080afe:	7b62      	ldrb	r2, [r4, #13]
-d0080b00:	7ba1      	ldrb	r1, [r4, #14]
-d0080b02:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
-d0080b06:	7be2      	ldrb	r2, [r4, #15]
-d0080b08:	ea43 4301 	orr.w	r3, r3, r1, lsl #16
-d0080b0c:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
-d0080b10:	681b      	ldr	r3, [r3, #0]
-d0080b12:	6b5b      	ldr	r3, [r3, #52]	; 0x34
-d0080b14:	4798      	blx	r3
-d0080b16:	7b23      	ldrb	r3, [r4, #12]
-d0080b18:	7b62      	ldrb	r2, [r4, #13]
-d0080b1a:	4606      	mov	r6, r0
-d0080b1c:	7ba1      	ldrb	r1, [r4, #14]
-d0080b1e:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
-d0080b22:	7be2      	ldrb	r2, [r4, #15]
-d0080b24:	ea43 4301 	orr.w	r3, r3, r1, lsl #16
-d0080b28:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
-d0080b2c:	681b      	ldr	r3, [r3, #0]
-d0080b2e:	699b      	ldr	r3, [r3, #24]
-d0080b30:	4798      	blx	r3
-d0080b32:	7b23      	ldrb	r3, [r4, #12]
-d0080b34:	7b62      	ldrb	r2, [r4, #13]
-d0080b36:	2010      	movs	r0, #16
-d0080b38:	7ba1      	ldrb	r1, [r4, #14]
-d0080b3a:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
-d0080b3e:	7be2      	ldrb	r2, [r4, #15]
-d0080b40:	ea43 4301 	orr.w	r3, r3, r1, lsl #16
-d0080b44:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
-d0080b48:	685b      	ldr	r3, [r3, #4]
-d0080b4a:	68db      	ldr	r3, [r3, #12]
-d0080b4c:	4798      	blx	r3
-d0080b4e:	7b25      	ldrb	r5, [r4, #12]
-d0080b50:	7b61      	ldrb	r1, [r4, #13]
-d0080b52:	2364      	movs	r3, #100	; 0x64
-d0080b54:	7ba0      	ldrb	r0, [r4, #14]
-d0080b56:	f44f 72f0 	mov.w	r2, #480	; 0x1e0
-d0080b5a:	ea45 2501 	orr.w	r5, r5, r1, lsl #8
-d0080b5e:	7be7      	ldrb	r7, [r4, #15]
-d0080b60:	2190      	movs	r1, #144	; 0x90
-d0080b62:	ea45 4400 	orr.w	r4, r5, r0, lsl #16
-d0080b66:	2000      	movs	r0, #0
-d0080b68:	4d23      	ldr	r5, [pc, #140]	; (d0080bf8 <setup_background_bub+0x290>)
-d0080b6a:	ea44 6407 	orr.w	r4, r4, r7, lsl #24
-d0080b6e:	f64f 7724 	movw	r7, #65316	; 0xff24
-d0080b72:	6864      	ldr	r4, [r4, #4]
-d0080b74:	6864      	ldr	r4, [r4, #4]
-d0080b76:	47a0      	blx	r4
-d0080b78:	6833      	ldr	r3, [r6, #0]
-d0080b7a:	2210      	movs	r2, #16
-d0080b7c:	491f      	ldr	r1, [pc, #124]	; (d0080bfc <setup_background_bub+0x294>)
-d0080b7e:	9302      	str	r3, [sp, #8]
-d0080b80:	2000      	movs	r0, #0
-d0080b82:	9201      	str	r2, [sp, #4]
-d0080b84:	2328      	movs	r3, #40	; 0x28
-d0080b86:	9100      	str	r1, [sp, #0]
-d0080b88:	f44f 72f0 	mov.w	r2, #480	; 0x1e0
-d0080b8c:	2168      	movs	r1, #104	; 0x68
-d0080b8e:	f64f 74ce 	movw	r4, #65486	; 0xffce
-d0080b92:	f7ff fa61 	bl	d0080058 <gfx_draw1bit>
-d0080b96:	481a      	ldr	r0, [pc, #104]	; (d0080c00 <setup_background_bub+0x298>)
-d0080b98:	2300      	movs	r3, #0
-d0080b9a:	4a1a      	ldr	r2, [pc, #104]	; (d0080c04 <setup_background_bub+0x29c>)
-d0080b9c:	6005      	str	r5, [r0, #0]
-d0080b9e:	4d1a      	ldr	r5, [pc, #104]	; (d0080c08 <setup_background_bub+0x2a0>)
-d0080ba0:	481a      	ldr	r0, [pc, #104]	; (d0080c0c <setup_background_bub+0x2a4>)
-d0080ba2:	702b      	strb	r3, [r5, #0]
-d0080ba4:	7003      	strb	r3, [r0, #0]
-d0080ba6:	4d1a      	ldr	r5, [pc, #104]	; (d0080c10 <setup_background_bub+0x2a8>)
-d0080ba8:	481a      	ldr	r0, [pc, #104]	; (d0080c14 <setup_background_bub+0x2ac>)
-d0080baa:	702b      	strb	r3, [r5, #0]
-d0080bac:	7003      	strb	r3, [r0, #0]
-d0080bae:	6816      	ldr	r6, [r2, #0]
-d0080bb0:	2202      	movs	r2, #2
-d0080bb2:	4919      	ldr	r1, [pc, #100]	; (d0080c18 <setup_background_bub+0x2b0>)
-d0080bb4:	4d19      	ldr	r5, [pc, #100]	; (d0080c1c <setup_background_bub+0x2b4>)
-d0080bb6:	481a      	ldr	r0, [pc, #104]	; (d0080c20 <setup_background_bub+0x2b8>)
-d0080bb8:	702b      	strb	r3, [r5, #0]
-d0080bba:	600e      	str	r6, [r1, #0]
-d0080bbc:	21b4      	movs	r1, #180	; 0xb4
-d0080bbe:	8007      	strh	r7, [r0, #0]
-d0080bc0:	4e18      	ldr	r6, [pc, #96]	; (d0080c24 <setup_background_bub+0x2bc>)
-d0080bc2:	4d19      	ldr	r5, [pc, #100]	; (d0080c28 <setup_background_bub+0x2c0>)
-d0080bc4:	4819      	ldr	r0, [pc, #100]	; (d0080c2c <setup_background_bub+0x2c4>)
-d0080bc6:	4b1a      	ldr	r3, [pc, #104]	; (d0080c30 <setup_background_bub+0x2c8>)
-d0080bc8:	8032      	strh	r2, [r6, #0]
-d0080bca:	802a      	strh	r2, [r5, #0]
-d0080bcc:	8004      	strh	r4, [r0, #0]
-d0080bce:	8019      	strh	r1, [r3, #0]
-d0080bd0:	b007      	add	sp, #28
-d0080bd2:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-d0080bd6:	bf00      	nop
-d0080bd8:	2001f000 	.word	0x2001f000
-d0080bdc:	d009b8c0 	.word	0xd009b8c0
-d0080be0:	d0085a08 	.word	0xd0085a08
-d0080be4:	d009b960 	.word	0xd009b960
-d0080be8:	00960020 	.word	0x00960020
-d0080bec:	d009b8d2 	.word	0xd009b8d2
-d0080bf0:	d009b942 	.word	0xd009b942
-d0080bf4:	d009b8e0 	.word	0xd009b8e0
-d0080bf8:	d0082d68 	.word	0xd0082d68
-d0080bfc:	d00850a8 	.word	0xd00850a8
-d0080c00:	d009b8cc 	.word	0xd009b8cc
-d0080c04:	d009b5a0 	.word	0xd009b5a0
-d0080c08:	d009b8c8 	.word	0xd009b8c8
-d0080c0c:	d009b8d0 	.word	0xd009b8d0
-d0080c10:	d009b8c2 	.word	0xd009b8c2
-d0080c14:	d009b8c9 	.word	0xd009b8c9
-d0080c18:	d009b8c4 	.word	0xd009b8c4
-d0080c1c:	d009b948 	.word	0xd009b948
-d0080c20:	d009b940 	.word	0xd009b940
-d0080c24:	d009b944 	.word	0xd009b944
-d0080c28:	d009b946 	.word	0xd009b946
-d0080c2c:	d009b982 	.word	0xd009b982
-d0080c30:	d009b980 	.word	0xd009b980
-d0080c34:	d0093f00 	.word	0xd0093f00
+d00808b0 <init_star_fields>:
+d00808b0:	4b33      	ldr	r3, [pc, #204]	; (d0080980 <init_star_fields+0xd0>)
+d00808b2:	f8df c0d4 	ldr.w	ip, [pc, #212]	; d0080988 <init_star_fields+0xd8>
+d00808b6:	6819      	ldr	r1, [r3, #0]
+d00808b8:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d00808bc:	2600      	movs	r6, #0
+d00808be:	4c31      	ldr	r4, [pc, #196]	; (d0080984 <init_star_fields+0xd4>)
+d00808c0:	f243 0e39 	movw	lr, #12345	; 0x3039
+d00808c4:	f240 1b19 	movw	fp, #281	; 0x119
+d00808c8:	f8df a0c0 	ldr.w	sl, [pc, #192]	; d008098c <init_star_fields+0xdc>
+d00808cc:	f8df 90c0 	ldr.w	r9, [pc, #192]	; d0080990 <init_star_fields+0xe0>
+d00808d0:	e006      	b.n	d00808e0 <init_star_fields+0x30>
+d00808d2:	2306      	movs	r3, #6
+d00808d4:	f04f 0201 	mov.w	r2, #1
+d00808d8:	7163      	strb	r3, [r4, #5]
+d00808da:	7122      	strb	r2, [r4, #4]
+d00808dc:	3601      	adds	r6, #1
+d00808de:	3406      	adds	r4, #6
+d00808e0:	fb0c e101 	mla	r1, ip, r1, lr
+d00808e4:	2e1f      	cmp	r6, #31
+d00808e6:	b2f5      	uxtb	r5, r6
+d00808e8:	ea4f 4011 	mov.w	r0, r1, lsr #16
+d00808ec:	fb0c e101 	mla	r1, ip, r1, lr
+d00808f0:	fbaa 2300 	umull	r2, r3, sl, r0
+d00808f4:	ea4f 4811 	mov.w	r8, r1, lsr #16
+d00808f8:	eba0 0203 	sub.w	r2, r0, r3
+d00808fc:	eb03 0352 	add.w	r3, r3, r2, lsr #1
+d0080900:	fba9 7208 	umull	r7, r2, r9, r8
+d0080904:	ea4f 2313 	mov.w	r3, r3, lsr #8
+d0080908:	ea4f 02d2 	mov.w	r2, r2, lsr #3
+d008090c:	ebc3 1703 	rsb	r7, r3, r3, lsl #4
+d0080910:	fb0b 8212 	mls	r2, fp, r2, r8
+d0080914:	ebc3 1347 	rsb	r3, r3, r7, lsl #5
+d0080918:	f102 0226 	add.w	r2, r2, #38	; 0x26
+d008091c:	eba0 0003 	sub.w	r0, r0, r3
+d0080920:	8062      	strh	r2, [r4, #2]
+d0080922:	8020      	strh	r0, [r4, #0]
+d0080924:	d9d5      	bls.n	d00808d2 <init_star_fields+0x22>
+d0080926:	2d35      	cmp	r5, #53	; 0x35
+d0080928:	d805      	bhi.n	d0080936 <init_star_fields+0x86>
+d008092a:	2306      	movs	r3, #6
+d008092c:	f04f 0202 	mov.w	r2, #2
+d0080930:	7163      	strb	r3, [r4, #5]
+d0080932:	7122      	strb	r2, [r4, #4]
+d0080934:	e7d2      	b.n	d00808dc <init_star_fields+0x2c>
+d0080936:	2d47      	cmp	r5, #71	; 0x47
+d0080938:	d804      	bhi.n	d0080944 <init_star_fields+0x94>
+d008093a:	2203      	movs	r2, #3
+d008093c:	2305      	movs	r3, #5
+d008093e:	7122      	strb	r2, [r4, #4]
+d0080940:	7163      	strb	r3, [r4, #5]
+d0080942:	e7cb      	b.n	d00808dc <init_star_fields+0x2c>
+d0080944:	2d53      	cmp	r5, #83	; 0x53
+d0080946:	d805      	bhi.n	d0080954 <init_star_fields+0xa4>
+d0080948:	2305      	movs	r3, #5
+d008094a:	f04f 0201 	mov.w	r2, #1
+d008094e:	7123      	strb	r3, [r4, #4]
+d0080950:	7162      	strb	r2, [r4, #5]
+d0080952:	e7c3      	b.n	d00808dc <init_star_fields+0x2c>
+d0080954:	2d5b      	cmp	r5, #91	; 0x5b
+d0080956:	d806      	bhi.n	d0080966 <init_star_fields+0xb6>
+d0080958:	f04f 0307 	mov.w	r3, #7
+d008095c:	7123      	strb	r3, [r4, #4]
+d008095e:	f04f 0301 	mov.w	r3, #1
+d0080962:	7163      	strb	r3, [r4, #5]
+d0080964:	e7ba      	b.n	d00808dc <init_star_fields+0x2c>
+d0080966:	f04f 0309 	mov.w	r3, #9
+d008096a:	2d5f      	cmp	r5, #95	; 0x5f
+d008096c:	7123      	strb	r3, [r4, #4]
+d008096e:	f04f 0302 	mov.w	r3, #2
+d0080972:	7163      	strb	r3, [r4, #5]
+d0080974:	d1b2      	bne.n	d00808dc <init_star_fields+0x2c>
+d0080976:	4b02      	ldr	r3, [pc, #8]	; (d0080980 <init_star_fields+0xd0>)
+d0080978:	6019      	str	r1, [r3, #0]
+d008097a:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d008097e:	bf00      	nop
+d0080980:	d009c600 	.word	0xd009c600
+d0080984:	d009c700 	.word	0xd009c700
+d0080988:	41c64e6d 	.word	0x41c64e6d
+d008098c:	11a3019b 	.word	0x11a3019b
+d0080990:	0749cb29 	.word	0x0749cb29
 
-d0080c38 <do_bubbastix_playdemo_screensaver>:
-d0080c38:	4b88      	ldr	r3, [pc, #544]	; (d0080e5c <do_bubbastix_playdemo_screensaver+0x224>)
-d0080c3a:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d0080c3e:	781b      	ldrb	r3, [r3, #0]
-d0080c40:	b089      	sub	sp, #36	; 0x24
-d0080c42:	2b03      	cmp	r3, #3
-d0080c44:	f000 81a2 	beq.w	d0080f8c <do_bubbastix_playdemo_screensaver+0x354>
-d0080c48:	4985      	ldr	r1, [pc, #532]	; (d0080e60 <do_bubbastix_playdemo_screensaver+0x228>)
-d0080c4a:	4d86      	ldr	r5, [pc, #536]	; (d0080e64 <do_bubbastix_playdemo_screensaver+0x22c>)
-d0080c4c:	880b      	ldrh	r3, [r1, #0]
-d0080c4e:	1e5a      	subs	r2, r3, #1
-d0080c50:	b212      	sxth	r2, r2
-d0080c52:	2a01      	cmp	r2, #1
-d0080c54:	800a      	strh	r2, [r1, #0]
-d0080c56:	f040 8131 	bne.w	d0080ebc <do_bubbastix_playdemo_screensaver+0x284>
-d0080c5a:	f895 c000 	ldrb.w	ip, [r5]
-d0080c5e:	2302      	movs	r3, #2
-d0080c60:	4a81      	ldr	r2, [pc, #516]	; (d0080e68 <do_bubbastix_playdemo_screensaver+0x230>)
-d0080c62:	f10c 0401 	add.w	r4, ip, #1
-d0080c66:	4881      	ldr	r0, [pc, #516]	; (d0080e6c <do_bubbastix_playdemo_screensaver+0x234>)
-d0080c68:	6a11      	ldr	r1, [r2, #32]
-d0080c6a:	f1bc 0f03 	cmp.w	ip, #3
-d0080c6e:	b2e4      	uxtb	r4, r4
-d0080c70:	9203      	str	r2, [sp, #12]
-d0080c72:	9006      	str	r0, [sp, #24]
-d0080c74:	460a      	mov	r2, r1
-d0080c76:	6001      	str	r1, [r0, #0]
-d0080c78:	702c      	strb	r4, [r5, #0]
-d0080c7a:	f240 820a 	bls.w	d0081092 <do_bubbastix_playdemo_screensaver+0x45a>
-d0080c7e:	487c      	ldr	r0, [pc, #496]	; (d0080e70 <do_bubbastix_playdemo_screensaver+0x238>)
-d0080c80:	4f7c      	ldr	r7, [pc, #496]	; (d0080e74 <do_bubbastix_playdemo_screensaver+0x23c>)
-d0080c82:	f8df b228 	ldr.w	fp, [pc, #552]	; d0080eac <do_bubbastix_playdemo_screensaver+0x274>
-d0080c86:	9007      	str	r0, [sp, #28]
-d0080c88:	4e7b      	ldr	r6, [pc, #492]	; (d0080e78 <do_bubbastix_playdemo_screensaver+0x240>)
-d0080c8a:	f04f 0c00 	mov.w	ip, #0
-d0080c8e:	7834      	ldrb	r4, [r6, #0]
-d0080c90:	f885 c000 	strb.w	ip, [r5]
-d0080c94:	2c06      	cmp	r4, #6
-d0080c96:	f200 81de 	bhi.w	d0081056 <do_bubbastix_playdemo_screensaver+0x41e>
-d0080c9a:	3401      	adds	r4, #1
-d0080c9c:	4291      	cmp	r1, r2
-d0080c9e:	b2e4      	uxtb	r4, r4
-d0080ca0:	7034      	strb	r4, [r6, #0]
-d0080ca2:	f000 81de 	beq.w	d0081062 <do_bubbastix_playdemo_screensaver+0x42a>
-d0080ca6:	4875      	ldr	r0, [pc, #468]	; (d0080e7c <do_bubbastix_playdemo_screensaver+0x244>)
-d0080ca8:	9a03      	ldr	r2, [sp, #12]
-d0080caa:	9005      	str	r0, [sp, #20]
-d0080cac:	4874      	ldr	r0, [pc, #464]	; (d0080e80 <do_bubbastix_playdemo_screensaver+0x248>)
-d0080cae:	f852 2024 	ldr.w	r2, [r2, r4, lsl #2]
-d0080cb2:	9004      	str	r0, [sp, #16]
-d0080cb4:	f8df 81f8 	ldr.w	r8, [pc, #504]	; d0080eb0 <do_bubbastix_playdemo_screensaver+0x278>
-d0080cb8:	9806      	ldr	r0, [sp, #24]
-d0080cba:	f8df a1f8 	ldr.w	sl, [pc, #504]	; d0080eb4 <do_bubbastix_playdemo_screensaver+0x27c>
-d0080cbe:	6002      	str	r2, [r0, #0]
-d0080cc0:	4291      	cmp	r1, r2
-d0080cc2:	d026      	beq.n	d0080d12 <do_bubbastix_playdemo_screensaver+0xda>
-d0080cc4:	496f      	ldr	r1, [pc, #444]	; (d0080e84 <do_bubbastix_playdemo_screensaver+0x24c>)
-d0080cc6:	780a      	ldrb	r2, [r1, #0]
-d0080cc8:	2a03      	cmp	r2, #3
-d0080cca:	f200 8150 	bhi.w	d0080f6e <do_bubbastix_playdemo_screensaver+0x336>
-d0080cce:	3201      	adds	r2, #1
-d0080cd0:	700a      	strb	r2, [r1, #0]
-d0080cd2:	33db      	adds	r3, #219	; 0xdb
-d0080cd4:	b29b      	uxth	r3, r3
-d0080cd6:	2bdc      	cmp	r3, #220	; 0xdc
-d0080cd8:	d91b      	bls.n	d0080d12 <do_bubbastix_playdemo_screensaver+0xda>
-d0080cda:	4a6b      	ldr	r2, [pc, #428]	; (d0080e88 <do_bubbastix_playdemo_screensaver+0x250>)
-d0080cdc:	f8b8 3000 	ldrh.w	r3, [r8]
-d0080ce0:	8812      	ldrh	r2, [r2, #0]
-d0080ce2:	4413      	add	r3, r2
-d0080ce4:	b21b      	sxth	r3, r3
-d0080ce6:	f5b3 7ff0 	cmp.w	r3, #480	; 0x1e0
-d0080cea:	f8a8 3000 	strh.w	r3, [r8]
-d0080cee:	dd04      	ble.n	d0080cfa <do_bubbastix_playdemo_screensaver+0xc2>
-d0080cf0:	4a5a      	ldr	r2, [pc, #360]	; (d0080e5c <do_bubbastix_playdemo_screensaver+0x224>)
-d0080cf2:	7813      	ldrb	r3, [r2, #0]
-d0080cf4:	f043 0302 	orr.w	r3, r3, #2
-d0080cf8:	7013      	strb	r3, [r2, #0]
-d0080cfa:	4a64      	ldr	r2, [pc, #400]	; (d0080e8c <do_bubbastix_playdemo_screensaver+0x254>)
-d0080cfc:	f8ba 3000 	ldrh.w	r3, [sl]
-d0080d00:	8812      	ldrh	r2, [r2, #0]
-d0080d02:	4413      	add	r3, r2
-d0080d04:	b21b      	sxth	r3, r3
-d0080d06:	f5b3 7f7a 	cmp.w	r3, #1000	; 0x3e8
-d0080d0a:	f8aa 3000 	strh.w	r3, [sl]
-d0080d0e:	f300 81b4 	bgt.w	d008107a <do_bubbastix_playdemo_screensaver+0x442>
-d0080d12:	2500      	movs	r5, #0
-d0080d14:	4c5e      	ldr	r4, [pc, #376]	; (d0080e90 <do_bubbastix_playdemo_screensaver+0x258>)
-d0080d16:	f04f 0960 	mov.w	r9, #96	; 0x60
-d0080d1a:	485e      	ldr	r0, [pc, #376]	; (d0080e94 <do_bubbastix_playdemo_screensaver+0x25c>)
-d0080d1c:	f894 e00c 	ldrb.w	lr, [r4, #12]
-d0080d20:	f44f 738e 	mov.w	r3, #284	; 0x11c
-d0080d24:	f894 c00d 	ldrb.w	ip, [r4, #13]
-d0080d28:	22d6      	movs	r2, #214	; 0xd6
-d0080d2a:	7ba6      	ldrb	r6, [r4, #14]
-d0080d2c:	ea4e 210c 	orr.w	r1, lr, ip, lsl #8
-d0080d30:	f894 e00f 	ldrb.w	lr, [r4, #15]
-d0080d34:	ea41 4c06 	orr.w	ip, r1, r6, lsl #16
-d0080d38:	8839      	ldrh	r1, [r7, #0]
-d0080d3a:	ea4c 660e 	orr.w	r6, ip, lr, lsl #24
-d0080d3e:	4429      	add	r1, r5
-d0080d40:	441d      	add	r5, r3
-d0080d42:	6876      	ldr	r6, [r6, #4]
-d0080d44:	b209      	sxth	r1, r1
-d0080d46:	f8cd 9000 	str.w	r9, [sp]
-d0080d4a:	69b6      	ldr	r6, [r6, #24]
-d0080d4c:	47b0      	blx	r6
-d0080d4e:	f5b5 7f55 	cmp.w	r5, #852	; 0x354
-d0080d52:	4850      	ldr	r0, [pc, #320]	; (d0080e94 <do_bubbastix_playdemo_screensaver+0x25c>)
-d0080d54:	d1e2      	bne.n	d0080d1c <do_bubbastix_playdemo_screensaver+0xe4>
-d0080d56:	7b22      	ldrb	r2, [r4, #12]
-d0080d58:	2520      	movs	r5, #32
-d0080d5a:	7b63      	ldrb	r3, [r4, #13]
-d0080d5c:	7ba6      	ldrb	r6, [r4, #14]
-d0080d5e:	ea42 2303 	orr.w	r3, r2, r3, lsl #8
-d0080d62:	9904      	ldr	r1, [sp, #16]
-d0080d64:	4a4c      	ldr	r2, [pc, #304]	; (d0080e98 <do_bubbastix_playdemo_screensaver+0x260>)
-d0080d66:	ea43 4306 	orr.w	r3, r3, r6, lsl #16
-d0080d6a:	7be6      	ldrb	r6, [r4, #15]
-d0080d6c:	7809      	ldrb	r1, [r1, #0]
-d0080d6e:	ea43 6606 	orr.w	r6, r3, r6, lsl #24
-d0080d72:	9805      	ldr	r0, [sp, #20]
-d0080d74:	5c53      	ldrb	r3, [r2, r1]
-d0080d76:	22de      	movs	r2, #222	; 0xde
-d0080d78:	6876      	ldr	r6, [r6, #4]
-d0080d7a:	6800      	ldr	r0, [r0, #0]
-d0080d7c:	f9b8 1000 	ldrsh.w	r1, [r8]
-d0080d80:	9500      	str	r5, [sp, #0]
-d0080d82:	69b5      	ldr	r5, [r6, #24]
-d0080d84:	47a8      	blx	r5
-d0080d86:	7b21      	ldrb	r1, [r4, #12]
-d0080d88:	7b62      	ldrb	r2, [r4, #13]
-d0080d8a:	2570      	movs	r5, #112	; 0x70
-d0080d8c:	7ba0      	ldrb	r0, [r4, #14]
-d0080d8e:	2340      	movs	r3, #64	; 0x40
-d0080d90:	ea41 2202 	orr.w	r2, r1, r2, lsl #8
-d0080d94:	7be6      	ldrb	r6, [r4, #15]
-d0080d96:	f8b8 1000 	ldrh.w	r1, [r8]
-d0080d9a:	ea42 4000 	orr.w	r0, r2, r0, lsl #16
-d0080d9e:	226e      	movs	r2, #110	; 0x6e
-d0080da0:	3104      	adds	r1, #4
-d0080da2:	ea40 6606 	orr.w	r6, r0, r6, lsl #24
-d0080da6:	483d      	ldr	r0, [pc, #244]	; (d0080e9c <do_bubbastix_playdemo_screensaver+0x264>)
-d0080da8:	b209      	sxth	r1, r1
-d0080daa:	6876      	ldr	r6, [r6, #4]
-d0080dac:	9500      	str	r5, [sp, #0]
-d0080dae:	69b5      	ldr	r5, [r6, #24]
-d0080db0:	47a8      	blx	r5
-d0080db2:	9b06      	ldr	r3, [sp, #24]
-d0080db4:	6818      	ldr	r0, [r3, #0]
-d0080db6:	9b03      	ldr	r3, [sp, #12]
-d0080db8:	6a1b      	ldr	r3, [r3, #32]
-d0080dba:	4283      	cmp	r3, r0
-d0080dbc:	f000 8120 	beq.w	d0081000 <do_bubbastix_playdemo_screensaver+0x3c8>
-d0080dc0:	7b26      	ldrb	r6, [r4, #12]
-d0080dc2:	22bb      	movs	r2, #187	; 0xbb
-d0080dc4:	7b63      	ldrb	r3, [r4, #13]
-d0080dc6:	7ba5      	ldrb	r5, [r4, #14]
-d0080dc8:	ea46 2603 	orr.w	r6, r6, r3, lsl #8
-d0080dcc:	7be3      	ldrb	r3, [r4, #15]
-d0080dce:	4f34      	ldr	r7, [pc, #208]	; (d0080ea0 <do_bubbastix_playdemo_screensaver+0x268>)
-d0080dd0:	ea46 4505 	orr.w	r5, r6, r5, lsl #16
-d0080dd4:	4e28      	ldr	r6, [pc, #160]	; (d0080e78 <do_bubbastix_playdemo_screensaver+0x240>)
-d0080dd6:	f9ba 1000 	ldrsh.w	r1, [sl]
-d0080dda:	ea45 6303 	orr.w	r3, r5, r3, lsl #24
-d0080dde:	7835      	ldrb	r5, [r6, #0]
-d0080de0:	685e      	ldr	r6, [r3, #4]
-d0080de2:	5d7f      	ldrb	r7, [r7, r5]
-d0080de4:	4b2f      	ldr	r3, [pc, #188]	; (d0080ea4 <do_bubbastix_playdemo_screensaver+0x26c>)
-d0080de6:	9700      	str	r7, [sp, #0]
-d0080de8:	5d5b      	ldrb	r3, [r3, r5]
-d0080dea:	69b5      	ldr	r5, [r6, #24]
-d0080dec:	47a8      	blx	r5
-d0080dee:	2700      	movs	r7, #0
-d0080df0:	f04f 0850 	mov.w	r8, #80	; 0x50
-d0080df4:	f8df 90c0 	ldr.w	r9, [pc, #192]	; d0080eb8 <do_bubbastix_playdemo_screensaver+0x280>
-d0080df8:	f894 c00c 	ldrb.w	ip, [r4, #12]
-d0080dfc:	f44f 73a0 	mov.w	r3, #320	; 0x140
-d0080e00:	7b61      	ldrb	r1, [r4, #13]
-d0080e02:	22f0      	movs	r2, #240	; 0xf0
-d0080e04:	7ba6      	ldrb	r6, [r4, #14]
-d0080e06:	4648      	mov	r0, r9
-d0080e08:	ea4c 2101 	orr.w	r1, ip, r1, lsl #8
-d0080e0c:	7be5      	ldrb	r5, [r4, #15]
-d0080e0e:	ea41 4606 	orr.w	r6, r1, r6, lsl #16
-d0080e12:	f8bb 1000 	ldrh.w	r1, [fp]
-d0080e16:	ea46 6505 	orr.w	r5, r6, r5, lsl #24
-d0080e1a:	4439      	add	r1, r7
-d0080e1c:	441f      	add	r7, r3
-d0080e1e:	686d      	ldr	r5, [r5, #4]
-d0080e20:	b209      	sxth	r1, r1
-d0080e22:	f8cd 8000 	str.w	r8, [sp]
-d0080e26:	69ad      	ldr	r5, [r5, #24]
-d0080e28:	47a8      	blx	r5
-d0080e2a:	f5b7 7f70 	cmp.w	r7, #960	; 0x3c0
-d0080e2e:	d1e3      	bne.n	d0080df8 <do_bubbastix_playdemo_screensaver+0x1c0>
-d0080e30:	7b23      	ldrb	r3, [r4, #12]
-d0080e32:	2221      	movs	r2, #33	; 0x21
-d0080e34:	7b60      	ldrb	r0, [r4, #13]
-d0080e36:	9907      	ldr	r1, [sp, #28]
-d0080e38:	ea43 2300 	orr.w	r3, r3, r0, lsl #8
-d0080e3c:	7ba0      	ldrb	r0, [r4, #14]
-d0080e3e:	7be4      	ldrb	r4, [r4, #15]
-d0080e40:	ea43 4300 	orr.w	r3, r3, r0, lsl #16
-d0080e44:	8809      	ldrh	r1, [r1, #0]
-d0080e46:	4818      	ldr	r0, [pc, #96]	; (d0080ea8 <do_bubbastix_playdemo_screensaver+0x270>)
-d0080e48:	ea43 6304 	orr.w	r3, r3, r4, lsl #24
-d0080e4c:	8281      	strh	r1, [r0, #20]
-d0080e4e:	685b      	ldr	r3, [r3, #4]
-d0080e50:	82c2      	strh	r2, [r0, #22]
-d0080e52:	6a5b      	ldr	r3, [r3, #36]	; 0x24
-d0080e54:	b009      	add	sp, #36	; 0x24
-d0080e56:	e8bd 4ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-d0080e5a:	4718      	bx	r3
-d0080e5c:	d009b948 	.word	0xd009b948
-d0080e60:	d009b980 	.word	0xd009b980
-d0080e64:	d009b8c8 	.word	0xd009b8c8
-d0080e68:	d009b5a0 	.word	0xd009b5a0
-d0080e6c:	d009b8c4 	.word	0xd009b8c4
-d0080e70:	d009b8c0 	.word	0xd009b8c0
-d0080e74:	d009b942 	.word	0xd009b942
-d0080e78:	d009b8c2 	.word	0xd009b8c2
-d0080e7c:	d009b8cc 	.word	0xd009b8cc
-d0080e80:	d009b8c9 	.word	0xd009b8c9
-d0080e84:	d009b8d0 	.word	0xd009b8d0
-d0080e88:	d009b944 	.word	0xd009b944
-d0080e8c:	d009b946 	.word	0xd009b946
-d0080e90:	2001f000 	.word	0x2001f000
-d0080e94:	d0093f2c 	.word	0xd0093f2c
-d0080e98:	d009b4e0 	.word	0xd009b4e0
-d0080e9c:	d008d0c8 	.word	0xd008d0c8
-d0080ea0:	d0093f14 	.word	0xd0093f14
-d0080ea4:	d0093f20 	.word	0xd0093f20
-d0080ea8:	d009b960 	.word	0xd009b960
-d0080eac:	d009b8d2 	.word	0xd009b8d2
-d0080eb0:	d009b940 	.word	0xd009b940
-d0080eb4:	d009b982 	.word	0xd009b982
-d0080eb8:	d0086cc8 	.word	0xd0086cc8
-d0080ebc:	323c      	adds	r2, #60	; 0x3c
-d0080ebe:	f040 810b 	bne.w	d00810d8 <do_bubbastix_playdemo_screensaver+0x4a0>
-d0080ec2:	f895 c000 	ldrb.w	ip, [r5]
-d0080ec6:	4a8a      	ldr	r2, [pc, #552]	; (d00810f0 <do_bubbastix_playdemo_screensaver+0x4b8>)
-d0080ec8:	f10c 0401 	add.w	r4, ip, #1
-d0080ecc:	4989      	ldr	r1, [pc, #548]	; (d00810f4 <do_bubbastix_playdemo_screensaver+0x4bc>)
-d0080ece:	9203      	str	r2, [sp, #12]
-d0080ed0:	b2e4      	uxtb	r4, r4
-d0080ed2:	6812      	ldr	r2, [r2, #0]
-d0080ed4:	9106      	str	r1, [sp, #24]
-d0080ed6:	600a      	str	r2, [r1, #0]
-d0080ed8:	f103 01da 	add.w	r1, r3, #218	; 0xda
-d0080edc:	b289      	uxth	r1, r1
-d0080ede:	29da      	cmp	r1, #218	; 0xda
-d0080ee0:	f200 80e5 	bhi.w	d00810ae <do_bubbastix_playdemo_screensaver+0x476>
-d0080ee4:	9903      	ldr	r1, [sp, #12]
-d0080ee6:	6a09      	ldr	r1, [r1, #32]
-d0080ee8:	4291      	cmp	r1, r2
-d0080eea:	f000 80cc 	beq.w	d0081086 <do_bubbastix_playdemo_screensaver+0x44e>
-d0080eee:	4f82      	ldr	r7, [pc, #520]	; (d00810f8 <do_bubbastix_playdemo_screensaver+0x4c0>)
-d0080ef0:	4e82      	ldr	r6, [pc, #520]	; (d00810fc <do_bubbastix_playdemo_screensaver+0x4c4>)
-d0080ef2:	f8df b234 	ldr.w	fp, [pc, #564]	; d0081128 <do_bubbastix_playdemo_screensaver+0x4f0>
-d0080ef6:	f8b7 9000 	ldrh.w	r9, [r7]
-d0080efa:	4630      	mov	r0, r6
-d0080efc:	f8bb a000 	ldrh.w	sl, [fp]
-d0080f00:	f1a9 0802 	sub.w	r8, r9, #2
-d0080f04:	9607      	str	r6, [sp, #28]
-d0080f06:	8836      	ldrh	r6, [r6, #0]
-d0080f08:	f1aa 0e03 	sub.w	lr, sl, #3
-d0080f0c:	fa0f f888 	sxth.w	r8, r8
-d0080f10:	3e05      	subs	r6, #5
-d0080f12:	fa0f fe8e 	sxth.w	lr, lr
-d0080f16:	f518 7f8e 	cmn.w	r8, #284	; 0x11c
-d0080f1a:	f8a7 8000 	strh.w	r8, [r7]
-d0080f1e:	b236      	sxth	r6, r6
-d0080f20:	f8ab e000 	strh.w	lr, [fp]
-d0080f24:	8006      	strh	r6, [r0, #0]
-d0080f26:	da03      	bge.n	d0080f30 <do_bubbastix_playdemo_screensaver+0x2f8>
-d0080f28:	f509 788d 	add.w	r8, r9, #282	; 0x11a
-d0080f2c:	f8a7 8000 	strh.w	r8, [r7]
-d0080f30:	3640      	adds	r6, #64	; 0x40
-d0080f32:	da03      	bge.n	d0080f3c <do_bubbastix_playdemo_screensaver+0x304>
-d0080f34:	f44f 7602 	mov.w	r6, #520	; 0x208
-d0080f38:	9807      	ldr	r0, [sp, #28]
-d0080f3a:	8006      	strh	r6, [r0, #0]
-d0080f3c:	f51e 7fa0 	cmn.w	lr, #320	; 0x140
-d0080f40:	da03      	bge.n	d0080f4a <do_bubbastix_playdemo_screensaver+0x312>
-d0080f42:	f20a 1a3d 	addw	sl, sl, #317	; 0x13d
-d0080f46:	f8ab a000 	strh.w	sl, [fp]
-d0080f4a:	f1bc 0f03 	cmp.w	ip, #3
-d0080f4e:	702c      	strb	r4, [r5, #0]
-d0080f50:	f63f ae9a 	bhi.w	d0080c88 <do_bubbastix_playdemo_screensaver+0x50>
-d0080f54:	4a6a      	ldr	r2, [pc, #424]	; (d0081100 <do_bubbastix_playdemo_screensaver+0x4c8>)
-d0080f56:	496b      	ldr	r1, [pc, #428]	; (d0081104 <do_bubbastix_playdemo_screensaver+0x4cc>)
-d0080f58:	9205      	str	r2, [sp, #20]
-d0080f5a:	4a6b      	ldr	r2, [pc, #428]	; (d0081108 <do_bubbastix_playdemo_screensaver+0x4d0>)
-d0080f5c:	f8df 81cc 	ldr.w	r8, [pc, #460]	; d008112c <do_bubbastix_playdemo_screensaver+0x4f4>
-d0080f60:	9204      	str	r2, [sp, #16]
-d0080f62:	780a      	ldrb	r2, [r1, #0]
-d0080f64:	f8df a1c8 	ldr.w	sl, [pc, #456]	; d0081130 <do_bubbastix_playdemo_screensaver+0x4f8>
-d0080f68:	2a03      	cmp	r2, #3
-d0080f6a:	f67f aeb0 	bls.w	d0080cce <do_bubbastix_playdemo_screensaver+0x96>
-d0080f6e:	9804      	ldr	r0, [sp, #16]
-d0080f70:	2400      	movs	r4, #0
-d0080f72:	7802      	ldrb	r2, [r0, #0]
-d0080f74:	700c      	strb	r4, [r1, #0]
-d0080f76:	2a02      	cmp	r2, #2
-d0080f78:	d87c      	bhi.n	d0081074 <do_bubbastix_playdemo_screensaver+0x43c>
-d0080f7a:	3201      	adds	r2, #1
-d0080f7c:	b2d2      	uxtb	r2, r2
-d0080f7e:	7002      	strb	r2, [r0, #0]
-d0080f80:	4962      	ldr	r1, [pc, #392]	; (d008110c <do_bubbastix_playdemo_screensaver+0x4d4>)
-d0080f82:	f851 2022 	ldr.w	r2, [r1, r2, lsl #2]
-d0080f86:	9905      	ldr	r1, [sp, #20]
-d0080f88:	600a      	str	r2, [r1, #0]
-d0080f8a:	e6a2      	b.n	d0080cd2 <do_bubbastix_playdemo_screensaver+0x9a>
-d0080f8c:	4958      	ldr	r1, [pc, #352]	; (d00810f0 <do_bubbastix_playdemo_screensaver+0x4b8>)
-d0080f8e:	2400      	movs	r4, #0
-d0080f90:	4858      	ldr	r0, [pc, #352]	; (d00810f4 <do_bubbastix_playdemo_screensaver+0x4bc>)
-d0080f92:	f64f 7e24 	movw	lr, #65316	; 0xff24
-d0080f96:	680a      	ldr	r2, [r1, #0]
-d0080f98:	2502      	movs	r5, #2
-d0080f9a:	f8df 9198 	ldr.w	r9, [pc, #408]	; d0081134 <do_bubbastix_playdemo_screensaver+0x4fc>
-d0080f9e:	27b3      	movs	r7, #179	; 0xb3
-d0080fa0:	6002      	str	r2, [r0, #0]
-d0080fa2:	f64f 7cce 	movw	ip, #65486	; 0xffce
-d0080fa6:	9006      	str	r0, [sp, #24]
-d0080fa8:	2601      	movs	r6, #1
-d0080faa:	4855      	ldr	r0, [pc, #340]	; (d0081100 <do_bubbastix_playdemo_screensaver+0x4c8>)
-d0080fac:	4b54      	ldr	r3, [pc, #336]	; (d0081100 <do_bubbastix_playdemo_screensaver+0x4c8>)
-d0080fae:	f8c0 9000 	str.w	r9, [r0]
-d0080fb2:	f8df 8184 	ldr.w	r8, [pc, #388]	; d0081138 <do_bubbastix_playdemo_screensaver+0x500>
-d0080fb6:	4856      	ldr	r0, [pc, #344]	; (d0081110 <do_bubbastix_playdemo_screensaver+0x4d8>)
-d0080fb8:	f888 4000 	strb.w	r4, [r8]
-d0080fbc:	7004      	strb	r4, [r0, #0]
-d0080fbe:	f8df 816c 	ldr.w	r8, [pc, #364]	; d008112c <do_bubbastix_playdemo_screensaver+0x4f4>
-d0080fc2:	4851      	ldr	r0, [pc, #324]	; (d0081108 <do_bubbastix_playdemo_screensaver+0x4d0>)
-d0080fc4:	9305      	str	r3, [sp, #20]
-d0080fc6:	4b4f      	ldr	r3, [pc, #316]	; (d0081104 <do_bubbastix_playdemo_screensaver+0x4cc>)
-d0080fc8:	7004      	strb	r4, [r0, #0]
-d0080fca:	701c      	strb	r4, [r3, #0]
-d0080fcc:	23b4      	movs	r3, #180	; 0xb4
-d0080fce:	4c51      	ldr	r4, [pc, #324]	; (d0081114 <do_bubbastix_playdemo_screensaver+0x4dc>)
-d0080fd0:	f8a8 e000 	strh.w	lr, [r8]
-d0080fd4:	f8df e164 	ldr.w	lr, [pc, #356]	; d008113c <do_bubbastix_playdemo_screensaver+0x504>
-d0080fd8:	8025      	strh	r5, [r4, #0]
-d0080fda:	f8df a154 	ldr.w	sl, [pc, #340]	; d0081130 <do_bubbastix_playdemo_screensaver+0x4f8>
-d0080fde:	4c4e      	ldr	r4, [pc, #312]	; (d0081118 <do_bubbastix_playdemo_screensaver+0x4e0>)
-d0080fe0:	9004      	str	r0, [sp, #16]
-d0080fe2:	f8ae 5000 	strh.w	r5, [lr]
-d0080fe6:	4845      	ldr	r0, [pc, #276]	; (d00810fc <do_bubbastix_playdemo_screensaver+0x4c4>)
-d0080fe8:	4d4c      	ldr	r5, [pc, #304]	; (d008111c <do_bubbastix_playdemo_screensaver+0x4e4>)
-d0080fea:	9103      	str	r1, [sp, #12]
-d0080fec:	8027      	strh	r7, [r4, #0]
-d0080fee:	6a09      	ldr	r1, [r1, #32]
-d0080ff0:	4f41      	ldr	r7, [pc, #260]	; (d00810f8 <do_bubbastix_playdemo_screensaver+0x4c0>)
-d0080ff2:	f8df b134 	ldr.w	fp, [pc, #308]	; d0081128 <do_bubbastix_playdemo_screensaver+0x4f0>
-d0080ff6:	f8aa c000 	strh.w	ip, [sl]
-d0080ffa:	702e      	strb	r6, [r5, #0]
-d0080ffc:	9007      	str	r0, [sp, #28]
-d0080ffe:	e65f      	b.n	d0080cc0 <do_bubbastix_playdemo_screensaver+0x88>
-d0081000:	7b22      	ldrb	r2, [r4, #12]
-d0081002:	2610      	movs	r6, #16
-d0081004:	7b65      	ldrb	r5, [r4, #13]
-d0081006:	2328      	movs	r3, #40	; 0x28
-d0081008:	7ba0      	ldrb	r0, [r4, #14]
-d008100a:	2745      	movs	r7, #69	; 0x45
-d008100c:	ea42 2205 	orr.w	r2, r2, r5, lsl #8
-d0081010:	7be5      	ldrb	r5, [r4, #15]
-d0081012:	f8b8 1000 	ldrh.w	r1, [r8]
-d0081016:	ea42 4000 	orr.w	r0, r2, r0, lsl #16
-d008101a:	22de      	movs	r2, #222	; 0xde
-d008101c:	4431      	add	r1, r6
-d008101e:	ea40 6505 	orr.w	r5, r0, r5, lsl #24
-d0081022:	483f      	ldr	r0, [pc, #252]	; (d0081120 <do_bubbastix_playdemo_screensaver+0x4e8>)
-d0081024:	b209      	sxth	r1, r1
-d0081026:	686d      	ldr	r5, [r5, #4]
-d0081028:	9600      	str	r6, [sp, #0]
-d008102a:	69ad      	ldr	r5, [r5, #24]
-d008102c:	47a8      	blx	r5
-d008102e:	7b22      	ldrb	r2, [r4, #12]
-d0081030:	7b60      	ldrb	r0, [r4, #13]
-d0081032:	2318      	movs	r3, #24
-d0081034:	7ba6      	ldrb	r6, [r4, #14]
-d0081036:	ea42 2000 	orr.w	r0, r2, r0, lsl #8
-d008103a:	7be5      	ldrb	r5, [r4, #15]
-d008103c:	f9ba 1000 	ldrsh.w	r1, [sl]
-d0081040:	22bb      	movs	r2, #187	; 0xbb
-d0081042:	ea40 4606 	orr.w	r6, r0, r6, lsl #16
-d0081046:	4837      	ldr	r0, [pc, #220]	; (d0081124 <do_bubbastix_playdemo_screensaver+0x4ec>)
-d0081048:	ea46 6505 	orr.w	r5, r6, r5, lsl #24
-d008104c:	686d      	ldr	r5, [r5, #4]
-d008104e:	9700      	str	r7, [sp, #0]
-d0081050:	69ad      	ldr	r5, [r5, #24]
-d0081052:	47a8      	blx	r5
-d0081054:	e6cb      	b.n	d0080dee <do_bubbastix_playdemo_screensaver+0x1b6>
-d0081056:	4291      	cmp	r1, r2
-d0081058:	4664      	mov	r4, ip
-d008105a:	f886 c000 	strb.w	ip, [r6]
-d008105e:	f47f ae22 	bne.w	d0080ca6 <do_bubbastix_playdemo_screensaver+0x6e>
-d0081062:	4b27      	ldr	r3, [pc, #156]	; (d0081100 <do_bubbastix_playdemo_screensaver+0x4c8>)
-d0081064:	f8df 80c4 	ldr.w	r8, [pc, #196]	; d008112c <do_bubbastix_playdemo_screensaver+0x4f4>
-d0081068:	9305      	str	r3, [sp, #20]
-d008106a:	4b27      	ldr	r3, [pc, #156]	; (d0081108 <do_bubbastix_playdemo_screensaver+0x4d0>)
-d008106c:	f8df a0c0 	ldr.w	sl, [pc, #192]	; d0081130 <do_bubbastix_playdemo_screensaver+0x4f8>
-d0081070:	9304      	str	r3, [sp, #16]
-d0081072:	e64e      	b.n	d0080d12 <do_bubbastix_playdemo_screensaver+0xda>
-d0081074:	4622      	mov	r2, r4
-d0081076:	7004      	strb	r4, [r0, #0]
-d0081078:	e782      	b.n	d0080f80 <do_bubbastix_playdemo_screensaver+0x348>
-d008107a:	4a25      	ldr	r2, [pc, #148]	; (d0081110 <do_bubbastix_playdemo_screensaver+0x4d8>)
-d008107c:	7813      	ldrb	r3, [r2, #0]
-d008107e:	f043 0301 	orr.w	r3, r3, #1
-d0081082:	7013      	strb	r3, [r2, #0]
-d0081084:	e645      	b.n	d0080d12 <do_bubbastix_playdemo_screensaver+0xda>
-d0081086:	f1bc 0f03 	cmp.w	ip, #3
-d008108a:	4611      	mov	r1, r2
-d008108c:	702c      	strb	r4, [r5, #0]
-d008108e:	f63f adf6 	bhi.w	d0080c7e <do_bubbastix_playdemo_screensaver+0x46>
-d0081092:	4b1b      	ldr	r3, [pc, #108]	; (d0081100 <do_bubbastix_playdemo_screensaver+0x4c8>)
-d0081094:	f8df 8094 	ldr.w	r8, [pc, #148]	; d008112c <do_bubbastix_playdemo_screensaver+0x4f4>
-d0081098:	9305      	str	r3, [sp, #20]
-d008109a:	4b1b      	ldr	r3, [pc, #108]	; (d0081108 <do_bubbastix_playdemo_screensaver+0x4d0>)
-d008109c:	f8df a090 	ldr.w	sl, [pc, #144]	; d0081130 <do_bubbastix_playdemo_screensaver+0x4f8>
-d00810a0:	9304      	str	r3, [sp, #16]
-d00810a2:	4b16      	ldr	r3, [pc, #88]	; (d00810fc <do_bubbastix_playdemo_screensaver+0x4c4>)
-d00810a4:	4f14      	ldr	r7, [pc, #80]	; (d00810f8 <do_bubbastix_playdemo_screensaver+0x4c0>)
-d00810a6:	f8df b080 	ldr.w	fp, [pc, #128]	; d0081128 <do_bubbastix_playdemo_screensaver+0x4f0>
-d00810aa:	9307      	str	r3, [sp, #28]
-d00810ac:	e631      	b.n	d0080d12 <do_bubbastix_playdemo_screensaver+0xda>
-d00810ae:	9903      	ldr	r1, [sp, #12]
-d00810b0:	f1bc 0f03 	cmp.w	ip, #3
-d00810b4:	702c      	strb	r4, [r5, #0]
-d00810b6:	6a09      	ldr	r1, [r1, #32]
-d00810b8:	f63f ade1 	bhi.w	d0080c7e <do_bubbastix_playdemo_screensaver+0x46>
-d00810bc:	4810      	ldr	r0, [pc, #64]	; (d0081100 <do_bubbastix_playdemo_screensaver+0x4c8>)
-d00810be:	f8df 806c 	ldr.w	r8, [pc, #108]	; d008112c <do_bubbastix_playdemo_screensaver+0x4f4>
-d00810c2:	9005      	str	r0, [sp, #20]
-d00810c4:	4810      	ldr	r0, [pc, #64]	; (d0081108 <do_bubbastix_playdemo_screensaver+0x4d0>)
-d00810c6:	f8df a068 	ldr.w	sl, [pc, #104]	; d0081130 <do_bubbastix_playdemo_screensaver+0x4f8>
-d00810ca:	9004      	str	r0, [sp, #16]
-d00810cc:	480b      	ldr	r0, [pc, #44]	; (d00810fc <do_bubbastix_playdemo_screensaver+0x4c4>)
-d00810ce:	4f0a      	ldr	r7, [pc, #40]	; (d00810f8 <do_bubbastix_playdemo_screensaver+0x4c0>)
-d00810d0:	f8df b054 	ldr.w	fp, [pc, #84]	; d0081128 <do_bubbastix_playdemo_screensaver+0x4f0>
-d00810d4:	9007      	str	r0, [sp, #28]
-d00810d6:	e5f3      	b.n	d0080cc0 <do_bubbastix_playdemo_screensaver+0x88>
-d00810d8:	f895 c000 	ldrb.w	ip, [r5]
-d00810dc:	4a05      	ldr	r2, [pc, #20]	; (d00810f4 <do_bubbastix_playdemo_screensaver+0x4bc>)
-d00810de:	f10c 0401 	add.w	r4, ip, #1
-d00810e2:	4903      	ldr	r1, [pc, #12]	; (d00810f0 <do_bubbastix_playdemo_screensaver+0x4b8>)
-d00810e4:	9206      	str	r2, [sp, #24]
-d00810e6:	b2e4      	uxtb	r4, r4
-d00810e8:	6812      	ldr	r2, [r2, #0]
-d00810ea:	9103      	str	r1, [sp, #12]
-d00810ec:	e6f4      	b.n	d0080ed8 <do_bubbastix_playdemo_screensaver+0x2a0>
-d00810ee:	bf00      	nop
-d00810f0:	d009b5a0 	.word	0xd009b5a0
-d00810f4:	d009b8c4 	.word	0xd009b8c4
-d00810f8:	d009b942 	.word	0xd009b942
-d00810fc:	d009b8c0 	.word	0xd009b8c0
-d0081100:	d009b8cc 	.word	0xd009b8cc
-d0081104:	d009b8d0 	.word	0xd009b8d0
-d0081108:	d009b8c9 	.word	0xd009b8c9
-d008110c:	d009b5e0 	.word	0xd009b5e0
-d0081110:	d009b948 	.word	0xd009b948
-d0081114:	d009b946 	.word	0xd009b946
-d0081118:	d009b980 	.word	0xd009b980
-d008111c:	d009b8c8 	.word	0xd009b8c8
-d0081120:	d0084e28 	.word	0xd0084e28
-d0081124:	d008ecc8 	.word	0xd008ecc8
-d0081128:	d009b8d2 	.word	0xd009b8d2
-d008112c:	d009b940 	.word	0xd009b940
-d0081130:	d009b982 	.word	0xd009b982
-d0081134:	d0082d68 	.word	0xd0082d68
-d0081138:	d009b8c2 	.word	0xd009b8c2
-d008113c:	d009b944 	.word	0xd009b944
+d0080994 <setup_background_bub>:
+d0080994:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d0080998:	4b83      	ldr	r3, [pc, #524]	; (d0080ba8 <setup_background_bub+0x214>)
+d008099a:	21c8      	movs	r1, #200	; 0xc8
+d008099c:	4d83      	ldr	r5, [pc, #524]	; (d0080bac <setup_background_bub+0x218>)
+d008099e:	2200      	movs	r2, #0
+d00809a0:	4883      	ldr	r0, [pc, #524]	; (d0080bb0 <setup_background_bub+0x21c>)
+d00809a2:	b087      	sub	sp, #28
+d00809a4:	4c83      	ldr	r4, [pc, #524]	; (d0080bb4 <setup_background_bub+0x220>)
+d00809a6:	f04f 0964 	mov.w	r9, #100	; 0x64
+d00809aa:	8029      	strh	r1, [r5, #0]
+d00809ac:	8319      	strh	r1, [r3, #24]
+d00809ae:	f504 7a00 	add.w	sl, r4, #512	; 0x200
+d00809b2:	4981      	ldr	r1, [pc, #516]	; (d0080bb8 <setup_background_bub+0x224>)
+d00809b4:	4d81      	ldr	r5, [pc, #516]	; (d0080bbc <setup_background_bub+0x228>)
+d00809b6:	6018      	str	r0, [r3, #0]
+d00809b8:	f8df 8218 	ldr.w	r8, [pc, #536]	; d0080bd4 <setup_background_bub+0x240>
+d00809bc:	4880      	ldr	r0, [pc, #512]	; (d0080bc0 <setup_background_bub+0x22c>)
+d00809be:	4f81      	ldr	r7, [pc, #516]	; (d0080bc4 <setup_background_bub+0x230>)
+d00809c0:	4e81      	ldr	r6, [pc, #516]	; (d0080bc8 <setup_background_bub+0x234>)
+d00809c2:	60d9      	str	r1, [r3, #12]
+d00809c4:	6119      	str	r1, [r3, #16]
+d00809c6:	802a      	strh	r2, [r5, #0]
+d00809c8:	8002      	strh	r2, [r0, #0]
+d00809ca:	2500      	movs	r5, #0
+d00809cc:	f8c4 8000 	str.w	r8, [r4]
+d00809d0:	60e7      	str	r7, [r4, #12]
+d00809d2:	2009      	movs	r0, #9
+d00809d4:	6126      	str	r6, [r4, #16]
+d00809d6:	3440      	adds	r4, #64	; 0x40
+d00809d8:	f824 9c28 	strh.w	r9, [r4, #-40]
+d00809dc:	f804 5c1b 	strb.w	r5, [r4, #-27]
+d00809e0:	f7ff ff50 	bl	d0080884 <star_rand>
+d00809e4:	4603      	mov	r3, r0
+d00809e6:	f804 5c1a 	strb.w	r5, [r4, #-26]
+d00809ea:	f44f 70be 	mov.w	r0, #380	; 0x17c
+d00809ee:	f804 3c1c 	strb.w	r3, [r4, #-28]
+d00809f2:	f804 5c19 	strb.w	r5, [r4, #-25]
+d00809f6:	f7ff ff45 	bl	d0080884 <star_rand>
+d00809fa:	4603      	mov	r3, r0
+d00809fc:	20dc      	movs	r0, #220	; 0xdc
+d00809fe:	3314      	adds	r3, #20
+d0080a00:	f824 3c20 	strh.w	r3, [r4, #-32]
+d0080a04:	f7ff ff3e 	bl	d0080884 <star_rand>
+d0080a08:	4603      	mov	r3, r0
+d0080a0a:	2004      	movs	r0, #4
+d0080a0c:	3314      	adds	r3, #20
+d0080a0e:	f824 3c1e 	strh.w	r3, [r4, #-30]
+d0080a12:	f7ff ff37 	bl	d0080884 <star_rand>
+d0080a16:	4603      	mov	r3, r0
+d0080a18:	2002      	movs	r0, #2
+d0080a1a:	3303      	adds	r3, #3
+d0080a1c:	f804 3c18 	strb.w	r3, [r4, #-24]
+d0080a20:	f7ff ff30 	bl	d0080884 <star_rand>
+d0080a24:	4603      	mov	r3, r0
+d0080a26:	2014      	movs	r0, #20
+d0080a28:	3301      	adds	r3, #1
+d0080a2a:	f804 3c17 	strb.w	r3, [r4, #-23]
+d0080a2e:	f7ff ff29 	bl	d0080884 <star_rand>
+d0080a32:	f804 0c16 	strb.w	r0, [r4, #-22]
+d0080a36:	4554      	cmp	r4, sl
+d0080a38:	d1c7      	bne.n	d00809ca <setup_background_bub+0x36>
+d0080a3a:	4c64      	ldr	r4, [pc, #400]	; (d0080bcc <setup_background_bub+0x238>)
+d0080a3c:	f04f 0825 	mov.w	r8, #37	; 0x25
+d0080a40:	4863      	ldr	r0, [pc, #396]	; (d0080bd0 <setup_background_bub+0x23c>)
+d0080a42:	2720      	movs	r7, #32
+d0080a44:	7b23      	ldrb	r3, [r4, #12]
+d0080a46:	7b62      	ldrb	r2, [r4, #13]
+d0080a48:	f8df 918c 	ldr.w	r9, [pc, #396]	; d0080bd8 <setup_background_bub+0x244>
+d0080a4c:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d0080a50:	7ba2      	ldrb	r2, [r4, #14]
+d0080a52:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
+d0080a56:	7be2      	ldrb	r2, [r4, #15]
+d0080a58:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d0080a5c:	681b      	ldr	r3, [r3, #0]
+d0080a5e:	699b      	ldr	r3, [r3, #24]
+d0080a60:	4798      	blx	r3
+d0080a62:	7b23      	ldrb	r3, [r4, #12]
+d0080a64:	7b62      	ldrb	r2, [r4, #13]
+d0080a66:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d0080a6a:	7ba2      	ldrb	r2, [r4, #14]
+d0080a6c:	ea43 4302 	orr.w	r3, r3, r2, lsl #16
+d0080a70:	7be2      	ldrb	r2, [r4, #15]
+d0080a72:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d0080a76:	685b      	ldr	r3, [r3, #4]
+d0080a78:	681b      	ldr	r3, [r3, #0]
+d0080a7a:	4798      	blx	r3
+d0080a7c:	e057      	b.n	d0080b2e <setup_background_bub+0x19a>
+d0080a7e:	f894 e00c 	ldrb.w	lr, [r4, #12]
+d0080a82:	4638      	mov	r0, r7
+d0080a84:	f894 c00d 	ldrb.w	ip, [r4, #13]
+d0080a88:	7ba2      	ldrb	r2, [r4, #14]
+d0080a8a:	ea4e 2c0c 	orr.w	ip, lr, ip, lsl #8
+d0080a8e:	7be3      	ldrb	r3, [r4, #15]
+d0080a90:	f819 ac01 	ldrb.w	sl, [r9, #-1]
+d0080a94:	ea4c 4202 	orr.w	r2, ip, r2, lsl #16
+d0080a98:	9105      	str	r1, [sp, #20]
+d0080a9a:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
+d0080a9e:	685b      	ldr	r3, [r3, #4]
+d0080aa0:	68db      	ldr	r3, [r3, #12]
+d0080aa2:	4798      	blx	r3
+d0080aa4:	7b22      	ldrb	r2, [r4, #12]
+d0080aa6:	f894 c00d 	ldrb.w	ip, [r4, #13]
+d0080aaa:	465b      	mov	r3, fp
+d0080aac:	7ba0      	ldrb	r0, [r4, #14]
+d0080aae:	ea42 2c0c 	orr.w	ip, r2, ip, lsl #8
+d0080ab2:	f894 e00f 	ldrb.w	lr, [r4, #15]
+d0080ab6:	9905      	ldr	r1, [sp, #20]
+d0080ab8:	f44f 72f0 	mov.w	r2, #480	; 0x1e0
+d0080abc:	ea4c 4c00 	orr.w	ip, ip, r0, lsl #16
+d0080ac0:	2000      	movs	r0, #0
+d0080ac2:	ea4c 6e0e 	orr.w	lr, ip, lr, lsl #24
+d0080ac6:	f8de c004 	ldr.w	ip, [lr, #4]
+d0080aca:	f8dc b004 	ldr.w	fp, [ip, #4]
+d0080ace:	47d8      	blx	fp
+d0080ad0:	45ba      	cmp	sl, r7
+d0080ad2:	d024      	beq.n	d0080b1e <setup_background_bub+0x18a>
+d0080ad4:	9b04      	ldr	r3, [sp, #16]
+d0080ad6:	4650      	mov	r0, sl
+d0080ad8:	4543      	cmp	r3, r8
+d0080ada:	dd20      	ble.n	d0080b1e <setup_background_bub+0x18a>
+d0080adc:	7b27      	ldrb	r7, [r4, #12]
+d0080ade:	7b61      	ldrb	r1, [r4, #13]
+d0080ae0:	7ba2      	ldrb	r2, [r4, #14]
+d0080ae2:	ea47 2101 	orr.w	r1, r7, r1, lsl #8
+d0080ae6:	7be3      	ldrb	r3, [r4, #15]
+d0080ae8:	ea41 4202 	orr.w	r2, r1, r2, lsl #16
+d0080aec:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
+d0080af0:	685b      	ldr	r3, [r3, #4]
+d0080af2:	68db      	ldr	r3, [r3, #12]
+d0080af4:	4798      	blx	r3
+d0080af6:	7b22      	ldrb	r2, [r4, #12]
+d0080af8:	7b67      	ldrb	r7, [r4, #13]
+d0080afa:	1cb1      	adds	r1, r6, #2
+d0080afc:	7ba6      	ldrb	r6, [r4, #14]
+d0080afe:	2302      	movs	r3, #2
+d0080b00:	ea42 2007 	orr.w	r0, r2, r7, lsl #8
+d0080b04:	f894 c00f 	ldrb.w	ip, [r4, #15]
+d0080b08:	b209      	sxth	r1, r1
+d0080b0a:	f44f 72f0 	mov.w	r2, #480	; 0x1e0
+d0080b0e:	ea40 4706 	orr.w	r7, r0, r6, lsl #16
+d0080b12:	2000      	movs	r0, #0
+d0080b14:	ea47 660c 	orr.w	r6, r7, ip, lsl #24
+d0080b18:	6876      	ldr	r6, [r6, #4]
+d0080b1a:	6876      	ldr	r6, [r6, #4]
+d0080b1c:	47b0      	blx	r6
+d0080b1e:	b2ab      	uxth	r3, r5
+d0080b20:	2b11      	cmp	r3, #17
+d0080b22:	d05b      	beq.n	d0080bdc <setup_background_bub+0x248>
+d0080b24:	3501      	adds	r5, #1
+d0080b26:	f108 0806 	add.w	r8, r8, #6
+d0080b2a:	f819 7f01 	ldrb.w	r7, [r9, #1]!
+d0080b2e:	fa1f f688 	uxth.w	r6, r8
+d0080b32:	2d11      	cmp	r5, #17
+d0080b34:	f04f 0b06 	mov.w	fp, #6
+d0080b38:	fa0f fa85 	sxth.w	sl, r5
+d0080b3c:	f106 0305 	add.w	r3, r6, #5
+d0080b40:	f106 31ff 	add.w	r1, r6, #4294967295	; 0xffffffff
+d0080b44:	b21b      	sxth	r3, r3
+d0080b46:	b209      	sxth	r1, r1
+d0080b48:	9304      	str	r3, [sp, #16]
+d0080b4a:	d026      	beq.n	d0080b9a <setup_background_bub+0x206>
+d0080b4c:	f1ba 0f00 	cmp.w	sl, #0
+d0080b50:	d195      	bne.n	d0080a7e <setup_background_bub+0xea>
+d0080b52:	7b20      	ldrb	r0, [r4, #12]
+d0080b54:	7b66      	ldrb	r6, [r4, #13]
+d0080b56:	7ba2      	ldrb	r2, [r4, #14]
+d0080b58:	ea40 2606 	orr.w	r6, r0, r6, lsl #8
+d0080b5c:	7be3      	ldrb	r3, [r4, #15]
+d0080b5e:	f899 0000 	ldrb.w	r0, [r9]
+d0080b62:	ea46 4202 	orr.w	r2, r6, r2, lsl #16
+d0080b66:	9104      	str	r1, [sp, #16]
+d0080b68:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
+d0080b6c:	685b      	ldr	r3, [r3, #4]
+d0080b6e:	68db      	ldr	r3, [r3, #12]
+d0080b70:	4798      	blx	r3
+d0080b72:	f894 c00c 	ldrb.w	ip, [r4, #12]
+d0080b76:	7b66      	ldrb	r6, [r4, #13]
+d0080b78:	4650      	mov	r0, sl
+d0080b7a:	7ba7      	ldrb	r7, [r4, #14]
+d0080b7c:	2306      	movs	r3, #6
+d0080b7e:	ea4c 2c06 	orr.w	ip, ip, r6, lsl #8
+d0080b82:	7be6      	ldrb	r6, [r4, #15]
+d0080b84:	9904      	ldr	r1, [sp, #16]
+d0080b86:	f44f 72f0 	mov.w	r2, #480	; 0x1e0
+d0080b8a:	ea4c 4707 	orr.w	r7, ip, r7, lsl #16
+d0080b8e:	ea47 6606 	orr.w	r6, r7, r6, lsl #24
+d0080b92:	6876      	ldr	r6, [r6, #4]
+d0080b94:	6876      	ldr	r6, [r6, #4]
+d0080b96:	47b0      	blx	r6
+d0080b98:	e7c4      	b.n	d0080b24 <setup_background_bub+0x190>
+d0080b9a:	f1c6 0b7d 	rsb	fp, r6, #125	; 0x7d
+d0080b9e:	237c      	movs	r3, #124	; 0x7c
+d0080ba0:	fa0f fb8b 	sxth.w	fp, fp
+d0080ba4:	9304      	str	r3, [sp, #16]
+d0080ba6:	e76a      	b.n	d0080a7e <setup_background_bub+0xea>
+d0080ba8:	d009c940 	.word	0xd009c940
+d0080bac:	d009c960 	.word	0xd009c960
+d0080bb0:	d0086a18 	.word	0xd0086a18
+d0080bb4:	d009c980 	.word	0xd009c980
+d0080bb8:	00960020 	.word	0x00960020
+d0080bbc:	d009cb80 	.word	0xd009cb80
+d0080bc0:	d009cbe6 	.word	0xd009cbe6
+d0080bc4:	00300020 	.word	0x00300020
+d0080bc8:	00180020 	.word	0x00180020
+d0080bcc:	2001f000 	.word	0x2001f000
+d0080bd0:	d009cba0 	.word	0xd009cba0
+d0080bd4:	d0086418 	.word	0xd0086418
+d0080bd8:	d0094f10 	.word	0xd0094f10
+d0080bdc:	7b23      	ldrb	r3, [r4, #12]
+d0080bde:	7b62      	ldrb	r2, [r4, #13]
+d0080be0:	7ba1      	ldrb	r1, [r4, #14]
+d0080be2:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d0080be6:	7be2      	ldrb	r2, [r4, #15]
+d0080be8:	ea43 4301 	orr.w	r3, r3, r1, lsl #16
+d0080bec:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d0080bf0:	681b      	ldr	r3, [r3, #0]
+d0080bf2:	6b5b      	ldr	r3, [r3, #52]	; 0x34
+d0080bf4:	4798      	blx	r3
+d0080bf6:	7b23      	ldrb	r3, [r4, #12]
+d0080bf8:	7b62      	ldrb	r2, [r4, #13]
+d0080bfa:	4606      	mov	r6, r0
+d0080bfc:	7ba1      	ldrb	r1, [r4, #14]
+d0080bfe:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d0080c02:	7be2      	ldrb	r2, [r4, #15]
+d0080c04:	ea43 4301 	orr.w	r3, r3, r1, lsl #16
+d0080c08:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d0080c0c:	681b      	ldr	r3, [r3, #0]
+d0080c0e:	699b      	ldr	r3, [r3, #24]
+d0080c10:	4798      	blx	r3
+d0080c12:	7b23      	ldrb	r3, [r4, #12]
+d0080c14:	7b62      	ldrb	r2, [r4, #13]
+d0080c16:	2010      	movs	r0, #16
+d0080c18:	7ba1      	ldrb	r1, [r4, #14]
+d0080c1a:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d0080c1e:	7be2      	ldrb	r2, [r4, #15]
+d0080c20:	ea43 4301 	orr.w	r3, r3, r1, lsl #16
+d0080c24:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d0080c28:	685b      	ldr	r3, [r3, #4]
+d0080c2a:	68db      	ldr	r3, [r3, #12]
+d0080c2c:	4798      	blx	r3
+d0080c2e:	7b25      	ldrb	r5, [r4, #12]
+d0080c30:	7b61      	ldrb	r1, [r4, #13]
+d0080c32:	2364      	movs	r3, #100	; 0x64
+d0080c34:	7ba0      	ldrb	r0, [r4, #14]
+d0080c36:	f44f 72f0 	mov.w	r2, #480	; 0x1e0
+d0080c3a:	ea45 2501 	orr.w	r5, r5, r1, lsl #8
+d0080c3e:	7be7      	ldrb	r7, [r4, #15]
+d0080c40:	2190      	movs	r1, #144	; 0x90
+d0080c42:	ea45 4400 	orr.w	r4, r5, r0, lsl #16
+d0080c46:	2000      	movs	r0, #0
+d0080c48:	4d1b      	ldr	r5, [pc, #108]	; (d0080cb8 <setup_background_bub+0x324>)
+d0080c4a:	ea44 6407 	orr.w	r4, r4, r7, lsl #24
+d0080c4e:	f64f 7724 	movw	r7, #65316	; 0xff24
+d0080c52:	6864      	ldr	r4, [r4, #4]
+d0080c54:	6864      	ldr	r4, [r4, #4]
+d0080c56:	47a0      	blx	r4
+d0080c58:	6833      	ldr	r3, [r6, #0]
+d0080c5a:	2210      	movs	r2, #16
+d0080c5c:	4917      	ldr	r1, [pc, #92]	; (d0080cbc <setup_background_bub+0x328>)
+d0080c5e:	9302      	str	r3, [sp, #8]
+d0080c60:	2000      	movs	r0, #0
+d0080c62:	9201      	str	r2, [sp, #4]
+d0080c64:	2328      	movs	r3, #40	; 0x28
+d0080c66:	9100      	str	r1, [sp, #0]
+d0080c68:	f44f 72f0 	mov.w	r2, #480	; 0x1e0
+d0080c6c:	2168      	movs	r1, #104	; 0x68
+d0080c6e:	f64f 74ce 	movw	r4, #65486	; 0xffce
+d0080c72:	f7ff f9f1 	bl	d0080058 <gfx_draw1bit>
+d0080c76:	4812      	ldr	r0, [pc, #72]	; (d0080cc0 <setup_background_bub+0x32c>)
+d0080c78:	2300      	movs	r3, #0
+d0080c7a:	4a12      	ldr	r2, [pc, #72]	; (d0080cc4 <setup_background_bub+0x330>)
+d0080c7c:	6005      	str	r5, [r0, #0]
+d0080c7e:	4d12      	ldr	r5, [pc, #72]	; (d0080cc8 <setup_background_bub+0x334>)
+d0080c80:	4812      	ldr	r0, [pc, #72]	; (d0080ccc <setup_background_bub+0x338>)
+d0080c82:	702b      	strb	r3, [r5, #0]
+d0080c84:	7003      	strb	r3, [r0, #0]
+d0080c86:	4d12      	ldr	r5, [pc, #72]	; (d0080cd0 <setup_background_bub+0x33c>)
+d0080c88:	4812      	ldr	r0, [pc, #72]	; (d0080cd4 <setup_background_bub+0x340>)
+d0080c8a:	702b      	strb	r3, [r5, #0]
+d0080c8c:	7003      	strb	r3, [r0, #0]
+d0080c8e:	6816      	ldr	r6, [r2, #0]
+d0080c90:	2202      	movs	r2, #2
+d0080c92:	4911      	ldr	r1, [pc, #68]	; (d0080cd8 <setup_background_bub+0x344>)
+d0080c94:	4d11      	ldr	r5, [pc, #68]	; (d0080cdc <setup_background_bub+0x348>)
+d0080c96:	4812      	ldr	r0, [pc, #72]	; (d0080ce0 <setup_background_bub+0x34c>)
+d0080c98:	702b      	strb	r3, [r5, #0]
+d0080c9a:	600e      	str	r6, [r1, #0]
+d0080c9c:	21b4      	movs	r1, #180	; 0xb4
+d0080c9e:	8007      	strh	r7, [r0, #0]
+d0080ca0:	4e10      	ldr	r6, [pc, #64]	; (d0080ce4 <setup_background_bub+0x350>)
+d0080ca2:	4d11      	ldr	r5, [pc, #68]	; (d0080ce8 <setup_background_bub+0x354>)
+d0080ca4:	4811      	ldr	r0, [pc, #68]	; (d0080cec <setup_background_bub+0x358>)
+d0080ca6:	4b12      	ldr	r3, [pc, #72]	; (d0080cf0 <setup_background_bub+0x35c>)
+d0080ca8:	8032      	strh	r2, [r6, #0]
+d0080caa:	802a      	strh	r2, [r5, #0]
+d0080cac:	8004      	strh	r4, [r0, #0]
+d0080cae:	8019      	strh	r1, [r3, #0]
+d0080cb0:	b007      	add	sp, #28
+d0080cb2:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d0080cb6:	bf00      	nop
+d0080cb8:	d0083778 	.word	0xd0083778
+d0080cbc:	d0085ab8 	.word	0xd0085ab8
+d0080cc0:	d009c96c 	.word	0xd009c96c
+d0080cc4:	d009c620 	.word	0xd009c620
+d0080cc8:	d009c968 	.word	0xd009c968
+d0080ccc:	d009c970 	.word	0xd009c970
+d0080cd0:	d009c962 	.word	0xd009c962
+d0080cd4:	d009c969 	.word	0xd009c969
+d0080cd8:	d009c964 	.word	0xd009c964
+d0080cdc:	d009cbec 	.word	0xd009cbec
+d0080ce0:	d009cbe4 	.word	0xd009cbe4
+d0080ce4:	d009cbe8 	.word	0xd009cbe8
+d0080ce8:	d009cbea 	.word	0xd009cbea
+d0080cec:	d009cbf0 	.word	0xd009cbf0
+d0080cf0:	d009cbee 	.word	0xd009cbee
 
-d0081140 <__errno>:
-d0081140:	4b01      	ldr	r3, [pc, #4]	; (d0081148 <__errno+0x8>)
-d0081142:	6818      	ldr	r0, [r3, #0]
-d0081144:	4770      	bx	lr
-d0081146:	bf00      	nop
-d0081148:	d009b5f0 	.word	0xd009b5f0
+d0080cf4 <do_bubbastix_playdemo_screensaver>:
+d0080cf4:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d0080cf8:	4ca3      	ldr	r4, [pc, #652]	; (d0080f88 <do_bubbastix_playdemo_screensaver+0x294>)
+d0080cfa:	b09b      	sub	sp, #108	; 0x6c
+d0080cfc:	7823      	ldrb	r3, [r4, #0]
+d0080cfe:	f10d 0227 	add.w	r2, sp, #39	; 0x27
+d0080d02:	7865      	ldrb	r5, [r4, #1]
+d0080d04:	f10d 0126 	add.w	r1, sp, #38	; 0x26
+d0080d08:	f10d 0025 	add.w	r0, sp, #37	; 0x25
+d0080d0c:	ea43 2305 	orr.w	r3, r3, r5, lsl #8
+d0080d10:	78a5      	ldrb	r5, [r4, #2]
+d0080d12:	ea43 4305 	orr.w	r3, r3, r5, lsl #16
+d0080d16:	78e5      	ldrb	r5, [r4, #3]
+d0080d18:	ea43 6305 	orr.w	r3, r3, r5, lsl #24
+d0080d1c:	6e5b      	ldr	r3, [r3, #100]	; 0x64
+d0080d1e:	4798      	blx	r3
+d0080d20:	f89d 2027 	ldrb.w	r2, [sp, #39]	; 0x27
+d0080d24:	f89d 3026 	ldrb.w	r3, [sp, #38]	; 0x26
+d0080d28:	a80a      	add	r0, sp, #40	; 0x28
+d0080d2a:	9200      	str	r2, [sp, #0]
+d0080d2c:	4997      	ldr	r1, [pc, #604]	; (d0080f8c <do_bubbastix_playdemo_screensaver+0x298>)
+d0080d2e:	f89d 2025 	ldrb.w	r2, [sp, #37]	; 0x25
+d0080d32:	f000 fd55 	bl	d00817e0 <siprintf>
+d0080d36:	4b96      	ldr	r3, [pc, #600]	; (d0080f90 <do_bubbastix_playdemo_screensaver+0x29c>)
+d0080d38:	781b      	ldrb	r3, [r3, #0]
+d0080d3a:	2b03      	cmp	r3, #3
+d0080d3c:	f000 8266 	beq.w	d008120c <do_bubbastix_playdemo_screensaver+0x518>
+d0080d40:	4994      	ldr	r1, [pc, #592]	; (d0080f94 <do_bubbastix_playdemo_screensaver+0x2a0>)
+d0080d42:	4d95      	ldr	r5, [pc, #596]	; (d0080f98 <do_bubbastix_playdemo_screensaver+0x2a4>)
+d0080d44:	880b      	ldrh	r3, [r1, #0]
+d0080d46:	1e5a      	subs	r2, r3, #1
+d0080d48:	b212      	sxth	r2, r2
+d0080d4a:	2a01      	cmp	r2, #1
+d0080d4c:	800a      	strh	r2, [r1, #0]
+d0080d4e:	f040 81bc 	bne.w	d00810ca <do_bubbastix_playdemo_screensaver+0x3d6>
+d0080d52:	f895 c000 	ldrb.w	ip, [r5]
+d0080d56:	2302      	movs	r3, #2
+d0080d58:	f8df b284 	ldr.w	fp, [pc, #644]	; d0080fe0 <do_bubbastix_playdemo_screensaver+0x2ec>
+d0080d5c:	f10c 0a01 	add.w	sl, ip, #1
+d0080d60:	488e      	ldr	r0, [pc, #568]	; (d0080f9c <do_bubbastix_playdemo_screensaver+0x2a8>)
+d0080d62:	f8db 1020 	ldr.w	r1, [fp, #32]
+d0080d66:	f1bc 0f03 	cmp.w	ip, #3
+d0080d6a:	fa5f fa8a 	uxtb.w	sl, sl
+d0080d6e:	9007      	str	r0, [sp, #28]
+d0080d70:	460a      	mov	r2, r1
+d0080d72:	6001      	str	r1, [r0, #0]
+d0080d74:	f885 a000 	strb.w	sl, [r5]
+d0080d78:	f240 82d3 	bls.w	d0081322 <do_bubbastix_playdemo_screensaver+0x62e>
+d0080d7c:	4888      	ldr	r0, [pc, #544]	; (d0080fa0 <do_bubbastix_playdemo_screensaver+0x2ac>)
+d0080d7e:	f8df 8264 	ldr.w	r8, [pc, #612]	; d0080fe4 <do_bubbastix_playdemo_screensaver+0x2f0>
+d0080d82:	4f88      	ldr	r7, [pc, #544]	; (d0080fa4 <do_bubbastix_playdemo_screensaver+0x2b0>)
+d0080d84:	9003      	str	r0, [sp, #12]
+d0080d86:	f8df c244 	ldr.w	ip, [pc, #580]	; d0080fcc <do_bubbastix_playdemo_screensaver+0x2d8>
+d0080d8a:	f04f 0e00 	mov.w	lr, #0
+d0080d8e:	f89c 6000 	ldrb.w	r6, [ip]
+d0080d92:	f885 e000 	strb.w	lr, [r5]
+d0080d96:	2e06      	cmp	r6, #6
+d0080d98:	f200 82a4 	bhi.w	d00812e4 <do_bubbastix_playdemo_screensaver+0x5f0>
+d0080d9c:	3601      	adds	r6, #1
+d0080d9e:	4291      	cmp	r1, r2
+d0080da0:	b2f6      	uxtb	r6, r6
+d0080da2:	f88c 6000 	strb.w	r6, [ip]
+d0080da6:	f000 82a3 	beq.w	d00812f0 <do_bubbastix_playdemo_screensaver+0x5fc>
+d0080daa:	487f      	ldr	r0, [pc, #508]	; (d0080fa8 <do_bubbastix_playdemo_screensaver+0x2b4>)
+d0080dac:	f85b 2026 	ldr.w	r2, [fp, r6, lsl #2]
+d0080db0:	9005      	str	r0, [sp, #20]
+d0080db2:	487e      	ldr	r0, [pc, #504]	; (d0080fac <do_bubbastix_playdemo_screensaver+0x2b8>)
+d0080db4:	f8df 9230 	ldr.w	r9, [pc, #560]	; d0080fe8 <do_bubbastix_playdemo_screensaver+0x2f4>
+d0080db8:	9004      	str	r0, [sp, #16]
+d0080dba:	487d      	ldr	r0, [pc, #500]	; (d0080fb0 <do_bubbastix_playdemo_screensaver+0x2bc>)
+d0080dbc:	9006      	str	r0, [sp, #24]
+d0080dbe:	9807      	ldr	r0, [sp, #28]
+d0080dc0:	6002      	str	r2, [r0, #0]
+d0080dc2:	4291      	cmp	r1, r2
+d0080dc4:	d027      	beq.n	d0080e16 <do_bubbastix_playdemo_screensaver+0x122>
+d0080dc6:	497b      	ldr	r1, [pc, #492]	; (d0080fb4 <do_bubbastix_playdemo_screensaver+0x2c0>)
+d0080dc8:	780a      	ldrb	r2, [r1, #0]
+d0080dca:	2a03      	cmp	r2, #3
+d0080dcc:	f200 81e3 	bhi.w	d0081196 <do_bubbastix_playdemo_screensaver+0x4a2>
+d0080dd0:	3201      	adds	r2, #1
+d0080dd2:	700a      	strb	r2, [r1, #0]
+d0080dd4:	f203 236b 	addw	r3, r3, #619	; 0x26b
+d0080dd8:	b29b      	uxth	r3, r3
+d0080dda:	f5b3 7f1b 	cmp.w	r3, #620	; 0x26c
+d0080dde:	d91a      	bls.n	d0080e16 <do_bubbastix_playdemo_screensaver+0x122>
+d0080de0:	4a75      	ldr	r2, [pc, #468]	; (d0080fb8 <do_bubbastix_playdemo_screensaver+0x2c4>)
+d0080de2:	f8b9 3000 	ldrh.w	r3, [r9]
+d0080de6:	8812      	ldrh	r2, [r2, #0]
+d0080de8:	4413      	add	r3, r2
+d0080dea:	b21b      	sxth	r3, r3
+d0080dec:	f5b3 7ff0 	cmp.w	r3, #480	; 0x1e0
+d0080df0:	f8a9 3000 	strh.w	r3, [r9]
+d0080df4:	dd04      	ble.n	d0080e00 <do_bubbastix_playdemo_screensaver+0x10c>
+d0080df6:	4a66      	ldr	r2, [pc, #408]	; (d0080f90 <do_bubbastix_playdemo_screensaver+0x29c>)
+d0080df8:	7813      	ldrb	r3, [r2, #0]
+d0080dfa:	f043 0302 	orr.w	r3, r3, #2
+d0080dfe:	7013      	strb	r3, [r2, #0]
+d0080e00:	9906      	ldr	r1, [sp, #24]
+d0080e02:	4a6e      	ldr	r2, [pc, #440]	; (d0080fbc <do_bubbastix_playdemo_screensaver+0x2c8>)
+d0080e04:	880b      	ldrh	r3, [r1, #0]
+d0080e06:	8812      	ldrh	r2, [r2, #0]
+d0080e08:	4413      	add	r3, r2
+d0080e0a:	b21b      	sxth	r3, r3
+d0080e0c:	f5b3 7f7a 	cmp.w	r3, #1000	; 0x3e8
+d0080e10:	800b      	strh	r3, [r1, #0]
+d0080e12:	f300 8279 	bgt.w	d0081308 <do_bubbastix_playdemo_screensaver+0x614>
+d0080e16:	2500      	movs	r5, #0
+d0080e18:	f04f 0a60 	mov.w	sl, #96	; 0x60
+d0080e1c:	4868      	ldr	r0, [pc, #416]	; (d0080fc0 <do_bubbastix_playdemo_screensaver+0x2cc>)
+d0080e1e:	f894 e00c 	ldrb.w	lr, [r4, #12]
+d0080e22:	f44f 738e 	mov.w	r3, #284	; 0x11c
+d0080e26:	f894 c00d 	ldrb.w	ip, [r4, #13]
+d0080e2a:	22d6      	movs	r2, #214	; 0xd6
+d0080e2c:	7ba6      	ldrb	r6, [r4, #14]
+d0080e2e:	ea4e 210c 	orr.w	r1, lr, ip, lsl #8
+d0080e32:	f894 e00f 	ldrb.w	lr, [r4, #15]
+d0080e36:	ea41 4c06 	orr.w	ip, r1, r6, lsl #16
+d0080e3a:	f8b8 1000 	ldrh.w	r1, [r8]
+d0080e3e:	ea4c 660e 	orr.w	r6, ip, lr, lsl #24
+d0080e42:	4429      	add	r1, r5
+d0080e44:	441d      	add	r5, r3
+d0080e46:	6876      	ldr	r6, [r6, #4]
+d0080e48:	b209      	sxth	r1, r1
+d0080e4a:	f8cd a000 	str.w	sl, [sp]
+d0080e4e:	69b6      	ldr	r6, [r6, #24]
+d0080e50:	47b0      	blx	r6
+d0080e52:	f5b5 7f55 	cmp.w	r5, #852	; 0x354
+d0080e56:	485a      	ldr	r0, [pc, #360]	; (d0080fc0 <do_bubbastix_playdemo_screensaver+0x2cc>)
+d0080e58:	d1e1      	bne.n	d0080e1e <do_bubbastix_playdemo_screensaver+0x12a>
+d0080e5a:	7b23      	ldrb	r3, [r4, #12]
+d0080e5c:	2520      	movs	r5, #32
+d0080e5e:	7b60      	ldrb	r0, [r4, #13]
+d0080e60:	7ba6      	ldrb	r6, [r4, #14]
+d0080e62:	ea43 2300 	orr.w	r3, r3, r0, lsl #8
+d0080e66:	9a04      	ldr	r2, [sp, #16]
+d0080e68:	9805      	ldr	r0, [sp, #20]
+d0080e6a:	ea43 4306 	orr.w	r3, r3, r6, lsl #16
+d0080e6e:	7be6      	ldrb	r6, [r4, #15]
+d0080e70:	7811      	ldrb	r1, [r2, #0]
+d0080e72:	ea43 6606 	orr.w	r6, r3, r6, lsl #24
+d0080e76:	4a53      	ldr	r2, [pc, #332]	; (d0080fc4 <do_bubbastix_playdemo_screensaver+0x2d0>)
+d0080e78:	6800      	ldr	r0, [r0, #0]
+d0080e7a:	6876      	ldr	r6, [r6, #4]
+d0080e7c:	5c53      	ldrb	r3, [r2, r1]
+d0080e7e:	22de      	movs	r2, #222	; 0xde
+d0080e80:	f9b9 1000 	ldrsh.w	r1, [r9]
+d0080e84:	9500      	str	r5, [sp, #0]
+d0080e86:	69b5      	ldr	r5, [r6, #24]
+d0080e88:	47a8      	blx	r5
+d0080e8a:	7b21      	ldrb	r1, [r4, #12]
+d0080e8c:	7b62      	ldrb	r2, [r4, #13]
+d0080e8e:	2570      	movs	r5, #112	; 0x70
+d0080e90:	7ba0      	ldrb	r0, [r4, #14]
+d0080e92:	2340      	movs	r3, #64	; 0x40
+d0080e94:	ea41 2202 	orr.w	r2, r1, r2, lsl #8
+d0080e98:	7be6      	ldrb	r6, [r4, #15]
+d0080e9a:	f8b9 1000 	ldrh.w	r1, [r9]
+d0080e9e:	ea42 4000 	orr.w	r0, r2, r0, lsl #16
+d0080ea2:	226e      	movs	r2, #110	; 0x6e
+d0080ea4:	3104      	adds	r1, #4
+d0080ea6:	ea40 6606 	orr.w	r6, r0, r6, lsl #24
+d0080eaa:	4847      	ldr	r0, [pc, #284]	; (d0080fc8 <do_bubbastix_playdemo_screensaver+0x2d4>)
+d0080eac:	b209      	sxth	r1, r1
+d0080eae:	6876      	ldr	r6, [r6, #4]
+d0080eb0:	9500      	str	r5, [sp, #0]
+d0080eb2:	69b5      	ldr	r5, [r6, #24]
+d0080eb4:	47a8      	blx	r5
+d0080eb6:	9b07      	ldr	r3, [sp, #28]
+d0080eb8:	6818      	ldr	r0, [r3, #0]
+d0080eba:	f8db 3020 	ldr.w	r3, [fp, #32]
+d0080ebe:	4283      	cmp	r3, r0
+d0080ec0:	f000 81e2 	beq.w	d0081288 <do_bubbastix_playdemo_screensaver+0x594>
+d0080ec4:	7b26      	ldrb	r6, [r4, #12]
+d0080ec6:	22bb      	movs	r2, #187	; 0xbb
+d0080ec8:	7b63      	ldrb	r3, [r4, #13]
+d0080eca:	7ba5      	ldrb	r5, [r4, #14]
+d0080ecc:	ea46 2603 	orr.w	r6, r6, r3, lsl #8
+d0080ed0:	7be3      	ldrb	r3, [r4, #15]
+d0080ed2:	f8df c118 	ldr.w	ip, [pc, #280]	; d0080fec <do_bubbastix_playdemo_screensaver+0x2f8>
+d0080ed6:	ea46 4505 	orr.w	r5, r6, r5, lsl #16
+d0080eda:	4e3c      	ldr	r6, [pc, #240]	; (d0080fcc <do_bubbastix_playdemo_screensaver+0x2d8>)
+d0080edc:	9906      	ldr	r1, [sp, #24]
+d0080ede:	ea45 6303 	orr.w	r3, r5, r3, lsl #24
+d0080ee2:	7835      	ldrb	r5, [r6, #0]
+d0080ee4:	f9b1 1000 	ldrsh.w	r1, [r1]
+d0080ee8:	685e      	ldr	r6, [r3, #4]
+d0080eea:	f81c c005 	ldrb.w	ip, [ip, r5]
+d0080eee:	4b38      	ldr	r3, [pc, #224]	; (d0080fd0 <do_bubbastix_playdemo_screensaver+0x2dc>)
+d0080ef0:	f8cd c000 	str.w	ip, [sp]
+d0080ef4:	5d5b      	ldrb	r3, [r3, r5]
+d0080ef6:	69b5      	ldr	r5, [r6, #24]
+d0080ef8:	47a8      	blx	r5
+d0080efa:	f04f 0800 	mov.w	r8, #0
+d0080efe:	f04f 0950 	mov.w	r9, #80	; 0x50
+d0080f02:	f8df a0ec 	ldr.w	sl, [pc, #236]	; d0080ff0 <do_bubbastix_playdemo_screensaver+0x2fc>
+d0080f06:	f894 c00c 	ldrb.w	ip, [r4, #12]
+d0080f0a:	f44f 73a0 	mov.w	r3, #320	; 0x140
+d0080f0e:	7b61      	ldrb	r1, [r4, #13]
+d0080f10:	22f0      	movs	r2, #240	; 0xf0
+d0080f12:	7ba6      	ldrb	r6, [r4, #14]
+d0080f14:	4650      	mov	r0, sl
+d0080f16:	ea4c 2101 	orr.w	r1, ip, r1, lsl #8
+d0080f1a:	7be5      	ldrb	r5, [r4, #15]
+d0080f1c:	ea41 4606 	orr.w	r6, r1, r6, lsl #16
+d0080f20:	8839      	ldrh	r1, [r7, #0]
+d0080f22:	ea46 6505 	orr.w	r5, r6, r5, lsl #24
+d0080f26:	4441      	add	r1, r8
+d0080f28:	4498      	add	r8, r3
+d0080f2a:	686d      	ldr	r5, [r5, #4]
+d0080f2c:	b209      	sxth	r1, r1
+d0080f2e:	f8cd 9000 	str.w	r9, [sp]
+d0080f32:	69ad      	ldr	r5, [r5, #24]
+d0080f34:	47a8      	blx	r5
+d0080f36:	f5b8 7f70 	cmp.w	r8, #960	; 0x3c0
+d0080f3a:	d1e4      	bne.n	d0080f06 <do_bubbastix_playdemo_screensaver+0x212>
+d0080f3c:	4e25      	ldr	r6, [pc, #148]	; (d0080fd4 <do_bubbastix_playdemo_screensaver+0x2e0>)
+d0080f3e:	2121      	movs	r1, #33	; 0x21
+d0080f40:	9b03      	ldr	r3, [sp, #12]
+d0080f42:	7832      	ldrb	r2, [r6, #0]
+d0080f44:	8818      	ldrh	r0, [r3, #0]
+d0080f46:	3201      	adds	r2, #1
+d0080f48:	4b23      	ldr	r3, [pc, #140]	; (d0080fd8 <do_bubbastix_playdemo_screensaver+0x2e4>)
+d0080f4a:	b252      	sxtb	r2, r2
+d0080f4c:	8298      	strh	r0, [r3, #20]
+d0080f4e:	82d9      	strh	r1, [r3, #22]
+d0080f50:	2a02      	cmp	r2, #2
+d0080f52:	f300 8157 	bgt.w	d0081204 <do_bubbastix_playdemo_screensaver+0x510>
+d0080f56:	7032      	strb	r2, [r6, #0]
+d0080f58:	4d20      	ldr	r5, [pc, #128]	; (d0080fdc <do_bubbastix_playdemo_screensaver+0x2e8>)
+d0080f5a:	f04f 0800 	mov.w	r8, #0
+d0080f5e:	f8df b094 	ldr.w	fp, [pc, #148]	; d0080ff4 <do_bubbastix_playdemo_screensaver+0x300>
+d0080f62:	f44f 7afa 	mov.w	sl, #500	; 0x1f4
+d0080f66:	f995 3024 	ldrsb.w	r3, [r5, #36]	; 0x24
+d0080f6a:	f505 7700 	add.w	r7, r5, #512	; 0x200
+d0080f6e:	f64f 79f0 	movw	r9, #65520	; 0xfff0
+d0080f72:	2b09      	cmp	r3, #9
+d0080f74:	f300 8091 	bgt.w	d008109a <do_bubbastix_playdemo_screensaver+0x3a6>
+d0080f78:	3301      	adds	r3, #1
+d0080f7a:	f885 3024 	strb.w	r3, [r5, #36]	; 0x24
+d0080f7e:	2a00      	cmp	r2, #0
+d0080f80:	f040 8098 	bne.w	d00810b4 <do_bubbastix_playdemo_screensaver+0x3c0>
+d0080f84:	e038      	b.n	d0080ff8 <do_bubbastix_playdemo_screensaver+0x304>
+d0080f86:	bf00      	nop
+d0080f88:	2001f000 	.word	0x2001f000
+d0080f8c:	d0083768 	.word	0xd0083768
+d0080f90:	d009cbec 	.word	0xd009cbec
+d0080f94:	d009cbee 	.word	0xd009cbee
+d0080f98:	d009c968 	.word	0xd009c968
+d0080f9c:	d009c964 	.word	0xd009c964
+d0080fa0:	d009c960 	.word	0xd009c960
+d0080fa4:	d009cb80 	.word	0xd009cb80
+d0080fa8:	d009c96c 	.word	0xd009c96c
+d0080fac:	d009c969 	.word	0xd009c969
+d0080fb0:	d009cbf0 	.word	0xd009cbf0
+d0080fb4:	d009c970 	.word	0xd009c970
+d0080fb8:	d009cbe8 	.word	0xd009cbe8
+d0080fbc:	d009cbea 	.word	0xd009cbea
+d0080fc0:	d0094f4c 	.word	0xd0094f4c
+d0080fc4:	d009c520 	.word	0xd009c520
+d0080fc8:	d008e0d8 	.word	0xd008e0d8
+d0080fcc:	d009c962 	.word	0xd009c962
+d0080fd0:	d0094f40 	.word	0xd0094f40
+d0080fd4:	d009cb82 	.word	0xd009cb82
+d0080fd8:	d009c940 	.word	0xd009c940
+d0080fdc:	d009c980 	.word	0xd009c980
+d0080fe0:	d009c620 	.word	0xd009c620
+d0080fe4:	d009cbe6 	.word	0xd009cbe6
+d0080fe8:	d009cbe4 	.word	0xd009cbe4
+d0080fec:	d0094f24 	.word	0xd0094f24
+d0080ff0:	d0087cd8 	.word	0xd0087cd8
+d0080ff4:	d009c4e4 	.word	0xd009c4e4
+d0080ff8:	f995 0028 	ldrsb.w	r0, [r5, #40]	; 0x28
+d0080ffc:	f995 1026 	ldrsb.w	r1, [r5, #38]	; 0x26
+d0081000:	f995 3029 	ldrsb.w	r3, [r5, #41]	; 0x29
+d0081004:	4401      	add	r1, r0
+d0081006:	f995 0027 	ldrsb.w	r0, [r5, #39]	; 0x27
+d008100a:	f895 202a 	ldrb.w	r2, [r5, #42]	; 0x2a
+d008100e:	4403      	add	r3, r0
+d0081010:	f8b5 c022 	ldrh.w	ip, [r5, #34]	; 0x22
+d0081014:	8c28      	ldrh	r0, [r5, #32]
+d0081016:	3201      	adds	r2, #1
+d0081018:	4463      	add	r3, ip
+d008101a:	1a40      	subs	r0, r0, r1
+d008101c:	f002 021f 	and.w	r2, r2, #31
+d0081020:	b21b      	sxth	r3, r3
+d0081022:	b200      	sxth	r0, r0
+d0081024:	f885 202a 	strb.w	r2, [r5, #42]	; 0x2a
+d0081028:	f995 102a 	ldrsb.w	r1, [r5, #42]	; 0x2a
+d008102c:	f894 c00c 	ldrb.w	ip, [r4, #12]
+d0081030:	f101 0208 	add.w	r2, r1, #8
+d0081034:	f81b 1001 	ldrb.w	r1, [fp, r1]
+d0081038:	8428      	strh	r0, [r5, #32]
+d008103a:	3040      	adds	r0, #64	; 0x40
+d008103c:	f002 021f 	and.w	r2, r2, #31
+d0081040:	f885 1026 	strb.w	r1, [r5, #38]	; 0x26
+d0081044:	846b      	strh	r3, [r5, #34]	; 0x22
+d0081046:	4628      	mov	r0, r5
+d0081048:	f81b 2002 	ldrb.w	r2, [fp, r2]
+d008104c:	f105 0540 	add.w	r5, r5, #64	; 0x40
+d0081050:	bfb8      	it	lt
+d0081052:	f825 ac20 	strhlt.w	sl, [r5, #-32]
+d0081056:	f5b3 7fa0 	cmp.w	r3, #320	; 0x140
+d008105a:	f805 2c19 	strb.w	r2, [r5, #-25]
+d008105e:	7b62      	ldrb	r2, [r4, #13]
+d0081060:	f894 e00e 	ldrb.w	lr, [r4, #14]
+d0081064:	ea4c 2102 	orr.w	r1, ip, r2, lsl #8
+d0081068:	7be3      	ldrb	r3, [r4, #15]
+d008106a:	bfc8      	it	gt
+d008106c:	f825 9c1e 	strhgt.w	r9, [r5, #-30]
+d0081070:	ea41 420e 	orr.w	r2, r1, lr, lsl #16
+d0081074:	f855 1c20 	ldr.w	r1, [r5, #-32]
+d0081078:	ea42 6303 	orr.w	r3, r2, r3, lsl #24
+d008107c:	f845 1c2c 	str.w	r1, [r5, #-44]
+d0081080:	685b      	ldr	r3, [r3, #4]
+d0081082:	6a5b      	ldr	r3, [r3, #36]	; 0x24
+d0081084:	4798      	blx	r3
+d0081086:	42bd      	cmp	r5, r7
+d0081088:	f000 809b 	beq.w	d00811c2 <do_bubbastix_playdemo_screensaver+0x4ce>
+d008108c:	f995 3024 	ldrsb.w	r3, [r5, #36]	; 0x24
+d0081090:	f996 2000 	ldrsb.w	r2, [r6]
+d0081094:	2b09      	cmp	r3, #9
+d0081096:	f77f af6f 	ble.w	d0080f78 <do_bubbastix_playdemo_screensaver+0x284>
+d008109a:	f995 3025 	ldrsb.w	r3, [r5, #37]	; 0x25
+d008109e:	f885 8024 	strb.w	r8, [r5, #36]	; 0x24
+d00810a2:	2b00      	cmp	r3, #0
+d00810a4:	f340 8087 	ble.w	d00811b6 <do_bubbastix_playdemo_screensaver+0x4c2>
+d00810a8:	2300      	movs	r3, #0
+d00810aa:	f885 8025 	strb.w	r8, [r5, #37]	; 0x25
+d00810ae:	76eb      	strb	r3, [r5, #27]
+d00810b0:	2a00      	cmp	r2, #0
+d00810b2:	d0a1      	beq.n	d0080ff8 <do_bubbastix_playdemo_screensaver+0x304>
+d00810b4:	f995 1028 	ldrsb.w	r1, [r5, #40]	; 0x28
+d00810b8:	8c28      	ldrh	r0, [r5, #32]
+d00810ba:	f995 3029 	ldrsb.w	r3, [r5, #41]	; 0x29
+d00810be:	8c6a      	ldrh	r2, [r5, #34]	; 0x22
+d00810c0:	1a40      	subs	r0, r0, r1
+d00810c2:	4413      	add	r3, r2
+d00810c4:	b200      	sxth	r0, r0
+d00810c6:	b21b      	sxth	r3, r3
+d00810c8:	e7ae      	b.n	d0081028 <do_bubbastix_playdemo_screensaver+0x334>
+d00810ca:	323c      	adds	r2, #60	; 0x3c
+d00810cc:	f040 814d 	bne.w	d008136a <do_bubbastix_playdemo_screensaver+0x676>
+d00810d0:	f895 c000 	ldrb.w	ip, [r5]
+d00810d4:	f8df b2e8 	ldr.w	fp, [pc, #744]	; d00813c0 <do_bubbastix_playdemo_screensaver+0x6cc>
+d00810d8:	f10c 0a01 	add.w	sl, ip, #1
+d00810dc:	49a9      	ldr	r1, [pc, #676]	; (d0081384 <do_bubbastix_playdemo_screensaver+0x690>)
+d00810de:	f8db 2000 	ldr.w	r2, [fp]
+d00810e2:	fa5f fa8a 	uxtb.w	sl, sl
+d00810e6:	9107      	str	r1, [sp, #28]
+d00810e8:	600a      	str	r2, [r1, #0]
+d00810ea:	f203 216a 	addw	r1, r3, #618	; 0x26a
+d00810ee:	f240 266a 	movw	r6, #618	; 0x26a
+d00810f2:	b289      	uxth	r1, r1
+d00810f4:	42b1      	cmp	r1, r6
+d00810f6:	f200 8122 	bhi.w	d008133e <do_bubbastix_playdemo_screensaver+0x64a>
+d00810fa:	f8db 1020 	ldr.w	r1, [fp, #32]
+d00810fe:	4291      	cmp	r1, r2
+d0081100:	f000 8108 	beq.w	d0081314 <do_bubbastix_playdemo_screensaver+0x620>
+d0081104:	f8df 82bc 	ldr.w	r8, [pc, #700]	; d00813c4 <do_bubbastix_playdemo_screensaver+0x6d0>
+d0081108:	4e9f      	ldr	r6, [pc, #636]	; (d0081388 <do_bubbastix_playdemo_screensaver+0x694>)
+d008110a:	f8b8 0000 	ldrh.w	r0, [r8]
+d008110e:	4f9f      	ldr	r7, [pc, #636]	; (d008138c <do_bubbastix_playdemo_screensaver+0x698>)
+d0081110:	9004      	str	r0, [sp, #16]
+d0081112:	f8b6 9000 	ldrh.w	r9, [r6]
+d0081116:	f8b7 e000 	ldrh.w	lr, [r7]
+d008111a:	9603      	str	r6, [sp, #12]
+d008111c:	9e04      	ldr	r6, [sp, #16]
+d008111e:	4670      	mov	r0, lr
+d0081120:	f8cd e014 	str.w	lr, [sp, #20]
+d0081124:	f1a6 0e02 	sub.w	lr, r6, #2
+d0081128:	f1a9 0605 	sub.w	r6, r9, #5
+d008112c:	f1a0 0903 	sub.w	r9, r0, #3
+d0081130:	4895      	ldr	r0, [pc, #596]	; (d0081388 <do_bubbastix_playdemo_screensaver+0x694>)
+d0081132:	fa0f fe8e 	sxth.w	lr, lr
+d0081136:	b236      	sxth	r6, r6
+d0081138:	fa0f f989 	sxth.w	r9, r9
+d008113c:	f51e 7f8e 	cmn.w	lr, #284	; 0x11c
+d0081140:	f8a8 e000 	strh.w	lr, [r8]
+d0081144:	8006      	strh	r6, [r0, #0]
+d0081146:	f8a7 9000 	strh.w	r9, [r7]
+d008114a:	da04      	bge.n	d0081156 <do_bubbastix_playdemo_screensaver+0x462>
+d008114c:	9804      	ldr	r0, [sp, #16]
+d008114e:	f500 7e8d 	add.w	lr, r0, #282	; 0x11a
+d0081152:	f8a8 e000 	strh.w	lr, [r8]
+d0081156:	3640      	adds	r6, #64	; 0x40
+d0081158:	da03      	bge.n	d0081162 <do_bubbastix_playdemo_screensaver+0x46e>
+d008115a:	f44f 7602 	mov.w	r6, #520	; 0x208
+d008115e:	9803      	ldr	r0, [sp, #12]
+d0081160:	8006      	strh	r6, [r0, #0]
+d0081162:	f519 7fa0 	cmn.w	r9, #320	; 0x140
+d0081166:	da03      	bge.n	d0081170 <do_bubbastix_playdemo_screensaver+0x47c>
+d0081168:	9805      	ldr	r0, [sp, #20]
+d008116a:	f200 163d 	addw	r6, r0, #317	; 0x13d
+d008116e:	803e      	strh	r6, [r7, #0]
+d0081170:	f1bc 0f03 	cmp.w	ip, #3
+d0081174:	f885 a000 	strb.w	sl, [r5]
+d0081178:	f63f ae05 	bhi.w	d0080d86 <do_bubbastix_playdemo_screensaver+0x92>
+d008117c:	4a84      	ldr	r2, [pc, #528]	; (d0081390 <do_bubbastix_playdemo_screensaver+0x69c>)
+d008117e:	4985      	ldr	r1, [pc, #532]	; (d0081394 <do_bubbastix_playdemo_screensaver+0x6a0>)
+d0081180:	9205      	str	r2, [sp, #20]
+d0081182:	4a85      	ldr	r2, [pc, #532]	; (d0081398 <do_bubbastix_playdemo_screensaver+0x6a4>)
+d0081184:	f8df 9240 	ldr.w	r9, [pc, #576]	; d00813c8 <do_bubbastix_playdemo_screensaver+0x6d4>
+d0081188:	9204      	str	r2, [sp, #16]
+d008118a:	4a84      	ldr	r2, [pc, #528]	; (d008139c <do_bubbastix_playdemo_screensaver+0x6a8>)
+d008118c:	9206      	str	r2, [sp, #24]
+d008118e:	780a      	ldrb	r2, [r1, #0]
+d0081190:	2a03      	cmp	r2, #3
+d0081192:	f67f ae1d 	bls.w	d0080dd0 <do_bubbastix_playdemo_screensaver+0xdc>
+d0081196:	9804      	ldr	r0, [sp, #16]
+d0081198:	2500      	movs	r5, #0
+d008119a:	7802      	ldrb	r2, [r0, #0]
+d008119c:	700d      	strb	r5, [r1, #0]
+d008119e:	2a02      	cmp	r2, #2
+d00811a0:	f200 80af 	bhi.w	d0081302 <do_bubbastix_playdemo_screensaver+0x60e>
+d00811a4:	3201      	adds	r2, #1
+d00811a6:	b2d2      	uxtb	r2, r2
+d00811a8:	7002      	strb	r2, [r0, #0]
+d00811aa:	497d      	ldr	r1, [pc, #500]	; (d00813a0 <do_bubbastix_playdemo_screensaver+0x6ac>)
+d00811ac:	f851 2022 	ldr.w	r2, [r1, r2, lsl #2]
+d00811b0:	9905      	ldr	r1, [sp, #20]
+d00811b2:	600a      	str	r2, [r1, #0]
+d00811b4:	e60e      	b.n	d0080dd4 <do_bubbastix_playdemo_screensaver+0xe0>
+d00811b6:	3301      	adds	r3, #1
+d00811b8:	b2db      	uxtb	r3, r3
+d00811ba:	f885 3025 	strb.w	r3, [r5, #37]	; 0x25
+d00811be:	76eb      	strb	r3, [r5, #27]
+d00811c0:	e776      	b.n	d00810b0 <do_bubbastix_playdemo_screensaver+0x3bc>
+d00811c2:	7b23      	ldrb	r3, [r4, #12]
+d00811c4:	7b62      	ldrb	r2, [r4, #13]
+d00811c6:	7ba1      	ldrb	r1, [r4, #14]
+d00811c8:	ea43 2302 	orr.w	r3, r3, r2, lsl #8
+d00811cc:	7be2      	ldrb	r2, [r4, #15]
+d00811ce:	4875      	ldr	r0, [pc, #468]	; (d00813a4 <do_bubbastix_playdemo_screensaver+0x6b0>)
+d00811d0:	ea43 4301 	orr.w	r3, r3, r1, lsl #16
+d00811d4:	ea43 6302 	orr.w	r3, r3, r2, lsl #24
+d00811d8:	685b      	ldr	r3, [r3, #4]
+d00811da:	6a5b      	ldr	r3, [r3, #36]	; 0x24
+d00811dc:	4798      	blx	r3
+d00811de:	7b23      	ldrb	r3, [r4, #12]
+d00811e0:	7b60      	ldrb	r0, [r4, #13]
+d00811e2:	aa0a      	add	r2, sp, #40	; 0x28
+d00811e4:	7ba5      	ldrb	r5, [r4, #14]
+d00811e6:	2164      	movs	r1, #100	; 0x64
+d00811e8:	ea43 2300 	orr.w	r3, r3, r0, lsl #8
+d00811ec:	7be4      	ldrb	r4, [r4, #15]
+d00811ee:	2008      	movs	r0, #8
+d00811f0:	ea43 4305 	orr.w	r3, r3, r5, lsl #16
+d00811f4:	ea43 6304 	orr.w	r3, r3, r4, lsl #24
+d00811f8:	685b      	ldr	r3, [r3, #4]
+d00811fa:	6adb      	ldr	r3, [r3, #44]	; 0x2c
+d00811fc:	4798      	blx	r3
+d00811fe:	b01b      	add	sp, #108	; 0x6c
+d0081200:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d0081204:	2300      	movs	r3, #0
+d0081206:	461a      	mov	r2, r3
+d0081208:	7033      	strb	r3, [r6, #0]
+d008120a:	e6a5      	b.n	d0080f58 <do_bubbastix_playdemo_screensaver+0x264>
+d008120c:	4860      	ldr	r0, [pc, #384]	; (d0081390 <do_bubbastix_playdemo_screensaver+0x69c>)
+d008120e:	2500      	movs	r5, #0
+d0081210:	f8df 91b8 	ldr.w	r9, [pc, #440]	; d00813cc <do_bubbastix_playdemo_screensaver+0x6d8>
+d0081214:	f64f 7c24 	movw	ip, #65316	; 0xff24
+d0081218:	9005      	str	r0, [sp, #20]
+d008121a:	2602      	movs	r6, #2
+d008121c:	f8c0 9000 	str.w	r9, [r0]
+d0081220:	f64f 77ce 	movw	r7, #65486	; 0xffce
+d0081224:	4860      	ldr	r0, [pc, #384]	; (d00813a8 <do_bubbastix_playdemo_screensaver+0x6b4>)
+d0081226:	f04f 0801 	mov.w	r8, #1
+d008122a:	4b5a      	ldr	r3, [pc, #360]	; (d0081394 <do_bubbastix_playdemo_screensaver+0x6a0>)
+d008122c:	f04f 0ab3 	mov.w	sl, #179	; 0xb3
+d0081230:	7005      	strb	r5, [r0, #0]
+d0081232:	f8df e19c 	ldr.w	lr, [pc, #412]	; d00813d0 <do_bubbastix_playdemo_screensaver+0x6dc>
+d0081236:	4858      	ldr	r0, [pc, #352]	; (d0081398 <do_bubbastix_playdemo_screensaver+0x6a4>)
+d0081238:	f8df 918c 	ldr.w	r9, [pc, #396]	; d00813c8 <do_bubbastix_playdemo_screensaver+0x6d4>
+d008123c:	7005      	strb	r5, [r0, #0]
+d008123e:	f8df b180 	ldr.w	fp, [pc, #384]	; d00813c0 <do_bubbastix_playdemo_screensaver+0x6cc>
+d0081242:	701d      	strb	r5, [r3, #0]
+d0081244:	23b4      	movs	r3, #180	; 0xb4
+d0081246:	f88e 5000 	strb.w	r5, [lr]
+d008124a:	9004      	str	r0, [sp, #16]
+d008124c:	4d57      	ldr	r5, [pc, #348]	; (d00813ac <do_bubbastix_playdemo_screensaver+0x6b8>)
+d008124e:	4853      	ldr	r0, [pc, #332]	; (d008139c <do_bubbastix_playdemo_screensaver+0x6a8>)
+d0081250:	f8a9 c000 	strh.w	ip, [r9]
+d0081254:	f8df c17c 	ldr.w	ip, [pc, #380]	; d00813d4 <do_bubbastix_playdemo_screensaver+0x6e0>
+d0081258:	494a      	ldr	r1, [pc, #296]	; (d0081384 <do_bubbastix_playdemo_screensaver+0x690>)
+d008125a:	802e      	strh	r6, [r5, #0]
+d008125c:	8007      	strh	r7, [r0, #0]
+d008125e:	f8db 2000 	ldr.w	r2, [fp]
+d0081262:	4d53      	ldr	r5, [pc, #332]	; (d00813b0 <do_bubbastix_playdemo_screensaver+0x6bc>)
+d0081264:	f8ac 6000 	strh.w	r6, [ip]
+d0081268:	9006      	str	r0, [sp, #24]
+d008126a:	4e52      	ldr	r6, [pc, #328]	; (d00813b4 <do_bubbastix_playdemo_screensaver+0x6c0>)
+d008126c:	4846      	ldr	r0, [pc, #280]	; (d0081388 <do_bubbastix_playdemo_screensaver+0x694>)
+d008126e:	9107      	str	r1, [sp, #28]
+d0081270:	600a      	str	r2, [r1, #0]
+d0081272:	f886 8000 	strb.w	r8, [r6]
+d0081276:	f8db 1020 	ldr.w	r1, [fp, #32]
+d008127a:	f8df 8148 	ldr.w	r8, [pc, #328]	; d00813c4 <do_bubbastix_playdemo_screensaver+0x6d0>
+d008127e:	4f43      	ldr	r7, [pc, #268]	; (d008138c <do_bubbastix_playdemo_screensaver+0x698>)
+d0081280:	f8a5 a000 	strh.w	sl, [r5]
+d0081284:	9003      	str	r0, [sp, #12]
+d0081286:	e59c      	b.n	d0080dc2 <do_bubbastix_playdemo_screensaver+0xce>
+d0081288:	7b22      	ldrb	r2, [r4, #12]
+d008128a:	2610      	movs	r6, #16
+d008128c:	7b65      	ldrb	r5, [r4, #13]
+d008128e:	2328      	movs	r3, #40	; 0x28
+d0081290:	7ba0      	ldrb	r0, [r4, #14]
+d0081292:	ea42 2205 	orr.w	r2, r2, r5, lsl #8
+d0081296:	7be5      	ldrb	r5, [r4, #15]
+d0081298:	f8b9 1000 	ldrh.w	r1, [r9]
+d008129c:	ea42 4000 	orr.w	r0, r2, r0, lsl #16
+d00812a0:	22de      	movs	r2, #222	; 0xde
+d00812a2:	4431      	add	r1, r6
+d00812a4:	ea40 6505 	orr.w	r5, r0, r5, lsl #24
+d00812a8:	4843      	ldr	r0, [pc, #268]	; (d00813b8 <do_bubbastix_playdemo_screensaver+0x6c4>)
+d00812aa:	b209      	sxth	r1, r1
+d00812ac:	686d      	ldr	r5, [r5, #4]
+d00812ae:	9600      	str	r6, [sp, #0]
+d00812b0:	69ad      	ldr	r5, [r5, #24]
+d00812b2:	47a8      	blx	r5
+d00812b4:	7b22      	ldrb	r2, [r4, #12]
+d00812b6:	7b60      	ldrb	r0, [r4, #13]
+d00812b8:	f04f 0c45 	mov.w	ip, #69	; 0x45
+d00812bc:	7ba6      	ldrb	r6, [r4, #14]
+d00812be:	2318      	movs	r3, #24
+d00812c0:	ea42 2000 	orr.w	r0, r2, r0, lsl #8
+d00812c4:	7be5      	ldrb	r5, [r4, #15]
+d00812c6:	9a06      	ldr	r2, [sp, #24]
+d00812c8:	ea40 4606 	orr.w	r6, r0, r6, lsl #16
+d00812cc:	483b      	ldr	r0, [pc, #236]	; (d00813bc <do_bubbastix_playdemo_screensaver+0x6c8>)
+d00812ce:	f9b2 1000 	ldrsh.w	r1, [r2]
+d00812d2:	22bb      	movs	r2, #187	; 0xbb
+d00812d4:	ea46 6505 	orr.w	r5, r6, r5, lsl #24
+d00812d8:	686d      	ldr	r5, [r5, #4]
+d00812da:	f8cd c000 	str.w	ip, [sp]
+d00812de:	69ad      	ldr	r5, [r5, #24]
+d00812e0:	47a8      	blx	r5
+d00812e2:	e60a      	b.n	d0080efa <do_bubbastix_playdemo_screensaver+0x206>
+d00812e4:	4291      	cmp	r1, r2
+d00812e6:	4676      	mov	r6, lr
+d00812e8:	f88c e000 	strb.w	lr, [ip]
+d00812ec:	f47f ad5d 	bne.w	d0080daa <do_bubbastix_playdemo_screensaver+0xb6>
+d00812f0:	4b27      	ldr	r3, [pc, #156]	; (d0081390 <do_bubbastix_playdemo_screensaver+0x69c>)
+d00812f2:	f8df 90d4 	ldr.w	r9, [pc, #212]	; d00813c8 <do_bubbastix_playdemo_screensaver+0x6d4>
+d00812f6:	9305      	str	r3, [sp, #20]
+d00812f8:	4b27      	ldr	r3, [pc, #156]	; (d0081398 <do_bubbastix_playdemo_screensaver+0x6a4>)
+d00812fa:	9304      	str	r3, [sp, #16]
+d00812fc:	4b27      	ldr	r3, [pc, #156]	; (d008139c <do_bubbastix_playdemo_screensaver+0x6a8>)
+d00812fe:	9306      	str	r3, [sp, #24]
+d0081300:	e589      	b.n	d0080e16 <do_bubbastix_playdemo_screensaver+0x122>
+d0081302:	462a      	mov	r2, r5
+d0081304:	7005      	strb	r5, [r0, #0]
+d0081306:	e750      	b.n	d00811aa <do_bubbastix_playdemo_screensaver+0x4b6>
+d0081308:	4a27      	ldr	r2, [pc, #156]	; (d00813a8 <do_bubbastix_playdemo_screensaver+0x6b4>)
+d008130a:	7813      	ldrb	r3, [r2, #0]
+d008130c:	f043 0301 	orr.w	r3, r3, #1
+d0081310:	7013      	strb	r3, [r2, #0]
+d0081312:	e580      	b.n	d0080e16 <do_bubbastix_playdemo_screensaver+0x122>
+d0081314:	f1bc 0f03 	cmp.w	ip, #3
+d0081318:	4611      	mov	r1, r2
+d008131a:	f885 a000 	strb.w	sl, [r5]
+d008131e:	f63f ad2d 	bhi.w	d0080d7c <do_bubbastix_playdemo_screensaver+0x88>
+d0081322:	4b1b      	ldr	r3, [pc, #108]	; (d0081390 <do_bubbastix_playdemo_screensaver+0x69c>)
+d0081324:	f8df 90a0 	ldr.w	r9, [pc, #160]	; d00813c8 <do_bubbastix_playdemo_screensaver+0x6d4>
+d0081328:	9305      	str	r3, [sp, #20]
+d008132a:	4b1b      	ldr	r3, [pc, #108]	; (d0081398 <do_bubbastix_playdemo_screensaver+0x6a4>)
+d008132c:	f8df 8094 	ldr.w	r8, [pc, #148]	; d00813c4 <do_bubbastix_playdemo_screensaver+0x6d0>
+d0081330:	9304      	str	r3, [sp, #16]
+d0081332:	4b1a      	ldr	r3, [pc, #104]	; (d008139c <do_bubbastix_playdemo_screensaver+0x6a8>)
+d0081334:	4f15      	ldr	r7, [pc, #84]	; (d008138c <do_bubbastix_playdemo_screensaver+0x698>)
+d0081336:	9306      	str	r3, [sp, #24]
+d0081338:	4b13      	ldr	r3, [pc, #76]	; (d0081388 <do_bubbastix_playdemo_screensaver+0x694>)
+d008133a:	9303      	str	r3, [sp, #12]
+d008133c:	e56b      	b.n	d0080e16 <do_bubbastix_playdemo_screensaver+0x122>
+d008133e:	f1bc 0f03 	cmp.w	ip, #3
+d0081342:	f8db 1020 	ldr.w	r1, [fp, #32]
+d0081346:	f885 a000 	strb.w	sl, [r5]
+d008134a:	f63f ad17 	bhi.w	d0080d7c <do_bubbastix_playdemo_screensaver+0x88>
+d008134e:	4810      	ldr	r0, [pc, #64]	; (d0081390 <do_bubbastix_playdemo_screensaver+0x69c>)
+d0081350:	f8df 9074 	ldr.w	r9, [pc, #116]	; d00813c8 <do_bubbastix_playdemo_screensaver+0x6d4>
+d0081354:	9005      	str	r0, [sp, #20]
+d0081356:	4810      	ldr	r0, [pc, #64]	; (d0081398 <do_bubbastix_playdemo_screensaver+0x6a4>)
+d0081358:	f8df 8068 	ldr.w	r8, [pc, #104]	; d00813c4 <do_bubbastix_playdemo_screensaver+0x6d0>
+d008135c:	9004      	str	r0, [sp, #16]
+d008135e:	480f      	ldr	r0, [pc, #60]	; (d008139c <do_bubbastix_playdemo_screensaver+0x6a8>)
+d0081360:	4f0a      	ldr	r7, [pc, #40]	; (d008138c <do_bubbastix_playdemo_screensaver+0x698>)
+d0081362:	9006      	str	r0, [sp, #24]
+d0081364:	4808      	ldr	r0, [pc, #32]	; (d0081388 <do_bubbastix_playdemo_screensaver+0x694>)
+d0081366:	9003      	str	r0, [sp, #12]
+d0081368:	e52b      	b.n	d0080dc2 <do_bubbastix_playdemo_screensaver+0xce>
+d008136a:	f895 c000 	ldrb.w	ip, [r5]
+d008136e:	4a05      	ldr	r2, [pc, #20]	; (d0081384 <do_bubbastix_playdemo_screensaver+0x690>)
+d0081370:	f10c 0a01 	add.w	sl, ip, #1
+d0081374:	f8df b048 	ldr.w	fp, [pc, #72]	; d00813c0 <do_bubbastix_playdemo_screensaver+0x6cc>
+d0081378:	9207      	str	r2, [sp, #28]
+d008137a:	fa5f fa8a 	uxtb.w	sl, sl
+d008137e:	6812      	ldr	r2, [r2, #0]
+d0081380:	e6b3      	b.n	d00810ea <do_bubbastix_playdemo_screensaver+0x3f6>
+d0081382:	bf00      	nop
+d0081384:	d009c964 	.word	0xd009c964
+d0081388:	d009c960 	.word	0xd009c960
+d008138c:	d009cb80 	.word	0xd009cb80
+d0081390:	d009c96c 	.word	0xd009c96c
+d0081394:	d009c970 	.word	0xd009c970
+d0081398:	d009c969 	.word	0xd009c969
+d008139c:	d009cbf0 	.word	0xd009cbf0
+d00813a0:	d009c660 	.word	0xd009c660
+d00813a4:	d009c940 	.word	0xd009c940
+d00813a8:	d009cbec 	.word	0xd009cbec
+d00813ac:	d009cbea 	.word	0xd009cbea
+d00813b0:	d009cbee 	.word	0xd009cbee
+d00813b4:	d009c968 	.word	0xd009c968
+d00813b8:	d0085838 	.word	0xd0085838
+d00813bc:	d008fcd8 	.word	0xd008fcd8
+d00813c0:	d009c620 	.word	0xd009c620
+d00813c4:	d009cbe6 	.word	0xd009cbe6
+d00813c8:	d009cbe4 	.word	0xd009cbe4
+d00813cc:	d0083778 	.word	0xd0083778
+d00813d0:	d009c962 	.word	0xd009c962
+d00813d4:	d009cbe8 	.word	0xd009cbe8
 
-d008114c <malloc>:
-d008114c:	4b02      	ldr	r3, [pc, #8]	; (d0081158 <malloc+0xc>)
-d008114e:	4601      	mov	r1, r0
-d0081150:	6818      	ldr	r0, [r3, #0]
-d0081152:	f000 b85b 	b.w	d008120c <_malloc_r>
-d0081156:	bf00      	nop
-d0081158:	d009b5f0 	.word	0xd009b5f0
+d00813d8 <__errno>:
+d00813d8:	4b01      	ldr	r3, [pc, #4]	; (d00813e0 <__errno+0x8>)
+d00813da:	6818      	ldr	r0, [r3, #0]
+d00813dc:	4770      	bx	lr
+d00813de:	bf00      	nop
+d00813e0:	d009c670 	.word	0xd009c670
 
-d008115c <memset>:
-d008115c:	4402      	add	r2, r0
-d008115e:	4603      	mov	r3, r0
-d0081160:	4293      	cmp	r3, r2
-d0081162:	d100      	bne.n	d0081166 <memset+0xa>
-d0081164:	4770      	bx	lr
-d0081166:	f803 1b01 	strb.w	r1, [r3], #1
-d008116a:	e7f9      	b.n	d0081160 <memset+0x4>
+d00813e4 <malloc>:
+d00813e4:	4b02      	ldr	r3, [pc, #8]	; (d00813f0 <malloc+0xc>)
+d00813e6:	4601      	mov	r1, r0
+d00813e8:	6818      	ldr	r0, [r3, #0]
+d00813ea:	f000 b85b 	b.w	d00814a4 <_malloc_r>
+d00813ee:	bf00      	nop
+d00813f0:	d009c670 	.word	0xd009c670
 
-d008116c <_free_r>:
-d008116c:	b537      	push	{r0, r1, r2, r4, r5, lr}
-d008116e:	2900      	cmp	r1, #0
-d0081170:	d048      	beq.n	d0081204 <_free_r+0x98>
-d0081172:	f851 3c04 	ldr.w	r3, [r1, #-4]
-d0081176:	9001      	str	r0, [sp, #4]
-d0081178:	2b00      	cmp	r3, #0
-d008117a:	f1a1 0404 	sub.w	r4, r1, #4
-d008117e:	bfb8      	it	lt
-d0081180:	18e4      	addlt	r4, r4, r3
-d0081182:	f000 fcbf 	bl	d0081b04 <__malloc_lock>
-d0081186:	4a20      	ldr	r2, [pc, #128]	; (d0081208 <_free_r+0x9c>)
-d0081188:	9801      	ldr	r0, [sp, #4]
-d008118a:	6813      	ldr	r3, [r2, #0]
-d008118c:	4615      	mov	r5, r2
-d008118e:	b933      	cbnz	r3, d008119e <_free_r+0x32>
-d0081190:	6063      	str	r3, [r4, #4]
-d0081192:	6014      	str	r4, [r2, #0]
-d0081194:	b003      	add	sp, #12
-d0081196:	e8bd 4030 	ldmia.w	sp!, {r4, r5, lr}
-d008119a:	f000 bcb9 	b.w	d0081b10 <__malloc_unlock>
-d008119e:	42a3      	cmp	r3, r4
-d00811a0:	d90b      	bls.n	d00811ba <_free_r+0x4e>
-d00811a2:	6821      	ldr	r1, [r4, #0]
-d00811a4:	1862      	adds	r2, r4, r1
-d00811a6:	4293      	cmp	r3, r2
-d00811a8:	bf04      	itt	eq
-d00811aa:	681a      	ldreq	r2, [r3, #0]
-d00811ac:	685b      	ldreq	r3, [r3, #4]
-d00811ae:	6063      	str	r3, [r4, #4]
-d00811b0:	bf04      	itt	eq
-d00811b2:	1852      	addeq	r2, r2, r1
-d00811b4:	6022      	streq	r2, [r4, #0]
-d00811b6:	602c      	str	r4, [r5, #0]
-d00811b8:	e7ec      	b.n	d0081194 <_free_r+0x28>
-d00811ba:	461a      	mov	r2, r3
-d00811bc:	685b      	ldr	r3, [r3, #4]
-d00811be:	b10b      	cbz	r3, d00811c4 <_free_r+0x58>
-d00811c0:	42a3      	cmp	r3, r4
-d00811c2:	d9fa      	bls.n	d00811ba <_free_r+0x4e>
-d00811c4:	6811      	ldr	r1, [r2, #0]
-d00811c6:	1855      	adds	r5, r2, r1
-d00811c8:	42a5      	cmp	r5, r4
-d00811ca:	d10b      	bne.n	d00811e4 <_free_r+0x78>
-d00811cc:	6824      	ldr	r4, [r4, #0]
-d00811ce:	4421      	add	r1, r4
-d00811d0:	1854      	adds	r4, r2, r1
-d00811d2:	42a3      	cmp	r3, r4
-d00811d4:	6011      	str	r1, [r2, #0]
-d00811d6:	d1dd      	bne.n	d0081194 <_free_r+0x28>
-d00811d8:	681c      	ldr	r4, [r3, #0]
-d00811da:	685b      	ldr	r3, [r3, #4]
-d00811dc:	6053      	str	r3, [r2, #4]
-d00811de:	4421      	add	r1, r4
-d00811e0:	6011      	str	r1, [r2, #0]
-d00811e2:	e7d7      	b.n	d0081194 <_free_r+0x28>
-d00811e4:	d902      	bls.n	d00811ec <_free_r+0x80>
-d00811e6:	230c      	movs	r3, #12
-d00811e8:	6003      	str	r3, [r0, #0]
-d00811ea:	e7d3      	b.n	d0081194 <_free_r+0x28>
-d00811ec:	6825      	ldr	r5, [r4, #0]
-d00811ee:	1961      	adds	r1, r4, r5
-d00811f0:	428b      	cmp	r3, r1
-d00811f2:	bf04      	itt	eq
-d00811f4:	6819      	ldreq	r1, [r3, #0]
-d00811f6:	685b      	ldreq	r3, [r3, #4]
-d00811f8:	6063      	str	r3, [r4, #4]
-d00811fa:	bf04      	itt	eq
-d00811fc:	1949      	addeq	r1, r1, r5
-d00811fe:	6021      	streq	r1, [r4, #0]
-d0081200:	6054      	str	r4, [r2, #4]
-d0081202:	e7c7      	b.n	d0081194 <_free_r+0x28>
-d0081204:	b003      	add	sp, #12
-d0081206:	bd30      	pop	{r4, r5, pc}
-d0081208:	d009b8d4 	.word	0xd009b8d4
+d00813f4 <memset>:
+d00813f4:	4402      	add	r2, r0
+d00813f6:	4603      	mov	r3, r0
+d00813f8:	4293      	cmp	r3, r2
+d00813fa:	d100      	bne.n	d00813fe <memset+0xa>
+d00813fc:	4770      	bx	lr
+d00813fe:	f803 1b01 	strb.w	r1, [r3], #1
+d0081402:	e7f9      	b.n	d00813f8 <memset+0x4>
 
-d008120c <_malloc_r>:
-d008120c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-d008120e:	1ccd      	adds	r5, r1, #3
-d0081210:	f025 0503 	bic.w	r5, r5, #3
-d0081214:	3508      	adds	r5, #8
-d0081216:	2d0c      	cmp	r5, #12
-d0081218:	bf38      	it	cc
-d008121a:	250c      	movcc	r5, #12
-d008121c:	2d00      	cmp	r5, #0
-d008121e:	4606      	mov	r6, r0
-d0081220:	db01      	blt.n	d0081226 <_malloc_r+0x1a>
-d0081222:	42a9      	cmp	r1, r5
-d0081224:	d903      	bls.n	d008122e <_malloc_r+0x22>
-d0081226:	230c      	movs	r3, #12
-d0081228:	6033      	str	r3, [r6, #0]
-d008122a:	2000      	movs	r0, #0
-d008122c:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
-d008122e:	f000 fc69 	bl	d0081b04 <__malloc_lock>
-d0081232:	4921      	ldr	r1, [pc, #132]	; (d00812b8 <_malloc_r+0xac>)
-d0081234:	680a      	ldr	r2, [r1, #0]
-d0081236:	4614      	mov	r4, r2
-d0081238:	b99c      	cbnz	r4, d0081262 <_malloc_r+0x56>
-d008123a:	4f20      	ldr	r7, [pc, #128]	; (d00812bc <_malloc_r+0xb0>)
-d008123c:	683b      	ldr	r3, [r7, #0]
-d008123e:	b923      	cbnz	r3, d008124a <_malloc_r+0x3e>
-d0081240:	4621      	mov	r1, r4
-d0081242:	4630      	mov	r0, r6
-d0081244:	f7ff f840 	bl	d00802c8 <_sbrk_r>
-d0081248:	6038      	str	r0, [r7, #0]
-d008124a:	4629      	mov	r1, r5
-d008124c:	4630      	mov	r0, r6
-d008124e:	f7ff f83b 	bl	d00802c8 <_sbrk_r>
-d0081252:	1c43      	adds	r3, r0, #1
-d0081254:	d123      	bne.n	d008129e <_malloc_r+0x92>
-d0081256:	230c      	movs	r3, #12
-d0081258:	6033      	str	r3, [r6, #0]
-d008125a:	4630      	mov	r0, r6
-d008125c:	f000 fc58 	bl	d0081b10 <__malloc_unlock>
-d0081260:	e7e3      	b.n	d008122a <_malloc_r+0x1e>
-d0081262:	6823      	ldr	r3, [r4, #0]
-d0081264:	1b5b      	subs	r3, r3, r5
-d0081266:	d417      	bmi.n	d0081298 <_malloc_r+0x8c>
-d0081268:	2b0b      	cmp	r3, #11
-d008126a:	d903      	bls.n	d0081274 <_malloc_r+0x68>
-d008126c:	6023      	str	r3, [r4, #0]
-d008126e:	441c      	add	r4, r3
-d0081270:	6025      	str	r5, [r4, #0]
-d0081272:	e004      	b.n	d008127e <_malloc_r+0x72>
-d0081274:	6863      	ldr	r3, [r4, #4]
-d0081276:	42a2      	cmp	r2, r4
-d0081278:	bf0c      	ite	eq
-d008127a:	600b      	streq	r3, [r1, #0]
-d008127c:	6053      	strne	r3, [r2, #4]
-d008127e:	4630      	mov	r0, r6
-d0081280:	f000 fc46 	bl	d0081b10 <__malloc_unlock>
-d0081284:	f104 000b 	add.w	r0, r4, #11
-d0081288:	1d23      	adds	r3, r4, #4
-d008128a:	f020 0007 	bic.w	r0, r0, #7
-d008128e:	1ac2      	subs	r2, r0, r3
-d0081290:	d0cc      	beq.n	d008122c <_malloc_r+0x20>
-d0081292:	1a1b      	subs	r3, r3, r0
-d0081294:	50a3      	str	r3, [r4, r2]
-d0081296:	e7c9      	b.n	d008122c <_malloc_r+0x20>
-d0081298:	4622      	mov	r2, r4
-d008129a:	6864      	ldr	r4, [r4, #4]
-d008129c:	e7cc      	b.n	d0081238 <_malloc_r+0x2c>
-d008129e:	1cc4      	adds	r4, r0, #3
-d00812a0:	f024 0403 	bic.w	r4, r4, #3
-d00812a4:	42a0      	cmp	r0, r4
-d00812a6:	d0e3      	beq.n	d0081270 <_malloc_r+0x64>
-d00812a8:	1a21      	subs	r1, r4, r0
-d00812aa:	4630      	mov	r0, r6
-d00812ac:	f7ff f80c 	bl	d00802c8 <_sbrk_r>
-d00812b0:	3001      	adds	r0, #1
-d00812b2:	d1dd      	bne.n	d0081270 <_malloc_r+0x64>
-d00812b4:	e7cf      	b.n	d0081256 <_malloc_r+0x4a>
-d00812b6:	bf00      	nop
-d00812b8:	d009b8d4 	.word	0xd009b8d4
-d00812bc:	d009b8d8 	.word	0xd009b8d8
-
-d00812c0 <_puts_r>:
-d00812c0:	b570      	push	{r4, r5, r6, lr}
-d00812c2:	460e      	mov	r6, r1
-d00812c4:	4605      	mov	r5, r0
-d00812c6:	b118      	cbz	r0, d00812d0 <_puts_r+0x10>
-d00812c8:	6983      	ldr	r3, [r0, #24]
-d00812ca:	b90b      	cbnz	r3, d00812d0 <_puts_r+0x10>
-d00812cc:	f000 fb16 	bl	d00818fc <__sinit>
-d00812d0:	69ab      	ldr	r3, [r5, #24]
-d00812d2:	68ac      	ldr	r4, [r5, #8]
-d00812d4:	b913      	cbnz	r3, d00812dc <_puts_r+0x1c>
-d00812d6:	4628      	mov	r0, r5
-d00812d8:	f000 fb10 	bl	d00818fc <__sinit>
-d00812dc:	4b2c      	ldr	r3, [pc, #176]	; (d0081390 <_puts_r+0xd0>)
-d00812de:	429c      	cmp	r4, r3
-d00812e0:	d120      	bne.n	d0081324 <_puts_r+0x64>
-d00812e2:	686c      	ldr	r4, [r5, #4]
-d00812e4:	6e63      	ldr	r3, [r4, #100]	; 0x64
-d00812e6:	07db      	lsls	r3, r3, #31
-d00812e8:	d405      	bmi.n	d00812f6 <_puts_r+0x36>
-d00812ea:	89a3      	ldrh	r3, [r4, #12]
-d00812ec:	0598      	lsls	r0, r3, #22
-d00812ee:	d402      	bmi.n	d00812f6 <_puts_r+0x36>
-d00812f0:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d00812f2:	f000 fba1 	bl	d0081a38 <__retarget_lock_acquire_recursive>
-d00812f6:	89a3      	ldrh	r3, [r4, #12]
-d00812f8:	0719      	lsls	r1, r3, #28
-d00812fa:	d51d      	bpl.n	d0081338 <_puts_r+0x78>
-d00812fc:	6923      	ldr	r3, [r4, #16]
-d00812fe:	b1db      	cbz	r3, d0081338 <_puts_r+0x78>
-d0081300:	3e01      	subs	r6, #1
-d0081302:	68a3      	ldr	r3, [r4, #8]
-d0081304:	f816 1f01 	ldrb.w	r1, [r6, #1]!
-d0081308:	3b01      	subs	r3, #1
-d008130a:	60a3      	str	r3, [r4, #8]
-d008130c:	bb39      	cbnz	r1, d008135e <_puts_r+0x9e>
-d008130e:	2b00      	cmp	r3, #0
-d0081310:	da38      	bge.n	d0081384 <_puts_r+0xc4>
-d0081312:	4622      	mov	r2, r4
-d0081314:	210a      	movs	r1, #10
-d0081316:	4628      	mov	r0, r5
-d0081318:	f000 f916 	bl	d0081548 <__swbuf_r>
-d008131c:	3001      	adds	r0, #1
-d008131e:	d011      	beq.n	d0081344 <_puts_r+0x84>
-d0081320:	250a      	movs	r5, #10
-d0081322:	e011      	b.n	d0081348 <_puts_r+0x88>
-d0081324:	4b1b      	ldr	r3, [pc, #108]	; (d0081394 <_puts_r+0xd4>)
-d0081326:	429c      	cmp	r4, r3
-d0081328:	d101      	bne.n	d008132e <_puts_r+0x6e>
-d008132a:	68ac      	ldr	r4, [r5, #8]
-d008132c:	e7da      	b.n	d00812e4 <_puts_r+0x24>
-d008132e:	4b1a      	ldr	r3, [pc, #104]	; (d0081398 <_puts_r+0xd8>)
-d0081330:	429c      	cmp	r4, r3
-d0081332:	bf08      	it	eq
-d0081334:	68ec      	ldreq	r4, [r5, #12]
-d0081336:	e7d5      	b.n	d00812e4 <_puts_r+0x24>
-d0081338:	4621      	mov	r1, r4
-d008133a:	4628      	mov	r0, r5
-d008133c:	f000 f956 	bl	d00815ec <__swsetup_r>
-d0081340:	2800      	cmp	r0, #0
-d0081342:	d0dd      	beq.n	d0081300 <_puts_r+0x40>
-d0081344:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
-d0081348:	6e63      	ldr	r3, [r4, #100]	; 0x64
-d008134a:	07da      	lsls	r2, r3, #31
-d008134c:	d405      	bmi.n	d008135a <_puts_r+0x9a>
-d008134e:	89a3      	ldrh	r3, [r4, #12]
-d0081350:	059b      	lsls	r3, r3, #22
-d0081352:	d402      	bmi.n	d008135a <_puts_r+0x9a>
-d0081354:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d0081356:	f000 fb70 	bl	d0081a3a <__retarget_lock_release_recursive>
-d008135a:	4628      	mov	r0, r5
-d008135c:	bd70      	pop	{r4, r5, r6, pc}
-d008135e:	2b00      	cmp	r3, #0
-d0081360:	da04      	bge.n	d008136c <_puts_r+0xac>
-d0081362:	69a2      	ldr	r2, [r4, #24]
-d0081364:	429a      	cmp	r2, r3
-d0081366:	dc06      	bgt.n	d0081376 <_puts_r+0xb6>
-d0081368:	290a      	cmp	r1, #10
-d008136a:	d004      	beq.n	d0081376 <_puts_r+0xb6>
-d008136c:	6823      	ldr	r3, [r4, #0]
-d008136e:	1c5a      	adds	r2, r3, #1
-d0081370:	6022      	str	r2, [r4, #0]
-d0081372:	7019      	strb	r1, [r3, #0]
-d0081374:	e7c5      	b.n	d0081302 <_puts_r+0x42>
-d0081376:	4622      	mov	r2, r4
-d0081378:	4628      	mov	r0, r5
-d008137a:	f000 f8e5 	bl	d0081548 <__swbuf_r>
-d008137e:	3001      	adds	r0, #1
-d0081380:	d1bf      	bne.n	d0081302 <_puts_r+0x42>
-d0081382:	e7df      	b.n	d0081344 <_puts_r+0x84>
-d0081384:	6823      	ldr	r3, [r4, #0]
-d0081386:	250a      	movs	r5, #10
-d0081388:	1c5a      	adds	r2, r3, #1
-d008138a:	6022      	str	r2, [r4, #0]
-d008138c:	701d      	strb	r5, [r3, #0]
-d008138e:	e7db      	b.n	d0081348 <_puts_r+0x88>
-d0081390:	d009b508 	.word	0xd009b508
-d0081394:	d009b528 	.word	0xd009b528
-d0081398:	d009b4e8 	.word	0xd009b4e8
-
-d008139c <puts>:
-d008139c:	4b02      	ldr	r3, [pc, #8]	; (d00813a8 <puts+0xc>)
-d008139e:	4601      	mov	r1, r0
-d00813a0:	6818      	ldr	r0, [r3, #0]
-d00813a2:	f7ff bf8d 	b.w	d00812c0 <_puts_r>
-d00813a6:	bf00      	nop
-d00813a8:	d009b5f0 	.word	0xd009b5f0
-
-d00813ac <setbuf>:
-d00813ac:	2900      	cmp	r1, #0
-d00813ae:	f44f 6380 	mov.w	r3, #1024	; 0x400
-d00813b2:	bf0c      	ite	eq
-d00813b4:	2202      	moveq	r2, #2
-d00813b6:	2200      	movne	r2, #0
-d00813b8:	f000 b800 	b.w	d00813bc <setvbuf>
-
-d00813bc <setvbuf>:
-d00813bc:	e92d 43f7 	stmdb	sp!, {r0, r1, r2, r4, r5, r6, r7, r8, r9, lr}
-d00813c0:	461d      	mov	r5, r3
-d00813c2:	4b5d      	ldr	r3, [pc, #372]	; (d0081538 <setvbuf+0x17c>)
-d00813c4:	681f      	ldr	r7, [r3, #0]
-d00813c6:	4604      	mov	r4, r0
-d00813c8:	460e      	mov	r6, r1
-d00813ca:	4690      	mov	r8, r2
-d00813cc:	b127      	cbz	r7, d00813d8 <setvbuf+0x1c>
-d00813ce:	69bb      	ldr	r3, [r7, #24]
-d00813d0:	b913      	cbnz	r3, d00813d8 <setvbuf+0x1c>
-d00813d2:	4638      	mov	r0, r7
-d00813d4:	f000 fa92 	bl	d00818fc <__sinit>
-d00813d8:	4b58      	ldr	r3, [pc, #352]	; (d008153c <setvbuf+0x180>)
-d00813da:	429c      	cmp	r4, r3
-d00813dc:	d167      	bne.n	d00814ae <setvbuf+0xf2>
-d00813de:	687c      	ldr	r4, [r7, #4]
-d00813e0:	f1b8 0f02 	cmp.w	r8, #2
-d00813e4:	d006      	beq.n	d00813f4 <setvbuf+0x38>
-d00813e6:	f1b8 0f01 	cmp.w	r8, #1
-d00813ea:	f200 809f 	bhi.w	d008152c <setvbuf+0x170>
-d00813ee:	2d00      	cmp	r5, #0
-d00813f0:	f2c0 809c 	blt.w	d008152c <setvbuf+0x170>
-d00813f4:	6e63      	ldr	r3, [r4, #100]	; 0x64
-d00813f6:	07db      	lsls	r3, r3, #31
-d00813f8:	d405      	bmi.n	d0081406 <setvbuf+0x4a>
-d00813fa:	89a3      	ldrh	r3, [r4, #12]
-d00813fc:	0598      	lsls	r0, r3, #22
-d00813fe:	d402      	bmi.n	d0081406 <setvbuf+0x4a>
-d0081400:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d0081402:	f000 fb19 	bl	d0081a38 <__retarget_lock_acquire_recursive>
-d0081406:	4621      	mov	r1, r4
-d0081408:	4638      	mov	r0, r7
-d008140a:	f000 f9e3 	bl	d00817d4 <_fflush_r>
-d008140e:	6b61      	ldr	r1, [r4, #52]	; 0x34
-d0081410:	b141      	cbz	r1, d0081424 <setvbuf+0x68>
-d0081412:	f104 0344 	add.w	r3, r4, #68	; 0x44
-d0081416:	4299      	cmp	r1, r3
-d0081418:	d002      	beq.n	d0081420 <setvbuf+0x64>
-d008141a:	4638      	mov	r0, r7
-d008141c:	f7ff fea6 	bl	d008116c <_free_r>
-d0081420:	2300      	movs	r3, #0
-d0081422:	6363      	str	r3, [r4, #52]	; 0x34
-d0081424:	2300      	movs	r3, #0
-d0081426:	61a3      	str	r3, [r4, #24]
+d0081404 <_free_r>:
+d0081404:	b537      	push	{r0, r1, r2, r4, r5, lr}
+d0081406:	2900      	cmp	r1, #0
+d0081408:	d048      	beq.n	d008149c <_free_r+0x98>
+d008140a:	f851 3c04 	ldr.w	r3, [r1, #-4]
+d008140e:	9001      	str	r0, [sp, #4]
+d0081410:	2b00      	cmp	r3, #0
+d0081412:	f1a1 0404 	sub.w	r4, r1, #4
+d0081416:	bfb8      	it	lt
+d0081418:	18e4      	addlt	r4, r4, r3
+d008141a:	f000 fcdf 	bl	d0081ddc <__malloc_lock>
+d008141e:	4a20      	ldr	r2, [pc, #128]	; (d00814a0 <_free_r+0x9c>)
+d0081420:	9801      	ldr	r0, [sp, #4]
+d0081422:	6813      	ldr	r3, [r2, #0]
+d0081424:	4615      	mov	r5, r2
+d0081426:	b933      	cbnz	r3, d0081436 <_free_r+0x32>
 d0081428:	6063      	str	r3, [r4, #4]
-d008142a:	89a3      	ldrh	r3, [r4, #12]
-d008142c:	0619      	lsls	r1, r3, #24
-d008142e:	d503      	bpl.n	d0081438 <setvbuf+0x7c>
-d0081430:	6921      	ldr	r1, [r4, #16]
-d0081432:	4638      	mov	r0, r7
-d0081434:	f7ff fe9a 	bl	d008116c <_free_r>
-d0081438:	89a3      	ldrh	r3, [r4, #12]
-d008143a:	f423 634a 	bic.w	r3, r3, #3232	; 0xca0
-d008143e:	f023 0303 	bic.w	r3, r3, #3
-d0081442:	f1b8 0f02 	cmp.w	r8, #2
-d0081446:	81a3      	strh	r3, [r4, #12]
-d0081448:	d06c      	beq.n	d0081524 <setvbuf+0x168>
-d008144a:	ab01      	add	r3, sp, #4
-d008144c:	466a      	mov	r2, sp
-d008144e:	4621      	mov	r1, r4
-d0081450:	4638      	mov	r0, r7
-d0081452:	f000 faf3 	bl	d0081a3c <__swhatbuf_r>
-d0081456:	89a3      	ldrh	r3, [r4, #12]
-d0081458:	4318      	orrs	r0, r3
-d008145a:	81a0      	strh	r0, [r4, #12]
-d008145c:	2d00      	cmp	r5, #0
-d008145e:	d130      	bne.n	d00814c2 <setvbuf+0x106>
-d0081460:	9d00      	ldr	r5, [sp, #0]
-d0081462:	4628      	mov	r0, r5
-d0081464:	f7ff fe72 	bl	d008114c <malloc>
-d0081468:	4606      	mov	r6, r0
-d008146a:	2800      	cmp	r0, #0
-d008146c:	d155      	bne.n	d008151a <setvbuf+0x15e>
-d008146e:	f8dd 9000 	ldr.w	r9, [sp]
-d0081472:	45a9      	cmp	r9, r5
-d0081474:	d14a      	bne.n	d008150c <setvbuf+0x150>
-d0081476:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
-d008147a:	2200      	movs	r2, #0
-d008147c:	60a2      	str	r2, [r4, #8]
-d008147e:	f104 0247 	add.w	r2, r4, #71	; 0x47
-d0081482:	6022      	str	r2, [r4, #0]
-d0081484:	6122      	str	r2, [r4, #16]
-d0081486:	2201      	movs	r2, #1
-d0081488:	f9b4 300c 	ldrsh.w	r3, [r4, #12]
-d008148c:	6162      	str	r2, [r4, #20]
-d008148e:	6e62      	ldr	r2, [r4, #100]	; 0x64
-d0081490:	f043 0302 	orr.w	r3, r3, #2
-d0081494:	07d2      	lsls	r2, r2, #31
-d0081496:	81a3      	strh	r3, [r4, #12]
-d0081498:	d405      	bmi.n	d00814a6 <setvbuf+0xea>
-d008149a:	f413 7f00 	tst.w	r3, #512	; 0x200
-d008149e:	d102      	bne.n	d00814a6 <setvbuf+0xea>
-d00814a0:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d00814a2:	f000 faca 	bl	d0081a3a <__retarget_lock_release_recursive>
-d00814a6:	4628      	mov	r0, r5
-d00814a8:	b003      	add	sp, #12
-d00814aa:	e8bd 83f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, pc}
-d00814ae:	4b24      	ldr	r3, [pc, #144]	; (d0081540 <setvbuf+0x184>)
-d00814b0:	429c      	cmp	r4, r3
-d00814b2:	d101      	bne.n	d00814b8 <setvbuf+0xfc>
-d00814b4:	68bc      	ldr	r4, [r7, #8]
-d00814b6:	e793      	b.n	d00813e0 <setvbuf+0x24>
-d00814b8:	4b22      	ldr	r3, [pc, #136]	; (d0081544 <setvbuf+0x188>)
-d00814ba:	429c      	cmp	r4, r3
-d00814bc:	bf08      	it	eq
-d00814be:	68fc      	ldreq	r4, [r7, #12]
-d00814c0:	e78e      	b.n	d00813e0 <setvbuf+0x24>
-d00814c2:	2e00      	cmp	r6, #0
-d00814c4:	d0cd      	beq.n	d0081462 <setvbuf+0xa6>
-d00814c6:	69bb      	ldr	r3, [r7, #24]
-d00814c8:	b913      	cbnz	r3, d00814d0 <setvbuf+0x114>
-d00814ca:	4638      	mov	r0, r7
-d00814cc:	f000 fa16 	bl	d00818fc <__sinit>
-d00814d0:	f1b8 0f01 	cmp.w	r8, #1
-d00814d4:	bf08      	it	eq
-d00814d6:	89a3      	ldrheq	r3, [r4, #12]
-d00814d8:	6026      	str	r6, [r4, #0]
-d00814da:	bf04      	itt	eq
-d00814dc:	f043 0301 	orreq.w	r3, r3, #1
-d00814e0:	81a3      	strheq	r3, [r4, #12]
-d00814e2:	89a2      	ldrh	r2, [r4, #12]
-d00814e4:	f012 0308 	ands.w	r3, r2, #8
-d00814e8:	e9c4 6504 	strd	r6, r5, [r4, #16]
-d00814ec:	d01c      	beq.n	d0081528 <setvbuf+0x16c>
-d00814ee:	07d3      	lsls	r3, r2, #31
-d00814f0:	bf41      	itttt	mi
-d00814f2:	2300      	movmi	r3, #0
-d00814f4:	426d      	negmi	r5, r5
-d00814f6:	60a3      	strmi	r3, [r4, #8]
-d00814f8:	61a5      	strmi	r5, [r4, #24]
-d00814fa:	bf58      	it	pl
-d00814fc:	60a5      	strpl	r5, [r4, #8]
-d00814fe:	6e65      	ldr	r5, [r4, #100]	; 0x64
-d0081500:	f015 0501 	ands.w	r5, r5, #1
-d0081504:	d115      	bne.n	d0081532 <setvbuf+0x176>
-d0081506:	f412 7f00 	tst.w	r2, #512	; 0x200
-d008150a:	e7c8      	b.n	d008149e <setvbuf+0xe2>
-d008150c:	4648      	mov	r0, r9
-d008150e:	f7ff fe1d 	bl	d008114c <malloc>
-d0081512:	4606      	mov	r6, r0
-d0081514:	2800      	cmp	r0, #0
-d0081516:	d0ae      	beq.n	d0081476 <setvbuf+0xba>
-d0081518:	464d      	mov	r5, r9
-d008151a:	89a3      	ldrh	r3, [r4, #12]
-d008151c:	f043 0380 	orr.w	r3, r3, #128	; 0x80
-d0081520:	81a3      	strh	r3, [r4, #12]
-d0081522:	e7d0      	b.n	d00814c6 <setvbuf+0x10a>
-d0081524:	2500      	movs	r5, #0
-d0081526:	e7a8      	b.n	d008147a <setvbuf+0xbe>
-d0081528:	60a3      	str	r3, [r4, #8]
-d008152a:	e7e8      	b.n	d00814fe <setvbuf+0x142>
-d008152c:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
-d0081530:	e7b9      	b.n	d00814a6 <setvbuf+0xea>
-d0081532:	2500      	movs	r5, #0
-d0081534:	e7b7      	b.n	d00814a6 <setvbuf+0xea>
-d0081536:	bf00      	nop
-d0081538:	d009b5f0 	.word	0xd009b5f0
-d008153c:	d009b508 	.word	0xd009b508
-d0081540:	d009b528 	.word	0xd009b528
-d0081544:	d009b4e8 	.word	0xd009b4e8
+d008142a:	6014      	str	r4, [r2, #0]
+d008142c:	b003      	add	sp, #12
+d008142e:	e8bd 4030 	ldmia.w	sp!, {r4, r5, lr}
+d0081432:	f000 bcd9 	b.w	d0081de8 <__malloc_unlock>
+d0081436:	42a3      	cmp	r3, r4
+d0081438:	d90b      	bls.n	d0081452 <_free_r+0x4e>
+d008143a:	6821      	ldr	r1, [r4, #0]
+d008143c:	1862      	adds	r2, r4, r1
+d008143e:	4293      	cmp	r3, r2
+d0081440:	bf04      	itt	eq
+d0081442:	681a      	ldreq	r2, [r3, #0]
+d0081444:	685b      	ldreq	r3, [r3, #4]
+d0081446:	6063      	str	r3, [r4, #4]
+d0081448:	bf04      	itt	eq
+d008144a:	1852      	addeq	r2, r2, r1
+d008144c:	6022      	streq	r2, [r4, #0]
+d008144e:	602c      	str	r4, [r5, #0]
+d0081450:	e7ec      	b.n	d008142c <_free_r+0x28>
+d0081452:	461a      	mov	r2, r3
+d0081454:	685b      	ldr	r3, [r3, #4]
+d0081456:	b10b      	cbz	r3, d008145c <_free_r+0x58>
+d0081458:	42a3      	cmp	r3, r4
+d008145a:	d9fa      	bls.n	d0081452 <_free_r+0x4e>
+d008145c:	6811      	ldr	r1, [r2, #0]
+d008145e:	1855      	adds	r5, r2, r1
+d0081460:	42a5      	cmp	r5, r4
+d0081462:	d10b      	bne.n	d008147c <_free_r+0x78>
+d0081464:	6824      	ldr	r4, [r4, #0]
+d0081466:	4421      	add	r1, r4
+d0081468:	1854      	adds	r4, r2, r1
+d008146a:	42a3      	cmp	r3, r4
+d008146c:	6011      	str	r1, [r2, #0]
+d008146e:	d1dd      	bne.n	d008142c <_free_r+0x28>
+d0081470:	681c      	ldr	r4, [r3, #0]
+d0081472:	685b      	ldr	r3, [r3, #4]
+d0081474:	6053      	str	r3, [r2, #4]
+d0081476:	4421      	add	r1, r4
+d0081478:	6011      	str	r1, [r2, #0]
+d008147a:	e7d7      	b.n	d008142c <_free_r+0x28>
+d008147c:	d902      	bls.n	d0081484 <_free_r+0x80>
+d008147e:	230c      	movs	r3, #12
+d0081480:	6003      	str	r3, [r0, #0]
+d0081482:	e7d3      	b.n	d008142c <_free_r+0x28>
+d0081484:	6825      	ldr	r5, [r4, #0]
+d0081486:	1961      	adds	r1, r4, r5
+d0081488:	428b      	cmp	r3, r1
+d008148a:	bf04      	itt	eq
+d008148c:	6819      	ldreq	r1, [r3, #0]
+d008148e:	685b      	ldreq	r3, [r3, #4]
+d0081490:	6063      	str	r3, [r4, #4]
+d0081492:	bf04      	itt	eq
+d0081494:	1949      	addeq	r1, r1, r5
+d0081496:	6021      	streq	r1, [r4, #0]
+d0081498:	6054      	str	r4, [r2, #4]
+d008149a:	e7c7      	b.n	d008142c <_free_r+0x28>
+d008149c:	b003      	add	sp, #12
+d008149e:	bd30      	pop	{r4, r5, pc}
+d00814a0:	d009cb84 	.word	0xd009cb84
 
-d0081548 <__swbuf_r>:
-d0081548:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-d008154a:	460e      	mov	r6, r1
-d008154c:	4614      	mov	r4, r2
-d008154e:	4605      	mov	r5, r0
-d0081550:	b118      	cbz	r0, d008155a <__swbuf_r+0x12>
-d0081552:	6983      	ldr	r3, [r0, #24]
-d0081554:	b90b      	cbnz	r3, d008155a <__swbuf_r+0x12>
-d0081556:	f000 f9d1 	bl	d00818fc <__sinit>
-d008155a:	4b21      	ldr	r3, [pc, #132]	; (d00815e0 <__swbuf_r+0x98>)
-d008155c:	429c      	cmp	r4, r3
-d008155e:	d12b      	bne.n	d00815b8 <__swbuf_r+0x70>
-d0081560:	686c      	ldr	r4, [r5, #4]
-d0081562:	69a3      	ldr	r3, [r4, #24]
-d0081564:	60a3      	str	r3, [r4, #8]
-d0081566:	89a3      	ldrh	r3, [r4, #12]
-d0081568:	071a      	lsls	r2, r3, #28
-d008156a:	d52f      	bpl.n	d00815cc <__swbuf_r+0x84>
-d008156c:	6923      	ldr	r3, [r4, #16]
-d008156e:	b36b      	cbz	r3, d00815cc <__swbuf_r+0x84>
-d0081570:	6923      	ldr	r3, [r4, #16]
-d0081572:	6820      	ldr	r0, [r4, #0]
-d0081574:	1ac0      	subs	r0, r0, r3
-d0081576:	6963      	ldr	r3, [r4, #20]
-d0081578:	b2f6      	uxtb	r6, r6
-d008157a:	4283      	cmp	r3, r0
-d008157c:	4637      	mov	r7, r6
-d008157e:	dc04      	bgt.n	d008158a <__swbuf_r+0x42>
-d0081580:	4621      	mov	r1, r4
-d0081582:	4628      	mov	r0, r5
-d0081584:	f000 f926 	bl	d00817d4 <_fflush_r>
-d0081588:	bb30      	cbnz	r0, d00815d8 <__swbuf_r+0x90>
-d008158a:	68a3      	ldr	r3, [r4, #8]
-d008158c:	3b01      	subs	r3, #1
-d008158e:	60a3      	str	r3, [r4, #8]
-d0081590:	6823      	ldr	r3, [r4, #0]
-d0081592:	1c5a      	adds	r2, r3, #1
-d0081594:	6022      	str	r2, [r4, #0]
-d0081596:	701e      	strb	r6, [r3, #0]
-d0081598:	6963      	ldr	r3, [r4, #20]
-d008159a:	3001      	adds	r0, #1
-d008159c:	4283      	cmp	r3, r0
-d008159e:	d004      	beq.n	d00815aa <__swbuf_r+0x62>
-d00815a0:	89a3      	ldrh	r3, [r4, #12]
-d00815a2:	07db      	lsls	r3, r3, #31
-d00815a4:	d506      	bpl.n	d00815b4 <__swbuf_r+0x6c>
-d00815a6:	2e0a      	cmp	r6, #10
-d00815a8:	d104      	bne.n	d00815b4 <__swbuf_r+0x6c>
-d00815aa:	4621      	mov	r1, r4
-d00815ac:	4628      	mov	r0, r5
-d00815ae:	f000 f911 	bl	d00817d4 <_fflush_r>
-d00815b2:	b988      	cbnz	r0, d00815d8 <__swbuf_r+0x90>
-d00815b4:	4638      	mov	r0, r7
-d00815b6:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
-d00815b8:	4b0a      	ldr	r3, [pc, #40]	; (d00815e4 <__swbuf_r+0x9c>)
-d00815ba:	429c      	cmp	r4, r3
-d00815bc:	d101      	bne.n	d00815c2 <__swbuf_r+0x7a>
-d00815be:	68ac      	ldr	r4, [r5, #8]
-d00815c0:	e7cf      	b.n	d0081562 <__swbuf_r+0x1a>
-d00815c2:	4b09      	ldr	r3, [pc, #36]	; (d00815e8 <__swbuf_r+0xa0>)
-d00815c4:	429c      	cmp	r4, r3
-d00815c6:	bf08      	it	eq
-d00815c8:	68ec      	ldreq	r4, [r5, #12]
-d00815ca:	e7ca      	b.n	d0081562 <__swbuf_r+0x1a>
-d00815cc:	4621      	mov	r1, r4
-d00815ce:	4628      	mov	r0, r5
-d00815d0:	f000 f80c 	bl	d00815ec <__swsetup_r>
-d00815d4:	2800      	cmp	r0, #0
-d00815d6:	d0cb      	beq.n	d0081570 <__swbuf_r+0x28>
-d00815d8:	f04f 37ff 	mov.w	r7, #4294967295	; 0xffffffff
-d00815dc:	e7ea      	b.n	d00815b4 <__swbuf_r+0x6c>
-d00815de:	bf00      	nop
-d00815e0:	d009b508 	.word	0xd009b508
-d00815e4:	d009b528 	.word	0xd009b528
-d00815e8:	d009b4e8 	.word	0xd009b4e8
+d00814a4 <_malloc_r>:
+d00814a4:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+d00814a6:	1ccd      	adds	r5, r1, #3
+d00814a8:	f025 0503 	bic.w	r5, r5, #3
+d00814ac:	3508      	adds	r5, #8
+d00814ae:	2d0c      	cmp	r5, #12
+d00814b0:	bf38      	it	cc
+d00814b2:	250c      	movcc	r5, #12
+d00814b4:	2d00      	cmp	r5, #0
+d00814b6:	4606      	mov	r6, r0
+d00814b8:	db01      	blt.n	d00814be <_malloc_r+0x1a>
+d00814ba:	42a9      	cmp	r1, r5
+d00814bc:	d903      	bls.n	d00814c6 <_malloc_r+0x22>
+d00814be:	230c      	movs	r3, #12
+d00814c0:	6033      	str	r3, [r6, #0]
+d00814c2:	2000      	movs	r0, #0
+d00814c4:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+d00814c6:	f000 fc89 	bl	d0081ddc <__malloc_lock>
+d00814ca:	4921      	ldr	r1, [pc, #132]	; (d0081550 <_malloc_r+0xac>)
+d00814cc:	680a      	ldr	r2, [r1, #0]
+d00814ce:	4614      	mov	r4, r2
+d00814d0:	b99c      	cbnz	r4, d00814fa <_malloc_r+0x56>
+d00814d2:	4f20      	ldr	r7, [pc, #128]	; (d0081554 <_malloc_r+0xb0>)
+d00814d4:	683b      	ldr	r3, [r7, #0]
+d00814d6:	b923      	cbnz	r3, d00814e2 <_malloc_r+0x3e>
+d00814d8:	4621      	mov	r1, r4
+d00814da:	4630      	mov	r0, r6
+d00814dc:	f7fe fef4 	bl	d00802c8 <_sbrk_r>
+d00814e0:	6038      	str	r0, [r7, #0]
+d00814e2:	4629      	mov	r1, r5
+d00814e4:	4630      	mov	r0, r6
+d00814e6:	f7fe feef 	bl	d00802c8 <_sbrk_r>
+d00814ea:	1c43      	adds	r3, r0, #1
+d00814ec:	d123      	bne.n	d0081536 <_malloc_r+0x92>
+d00814ee:	230c      	movs	r3, #12
+d00814f0:	6033      	str	r3, [r6, #0]
+d00814f2:	4630      	mov	r0, r6
+d00814f4:	f000 fc78 	bl	d0081de8 <__malloc_unlock>
+d00814f8:	e7e3      	b.n	d00814c2 <_malloc_r+0x1e>
+d00814fa:	6823      	ldr	r3, [r4, #0]
+d00814fc:	1b5b      	subs	r3, r3, r5
+d00814fe:	d417      	bmi.n	d0081530 <_malloc_r+0x8c>
+d0081500:	2b0b      	cmp	r3, #11
+d0081502:	d903      	bls.n	d008150c <_malloc_r+0x68>
+d0081504:	6023      	str	r3, [r4, #0]
+d0081506:	441c      	add	r4, r3
+d0081508:	6025      	str	r5, [r4, #0]
+d008150a:	e004      	b.n	d0081516 <_malloc_r+0x72>
+d008150c:	6863      	ldr	r3, [r4, #4]
+d008150e:	42a2      	cmp	r2, r4
+d0081510:	bf0c      	ite	eq
+d0081512:	600b      	streq	r3, [r1, #0]
+d0081514:	6053      	strne	r3, [r2, #4]
+d0081516:	4630      	mov	r0, r6
+d0081518:	f000 fc66 	bl	d0081de8 <__malloc_unlock>
+d008151c:	f104 000b 	add.w	r0, r4, #11
+d0081520:	1d23      	adds	r3, r4, #4
+d0081522:	f020 0007 	bic.w	r0, r0, #7
+d0081526:	1ac2      	subs	r2, r0, r3
+d0081528:	d0cc      	beq.n	d00814c4 <_malloc_r+0x20>
+d008152a:	1a1b      	subs	r3, r3, r0
+d008152c:	50a3      	str	r3, [r4, r2]
+d008152e:	e7c9      	b.n	d00814c4 <_malloc_r+0x20>
+d0081530:	4622      	mov	r2, r4
+d0081532:	6864      	ldr	r4, [r4, #4]
+d0081534:	e7cc      	b.n	d00814d0 <_malloc_r+0x2c>
+d0081536:	1cc4      	adds	r4, r0, #3
+d0081538:	f024 0403 	bic.w	r4, r4, #3
+d008153c:	42a0      	cmp	r0, r4
+d008153e:	d0e3      	beq.n	d0081508 <_malloc_r+0x64>
+d0081540:	1a21      	subs	r1, r4, r0
+d0081542:	4630      	mov	r0, r6
+d0081544:	f7fe fec0 	bl	d00802c8 <_sbrk_r>
+d0081548:	3001      	adds	r0, #1
+d008154a:	d1dd      	bne.n	d0081508 <_malloc_r+0x64>
+d008154c:	e7cf      	b.n	d00814ee <_malloc_r+0x4a>
+d008154e:	bf00      	nop
+d0081550:	d009cb84 	.word	0xd009cb84
+d0081554:	d009cb88 	.word	0xd009cb88
 
-d00815ec <__swsetup_r>:
-d00815ec:	4b32      	ldr	r3, [pc, #200]	; (d00816b8 <__swsetup_r+0xcc>)
-d00815ee:	b570      	push	{r4, r5, r6, lr}
-d00815f0:	681d      	ldr	r5, [r3, #0]
-d00815f2:	4606      	mov	r6, r0
-d00815f4:	460c      	mov	r4, r1
-d00815f6:	b125      	cbz	r5, d0081602 <__swsetup_r+0x16>
-d00815f8:	69ab      	ldr	r3, [r5, #24]
-d00815fa:	b913      	cbnz	r3, d0081602 <__swsetup_r+0x16>
-d00815fc:	4628      	mov	r0, r5
-d00815fe:	f000 f97d 	bl	d00818fc <__sinit>
-d0081602:	4b2e      	ldr	r3, [pc, #184]	; (d00816bc <__swsetup_r+0xd0>)
-d0081604:	429c      	cmp	r4, r3
-d0081606:	d10f      	bne.n	d0081628 <__swsetup_r+0x3c>
-d0081608:	686c      	ldr	r4, [r5, #4]
-d008160a:	89a3      	ldrh	r3, [r4, #12]
-d008160c:	f9b4 200c 	ldrsh.w	r2, [r4, #12]
-d0081610:	0719      	lsls	r1, r3, #28
-d0081612:	d42c      	bmi.n	d008166e <__swsetup_r+0x82>
-d0081614:	06dd      	lsls	r5, r3, #27
-d0081616:	d411      	bmi.n	d008163c <__swsetup_r+0x50>
-d0081618:	2309      	movs	r3, #9
-d008161a:	6033      	str	r3, [r6, #0]
-d008161c:	f042 0340 	orr.w	r3, r2, #64	; 0x40
-d0081620:	81a3      	strh	r3, [r4, #12]
-d0081622:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
-d0081626:	e03e      	b.n	d00816a6 <__swsetup_r+0xba>
-d0081628:	4b25      	ldr	r3, [pc, #148]	; (d00816c0 <__swsetup_r+0xd4>)
-d008162a:	429c      	cmp	r4, r3
-d008162c:	d101      	bne.n	d0081632 <__swsetup_r+0x46>
-d008162e:	68ac      	ldr	r4, [r5, #8]
-d0081630:	e7eb      	b.n	d008160a <__swsetup_r+0x1e>
-d0081632:	4b24      	ldr	r3, [pc, #144]	; (d00816c4 <__swsetup_r+0xd8>)
-d0081634:	429c      	cmp	r4, r3
-d0081636:	bf08      	it	eq
-d0081638:	68ec      	ldreq	r4, [r5, #12]
-d008163a:	e7e6      	b.n	d008160a <__swsetup_r+0x1e>
-d008163c:	0758      	lsls	r0, r3, #29
-d008163e:	d512      	bpl.n	d0081666 <__swsetup_r+0x7a>
-d0081640:	6b61      	ldr	r1, [r4, #52]	; 0x34
-d0081642:	b141      	cbz	r1, d0081656 <__swsetup_r+0x6a>
-d0081644:	f104 0344 	add.w	r3, r4, #68	; 0x44
-d0081648:	4299      	cmp	r1, r3
-d008164a:	d002      	beq.n	d0081652 <__swsetup_r+0x66>
-d008164c:	4630      	mov	r0, r6
-d008164e:	f7ff fd8d 	bl	d008116c <_free_r>
-d0081652:	2300      	movs	r3, #0
-d0081654:	6363      	str	r3, [r4, #52]	; 0x34
-d0081656:	89a3      	ldrh	r3, [r4, #12]
-d0081658:	f023 0324 	bic.w	r3, r3, #36	; 0x24
-d008165c:	81a3      	strh	r3, [r4, #12]
-d008165e:	2300      	movs	r3, #0
-d0081660:	6063      	str	r3, [r4, #4]
-d0081662:	6923      	ldr	r3, [r4, #16]
-d0081664:	6023      	str	r3, [r4, #0]
-d0081666:	89a3      	ldrh	r3, [r4, #12]
-d0081668:	f043 0308 	orr.w	r3, r3, #8
-d008166c:	81a3      	strh	r3, [r4, #12]
-d008166e:	6923      	ldr	r3, [r4, #16]
-d0081670:	b94b      	cbnz	r3, d0081686 <__swsetup_r+0x9a>
-d0081672:	89a3      	ldrh	r3, [r4, #12]
-d0081674:	f403 7320 	and.w	r3, r3, #640	; 0x280
-d0081678:	f5b3 7f00 	cmp.w	r3, #512	; 0x200
-d008167c:	d003      	beq.n	d0081686 <__swsetup_r+0x9a>
-d008167e:	4621      	mov	r1, r4
-d0081680:	4630      	mov	r0, r6
-d0081682:	f000 f9ff 	bl	d0081a84 <__smakebuf_r>
-d0081686:	89a0      	ldrh	r0, [r4, #12]
-d0081688:	f9b4 200c 	ldrsh.w	r2, [r4, #12]
-d008168c:	f010 0301 	ands.w	r3, r0, #1
-d0081690:	d00a      	beq.n	d00816a8 <__swsetup_r+0xbc>
-d0081692:	2300      	movs	r3, #0
-d0081694:	60a3      	str	r3, [r4, #8]
-d0081696:	6963      	ldr	r3, [r4, #20]
-d0081698:	425b      	negs	r3, r3
-d008169a:	61a3      	str	r3, [r4, #24]
-d008169c:	6923      	ldr	r3, [r4, #16]
-d008169e:	b943      	cbnz	r3, d00816b2 <__swsetup_r+0xc6>
-d00816a0:	f010 0080 	ands.w	r0, r0, #128	; 0x80
-d00816a4:	d1ba      	bne.n	d008161c <__swsetup_r+0x30>
-d00816a6:	bd70      	pop	{r4, r5, r6, pc}
-d00816a8:	0781      	lsls	r1, r0, #30
-d00816aa:	bf58      	it	pl
-d00816ac:	6963      	ldrpl	r3, [r4, #20]
-d00816ae:	60a3      	str	r3, [r4, #8]
-d00816b0:	e7f4      	b.n	d008169c <__swsetup_r+0xb0>
-d00816b2:	2000      	movs	r0, #0
-d00816b4:	e7f7      	b.n	d00816a6 <__swsetup_r+0xba>
-d00816b6:	bf00      	nop
-d00816b8:	d009b5f0 	.word	0xd009b5f0
-d00816bc:	d009b508 	.word	0xd009b508
-d00816c0:	d009b528 	.word	0xd009b528
-d00816c4:	d009b4e8 	.word	0xd009b4e8
+d0081558 <_puts_r>:
+d0081558:	b570      	push	{r4, r5, r6, lr}
+d008155a:	460e      	mov	r6, r1
+d008155c:	4605      	mov	r5, r0
+d008155e:	b118      	cbz	r0, d0081568 <_puts_r+0x10>
+d0081560:	6983      	ldr	r3, [r0, #24]
+d0081562:	b90b      	cbnz	r3, d0081568 <_puts_r+0x10>
+d0081564:	f000 fb36 	bl	d0081bd4 <__sinit>
+d0081568:	69ab      	ldr	r3, [r5, #24]
+d008156a:	68ac      	ldr	r4, [r5, #8]
+d008156c:	b913      	cbnz	r3, d0081574 <_puts_r+0x1c>
+d008156e:	4628      	mov	r0, r5
+d0081570:	f000 fb30 	bl	d0081bd4 <__sinit>
+d0081574:	4b2c      	ldr	r3, [pc, #176]	; (d0081628 <_puts_r+0xd0>)
+d0081576:	429c      	cmp	r4, r3
+d0081578:	d120      	bne.n	d00815bc <_puts_r+0x64>
+d008157a:	686c      	ldr	r4, [r5, #4]
+d008157c:	6e63      	ldr	r3, [r4, #100]	; 0x64
+d008157e:	07db      	lsls	r3, r3, #31
+d0081580:	d405      	bmi.n	d008158e <_puts_r+0x36>
+d0081582:	89a3      	ldrh	r3, [r4, #12]
+d0081584:	0598      	lsls	r0, r3, #22
+d0081586:	d402      	bmi.n	d008158e <_puts_r+0x36>
+d0081588:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d008158a:	f000 fbc1 	bl	d0081d10 <__retarget_lock_acquire_recursive>
+d008158e:	89a3      	ldrh	r3, [r4, #12]
+d0081590:	0719      	lsls	r1, r3, #28
+d0081592:	d51d      	bpl.n	d00815d0 <_puts_r+0x78>
+d0081594:	6923      	ldr	r3, [r4, #16]
+d0081596:	b1db      	cbz	r3, d00815d0 <_puts_r+0x78>
+d0081598:	3e01      	subs	r6, #1
+d008159a:	68a3      	ldr	r3, [r4, #8]
+d008159c:	f816 1f01 	ldrb.w	r1, [r6, #1]!
+d00815a0:	3b01      	subs	r3, #1
+d00815a2:	60a3      	str	r3, [r4, #8]
+d00815a4:	bb39      	cbnz	r1, d00815f6 <_puts_r+0x9e>
+d00815a6:	2b00      	cmp	r3, #0
+d00815a8:	da38      	bge.n	d008161c <_puts_r+0xc4>
+d00815aa:	4622      	mov	r2, r4
+d00815ac:	210a      	movs	r1, #10
+d00815ae:	4628      	mov	r0, r5
+d00815b0:	f000 f936 	bl	d0081820 <__swbuf_r>
+d00815b4:	3001      	adds	r0, #1
+d00815b6:	d011      	beq.n	d00815dc <_puts_r+0x84>
+d00815b8:	250a      	movs	r5, #10
+d00815ba:	e011      	b.n	d00815e0 <_puts_r+0x88>
+d00815bc:	4b1b      	ldr	r3, [pc, #108]	; (d008162c <_puts_r+0xd4>)
+d00815be:	429c      	cmp	r4, r3
+d00815c0:	d101      	bne.n	d00815c6 <_puts_r+0x6e>
+d00815c2:	68ac      	ldr	r4, [r5, #8]
+d00815c4:	e7da      	b.n	d008157c <_puts_r+0x24>
+d00815c6:	4b1a      	ldr	r3, [pc, #104]	; (d0081630 <_puts_r+0xd8>)
+d00815c8:	429c      	cmp	r4, r3
+d00815ca:	bf08      	it	eq
+d00815cc:	68ec      	ldreq	r4, [r5, #12]
+d00815ce:	e7d5      	b.n	d008157c <_puts_r+0x24>
+d00815d0:	4621      	mov	r1, r4
+d00815d2:	4628      	mov	r0, r5
+d00815d4:	f000 f976 	bl	d00818c4 <__swsetup_r>
+d00815d8:	2800      	cmp	r0, #0
+d00815da:	d0dd      	beq.n	d0081598 <_puts_r+0x40>
+d00815dc:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
+d00815e0:	6e63      	ldr	r3, [r4, #100]	; 0x64
+d00815e2:	07da      	lsls	r2, r3, #31
+d00815e4:	d405      	bmi.n	d00815f2 <_puts_r+0x9a>
+d00815e6:	89a3      	ldrh	r3, [r4, #12]
+d00815e8:	059b      	lsls	r3, r3, #22
+d00815ea:	d402      	bmi.n	d00815f2 <_puts_r+0x9a>
+d00815ec:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d00815ee:	f000 fb90 	bl	d0081d12 <__retarget_lock_release_recursive>
+d00815f2:	4628      	mov	r0, r5
+d00815f4:	bd70      	pop	{r4, r5, r6, pc}
+d00815f6:	2b00      	cmp	r3, #0
+d00815f8:	da04      	bge.n	d0081604 <_puts_r+0xac>
+d00815fa:	69a2      	ldr	r2, [r4, #24]
+d00815fc:	429a      	cmp	r2, r3
+d00815fe:	dc06      	bgt.n	d008160e <_puts_r+0xb6>
+d0081600:	290a      	cmp	r1, #10
+d0081602:	d004      	beq.n	d008160e <_puts_r+0xb6>
+d0081604:	6823      	ldr	r3, [r4, #0]
+d0081606:	1c5a      	adds	r2, r3, #1
+d0081608:	6022      	str	r2, [r4, #0]
+d008160a:	7019      	strb	r1, [r3, #0]
+d008160c:	e7c5      	b.n	d008159a <_puts_r+0x42>
+d008160e:	4622      	mov	r2, r4
+d0081610:	4628      	mov	r0, r5
+d0081612:	f000 f905 	bl	d0081820 <__swbuf_r>
+d0081616:	3001      	adds	r0, #1
+d0081618:	d1bf      	bne.n	d008159a <_puts_r+0x42>
+d008161a:	e7df      	b.n	d00815dc <_puts_r+0x84>
+d008161c:	6823      	ldr	r3, [r4, #0]
+d008161e:	250a      	movs	r5, #10
+d0081620:	1c5a      	adds	r2, r3, #1
+d0081622:	6022      	str	r2, [r4, #0]
+d0081624:	701d      	strb	r5, [r3, #0]
+d0081626:	e7db      	b.n	d00815e0 <_puts_r+0x88>
+d0081628:	d009c548 	.word	0xd009c548
+d008162c:	d009c568 	.word	0xd009c568
+d0081630:	d009c528 	.word	0xd009c528
 
-d00816c8 <__sflush_r>:
-d00816c8:	898a      	ldrh	r2, [r1, #12]
-d00816ca:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
-d00816ce:	4605      	mov	r5, r0
-d00816d0:	0710      	lsls	r0, r2, #28
-d00816d2:	460c      	mov	r4, r1
-d00816d4:	d458      	bmi.n	d0081788 <__sflush_r+0xc0>
-d00816d6:	684b      	ldr	r3, [r1, #4]
-d00816d8:	2b00      	cmp	r3, #0
-d00816da:	dc05      	bgt.n	d00816e8 <__sflush_r+0x20>
-d00816dc:	6c0b      	ldr	r3, [r1, #64]	; 0x40
-d00816de:	2b00      	cmp	r3, #0
-d00816e0:	dc02      	bgt.n	d00816e8 <__sflush_r+0x20>
-d00816e2:	2000      	movs	r0, #0
-d00816e4:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
-d00816e8:	6ae6      	ldr	r6, [r4, #44]	; 0x2c
-d00816ea:	2e00      	cmp	r6, #0
-d00816ec:	d0f9      	beq.n	d00816e2 <__sflush_r+0x1a>
-d00816ee:	2300      	movs	r3, #0
-d00816f0:	f412 5280 	ands.w	r2, r2, #4096	; 0x1000
-d00816f4:	682f      	ldr	r7, [r5, #0]
-d00816f6:	602b      	str	r3, [r5, #0]
-d00816f8:	d032      	beq.n	d0081760 <__sflush_r+0x98>
-d00816fa:	6d60      	ldr	r0, [r4, #84]	; 0x54
-d00816fc:	89a3      	ldrh	r3, [r4, #12]
-d00816fe:	075a      	lsls	r2, r3, #29
-d0081700:	d505      	bpl.n	d008170e <__sflush_r+0x46>
-d0081702:	6863      	ldr	r3, [r4, #4]
-d0081704:	1ac0      	subs	r0, r0, r3
-d0081706:	6b63      	ldr	r3, [r4, #52]	; 0x34
-d0081708:	b10b      	cbz	r3, d008170e <__sflush_r+0x46>
-d008170a:	6c23      	ldr	r3, [r4, #64]	; 0x40
-d008170c:	1ac0      	subs	r0, r0, r3
-d008170e:	2300      	movs	r3, #0
-d0081710:	4602      	mov	r2, r0
-d0081712:	6ae6      	ldr	r6, [r4, #44]	; 0x2c
-d0081714:	6a21      	ldr	r1, [r4, #32]
-d0081716:	4628      	mov	r0, r5
-d0081718:	47b0      	blx	r6
-d008171a:	1c43      	adds	r3, r0, #1
-d008171c:	89a3      	ldrh	r3, [r4, #12]
-d008171e:	d106      	bne.n	d008172e <__sflush_r+0x66>
-d0081720:	6829      	ldr	r1, [r5, #0]
-d0081722:	291d      	cmp	r1, #29
-d0081724:	d82c      	bhi.n	d0081780 <__sflush_r+0xb8>
-d0081726:	4a2a      	ldr	r2, [pc, #168]	; (d00817d0 <__sflush_r+0x108>)
-d0081728:	40ca      	lsrs	r2, r1
-d008172a:	07d6      	lsls	r6, r2, #31
-d008172c:	d528      	bpl.n	d0081780 <__sflush_r+0xb8>
-d008172e:	2200      	movs	r2, #0
-d0081730:	6062      	str	r2, [r4, #4]
-d0081732:	04d9      	lsls	r1, r3, #19
-d0081734:	6922      	ldr	r2, [r4, #16]
-d0081736:	6022      	str	r2, [r4, #0]
-d0081738:	d504      	bpl.n	d0081744 <__sflush_r+0x7c>
-d008173a:	1c42      	adds	r2, r0, #1
-d008173c:	d101      	bne.n	d0081742 <__sflush_r+0x7a>
-d008173e:	682b      	ldr	r3, [r5, #0]
-d0081740:	b903      	cbnz	r3, d0081744 <__sflush_r+0x7c>
-d0081742:	6560      	str	r0, [r4, #84]	; 0x54
-d0081744:	6b61      	ldr	r1, [r4, #52]	; 0x34
-d0081746:	602f      	str	r7, [r5, #0]
-d0081748:	2900      	cmp	r1, #0
-d008174a:	d0ca      	beq.n	d00816e2 <__sflush_r+0x1a>
-d008174c:	f104 0344 	add.w	r3, r4, #68	; 0x44
-d0081750:	4299      	cmp	r1, r3
-d0081752:	d002      	beq.n	d008175a <__sflush_r+0x92>
-d0081754:	4628      	mov	r0, r5
-d0081756:	f7ff fd09 	bl	d008116c <_free_r>
-d008175a:	2000      	movs	r0, #0
-d008175c:	6360      	str	r0, [r4, #52]	; 0x34
-d008175e:	e7c1      	b.n	d00816e4 <__sflush_r+0x1c>
-d0081760:	6a21      	ldr	r1, [r4, #32]
-d0081762:	2301      	movs	r3, #1
-d0081764:	4628      	mov	r0, r5
-d0081766:	47b0      	blx	r6
-d0081768:	1c41      	adds	r1, r0, #1
-d008176a:	d1c7      	bne.n	d00816fc <__sflush_r+0x34>
-d008176c:	682b      	ldr	r3, [r5, #0]
-d008176e:	2b00      	cmp	r3, #0
-d0081770:	d0c4      	beq.n	d00816fc <__sflush_r+0x34>
-d0081772:	2b1d      	cmp	r3, #29
-d0081774:	d001      	beq.n	d008177a <__sflush_r+0xb2>
-d0081776:	2b16      	cmp	r3, #22
-d0081778:	d101      	bne.n	d008177e <__sflush_r+0xb6>
-d008177a:	602f      	str	r7, [r5, #0]
-d008177c:	e7b1      	b.n	d00816e2 <__sflush_r+0x1a>
-d008177e:	89a3      	ldrh	r3, [r4, #12]
-d0081780:	f043 0340 	orr.w	r3, r3, #64	; 0x40
-d0081784:	81a3      	strh	r3, [r4, #12]
-d0081786:	e7ad      	b.n	d00816e4 <__sflush_r+0x1c>
-d0081788:	690f      	ldr	r7, [r1, #16]
-d008178a:	2f00      	cmp	r7, #0
-d008178c:	d0a9      	beq.n	d00816e2 <__sflush_r+0x1a>
-d008178e:	0793      	lsls	r3, r2, #30
-d0081790:	680e      	ldr	r6, [r1, #0]
-d0081792:	bf08      	it	eq
-d0081794:	694b      	ldreq	r3, [r1, #20]
-d0081796:	600f      	str	r7, [r1, #0]
-d0081798:	bf18      	it	ne
-d008179a:	2300      	movne	r3, #0
-d008179c:	eba6 0807 	sub.w	r8, r6, r7
-d00817a0:	608b      	str	r3, [r1, #8]
-d00817a2:	f1b8 0f00 	cmp.w	r8, #0
-d00817a6:	dd9c      	ble.n	d00816e2 <__sflush_r+0x1a>
-d00817a8:	6a21      	ldr	r1, [r4, #32]
-d00817aa:	6aa6      	ldr	r6, [r4, #40]	; 0x28
-d00817ac:	4643      	mov	r3, r8
-d00817ae:	463a      	mov	r2, r7
-d00817b0:	4628      	mov	r0, r5
-d00817b2:	47b0      	blx	r6
-d00817b4:	2800      	cmp	r0, #0
-d00817b6:	dc06      	bgt.n	d00817c6 <__sflush_r+0xfe>
-d00817b8:	89a3      	ldrh	r3, [r4, #12]
-d00817ba:	f043 0340 	orr.w	r3, r3, #64	; 0x40
-d00817be:	81a3      	strh	r3, [r4, #12]
-d00817c0:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
-d00817c4:	e78e      	b.n	d00816e4 <__sflush_r+0x1c>
-d00817c6:	4407      	add	r7, r0
-d00817c8:	eba8 0800 	sub.w	r8, r8, r0
-d00817cc:	e7e9      	b.n	d00817a2 <__sflush_r+0xda>
+d0081634 <puts>:
+d0081634:	4b02      	ldr	r3, [pc, #8]	; (d0081640 <puts+0xc>)
+d0081636:	4601      	mov	r1, r0
+d0081638:	6818      	ldr	r0, [r3, #0]
+d008163a:	f7ff bf8d 	b.w	d0081558 <_puts_r>
+d008163e:	bf00      	nop
+d0081640:	d009c670 	.word	0xd009c670
+
+d0081644 <setbuf>:
+d0081644:	2900      	cmp	r1, #0
+d0081646:	f44f 6380 	mov.w	r3, #1024	; 0x400
+d008164a:	bf0c      	ite	eq
+d008164c:	2202      	moveq	r2, #2
+d008164e:	2200      	movne	r2, #0
+d0081650:	f000 b800 	b.w	d0081654 <setvbuf>
+
+d0081654 <setvbuf>:
+d0081654:	e92d 43f7 	stmdb	sp!, {r0, r1, r2, r4, r5, r6, r7, r8, r9, lr}
+d0081658:	461d      	mov	r5, r3
+d008165a:	4b5d      	ldr	r3, [pc, #372]	; (d00817d0 <setvbuf+0x17c>)
+d008165c:	681f      	ldr	r7, [r3, #0]
+d008165e:	4604      	mov	r4, r0
+d0081660:	460e      	mov	r6, r1
+d0081662:	4690      	mov	r8, r2
+d0081664:	b127      	cbz	r7, d0081670 <setvbuf+0x1c>
+d0081666:	69bb      	ldr	r3, [r7, #24]
+d0081668:	b913      	cbnz	r3, d0081670 <setvbuf+0x1c>
+d008166a:	4638      	mov	r0, r7
+d008166c:	f000 fab2 	bl	d0081bd4 <__sinit>
+d0081670:	4b58      	ldr	r3, [pc, #352]	; (d00817d4 <setvbuf+0x180>)
+d0081672:	429c      	cmp	r4, r3
+d0081674:	d167      	bne.n	d0081746 <setvbuf+0xf2>
+d0081676:	687c      	ldr	r4, [r7, #4]
+d0081678:	f1b8 0f02 	cmp.w	r8, #2
+d008167c:	d006      	beq.n	d008168c <setvbuf+0x38>
+d008167e:	f1b8 0f01 	cmp.w	r8, #1
+d0081682:	f200 809f 	bhi.w	d00817c4 <setvbuf+0x170>
+d0081686:	2d00      	cmp	r5, #0
+d0081688:	f2c0 809c 	blt.w	d00817c4 <setvbuf+0x170>
+d008168c:	6e63      	ldr	r3, [r4, #100]	; 0x64
+d008168e:	07db      	lsls	r3, r3, #31
+d0081690:	d405      	bmi.n	d008169e <setvbuf+0x4a>
+d0081692:	89a3      	ldrh	r3, [r4, #12]
+d0081694:	0598      	lsls	r0, r3, #22
+d0081696:	d402      	bmi.n	d008169e <setvbuf+0x4a>
+d0081698:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d008169a:	f000 fb39 	bl	d0081d10 <__retarget_lock_acquire_recursive>
+d008169e:	4621      	mov	r1, r4
+d00816a0:	4638      	mov	r0, r7
+d00816a2:	f000 fa03 	bl	d0081aac <_fflush_r>
+d00816a6:	6b61      	ldr	r1, [r4, #52]	; 0x34
+d00816a8:	b141      	cbz	r1, d00816bc <setvbuf+0x68>
+d00816aa:	f104 0344 	add.w	r3, r4, #68	; 0x44
+d00816ae:	4299      	cmp	r1, r3
+d00816b0:	d002      	beq.n	d00816b8 <setvbuf+0x64>
+d00816b2:	4638      	mov	r0, r7
+d00816b4:	f7ff fea6 	bl	d0081404 <_free_r>
+d00816b8:	2300      	movs	r3, #0
+d00816ba:	6363      	str	r3, [r4, #52]	; 0x34
+d00816bc:	2300      	movs	r3, #0
+d00816be:	61a3      	str	r3, [r4, #24]
+d00816c0:	6063      	str	r3, [r4, #4]
+d00816c2:	89a3      	ldrh	r3, [r4, #12]
+d00816c4:	0619      	lsls	r1, r3, #24
+d00816c6:	d503      	bpl.n	d00816d0 <setvbuf+0x7c>
+d00816c8:	6921      	ldr	r1, [r4, #16]
+d00816ca:	4638      	mov	r0, r7
+d00816cc:	f7ff fe9a 	bl	d0081404 <_free_r>
+d00816d0:	89a3      	ldrh	r3, [r4, #12]
+d00816d2:	f423 634a 	bic.w	r3, r3, #3232	; 0xca0
+d00816d6:	f023 0303 	bic.w	r3, r3, #3
+d00816da:	f1b8 0f02 	cmp.w	r8, #2
+d00816de:	81a3      	strh	r3, [r4, #12]
+d00816e0:	d06c      	beq.n	d00817bc <setvbuf+0x168>
+d00816e2:	ab01      	add	r3, sp, #4
+d00816e4:	466a      	mov	r2, sp
+d00816e6:	4621      	mov	r1, r4
+d00816e8:	4638      	mov	r0, r7
+d00816ea:	f000 fb13 	bl	d0081d14 <__swhatbuf_r>
+d00816ee:	89a3      	ldrh	r3, [r4, #12]
+d00816f0:	4318      	orrs	r0, r3
+d00816f2:	81a0      	strh	r0, [r4, #12]
+d00816f4:	2d00      	cmp	r5, #0
+d00816f6:	d130      	bne.n	d008175a <setvbuf+0x106>
+d00816f8:	9d00      	ldr	r5, [sp, #0]
+d00816fa:	4628      	mov	r0, r5
+d00816fc:	f7ff fe72 	bl	d00813e4 <malloc>
+d0081700:	4606      	mov	r6, r0
+d0081702:	2800      	cmp	r0, #0
+d0081704:	d155      	bne.n	d00817b2 <setvbuf+0x15e>
+d0081706:	f8dd 9000 	ldr.w	r9, [sp]
+d008170a:	45a9      	cmp	r9, r5
+d008170c:	d14a      	bne.n	d00817a4 <setvbuf+0x150>
+d008170e:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
+d0081712:	2200      	movs	r2, #0
+d0081714:	60a2      	str	r2, [r4, #8]
+d0081716:	f104 0247 	add.w	r2, r4, #71	; 0x47
+d008171a:	6022      	str	r2, [r4, #0]
+d008171c:	6122      	str	r2, [r4, #16]
+d008171e:	2201      	movs	r2, #1
+d0081720:	f9b4 300c 	ldrsh.w	r3, [r4, #12]
+d0081724:	6162      	str	r2, [r4, #20]
+d0081726:	6e62      	ldr	r2, [r4, #100]	; 0x64
+d0081728:	f043 0302 	orr.w	r3, r3, #2
+d008172c:	07d2      	lsls	r2, r2, #31
+d008172e:	81a3      	strh	r3, [r4, #12]
+d0081730:	d405      	bmi.n	d008173e <setvbuf+0xea>
+d0081732:	f413 7f00 	tst.w	r3, #512	; 0x200
+d0081736:	d102      	bne.n	d008173e <setvbuf+0xea>
+d0081738:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d008173a:	f000 faea 	bl	d0081d12 <__retarget_lock_release_recursive>
+d008173e:	4628      	mov	r0, r5
+d0081740:	b003      	add	sp, #12
+d0081742:	e8bd 83f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, pc}
+d0081746:	4b24      	ldr	r3, [pc, #144]	; (d00817d8 <setvbuf+0x184>)
+d0081748:	429c      	cmp	r4, r3
+d008174a:	d101      	bne.n	d0081750 <setvbuf+0xfc>
+d008174c:	68bc      	ldr	r4, [r7, #8]
+d008174e:	e793      	b.n	d0081678 <setvbuf+0x24>
+d0081750:	4b22      	ldr	r3, [pc, #136]	; (d00817dc <setvbuf+0x188>)
+d0081752:	429c      	cmp	r4, r3
+d0081754:	bf08      	it	eq
+d0081756:	68fc      	ldreq	r4, [r7, #12]
+d0081758:	e78e      	b.n	d0081678 <setvbuf+0x24>
+d008175a:	2e00      	cmp	r6, #0
+d008175c:	d0cd      	beq.n	d00816fa <setvbuf+0xa6>
+d008175e:	69bb      	ldr	r3, [r7, #24]
+d0081760:	b913      	cbnz	r3, d0081768 <setvbuf+0x114>
+d0081762:	4638      	mov	r0, r7
+d0081764:	f000 fa36 	bl	d0081bd4 <__sinit>
+d0081768:	f1b8 0f01 	cmp.w	r8, #1
+d008176c:	bf08      	it	eq
+d008176e:	89a3      	ldrheq	r3, [r4, #12]
+d0081770:	6026      	str	r6, [r4, #0]
+d0081772:	bf04      	itt	eq
+d0081774:	f043 0301 	orreq.w	r3, r3, #1
+d0081778:	81a3      	strheq	r3, [r4, #12]
+d008177a:	89a2      	ldrh	r2, [r4, #12]
+d008177c:	f012 0308 	ands.w	r3, r2, #8
+d0081780:	e9c4 6504 	strd	r6, r5, [r4, #16]
+d0081784:	d01c      	beq.n	d00817c0 <setvbuf+0x16c>
+d0081786:	07d3      	lsls	r3, r2, #31
+d0081788:	bf41      	itttt	mi
+d008178a:	2300      	movmi	r3, #0
+d008178c:	426d      	negmi	r5, r5
+d008178e:	60a3      	strmi	r3, [r4, #8]
+d0081790:	61a5      	strmi	r5, [r4, #24]
+d0081792:	bf58      	it	pl
+d0081794:	60a5      	strpl	r5, [r4, #8]
+d0081796:	6e65      	ldr	r5, [r4, #100]	; 0x64
+d0081798:	f015 0501 	ands.w	r5, r5, #1
+d008179c:	d115      	bne.n	d00817ca <setvbuf+0x176>
+d008179e:	f412 7f00 	tst.w	r2, #512	; 0x200
+d00817a2:	e7c8      	b.n	d0081736 <setvbuf+0xe2>
+d00817a4:	4648      	mov	r0, r9
+d00817a6:	f7ff fe1d 	bl	d00813e4 <malloc>
+d00817aa:	4606      	mov	r6, r0
+d00817ac:	2800      	cmp	r0, #0
+d00817ae:	d0ae      	beq.n	d008170e <setvbuf+0xba>
+d00817b0:	464d      	mov	r5, r9
+d00817b2:	89a3      	ldrh	r3, [r4, #12]
+d00817b4:	f043 0380 	orr.w	r3, r3, #128	; 0x80
+d00817b8:	81a3      	strh	r3, [r4, #12]
+d00817ba:	e7d0      	b.n	d008175e <setvbuf+0x10a>
+d00817bc:	2500      	movs	r5, #0
+d00817be:	e7a8      	b.n	d0081712 <setvbuf+0xbe>
+d00817c0:	60a3      	str	r3, [r4, #8]
+d00817c2:	e7e8      	b.n	d0081796 <setvbuf+0x142>
+d00817c4:	f04f 35ff 	mov.w	r5, #4294967295	; 0xffffffff
+d00817c8:	e7b9      	b.n	d008173e <setvbuf+0xea>
+d00817ca:	2500      	movs	r5, #0
+d00817cc:	e7b7      	b.n	d008173e <setvbuf+0xea>
 d00817ce:	bf00      	nop
-d00817d0:	20400001 	.word	0x20400001
+d00817d0:	d009c670 	.word	0xd009c670
+d00817d4:	d009c548 	.word	0xd009c548
+d00817d8:	d009c568 	.word	0xd009c568
+d00817dc:	d009c528 	.word	0xd009c528
 
-d00817d4 <_fflush_r>:
-d00817d4:	b538      	push	{r3, r4, r5, lr}
-d00817d6:	690b      	ldr	r3, [r1, #16]
-d00817d8:	4605      	mov	r5, r0
-d00817da:	460c      	mov	r4, r1
-d00817dc:	b913      	cbnz	r3, d00817e4 <_fflush_r+0x10>
-d00817de:	2500      	movs	r5, #0
-d00817e0:	4628      	mov	r0, r5
-d00817e2:	bd38      	pop	{r3, r4, r5, pc}
-d00817e4:	b118      	cbz	r0, d00817ee <_fflush_r+0x1a>
-d00817e6:	6983      	ldr	r3, [r0, #24]
-d00817e8:	b90b      	cbnz	r3, d00817ee <_fflush_r+0x1a>
-d00817ea:	f000 f887 	bl	d00818fc <__sinit>
-d00817ee:	4b14      	ldr	r3, [pc, #80]	; (d0081840 <_fflush_r+0x6c>)
-d00817f0:	429c      	cmp	r4, r3
-d00817f2:	d11b      	bne.n	d008182c <_fflush_r+0x58>
-d00817f4:	686c      	ldr	r4, [r5, #4]
-d00817f6:	f9b4 300c 	ldrsh.w	r3, [r4, #12]
-d00817fa:	2b00      	cmp	r3, #0
-d00817fc:	d0ef      	beq.n	d00817de <_fflush_r+0xa>
-d00817fe:	6e62      	ldr	r2, [r4, #100]	; 0x64
-d0081800:	07d0      	lsls	r0, r2, #31
-d0081802:	d404      	bmi.n	d008180e <_fflush_r+0x3a>
-d0081804:	0599      	lsls	r1, r3, #22
-d0081806:	d402      	bmi.n	d008180e <_fflush_r+0x3a>
-d0081808:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d008180a:	f000 f915 	bl	d0081a38 <__retarget_lock_acquire_recursive>
-d008180e:	4628      	mov	r0, r5
-d0081810:	4621      	mov	r1, r4
-d0081812:	f7ff ff59 	bl	d00816c8 <__sflush_r>
-d0081816:	6e63      	ldr	r3, [r4, #100]	; 0x64
-d0081818:	07da      	lsls	r2, r3, #31
-d008181a:	4605      	mov	r5, r0
-d008181c:	d4e0      	bmi.n	d00817e0 <_fflush_r+0xc>
-d008181e:	89a3      	ldrh	r3, [r4, #12]
-d0081820:	059b      	lsls	r3, r3, #22
-d0081822:	d4dd      	bmi.n	d00817e0 <_fflush_r+0xc>
-d0081824:	6da0      	ldr	r0, [r4, #88]	; 0x58
-d0081826:	f000 f908 	bl	d0081a3a <__retarget_lock_release_recursive>
-d008182a:	e7d9      	b.n	d00817e0 <_fflush_r+0xc>
-d008182c:	4b05      	ldr	r3, [pc, #20]	; (d0081844 <_fflush_r+0x70>)
-d008182e:	429c      	cmp	r4, r3
-d0081830:	d101      	bne.n	d0081836 <_fflush_r+0x62>
-d0081832:	68ac      	ldr	r4, [r5, #8]
-d0081834:	e7df      	b.n	d00817f6 <_fflush_r+0x22>
-d0081836:	4b04      	ldr	r3, [pc, #16]	; (d0081848 <_fflush_r+0x74>)
-d0081838:	429c      	cmp	r4, r3
-d008183a:	bf08      	it	eq
-d008183c:	68ec      	ldreq	r4, [r5, #12]
-d008183e:	e7da      	b.n	d00817f6 <_fflush_r+0x22>
-d0081840:	d009b508 	.word	0xd009b508
-d0081844:	d009b528 	.word	0xd009b528
-d0081848:	d009b4e8 	.word	0xd009b4e8
+d00817e0 <siprintf>:
+d00817e0:	b40e      	push	{r1, r2, r3}
+d00817e2:	b500      	push	{lr}
+d00817e4:	b09c      	sub	sp, #112	; 0x70
+d00817e6:	ab1d      	add	r3, sp, #116	; 0x74
+d00817e8:	9002      	str	r0, [sp, #8]
+d00817ea:	9006      	str	r0, [sp, #24]
+d00817ec:	f06f 4100 	mvn.w	r1, #2147483648	; 0x80000000
+d00817f0:	4809      	ldr	r0, [pc, #36]	; (d0081818 <siprintf+0x38>)
+d00817f2:	9107      	str	r1, [sp, #28]
+d00817f4:	9104      	str	r1, [sp, #16]
+d00817f6:	4909      	ldr	r1, [pc, #36]	; (d008181c <siprintf+0x3c>)
+d00817f8:	f853 2b04 	ldr.w	r2, [r3], #4
+d00817fc:	9105      	str	r1, [sp, #20]
+d00817fe:	6800      	ldr	r0, [r0, #0]
+d0081800:	9301      	str	r3, [sp, #4]
+d0081802:	a902      	add	r1, sp, #8
+d0081804:	f000 fb52 	bl	d0081eac <_svfiprintf_r>
+d0081808:	9b02      	ldr	r3, [sp, #8]
+d008180a:	2200      	movs	r2, #0
+d008180c:	701a      	strb	r2, [r3, #0]
+d008180e:	b01c      	add	sp, #112	; 0x70
+d0081810:	f85d eb04 	ldr.w	lr, [sp], #4
+d0081814:	b003      	add	sp, #12
+d0081816:	4770      	bx	lr
+d0081818:	d009c670 	.word	0xd009c670
+d008181c:	ffff0208 	.word	0xffff0208
 
-d008184c <std>:
-d008184c:	2300      	movs	r3, #0
-d008184e:	b510      	push	{r4, lr}
-d0081850:	4604      	mov	r4, r0
-d0081852:	e9c0 3300 	strd	r3, r3, [r0]
-d0081856:	e9c0 3304 	strd	r3, r3, [r0, #16]
-d008185a:	6083      	str	r3, [r0, #8]
-d008185c:	8181      	strh	r1, [r0, #12]
-d008185e:	6643      	str	r3, [r0, #100]	; 0x64
-d0081860:	81c2      	strh	r2, [r0, #14]
-d0081862:	6183      	str	r3, [r0, #24]
-d0081864:	4619      	mov	r1, r3
-d0081866:	2208      	movs	r2, #8
-d0081868:	305c      	adds	r0, #92	; 0x5c
-d008186a:	f7ff fc77 	bl	d008115c <memset>
-d008186e:	4b05      	ldr	r3, [pc, #20]	; (d0081884 <std+0x38>)
-d0081870:	6263      	str	r3, [r4, #36]	; 0x24
-d0081872:	4b05      	ldr	r3, [pc, #20]	; (d0081888 <std+0x3c>)
-d0081874:	62a3      	str	r3, [r4, #40]	; 0x28
-d0081876:	4b05      	ldr	r3, [pc, #20]	; (d008188c <std+0x40>)
-d0081878:	62e3      	str	r3, [r4, #44]	; 0x2c
-d008187a:	4b05      	ldr	r3, [pc, #20]	; (d0081890 <std+0x44>)
-d008187c:	6224      	str	r4, [r4, #32]
-d008187e:	6323      	str	r3, [r4, #48]	; 0x30
-d0081880:	bd10      	pop	{r4, pc}
-d0081882:	bf00      	nop
-d0081884:	d0081b1d 	.word	0xd0081b1d
-d0081888:	d0081b3f 	.word	0xd0081b3f
-d008188c:	d0081b77 	.word	0xd0081b77
-d0081890:	d0081b9b 	.word	0xd0081b9b
+d0081820 <__swbuf_r>:
+d0081820:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+d0081822:	460e      	mov	r6, r1
+d0081824:	4614      	mov	r4, r2
+d0081826:	4605      	mov	r5, r0
+d0081828:	b118      	cbz	r0, d0081832 <__swbuf_r+0x12>
+d008182a:	6983      	ldr	r3, [r0, #24]
+d008182c:	b90b      	cbnz	r3, d0081832 <__swbuf_r+0x12>
+d008182e:	f000 f9d1 	bl	d0081bd4 <__sinit>
+d0081832:	4b21      	ldr	r3, [pc, #132]	; (d00818b8 <__swbuf_r+0x98>)
+d0081834:	429c      	cmp	r4, r3
+d0081836:	d12b      	bne.n	d0081890 <__swbuf_r+0x70>
+d0081838:	686c      	ldr	r4, [r5, #4]
+d008183a:	69a3      	ldr	r3, [r4, #24]
+d008183c:	60a3      	str	r3, [r4, #8]
+d008183e:	89a3      	ldrh	r3, [r4, #12]
+d0081840:	071a      	lsls	r2, r3, #28
+d0081842:	d52f      	bpl.n	d00818a4 <__swbuf_r+0x84>
+d0081844:	6923      	ldr	r3, [r4, #16]
+d0081846:	b36b      	cbz	r3, d00818a4 <__swbuf_r+0x84>
+d0081848:	6923      	ldr	r3, [r4, #16]
+d008184a:	6820      	ldr	r0, [r4, #0]
+d008184c:	1ac0      	subs	r0, r0, r3
+d008184e:	6963      	ldr	r3, [r4, #20]
+d0081850:	b2f6      	uxtb	r6, r6
+d0081852:	4283      	cmp	r3, r0
+d0081854:	4637      	mov	r7, r6
+d0081856:	dc04      	bgt.n	d0081862 <__swbuf_r+0x42>
+d0081858:	4621      	mov	r1, r4
+d008185a:	4628      	mov	r0, r5
+d008185c:	f000 f926 	bl	d0081aac <_fflush_r>
+d0081860:	bb30      	cbnz	r0, d00818b0 <__swbuf_r+0x90>
+d0081862:	68a3      	ldr	r3, [r4, #8]
+d0081864:	3b01      	subs	r3, #1
+d0081866:	60a3      	str	r3, [r4, #8]
+d0081868:	6823      	ldr	r3, [r4, #0]
+d008186a:	1c5a      	adds	r2, r3, #1
+d008186c:	6022      	str	r2, [r4, #0]
+d008186e:	701e      	strb	r6, [r3, #0]
+d0081870:	6963      	ldr	r3, [r4, #20]
+d0081872:	3001      	adds	r0, #1
+d0081874:	4283      	cmp	r3, r0
+d0081876:	d004      	beq.n	d0081882 <__swbuf_r+0x62>
+d0081878:	89a3      	ldrh	r3, [r4, #12]
+d008187a:	07db      	lsls	r3, r3, #31
+d008187c:	d506      	bpl.n	d008188c <__swbuf_r+0x6c>
+d008187e:	2e0a      	cmp	r6, #10
+d0081880:	d104      	bne.n	d008188c <__swbuf_r+0x6c>
+d0081882:	4621      	mov	r1, r4
+d0081884:	4628      	mov	r0, r5
+d0081886:	f000 f911 	bl	d0081aac <_fflush_r>
+d008188a:	b988      	cbnz	r0, d00818b0 <__swbuf_r+0x90>
+d008188c:	4638      	mov	r0, r7
+d008188e:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+d0081890:	4b0a      	ldr	r3, [pc, #40]	; (d00818bc <__swbuf_r+0x9c>)
+d0081892:	429c      	cmp	r4, r3
+d0081894:	d101      	bne.n	d008189a <__swbuf_r+0x7a>
+d0081896:	68ac      	ldr	r4, [r5, #8]
+d0081898:	e7cf      	b.n	d008183a <__swbuf_r+0x1a>
+d008189a:	4b09      	ldr	r3, [pc, #36]	; (d00818c0 <__swbuf_r+0xa0>)
+d008189c:	429c      	cmp	r4, r3
+d008189e:	bf08      	it	eq
+d00818a0:	68ec      	ldreq	r4, [r5, #12]
+d00818a2:	e7ca      	b.n	d008183a <__swbuf_r+0x1a>
+d00818a4:	4621      	mov	r1, r4
+d00818a6:	4628      	mov	r0, r5
+d00818a8:	f000 f80c 	bl	d00818c4 <__swsetup_r>
+d00818ac:	2800      	cmp	r0, #0
+d00818ae:	d0cb      	beq.n	d0081848 <__swbuf_r+0x28>
+d00818b0:	f04f 37ff 	mov.w	r7, #4294967295	; 0xffffffff
+d00818b4:	e7ea      	b.n	d008188c <__swbuf_r+0x6c>
+d00818b6:	bf00      	nop
+d00818b8:	d009c548 	.word	0xd009c548
+d00818bc:	d009c568 	.word	0xd009c568
+d00818c0:	d009c528 	.word	0xd009c528
 
-d0081894 <_cleanup_r>:
-d0081894:	4901      	ldr	r1, [pc, #4]	; (d008189c <_cleanup_r+0x8>)
-d0081896:	f000 b8af 	b.w	d00819f8 <_fwalk_reent>
-d008189a:	bf00      	nop
-d008189c:	d00817d5 	.word	0xd00817d5
+d00818c4 <__swsetup_r>:
+d00818c4:	4b32      	ldr	r3, [pc, #200]	; (d0081990 <__swsetup_r+0xcc>)
+d00818c6:	b570      	push	{r4, r5, r6, lr}
+d00818c8:	681d      	ldr	r5, [r3, #0]
+d00818ca:	4606      	mov	r6, r0
+d00818cc:	460c      	mov	r4, r1
+d00818ce:	b125      	cbz	r5, d00818da <__swsetup_r+0x16>
+d00818d0:	69ab      	ldr	r3, [r5, #24]
+d00818d2:	b913      	cbnz	r3, d00818da <__swsetup_r+0x16>
+d00818d4:	4628      	mov	r0, r5
+d00818d6:	f000 f97d 	bl	d0081bd4 <__sinit>
+d00818da:	4b2e      	ldr	r3, [pc, #184]	; (d0081994 <__swsetup_r+0xd0>)
+d00818dc:	429c      	cmp	r4, r3
+d00818de:	d10f      	bne.n	d0081900 <__swsetup_r+0x3c>
+d00818e0:	686c      	ldr	r4, [r5, #4]
+d00818e2:	89a3      	ldrh	r3, [r4, #12]
+d00818e4:	f9b4 200c 	ldrsh.w	r2, [r4, #12]
+d00818e8:	0719      	lsls	r1, r3, #28
+d00818ea:	d42c      	bmi.n	d0081946 <__swsetup_r+0x82>
+d00818ec:	06dd      	lsls	r5, r3, #27
+d00818ee:	d411      	bmi.n	d0081914 <__swsetup_r+0x50>
+d00818f0:	2309      	movs	r3, #9
+d00818f2:	6033      	str	r3, [r6, #0]
+d00818f4:	f042 0340 	orr.w	r3, r2, #64	; 0x40
+d00818f8:	81a3      	strh	r3, [r4, #12]
+d00818fa:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+d00818fe:	e03e      	b.n	d008197e <__swsetup_r+0xba>
+d0081900:	4b25      	ldr	r3, [pc, #148]	; (d0081998 <__swsetup_r+0xd4>)
+d0081902:	429c      	cmp	r4, r3
+d0081904:	d101      	bne.n	d008190a <__swsetup_r+0x46>
+d0081906:	68ac      	ldr	r4, [r5, #8]
+d0081908:	e7eb      	b.n	d00818e2 <__swsetup_r+0x1e>
+d008190a:	4b24      	ldr	r3, [pc, #144]	; (d008199c <__swsetup_r+0xd8>)
+d008190c:	429c      	cmp	r4, r3
+d008190e:	bf08      	it	eq
+d0081910:	68ec      	ldreq	r4, [r5, #12]
+d0081912:	e7e6      	b.n	d00818e2 <__swsetup_r+0x1e>
+d0081914:	0758      	lsls	r0, r3, #29
+d0081916:	d512      	bpl.n	d008193e <__swsetup_r+0x7a>
+d0081918:	6b61      	ldr	r1, [r4, #52]	; 0x34
+d008191a:	b141      	cbz	r1, d008192e <__swsetup_r+0x6a>
+d008191c:	f104 0344 	add.w	r3, r4, #68	; 0x44
+d0081920:	4299      	cmp	r1, r3
+d0081922:	d002      	beq.n	d008192a <__swsetup_r+0x66>
+d0081924:	4630      	mov	r0, r6
+d0081926:	f7ff fd6d 	bl	d0081404 <_free_r>
+d008192a:	2300      	movs	r3, #0
+d008192c:	6363      	str	r3, [r4, #52]	; 0x34
+d008192e:	89a3      	ldrh	r3, [r4, #12]
+d0081930:	f023 0324 	bic.w	r3, r3, #36	; 0x24
+d0081934:	81a3      	strh	r3, [r4, #12]
+d0081936:	2300      	movs	r3, #0
+d0081938:	6063      	str	r3, [r4, #4]
+d008193a:	6923      	ldr	r3, [r4, #16]
+d008193c:	6023      	str	r3, [r4, #0]
+d008193e:	89a3      	ldrh	r3, [r4, #12]
+d0081940:	f043 0308 	orr.w	r3, r3, #8
+d0081944:	81a3      	strh	r3, [r4, #12]
+d0081946:	6923      	ldr	r3, [r4, #16]
+d0081948:	b94b      	cbnz	r3, d008195e <__swsetup_r+0x9a>
+d008194a:	89a3      	ldrh	r3, [r4, #12]
+d008194c:	f403 7320 	and.w	r3, r3, #640	; 0x280
+d0081950:	f5b3 7f00 	cmp.w	r3, #512	; 0x200
+d0081954:	d003      	beq.n	d008195e <__swsetup_r+0x9a>
+d0081956:	4621      	mov	r1, r4
+d0081958:	4630      	mov	r0, r6
+d008195a:	f000 f9ff 	bl	d0081d5c <__smakebuf_r>
+d008195e:	89a0      	ldrh	r0, [r4, #12]
+d0081960:	f9b4 200c 	ldrsh.w	r2, [r4, #12]
+d0081964:	f010 0301 	ands.w	r3, r0, #1
+d0081968:	d00a      	beq.n	d0081980 <__swsetup_r+0xbc>
+d008196a:	2300      	movs	r3, #0
+d008196c:	60a3      	str	r3, [r4, #8]
+d008196e:	6963      	ldr	r3, [r4, #20]
+d0081970:	425b      	negs	r3, r3
+d0081972:	61a3      	str	r3, [r4, #24]
+d0081974:	6923      	ldr	r3, [r4, #16]
+d0081976:	b943      	cbnz	r3, d008198a <__swsetup_r+0xc6>
+d0081978:	f010 0080 	ands.w	r0, r0, #128	; 0x80
+d008197c:	d1ba      	bne.n	d00818f4 <__swsetup_r+0x30>
+d008197e:	bd70      	pop	{r4, r5, r6, pc}
+d0081980:	0781      	lsls	r1, r0, #30
+d0081982:	bf58      	it	pl
+d0081984:	6963      	ldrpl	r3, [r4, #20]
+d0081986:	60a3      	str	r3, [r4, #8]
+d0081988:	e7f4      	b.n	d0081974 <__swsetup_r+0xb0>
+d008198a:	2000      	movs	r0, #0
+d008198c:	e7f7      	b.n	d008197e <__swsetup_r+0xba>
+d008198e:	bf00      	nop
+d0081990:	d009c670 	.word	0xd009c670
+d0081994:	d009c548 	.word	0xd009c548
+d0081998:	d009c568 	.word	0xd009c568
+d008199c:	d009c528 	.word	0xd009c528
 
-d00818a0 <__sfmoreglue>:
-d00818a0:	b570      	push	{r4, r5, r6, lr}
-d00818a2:	1e4a      	subs	r2, r1, #1
-d00818a4:	2568      	movs	r5, #104	; 0x68
-d00818a6:	4355      	muls	r5, r2
-d00818a8:	460e      	mov	r6, r1
-d00818aa:	f105 0174 	add.w	r1, r5, #116	; 0x74
-d00818ae:	f7ff fcad 	bl	d008120c <_malloc_r>
-d00818b2:	4604      	mov	r4, r0
-d00818b4:	b140      	cbz	r0, d00818c8 <__sfmoreglue+0x28>
-d00818b6:	2100      	movs	r1, #0
-d00818b8:	e9c0 1600 	strd	r1, r6, [r0]
-d00818bc:	300c      	adds	r0, #12
-d00818be:	60a0      	str	r0, [r4, #8]
-d00818c0:	f105 0268 	add.w	r2, r5, #104	; 0x68
-d00818c4:	f7ff fc4a 	bl	d008115c <memset>
-d00818c8:	4620      	mov	r0, r4
-d00818ca:	bd70      	pop	{r4, r5, r6, pc}
+d00819a0 <__sflush_r>:
+d00819a0:	898a      	ldrh	r2, [r1, #12]
+d00819a2:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+d00819a6:	4605      	mov	r5, r0
+d00819a8:	0710      	lsls	r0, r2, #28
+d00819aa:	460c      	mov	r4, r1
+d00819ac:	d458      	bmi.n	d0081a60 <__sflush_r+0xc0>
+d00819ae:	684b      	ldr	r3, [r1, #4]
+d00819b0:	2b00      	cmp	r3, #0
+d00819b2:	dc05      	bgt.n	d00819c0 <__sflush_r+0x20>
+d00819b4:	6c0b      	ldr	r3, [r1, #64]	; 0x40
+d00819b6:	2b00      	cmp	r3, #0
+d00819b8:	dc02      	bgt.n	d00819c0 <__sflush_r+0x20>
+d00819ba:	2000      	movs	r0, #0
+d00819bc:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+d00819c0:	6ae6      	ldr	r6, [r4, #44]	; 0x2c
+d00819c2:	2e00      	cmp	r6, #0
+d00819c4:	d0f9      	beq.n	d00819ba <__sflush_r+0x1a>
+d00819c6:	2300      	movs	r3, #0
+d00819c8:	f412 5280 	ands.w	r2, r2, #4096	; 0x1000
+d00819cc:	682f      	ldr	r7, [r5, #0]
+d00819ce:	602b      	str	r3, [r5, #0]
+d00819d0:	d032      	beq.n	d0081a38 <__sflush_r+0x98>
+d00819d2:	6d60      	ldr	r0, [r4, #84]	; 0x54
+d00819d4:	89a3      	ldrh	r3, [r4, #12]
+d00819d6:	075a      	lsls	r2, r3, #29
+d00819d8:	d505      	bpl.n	d00819e6 <__sflush_r+0x46>
+d00819da:	6863      	ldr	r3, [r4, #4]
+d00819dc:	1ac0      	subs	r0, r0, r3
+d00819de:	6b63      	ldr	r3, [r4, #52]	; 0x34
+d00819e0:	b10b      	cbz	r3, d00819e6 <__sflush_r+0x46>
+d00819e2:	6c23      	ldr	r3, [r4, #64]	; 0x40
+d00819e4:	1ac0      	subs	r0, r0, r3
+d00819e6:	2300      	movs	r3, #0
+d00819e8:	4602      	mov	r2, r0
+d00819ea:	6ae6      	ldr	r6, [r4, #44]	; 0x2c
+d00819ec:	6a21      	ldr	r1, [r4, #32]
+d00819ee:	4628      	mov	r0, r5
+d00819f0:	47b0      	blx	r6
+d00819f2:	1c43      	adds	r3, r0, #1
+d00819f4:	89a3      	ldrh	r3, [r4, #12]
+d00819f6:	d106      	bne.n	d0081a06 <__sflush_r+0x66>
+d00819f8:	6829      	ldr	r1, [r5, #0]
+d00819fa:	291d      	cmp	r1, #29
+d00819fc:	d82c      	bhi.n	d0081a58 <__sflush_r+0xb8>
+d00819fe:	4a2a      	ldr	r2, [pc, #168]	; (d0081aa8 <__sflush_r+0x108>)
+d0081a00:	40ca      	lsrs	r2, r1
+d0081a02:	07d6      	lsls	r6, r2, #31
+d0081a04:	d528      	bpl.n	d0081a58 <__sflush_r+0xb8>
+d0081a06:	2200      	movs	r2, #0
+d0081a08:	6062      	str	r2, [r4, #4]
+d0081a0a:	04d9      	lsls	r1, r3, #19
+d0081a0c:	6922      	ldr	r2, [r4, #16]
+d0081a0e:	6022      	str	r2, [r4, #0]
+d0081a10:	d504      	bpl.n	d0081a1c <__sflush_r+0x7c>
+d0081a12:	1c42      	adds	r2, r0, #1
+d0081a14:	d101      	bne.n	d0081a1a <__sflush_r+0x7a>
+d0081a16:	682b      	ldr	r3, [r5, #0]
+d0081a18:	b903      	cbnz	r3, d0081a1c <__sflush_r+0x7c>
+d0081a1a:	6560      	str	r0, [r4, #84]	; 0x54
+d0081a1c:	6b61      	ldr	r1, [r4, #52]	; 0x34
+d0081a1e:	602f      	str	r7, [r5, #0]
+d0081a20:	2900      	cmp	r1, #0
+d0081a22:	d0ca      	beq.n	d00819ba <__sflush_r+0x1a>
+d0081a24:	f104 0344 	add.w	r3, r4, #68	; 0x44
+d0081a28:	4299      	cmp	r1, r3
+d0081a2a:	d002      	beq.n	d0081a32 <__sflush_r+0x92>
+d0081a2c:	4628      	mov	r0, r5
+d0081a2e:	f7ff fce9 	bl	d0081404 <_free_r>
+d0081a32:	2000      	movs	r0, #0
+d0081a34:	6360      	str	r0, [r4, #52]	; 0x34
+d0081a36:	e7c1      	b.n	d00819bc <__sflush_r+0x1c>
+d0081a38:	6a21      	ldr	r1, [r4, #32]
+d0081a3a:	2301      	movs	r3, #1
+d0081a3c:	4628      	mov	r0, r5
+d0081a3e:	47b0      	blx	r6
+d0081a40:	1c41      	adds	r1, r0, #1
+d0081a42:	d1c7      	bne.n	d00819d4 <__sflush_r+0x34>
+d0081a44:	682b      	ldr	r3, [r5, #0]
+d0081a46:	2b00      	cmp	r3, #0
+d0081a48:	d0c4      	beq.n	d00819d4 <__sflush_r+0x34>
+d0081a4a:	2b1d      	cmp	r3, #29
+d0081a4c:	d001      	beq.n	d0081a52 <__sflush_r+0xb2>
+d0081a4e:	2b16      	cmp	r3, #22
+d0081a50:	d101      	bne.n	d0081a56 <__sflush_r+0xb6>
+d0081a52:	602f      	str	r7, [r5, #0]
+d0081a54:	e7b1      	b.n	d00819ba <__sflush_r+0x1a>
+d0081a56:	89a3      	ldrh	r3, [r4, #12]
+d0081a58:	f043 0340 	orr.w	r3, r3, #64	; 0x40
+d0081a5c:	81a3      	strh	r3, [r4, #12]
+d0081a5e:	e7ad      	b.n	d00819bc <__sflush_r+0x1c>
+d0081a60:	690f      	ldr	r7, [r1, #16]
+d0081a62:	2f00      	cmp	r7, #0
+d0081a64:	d0a9      	beq.n	d00819ba <__sflush_r+0x1a>
+d0081a66:	0793      	lsls	r3, r2, #30
+d0081a68:	680e      	ldr	r6, [r1, #0]
+d0081a6a:	bf08      	it	eq
+d0081a6c:	694b      	ldreq	r3, [r1, #20]
+d0081a6e:	600f      	str	r7, [r1, #0]
+d0081a70:	bf18      	it	ne
+d0081a72:	2300      	movne	r3, #0
+d0081a74:	eba6 0807 	sub.w	r8, r6, r7
+d0081a78:	608b      	str	r3, [r1, #8]
+d0081a7a:	f1b8 0f00 	cmp.w	r8, #0
+d0081a7e:	dd9c      	ble.n	d00819ba <__sflush_r+0x1a>
+d0081a80:	6a21      	ldr	r1, [r4, #32]
+d0081a82:	6aa6      	ldr	r6, [r4, #40]	; 0x28
+d0081a84:	4643      	mov	r3, r8
+d0081a86:	463a      	mov	r2, r7
+d0081a88:	4628      	mov	r0, r5
+d0081a8a:	47b0      	blx	r6
+d0081a8c:	2800      	cmp	r0, #0
+d0081a8e:	dc06      	bgt.n	d0081a9e <__sflush_r+0xfe>
+d0081a90:	89a3      	ldrh	r3, [r4, #12]
+d0081a92:	f043 0340 	orr.w	r3, r3, #64	; 0x40
+d0081a96:	81a3      	strh	r3, [r4, #12]
+d0081a98:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+d0081a9c:	e78e      	b.n	d00819bc <__sflush_r+0x1c>
+d0081a9e:	4407      	add	r7, r0
+d0081aa0:	eba8 0800 	sub.w	r8, r8, r0
+d0081aa4:	e7e9      	b.n	d0081a7a <__sflush_r+0xda>
+d0081aa6:	bf00      	nop
+d0081aa8:	20400001 	.word	0x20400001
 
-d00818cc <__sfp_lock_acquire>:
-d00818cc:	4801      	ldr	r0, [pc, #4]	; (d00818d4 <__sfp_lock_acquire+0x8>)
-d00818ce:	f000 b8b3 	b.w	d0081a38 <__retarget_lock_acquire_recursive>
-d00818d2:	bf00      	nop
-d00818d4:	d009b98c 	.word	0xd009b98c
+d0081aac <_fflush_r>:
+d0081aac:	b538      	push	{r3, r4, r5, lr}
+d0081aae:	690b      	ldr	r3, [r1, #16]
+d0081ab0:	4605      	mov	r5, r0
+d0081ab2:	460c      	mov	r4, r1
+d0081ab4:	b913      	cbnz	r3, d0081abc <_fflush_r+0x10>
+d0081ab6:	2500      	movs	r5, #0
+d0081ab8:	4628      	mov	r0, r5
+d0081aba:	bd38      	pop	{r3, r4, r5, pc}
+d0081abc:	b118      	cbz	r0, d0081ac6 <_fflush_r+0x1a>
+d0081abe:	6983      	ldr	r3, [r0, #24]
+d0081ac0:	b90b      	cbnz	r3, d0081ac6 <_fflush_r+0x1a>
+d0081ac2:	f000 f887 	bl	d0081bd4 <__sinit>
+d0081ac6:	4b14      	ldr	r3, [pc, #80]	; (d0081b18 <_fflush_r+0x6c>)
+d0081ac8:	429c      	cmp	r4, r3
+d0081aca:	d11b      	bne.n	d0081b04 <_fflush_r+0x58>
+d0081acc:	686c      	ldr	r4, [r5, #4]
+d0081ace:	f9b4 300c 	ldrsh.w	r3, [r4, #12]
+d0081ad2:	2b00      	cmp	r3, #0
+d0081ad4:	d0ef      	beq.n	d0081ab6 <_fflush_r+0xa>
+d0081ad6:	6e62      	ldr	r2, [r4, #100]	; 0x64
+d0081ad8:	07d0      	lsls	r0, r2, #31
+d0081ada:	d404      	bmi.n	d0081ae6 <_fflush_r+0x3a>
+d0081adc:	0599      	lsls	r1, r3, #22
+d0081ade:	d402      	bmi.n	d0081ae6 <_fflush_r+0x3a>
+d0081ae0:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d0081ae2:	f000 f915 	bl	d0081d10 <__retarget_lock_acquire_recursive>
+d0081ae6:	4628      	mov	r0, r5
+d0081ae8:	4621      	mov	r1, r4
+d0081aea:	f7ff ff59 	bl	d00819a0 <__sflush_r>
+d0081aee:	6e63      	ldr	r3, [r4, #100]	; 0x64
+d0081af0:	07da      	lsls	r2, r3, #31
+d0081af2:	4605      	mov	r5, r0
+d0081af4:	d4e0      	bmi.n	d0081ab8 <_fflush_r+0xc>
+d0081af6:	89a3      	ldrh	r3, [r4, #12]
+d0081af8:	059b      	lsls	r3, r3, #22
+d0081afa:	d4dd      	bmi.n	d0081ab8 <_fflush_r+0xc>
+d0081afc:	6da0      	ldr	r0, [r4, #88]	; 0x58
+d0081afe:	f000 f908 	bl	d0081d12 <__retarget_lock_release_recursive>
+d0081b02:	e7d9      	b.n	d0081ab8 <_fflush_r+0xc>
+d0081b04:	4b05      	ldr	r3, [pc, #20]	; (d0081b1c <_fflush_r+0x70>)
+d0081b06:	429c      	cmp	r4, r3
+d0081b08:	d101      	bne.n	d0081b0e <_fflush_r+0x62>
+d0081b0a:	68ac      	ldr	r4, [r5, #8]
+d0081b0c:	e7df      	b.n	d0081ace <_fflush_r+0x22>
+d0081b0e:	4b04      	ldr	r3, [pc, #16]	; (d0081b20 <_fflush_r+0x74>)
+d0081b10:	429c      	cmp	r4, r3
+d0081b12:	bf08      	it	eq
+d0081b14:	68ec      	ldreq	r4, [r5, #12]
+d0081b16:	e7da      	b.n	d0081ace <_fflush_r+0x22>
+d0081b18:	d009c548 	.word	0xd009c548
+d0081b1c:	d009c568 	.word	0xd009c568
+d0081b20:	d009c528 	.word	0xd009c528
 
-d00818d8 <__sfp_lock_release>:
-d00818d8:	4801      	ldr	r0, [pc, #4]	; (d00818e0 <__sfp_lock_release+0x8>)
-d00818da:	f000 b8ae 	b.w	d0081a3a <__retarget_lock_release_recursive>
-d00818de:	bf00      	nop
-d00818e0:	d009b98c 	.word	0xd009b98c
+d0081b24 <std>:
+d0081b24:	2300      	movs	r3, #0
+d0081b26:	b510      	push	{r4, lr}
+d0081b28:	4604      	mov	r4, r0
+d0081b2a:	e9c0 3300 	strd	r3, r3, [r0]
+d0081b2e:	e9c0 3304 	strd	r3, r3, [r0, #16]
+d0081b32:	6083      	str	r3, [r0, #8]
+d0081b34:	8181      	strh	r1, [r0, #12]
+d0081b36:	6643      	str	r3, [r0, #100]	; 0x64
+d0081b38:	81c2      	strh	r2, [r0, #14]
+d0081b3a:	6183      	str	r3, [r0, #24]
+d0081b3c:	4619      	mov	r1, r3
+d0081b3e:	2208      	movs	r2, #8
+d0081b40:	305c      	adds	r0, #92	; 0x5c
+d0081b42:	f7ff fc57 	bl	d00813f4 <memset>
+d0081b46:	4b05      	ldr	r3, [pc, #20]	; (d0081b5c <std+0x38>)
+d0081b48:	6263      	str	r3, [r4, #36]	; 0x24
+d0081b4a:	4b05      	ldr	r3, [pc, #20]	; (d0081b60 <std+0x3c>)
+d0081b4c:	62a3      	str	r3, [r4, #40]	; 0x28
+d0081b4e:	4b05      	ldr	r3, [pc, #20]	; (d0081b64 <std+0x40>)
+d0081b50:	62e3      	str	r3, [r4, #44]	; 0x2c
+d0081b52:	4b05      	ldr	r3, [pc, #20]	; (d0081b68 <std+0x44>)
+d0081b54:	6224      	str	r4, [r4, #32]
+d0081b56:	6323      	str	r3, [r4, #48]	; 0x30
+d0081b58:	bd10      	pop	{r4, pc}
+d0081b5a:	bf00      	nop
+d0081b5c:	d00823d5 	.word	0xd00823d5
+d0081b60:	d00823f7 	.word	0xd00823f7
+d0081b64:	d008242f 	.word	0xd008242f
+d0081b68:	d0082453 	.word	0xd0082453
 
-d00818e4 <__sinit_lock_acquire>:
-d00818e4:	4801      	ldr	r0, [pc, #4]	; (d00818ec <__sinit_lock_acquire+0x8>)
-d00818e6:	f000 b8a7 	b.w	d0081a38 <__retarget_lock_acquire_recursive>
-d00818ea:	bf00      	nop
-d00818ec:	d009b987 	.word	0xd009b987
+d0081b6c <_cleanup_r>:
+d0081b6c:	4901      	ldr	r1, [pc, #4]	; (d0081b74 <_cleanup_r+0x8>)
+d0081b6e:	f000 b8af 	b.w	d0081cd0 <_fwalk_reent>
+d0081b72:	bf00      	nop
+d0081b74:	d0081aad 	.word	0xd0081aad
 
-d00818f0 <__sinit_lock_release>:
-d00818f0:	4801      	ldr	r0, [pc, #4]	; (d00818f8 <__sinit_lock_release+0x8>)
-d00818f2:	f000 b8a2 	b.w	d0081a3a <__retarget_lock_release_recursive>
-d00818f6:	bf00      	nop
-d00818f8:	d009b987 	.word	0xd009b987
+d0081b78 <__sfmoreglue>:
+d0081b78:	b570      	push	{r4, r5, r6, lr}
+d0081b7a:	1e4a      	subs	r2, r1, #1
+d0081b7c:	2568      	movs	r5, #104	; 0x68
+d0081b7e:	4355      	muls	r5, r2
+d0081b80:	460e      	mov	r6, r1
+d0081b82:	f105 0174 	add.w	r1, r5, #116	; 0x74
+d0081b86:	f7ff fc8d 	bl	d00814a4 <_malloc_r>
+d0081b8a:	4604      	mov	r4, r0
+d0081b8c:	b140      	cbz	r0, d0081ba0 <__sfmoreglue+0x28>
+d0081b8e:	2100      	movs	r1, #0
+d0081b90:	e9c0 1600 	strd	r1, r6, [r0]
+d0081b94:	300c      	adds	r0, #12
+d0081b96:	60a0      	str	r0, [r4, #8]
+d0081b98:	f105 0268 	add.w	r2, r5, #104	; 0x68
+d0081b9c:	f7ff fc2a 	bl	d00813f4 <memset>
+d0081ba0:	4620      	mov	r0, r4
+d0081ba2:	bd70      	pop	{r4, r5, r6, pc}
 
-d00818fc <__sinit>:
-d00818fc:	b510      	push	{r4, lr}
-d00818fe:	4604      	mov	r4, r0
-d0081900:	f7ff fff0 	bl	d00818e4 <__sinit_lock_acquire>
-d0081904:	69a3      	ldr	r3, [r4, #24]
-d0081906:	b11b      	cbz	r3, d0081910 <__sinit+0x14>
-d0081908:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
-d008190c:	f7ff bff0 	b.w	d00818f0 <__sinit_lock_release>
-d0081910:	e9c4 3312 	strd	r3, r3, [r4, #72]	; 0x48
-d0081914:	6523      	str	r3, [r4, #80]	; 0x50
-d0081916:	4b13      	ldr	r3, [pc, #76]	; (d0081964 <__sinit+0x68>)
-d0081918:	4a13      	ldr	r2, [pc, #76]	; (d0081968 <__sinit+0x6c>)
-d008191a:	681b      	ldr	r3, [r3, #0]
-d008191c:	62a2      	str	r2, [r4, #40]	; 0x28
-d008191e:	42a3      	cmp	r3, r4
-d0081920:	bf04      	itt	eq
-d0081922:	2301      	moveq	r3, #1
-d0081924:	61a3      	streq	r3, [r4, #24]
-d0081926:	4620      	mov	r0, r4
-d0081928:	f000 f820 	bl	d008196c <__sfp>
-d008192c:	6060      	str	r0, [r4, #4]
-d008192e:	4620      	mov	r0, r4
-d0081930:	f000 f81c 	bl	d008196c <__sfp>
-d0081934:	60a0      	str	r0, [r4, #8]
-d0081936:	4620      	mov	r0, r4
-d0081938:	f000 f818 	bl	d008196c <__sfp>
-d008193c:	2200      	movs	r2, #0
-d008193e:	60e0      	str	r0, [r4, #12]
-d0081940:	2104      	movs	r1, #4
-d0081942:	6860      	ldr	r0, [r4, #4]
-d0081944:	f7ff ff82 	bl	d008184c <std>
-d0081948:	68a0      	ldr	r0, [r4, #8]
-d008194a:	2201      	movs	r2, #1
-d008194c:	2109      	movs	r1, #9
-d008194e:	f7ff ff7d 	bl	d008184c <std>
-d0081952:	68e0      	ldr	r0, [r4, #12]
-d0081954:	2202      	movs	r2, #2
-d0081956:	2112      	movs	r1, #18
-d0081958:	f7ff ff78 	bl	d008184c <std>
-d008195c:	2301      	movs	r3, #1
-d008195e:	61a3      	str	r3, [r4, #24]
-d0081960:	e7d2      	b.n	d0081908 <__sinit+0xc>
-d0081962:	bf00      	nop
-d0081964:	d009b4e4 	.word	0xd009b4e4
-d0081968:	d0081895 	.word	0xd0081895
+d0081ba4 <__sfp_lock_acquire>:
+d0081ba4:	4801      	ldr	r0, [pc, #4]	; (d0081bac <__sfp_lock_acquire+0x8>)
+d0081ba6:	f000 b8b3 	b.w	d0081d10 <__retarget_lock_acquire_recursive>
+d0081baa:	bf00      	nop
+d0081bac:	d009cbfa 	.word	0xd009cbfa
 
-d008196c <__sfp>:
-d008196c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-d008196e:	4607      	mov	r7, r0
-d0081970:	f7ff ffac 	bl	d00818cc <__sfp_lock_acquire>
-d0081974:	4b1e      	ldr	r3, [pc, #120]	; (d00819f0 <__sfp+0x84>)
-d0081976:	681e      	ldr	r6, [r3, #0]
-d0081978:	69b3      	ldr	r3, [r6, #24]
-d008197a:	b913      	cbnz	r3, d0081982 <__sfp+0x16>
-d008197c:	4630      	mov	r0, r6
-d008197e:	f7ff ffbd 	bl	d00818fc <__sinit>
-d0081982:	3648      	adds	r6, #72	; 0x48
-d0081984:	e9d6 3401 	ldrd	r3, r4, [r6, #4]
-d0081988:	3b01      	subs	r3, #1
-d008198a:	d503      	bpl.n	d0081994 <__sfp+0x28>
-d008198c:	6833      	ldr	r3, [r6, #0]
-d008198e:	b30b      	cbz	r3, d00819d4 <__sfp+0x68>
-d0081990:	6836      	ldr	r6, [r6, #0]
-d0081992:	e7f7      	b.n	d0081984 <__sfp+0x18>
-d0081994:	f9b4 500c 	ldrsh.w	r5, [r4, #12]
-d0081998:	b9d5      	cbnz	r5, d00819d0 <__sfp+0x64>
-d008199a:	4b16      	ldr	r3, [pc, #88]	; (d00819f4 <__sfp+0x88>)
-d008199c:	60e3      	str	r3, [r4, #12]
-d008199e:	f104 0058 	add.w	r0, r4, #88	; 0x58
-d00819a2:	6665      	str	r5, [r4, #100]	; 0x64
-d00819a4:	f000 f847 	bl	d0081a36 <__retarget_lock_init_recursive>
-d00819a8:	f7ff ff96 	bl	d00818d8 <__sfp_lock_release>
-d00819ac:	e9c4 5501 	strd	r5, r5, [r4, #4]
-d00819b0:	e9c4 5504 	strd	r5, r5, [r4, #16]
-d00819b4:	6025      	str	r5, [r4, #0]
-d00819b6:	61a5      	str	r5, [r4, #24]
-d00819b8:	2208      	movs	r2, #8
-d00819ba:	4629      	mov	r1, r5
-d00819bc:	f104 005c 	add.w	r0, r4, #92	; 0x5c
-d00819c0:	f7ff fbcc 	bl	d008115c <memset>
-d00819c4:	e9c4 550d 	strd	r5, r5, [r4, #52]	; 0x34
-d00819c8:	e9c4 5512 	strd	r5, r5, [r4, #72]	; 0x48
-d00819cc:	4620      	mov	r0, r4
-d00819ce:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
-d00819d0:	3468      	adds	r4, #104	; 0x68
-d00819d2:	e7d9      	b.n	d0081988 <__sfp+0x1c>
-d00819d4:	2104      	movs	r1, #4
-d00819d6:	4638      	mov	r0, r7
-d00819d8:	f7ff ff62 	bl	d00818a0 <__sfmoreglue>
-d00819dc:	4604      	mov	r4, r0
-d00819de:	6030      	str	r0, [r6, #0]
-d00819e0:	2800      	cmp	r0, #0
-d00819e2:	d1d5      	bne.n	d0081990 <__sfp+0x24>
-d00819e4:	f7ff ff78 	bl	d00818d8 <__sfp_lock_release>
-d00819e8:	230c      	movs	r3, #12
-d00819ea:	603b      	str	r3, [r7, #0]
-d00819ec:	e7ee      	b.n	d00819cc <__sfp+0x60>
-d00819ee:	bf00      	nop
-d00819f0:	d009b4e4 	.word	0xd009b4e4
-d00819f4:	ffff0001 	.word	0xffff0001
+d0081bb0 <__sfp_lock_release>:
+d0081bb0:	4801      	ldr	r0, [pc, #4]	; (d0081bb8 <__sfp_lock_release+0x8>)
+d0081bb2:	f000 b8ae 	b.w	d0081d12 <__retarget_lock_release_recursive>
+d0081bb6:	bf00      	nop
+d0081bb8:	d009cbfa 	.word	0xd009cbfa
 
-d00819f8 <_fwalk_reent>:
-d00819f8:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
-d00819fc:	4606      	mov	r6, r0
-d00819fe:	4688      	mov	r8, r1
-d0081a00:	f100 0448 	add.w	r4, r0, #72	; 0x48
-d0081a04:	2700      	movs	r7, #0
-d0081a06:	e9d4 9501 	ldrd	r9, r5, [r4, #4]
-d0081a0a:	f1b9 0901 	subs.w	r9, r9, #1
-d0081a0e:	d505      	bpl.n	d0081a1c <_fwalk_reent+0x24>
-d0081a10:	6824      	ldr	r4, [r4, #0]
-d0081a12:	2c00      	cmp	r4, #0
-d0081a14:	d1f7      	bne.n	d0081a06 <_fwalk_reent+0xe>
-d0081a16:	4638      	mov	r0, r7
-d0081a18:	e8bd 83f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, pc}
-d0081a1c:	89ab      	ldrh	r3, [r5, #12]
-d0081a1e:	2b01      	cmp	r3, #1
-d0081a20:	d907      	bls.n	d0081a32 <_fwalk_reent+0x3a>
-d0081a22:	f9b5 300e 	ldrsh.w	r3, [r5, #14]
-d0081a26:	3301      	adds	r3, #1
-d0081a28:	d003      	beq.n	d0081a32 <_fwalk_reent+0x3a>
-d0081a2a:	4629      	mov	r1, r5
-d0081a2c:	4630      	mov	r0, r6
-d0081a2e:	47c0      	blx	r8
-d0081a30:	4307      	orrs	r7, r0
-d0081a32:	3568      	adds	r5, #104	; 0x68
-d0081a34:	e7e9      	b.n	d0081a0a <_fwalk_reent+0x12>
+d0081bbc <__sinit_lock_acquire>:
+d0081bbc:	4801      	ldr	r0, [pc, #4]	; (d0081bc4 <__sinit_lock_acquire+0x8>)
+d0081bbe:	f000 b8a7 	b.w	d0081d10 <__retarget_lock_acquire_recursive>
+d0081bc2:	bf00      	nop
+d0081bc4:	d009cbf5 	.word	0xd009cbf5
 
-d0081a36 <__retarget_lock_init_recursive>:
-d0081a36:	4770      	bx	lr
+d0081bc8 <__sinit_lock_release>:
+d0081bc8:	4801      	ldr	r0, [pc, #4]	; (d0081bd0 <__sinit_lock_release+0x8>)
+d0081bca:	f000 b8a2 	b.w	d0081d12 <__retarget_lock_release_recursive>
+d0081bce:	bf00      	nop
+d0081bd0:	d009cbf5 	.word	0xd009cbf5
 
-d0081a38 <__retarget_lock_acquire_recursive>:
-d0081a38:	4770      	bx	lr
+d0081bd4 <__sinit>:
+d0081bd4:	b510      	push	{r4, lr}
+d0081bd6:	4604      	mov	r4, r0
+d0081bd8:	f7ff fff0 	bl	d0081bbc <__sinit_lock_acquire>
+d0081bdc:	69a3      	ldr	r3, [r4, #24]
+d0081bde:	b11b      	cbz	r3, d0081be8 <__sinit+0x14>
+d0081be0:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
+d0081be4:	f7ff bff0 	b.w	d0081bc8 <__sinit_lock_release>
+d0081be8:	e9c4 3312 	strd	r3, r3, [r4, #72]	; 0x48
+d0081bec:	6523      	str	r3, [r4, #80]	; 0x50
+d0081bee:	4b13      	ldr	r3, [pc, #76]	; (d0081c3c <__sinit+0x68>)
+d0081bf0:	4a13      	ldr	r2, [pc, #76]	; (d0081c40 <__sinit+0x6c>)
+d0081bf2:	681b      	ldr	r3, [r3, #0]
+d0081bf4:	62a2      	str	r2, [r4, #40]	; 0x28
+d0081bf6:	42a3      	cmp	r3, r4
+d0081bf8:	bf04      	itt	eq
+d0081bfa:	2301      	moveq	r3, #1
+d0081bfc:	61a3      	streq	r3, [r4, #24]
+d0081bfe:	4620      	mov	r0, r4
+d0081c00:	f000 f820 	bl	d0081c44 <__sfp>
+d0081c04:	6060      	str	r0, [r4, #4]
+d0081c06:	4620      	mov	r0, r4
+d0081c08:	f000 f81c 	bl	d0081c44 <__sfp>
+d0081c0c:	60a0      	str	r0, [r4, #8]
+d0081c0e:	4620      	mov	r0, r4
+d0081c10:	f000 f818 	bl	d0081c44 <__sfp>
+d0081c14:	2200      	movs	r2, #0
+d0081c16:	60e0      	str	r0, [r4, #12]
+d0081c18:	2104      	movs	r1, #4
+d0081c1a:	6860      	ldr	r0, [r4, #4]
+d0081c1c:	f7ff ff82 	bl	d0081b24 <std>
+d0081c20:	68a0      	ldr	r0, [r4, #8]
+d0081c22:	2201      	movs	r2, #1
+d0081c24:	2109      	movs	r1, #9
+d0081c26:	f7ff ff7d 	bl	d0081b24 <std>
+d0081c2a:	68e0      	ldr	r0, [r4, #12]
+d0081c2c:	2202      	movs	r2, #2
+d0081c2e:	2112      	movs	r1, #18
+d0081c30:	f7ff ff78 	bl	d0081b24 <std>
+d0081c34:	2301      	movs	r3, #1
+d0081c36:	61a3      	str	r3, [r4, #24]
+d0081c38:	e7d2      	b.n	d0081be0 <__sinit+0xc>
+d0081c3a:	bf00      	nop
+d0081c3c:	d009c524 	.word	0xd009c524
+d0081c40:	d0081b6d 	.word	0xd0081b6d
 
-d0081a3a <__retarget_lock_release_recursive>:
-d0081a3a:	4770      	bx	lr
+d0081c44 <__sfp>:
+d0081c44:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+d0081c46:	4607      	mov	r7, r0
+d0081c48:	f7ff ffac 	bl	d0081ba4 <__sfp_lock_acquire>
+d0081c4c:	4b1e      	ldr	r3, [pc, #120]	; (d0081cc8 <__sfp+0x84>)
+d0081c4e:	681e      	ldr	r6, [r3, #0]
+d0081c50:	69b3      	ldr	r3, [r6, #24]
+d0081c52:	b913      	cbnz	r3, d0081c5a <__sfp+0x16>
+d0081c54:	4630      	mov	r0, r6
+d0081c56:	f7ff ffbd 	bl	d0081bd4 <__sinit>
+d0081c5a:	3648      	adds	r6, #72	; 0x48
+d0081c5c:	e9d6 3401 	ldrd	r3, r4, [r6, #4]
+d0081c60:	3b01      	subs	r3, #1
+d0081c62:	d503      	bpl.n	d0081c6c <__sfp+0x28>
+d0081c64:	6833      	ldr	r3, [r6, #0]
+d0081c66:	b30b      	cbz	r3, d0081cac <__sfp+0x68>
+d0081c68:	6836      	ldr	r6, [r6, #0]
+d0081c6a:	e7f7      	b.n	d0081c5c <__sfp+0x18>
+d0081c6c:	f9b4 500c 	ldrsh.w	r5, [r4, #12]
+d0081c70:	b9d5      	cbnz	r5, d0081ca8 <__sfp+0x64>
+d0081c72:	4b16      	ldr	r3, [pc, #88]	; (d0081ccc <__sfp+0x88>)
+d0081c74:	60e3      	str	r3, [r4, #12]
+d0081c76:	f104 0058 	add.w	r0, r4, #88	; 0x58
+d0081c7a:	6665      	str	r5, [r4, #100]	; 0x64
+d0081c7c:	f000 f847 	bl	d0081d0e <__retarget_lock_init_recursive>
+d0081c80:	f7ff ff96 	bl	d0081bb0 <__sfp_lock_release>
+d0081c84:	e9c4 5501 	strd	r5, r5, [r4, #4]
+d0081c88:	e9c4 5504 	strd	r5, r5, [r4, #16]
+d0081c8c:	6025      	str	r5, [r4, #0]
+d0081c8e:	61a5      	str	r5, [r4, #24]
+d0081c90:	2208      	movs	r2, #8
+d0081c92:	4629      	mov	r1, r5
+d0081c94:	f104 005c 	add.w	r0, r4, #92	; 0x5c
+d0081c98:	f7ff fbac 	bl	d00813f4 <memset>
+d0081c9c:	e9c4 550d 	strd	r5, r5, [r4, #52]	; 0x34
+d0081ca0:	e9c4 5512 	strd	r5, r5, [r4, #72]	; 0x48
+d0081ca4:	4620      	mov	r0, r4
+d0081ca6:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+d0081ca8:	3468      	adds	r4, #104	; 0x68
+d0081caa:	e7d9      	b.n	d0081c60 <__sfp+0x1c>
+d0081cac:	2104      	movs	r1, #4
+d0081cae:	4638      	mov	r0, r7
+d0081cb0:	f7ff ff62 	bl	d0081b78 <__sfmoreglue>
+d0081cb4:	4604      	mov	r4, r0
+d0081cb6:	6030      	str	r0, [r6, #0]
+d0081cb8:	2800      	cmp	r0, #0
+d0081cba:	d1d5      	bne.n	d0081c68 <__sfp+0x24>
+d0081cbc:	f7ff ff78 	bl	d0081bb0 <__sfp_lock_release>
+d0081cc0:	230c      	movs	r3, #12
+d0081cc2:	603b      	str	r3, [r7, #0]
+d0081cc4:	e7ee      	b.n	d0081ca4 <__sfp+0x60>
+d0081cc6:	bf00      	nop
+d0081cc8:	d009c524 	.word	0xd009c524
+d0081ccc:	ffff0001 	.word	0xffff0001
 
-d0081a3c <__swhatbuf_r>:
-d0081a3c:	b570      	push	{r4, r5, r6, lr}
-d0081a3e:	460e      	mov	r6, r1
-d0081a40:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
-d0081a44:	2900      	cmp	r1, #0
-d0081a46:	b096      	sub	sp, #88	; 0x58
-d0081a48:	4614      	mov	r4, r2
-d0081a4a:	461d      	mov	r5, r3
-d0081a4c:	da07      	bge.n	d0081a5e <__swhatbuf_r+0x22>
-d0081a4e:	2300      	movs	r3, #0
-d0081a50:	602b      	str	r3, [r5, #0]
-d0081a52:	89b3      	ldrh	r3, [r6, #12]
-d0081a54:	061a      	lsls	r2, r3, #24
-d0081a56:	d410      	bmi.n	d0081a7a <__swhatbuf_r+0x3e>
-d0081a58:	f44f 6380 	mov.w	r3, #1024	; 0x400
-d0081a5c:	e00e      	b.n	d0081a7c <__swhatbuf_r+0x40>
-d0081a5e:	466a      	mov	r2, sp
-d0081a60:	f000 f8b0 	bl	d0081bc4 <_fstat_r>
-d0081a64:	2800      	cmp	r0, #0
-d0081a66:	dbf2      	blt.n	d0081a4e <__swhatbuf_r+0x12>
-d0081a68:	9a01      	ldr	r2, [sp, #4]
-d0081a6a:	f402 4270 	and.w	r2, r2, #61440	; 0xf000
-d0081a6e:	f5a2 5300 	sub.w	r3, r2, #8192	; 0x2000
-d0081a72:	425a      	negs	r2, r3
-d0081a74:	415a      	adcs	r2, r3
-d0081a76:	602a      	str	r2, [r5, #0]
-d0081a78:	e7ee      	b.n	d0081a58 <__swhatbuf_r+0x1c>
-d0081a7a:	2340      	movs	r3, #64	; 0x40
-d0081a7c:	2000      	movs	r0, #0
-d0081a7e:	6023      	str	r3, [r4, #0]
-d0081a80:	b016      	add	sp, #88	; 0x58
-d0081a82:	bd70      	pop	{r4, r5, r6, pc}
+d0081cd0 <_fwalk_reent>:
+d0081cd0:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
+d0081cd4:	4606      	mov	r6, r0
+d0081cd6:	4688      	mov	r8, r1
+d0081cd8:	f100 0448 	add.w	r4, r0, #72	; 0x48
+d0081cdc:	2700      	movs	r7, #0
+d0081cde:	e9d4 9501 	ldrd	r9, r5, [r4, #4]
+d0081ce2:	f1b9 0901 	subs.w	r9, r9, #1
+d0081ce6:	d505      	bpl.n	d0081cf4 <_fwalk_reent+0x24>
+d0081ce8:	6824      	ldr	r4, [r4, #0]
+d0081cea:	2c00      	cmp	r4, #0
+d0081cec:	d1f7      	bne.n	d0081cde <_fwalk_reent+0xe>
+d0081cee:	4638      	mov	r0, r7
+d0081cf0:	e8bd 83f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, pc}
+d0081cf4:	89ab      	ldrh	r3, [r5, #12]
+d0081cf6:	2b01      	cmp	r3, #1
+d0081cf8:	d907      	bls.n	d0081d0a <_fwalk_reent+0x3a>
+d0081cfa:	f9b5 300e 	ldrsh.w	r3, [r5, #14]
+d0081cfe:	3301      	adds	r3, #1
+d0081d00:	d003      	beq.n	d0081d0a <_fwalk_reent+0x3a>
+d0081d02:	4629      	mov	r1, r5
+d0081d04:	4630      	mov	r0, r6
+d0081d06:	47c0      	blx	r8
+d0081d08:	4307      	orrs	r7, r0
+d0081d0a:	3568      	adds	r5, #104	; 0x68
+d0081d0c:	e7e9      	b.n	d0081ce2 <_fwalk_reent+0x12>
 
-d0081a84 <__smakebuf_r>:
-d0081a84:	898b      	ldrh	r3, [r1, #12]
-d0081a86:	b573      	push	{r0, r1, r4, r5, r6, lr}
-d0081a88:	079d      	lsls	r5, r3, #30
-d0081a8a:	4606      	mov	r6, r0
-d0081a8c:	460c      	mov	r4, r1
-d0081a8e:	d507      	bpl.n	d0081aa0 <__smakebuf_r+0x1c>
-d0081a90:	f104 0347 	add.w	r3, r4, #71	; 0x47
-d0081a94:	6023      	str	r3, [r4, #0]
-d0081a96:	6123      	str	r3, [r4, #16]
-d0081a98:	2301      	movs	r3, #1
-d0081a9a:	6163      	str	r3, [r4, #20]
-d0081a9c:	b002      	add	sp, #8
-d0081a9e:	bd70      	pop	{r4, r5, r6, pc}
-d0081aa0:	ab01      	add	r3, sp, #4
-d0081aa2:	466a      	mov	r2, sp
-d0081aa4:	f7ff ffca 	bl	d0081a3c <__swhatbuf_r>
-d0081aa8:	9900      	ldr	r1, [sp, #0]
-d0081aaa:	4605      	mov	r5, r0
-d0081aac:	4630      	mov	r0, r6
-d0081aae:	f7ff fbad 	bl	d008120c <_malloc_r>
-d0081ab2:	b948      	cbnz	r0, d0081ac8 <__smakebuf_r+0x44>
-d0081ab4:	f9b4 300c 	ldrsh.w	r3, [r4, #12]
-d0081ab8:	059a      	lsls	r2, r3, #22
-d0081aba:	d4ef      	bmi.n	d0081a9c <__smakebuf_r+0x18>
-d0081abc:	f023 0303 	bic.w	r3, r3, #3
-d0081ac0:	f043 0302 	orr.w	r3, r3, #2
-d0081ac4:	81a3      	strh	r3, [r4, #12]
-d0081ac6:	e7e3      	b.n	d0081a90 <__smakebuf_r+0xc>
-d0081ac8:	4b0d      	ldr	r3, [pc, #52]	; (d0081b00 <__smakebuf_r+0x7c>)
-d0081aca:	62b3      	str	r3, [r6, #40]	; 0x28
-d0081acc:	89a3      	ldrh	r3, [r4, #12]
-d0081ace:	6020      	str	r0, [r4, #0]
-d0081ad0:	f043 0380 	orr.w	r3, r3, #128	; 0x80
-d0081ad4:	81a3      	strh	r3, [r4, #12]
-d0081ad6:	9b00      	ldr	r3, [sp, #0]
-d0081ad8:	6163      	str	r3, [r4, #20]
-d0081ada:	9b01      	ldr	r3, [sp, #4]
-d0081adc:	6120      	str	r0, [r4, #16]
-d0081ade:	b15b      	cbz	r3, d0081af8 <__smakebuf_r+0x74>
-d0081ae0:	f9b4 100e 	ldrsh.w	r1, [r4, #14]
-d0081ae4:	4630      	mov	r0, r6
-d0081ae6:	f000 f87f 	bl	d0081be8 <_isatty_r>
-d0081aea:	b128      	cbz	r0, d0081af8 <__smakebuf_r+0x74>
-d0081aec:	89a3      	ldrh	r3, [r4, #12]
-d0081aee:	f023 0303 	bic.w	r3, r3, #3
-d0081af2:	f043 0301 	orr.w	r3, r3, #1
-d0081af6:	81a3      	strh	r3, [r4, #12]
-d0081af8:	89a0      	ldrh	r0, [r4, #12]
-d0081afa:	4305      	orrs	r5, r0
-d0081afc:	81a5      	strh	r5, [r4, #12]
-d0081afe:	e7cd      	b.n	d0081a9c <__smakebuf_r+0x18>
-d0081b00:	d0081895 	.word	0xd0081895
+d0081d0e <__retarget_lock_init_recursive>:
+d0081d0e:	4770      	bx	lr
 
-d0081b04 <__malloc_lock>:
-d0081b04:	4801      	ldr	r0, [pc, #4]	; (d0081b0c <__malloc_lock+0x8>)
-d0081b06:	f7ff bf97 	b.w	d0081a38 <__retarget_lock_acquire_recursive>
-d0081b0a:	bf00      	nop
-d0081b0c:	d009b988 	.word	0xd009b988
+d0081d10 <__retarget_lock_acquire_recursive>:
+d0081d10:	4770      	bx	lr
 
-d0081b10 <__malloc_unlock>:
-d0081b10:	4801      	ldr	r0, [pc, #4]	; (d0081b18 <__malloc_unlock+0x8>)
-d0081b12:	f7ff bf92 	b.w	d0081a3a <__retarget_lock_release_recursive>
-d0081b16:	bf00      	nop
-d0081b18:	d009b988 	.word	0xd009b988
+d0081d12 <__retarget_lock_release_recursive>:
+d0081d12:	4770      	bx	lr
 
-d0081b1c <__sread>:
-d0081b1c:	b510      	push	{r4, lr}
-d0081b1e:	460c      	mov	r4, r1
-d0081b20:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
-d0081b24:	f000 f882 	bl	d0081c2c <_read_r>
-d0081b28:	2800      	cmp	r0, #0
-d0081b2a:	bfab      	itete	ge
-d0081b2c:	6d63      	ldrge	r3, [r4, #84]	; 0x54
-d0081b2e:	89a3      	ldrhlt	r3, [r4, #12]
-d0081b30:	181b      	addge	r3, r3, r0
-d0081b32:	f423 5380 	biclt.w	r3, r3, #4096	; 0x1000
-d0081b36:	bfac      	ite	ge
-d0081b38:	6563      	strge	r3, [r4, #84]	; 0x54
-d0081b3a:	81a3      	strhlt	r3, [r4, #12]
-d0081b3c:	bd10      	pop	{r4, pc}
+d0081d14 <__swhatbuf_r>:
+d0081d14:	b570      	push	{r4, r5, r6, lr}
+d0081d16:	460e      	mov	r6, r1
+d0081d18:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
+d0081d1c:	2900      	cmp	r1, #0
+d0081d1e:	b096      	sub	sp, #88	; 0x58
+d0081d20:	4614      	mov	r4, r2
+d0081d22:	461d      	mov	r5, r3
+d0081d24:	da07      	bge.n	d0081d36 <__swhatbuf_r+0x22>
+d0081d26:	2300      	movs	r3, #0
+d0081d28:	602b      	str	r3, [r5, #0]
+d0081d2a:	89b3      	ldrh	r3, [r6, #12]
+d0081d2c:	061a      	lsls	r2, r3, #24
+d0081d2e:	d410      	bmi.n	d0081d52 <__swhatbuf_r+0x3e>
+d0081d30:	f44f 6380 	mov.w	r3, #1024	; 0x400
+d0081d34:	e00e      	b.n	d0081d54 <__swhatbuf_r+0x40>
+d0081d36:	466a      	mov	r2, sp
+d0081d38:	f000 fba0 	bl	d008247c <_fstat_r>
+d0081d3c:	2800      	cmp	r0, #0
+d0081d3e:	dbf2      	blt.n	d0081d26 <__swhatbuf_r+0x12>
+d0081d40:	9a01      	ldr	r2, [sp, #4]
+d0081d42:	f402 4270 	and.w	r2, r2, #61440	; 0xf000
+d0081d46:	f5a2 5300 	sub.w	r3, r2, #8192	; 0x2000
+d0081d4a:	425a      	negs	r2, r3
+d0081d4c:	415a      	adcs	r2, r3
+d0081d4e:	602a      	str	r2, [r5, #0]
+d0081d50:	e7ee      	b.n	d0081d30 <__swhatbuf_r+0x1c>
+d0081d52:	2340      	movs	r3, #64	; 0x40
+d0081d54:	2000      	movs	r0, #0
+d0081d56:	6023      	str	r3, [r4, #0]
+d0081d58:	b016      	add	sp, #88	; 0x58
+d0081d5a:	bd70      	pop	{r4, r5, r6, pc}
 
-d0081b3e <__swrite>:
-d0081b3e:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
-d0081b42:	461f      	mov	r7, r3
-d0081b44:	898b      	ldrh	r3, [r1, #12]
-d0081b46:	05db      	lsls	r3, r3, #23
-d0081b48:	4605      	mov	r5, r0
-d0081b4a:	460c      	mov	r4, r1
-d0081b4c:	4616      	mov	r6, r2
-d0081b4e:	d505      	bpl.n	d0081b5c <__swrite+0x1e>
-d0081b50:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
-d0081b54:	2302      	movs	r3, #2
-d0081b56:	2200      	movs	r2, #0
-d0081b58:	f000 f856 	bl	d0081c08 <_lseek_r>
-d0081b5c:	89a3      	ldrh	r3, [r4, #12]
-d0081b5e:	f9b4 100e 	ldrsh.w	r1, [r4, #14]
-d0081b62:	f423 5380 	bic.w	r3, r3, #4096	; 0x1000
-d0081b66:	81a3      	strh	r3, [r4, #12]
-d0081b68:	4632      	mov	r2, r6
-d0081b6a:	463b      	mov	r3, r7
-d0081b6c:	4628      	mov	r0, r5
-d0081b6e:	e8bd 41f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, lr}
-d0081b72:	f7fe bb63 	b.w	d008023c <_write_r>
+d0081d5c <__smakebuf_r>:
+d0081d5c:	898b      	ldrh	r3, [r1, #12]
+d0081d5e:	b573      	push	{r0, r1, r4, r5, r6, lr}
+d0081d60:	079d      	lsls	r5, r3, #30
+d0081d62:	4606      	mov	r6, r0
+d0081d64:	460c      	mov	r4, r1
+d0081d66:	d507      	bpl.n	d0081d78 <__smakebuf_r+0x1c>
+d0081d68:	f104 0347 	add.w	r3, r4, #71	; 0x47
+d0081d6c:	6023      	str	r3, [r4, #0]
+d0081d6e:	6123      	str	r3, [r4, #16]
+d0081d70:	2301      	movs	r3, #1
+d0081d72:	6163      	str	r3, [r4, #20]
+d0081d74:	b002      	add	sp, #8
+d0081d76:	bd70      	pop	{r4, r5, r6, pc}
+d0081d78:	ab01      	add	r3, sp, #4
+d0081d7a:	466a      	mov	r2, sp
+d0081d7c:	f7ff ffca 	bl	d0081d14 <__swhatbuf_r>
+d0081d80:	9900      	ldr	r1, [sp, #0]
+d0081d82:	4605      	mov	r5, r0
+d0081d84:	4630      	mov	r0, r6
+d0081d86:	f7ff fb8d 	bl	d00814a4 <_malloc_r>
+d0081d8a:	b948      	cbnz	r0, d0081da0 <__smakebuf_r+0x44>
+d0081d8c:	f9b4 300c 	ldrsh.w	r3, [r4, #12]
+d0081d90:	059a      	lsls	r2, r3, #22
+d0081d92:	d4ef      	bmi.n	d0081d74 <__smakebuf_r+0x18>
+d0081d94:	f023 0303 	bic.w	r3, r3, #3
+d0081d98:	f043 0302 	orr.w	r3, r3, #2
+d0081d9c:	81a3      	strh	r3, [r4, #12]
+d0081d9e:	e7e3      	b.n	d0081d68 <__smakebuf_r+0xc>
+d0081da0:	4b0d      	ldr	r3, [pc, #52]	; (d0081dd8 <__smakebuf_r+0x7c>)
+d0081da2:	62b3      	str	r3, [r6, #40]	; 0x28
+d0081da4:	89a3      	ldrh	r3, [r4, #12]
+d0081da6:	6020      	str	r0, [r4, #0]
+d0081da8:	f043 0380 	orr.w	r3, r3, #128	; 0x80
+d0081dac:	81a3      	strh	r3, [r4, #12]
+d0081dae:	9b00      	ldr	r3, [sp, #0]
+d0081db0:	6163      	str	r3, [r4, #20]
+d0081db2:	9b01      	ldr	r3, [sp, #4]
+d0081db4:	6120      	str	r0, [r4, #16]
+d0081db6:	b15b      	cbz	r3, d0081dd0 <__smakebuf_r+0x74>
+d0081db8:	f9b4 100e 	ldrsh.w	r1, [r4, #14]
+d0081dbc:	4630      	mov	r0, r6
+d0081dbe:	f000 fb6f 	bl	d00824a0 <_isatty_r>
+d0081dc2:	b128      	cbz	r0, d0081dd0 <__smakebuf_r+0x74>
+d0081dc4:	89a3      	ldrh	r3, [r4, #12]
+d0081dc6:	f023 0303 	bic.w	r3, r3, #3
+d0081dca:	f043 0301 	orr.w	r3, r3, #1
+d0081dce:	81a3      	strh	r3, [r4, #12]
+d0081dd0:	89a0      	ldrh	r0, [r4, #12]
+d0081dd2:	4305      	orrs	r5, r0
+d0081dd4:	81a5      	strh	r5, [r4, #12]
+d0081dd6:	e7cd      	b.n	d0081d74 <__smakebuf_r+0x18>
+d0081dd8:	d0081b6d 	.word	0xd0081b6d
 
-d0081b76 <__sseek>:
-d0081b76:	b510      	push	{r4, lr}
-d0081b78:	460c      	mov	r4, r1
-d0081b7a:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
-d0081b7e:	f000 f843 	bl	d0081c08 <_lseek_r>
-d0081b82:	1c43      	adds	r3, r0, #1
-d0081b84:	89a3      	ldrh	r3, [r4, #12]
-d0081b86:	bf15      	itete	ne
-d0081b88:	6560      	strne	r0, [r4, #84]	; 0x54
-d0081b8a:	f423 5380 	biceq.w	r3, r3, #4096	; 0x1000
-d0081b8e:	f443 5380 	orrne.w	r3, r3, #4096	; 0x1000
-d0081b92:	81a3      	strheq	r3, [r4, #12]
-d0081b94:	bf18      	it	ne
-d0081b96:	81a3      	strhne	r3, [r4, #12]
-d0081b98:	bd10      	pop	{r4, pc}
+d0081ddc <__malloc_lock>:
+d0081ddc:	4801      	ldr	r0, [pc, #4]	; (d0081de4 <__malloc_lock+0x8>)
+d0081dde:	f7ff bf97 	b.w	d0081d10 <__retarget_lock_acquire_recursive>
+d0081de2:	bf00      	nop
+d0081de4:	d009cbf6 	.word	0xd009cbf6
 
-d0081b9a <__sclose>:
-d0081b9a:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
-d0081b9e:	f000 b801 	b.w	d0081ba4 <_close_r>
-	...
+d0081de8 <__malloc_unlock>:
+d0081de8:	4801      	ldr	r0, [pc, #4]	; (d0081df0 <__malloc_unlock+0x8>)
+d0081dea:	f7ff bf92 	b.w	d0081d12 <__retarget_lock_release_recursive>
+d0081dee:	bf00      	nop
+d0081df0:	d009cbf6 	.word	0xd009cbf6
 
-d0081ba4 <_close_r>:
-d0081ba4:	b538      	push	{r3, r4, r5, lr}
-d0081ba6:	4d06      	ldr	r5, [pc, #24]	; (d0081bc0 <_close_r+0x1c>)
-d0081ba8:	2300      	movs	r3, #0
-d0081baa:	4604      	mov	r4, r0
-d0081bac:	4608      	mov	r0, r1
-d0081bae:	602b      	str	r3, [r5, #0]
-d0081bb0:	f7fe fb7e 	bl	d00802b0 <_close>
-d0081bb4:	1c43      	adds	r3, r0, #1
-d0081bb6:	d102      	bne.n	d0081bbe <_close_r+0x1a>
-d0081bb8:	682b      	ldr	r3, [r5, #0]
-d0081bba:	b103      	cbz	r3, d0081bbe <_close_r+0x1a>
-d0081bbc:	6023      	str	r3, [r4, #0]
-d0081bbe:	bd38      	pop	{r3, r4, r5, pc}
-d0081bc0:	d009b990 	.word	0xd009b990
-
-d0081bc4 <_fstat_r>:
-d0081bc4:	b538      	push	{r3, r4, r5, lr}
-d0081bc6:	4d07      	ldr	r5, [pc, #28]	; (d0081be4 <_fstat_r+0x20>)
-d0081bc8:	2300      	movs	r3, #0
-d0081bca:	4604      	mov	r4, r0
-d0081bcc:	4608      	mov	r0, r1
-d0081bce:	4611      	mov	r1, r2
-d0081bd0:	602b      	str	r3, [r5, #0]
-d0081bd2:	f7fe fb71 	bl	d00802b8 <_fstat>
-d0081bd6:	1c43      	adds	r3, r0, #1
-d0081bd8:	d102      	bne.n	d0081be0 <_fstat_r+0x1c>
-d0081bda:	682b      	ldr	r3, [r5, #0]
-d0081bdc:	b103      	cbz	r3, d0081be0 <_fstat_r+0x1c>
-d0081bde:	6023      	str	r3, [r4, #0]
-d0081be0:	bd38      	pop	{r3, r4, r5, pc}
-d0081be2:	bf00      	nop
-d0081be4:	d009b990 	.word	0xd009b990
-
-d0081be8 <_isatty_r>:
-d0081be8:	b538      	push	{r3, r4, r5, lr}
-d0081bea:	4d06      	ldr	r5, [pc, #24]	; (d0081c04 <_isatty_r+0x1c>)
-d0081bec:	2300      	movs	r3, #0
-d0081bee:	4604      	mov	r4, r0
-d0081bf0:	4608      	mov	r0, r1
-d0081bf2:	602b      	str	r3, [r5, #0]
-d0081bf4:	f7fe fb88 	bl	d0080308 <_isatty>
-d0081bf8:	1c43      	adds	r3, r0, #1
-d0081bfa:	d102      	bne.n	d0081c02 <_isatty_r+0x1a>
-d0081bfc:	682b      	ldr	r3, [r5, #0]
-d0081bfe:	b103      	cbz	r3, d0081c02 <_isatty_r+0x1a>
-d0081c00:	6023      	str	r3, [r4, #0]
-d0081c02:	bd38      	pop	{r3, r4, r5, pc}
-d0081c04:	d009b990 	.word	0xd009b990
-
-d0081c08 <_lseek_r>:
-d0081c08:	b538      	push	{r3, r4, r5, lr}
-d0081c0a:	4d07      	ldr	r5, [pc, #28]	; (d0081c28 <_lseek_r+0x20>)
-d0081c0c:	4604      	mov	r4, r0
-d0081c0e:	4608      	mov	r0, r1
-d0081c10:	4611      	mov	r1, r2
-d0081c12:	2200      	movs	r2, #0
-d0081c14:	602a      	str	r2, [r5, #0]
-d0081c16:	461a      	mov	r2, r3
-d0081c18:	f7fe fb54 	bl	d00802c4 <_lseek>
-d0081c1c:	1c43      	adds	r3, r0, #1
-d0081c1e:	d102      	bne.n	d0081c26 <_lseek_r+0x1e>
-d0081c20:	682b      	ldr	r3, [r5, #0]
-d0081c22:	b103      	cbz	r3, d0081c26 <_lseek_r+0x1e>
-d0081c24:	6023      	str	r3, [r4, #0]
-d0081c26:	bd38      	pop	{r3, r4, r5, pc}
-d0081c28:	d009b990 	.word	0xd009b990
-
-d0081c2c <_read_r>:
-d0081c2c:	b538      	push	{r3, r4, r5, lr}
-d0081c2e:	4d07      	ldr	r5, [pc, #28]	; (d0081c4c <_read_r+0x20>)
-d0081c30:	4604      	mov	r4, r0
-d0081c32:	4608      	mov	r0, r1
-d0081c34:	4611      	mov	r1, r2
-d0081c36:	2200      	movs	r2, #0
-d0081c38:	602a      	str	r2, [r5, #0]
-d0081c3a:	461a      	mov	r2, r3
-d0081c3c:	f7fe fb2e 	bl	d008029c <_read>
-d0081c40:	1c43      	adds	r3, r0, #1
-d0081c42:	d102      	bne.n	d0081c4a <_read_r+0x1e>
-d0081c44:	682b      	ldr	r3, [r5, #0]
-d0081c46:	b103      	cbz	r3, d0081c4a <_read_r+0x1e>
-d0081c48:	6023      	str	r3, [r4, #0]
-d0081c4a:	bd38      	pop	{r3, r4, r5, pc}
-d0081c4c:	d009b990 	.word	0xd009b990
-	...
-
-d0081c60 <clut>:
-d0081c60:	00000000 ffafafaf ffffffff ff3b67a2     .............g;.
-d0081c70:	ffaa907c ff959595 ff7b7b7b ffffa997     |.......{{{.....
-d0081c80:	ff37a91d ff7ca9ff ffbf8112 ffebbf66     ..7...|.....f...
-d0081c90:	ff78c178 ff3d9318 ffb33418 ffd9311c     x.x...=..4...1..
-d0081ca0:	ff000000 ff00000e ff00001d ff00002b     ............+...
-d0081cb0:	ff000139 ff000147 ff000156 ff000164     9...G...V...d...
-d0081cc0:	ff0001d2 ff0001ff ffcecece ff00ff00     ................
-d0081cd0:	ffb2ff00 ffffe700 ffff9600 ffff1100     ................
-d0081ce0:	ff491200 ff491355 ff4914aa ff4916ff     ..I.U.I...I...I.
-d0081cf0:	ff5b1700 ff5b1855 ff5b19aa ff5b1aff     ..[.U.[...[...[.
-d0081d00:	ff6d1b00 ff6d1c55 ff00e300 ff85ff54     ..m.U.m.....T...
-d0081d10:	ffc4ff00 ffffd900 ffffa41f ffe05400     .............T..
-d0081d20:	ffff0000 ff922655 ff9227aa ff9228ff     ....U&...'...(..
-d0081d30:	ffa42900 ffa42a55 ffa42baa ffa42cff     .)..U*...+...,..
-d0081d40:	ffb62d00 ffb62f55 ffb630aa ffb631ff     .-..U/...0...1..
-d0081d50:	ffc93200 ffc93355 ffc934aa ffc935ff     .2..U3...4...5..
-d0081d60:	ffdb3700 ffdb3855 ffdb39aa ffdb3aff     .7..U8...9...:..
-d0081d70:	ffed3b00 ffed3c55 ffed3daa ffed3fff     .;..U<...=...?..
-d0081d80:	ffff4000 ffff4155 ffff42aa ffff43ff     .@..UA...B...C..
-d0081d90:	ff004400 ff004555 ff0046aa ff0048ff     .D..UE...F...H..
-d0081da0:	ffffff00 ff12ff55 ff12ee55 ff12b6ff     ....U...U.......
-d0081db0:	ff001fff ff9d0ec7 fff10000 ffff7700     .............w..
-d0081dc0:	ff375200 ff375355 ff3754aa ff3755ff     .R7.US7..T7..U7.
-d0081dd0:	ff495600 ff495855 ff4959aa ff495aff     .VI.UXI..YI..ZI.
-d0081de0:	ff5b5b00 ff5b5c55 ff5b5daa ff5b5eff     .[[.U\[..][..^[.
-d0081df0:	ff6d6000 ff6d6155 ff6d62aa ff6d63ff     .`m.Uam..bm..cm.
-d0081e00:	ff6d6400 ff806555 ff8066aa ff8067ff     .dm.Ue...f...g..
-d0081e10:	ff926900 ff926a55 ff926baa ff926cff     .i..Uj...k...l..
-d0081e20:	ffa46d00 ffa46e55 ffa46faa ffa471ff     .m..Un...o...q..
-d0081e30:	ffb67200 ffb67355 ffb674aa ffb675ff     .r..Us...t...u..
-d0081e40:	ffc97600 ffc97755 ffc979aa ffc97aff     .v..Uw...y...z..
-d0081e50:	ffdb7b00 ffdb7c55 ffdb7daa ffdb7eff     .{..U|...}...~..
-d0081e60:	ffed7f00 ffed8055 ffed82aa ffed83ff     ....U...........
-d0081e70:	ffff8400 ffff8555 ffff86aa ffff87ff     ....U...........
-d0081e80:	ff008800 ff008a55 ff008baa ff008cff     ....U...........
-d0081e90:	ff128d00 ff128e55 ff128faa ff1290ff     ....U...........
-d0081ea0:	ff249200 ff249355 ff2494aa ff2495ff     ..$.U.$...$...$.
-d0081eb0:	ff379600 ff379755 ff3798aa ff3799ff     ..7.U.7...7...7.
-d0081ec0:	ff499b00 ff499c55 ff499daa ff499eff     ..I.U.I...I...I.
-d0081ed0:	ff5b9f00 ff5ba055 ff5ba1aa ff5ba3ff     ..[.U.[...[...[.
-d0081ee0:	ffa4b5d5 ffa0b0f8 ff94a3e6 ff7c89c1     ..............|.
-d0081ef0:	ff6281c0 ff1c62a1 ff4254ea ff62a1bd     ..b..b...TB...b.
-d0081f00:	ff7093c0 ff4977a1 ff003faa ff1554ff     ..p..wI..?...T..
-d0081f10:	ff1c50b9 ff00b3ff ff0088aa ff00b5ff     .P..............
-d0081f20:	ff0e62ff ff5eb7e3 ffbdc0b9 ff85b9ff     .b....^.........
-d0081f30:	ff006caf ff1f81b9 ff3f5baa ffc9beff     .l.......[?.....
-d0081f40:	ff5bafcb ffdbc055 ffdbc1aa ffbdc0c0     ..[.U...........
-d0081f50:	ffedc400 ffedc555 ffedc6aa ffedc7ff     ....U...........
-d0081f60:	ffffc800 ffffc955 ffffcaaa ffffccff     ....U...........
-d0081f70:	ff00cd00 ff00ce55 ff00cfaa ff00d0ff     ....U...........
-d0081f80:	ff12d100 ff12d255 ff12d3aa ff12d5ff     ....U...........
-d0081f90:	ff24d600 ff24d755 ff24d8aa ff24d9ff     ..$.U.$...$...$.
-d0081fa0:	ff37da00 ff37db55 ff37ddaa ff37deff     ..7.U.7...7...7.
-d0081fb0:	ff49df00 ff49e055 ff49e1aa ff49e2ff     ..I.U.I...I...I.
-d0081fc0:	ff5be300 ff5be555 ff5be6aa ff5be7ff     ..[.U.[...[...[.
-d0081fd0:	ff6de800 ff6de955 ff6deaaa ff6debff     ..m.U.m...m...m.
-d0081fe0:	ff0458ec ff0422ac ff0077ff ff0054ee     .X..."...w...T..
-d0081ff0:	ff0033dd ff990000 ffff0000 ffff6600     .3...........f..
-d0082000:	ffffdd00 ffa4f755 ffa4f8aa ffa4f9ff     ....U...........
-d0082010:	ffb6fa00 ffb6fb55 ffb6fcaa ffb6feff     ....U...........
-d0082020:	ffff00ff ff000000 ff131313 ff272727     ............'''.
-d0082030:	ff3a3a3a ff4e4e4e ff626262 ff757575     :::.NNN.bbb.uuu.
-d0082040:	ff898989 ff9c9c9c ffb0b0b0 ffc4c4c4     ................
-d0082050:	ffd7d7d7 ffebebeb ffffffff ffffffff     ................
-
-d0082060 <topscroll_bar_bg1>:
-d0082060:	9f9f9f9f 9f9f9f9f 9f9f9f9f 020202a0     ................
-d0082070:	a0020202 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082080:	029f9f9f 02020202 9f9fa002 9f9f9f9f     ................
-d0082090:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00820a0:	9f9f9f9f 9f9f9f9f 9f9f9f9f 029f9f9f     ................
-d00820b0:	02020202 02020202 9f020202 9f9f9f9f     ................
-d00820c0:	9f9f9f9f 0202a09f a3020202 9f9fa3a3     ................
-d00820d0:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00820e0:	a00202a0 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00820f0:	02029f9f 02020202 02020202 9f9fa002     ................
-d0082100:	9f9f9f9f 9f9f9f9f 0202a09f 02020202     ................
-d0082110:	02020202 9f9f0202 9f9f9f9f 9f9f9f9f     ................
-d0082120:	0202029f 02020202 9f9f9f9f 9f9f9f9f     ................
-d0082130:	9f9f9f9f 9f9f9f9f a00202a0 02a09f9f     ................
-d0082140:	9f9f9f02 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082150:	02020202 9f020202 9f9f9f9f 9f9f9f9f     ................
-d0082160:	a09f9f9f 02020202 02020202 9f9f0202     ................
-d0082170:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082180:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082190:	029f9f9f 0202a0a0 9f9f0202 9f9f9f9f     ................
-d00821a0:	9f9f9f9f 9f9f9f9f 0202a09f 02020202     ................
-d00821b0:	9f9f9f02 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00821c0:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00821d0:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00821e0:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00821f0:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082200:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082210:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082220:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082230:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082240:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082250:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082260:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082270:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082280:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082290:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00822a0:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00822b0:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00822c0:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00822d0:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00822e0:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00822f0:	a0a0a09f a0a0a0a0 9f9f9f9f 9f9f9f9f     ................
-d0082300:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082310:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082320:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082330:	b79f9f9f 02020202 b7b702a0 9fa0a0a0     ................
-d0082340:	9f9f9f9f 9f9f9f9f 9f9f9f9f 8f8f9f9f     ................
-d0082350:	9f9f8f8f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082360:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d0082370:	9f9f9f9f b7b79f9f 02a00202 b7020202     ................
-d0082380:	9f9fa0b7 9f9f9f9f 8f9f9f9f 8f8f8f8f     ................
-d0082390:	8f8f8f8f 8f8f8f8f a0a0a0a0 9fa0a0a0     ................
-d00823a0:	9f9f9f9f 9f9f9f9f 9f9f9f9f 9f9f9f9f     ................
-d00823b0:	8f8f8f8f 8f8f8f8f 09098f8f a0a0a009     ................
-d00823c0:	9fa0a0a0 9f9f9f9f 8f8f8f9f 8f8f8f8f     ................
-d00823d0:	8f8f8f8f 8f8f8f8f 02b78f8f a0020202     ................
-d00823e0:	a0b7b702 8f8fa0a0 8f8f8f8f 8f8f8f8f     ................
-d00823f0:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082400:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082410:	8f8f8f8f 8f8f8f8f 8f8f8f8f 02b7b78f     ................
-d0082420:	0202a002 b7b70202 8f8f8fa0 8f8f8f8f     ................
-d0082430:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082440:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082450:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082460:	8f8f8f8f a0a0a0a0 8f8fa0a0 06068f8f     ................
-d0082470:	06060606 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082480:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082490:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d00824a0:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d00824b0:	0605068f 06060606 8f8f8f06 8f8f8f8f     ................
-d00824c0:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d00824d0:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d00824e0:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d00824f0:	8f8f8f8f 06060506 06060606 8f8f0606     ................
-d0082500:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082510:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082520:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082530:	8f8f8f8f 068f8f8f 06060605 06060606     ................
-d0082540:	8f8f0606 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082550:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082560:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082570:	8f8f8f8f 8f8f8f8f 05068f8f 06060606     ................
-d0082580:	06060606 8f066006 8f8f8f8f 8f8f8f8f     .....`..........
-d0082590:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d00825a0:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d00825b0:	8f8f8f8f 8f8f8f8f 8f8f8f8f 0605068f     ................
-d00825c0:	06060606 06060606 06600606 8f8f8f8f     ..........`.....
-d00825d0:	05058f8f 05050505 05050505 8f8f8f8f     ................
-d00825e0:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d00825f0:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082600:	06050606 06060606 06060606 06600606     ..............`.
-d0082610:	8f8f8f06 05010505 05050505 05050505     ................
-d0082620:	8f8f0505 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082630:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082640:	068f8f8f 06060506 06060606 06060606     ................
-d0082650:	60060606 05058f06 05050101 05050505     ...`............
-d0082660:	05050505 8f050605 8f8f8f8f 8f8f8f8f     ................
-d0082670:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082680:	8f8f8f8f 06068f8f 06060605 06060606     ................
-d0082690:	06060606 60060606 01050505 05050505     .......`........
-d00826a0:	05050505 05050505 05060505 8f8f8f8f     ................
-d00826b0:	8f8f8f8f 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d00826c0:	8f8f8f8f 8f8f8f8f 0506068f 06060606     ................
-d00826d0:	06060606 06060606 05050606 05010105     ................
-d00826e0:	05050505 05050505 05050505 06050505     ................
-d00826f0:	8f8f0505 8f8f8f8f 8f8f8f8f 8f8f8f8f     ................
-d0082700:	8f8f8f8f 8f8f8f8f 8f8f0d8f 06050606     ................
-d0082710:	06060606 06060606 06060606 050d0505     ................
-d0082720:	05050501 05050505 05050505 05050505     ................
-d0082730:	05050505 8f050506 8f8f8f8f 8f8f8f8f     ................
-d0082740:	8f8f8f8f 8f8f8f8f 8f0d8f8f 068f0d8f     ................
-d0082750:	06060606 06060606 060d0606 05060606     ................
-d0082760:	050d0505 05050d05 05050505 050d050d     ................
-d0082770:	05050505 05050505 05050605 0d8f8f05     ................
-d0082780:	8f8f8f8f 8f0d8f0d 8f8f8f8f 0d0d0d0d     ................
-d0082790:	0d0d0d0d 0d0d0d0d 0d0d0d0d 0d0d0d0d     ................
-d00827a0:	0d0d0d0d 0d0d0d0d 0d0d0d0d 0d0d0d0d     ................
-d00827b0:	0d0d0d0d 0d0d0d0d 0d0d0d0d 0d0d0d0d     ................
-d00827c0:	0d0d0d0d 0d0d0d0d 0d0d0d0d 0d0d0d0d     ................
-d00827d0:	0d0a0b0a 0a0a0a0d 0b0a0b0a 0a0a0a0a     ................
-d00827e0:	0a0a0a0a 680a0a0a 0b0b0a68 0a0a0a0a     .......hh.......
-d00827f0:	0a0a0b0a 680a0a0a 0a0a0a0a 6868680a     .......h.....hhh
-d0082800:	0b0b0b0a 0a0a0b0a 0a0a0b0a 0a0b0b0b     ................
-d0082810:	0a0a0b0b 0b0b0a0a 0b0a0a0a 0a0a0a0b     ................
-d0082820:	0a0a0a0a 0a0b0a0a 0a0a0a0a 0a0a0a0a     ................
-d0082830:	0b0a0a0a 0a0a0a0a 0a0a0a0a 0b0b0a0a     ................
-d0082840:	0a0a0a0a 0a0a0a0b 0a0a0b0a 0a0a0a0a     ................
-d0082850:	0a0a0a0a 0b0b0a0a 0a0a0b0a 0a0a0b0a     ................
-d0082860:	0a680a0b 0b0a0a0a 0a0a0b0b 0a0a6868     ..h.........hh..
-d0082870:	680a0a0a 0a0b0a68 0a686868 680a0a0a     ...hh...hhh....h
-d0082880:	0a0a6868 0b0a0a0a 0a0a0a0a 0b0b0a0a     hh..............
-d0082890:	0a0a0a0a 0a0a0a0a 0b0a0a0a 0a0a0a0a     ................
-d00828a0:	6868680b 0a0a0a0a 68680a0a 0a0a0a0a     .hhh......hh....
-d00828b0:	0b0a0a0a 0a0a0a0b 0a0a0a0a 0a0a0a0a     ................
-d00828c0:	0a0a0a0a 0a0a0a0a 0a0a0a0a 0a0a0a0a     ................
-d00828d0:	0a0a0a0a 680a0a0a 0b0b6868 0a0a0a0a     .......hhh......
-d00828e0:	70707559 6f6f5420 63616874 64206568     Yupp Toothache d
-d00828f0:	746b7365 4520706f 6465646e 00293a20     esktop Ended :).
-
-d0082900 <thePallete>:
-d0082900:	00000000 ffafafaf ffffffff ff3b67a2     .............g;.
-d0082910:	ffaa907c ff959595 ff7b7b7b ffffa997     |.......{{{.....
-d0082920:	ff37a91d ff7ca9ff ffbf8112 ffebbf66     ..7...|.....f...
-d0082930:	ff78c178 ff3d9318 ffb33418 ffd9311c     x.x...=..4...1..
-d0082940:	ff000000 ff00000e ff00001d ff00002b     ............+...
-d0082950:	ff000139 ff000147 ff000156 ff000164     9...G...V...d...
-d0082960:	ff0001d2 ff0001ff ffcecece ff00ff00     ................
-d0082970:	ffb2ff00 ffffe700 ffff9600 ffff1100     ................
-d0082980:	ffbf13d5 ffa411c7 ff890eb9 ff6e0baa     ..............n.
-d0082990:	ff52099c ff37068d ff1c037f ff000070     ..R...7.....p...
-d00829a0:	ff6d1b00 ff6d1c55 ff00e300 ff85ff54     ..m.U.m.....T...
-d00829b0:	ffc4ff00 ffffd900 ffffa41f ffe05400     .............T..
-d00829c0:	ffff0000 ff922655 ff9227aa ff9228ff     ....U&...'...(..
-d00829d0:	ffa42900 ffa42a55 ffa42baa ffa42cff     .)..U*...+...,..
-d00829e0:	ffb62d00 ffb62f55 ffb630aa ffb631ff     .-..U/...0...1..
-d00829f0:	ffc93200 ffc93355 ffc934aa ffc935ff     .2..U3...4...5..
-d0082a00:	ffdb3700 ffdb3855 ffdb39aa ffdb3aff     .7..U8...9...:..
-d0082a10:	ffed3b00 ffed3c55 ffed3daa ffed3fff     .;..U<...=...?..
-d0082a20:	ffff4000 ffff4155 ffff42aa ffff43ff     .@..UA...B...C..
-d0082a30:	ff004400 ff004555 ff0046aa ff0048ff     .D..UE...F...H..
-d0082a40:	ffffff00 ff12ff55 ff12ee55 ff12b6ff     ....U...U.......
-d0082a50:	ff001fff ff9d0ec7 fff10000 ffff7700     .............w..
-d0082a60:	ff375200 ff375355 ff3754aa ff3755ff     .R7.US7..T7..U7.
-d0082a70:	ff495600 ff495855 ff4959aa ff495aff     .VI.UXI..YI..ZI.
-d0082a80:	ff5b5b00 ff5b5c55 ff5b5daa ff5b5eff     .[[.U\[..][..^[.
-d0082a90:	ff6d6000 ff6d6155 ff6d62aa ff6d63ff     .`m.Uam..bm..cm.
-d0082aa0:	ff6d6400 ff806555 ff8066aa ff8067ff     .dm.Ue...f...g..
-d0082ab0:	ff926900 ff926a55 ff926baa ff926cff     .i..Uj...k...l..
-d0082ac0:	ffa46d00 ffa46e55 ffa46faa ffa471ff     .m..Un...o...q..
-d0082ad0:	ffb67200 ffb67355 ffb674aa ffb675ff     .r..Us...t...u..
-d0082ae0:	ffc97600 ffc97755 ffc979aa ffc97aff     .v..Uw...y...z..
-d0082af0:	ffdb7b00 ffdb7c55 ffdb7daa ffdb7eff     .{..U|...}...~..
-d0082b00:	ffed7f00 ffed8055 ffed82aa ffed83ff     ....U...........
-d0082b10:	ffff8400 ffff8555 ffff86aa ffff87ff     ....U...........
-d0082b20:	ff008800 ff008a55 ff008baa ff008cff     ....U...........
-d0082b30:	ff128d00 ff128e55 ff128faa ff1290ff     ....U...........
-d0082b40:	ff249200 ff249355 ff2494aa ff2495ff     ..$.U.$...$...$.
-d0082b50:	ff379600 ff379755 ff3798aa ff3799ff     ..7.U.7...7...7.
-d0082b60:	ff499b00 ff499c55 ff499daa ff499eff     ..I.U.I...I...I.
-d0082b70:	ff5b9f00 ff5ba055 ff5ba1aa ff5ba3ff     ..[.U.[...[...[.
-d0082b80:	ffa4b5d5 ffa0b0f8 ff94a3e6 ff7c89c1     ..............|.
-d0082b90:	ff6281c0 ff1c62a1 ff4254ea ff62a1bd     ..b..b...TB...b.
-d0082ba0:	ff7093c0 ff4977a1 ff003faa ff1554ff     ..p..wI..?...T..
-d0082bb0:	ff1c50b9 ff00b3ff ff0088aa ff00b5ff     .P..............
-d0082bc0:	ff0e62ff ff5eb7e3 ffbdc0b9 ff85b9ff     .b....^.........
-d0082bd0:	ff006caf ff1f81b9 ff3f5baa ffc9beff     .l.......[?.....
-d0082be0:	ff5bafcb ffdbc055 ffdbc1aa ffbdc0c0     ..[.U...........
-d0082bf0:	ffedc400 ffedc555 ffedc6aa ffedc7ff     ....U...........
-d0082c00:	ffffc800 ffffc955 ffffcaaa ffffccff     ....U...........
-d0082c10:	ff00cd00 ff00ce55 ff00cfaa ff00d0ff     ....U...........
-d0082c20:	ff12d100 ff12d255 ff12d3aa ff12d5ff     ....U...........
-d0082c30:	ff24d600 ff24d755 ff24d8aa ff24d9ff     ..$.U.$...$...$.
-d0082c40:	ff37da00 ff37db55 ff37ddaa ff37deff     ..7.U.7...7...7.
-d0082c50:	ff49df00 ff49e055 ff49e1aa ff49e2ff     ..I.U.I...I...I.
-d0082c60:	ff5be300 ff5be555 ff5be6aa ff5be7ff     ..[.U.[...[...[.
-d0082c70:	ff6de800 ff6de955 ff6deaaa ff6debff     ..m.U.m...m...m.
-d0082c80:	ff6dec00 ff80ee55 ff80efaa ff80f0ff     ..m.U...........
-d0082c90:	ff93cea2 ff92f255 ff92f3aa ff92f4ff     ....U...........
-d0082ca0:	ffa4f600 ffa4f755 ffa4f8aa ffa4f9ff     ....U...........
-d0082cb0:	ffb6fa00 ffb6fb55 ffb6fcaa ffb6feff     ....U...........
-d0082cc0:	ffc9ff00 ffc9ff55 ffc9ffaa ffc9ffff     ....U...........
-d0082cd0:	ffdbff00 ffdbff55 ffdbffaa ffdbffff     ....U...........
-d0082ce0:	ffedff00 ffedff55 ffedffaa ffedffff     ....U...........
-d0082cf0:	ffffff00 ffffff55 ffffffaa ffffffff     ....U...........
-
-d0082d00 <txtTitle>:
-d0082d00:	73696874 20736920 65742061 73207473     this is a test s
-d0082d10:	6c6f7263 202c796c 656d6f73 6e696874     crolly, somethin
-d0082d20:	6f742067 73657420 6f662074 6f6e2072     g to test for no
-d0082d30:	62202c77 77207475 206c6c69 656b616d     w, but will make
-d0082d40:	20746920 696c2061 656c7474 74656220      it a little bet
-d0082d50:	20726574 6c6c6966 65742079 20797478     ter filly texty 
-d0082d60:	66757473 00000066                       stuff...
-
-d0082d68 <bk_bub_tree1>:
-	...
-d0082d7c:	21292110 21252525 21212529 29255d29     .!)!%%%!)%!!)]%)
-d0082d8c:	21212121 21212529 10292121 00001021     !!!!)%!!!!).!...
-	...
-d0082dbc:	21292910 29212521 25252925 25292529     .))!!%!)%)%%)%)%
-d0082dcc:	21212929 21212110 29292525 00001010     ))!!.!!!%%))....
-	...
-d0082df8:	10000000 25212921 29212521 1010215d     ....!)!%!%!)]!..
-d0082e08:	29212110 25292525 29211010 10102529     .!!)%%)%..!))%..
-d0082e18:	00000010 00000000 00000000 00000000     ................
-	...
-d0082e38:	10000000 25212121 25292925 10101010     ....!!!%%))%....
-d0082e48:	21101010 10101021 29101025 10101010     ...!!...%..)....
-d0082e58:	00000010 00000000 00000000 00000000     ................
-	...
-d0082e78:	10000000 29252121 29252925 10212110     ....!!%)%)%).!!.
-d0082e88:	10102121 10101010 10101010 67211010     !!............!g
-d0082e98:	00000010 00000000 00000000 00000000     ................
-	...
-d0082ebc:	25292110 25252925 10252121 67676725     .!)%%)%%!!%.%ggg
-d0082ecc:	10102121 10101010 bb672110 00001010     !!.......!g.....
-	...
-d0082efc:	29212110 25252525 10212125 bbbbbb21     .!!)%%%%%!!.!...
-d0082f0c:	67bbbbbb 21101010 67bb6710 00001010     ...g...!.g.g....
-	...
-d0082f3c:	25212110 29292521 21212925 bbbb6710     .!!%!%))%)!!.g..
-d0082f4c:	bbbbbbbb 211067bb 1010bb10 00001021     .....g.!....!...
-	...
-d0082f78:	10000000 25212921 10212921 29292521     ....!)!%!)!.!%))
-d0082f88:	67101021 bbbbbbbb 25101010 10102110     !..g.......%.!..
-d0082f98:	00001021 00000000 00000000 00000000     !...............
-	...
-d0082fb8:	10000000 21212521 21102925 25102561     ....!%!!%).!a%.%
-d0082fc8:	10212125 25672510 21101010 21101021     %!!..%g%...!!..!
-d0082fd8:	00101010 00000000 00000000 00000000     ................
-	...
-d0082ff8:	10000000 21252521 10102129 10211010     ....!%%!)!....!.
-d0083008:	21252525 10101021 29211010 10252525     %%%!!.....!)%%%.
-d0083018:	00102125 00000000 00000000 00000000     %!..............
-	...
-d0083038:	10000000 21292121 29211025 10212525     ....!!)!%.!)%%!.
-d0083048:	10102121 29292525 10252529 21101010     !!..%%)))%%....!
-d0083058:	00102125 00000000 00000000 00000000     %!..............
-	...
-d0083078:	10000000 25252121 29211029 21252529     ....!!%%).!))%%!
-d0083088:	21211010 10101010 21101010 29252521     ..!!.......!!%%)
-d0083098:	00102121 00000000 00000000 00000000     !!..............
-	...
-d00830bc:	21252110 5d212529 25252925 25252929     .!%!)%!]%)%%))%%
-d00830cc:	25292529 5d252529 21292929 00001021     )%)%)%%])))!!...
-	...
-d00830fc:	21252110 25252529 25292929 25252525     .!%!)%%%)))%%%%%
-d008310c:	25252125 21292925 255d2525 00000010     %!%%%))!%%]%....
-	...
-d008313c:	21252110 25292525 25252529 25292525     .!%!%%)%)%%%%%)%
-d008314c:	21212125 21212121 25292529 00000010     %!!!!!!!)%)%....
-	...
-d0083174:	10000000 10101010 25251010 25252929     ..........%%))%%
-d0083184:	25212525 29252925 21252925 29252121     %%!%%)%)%)%!!!%)
-d0083194:	25252525 10102129 00101010 00000000     %%%%)!..........
-	...
-d00831b4:	21100000 61292525 29102525 2121255d     ...!%%)a%%.)]%!!
-d00831c4:	21212525 25252525 29292929 29252925     %%!!%%%%))))%)%)
-d00831d4:	29292925 25252529 10252525 00001010     %))))%%%%%%.....
-	...
-d00831f4:	29211010 25252925 10252525 25212121     ..!)%)%%%%%.!!!%
-d0083204:	21212525 25212121 10102525 25211010     %%!!!!!%%%....!%
-d0083214:	29292529 21292925 25252525 10106129     )%))%))!%%%%)a..
-d0083224:	00000010 00000000 00000000 00000000     ................
-d0083234:	25252110 25252529 21252929 29212110     .!%%)%%%))%!.!!)
-d0083244:	25212125 25252925 25611010 10102529     %!!%%)%%..a%)%..
-d0083254:	21212121 25252525 25252925 25252529     !!!!%%%%%)%%)%%%
-d0083264:	00001010 00000000 00000000 00000000     ................
-d0083274:	29252910 25292525 25292521 25292110     .)%)%%)%!%)%.!)%
-d0083284:	25252129 29252529 29292929 21212525     )!%%)%%)))))%%!!
-d0083294:	21212110 29212125 29292925 25292529     .!!!%!!)%))))%)%
-d00832a4:	00001029 00000000 00000000 00000000     )...............
-d00832b4:	25292510 25292125 25292110 25291025     .%)%%!)%.!)%%.)%
-d00832c4:	25252529 29292525 25215d25 21252929     )%%%%%))%]!%))%!
-d00832d4:	25211021 25252929 25292525 29252925     !.!%))%%%%)%%)%)
-d00832e4:	00101025 00000000 00000000 10000000     %...............
-d00832f4:	25252521 10215d29 29252121 29252925     !%%%)]!.!!%)%)%)
-d0083304:	25212525 21292525 21292925 21252525     %%!%%%)!%))!%%%!
-d0083314:	25102121 21212925 25292521 25252925     !!.%%)!!!%)%%)%%
-d0083324:	00102925 00000000 00000000 10000000     %)..............
-d0083334:	25292121 10252929 25212121 255d2929     !!)%))%.!!!%))]%
-d0083344:	25212121 25212125 21212925 21292525     !!!%%!!%%)!!%%)!
-d0083354:	21102121 29212121 25212121 29252925     !!.!!!!)!!!%%)%)
-d0083364:	00102525 00000000 00000000 10000000     %%..............
-d0083374:	29252125 10292925 29211021 25292125     %!%)%)).!.!)%!)%
-d0083384:	21292929 21292521 25212525 21292529     )))!!%)!%%!%)%)!
-d0083394:	21102121 295d2929 10212925 29252925     !!.!))])%)!.%)%)
-d00833a4:	00102525 00000000 00000000 10000000     %%..............
-d00833b4:	29212121 25252525 10211010 25252561     !!!)%%%%..!.a%%%
-d00833c4:	25212121 21212129 25252125 21252925     !!!%)!!!%!%%%)%!
-d00833d4:	25102110 21212925 21292521 25292910     .!.%%)!!!%)!.))%
-d00833e4:	00102525 00000000 00000000 00000000     %%..............
-d00833f4:	21212510 29252129 21251021 25252110     .%!!)!%)!.%!.!%%
-d0083404:	21252929 25102121 29292125 21292925     ))%!!!.%%!))%))!
-d0083414:	21102110 21101021 25252110 25295d21     .!.!!..!.!%%!])%
-d0083424:	10212925 00000000 00000000 00000000     %)!.............
-d0083434:	21292510 25212929 21102125 21212110     .%)!))!%%!.!.!!!
-d0083444:	21211021 25211010 25252110 21212525     !.!!..!%.!%%%%!!
-d0083454:	10102110 10212110 29211021 29251021     .!...!!.!.!)!.%)
-d0083464:	10212525 00000000 00000000 00000000     %%!.............
-d0083474:	21292110 29212921 10102129 10102121     .!)!!)!))!..!!..
-d0083484:	10212110 25251010 25252110 10212925     .!!...%%.!%%%)!.
-d0083494:	10101021 10102121 29211021 2929105d     !...!!..!.!)].))
-d00834a4:	10212525 00000000 00000000 00000000     %%!.............
-d00834b4:	25211000 21252521 10212125 21212110     ..!%!%%!%!!..!!!
-d00834c4:	10101021 21102110 25252521 10212121     !....!.!!%%%!!!.
-d00834d4:	10101021 00001010 21212110 29211021     !........!!!!.!)
-d00834e4:	00102525 00000000 00000000 00000000     %%..............
-d00834f4:	21211000 21212121 10212121 10101010     ..!!!!!!!!!.....
-d0083504:	10101010 10211021 21212110 21212121     ....!.!..!!!!!!!
-d0083514:	10101010 00000000 21211000 21212121     ..........!!!!!!
-d0083524:	00102121 00000000 00000000 00000000     !!..............
-d0083534:	10100000 10101010 00101010 00000000     ................
-d0083544:	00000000 10101010 10101010 10101010     ................
-	...
-d008355c:	10100000 10101010 00001010              ............
-
-d0083568 <bk_bub_tree2>:
-	...
-d008357c:	21292110 21252525 21212529 29252529     .!)!%%%!)%!!)%%)
-d008358c:	21212121 21212529 10292121 00001021     !!!!)%!!!!).!...
-	...
-d00835b8:	29100000 25212129 29252921 25292525     ...))!!%!)%)%%)%
-d00835c8:	29292529 21102121 25252121 10102929     )%))!!.!!!%%))..
-	...
-d00835f4:	11000000 25212921 29212521 10102125     ....!)!%!%!)%!..
-d0083604:	29212110 25292525 29211010 10102529     .!!)%%)%..!))%..
-d0083614:	00000010 00000000 00000000 00000000     ................
-	...
-d0083634:	21211000 29252521 11102529 10101010     ..!!!%%))%......
-d0083644:	10212110 11251010 10102510 00101010     .!!...%..%......
-	...
-d0083670:	11000000 29292121 29252925 10212110     ....!!))%)%).!!.
-d0083680:	10102121 10101111 10101010 67211110     !!............!g
-d0083690:	00000010 00000000 00000000 00000000     ................
-	...
-d00836b0:	21100000 29252529 21212525 67251021     ...!)%%)%%!!!.%g
-d00836c0:	21216767 10101110 21101010 1011bb67     gg!!.......!g...
-	...
-d00836f0:	29212110 25252925 10212125 bbbbbb25     .!!)%)%%%!!.%...
-d0083700:	67bbbbbb 21101010 67bb6710 00001010     ...g...!.g.g....
-	...
-d008372c:	21100000 25212521 29252929 67102121     ...!!%!%))%)!!.g
-d008373c:	bbbbbbbb 67bbbbbb bb102110 10211010     .......g.!....!.
-	...
-d0083768:	10000000 25212921 11212921 29292521     ....!)!%!)!.!%))
-d0083778:	67101121 bbbbbbbb 25101110 10112510     !..g.......%.%..
-d0083788:	00001021 00000000 00000000 00000000     !...............
-	...
-d00837a8:	25211000 29292121 25252110 21252511     ..!%!!)).!%%.%%!
-d00837b8:	25101021 10102567 10212110 10102110     !..%g%...!!..!..
-d00837c8:	00000010 00000000 00000000 00000000     ................
-	...
-d00837e4:	10000000 21252521 10102129 11211010     ....!%%!)!....!.
-d00837f4:	21252525 10111021 29211110 10252525     %%%!!.....!)%%%.
-d0083804:	00102121 00000000 00000000 00000000     !!..............
-	...
-d0083824:	21211000 10252125 25292921 21211021     ..!!%!%.!))%!.!!
-d0083834:	25251011 25292929 10111025 21252110     ..%%)))%%....!%!
-d0083844:	00000010 00000000 00000000 00000000     ................
-	...
-d0083860:	11000000 21252121 29211025 21292529     ....!!%!%.!))%)!
-d0083870:	21211011 10101010 21101010 29252921     ..!!.......!!)%)
-d0083880:	00112121 00000000 00000000 00000000     !!..............
-	...
-d00838a0:	21100000 25292125 29292521 29292925     ...!%!)%!%))%)))
-d00838b0:	25292525 25292529 29292125 10212129     %%)%)%)%%!)))!!.
-	...
-d00838e0:	21252110 25252529 25292929 25252525     .!%!)%%%)))%%%%%
-d00838f0:	25252125 21292925 25252525 00000010     %!%%%))!%%%%....
-	...
-d008391c:	21100000 25252125 25292929 29252925     ...!%!%%)))%%)%)
-d008392c:	21252529 21212121 29252121 00112525     )%%!!!!!!!%)%%..
-	...
-d008395c:	21292110 29252925 21212529 25292925     .!)!%)%))%!!%))%
-d008396c:	21252525 29252121 25292929 10101125     %%%!!!%))))%%...
-d008397c:	00111010 00000000 00000000 00000000     ................
-	...
-d0083998:	21100000 25252125 21292929 25212121     ...!%!%%)))!!!!%
-d00839a8:	29292925 21292525 29252521 25292925     %)))%%)!!%%)%))%
-d00839b8:	29252925 00101029 00000000 00000000     %)%))...........
-	...
-d00839d4:	11000000 29212521 25252529 29292921     ....!%!))%%%!)))
-d00839e4:	25101125 25292921 21292929 29292525     %..%!))%)))!%%))
-d00839f4:	29292929 29292529 00101129 00000000     )))))%))).......
-	...
-d0083a14:	21252111 21292925 25292121 25252929     .!%!%))!!!)%))%%
-d0083a24:	21111121 29252925 25292525 21212525     !..!%)%)%%)%%%!!
-d0083a34:	29292121 21252925 00001125 00000000     !!))%)%!%.......
-	...
-d0083a50:	29100000 29292525 25251121 25252929     ...)%%))!.%%))%%
-d0083a60:	21292929 29211121 29252529 25252929     )))!!.!))%%)))%%
-d0083a70:	25252525 29252525 29252929 00000010     %%%%%%%)))%)....
-	...
-d0083a8c:	10000000 25252921 25102129 25292929     ....!)%%)!.%)))%
-d0083a9c:	29292925 11212129 29252121 21212529     %))))!!.!!%))%!!
-d0083aac:	21252929 25292121 29252929 00102129     ))%!!!)%))%))!..
-	...
-d0083acc:	29252110 11212529 25252925 25292529     .!%))%!.%)%%)%)%
-d0083adc:	21292925 25112121 21212929 25292521     %))!!!.%))!!!%)%
-d0083aec:	25292121 25292921 25252529 00000010     !!)%!))%)%%%....
-d0083afc:	00000000 10110000 00001010 25211011     ..............!%
-d0083b0c:	21292525 29252521 29252125 25292925     %%)!!%%)%!%)%))%
-d0083b1c:	21112121 21212111 25292521 25292125     !!.!.!!!!%)%%!)%
-d0083b2c:	25212125 25252925 00102529 00000000     %!!%%)%%)%......
-d0083b3c:	10100000 21292921 25211011 25252929     ....!))!..!%))%%
-d0083b4c:	29252921 21102529 25212525 10212525     !)%))%.!%%!%%%!.
-d0083b5c:	10102121 25252511 21212529 21252129     !!...%%%)%!!)!%!
-d0083b6c:	29252525 21252525 00000010 10000000     %%%)%%%!........
-d0083b7c:	25252521 29292925 29292929 29252529     !%%%%))))))))%%)
-d0083b8c:	21292525 21252910 29292929 11211021     %%)!.)%!))))!.!.
-d0083b9c:	29252121 21212529 21212121 21252129     !!%))%!!!!!!)!%!
-d0083bac:	29252529 00001021 00000000 29292111     )%%)!........!))
-d0083bbc:	25252129 25252525 29292925 25292929     )!%%%%%%%))))))%
-d0083bcc:	29211021 29212125 21212129 25251121     !.!)%!!))!!!!.%%
-d0083bdc:	21252529 21102121 21252111 25252521     )%%!!!.!.!%!!%%%
-d0083bec:	10212929 00000000 25100000 29212125     ))!........%%!!)
-d0083bfc:	21252525 25292925 25101025 11212121     %%%!%))%%..%!!!.
-d0083c0c:	21112529 21252929 11112121 21212121     )%.!))%!!!..!!!!
-d0083c1c:	11102121 29211021 25252110 21292525     !!..!.!).!%%%%)!
-d0083c2c:	00000010 10000000 21212921 29292521     ........!)!!!%))
-d0083c3c:	25252921 21101010 10212121 11212110     !)%%...!!!!..!!.
-d0083c4c:	25252521 21112121 10101010 10101010     !%%%!!.!........
-d0083c5c:	21102121 21211025 29292529 00102121     !!.!%.!!)%))!!..
-d0083c6c:	00000000 25211000 29252121 21212129     ......!%!!%))!!!
-d0083c7c:	21212121 21212121 21211011 29211021     !!!!!!!!..!!!.!)
-d0083c8c:	11212129 10101021 21212121 10102121     )!!.!...!!!!!!..
-d0083c9c:	11212110 29252921 11212129 00000000     .!!.!)%))!!.....
-d0083cac:	10000000 21212121 21212121 11212121     ....!!!!!!!!!!!.
-d0083cbc:	10101010 10101010 21111021 21212121     ........!..!!!!!
-d0083ccc:	10211010 21101010 10101011 21101010     ..!....!.......!
-d0083cdc:	25212111 21212125 00000010 00000000     .!!%%!!!........
-d0083cec:	10110000 10101010 10101110 00000010     ................
-d0083cfc:	00000000 10101000 10101010 10101010     ................
-d0083d0c:	10101010 00001010 00000000 10101000     ................
-d0083d1c:	10101010 00001010 00000000              ............
-
-d0083d28 <bk_bub_tree3>:
-	...
-d0083d3c:	21292110 21252525 21212529 25255d29     .!)!%%%!)%!!)]%%
-d0083d4c:	21212121 21212529 10292121 00001021     !!!!)%!!!!).!...
-	...
-d0083d80:	21292910 29212521 25252925 25292529     .))!!%!)%)%%)%)%
-d0083d90:	21212929 21212110 29292525 00001010     ))!!.!!!%%))....
-	...
-d0083dc0:	11000000 25212921 29212521 1110215d     ....!)!%!%!)]!..
-d0083dd0:	29212110 25292525 25211110 10106129     .!!)%%)%..!%)a..
-d0083de0:	00000010 00000000 00000000 00000000     ................
-	...
-d0083e04:	10000000 25212121 25292925 10101110     ....!!!%%))%....
-d0083e14:	21101010 10101021 29101125 10101010     ...!!...%..)....
-d0083e24:	00000010 00000000 00000000 00000000     ................
-	...
-d0083e48:	11000000 29252121 29252925 10212110     ....!!%)%)%).!!.
-d0083e58:	10102121 10101111 10101010 67211110     !!............!g
-d0083e68:	00000010 00000000 00000000 00000000     ................
-	...
-d0083e90:	25292110 25252925 10212121 67676725     .!)%%)%%!!!.%ggg
-d0083ea0:	11102121 10101010 bb672110 00001011     !!.......!g.....
-	...
-d0083ed4:	29212110 25252525 10212125 bbbbbb25     .!!)%%%%%!!.%...
-d0083ee4:	67bbbbbb 21101010 67bb6710 00001010     ...g...!.g.g....
-	...
-d0083f18:	25212110 29292521 21212925 bbbb6711     .!!%!%))%)!!.g..
-d0083f28:	bbbbbbbb 211067bb 1010bb10 00001021     .....g.!....!...
-	...
-d0083f58:	10000000 25212921 11212921 29292521     ....!)!%!)!.!%))
-d0083f68:	67101121 bbbbbbbb 25101110 10112510     !..g.......%.%..
-d0083f78:	00001021 00000000 00000000 00000000     !...............
-	...
-d0083f9c:	10000000 21212521 21102929 25112561     ....!%!!)).!a%.%
-d0083fac:	10212125 25672510 21101010 21101021     %!!..%g%...!!..!
-d0083fbc:	00101010 00000000 00000000 00000000     ................
-	...
-d0083fe0:	10000000 21252521 10102129 11211010     ....!%%!)!....!.
-d0083ff0:	21252525 10111021 29211111 10252525     %%%!!.....!)%%%.
-d0084000:	00102125 00000000 00000000 00000000     %!..............
-	...
-d0084024:	10000000 21292121 29211025 10212525     ....!!)!%.!)%%!.
-d0084034:	10112121 29252525 10252529 21101011     !!..%%%))%%....!
-d0084044:	00102125 00000000 00000000 00000000     %!..............
-	...
-d0084068:	11000000 25252121 29211025 21252525     ....!!%%%.!)%%%!
-d0084078:	21211011 10101010 21101110 25252525     ..!!.......!%%%%
-d0084088:	00112121 00000000 00000000 00000000     !!..............
-	...
-d00840b0:	21252110 5d212529 25252925 25252929     .!%!)%!]%)%%))%%
-d00840c0:	25292529 5d252529 21292929 00001021     )%)%)%%])))!!...
-	...
-d00840f4:	21252110 25252525 25292929 25252525     .!%!%%%%)))%%%%%
-d0084104:	25252125 21292925 255d2525 00000010     %!%%%))!%%]%....
-	...
-d0084138:	21252110 25292525 25252529 25292525     .!%!%%)%)%%%%%)%
-d0084148:	21212129 21212121 25252525 00000011     )!!!!!!!%%%%....
-	...
-d008417c:	21252111 29252925 25292925 10252529     .!%!%)%)%))%)%%.
-d008418c:	10101010 21101010 25252121 10252525     .......!!!%%%%%.
-d008419c:	10101010 10101010 00000010 00000000     ................
-	...
-d00841bc:	11000000 25212121 29252929 25292525     ....!!!%))%)%%)%
-d00841cc:	21112525 29252525 11212525 21211111     %%.!%%%)%%!...!!
-d00841dc:	25292529 25252525 61252925 00101021     )%)%%%%%%)%a!...
-	...
-d0084200:	21102000 29252125 25292529 29252929     . .!%!%))%)%))%)
-d0084210:	29252125 25292929 25292529 21112525     %!%))))%)%)%%%.!
-d0084220:	29252121 25252529 25252525 10252525     !!%))%%%%%%%%%%.
-	...
-d008423c:	11101000 10101111 29252111 25252525     .........!%)%%%%
-d008424c:	29292925 25252925 25252529 25212525     %)))%)%%)%%%%%!%
-d008425c:	25252525 11252561 25252521 25252525     %%%%a%%.!%%%%%%%
-d008426c:	25252525 29292929 00000010 00000000     %%%%))))........
-d008427c:	10000000 29212110 29252525 25252929     .....!!)%%%)))%%
-d008428c:	29252925 215d2529 29252525 25252925     %)%))%]!%%%)%)%%
-d008429c:	29251125 25292525 21252525 21212511     %.%)%%)%%%%!.%!!
-d00842ac:	21212929 29252525 25252529 00001021     ))!!%%%))%%%!...
-d00842bc:	00000000 21100000 25292925 25292925     .......!%))%%))%
-d00842cc:	25292925 29292529 25212125 29292525     %))%)%))%!!%%%))
-d00842dc:	25252925 25292511 29252925 21252929     %)%%.%)%%)%)))%!
-d00842ec:	25252110 25252525 25292125 25292525     .!%%%%%%%!)%%%)%
-d00842fc:	00001029 00000000 29100000 25252529     )..........))%%%
-d008430c:	29292925 29252529 21212529 25292521     %))))%%))%!!!%)%
-d008431c:	25252929 11212125 25256121 25252529     ))%%%!!.!a%%)%%%
-d008432c:	21212925 21292111 21212121 21212525     %)!!.!)!!!!!%%!!
-d008433c:	25292925 00001025 00000000 25211000     %))%%.........!%
-d008434c:	29252121 25252525 25252525 25292925     !!%)%%%%%%%%%))%
-d008435c:	25252925 21252525 21112121 21252525     %)%%%%%!!!.!%%%!
-d008436c:	25292925 21212529 21212110 21211111     %))%)%!!.!!!..!!
-d008437c:	21252521 25255d21 00102125 00000000     !%%!!]%%%!......
-d008438c:	10252110 25252929 25252529 25292925     .!%.))%%)%%%%))%
-d008439c:	25252929 29252525 29212125 21102529     ))%%%%%)%!!))%.!
-d00843ac:	25212525 29252525 21212121 10102110     %%!%%%%)!!!!.!..
-d00843bc:	10212121 25252121 25612921 00102125     !!!.!!%%!)a%%!..
-d00843cc:	00000000 25112110 29252925 2529295d     .....!.%%)%)]))%
-d00843dc:	25292529 21292925 21212121 25292925     )%)%%))!!!!!%))%
-d00843ec:	2121115d 25212121 21212529 21212121     ].!!!!!%)%!!!!!!
-d00843fc:	21211010 21101010 29212110 21252121     ..!!...!.!!)!!%!
-d008440c:	00112121 10000000 25292121 25252529     !!......!!)%)%%%
-d008441c:	21212121 21212121 25252925 21252525     !!!!!!!!%)%%%%%!
-d008442c:	21212121 21211011 25292121 21212121     !!!!..!!!!)%!!!!
-d008443c:	10212110 10212121 11200000 21212121     .!!.!!!... .!!!!
-d008444c:	21212121 00001021 10000000 21252929     !!!!!.......))%!
-d008445c:	21212525 21212121 10102121 29212121     %%!!!!!!!!..!!!)
-d008446c:	21212121 10212121 21211010 21212121     !!!!!!!...!!!!!!
-d008447c:	10212121 10102121 00101121 10000000     !!!.!!..!.......
-d008448c:	10212121 21212121 00001021 10000000     !!!.!!!!!.......
-d008449c:	25212521 10212925 10102110 21212111     !%!%%)!..!...!!!
-d00844ac:	21211111 11111011 10101021 21101010     ..!!....!......!
-d00844bc:	21212111 10102121 10102121 00101010     .!!!!!..!!......
-d00844cc:	00000000 21211010 10212121 00000010     ......!!!!!.....
-d00844dc:	00000000 29252111 21102125 00001021     .....!%)%!.!!...
-d00844ec:	21101000 10102121 21101010 10102121     ...!!!.....!!!..
-d00844fc:	10101010 21212121 21101010 10101021     ....!!!!...!!...
-d008450c:	00001110 00000000 10110000 00101010     ................
-	...
-d0084524:	21251000 21211021 00000010 10000000     ..%!!.!!........
-d0084534:	21212110 10102121 00101010 10000000     .!!!!!..........
-d0084544:	10112110 21211010 00000011 00000000     .!....!!........
-	...
-d0084568:	10100000 11101010 00000000 00000000     ................
-d0084578:	10101100 00101010 00000000 00000000     ................
-d0084588:	10101000 10101010 00000000 00000000     ................
+d0081df4 <__ssputs_r>:
+d0081df4:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
+d0081df8:	688e      	ldr	r6, [r1, #8]
+d0081dfa:	429e      	cmp	r6, r3
+d0081dfc:	4682      	mov	sl, r0
+d0081dfe:	460c      	mov	r4, r1
+d0081e00:	4690      	mov	r8, r2
+d0081e02:	461f      	mov	r7, r3
+d0081e04:	d838      	bhi.n	d0081e78 <__ssputs_r+0x84>
+d0081e06:	898a      	ldrh	r2, [r1, #12]
+d0081e08:	f412 6f90 	tst.w	r2, #1152	; 0x480
+d0081e0c:	d032      	beq.n	d0081e74 <__ssputs_r+0x80>
+d0081e0e:	6825      	ldr	r5, [r4, #0]
+d0081e10:	6909      	ldr	r1, [r1, #16]
+d0081e12:	eba5 0901 	sub.w	r9, r5, r1
+d0081e16:	6965      	ldr	r5, [r4, #20]
+d0081e18:	eb05 0545 	add.w	r5, r5, r5, lsl #1
+d0081e1c:	eb05 75d5 	add.w	r5, r5, r5, lsr #31
+d0081e20:	3301      	adds	r3, #1
+d0081e22:	444b      	add	r3, r9
+d0081e24:	106d      	asrs	r5, r5, #1
+d0081e26:	429d      	cmp	r5, r3
+d0081e28:	bf38      	it	cc
+d0081e2a:	461d      	movcc	r5, r3
+d0081e2c:	0553      	lsls	r3, r2, #21
+d0081e2e:	d531      	bpl.n	d0081e94 <__ssputs_r+0xa0>
+d0081e30:	4629      	mov	r1, r5
+d0081e32:	f7ff fb37 	bl	d00814a4 <_malloc_r>
+d0081e36:	4606      	mov	r6, r0
+d0081e38:	b950      	cbnz	r0, d0081e50 <__ssputs_r+0x5c>
+d0081e3a:	230c      	movs	r3, #12
+d0081e3c:	f8ca 3000 	str.w	r3, [sl]
+d0081e40:	89a3      	ldrh	r3, [r4, #12]
+d0081e42:	f043 0340 	orr.w	r3, r3, #64	; 0x40
+d0081e46:	81a3      	strh	r3, [r4, #12]
+d0081e48:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+d0081e4c:	e8bd 87f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
+d0081e50:	6921      	ldr	r1, [r4, #16]
+d0081e52:	464a      	mov	r2, r9
+d0081e54:	f000 fb9c 	bl	d0082590 <memcpy>
+d0081e58:	89a3      	ldrh	r3, [r4, #12]
+d0081e5a:	f423 6390 	bic.w	r3, r3, #1152	; 0x480
+d0081e5e:	f043 0380 	orr.w	r3, r3, #128	; 0x80
+d0081e62:	81a3      	strh	r3, [r4, #12]
+d0081e64:	6126      	str	r6, [r4, #16]
+d0081e66:	6165      	str	r5, [r4, #20]
+d0081e68:	444e      	add	r6, r9
+d0081e6a:	eba5 0509 	sub.w	r5, r5, r9
+d0081e6e:	6026      	str	r6, [r4, #0]
+d0081e70:	60a5      	str	r5, [r4, #8]
+d0081e72:	463e      	mov	r6, r7
+d0081e74:	42be      	cmp	r6, r7
+d0081e76:	d900      	bls.n	d0081e7a <__ssputs_r+0x86>
+d0081e78:	463e      	mov	r6, r7
+d0081e7a:	4632      	mov	r2, r6
+d0081e7c:	6820      	ldr	r0, [r4, #0]
+d0081e7e:	4641      	mov	r1, r8
+d0081e80:	f000 fb94 	bl	d00825ac <memmove>
+d0081e84:	68a3      	ldr	r3, [r4, #8]
+d0081e86:	6822      	ldr	r2, [r4, #0]
+d0081e88:	1b9b      	subs	r3, r3, r6
+d0081e8a:	4432      	add	r2, r6
+d0081e8c:	60a3      	str	r3, [r4, #8]
+d0081e8e:	6022      	str	r2, [r4, #0]
+d0081e90:	2000      	movs	r0, #0
+d0081e92:	e7db      	b.n	d0081e4c <__ssputs_r+0x58>
+d0081e94:	462a      	mov	r2, r5
+d0081e96:	f000 fba3 	bl	d00825e0 <_realloc_r>
+d0081e9a:	4606      	mov	r6, r0
+d0081e9c:	2800      	cmp	r0, #0
+d0081e9e:	d1e1      	bne.n	d0081e64 <__ssputs_r+0x70>
+d0081ea0:	6921      	ldr	r1, [r4, #16]
+d0081ea2:	4650      	mov	r0, sl
+d0081ea4:	f7ff faae 	bl	d0081404 <_free_r>
+d0081ea8:	e7c7      	b.n	d0081e3a <__ssputs_r+0x46>
 	...
 
-d00845a8 <bk_bub_tree4>:
-	...
-d00845bc:	25292110 21292525 21212529 29252529     .!)%%%)!)%!!)%%)
-d00845cc:	21212121 21212529 10252121 00001021     !!!!)%!!!!%.!...
-	...
-d0084600:	21292910 25212521 25252925 25292525     .))!!%!%%)%%%%)%
-d0084610:	21212929 21212110 29292525 00001010     ))!!.!!!%%))....
-	...
-d0084640:	10000000 25212921 29212521 10102125     ....!)!%!%!)%!..
-d0084650:	25212110 25292525 29211010 10102525     .!!%%%)%..!)%%..
-d0084660:	00000010 00000000 00000000 00000000     ................
-	...
-d0084684:	10000000 25212121 25292921 10101010     ....!!!%!))%....
-d0084694:	21101010 10101021 25101025 10101010     ...!!...%..%....
-d00846a4:	00000010 00000000 00000000 00000000     ................
-	...
-d00846c8:	10000000 29252121 29252929 10212110     ....!!%)))%).!!.
-d00846d8:	10102121 10101010 10101010 67211010     !!............!g
-d00846e8:	00000010 00000000 00000000 00000000     ................
-	...
-d0084710:	25252110 25252525 10252121 67676725     .!%%%%%%!!%.%ggg
-d0084720:	10102121 10101010 bb672110 00001010     !!.......!g.....
-	...
-d0084754:	29212110 25252525 10212125 bbbbbb25     .!!)%%%%%!!.%...
-d0084764:	67bbbbbb 21101010 67bb6710 00001010     ...g...!.g.g....
-	...
-d0084798:	25212110 29252521 21212925 bbbb6710     .!!%!%%)%)!!.g..
-d00847a8:	bbbbbbbb 211067bb 1010bb10 00001021     .....g.!....!...
-	...
-d00847d8:	10000000 25212921 10212921 25292521     ....!)!%!)!.!%)%
-d00847e8:	67101021 bbbbbbbb 25101010 10102510     !..g.......%.%..
-d00847f8:	00001021 00000000 00000000 00000000     !...............
-	...
-d008481c:	10000000 21212521 21102929 21102525     ....!%!!)).!%%.!
-d008482c:	10212125 25672510 21101010 21101021     %!!..%g%...!!..!
-d008483c:	00101010 00000000 00000000 00000000     ................
-	...
-d0084860:	10000000 21252521 10102129 10211010     ....!%%!)!....!.
-d0084870:	21252521 10101021 29211010 10252525     !%%!!.....!)%%%.
-d0084880:	00102125 00000000 00000000 00000000     %!..............
-	...
-d00848a4:	10000000 21292121 29211025 10212925     ....!!)!%.!)%)!.
-d00848b4:	10102121 29292525 10252525 21101010     !!..%%))%%%....!
-d00848c4:	00102121 00000000 00000000 00000000     !!..............
-	...
-d00848e8:	10000000 21252121 29211029 21252529     ....!!%!).!))%%!
-d00848f8:	21211010 10101010 21101010 25252521     ..!!.......!!%%%
-d0084908:	00102121 00000000 00000000 00000000     !!..............
-	...
-d0084930:	21252110 25212529 25252529 29252929     .!%!)%!%)%%%))%)
-d0084940:	25292525 21252525 21292929 00001021     %%)%%%%!)))!!...
-	...
-d0084974:	21252110 25252529 25292929 25252525     .!%!)%%%)))%%%%%
-d0084984:	25252125 25252525 25252525 00000010     %!%%%%%%%%%%....
-	...
-d00849b8:	21252110 25292525 29252529 25292525     .!%!%%)%)%%)%%)%
-d00849c8:	21212125 21212121 25292529 00000010     %!!!!!!!)%)%....
-	...
-d00849fc:	21292110 29292525 25252129 25252529     .!)!%%)))!%%)%%%
-d0084a0c:	21252929 29252121 29252525 10101025     ))%!!!%)%%%)%...
-	...
-d0084a34:	10000000 10101010 00000020 29212110     ........ ....!!)
-d0084a44:	25292525 25212121 25292525 25292525     %%)%!!!%%%)%%%)%
-d0084a54:	25212121 25252925 29252525 00000010     !!!%%)%%%%%)....
-	...
-d0084a78:	21101010 25292925 20101021 25252921     ...!%))%!.. !)%%
-d0084a88:	29252529 21212121 10101010 29252510     )%%)!!!!.....%%)
-d0084a98:	25292529 29292929 25292525 10101025     )%)%))))%%)%%...
-	...
-d0084ab8:	10000000 29212921 25252525 25252925     ....!)!)%%%%%)%%
-d0084ac8:	29252121 21292525 10102521 29252521     !!%)%%)!!%..!%%)
-d0084ad8:	10101029 21212110 29292521 25252525     )....!!!!%))%%%%
-d0084ae8:	25252529 00001010 00000000 00000000     )%%%............
-d0084af8:	00000000 21100000 25292529 29252929     .......!)%)%))%)
-d0084b08:	25252525 25252529 21212929 25252925     %%%%)%%%))!!%)%%
-d0084b18:	25252525 25292925 10101025 21212121     %%%%%))%%...!!!!
-d0084b28:	29212521 29292929 00102525 00000000     !%!)))))%%......
-	...
-d0084b40:	25211000 25252525 25292929 25292525     ..!%%%%%)))%%%)%
-d0084b50:	25292529 25292121 29252925 25292529     )%)%!!)%%)%))%)%
-d0084b60:	29252529 21292925 21212110 21252521     )%%)%))!.!!!!%%!
-d0084b70:	25292521 10252925 00000000 00000000     !%)%%)%.........
-d0084b80:	00000000 25251000 25292929 25292525     ......%%)))%%%)%
-d0084b90:	25252929 25212129 25252529 25252925     ))%%)!!%)%%%%)%%
-d0084ba0:	29292925 29252529 25252925 25211021     %))))%%)%)%%!.!%
-d0084bb0:	29252529 29252529 25252525 00000010     )%%))%%)%%%%....
-	...
-d0084bc8:	25212110 29252525 25252529 25292525     .!!%%%%))%%%%%)%
-d0084bd8:	25252525 21292925 21292521 29252521     %%%%%))!!%)!!%%)
-d0084be8:	25292521 29252929 25102125 21212529     !%)%))%)%!.%)%!!
-d0084bf8:	21212925 25252929 00001029 00000000     %)!!))%%).......
-d0084c08:	00000000 25212510 21292521 21212125     .....%!%!%)!%!!!
-d0084c18:	29292525 25292525 25252525 21212125     %%))%%)%%%%%%!!!
-d0084c28:	29292525 21252929 25252529 10212529     %%))))%!)%%%)%!.
-d0084c38:	25292121 25252525 29292121 00102525     !!)%%%%%!!))%%..
-	...
-d0084c50:	21252510 21212529 10101021 25252121     .%%!)%!!!...!!%%
-d0084c60:	21252925 21212129 25292121 25211010     %)%!)!!!!!)%..!%
-d0084c70:	21252525 29292521 10212525 21101010     %%%!!%))%%!....!
-d0084c80:	25212121 29212925 10292525 00000000     !!!%%)!)%%).....
-d0084c90:	00000000 21292510 10212125 21212121     .....%)!%!!.!!!!
-d0084ca0:	25212110 29292929 29252925 21212125     .!!%))))%)%)%!!!
-d0084cb0:	21101010 21252529 25252521 10212925     ...!)%%!!%%%%)!.
-d0084cc0:	10212121 21211010 21292929 29252525     !!!...!!)))!%%%)
-d0084cd0:	00000010 10000000 21292521 21102129     ........!%)!)!.!
-d0084ce0:	21101021 21212121 21212121 21212121     !..!!!!!!!!!!!!!
-d0084cf0:	10102121 10101021 21292525 25292910     !!..!...%%)!.))%
-d0084d00:	10212125 21211010 21102121 29252121     %!!...!!!!.!!!%)
-d0084d10:	29252521 00001025 10000000 25212525     !%%)%.......%%!%
-d0084d20:	21212125 10200010 25211010 21101021     %!!!.. ...!%!..!
-d0084d30:	10102121 21101010 10101021 10212921     !!.....!!...!)!.
-d0084d40:	29292521 10212121 10101010 21211010     !%))!!!.......!!
-d0084d50:	29212121 25212125 00001025 10000000     !!!)%!!%%.......
-d0084d60:	29212529 10212121 00000000 10102000     )%!)!!!...... ..
-d0084d70:	25212110 21212121 10212121 21101010     .!!%!!!!!!!....!
-d0084d80:	10212110 21212125 10102110 00001010     .!!.%!!!.!......
-d0084d90:	10100000 21101021 25212121 00102125     ....!..!!!!%%!..
-d0084da0:	10000000 21212121 10212125 00000000     ....!!!!%!!.....
-d0084db0:	00000000 10101020 10101010 00101010     .... ...........
-d0084dc0:	10100000 21102121 10102121 00001021     ....!!.!!!..!...
-	...
-d0084dd8:	10102110 21212110 00102121 00000000     .!...!!!!!......
-d0084de8:	10101010 00101010 00000000 00000000     ................
-	...
-d0084e04:	10000000 10101010 10101010 00000010     ................
-	...
-d0084e1c:	10101000 10101010 00001010              ............
+d0081eac <_svfiprintf_r>:
+d0081eac:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+d0081eb0:	4698      	mov	r8, r3
+d0081eb2:	898b      	ldrh	r3, [r1, #12]
+d0081eb4:	061b      	lsls	r3, r3, #24
+d0081eb6:	b09d      	sub	sp, #116	; 0x74
+d0081eb8:	4607      	mov	r7, r0
+d0081eba:	460d      	mov	r5, r1
+d0081ebc:	4614      	mov	r4, r2
+d0081ebe:	d50e      	bpl.n	d0081ede <_svfiprintf_r+0x32>
+d0081ec0:	690b      	ldr	r3, [r1, #16]
+d0081ec2:	b963      	cbnz	r3, d0081ede <_svfiprintf_r+0x32>
+d0081ec4:	2140      	movs	r1, #64	; 0x40
+d0081ec6:	f7ff faed 	bl	d00814a4 <_malloc_r>
+d0081eca:	6028      	str	r0, [r5, #0]
+d0081ecc:	6128      	str	r0, [r5, #16]
+d0081ece:	b920      	cbnz	r0, d0081eda <_svfiprintf_r+0x2e>
+d0081ed0:	230c      	movs	r3, #12
+d0081ed2:	603b      	str	r3, [r7, #0]
+d0081ed4:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+d0081ed8:	e0d1      	b.n	d008207e <_svfiprintf_r+0x1d2>
+d0081eda:	2340      	movs	r3, #64	; 0x40
+d0081edc:	616b      	str	r3, [r5, #20]
+d0081ede:	2300      	movs	r3, #0
+d0081ee0:	9309      	str	r3, [sp, #36]	; 0x24
+d0081ee2:	2320      	movs	r3, #32
+d0081ee4:	f88d 3029 	strb.w	r3, [sp, #41]	; 0x29
+d0081ee8:	f8cd 800c 	str.w	r8, [sp, #12]
+d0081eec:	2330      	movs	r3, #48	; 0x30
+d0081eee:	f8df 81a8 	ldr.w	r8, [pc, #424]	; d0082098 <_svfiprintf_r+0x1ec>
+d0081ef2:	f88d 302a 	strb.w	r3, [sp, #42]	; 0x2a
+d0081ef6:	f04f 0901 	mov.w	r9, #1
+d0081efa:	4623      	mov	r3, r4
+d0081efc:	469a      	mov	sl, r3
+d0081efe:	f813 2b01 	ldrb.w	r2, [r3], #1
+d0081f02:	b10a      	cbz	r2, d0081f08 <_svfiprintf_r+0x5c>
+d0081f04:	2a25      	cmp	r2, #37	; 0x25
+d0081f06:	d1f9      	bne.n	d0081efc <_svfiprintf_r+0x50>
+d0081f08:	ebba 0b04 	subs.w	fp, sl, r4
+d0081f0c:	d00b      	beq.n	d0081f26 <_svfiprintf_r+0x7a>
+d0081f0e:	465b      	mov	r3, fp
+d0081f10:	4622      	mov	r2, r4
+d0081f12:	4629      	mov	r1, r5
+d0081f14:	4638      	mov	r0, r7
+d0081f16:	f7ff ff6d 	bl	d0081df4 <__ssputs_r>
+d0081f1a:	3001      	adds	r0, #1
+d0081f1c:	f000 80aa 	beq.w	d0082074 <_svfiprintf_r+0x1c8>
+d0081f20:	9a09      	ldr	r2, [sp, #36]	; 0x24
+d0081f22:	445a      	add	r2, fp
+d0081f24:	9209      	str	r2, [sp, #36]	; 0x24
+d0081f26:	f89a 3000 	ldrb.w	r3, [sl]
+d0081f2a:	2b00      	cmp	r3, #0
+d0081f2c:	f000 80a2 	beq.w	d0082074 <_svfiprintf_r+0x1c8>
+d0081f30:	2300      	movs	r3, #0
+d0081f32:	f04f 32ff 	mov.w	r2, #4294967295	; 0xffffffff
+d0081f36:	e9cd 2305 	strd	r2, r3, [sp, #20]
+d0081f3a:	f10a 0a01 	add.w	sl, sl, #1
+d0081f3e:	9304      	str	r3, [sp, #16]
+d0081f40:	9307      	str	r3, [sp, #28]
+d0081f42:	f88d 3053 	strb.w	r3, [sp, #83]	; 0x53
+d0081f46:	931a      	str	r3, [sp, #104]	; 0x68
+d0081f48:	4654      	mov	r4, sl
+d0081f4a:	2205      	movs	r2, #5
+d0081f4c:	f814 1b01 	ldrb.w	r1, [r4], #1
+d0081f50:	4851      	ldr	r0, [pc, #324]	; (d0082098 <_svfiprintf_r+0x1ec>)
+d0081f52:	f000 facd 	bl	d00824f0 <memchr>
+d0081f56:	9a04      	ldr	r2, [sp, #16]
+d0081f58:	b9d8      	cbnz	r0, d0081f92 <_svfiprintf_r+0xe6>
+d0081f5a:	06d0      	lsls	r0, r2, #27
+d0081f5c:	bf44      	itt	mi
+d0081f5e:	2320      	movmi	r3, #32
+d0081f60:	f88d 3053 	strbmi.w	r3, [sp, #83]	; 0x53
+d0081f64:	0711      	lsls	r1, r2, #28
+d0081f66:	bf44      	itt	mi
+d0081f68:	232b      	movmi	r3, #43	; 0x2b
+d0081f6a:	f88d 3053 	strbmi.w	r3, [sp, #83]	; 0x53
+d0081f6e:	f89a 3000 	ldrb.w	r3, [sl]
+d0081f72:	2b2a      	cmp	r3, #42	; 0x2a
+d0081f74:	d015      	beq.n	d0081fa2 <_svfiprintf_r+0xf6>
+d0081f76:	9a07      	ldr	r2, [sp, #28]
+d0081f78:	4654      	mov	r4, sl
+d0081f7a:	2000      	movs	r0, #0
+d0081f7c:	f04f 0c0a 	mov.w	ip, #10
+d0081f80:	4621      	mov	r1, r4
+d0081f82:	f811 3b01 	ldrb.w	r3, [r1], #1
+d0081f86:	3b30      	subs	r3, #48	; 0x30
+d0081f88:	2b09      	cmp	r3, #9
+d0081f8a:	d94e      	bls.n	d008202a <_svfiprintf_r+0x17e>
+d0081f8c:	b1b0      	cbz	r0, d0081fbc <_svfiprintf_r+0x110>
+d0081f8e:	9207      	str	r2, [sp, #28]
+d0081f90:	e014      	b.n	d0081fbc <_svfiprintf_r+0x110>
+d0081f92:	eba0 0308 	sub.w	r3, r0, r8
+d0081f96:	fa09 f303 	lsl.w	r3, r9, r3
+d0081f9a:	4313      	orrs	r3, r2
+d0081f9c:	9304      	str	r3, [sp, #16]
+d0081f9e:	46a2      	mov	sl, r4
+d0081fa0:	e7d2      	b.n	d0081f48 <_svfiprintf_r+0x9c>
+d0081fa2:	9b03      	ldr	r3, [sp, #12]
+d0081fa4:	1d19      	adds	r1, r3, #4
+d0081fa6:	681b      	ldr	r3, [r3, #0]
+d0081fa8:	9103      	str	r1, [sp, #12]
+d0081faa:	2b00      	cmp	r3, #0
+d0081fac:	bfbb      	ittet	lt
+d0081fae:	425b      	neglt	r3, r3
+d0081fb0:	f042 0202 	orrlt.w	r2, r2, #2
+d0081fb4:	9307      	strge	r3, [sp, #28]
+d0081fb6:	9307      	strlt	r3, [sp, #28]
+d0081fb8:	bfb8      	it	lt
+d0081fba:	9204      	strlt	r2, [sp, #16]
+d0081fbc:	7823      	ldrb	r3, [r4, #0]
+d0081fbe:	2b2e      	cmp	r3, #46	; 0x2e
+d0081fc0:	d10c      	bne.n	d0081fdc <_svfiprintf_r+0x130>
+d0081fc2:	7863      	ldrb	r3, [r4, #1]
+d0081fc4:	2b2a      	cmp	r3, #42	; 0x2a
+d0081fc6:	d135      	bne.n	d0082034 <_svfiprintf_r+0x188>
+d0081fc8:	9b03      	ldr	r3, [sp, #12]
+d0081fca:	1d1a      	adds	r2, r3, #4
+d0081fcc:	681b      	ldr	r3, [r3, #0]
+d0081fce:	9203      	str	r2, [sp, #12]
+d0081fd0:	2b00      	cmp	r3, #0
+d0081fd2:	bfb8      	it	lt
+d0081fd4:	f04f 33ff 	movlt.w	r3, #4294967295	; 0xffffffff
+d0081fd8:	3402      	adds	r4, #2
+d0081fda:	9305      	str	r3, [sp, #20]
+d0081fdc:	f8df a0c8 	ldr.w	sl, [pc, #200]	; d00820a8 <_svfiprintf_r+0x1fc>
+d0081fe0:	7821      	ldrb	r1, [r4, #0]
+d0081fe2:	2203      	movs	r2, #3
+d0081fe4:	4650      	mov	r0, sl
+d0081fe6:	f000 fa83 	bl	d00824f0 <memchr>
+d0081fea:	b140      	cbz	r0, d0081ffe <_svfiprintf_r+0x152>
+d0081fec:	2340      	movs	r3, #64	; 0x40
+d0081fee:	eba0 000a 	sub.w	r0, r0, sl
+d0081ff2:	fa03 f000 	lsl.w	r0, r3, r0
+d0081ff6:	9b04      	ldr	r3, [sp, #16]
+d0081ff8:	4303      	orrs	r3, r0
+d0081ffa:	3401      	adds	r4, #1
+d0081ffc:	9304      	str	r3, [sp, #16]
+d0081ffe:	f814 1b01 	ldrb.w	r1, [r4], #1
+d0082002:	4826      	ldr	r0, [pc, #152]	; (d008209c <_svfiprintf_r+0x1f0>)
+d0082004:	f88d 1028 	strb.w	r1, [sp, #40]	; 0x28
+d0082008:	2206      	movs	r2, #6
+d008200a:	f000 fa71 	bl	d00824f0 <memchr>
+d008200e:	2800      	cmp	r0, #0
+d0082010:	d038      	beq.n	d0082084 <_svfiprintf_r+0x1d8>
+d0082012:	4b23      	ldr	r3, [pc, #140]	; (d00820a0 <_svfiprintf_r+0x1f4>)
+d0082014:	bb1b      	cbnz	r3, d008205e <_svfiprintf_r+0x1b2>
+d0082016:	9b03      	ldr	r3, [sp, #12]
+d0082018:	3307      	adds	r3, #7
+d008201a:	f023 0307 	bic.w	r3, r3, #7
+d008201e:	3308      	adds	r3, #8
+d0082020:	9303      	str	r3, [sp, #12]
+d0082022:	9b09      	ldr	r3, [sp, #36]	; 0x24
+d0082024:	4433      	add	r3, r6
+d0082026:	9309      	str	r3, [sp, #36]	; 0x24
+d0082028:	e767      	b.n	d0081efa <_svfiprintf_r+0x4e>
+d008202a:	fb0c 3202 	mla	r2, ip, r2, r3
+d008202e:	460c      	mov	r4, r1
+d0082030:	2001      	movs	r0, #1
+d0082032:	e7a5      	b.n	d0081f80 <_svfiprintf_r+0xd4>
+d0082034:	2300      	movs	r3, #0
+d0082036:	3401      	adds	r4, #1
+d0082038:	9305      	str	r3, [sp, #20]
+d008203a:	4619      	mov	r1, r3
+d008203c:	f04f 0c0a 	mov.w	ip, #10
+d0082040:	4620      	mov	r0, r4
+d0082042:	f810 2b01 	ldrb.w	r2, [r0], #1
+d0082046:	3a30      	subs	r2, #48	; 0x30
+d0082048:	2a09      	cmp	r2, #9
+d008204a:	d903      	bls.n	d0082054 <_svfiprintf_r+0x1a8>
+d008204c:	2b00      	cmp	r3, #0
+d008204e:	d0c5      	beq.n	d0081fdc <_svfiprintf_r+0x130>
+d0082050:	9105      	str	r1, [sp, #20]
+d0082052:	e7c3      	b.n	d0081fdc <_svfiprintf_r+0x130>
+d0082054:	fb0c 2101 	mla	r1, ip, r1, r2
+d0082058:	4604      	mov	r4, r0
+d008205a:	2301      	movs	r3, #1
+d008205c:	e7f0      	b.n	d0082040 <_svfiprintf_r+0x194>
+d008205e:	ab03      	add	r3, sp, #12
+d0082060:	9300      	str	r3, [sp, #0]
+d0082062:	462a      	mov	r2, r5
+d0082064:	4b0f      	ldr	r3, [pc, #60]	; (d00820a4 <_svfiprintf_r+0x1f8>)
+d0082066:	a904      	add	r1, sp, #16
+d0082068:	4638      	mov	r0, r7
+d008206a:	f3af 8000 	nop.w
+d008206e:	1c42      	adds	r2, r0, #1
+d0082070:	4606      	mov	r6, r0
+d0082072:	d1d6      	bne.n	d0082022 <_svfiprintf_r+0x176>
+d0082074:	89ab      	ldrh	r3, [r5, #12]
+d0082076:	065b      	lsls	r3, r3, #25
+d0082078:	f53f af2c 	bmi.w	d0081ed4 <_svfiprintf_r+0x28>
+d008207c:	9809      	ldr	r0, [sp, #36]	; 0x24
+d008207e:	b01d      	add	sp, #116	; 0x74
+d0082080:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+d0082084:	ab03      	add	r3, sp, #12
+d0082086:	9300      	str	r3, [sp, #0]
+d0082088:	462a      	mov	r2, r5
+d008208a:	4b06      	ldr	r3, [pc, #24]	; (d00820a4 <_svfiprintf_r+0x1f8>)
+d008208c:	a904      	add	r1, sp, #16
+d008208e:	4638      	mov	r0, r7
+d0082090:	f000 f87a 	bl	d0082188 <_printf_i>
+d0082094:	e7eb      	b.n	d008206e <_svfiprintf_r+0x1c2>
+d0082096:	bf00      	nop
+d0082098:	d009c588 	.word	0xd009c588
+d008209c:	d009c592 	.word	0xd009c592
+d00820a0:	00000000 	.word	0x00000000
+d00820a4:	d0081df5 	.word	0xd0081df5
+d00820a8:	d009c58e 	.word	0xd009c58e
 
-d0084e28 <bk_bub_treehide>:
-d0084e28:	00000000 29211000 29292521 21252521     ......!)!%))!%%!
-d0084e38:	29256121 21212129 21292521 25212121     !a%))!!!!%)!!!!%
-d0084e48:	00102110 00000000 00000000 29291000     .!............))
-d0084e58:	21252121 29252929 29292525 21292925     !!%!))%)%%))%))!
-d0084e68:	21201021 25292121 00111025 00000000     !. !!!)%%.......
-d0084e78:	00000000 21292111 21252125 11212129     .....!)!%!%!)!!.
-d0084e88:	21211011 25252525 21101021 10292921     ..!!%%%%!..!!)).
-d0084e98:	00001010 00000000 00000000 21212110     .............!!!
-d0084ea8:	29292525 10101025 10101010 11102121     %%))%.......!!..
-d0084eb8:	10112510 10111029 00001010 00000000     .%..)...........
-d0084ec8:	00000000 25215910 25292529 21211029     .....Y!%)%)%).!!
-d0084ed8:	10212110 10101011 10101010 21101010     .!!............!
-d0084ee8:	00001021 00000000 00000000 29211000     !.............!)
-d0084ef8:	25292525 21212125 21212111 10212121     %%)%%!!!.!!!!!!.
-d0084f08:	10101010 25591010 00101021 00000000     ......Y%!.......
-d0084f18:	00000000 21211000 25252525 21212525     ......!!%%%%%%!!
-d0084f28:	21212110 21252125 10102021 29211021     .!!!%!%!! ..!.!)
-d0084f38:	00101021 00000000 00000000 21211000     !.............!!
-d0084f48:	29252125 10252529 21211010 25212121     %!%))%%...!!!!!%
-d0084f58:	10212125 21211021 00101010 00000000     %!!.!.!!........
-d0084f68:	00000000 21292110 21292125 29252111     .....!)!%!)!.!%)
-d0084f78:	10102129 21212110 10212121 10101029     )!...!!!!!!.)...
-d0084f88:	00102110 00000000 00000000 21252110     .!...........!%!
-d0084f98:	10292521 11256121 21212521 10101010     !%).!a%.!%!!....
-d0084fa8:	10101010 10102121 10101021 00000000     ....!!..!.......
-d0084fb8:	00000000 25252110 10212921 21101010     .....!%%!)!....!
-d0084fc8:	25252111 10102121 21101010 29292125     .!%%!!.....!%!))
-d0084fd8:	10212110 00000000 00000000 29212110     .!!..........!!)
-d0084fe8:	21102521 21252525 10212110 25252511     !%.!%%%!.!!..%%%
-d0084ff8:	25252925 10101110 10212121 00000000     %)%%....!!!.....
-d0085008:	00000000 25212111 21102921 25252929     .....!!%!).!))%%
-d0085018:	21101021 10101021 10101010 25252121     !..!!.......!!%%
-d0085028:	10212129 00000000 00000000 25211000     )!!...........!%
-d0085038:	21612921 25252525 25292925 29292525     !)a!%%%%%))%%%))
-d0085048:	25252929 61292925 00102121 00000000     ))%%%))a!!......
-d0085058:	00000000 25211000 25252921 29252525     ......!%!)%%%%%)
-d0085068:	25252525 25212929 25252561 61252521     %%%%))!%a%%%!%%a
-d0085078:	00001025 00000000 00000000 25211000     %.............!%
-d0085088:	29252521 25252925 29292525 21212525     !%%)%)%%%%))%%!!
-d0085098:	21212121 29292521 00001029 00000000     !!!!!%))).......
-
-d00850a8 <bub_background>:
-	...
-d00850cc:	fffe0000 00000001 00000000 0fc00000     ................
-	...
-d0085108:	00038000 0000001f 00000000 78200000     .............. x
-	...
-d0085144:	ffc08000 00000070 00000000 60180000     ....p..........`
-	...
-d0085180:	81f8c000 00000043 00000000 30040000     ....C..........0
-	...
-d00851bc:	07004000 000000c6 00000000 18020000     .@..............
-	...
-d00851f8:	0cfe4000 00000086 00000000 1c020000     .@..............
-	...
-d0085234:	0b83c000 00000087 00000000 1e020000     ................
-d0085244:	00000000 00000700 00000000 00000000     ................
-	...
-d0085270:	9a008000 00000083 00000000 1e020000     ................
-d0085280:	00000000 00000580 00000000 00000000     ................
-	...
-d008529c:	00c00000 00000000 00000000 00000000     ................
-d00852ac:	b2000000 00000083 00000e00 1e020000     ................
-d00852bc:	00000000 00000ec0 1fc00000 00000000     ................
-	...
-d00852d8:	03300000 00000000 00000000 00000000     ..0.............
-d00852e8:	e6000000 000000c3 00001b00 3c040000     ...............<
-d00852f8:	00600000 00001a30 20600000 00000000     ..`.0.....` ....
-	...
-d0085314:	0ccc0000 00000000 00000000 00000000     ................
-d0085324:	e4000000 ff800061 00001181 3c080000     ....a..........<
-d0085334:	007c0000 00001718 43900000 00000000     ..|........C....
-	...
-d0085350:	0b720000 00000000 00000000 00000000     ..r.............
-d0085360:	64000000 00700030 00003083 38080000     ...d0.p..0.....8
-d0085370:	007e01e0 00703706 86e80000 00000001     ..~..7p.........
-	...
-d008538c:	097d8000 00000000 00000000 000001e0     ..}.............
-d008539c:	02000000 00180018 000030c2 38100000     .........0.....8
-d00853ac:	c0ff01fe 03fc2f01 8c260000 00000000     ...../....&.....
-d00853bc:	00000000 00000010 00000000 0cfe6000     .............`..
-	...
-d00853d4:	00000610 02000000 3c0c000c 7f003044     ...........<D0..
-d00853e4:	78600300 60ff81ff 0fc77f80 9c190000     ..`x...`........
-	...
-d00853fc:	00000010 00000000 067f2000 00000000     ......... ......
-d008540c:	00000000 000004c8 02000000 4f040004     ...............O
-d008541c:	7f80706c f0800780 3fffe0ff 1f81df80     lp.........?....
-d008542c:	dc090000 00000000 40000000 00000310     ...........@....
-d008543c:	00000000 073ec000 00000000 00000000     ......>.........
-d008544c:	000005a4 01000000 c786000e ff80f038     ............8...
-d008545c:	f1000fc0 3ffff8ff 17803f80 4f090000     .......?.?.....O
-d008546c:	00000000 80000000 000000d9 00000000     ................
-d008547c:	07818000 00000000 00000000 000005d2     ................
-d008548c:	01800000 81c2001e ffc0f018 fe000fe0     ................
-d008549c:	3fffff7f 17c00700 67d10003 00000000     ...?.......g....
-d00854ac:	00000000 00000067 00000000 05668000     ....g.........f.
-	...
-d00854c4:	03800cf2 00f00000 40e2001e ffe1e018     ...........@....
-d00854d4:	f8001ff1 3fffffff 1fb00000 31e10007     .......?.......1
-d00854e4:	7c000000 00000000 00000181 00003c00     ...|.........<..
-d00854f4:	03990000 00000000 00000000 0c403272     ............r2@.
-d0085504:	00f80000 6072003e fffbc00c fc001ff8     ....>.r`........
-d0085514:	3fffffff 3edc0000 10010006 83800000     ...?...>........
-d0085524:	9c000000 00000f1c 00006300 03c10000     .........c......
-	...
-d008553c:	30206106 00fe0000 3072003f 7fffc006     .a 0....?.r0....
-d008554c:	fe003ffe 3fffffff ffb70000 18e60107     .?.....?........
-d008555c:	38600000 70000001 00000334 0000dd80     ..`8...p4.......
-d008556c:	03c10000 00000000 00000000 271040e6     .............@.'
-d008557c:	81ff0018 18e2003f 3fff0003 ff003fff     ....?......?.?..
-d008558c:	3fffffff fffbc070 187c01c7 7f300000     ...?p.....|...0.
-d008559c:	40000001 0000038e 0000d640 01c10000     ...@....@.......
-	...
-d00855b4:	2d90401c e1ff801f 8786007f 3ffe0001     .@.-...........?
-d00855c4:	fff63fff ffffffff fffee3ff 184001e7     .?............@.
-d00855d4:	71100000 80000001 000001c0 0000f340     ...q........@...
-d00855e4:	05e08000 00000000 00000008 ee904f1a     .............O..
-d00855f4:	f3ffe01f c004007f ffff0000 ffff3fff     .............?..
-d0085604:	ffffffff ffff3fff 302003ff 60900000     .....?.... 0...`
-d0085614:	00000001 000000e7 00007b40 07f08000     ........@{......
-d0085624:	00000000 0c00000e fe8871f0 fffff3ff     .........q......
-d0085634:	400c007f ffff801e ffff3fff ffffffff     ...@.....?......
-d0085644:	ffffffff e02003ff 60900000 00000001     ...... ....`....
-d0085654:	00000068 001fef40 02f0c000 94000000     h...@...........
-d0085664:	1c00000f ff183020 ffffffff 403803ff     .... 0........8@
-d0085674:	ffffc03f ffffbfff ffffffff ffffffff     ?...............
-d0085684:	f81f00ff 31b00003 00000601 00000068     .......1....h...
-d0085694:	00300040 03f04000 fc000000 1a00019f     @.0..@..........
-d00856a4:	fffc1e20 ffffffff 40e01fff ffffe03f      ..........@?...
-d00856b4:	ffffbfff ffffffff ffffffff ff8780ff     ................
-d00856c4:	8f300307 00000581 00000048 0021e480     ..0.....H.....!.
-d00856d4:	03f82000 fe000000 3b0001ff fffc1040     . .........;@...
-d00856e4:	ffffffff ff807fff ffffff3f ffffffff     ........?.......
-d00856f4:	ffffffff ffffffff fffffe3f 806003ff     ........?.....`.
-d0085704:	00000670 00000048 0063f300 01701004     p...H.....c...p.
-d0085714:	fd800000 790001ff ffe41140 ffffffff     .......y@.......
-d0085724:	ffe3ffff ffffffff ffffffff ffffffff     ................
-d0085734:	ffffffff ffffffff 1fc007ff 00000b1d     ................
-d0085744:	000000d0 00647900 01f01816 ffc00000     .....yd.........
-d0085754:	fc8043ff ffc20bc0 ffffffff ffffffff     .C..............
-d0085764:	ffffffff ffffffff ffffffff ffffffff     ................
-d0085774:	ffffffff 0f981fff 00000b87 000000d0     ................
-d0085784:	88741c80 c0f00817 ffe000ef f88063ff     ..t..........c..
-d0085794:	fff20ec1 ffffffff ffffffff ffffffff     ................
-d00857a4:	ffffffff ffffffff ffffffff ffffffff     ................
-d00857b4:	8c243fff 0000edc3 00000090 8c740c80     .?$...........t.
-d00857c4:	f0f1042f ffffffff fe40ffff fff60e63     /.........@.c...
-d00857d4:	ffffffff ffffffff ffffffff ffffffff     ................
-d00857e4:	ffffffff ffffffff ffffffff 4c667fff     ..............fL
-d00857f4:	00039fc0 00000090 ef760640 fff0866f     ........@.v.o...
-d0085804:	ffffffff fff0ffff fffe043f ffffffff     ........?.......
-d0085814:	ffffffff ffffffff ffffffff ffffffff     ................
-d0085824:	ffffffff ffffffff 7fe1ffff 000f83c0     ................
-d0085834:	000001a0 ff3b0638 fff743e7 ffffffff     ....8.;..C......
-d0085844:	ffffffff ffff841f ffffffff ffffffff     ................
-d0085854:	ffffffff ffffffff ffffffff ffffffff     ................
-d0085864:	ffffffff 0ffcffff 000fc0e0 000001a0     ................
-d0085874:	ff9d863c ffffc1f3 ffffffff ffffffff     <...............
-d0085884:	ffffff8f ffffffff ffffffff ffffffff     ................
-d0085894:	ffffffff ffffffff ffffffff ffffffff     ................
-d00858a4:	ffffffff 000ff000 00000120 ffee6604     ........ ....f..
-d00858b4:	ffffe037 ffffffff ffffffff fffffff0     7...............
-d00858c4:	ffffffff ffffffff ffffffff ffffffff     ................
-d00858d4:	ffffffff ffffffff ffffffff ffffffff     ................
-d00858e4:	000ffc3f 8e000140 ffff3c07 ffffedbf     ?...@....<......
-d00858f4:	ffffffff ffffffff ffffffff ffffffff     ................
-d0085904:	ffffffff ffffffff ffffffff ffffffff     ................
-d0085914:	ffffffff ffffffff ffffffff 0003feff     ................
-d0085924:	8f000340 ffffc001 ffffffdf ffffffff     @...............
-d0085934:	ffffffff ffffffff ffffffff ffffffff     ................
-d0085944:	ffffffff ffffffff ffffffff ffffffff     ................
-d0085954:	ffffffff ffffffff 0007ffff 7ff00340     ............@...
-d0085964:	ffffff70 ffffffff ffffffff ffffffff     p...............
-d0085974:	ffffffff ffffffff ffffffff ffffffff     ................
-d0085984:	ffffffff ffffffff ffffffff ffffffff     ................
-d0085994:	ffffffff ffffffff fff00341 fffffff7     ........A.......
-d00859a4:	ffffffff ffffffff ffffffff ffffffff     ................
-d00859b4:	ffffffff ffffffff ffffffff ffffffff     ................
-d00859c4:	ffffffff ffffffff ffffffff ffffffff     ................
-d00859d4:	ffffffff ffffffff ffffffff ffffffff     ................
-d00859e4:	ffffffff ffffffff ffffffff ffffffff     ................
-d00859f4:	ffffffff ffffffff ffffffff ffffffff     ................
-d0085a04:	ffffffff                                ....
-
-d0085a08 <bubtreeforeground>:
-d0085a08:	21100000 21212121 25252525 25252525     ...!!!!!%%%%%%%%
-d0085a18:	25252525 25252525 21102121 00000000     %%%%%%%%!!.!....
-d0085a28:	21100000 21212121 25252525 25252525     ...!!!!!%%%%%%%%
-d0085a38:	25252525 25252525 21102121 00000010     %%%%%%%%!!.!....
-d0085a48:	21100000 25252121 25252525 25252525     ...!!!%%%%%%%%%%
-d0085a58:	25252525 25252525 10102121 00000010     %%%%%%%%!!......
-d0085a68:	21100000 25252121 25252525 25252525     ...!!!%%%%%%%%%%
-d0085a78:	25252525 25252525 21102125 00000010     %%%%%%%%%!.!....
-d0085a88:	21100000 25252121 25252525 25252525     ...!!!%%%%%%%%%%
-d0085a98:	25252525 25252525 10102125 00001021     %%%%%%%%%!..!...
-d0085aa8:	21100000 25212121 25252525 25252525     ...!!!!%%%%%%%%%
-d0085ab8:	25252525 21252525 10102125 00001021     %%%%%%%!%!..!...
-d0085ac8:	21100000 25212121 25252525 25252525     ...!!!!%%%%%%%%%
-d0085ad8:	25252525 21252525 10212121 00101021     %%%%%%%!!!!.!...
-d0085ae8:	21100000 25212121 25252525 25252525     ...!!!!%%%%%%%%%
-d0085af8:	25252525 21212525 10212121 00101021     %%%%%%!!!!!.!...
-d0085b08:	21100000 21212121 25252525 25252525     ...!!!!!%%%%%%%%
-d0085b18:	25252525 21212525 10212121 00101021     %%%%%%!!!!!.!...
-d0085b28:	21100000 21212121 25252525 25252525     ...!!!!!%%%%%%%%
-d0085b38:	25252525 21212525 10212121 00101021     %%%%%%!!!!!.!...
-d0085b48:	21100000 21212125 25252525 25252525     ...!%!!!%%%%%%%%
-d0085b58:	25252525 21212525 10212121 00001010     %%%%%%!!!!!.....
-d0085b68:	21100000 21212125 25252525 25252525     ...!%!!!%%%%%%%%
-d0085b78:	25252525 21251025 10212121 00001021     %%%%%.%!!!!.!...
-d0085b88:	10000000 21212125 25252525 25252525     ....%!!!%%%%%%%%
-d0085b98:	25252525 21251025 10212121 00000010     %%%%%.%!!!!.....
-d0085ba8:	10000000 21212125 25212525 25252525     ....%!!!%%!%%%%%
-d0085bb8:	25252525 21251025 10212121 00000010     %%%%%.%!!!!.....
-d0085bc8:	10000000 21212125 25212525 25252525     ....%!!!%%!%%%%%
-d0085bd8:	25252525 21102525 21102121 00000010     %%%%%%.!!!.!....
-d0085be8:	10000000 21212125 25212525 25252525     ....%!!!%%!%%%%%
-d0085bf8:	25252525 21102525 10102121 00000000     %%%%%%.!!!......
-d0085c08:	10000000 21212125 25212525 25252525     ....%!!!%%!%%%%%
-d0085c18:	25252525 21102525 10102121 00000000     %%%%%%.!!!......
-d0085c28:	10000000 21212125 25212525 25252525     ....%!!!%%!%%%%%
-d0085c38:	25252525 21102525 10102121 00000000     %%%%%%.!!!......
-d0085c48:	10000000 21212125 25212525 25252525     ....%!!!%%!%%%%%
-d0085c58:	25252525 25252525 10101021 00000000     %%%%%%%%!.......
-d0085c68:	10000000 21212125 25212525 25252525     ....%!!!%%!%%%%%
-d0085c78:	25252525 25252525 21101021 00000000     %%%%%%%%!..!....
-d0085c88:	10000000 21212125 25212521 25252525     ....%!!!!%!%%%%%
-d0085c98:	25252525 25252525 21101021 00000000     %%%%%%%%!..!....
-d0085ca8:	10000000 21212125 25212521 25252525     ....%!!!!%!%%%%%
-d0085cb8:	25252525 25252525 10211021 00000000     %%%%%%%%!.!.....
-d0085cc8:	10000000 21212125 25212525 25252525     ....%!!!%%!%%%%%
-d0085cd8:	25252525 25252525 10211025 00000000     %%%%%%%%%.!.....
-d0085ce8:	10000000 21212125 25212525 25252525     ....%!!!%%!%%%%%
-d0085cf8:	25252525 25252525 10211025 00000000     %%%%%%%%%.!.....
-d0085d08:	10000000 21212125 25212525 25252525     ....%!!!%%!%%%%%
-d0085d18:	25252525 25252525 10211025 00000000     %%%%%%%%%.!.....
-d0085d28:	10000000 21212521 25212525 25252525     ....!%!!%%!%%%%%
-d0085d38:	25252525 25252525 10211025 00000000     %%%%%%%%%.!.....
-d0085d48:	10000000 21212521 25212525 25252525     ....!%!!%%!%%%%%
-d0085d58:	25252525 25252125 10211025 00000000     %%%%%!%%%.!.....
-d0085d68:	10000000 21212521 25212525 25252525     ....!%!!%%!%%%%%
-d0085d78:	25252525 25252125 10211025 00000000     %%%%%!%%%.!.....
-d0085d88:	10000000 21212521 25212525 25252525     ....!%!!%%!%%%%%
-d0085d98:	25252525 10252125 10211025 00000000     %%%%%!%.%.!.....
-d0085da8:	10000000 21212521 25212525 25252525     ....!%!!%%!%%%%%
-d0085db8:	25252525 25252525 10101010 00000000     %%%%%%%%........
-d0085dc8:	00000000 21212510 25212525 25252525     .....%!!%%!%%%%%
-d0085dd8:	25252525 25252525 10101010 00000000     %%%%%%%%........
-d0085de8:	00000000 25212510 25212525 25252525     .....%!%%%!%%%%%
-d0085df8:	25252525 25252525 10101025 00000000     %%%%%%%%%.......
-d0085e08:	00000000 25212510 25212525 25252525     .....%!%%%!%%%%%
-d0085e18:	25252525 25252525 10102125 00000000     %%%%%%%%%!......
-d0085e28:	00000000 25212510 25212525 25252525     .....%!%%%!%%%%%
-d0085e38:	25252525 25252525 10101025 00000010     %%%%%%%%%.......
-d0085e48:	00000000 25212510 25212525 25252525     .....%!%%%!%%%%%
-d0085e58:	25252525 25252525 10101025 00000010     %%%%%%%%%.......
-d0085e68:	00000000 25212510 25212525 25252525     .....%!%%%!%%%%%
-d0085e78:	25252525 25252525 10101021 00000010     %%%%%%%%!.......
-d0085e88:	00000000 25212510 25212525 25252525     .....%!%%%!%%%%%
-d0085e98:	25252525 25252525 10101021 00000010     %%%%%%%%!.......
-d0085ea8:	00000000 25212510 25212525 25252525     .....%!%%%!%%%%%
-d0085eb8:	25252525 25252525 10101021 00000010     %%%%%%%%!.......
-d0085ec8:	00000000 25212510 25212525 25252525     .....%!%%%!%%%%%
-d0085ed8:	25252525 25252525 10101025 00000010     %%%%%%%%%.......
-d0085ee8:	10000000 25212121 25212525 25252525     ....!!!%%%!%%%%%
-d0085ef8:	25252525 21252525 10102125 00001010     %%%%%%%!%!......
-d0085f08:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d0085f18:	25252525 21252525 10102125 00001010     %%%%%%%!%!......
-d0085f28:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d0085f38:	25252525 25212525 10102125 00001010     %%%%%%!%%!......
-d0085f48:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d0085f58:	25252525 25212525 10102125 00001010     %%%%%%!%%!......
-d0085f68:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d0085f78:	25252525 25212525 10101025 00000010     %%%%%%!%%.......
-d0085f88:	10000000 25252121 25252525 25252525     ....!!%%%%%%%%%%
-d0085f98:	25252525 25252525 10101025 00000010     %%%%%%%%%.......
-d0085fa8:	10000000 25252121 25252525 25252525     ....!!%%%%%%%%%%
-d0085fb8:	25252525 25252125 10211025 00000010     %%%%%!%%%.!.....
-d0085fc8:	21100000 25252121 25252525 25252525     ...!!!%%%%%%%%%%
-d0085fd8:	25252525 25212525 10211025 00000010     %%%%%%!%%.!.....
-d0085fe8:	21100000 25212121 25252525 25252525     ...!!!!%%%%%%%%%
-d0085ff8:	25252525 25212525 10211025 00001010     %%%%%%!%%.!.....
-d0086008:	21100000 25212121 25252525 25252525     ...!!!!%%%%%%%%%
-d0086018:	25252525 25252525 21101025 00001010     %%%%%%%%%..!....
-d0086028:	21100000 25212125 25252525 25252525     ...!%!!%%%%%%%%%
-d0086038:	25252525 25252525 21101010 00101010     %%%%%%%%...!....
-d0086048:	21100000 21212125 25252525 25252525     ...!%!!!%%%%%%%%
-d0086058:	25252525 25212525 21101010 00101010     %%%%%%!%...!....
-d0086068:	21211000 21212125 25252525 25252525     ..!!%!!!%%%%%%%%
-d0086078:	25252525 25212525 21102125 00101010     %%%%%%!%%!.!....
-d0086088:	21211000 21212125 25212525 25252525     ..!!%!!!%%!%%%%%
-d0086098:	25252525 25212525 10212125 00001010     %%%%%%!%%!!.....
-d00860a8:	21211000 21212125 25212525 25252525     ..!!%!!!%%!%%%%%
-d00860b8:	25252525 25212525 10212125 00001010     %%%%%%!%%!!.....
-d00860c8:	21211000 21212125 25212525 25252525     ..!!%!!!%%!%%%%%
-d00860d8:	25252525 25252525 10212125 00001010     %%%%%%%%%!!.....
-d00860e8:	21211000 21212125 25212525 25252525     ..!!%!!!%%!%%%%%
-d00860f8:	25252525 25252525 10212125 00001010     %%%%%%%%%!!.....
-d0086108:	21211000 25212125 25212525 25252525     ..!!%!!%%%!%%%%%
-d0086118:	25252525 25252525 10102121 00000010     %%%%%%%%!!......
-d0086128:	21100000 25212125 25212525 25252525     ...!%!!%%%!%%%%%
-d0086138:	25252525 25252525 10102121 00000010     %%%%%%%%!!......
-d0086148:	21100000 25212125 21252525 25252525     ...!%!!%%%%!%%%%
-d0086158:	25252525 25252525 10102121 00000010     %%%%%%%%!!......
-d0086168:	21100000 25212125 21252525 25252525     ...!%!!%%%%!%%%%
-d0086178:	25252525 25252125 10102121 00000010     %%%%%!%%!!......
-d0086188:	21100000 25212125 21252525 25252525     ...!%!!%%%%!%%%%
-d0086198:	25252525 25252125 10102125 00000010     %%%%%!%%%!......
-d00861a8:	10000000 25212125 21252525 25252525     ....%!!%%%%!%%%%
-d00861b8:	25252525 25252125 21102125 00000010     %%%%%!%%%!.!....
-d00861c8:	10000000 25212125 21252525 25252525     ....%!!%%%%!%%%%
-d00861d8:	25252525 25252125 21101025 00000010     %%%%%!%%%..!....
-d00861e8:	10000000 25212121 21252525 25252525     ....!!!%%%%!%%%%
-d00861f8:	25252525 25252125 21101025 00000010     %%%%%!%%%..!....
-d0086208:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d0086218:	25252525 25252125 10211025 00000000     %%%%%!%%%.!.....
-d0086228:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d0086238:	25252525 25252521 10211025 00000000     %%%%!%%%%.!.....
-d0086248:	00000000 25212110 25252525 25252525     .....!!%%%%%%%%%
-d0086258:	25252525 25252521 10211025 00000000     %%%%!%%%%.!.....
-d0086268:	00000000 25212110 25252525 25252525     .....!!%%%%%%%%%
-d0086278:	25252525 25252521 10101025 00000000     %%%%!%%%%.......
-d0086288:	00000000 25212110 25212525 25252525     .....!!%%%!%%%%%
-d0086298:	25252525 25252521 00101025 00000000     %%%%!%%%%.......
-d00862a8:	00000000 25212110 25212525 25252525     .....!!%%%!%%%%%
-d00862b8:	25252525 25252521 00101025 00000000     %%%%!%%%%.......
-d00862c8:	00000000 25212110 25212525 25252525     .....!!%%%!%%%%%
-d00862d8:	25252525 25252521 00101025 00000000     %%%%!%%%%.......
-d00862e8:	00000000 25212110 25212525 25252525     .....!!%%%!%%%%%
-d00862f8:	25252525 25252521 10101025 00000000     %%%%!%%%%.......
-d0086308:	00000000 25212110 25212525 25252525     .....!!%%%!%%%%%
-d0086318:	25252525 25252525 10101025 00000000     %%%%%%%%%.......
-d0086328:	10000000 25212121 25212525 25252525     ....!!!%%%!%%%%%
-d0086338:	25252525 25252525 10101025 00000000     %%%%%%%%%.......
-d0086348:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d0086358:	25252525 25252525 10101010 00000000     %%%%%%%%........
-d0086368:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d0086378:	25252525 25252525 10101010 00000000     %%%%%%%%........
-d0086388:	10000000 25252121 25252525 25252525     ....!!%%%%%%%%%%
-d0086398:	25252525 25252525 10101010 00000000     %%%%%%%%........
-d00863a8:	10000000 25252121 25252525 25252525     ....!!%%%%%%%%%%
-d00863b8:	25252525 25252525 10101010 00000000     %%%%%%%%........
-d00863c8:	10000000 25252121 25252525 25252525     ....!!%%%%%%%%%%
-d00863d8:	25252525 25252525 10101010 00000010     %%%%%%%%........
-d00863e8:	10000000 25252121 25252521 25252525     ....!!%%!%%%%%%%
-d00863f8:	25252525 25252525 21101010 00000010     %%%%%%%%...!....
-d0086408:	10000000 25252121 25252521 25252525     ....!!%%!%%%%%%%
-d0086418:	25252525 25252525 21101010 00001010     %%%%%%%%...!....
-d0086428:	10000000 25252121 25252521 25252525     ....!!%%!%%%%%%%
-d0086438:	25252525 25252525 21101010 00001010     %%%%%%%%...!....
-d0086448:	21100000 25252121 25252521 25252525     ...!!!%%!%%%%%%%
-d0086458:	25252525 25252525 21101010 00001010     %%%%%%%%...!....
-d0086468:	21100000 25252121 25252521 25252525     ...!!!%%!%%%%%%%
-d0086478:	25252525 25252525 21101010 00001010     %%%%%%%%...!....
-d0086488:	21100000 25252121 25252521 25252525     ...!!!%%!%%%%%%%
-d0086498:	25252525 25212525 10101010 00001021     %%%%%%!%....!...
-d00864a8:	21100000 25252121 25252521 25252525     ...!!!%%!%%%%%%%
-d00864b8:	25252525 25212525 10101010 00001021     %%%%%%!%....!...
-d00864c8:	21100000 25252121 25252521 25252525     ...!!!%%!%%%%%%%
-d00864d8:	25252525 25212525 10101025 00001021     %%%%%%!%%...!...
-d00864e8:	21100000 25252121 25252521 25252525     ...!!!%%!%%%%%%%
-d00864f8:	25252525 25212525 10101025 00001021     %%%%%%!%%...!...
-d0086508:	21100000 25252121 25252521 25252525     ...!!!%%!%%%%%%%
-d0086518:	25252525 21252525 10101025 00001021     %%%%%%%!%...!...
-d0086528:	21100000 25252121 25252521 25252525     ...!!!%%!%%%%%%%
-d0086538:	25252525 21252525 10101025 00000010     %%%%%%%!%.......
-d0086548:	21100000 25252121 25252521 25252525     ...!!!%%!%%%%%%%
-d0086558:	25252525 21252525 10101025 00000010     %%%%%%%!%.......
-d0086568:	10000000 25252121 25252521 25252525     ....!!%%!%%%%%%%
-d0086578:	25252525 21252525 10251025 00000010     %%%%%%%!%.%.....
-d0086588:	10000000 25252121 25252525 25252525     ....!!%%%%%%%%%%
-d0086598:	25252525 21252525 10102525 00000010     %%%%%%%!%%......
-d00865a8:	10000000 25252121 25252525 25252525     ....!!%%%%%%%%%%
-d00865b8:	25252525 25252525 10102510 00000010     %%%%%%%%.%......
-d00865c8:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d00865d8:	25252525 25252525 10102510 00000010     %%%%%%%%.%......
-d00865e8:	00000000 25212110 25252525 25252525     .....!!%%%%%%%%%
-d00865f8:	25252525 10252525 10102521 00000010     %%%%%%%.!%......
-d0086608:	00000000 25212110 25252525 25252525     .....!!%%%%%%%%%
-d0086618:	25252525 10252525 21101021 00000010     %%%%%%%.!..!....
-d0086628:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d0086638:	25252525 25102525 21101025 00000010     %%%%%%.%%..!....
-d0086648:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d0086658:	25252525 25102525 21101025 00000010     %%%%%%.%%..!....
-d0086668:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d0086678:	25252525 25251025 21101025 00001010     %%%%%.%%%..!....
-d0086688:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d0086698:	25252525 25251025 10101021 00001010     %%%%%.%%!.......
-d00866a8:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d00866b8:	25252525 25252525 10101021 00001010     %%%%%%%%!.......
-d00866c8:	10000000 25212121 25252525 25252525     ....!!!%%%%%%%%%
-d00866d8:	25252525 25252525 10101021 00001010     %%%%%%%%!.......
-d00866e8:	21100000 25212121 25212525 25252525     ...!!!!%%%!%%%%%
-d00866f8:	25252525 21252525 10101021 00001010     %%%%%%%!!.......
-d0086708:	21100000 25252121 25212525 25252525     ...!!!%%%%!%%%%%
-d0086718:	25252525 25252525 10101025 00000010     %%%%%%%%%.......
-d0086728:	21100000 25252121 25212525 25252525     ...!!!%%%%!%%%%%
-d0086738:	25252525 25252525 10101025 00000010     %%%%%%%%%.......
-d0086748:	21100000 25252121 25212525 25252525     ...!!!%%%%!%%%%%
-d0086758:	25252525 25252525 10101025 00000000     %%%%%%%%%.......
-d0086768:	21100000 25252121 25212525 25252525     ...!!!%%%%!%%%%%
-d0086778:	25252525 25252525 10101025 00000010     %%%%%%%%%.......
-d0086788:	21100000 25252121 25252125 25252525     ...!!!%%%!%%%%%%
-d0086798:	25252525 25252125 10101025 00000010     %%%%%!%%%.......
-d00867a8:	21100000 25212521 25252125 25252525     ...!!%!%%!%%%%%%
-d00867b8:	25252525 25252125 10101025 00000010     %%%%%!%%%.......
-d00867c8:	21100000 25212521 25252125 25252525     ...!!%!%%!%%%%%%
-d00867d8:	25252525 25252125 10101025 00000010     %%%%%!%%%.......
-d00867e8:	21100000 25212521 25252125 25252525     ...!!%!%%!%%%%%%
-d00867f8:	25252525 25252125 21101010 00000010     %%%%%!%%...!....
-d0086808:	21100000 25252521 25252125 25252525     ...!!%%%%!%%%%%%
-d0086818:	25252525 25212525 21101010 00000010     %%%%%%!%...!....
-d0086828:	21100000 25252521 25252525 25252525     ...!!%%%%%%%%%%%
-d0086838:	25252525 25212525 10101010 00000021     %%%%%%!%....!...
-d0086848:	21100000 25252121 25252525 25252525     ...!!!%%%%%%%%%%
-d0086858:	25252525 25212525 10101025 00000021     %%%%%%!%%...!...
-d0086868:	21100000 25252121 25252525 25252525     ...!!!%%%%%%%%%%
-d0086878:	25252525 25212525 10101025 00000010     %%%%%%!%%.......
-d0086888:	21100000 25252121 25252525 25252525     ...!!!%%%%%%%%%%
-d0086898:	25252525 25252525 10101025 00001010     %%%%%%%%%.......
-d00868a8:	21100000 25252121 25252125 25252525     ...!!!%%%!%%%%%%
-d00868b8:	25252525 25252525 10101025 00001010     %%%%%%%%%.......
-d00868c8:	21100000 25252521 25252125 25252525     ...!!%%%%!%%%%%%
-d00868d8:	25252525 25252525 10101025 00002110     %%%%%%%%%....!..
-d00868e8:	21100000 25252521 25252125 25252525     ...!!%%%%!%%%%%%
-d00868f8:	25252525 25252525 10102125 00002110     %%%%%%%%%!...!..
-d0086908:	21100000 25252525 25252125 25252525     ...!%%%%%!%%%%%%
-d0086918:	25252525 25252525 10102125 00001021     %%%%%%%%%!..!...
-d0086928:	21100000 25252525 25252125 25252525     ...!%%%%%!%%%%%%
-d0086938:	25252525 25252525 10102125 00001021     %%%%%%%%%!..!...
-d0086948:	21100000 25252525 25252525 25252525     ...!%%%%%%%%%%%%
-d0086958:	25252525 25252525 10102525 00001021     %%%%%%%%%%..!...
-d0086968:	21211000 25252525 25252525 25252525     ..!!%%%%%%%%%%%%
-d0086978:	25252525 21252525 10212525 00001010     %%%%%%%!%%!.....
-d0086988:	21211000 25252521 25252525 25252525     ..!!!%%%%%%%%%%%
-d0086998:	25252525 21252525 10212525 00001010     %%%%%%%!%%!.....
-d00869a8:	21211000 25252521 25252525 25252525     ..!!!%%%%%%%%%%%
-d00869b8:	25252525 21252525 10212525 00001010     %%%%%%%!%%!.....
-d00869c8:	21211000 25252521 25252525 25252525     ..!!!%%%%%%%%%%%
-d00869d8:	25252525 21252525 10212525 00001010     %%%%%%%!%%!.....
-d00869e8:	21211000 25212121 25252525 25252525     ..!!!!!%%%%%%%%%
-d00869f8:	25252525 21252525 10212525 00001010     %%%%%%%!%%!.....
-d0086a08:	21211000 21212121 25252525 25252525     ..!!!!!!%%%%%%%%
-d0086a18:	25252525 21252525 10102525 00001010     %%%%%%%!%%......
-d0086a28:	21211000 21212121 25252521 25252525     ..!!!!!!!%%%%%%%
-d0086a38:	25252525 21252525 10102525 00001010     %%%%%%%!%%......
-d0086a48:	21211000 21212121 25252121 25252525     ..!!!!!!!!%%%%%%
-d0086a58:	25252525 25252525 10101025 00001010     %%%%%%%%%.......
-d0086a68:	21211000 25212121 25252525 25252525     ..!!!!!%%%%%%%%%
-d0086a78:	25252525 25252525 10101025 00001010     %%%%%%%%%.......
-d0086a88:	21211000 25212121 25252525 25252525     ..!!!!!%%%%%%%%%
-d0086a98:	25252525 25252525 10102521 00001010     %%%%%%%%!%......
-d0086aa8:	21211000 21212121 25252525 25252525     ..!!!!!!%%%%%%%%
-d0086ab8:	25252525 25252525 10102521 00001010     %%%%%%%%!%......
-d0086ac8:	21211000 21212121 25252525 25252525     ..!!!!!!%%%%%%%%
-d0086ad8:	25252525 25252525 10102521 00001010     %%%%%%%%!%......
-d0086ae8:	21211000 21212121 25252525 25252525     ..!!!!!!%%%%%%%%
-d0086af8:	25252525 21252525 10212525 00001010     %%%%%%%!%%!.....
-d0086b08:	21211000 21212121 21252525 25252525     ..!!!!!!%%%!%%%%
-d0086b18:	25252525 21252525 10252525 00101010     %%%%%%%!%%%.....
-d0086b28:	21211000 21212121 21252525 25252525     ..!!!!!!%%%!%%%%
-d0086b38:	25252525 21252525 10212125 00101025     %%%%%%%!%!!.%...
-d0086b48:	21211000 21212121 21252525 25252525     ..!!!!!!%%%!%%%%
-d0086b58:	25252525 21252525 10212510 00101010     %%%%%%%!.%!.....
-d0086b68:	21211000 21212121 21252525 25252525     ..!!!!!!%%%!%%%%
-d0086b78:	25252525 25252525 10212510 00101010     %%%%%%%%.%!.....
-d0086b88:	21211000 21212121 21252525 25252525     ..!!!!!!%%%!%%%%
-d0086b98:	25252525 25252525 10252110 00101010     %%%%%%%%.!%.....
-d0086ba8:	21211000 21212121 21252525 25252525     ..!!!!!!%%%!%%%%
-d0086bb8:	25252525 25252525 10251025 00101010     %%%%%%%%%.%.....
-d0086bc8:	21211000 21212121 21252525 25252525     ..!!!!!!%%%!%%%%
-d0086bd8:	25252525 25252525 10211025 00101010     %%%%%%%%%.!.....
-d0086be8:	21100000 21212121 21252525 25252525     ...!!!!!%%%!%%%%
-d0086bf8:	25252525 25252525 10211025 00101010     %%%%%%%%%.!.....
-d0086c08:	21100000 25212121 21252525 25252525     ...!!!!%%%%!%%%%
-d0086c18:	25252525 25252525 10252525 00101010     %%%%%%%%%%%.....
-d0086c28:	21100000 25212121 25252525 25252525     ...!!!!%%%%%%%%%
-d0086c38:	25252525 25252525 10102525 00101010     %%%%%%%%%%......
-d0086c48:	21100000 25212121 25252525 25252525     ...!!!!%%%%%%%%%
-d0086c58:	25252525 25252525 25102510 00101010     %%%%%%%%.%.%....
-d0086c68:	21100000 25212121 25252525 25252525     ...!!!!%%%%%%%%%
-d0086c78:	25252525 10252525 25102525 00101010     %%%%%%%.%%.%....
-d0086c88:	21100000 25212121 25252525 25252525     ...!!!!%%%%%%%%%
-d0086c98:	25252525 10252525 25102525 00101010     %%%%%%%.%%.%....
-d0086ca8:	21100000 25212121 25252525 25252525     ...!!!!%%%%%%%%%
-d0086cb8:	25252525 10212525 10102525 00101010     %%%%%%!.%%......
-
-d0086cc8 <frontbush>:
-	...
-d0086d30:	21f1f100 00f1f121 00000000 00000000     ...!!...........
-	...
-d0086e70:	f14cf100 f14cf121 00000000 f1000000     ..L.!.L.........
-d0086e80:	f1f1f1f1 00000000 00000000 00000000     ................
-	...
-d0086fb0:	4c4cf100 4c4cf1f1 000000f1 f1f1f100     ..LL..LL........
-d0086fc0:	00f14c4c 00000000 00000000 00000000     LL..............
-	...
-d00870f0:	584cf100 58f1f14c f1f1f14c 58584cf1     ..LXL..XL....LXX
-d0087100:	0000f14c 00000000 00000000 00000000     L...............
-	...
-d0087228:	f1f1f100 f1f1f1f1 584cf1f1 f14c4c58     ..........LXXLL.
-d0087238:	4c4c4c58 f14c5858 000000f1 00000000     XLLLXXL.........
-	...
-d0087368:	584c4cf1 4c585858 4cf1f14c 4c585858     .LLXXXXLL..LXXXL
-d0087378:	58585858 f14c4c58 00000000 00000000     XXXXXLL.........
-	...
-d00874a8:	f1f1f100 58584cf1 4c585858 58585858     .....LXXXXXLXXXX
-d00874b8:	58585858 00f14c4c 00000000 00000000     XXXXLL..........
-	...
-d00875ec:	4cf1f1f1 5858584c 58585858 58585858     ...LLXXXXXXXXXXX
-d00875fc:	f1f14c4c 0000f1f1 00000000 00000000     LL..............
-	...
-d0087724:	f1000000 f1f1f1f1 f14c4cf1 584c4c4c     .........LL.LLLX
-d0087734:	58585858 58585858 4c4c5858 f1f14c4c     XXXXXXXXXXLLLL..
-	...
-d0087864:	4cf10000 f14c4c4c 5858584c 5858584c     ...LLLL.LXXXLXXX
-d0087874:	58585858 58585858 4c4c4c4c 4c4cf1f1     XXXXXXXXLLLL..LL
-d0087884:	000000f1 00000000 00000000 00000000     ................
-	...
-d00879a4:	f1f10000 4cf1f1f1 58585858 58585858     .......LXXXXXXXX
-d00879b4:	58585858 584c5858 f1f14c4c f1f12121     XXXXXXLXLL..!!..
-	...
-d0087ae8:	584cf100 4c4c4c58 584c4c4c 58585858     ..LXXLLLLLLXXXXX
-d0087af8:	4c4c4c58 21f1f14c 0000f1f1 00000000     XLLLL..!........
-	...
-d0087c28:	5858f100 f14c4c4c 5858f1f1 58584c4c     ..XXLLL...XXLLXX
-d0087c38:	4c4c4c58 f14c4c4c 00f14c4c 00000000     XLLLLLL.LL......
-	...
-d0087d68:	4c584cf1 21f1f14c 4c584cf1 58584c4c     .LXLL..!.LXLLLXX
-d0087d78:	4c4c4c4c 4c4c4c4c 00f1f1f1 00000000     LLLLLLLL........
-	...
-d0087ea8:	f14c4cf1 f10000f1 f14c4c4c 584cf1f1     .LL.....LLL...LX
-d0087eb8:	4c4c4c4c f1f14c4c 00000000 00000000     LLLLLL..........
-	...
-d0087fe8:	00f14cf1 4cf10000 f1f14c4c 584cf1f1     .L.....LLL....LX
-d0087ff8:	4c4c4cf1 f1f1f14c 00000000 00000000     .LLLL...........
-	...
-d0088110:	00f1f100 00f1f100 00000000 00000000     ................
-	...
-d008812c:	4c4cf100 f121f14c 4c4cf1f1 f14cf14c     ..LLL.!...LLL.L.
-d008813c:	f14c4c4c 000000f1 00000000 00000000     LLL.............
-	...
-d00881f0:	f1000000 f10000f1 000000f1 00000000     ................
-	...
-d0088250:	f14cf100 f14cf100 00000000 f1000000     ..L...L.........
-d0088260:	f1f1f1f1 00000000 00000000 4c4cf100     ..............LL
-d0088270:	f2f121f1 4cf1f1f2 f14cf14c f14cf1f1     .!.....LL.L...L.
-d0088280:	0000f100 00000000 00000000 00000000     ................
-	...
-d0088324:	f1f10000 00f1f1f1 00000000 4cf10000     ...............L
-d0088334:	4cf100f1 000000f1 00000000 00000000     ...L............
-	...
-d0088390:	4c4cf100 4c4cf1f1 000000f1 f1f1f100     ..LL..LL........
-d00883a0:	00f14c4c 00000000 00000000 f14cf100     LL............L.
-d00883b0:	f220f121 4cf1f1f1 f14cf1f1 f1f10000     !. ....L..L.....
-	...
-d0088464:	f1000000 f1f14c4c 000000f1 4c4cf100     ....LL........LL
-d0088474:	4c4cf1f1 000000f1 00000000 00000000     ..LL............
-	...
-d00884d0:	584cf100 58f1f14c f1f1f14c 58584cf1     ..LXL..XL....LXX
-d00884e0:	0000f14c 00000000 00000000 21f10000     L..............!
-d00884f0:	f22020f1 f10000f1 f14cf14c f1000000     .  .....L.L.....
-	...
-d00885a8:	58584cf1 f1f1f14c f1584cf1 4c584cf1     .LXXL....LX..LXL
-d00885b8:	000000f1 00000000 00000000 00000000     ................
-	...
-d0088608:	f1f1f100 f1f1f1f1 584cf1f1 f14c4c58     ..........LXXLL.
-d0088618:	4c4c4c58 f14c5858 000000f1 00000000     XLLLXXL.........
-d0088628:	00000000 f1000000 f1202020 f1000000     ........   .....
-d0088638:	f14cf1f1 00000000 00000000 00000000     ..L.............
-	...
-d00886e8:	4cf1f100 4c4c5858 4cf1584c 4c58584c     ...LXXLLLX.LLXXL
-d00886f8:	f1f1f1f1 f1f1f1f1 000000f1 00000000     ................
-	...
-d0088748:	584c4cf1 4c585858 4cf1f14c 4c585858     .LLXXXXLL..LXXXL
-d0088758:	58585858 f14c4c58 00000000 00000000     XXXXXLL.........
-d0088768:	00000000 20f10000 00f12029 00000000     ....... ) ......
-d0088778:	f1f1f1f1 00000000 00000000 00000000     ................
-	...
-d0088828:	4cf10000 5858584c 584c5858 f14c5858     ...LLXXXXXLXXXL.
-d0088838:	584c4cf1 4c585858 0000f14c 00000000     .LLXXXXLL.......
-	...
-d0088888:	f1f1f100 58584cf1 4c585858 58585858     .....LXXXXXLXXXX
-d0088898:	58585858 00f14c4c 00000000 00000000     XXXXLL..........
-d00888a8:	00000000 29f10000 0000f120 00000000     .......) .......
-d00888b8:	f10000f1 00000000 00000000 00000000     ................
-	...
-d0088968:	f1000000 58584c4c 58585858 584c5858     ....LLXXXXXXXXLX
-d0088978:	58585858 f1f1f14c 000000f1 00000000     XXXXL...........
-	...
-d00889cc:	4cf1f1f1 5858584c 58585858 58585858     ...LLXXXXXXXXXXX
-d00889dc:	f1f14c4c 0000f1f1 00000000 00000000     LL..............
-d00889ec:	2029f100 000000f1 00000000 00000000     ..) ............
-	...
-d0088aa8:	f1f1f1f1 58584c4c 58585858 58585858     ....LLXXXXXXXXXX
-d0088ab8:	f14c4c58 0000f1f1 00000000 00000000     XLL.............
-	...
-d0088b04:	f1000000 f1f1f1f1 f14c4cf1 584c4c4c     .........LL.LLLX
-d0088b14:	58585858 58585858 4c4c5858 f1f14c4c     XXXXXXXXXXLLLL..
-	...
-d0088b2c:	f220f1f1 000000f1 00000000 00000000     .. .............
-	...
-d0088be4:	f1f10000 4c4c4c4c 58585858 58585858     ....LLLLXXXXXXXX
-d0088bf4:	4c585858 4cf14c4c f1f1f14c 00f1f1f1     XXXLLL.LL.......
-	...
-d0088c44:	4cf10000 f14c4c4c 5858584c 5858584c     ...LLLL.LXXXLXXX
-d0088c54:	58585858 58585858 4c4c4c4c 4c4cf1f1     XXXXXXXXLLLL..LL
-d0088c64:	000000f1 f1000000 f1f1f120 00000000     ........ .......
-	...
-d0088d24:	4c4cf100 4c4cf1f1 58584c4c 58585858     ..LL..LLLLXXXXXX
-d0088d34:	58585858 58584c58 4cf14c58 f14c4c4c     XXXXXLXXXL.LLLL.
-	...
-d0088d84:	f1f10000 f1f1f1f1 5858f1f1 58585858     ..........XXXXXX
-d0088d94:	58585858 584c5858 f1f14c4c f1f12121     XXXXXXLXLL..!!..
-d0088da4:	00000000 f1000000 00f12020 00000000     ........  ......
-	...
-d0088e64:	f1f10000 f1f12121 4c584c4c 58585858     ....!!..LLXLXXXX
-d0088e74:	58585858 58585858 f14c5858 f1f1f1f1     XXXXXXXXXXL.....
-	...
-d0088ecc:	f1f10000 584c4c4c 58585858 4c4c4c58     ....LLLXXXXXXLLL
-d0088edc:	21f1f14c 0000f1f1 00000000 20f10000     L..!........... 
-d0088eec:	00f12029 00000000 00000000 00000000     ) ..............
-	...
-d0088fa8:	f121f1f1 4c4c4cf1 5858584c 4c585858     ..!..LLLLXXXXXXL
-d0088fb8:	4c4c4c4c 4c58584c 000000f1 00000000     LLLLLXXL........
-	...
-d0089010:	5858f1f1 58584c4c 4c4c4c58 f14c4c4c     ..XXLLXXXLLLLLL.
-d0089020:	00f14c4c 00000000 2920f100 0000f120     LL........ ) ...
-	...
-d00890e4:	f1000000 4cf14c4c 4c4c4c4c 5858584c     ....LL.LLLLLLXXX
-d00890f4:	58584c4c 4cf1f1f1 58584c4c 000000f1     LLXX...LLLXX....
-	...
-d0089150:	4cf10000 58584c4c 4c4c4c4c 4c4c4c4c     ...LLLXXLLLLLLLL
-d0089160:	00f1f1f1 00000000 f12920f1 0000f1f1     ......... ).....
-	...
-d0089224:	f1000000 4c4cf1f1 4c4c4c4c 58584c4c     ......LLLLLLLLXX
-d0089234:	584c4c4c f121f14c 584c4cf1 0000f14c     LLLXL.!..LLXL...
-	...
-d0089290:	f1000000 584cf1f1 4c4c4c4c f1f14c4c     ......LXLLLLLL..
-	...
-d00892a8:	20f1f1f1 000000f1 00000000 00000000     ... ............
-	...
-d0089368:	f1f10000 4c4c4c4c 4c584c4c 4cf1f1f1     ....LLLLLLXL...L
-d0089378:	00f14c4c 4cf1f100 0000f14c 00000000     LL.....LL.......
-	...
-d00893d4:	584cf1f1 4c4c4cf1 f1f1f14c 00000000     ..LX.LLLL.......
-d00893e4:	f1000000 20202020 000000f1 00000000     ....    ........
-	...
-d00894a8:	f1f10000 4c4c4cf1 4c58f14c f1f1f1f1     .....LLLL.XL....
-d00894b8:	f14c4c4c f1000000 0000f14c 00000000     LLL.....L.......
-	...
-d0089514:	4c4cf1f1 f14cf14c f2f2f24c 000000f1     ..LLL.L.L.......
-d0089524:	20f10000 f1202029 00000000 00000000     ... )  .........
-	...
-d00895e8:	4cf1f100 4cf14c4c 4c4c4cf1 21f1f1f1     ...LLL.L.LLL...!
-d00895f8:	4c4c4cf1 000000f1 00000000 00000000     .LLL............
-	...
-d0089654:	4cf1f100 f14cf14c 20f2f1f1 0000f1f2     ...LL.L.... ....
-d0089664:	2920f100 00f12020 00000000 00000000     .. )  ..........
-	...
-d0089728:	4cf100f1 4cf1f1f1 f14c4cf1 f1f2f2f1     ...L...L.LL.....
-d0089738:	4c4cf121 000000f1 00000000 00000000     !.LL............
-	...
-d0089794:	4cf1f100 f14cf1f1 29f10000 f1f1f220     ...L..L....) ...
-d00897a4:	202920f1 00f12020 00000000 00000000     . )   ..........
-	...
-d0089868:	f1f10000 4cf10000 f14cf1f1 20f2f1f1     .......L..L.... 
-d0089878:	4cf121f1 000000f1 00000000 00000000     .!.L............
-	...
-d00898d4:	f1000000 f14cf14c 29f1f100 f1f22029     ....L.L....)) ..
-d00898e4:	20292920 0000f120 00000000 00000000      ))  ...........
-	...
-d00899a8:	00f10000 4cf10000 00f14cf1 20f2f100     .......L.L..... 
-d00899b8:	f121f120 00000000 00000000 00000000      .!.............
-	...
-d0089a14:	f1000000 f14cf1f1 20f10000 20f12020     ......L....   . 
-d0089a24:	20202020 0000f1f2 00000000 00000000         ............
-	...
-d0089aec:	4cf10000 00f1f1f1 20f10000 00f12020     ...L.......   ..
-	...
-d0089b58:	00f1f1f1 20f10000 20202020 f1202029     .......     )  .
-d0089b68:	000000f1 00000000 00000000 00000000     ................
-	...
-d0089c2c:	f1f10000 0000f1f1 f1000000 f1202920     ............ ) .
-	...
-d0089c9c:	f1000000 202020f1 00f12020 00000000     .....     ......
-	...
-d0089d6c:	00f10000 0000f100 00000000 f12920f1     ............. ).
-	...
-d0089de0:	2020f100 00f12020 00000000 00000000     ..    ..........
-	...
-d0089eb8:	2920f100 000000f1 00000000 00000000     .. )............
-	...
-d0089f20:	202020f1 00f12020 00000000 00000000     .     ..........
-	...
-d0089ff8:	20f2f100 0000f1f1 00000000 00000000     ... ............
-	...
-d008a060:	202020f1 0000f120 00000000 00000000     .    ...........
-	...
-d008a138:	f1f10000 00f120f1 00000000 00000000     ..... ..........
-	...
-d008a1a0:	202020f1 0000f120 00000000 00000000     .    ...........
-	...
-d008a278:	f1000000 00f12020 00000000 00000000     ....  ..........
-	...
-d008a2dc:	f1000000 202020f1 000000f1 00000000     .....   ........
-	...
-d008a3b8:	f1000000 f1202920 00000000 00000000     .... ) .........
-	...
-d008a41c:	f1000000 20202020 000000f1 00000000     ....    ........
-	...
-d008a4fc:	202920f1 000000f1 00000000 00000000     . ) ............
-	...
-d008a55c:	f1f10000 f2202020 000000f1 00000000     ....   .........
-	...
-d008a63c:	29f1f1f1 0000f120 00000000 00000000     ...) ...........
-	...
-d008a69c:	20f10000 f1f1f120 00000000 00000000     ...  ...........
-	...
-d008a77c:	f120f100 0000f1f1 00000000 00000000     .. .............
-	...
-d008a7dc:	20f10000 0000f120 00000000 00000000     ...  ...........
-	...
-d008a8bc:	2020f100 00f12020 00000000 00000000     ..    ..........
-	...
-d008a8e4:	f1f1f1f1 00000000 00000000 00000000     ................
-	...
-d008a91c:	20f1f100 00f12020 00000000 00000000     ...   ..........
-	...
-d008a99c:	f1f10000 00000000 00000000 00000000     ................
-	...
-d008a9e4:	f1f1f1f1 00000000 00000000 00000000     ................
-	...
-d008a9fc:	20f10000 00f12029 00000000 00000000     ... ) ..........
-	...
-d008aa14:	f1f1f100 000000f1 00000000 f1000000     ................
-d008aa24:	4c4c4c4c f1f1f1f1 0000f1f1 00000000     LLLL............
-d008aa34:	f1f10000 00000000 00000000 00000000     ................
-	...
-d008aa54:	f1f1f100 000000f1 2020f100 00f12020     ..........    ..
-d008aa64:	00000000 f1f1f100 0000f1f1 00000000     ................
-	...
-d008aadc:	4cf1f100 f10000f1 f1f1f1f1 000000f1     ...L............
-	...
-d008ab14:	f1f1f100 000000f1 00000000 f1000000     ................
-d008ab24:	4c4c4c4c f1f1f1f1 0000f1f1 00000000     LLLL............
-	...
-d008ab3c:	20f10000 f1f22929 00000000 00000000     ... ))..........
-	...
-d008ab54:	4c4c4c00 f1f14c4c 00000000 4cf10000     .LLLLL.........L
-d008ab64:	5858584c 4c4c5858 f1f14c4c 00000000     LXXXXXLLLL......
-d008ab74:	4cf10000 000000f1 00000000 00000000     ...L............
-	...
-d008ab94:	4c4c4c00 f1f14c4c 2920f1f1 f1f12020     .LLLLL.... )  ..
-d008aba4:	f1f1f1f1 4c4cf1f1 f1f14c4c 00000000     ......LLLL......
-	...
-d008ac1c:	4c584cf1 4cf1f14c 4c4c5858 0000584c     .LXLL..LXXLLLX..
-	...
-d008ac3c:	f1f10000 000000f1 00000000 00000000     ................
-	...
-d008ac54:	4c4c4c00 f1f14c4c 00000000 4cf10000     .LLLLL.........L
-d008ac64:	5858584c 4c4c5858 f1f14c4c 00000000     LXXXXXLLLL......
-	...
-d008ac7c:	f2f10000 f1202929 00000000 00000000     ....)) .........
-	...
-d008ac94:	584cf100 4c4c5858 000000f1 4cf10000     ..LXXXLL.......L
-d008aca4:	58585858 58585858 4c4c4c58 000000f1     XXXXXXXXXLLL....
-d008acb4:	4cf10000 000000f1 00000000 00000000     ...L............
-	...
-d008acd4:	584cf100 4c4c5858 2920f1f1 4cf1f120     ..LXXXLL.. ) ..L
-d008ace4:	58585858 58585858 4c4c4c58 000000f1     XXXXXXXXXLLL....
-d008acf4:	00000000 0000f100 00000000 00000000     ................
-	...
-d008ad18:	f1f10000 000000f1 f2000000 f1f1f1f1     ................
-d008ad28:	000000f1 00000000 00000000 00000000     ................
-	...
-d008ad58:	f1f10000 5858584c 584cf14c 4c585858     ....LXXXL.LXXXXL
-d008ad68:	00f15858 00000000 00000000 00000000     XX..............
-d008ad78:	0000f100 f1000000 f1f1f14c 000000f1     ........L.......
-	...
-d008ad94:	584cf100 4c4c5858 000000f1 4cf10000     ..LXXXLL.......L
-d008ada4:	58585858 58585858 4c4c4c58 000000f1     XXXXXXXXXLLL....
-d008adb4:	00000000 0000f100 f1000000 f1202920     ............ ) .
-d008adc4:	000000f1 00000000 00000000 00000000     ................
-d008add4:	4cf10000 5858584c 0000f14c 4c4cf100     ...LLXXXL.....LL
-d008ade4:	58585858 58585858 f14c4c58 00000000     XXXXXXXXXLL.....
-d008adf4:	58f10000 0000f14c 00000000 00000000     ...XL...........
-	...
-d008ae14:	4cf10000 5858584c 2020f14c 4c4cf1f2     ...LLXXXL.  ..LL
-d008ae24:	58585858 58585858 f14c4c58 00000000     XXXXXXXXXLL.....
-d008ae34:	00000000 00f1f100 00000000 00000000     ................
-	...
-d008ae58:	f1f1f100 f1f1f1f1 f1f1f100 5858f1f1     ..............XX
-d008ae68:	000000f1 00000000 00000000 00000000     ................
-	...
-d008ae98:	4c4cf100 4c585858 5858f1f1 58585858     ..LLXXXL..XXXXXX
-d008aea8:	00f14c58 00000000 00000000 00000000     XL..............
-d008aeb8:	00f1f100 00000000 584c4cf1 00f1f158     .........LLXX...
-	...
-d008aed4:	4cf10000 5858584c 0000f14c 4c4cf100     ...LLXXXL.....LL
-d008aee4:	58585858 58585858 f14c4c58 00000000     XXXXXXXXXLL.....
-d008aef4:	00000000 00f1f100 f1000000 f1202920     ............ ) .
-d008af04:	00f1f14c 0000f1f1 00000000 00000000     L...............
-d008af14:	f1000000 5858584c 00f14c58 584cf100     ....LXXXXL....LX
-d008af24:	58585858 58585858 f14c4c4c 00000000     XXXXXXXXLLL.....
-d008af34:	584cf100 0000f14c 00000000 00000000     ..LXL...........
-	...
-d008af54:	f1000000 5858584c f2f14c58 584cf1f2     ....LXXXXL....LX
-d008af64:	58585858 58585858 f14c4c4c 00000000     XXXXXXXXLLL.....
-d008af74:	00000000 f14cf100 00000000 00000000     ......L.........
-	...
-d008af98:	4c4c4cf1 f14c4c4c 58f1f1f1 f1585858     .LLLLLL....XXXX.
-d008afa8:	f1f1f1f1 000000f1 00000000 00000000     ................
-d008afb8:	f1f10000 0000f1f1 00000000 00000000     ................
-	...
-d008afd8:	58584cf1 58585858 58584cf1 58585858     .LXXXXXX.LXXXXXX
-d008afe8:	f14c5858 00000000 00000000 00000000     XXL.............
-d008aff8:	f14cf100 00000000 4cf1f100 f14c4c4c     ..L........LLLL.
-d008b008:	0000f1f1 00000000 00000000 f1000000     ................
-d008b018:	5858584c 00f14c58 584cf100 58585858     LXXXXL....LXXXXX
-d008b028:	58585858 f14c4c4c 00000000 00000000     XXXXLLL.........
-d008b038:	f14cf100 f1000000 f1202920 f14c4c4c     ..L..... ) .LLL.
-d008b048:	f1f14c4c 00000000 00000000 f1000000     LL..............
-d008b058:	5858584c f14c4c58 584c4cf1 58585858     LXXXXLL..LLXXXXX
-d008b068:	4c585858 00f14c4c 00000000 584cf100     XXXLLL........LX
-d008b078:	0000f158 00000000 00000000 00000000     X...............
-	...
-d008b094:	f1000000 5858584c f14c4c58 584c4cf1     ....LXXXXLL..LLX
-d008b0a4:	58585858 4c585858 00f14c4c 00000000     XXXXXXXLLL......
-d008b0b4:	00000000 f14cf100 00000000 00000000     ......L.........
-	...
-d008b0d8:	585858f1 4c4c4c58 5858f1f1 58585858     .XXXXLLL..XXXXXX
-d008b0e8:	4c585858 0000f14c 00000000 00000000     XXXLL...........
-d008b0f8:	f1f1f100 0000f1f1 00000000 f1f1f100     ................
-d008b108:	f1f1f1f1 00000000 00000000 f1000000     ................
-d008b118:	5858584c 5858584c 58584cf1 58585858     LXXXLXXX.LXXXXXX
-d008b128:	f14c5858 00000000 00000000 00000000     XXL.............
-d008b138:	4c4cf100 0000f1f1 f1000000 4c58584c     ..LL........LXXL
-d008b148:	f1f14c4c 00000000 00000000 f1000000     LL..............
-d008b158:	5858584c f14c4c58 584c4cf1 58585858     LXXXXLL..LLXXXXX
-d008b168:	4c585858 00f14c4c 00000000 00000000     XXXLLL..........
-d008b178:	4c4cf100 0000f1f1 202020f2 4c5858f1     ..LL.....   .XXL
-d008b188:	4c585858 000000f1 00000000 f1000000     XXXL............
-d008b198:	5858584c 4c585858 58584cf1 4c585858     LXXXXXXL.LXXXXXL
-d008b1a8:	4c585858 00f14c4c 00000000 4c4cf100     XXXLLL........LL
-d008b1b8:	00f14c58 00000000 00000000 00000000     XL..............
-	...
-d008b1d4:	f1000000 5858584c 4c585858 58584cf1     ....LXXXXXXL.LXX
-d008b1e4:	4c585858 4c585858 00f14c4c 00000000     XXXLXXXLLL......
-d008b1f4:	00000000 f1584cf1 00000000 00000000     .....LX.........
-	...
-d008b214:	f1000000 5858584c 4c585858 58584cf1     ....LXXXXXXL.LXX
-d008b224:	4c585858 4c585858 00f14c4c 00000000     XXXLXXXLLL......
-d008b234:	00000000 4c584cf1 f1f14c4c 00000000     .....LXLLL......
-d008b244:	584c4cf1 4c585858 000000f1 00000000     .LLXXXXL........
-d008b254:	f1000000 58585858 4c585858 58584cf1     ....XXXXXXXL.LXX
-d008b264:	4c585858 f1585858 00000000 00000000     XXXLXXX.........
-d008b274:	00000000 4c584cf1 f1f14c4c 00000000     .....LXLLL......
-d008b284:	584c4cf1 4c585858 000000f1 00000000     .LLXXXXL........
-d008b294:	f1000000 5858584c 4c585858 58584cf1     ....LXXXXXXL.LXX
-d008b2a4:	4c585858 4c585858 00f14c4c 00000000     XXXLXXXLLL......
-d008b2b4:	00000000 4c584cf1 f1f14c4c f22020f1     .....LXLLL...  .
-d008b2c4:	584c4cf1 58585858 f14c4c58 0000f1f1     .LLXXXXXXLL.....
-d008b2d4:	f1000000 5858584c 4c4c5858 58584c4c     ....LXXXXXLLLLXX
-d008b2e4:	4c585858 4c4c5858 0000f14c 00000000     XXXLXXLLL.......
-d008b2f4:	4c4cf100 00f14c58 00000000 00000000     ..LLXL..........
-	...
-d008b314:	f1000000 5858584c 4c4c5858 58584c4c     ....LXXXXXLLLLXX
-d008b324:	4c585858 4c4c5858 0000f14c 00000000     XXXLXXLLL.......
-d008b334:	f1000000 58584cf1 000000f1 00000000     .....LXX........
-	...
-d008b354:	f1000000 5858584c 4c4c5858 58584c4c     ....LXXXXXLLLLXX
-d008b364:	4c585858 4c4c5858 00f1f14c 00000000     XXXLXXLLL.......
-d008b374:	f1000000 58584cf1 4c4c584c f1f1f1f1     .....LXXLXLL....
-d008b384:	4c4c4c4c 58585858 f14c4c58 0000f1f1     LLLLXXXXXLL.....
-d008b394:	f1000000 5858584c 4c4c5858 58584c4c     ....LXXXXXLLLLXX
-d008b3a4:	4c585858 4c4c5858 0000f1f1 00000000     XXXLXXLL........
-d008b3b4:	00000000 58584cf1 4c4c584c f100f1f1     .....LXXLXLL....
-d008b3c4:	4c4c4c4c 58585858 f14c4c58 0000f1f1     LLLLXXXXXLL.....
-d008b3d4:	f1000000 5858584c 4c4c5858 58584c4c     ....LXXXXXLLLLXX
-d008b3e4:	4c585858 4c4c5858 00f1f14c 00000000     XXXLXXLLL.......
-d008b3f4:	00000000 58584cf1 4c4c584c f1f1f1f1     .....LXXLXLL....
-d008b404:	4c4c4c4c 58584c4c 4c585858 f1f14c4c     LLLLLLXXXXXLLL..
-d008b414:	f1000000 5858584c 4c4c5858 5858584c     ....LXXXXXLLLXXX
-d008b424:	4c4c5858 4c4c4c58 00f1f14c 00000000     XXLLXLLLL.......
-d008b434:	4c4cf100 00f14c58 00000000 00000000     ..LLXL..........
-	...
-d008b450:	00f10000 f1000000 5858584c 4c4c5858     ........LXXXXXLL
-d008b460:	5858584c 4c4c5858 4c4c4c58 00f1f14c     LXXXXXLLXLLLL...
-d008b470:	00000000 f1000000 5858584c 000000f1     ........LXXX....
-	...
-d008b490:	f1f10000 f1000000 5858584c 4c4c5858     ........LXXXXXLL
-d008b4a0:	5858584c 4c4c5858 4c4c4c58 00f1f14c     LXXXXXLLXLLLL...
-d008b4b0:	00000000 f1000000 5858584c 4c584c4c     ........LXXXLLXL
-d008b4c0:	f1f14c4c 4c584c4c 58584c4c 4c585858     LL..LLXLLLXXXXXL
-d008b4d0:	f1f14c4c f1000000 5858584c 4c4c5858     LL......LXXXXXLL
-d008b4e0:	5858584c 4c4c5858 4c4c4c58 00f1f14c     LXXXXXLLXLLLL...
-d008b4f0:	00000000 f1000000 5858584c 4c584c4c     ........LXXXLLXL
-d008b500:	f1f14c4c 4c584c4c 58584c4c 4c585858     LL..LLXLLLXXXXXL
-d008b510:	f1f14c4c f1000000 5858584c 4c4c5858     LL......LXXXXXLL
-d008b520:	5858584c 4c4c5858 4c4c4c58 00f1f14c     LXXXXXLLXLLLL...
-d008b530:	00000000 f1000000 5858584c 4c584c4c     ........LXXXLLXL
-d008b540:	f1f14c4c 4c584c4c 584c4c58 58585858     LL..LLXLXLLXXXXX
-d008b550:	4c4c4c58 f100f1f1 584c584c 4c4c5858     XLLL....LXLXXXLL
-d008b560:	5858584c 584c4c58 4c4c4c58 f14c4c4c     LXXXXLLXXLLLLLL.
-d008b570:	00f1f1f1 584cf100 f14c4c58 00000000     ......LXXLL.....
-	...
-d008b590:	f14cf100 f100f100 584c584c 4c4c5858     ..L.....LXLXXXLL
-d008b5a0:	5858584c 584c4c58 4c4c4c58 f14c4c4c     LXXXXLLXXLLLLLL.
-d008b5b0:	00f1f1f1 f1000000 4c58584c 000000f1     ........LXXL....
-	...
-d008b5d0:	f14cf100 f100f100 584c584c 4c4c5858     ..L.....LXLXXXLL
-d008b5e0:	5858584c 584c4c58 4c4c4c58 f14c4c4c     LXXXXLLXXLLLLLL.
-d008b5f0:	00f1f1f1 f1000000 4c58584c 584c4c4c     ........LXXLLLLX
-d008b600:	4c4c4c4c 584c4c4c 584c4c58 58585858     LLLLLLLXXLLXXXXX
-d008b610:	4c4c4c58 f100f1f1 584c584c 4c4c5858     XLLL....LXLXXXLL
-d008b620:	5858584c 584c4c58 4c4c4c58 f14c4c4c     LXXXXLLXXLLLLLL.
-d008b630:	00f1f1f1 f1000000 4c58584c 584c4c4c     ........LXXLLLLX
-d008b640:	4c4c4c4c 584c4c4c 584c4c58 58585858     LLLLLLLXXLLXXXXX
-d008b650:	4c4c4c58 f100f1f1 584c584c 4c4c5858     XLLL....LXLXXXLL
-d008b660:	5858584c 584c4c58 4c4c4c58 f14c4c4c     LXXXXLLXXLLLLLL.
-d008b670:	00f1f1f1 f1000000 4c58584c 584c4c4c     ........LXXLLLLX
-d008b680:	4c4c4c4c 584c4c4c 4c4c4c58 5858584c     LLLLLLLXXLLLLXXX
-d008b690:	4c585858 f1f14c4c 4c4c584c 4c4c4c58     XXXLLL..LXLLXLLL
-d008b6a0:	5858584c 4c4c4c58 4c4c4c4c 4c4c4c4c     LXXXXLLLLLLLLLLL
-d008b6b0:	f14c4c4c 584cf1f1 f14c4c58 00000000     LLL...LXXLL.....
-	...
-d008b6d0:	f14cf100 f1f14c00 4c4c584c 4c4c4c58     ..L..L..LXLLXLLL
-d008b6e0:	5858584c 4c4c4c58 4c4c4c4c 4c4c4c4c     LXXXXLLLLLLLLLLL
-d008b6f0:	f14c4c4c 4cf1f1f1 4c4c5858 0000f14c     LLL....LXXLLL...
-	...
-d008b710:	f14cf100 f1f14c00 4c4c584c 4c4c4c58     ..L..L..LXLLXLLL
-d008b720:	5858584c 4c4c4c58 4c4c4c4c 4c4c4c4c     LXXXXLLLLLLLLLLL
-d008b730:	f14c4c4c 4cf1f1f1 4c4c5858 584c4c4c     LLL....LXXLLLLLX
-d008b740:	4c4c4c58 4c4c4c4c 4c4c4c58 5858584c     XLLLLLLLXLLLLXXX
-d008b750:	4c585858 f1f14c4c 4c4c584c 4c4c4c58     XXXLLL..LXLLXLLL
-d008b760:	5858584c 4c4c4c58 4c4c4c4c 4c4c4c4c     LXXXXLLLLLLLLLLL
-d008b770:	f14c4c4c 4cf1f1f1 4c4c5858 584c4c4c     LLL....LXXLLLLLX
-d008b780:	4c4c4c58 4c4c4c4c 4c4c4c58 5858584c     XLLLLLLLXLLLLXXX
-d008b790:	4c585858 f1f14c4c 4c4c584c 4c4c4c58     XXXLLL..LXLLXLLL
-d008b7a0:	5858584c 4c4c4c58 4c4c4c4c 4c4c4c4c     LXXXXLLLLLLLLLLL
-d008b7b0:	f14c4c4c 4cf1f1f1 4c4c5858 584c4c4c     LLL....LXXLLLLLX
-d008b7c0:	4c4c4c58 4c4c4c4c 4c4c4c4c 58584c4c     XLLLLLLLLLLLLLXX
-d008b7d0:	4c585858 4c4c4c4c 4c4c4c4c 4c4c5858     XXXLLLLLLLLLXXLL
-d008b7e0:	58584c58 584c4c4c 4c4c4c4c 4c4c4c4c     XLXXLLLXLLLLLLLL
-d008b7f0:	4c4c4c4c 584c4c4c f14c4c58 00000000     LLLLLLLXXLL.....
-	...
-d008b810:	f1584cf1 4c4c4c00 4c4c4c4c 4c4c5858     .LX..LLLLLLLXXLL
-d008b820:	58584c58 584c4c4c 4c4c4c4c 4c4c4c4c     XLXXLLLXLLLLLLLL
-d008b830:	4c4c4c4c 4c4c4c4c 4c4c4c4c 0000f14c     LLLLLLLLLLLLL...
-	...
-d008b850:	f1584cf1 4c4c4c00 4c4c4c4c 4c4c5858     .LX..LLLLLLLXXLL
-d008b860:	58584c58 584c4c4c 4c4c4c4c 4c4c4c4c     XLXXLLLXLLLLLLLL
-d008b870:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008b880:	4c4c5858 4c4c4c4c 4c4c4c4c 58584c4c     XXLLLLLLLLLLLLXX
-d008b890:	4c585858 4c4c4c4c 4c4c4c4c 4c4c5858     XXXLLLLLLLLLXXLL
-d008b8a0:	58584c58 584c4c4c 4c4c4c4c 4c4c4c4c     XLXXLLLXLLLLLLLL
-d008b8b0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008b8c0:	4c4c5858 4c4c4c4c 4c4c4c4c 58584c4c     XXLLLLLLLLLLLLXX
-d008b8d0:	4c585858 4c4c4c4c 4c4c4c4c 4c4c5858     XXXLLLLLLLLLXXLL
-d008b8e0:	58584c58 584c4c4c 4c4c4c4c 4c4c4c4c     XLXXLLLXLLLLLLLL
-d008b8f0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008b900:	4c4c5858 4c4c4c4c 4c4c4c4c 4c4c4c4c     XXLLLLLLLLLLLLLL
-d008b910:	5858584c 4c4c4c58 4c4c4c4c 4c4c584c     LXXXXLLLLLLLLXLL
-d008b920:	4c4c5858 58584c4c 4c4c4c4c 4c4c4c4c     XXLLLLXXLLLLLLLL
-d008b930:	4c4c4c4c 58584c4c f14c584c 00000000     LLLLLLXXLXL.....
-	...
-d008b950:	4c584cf1 4c4c4cf1 4c4c4c4c 4c4c584c     .LXL.LLLLLLLLXLL
-d008b960:	4c4c5858 58584c4c 4c4c4c4c 4c4c4c4c     XXLLLLXXLLLLLLLL
-d008b970:	4c4c4c4c 4c4c4c4c 4c4c4c4c 0000f14c     LLLLLLLLLLLLL...
-	...
-d008b990:	4c584cf1 4c4c4cf1 4c4c4c4c 4c4c584c     .LXL.LLLLLLLLXLL
-d008b9a0:	4c4c5858 58584c4c 4c4c4c4c 4c4c4c4c     XXLLLLXXLLLLLLLL
-d008b9b0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008b9c0:	584c584c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LXLXLLLLLLLLLLLL
-d008b9d0:	5858584c 4c4c4c58 4c4c4c4c 4c4c584c     LXXXXLLLLLLLLXLL
-d008b9e0:	4c4c5858 58584c4c 4c4c4c4c 4c4c4c4c     XXLLLLXXLLLLLLLL
-d008b9f0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ba00:	584c584c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LXLXLLLLLLLLLLLL
-d008ba10:	5858584c 4c4c4c58 4c4c4c4c 4c4c584c     LXXXXLLLLLLLLXLL
-d008ba20:	4c4c5858 58584c4c 4c4c4c4c 4c4c4c4c     XXLLLLXXLLLLLLLL
-d008ba30:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ba40:	584c584c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LXLXLLLLLLLLLLLL
-d008ba50:	584c4c4c 4c4c5858 4c4c4c4c 4c4c4c4c     LLLXXXLLLLLLLLLL
-d008ba60:	4c4c4c4c 4c584c4c 4c4c4c4c 4c4c4c4c     LLLLLLXLLLLLLLLL
-d008ba70:	4c4c4c4c 58584c4c 4c4c584c 000000f1     LLLLLLXXLXLL....
-	...
-d008ba90:	4c5858f1 4c4c58f1 4c4c4c4c 4c4c4c4c     .XXL.XLLLLLLLLLL
-d008baa0:	4c4c4c4c 4c584c4c 4c4c4c4c 4c4c4c4c     LLLLLLXLLLLLLLLL
-d008bab0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 0000f14c     LLLLLLLLLLLLL...
-	...
-d008bad0:	4c5858f1 4c4c58f1 4c4c4c4c 4c4c4c4c     .XXL.XLLLLLLLLLL
-d008bae0:	4c4c4c4c 4c584c4c 4c4c4c4c 4c4c4c4c     LLLLLLXLLLLLLLLL
-d008baf0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bb00:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bb10:	584c4c4c 4c4c5858 4c4c4c4c 4c4c4c4c     LLLXXXLLLLLLLLLL
-d008bb20:	4c4c4c4c 4c584c4c 4c4c4c4c 4c4c4c4c     LLLLLLXLLLLLLLLL
-d008bb30:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bb40:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bb50:	584c4c4c 4c4c5858 4c4c4c4c 4c4c4c4c     LLLXXXLLLLLLLLLL
-d008bb60:	4c4c4c4c 4c584c4c 4c4c4c4c 4c4c4c4c     LLLLLLXLLLLLLLLL
-d008bb70:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bb80:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bb90:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bba0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bbb0:	4c4c4c4c 5858584c 4c58584c f10000f1     LLLLLXXXLXXL....
-d008bbc0:	0000f1f1 00000000 00000000 f1000000     ................
-d008bbd0:	4c4c584c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LXLLLLLLLLLLLLLL
-d008bbe0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bbf0:	4c4c4c4c 4c4c4c4c 4c4c4c4c f1f14c4c     LLLLLLLLLLLLLL..
-d008bc00:	0000f1f1 00000000 00000000 f1000000     ................
-d008bc10:	4c4c584c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LXLLLLLLLLLLLLLL
-d008bc20:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bc30:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bc40:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bc50:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bc60:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bc70:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bc80:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bc90:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bca0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bcb0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bcc0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bcd0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bce0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bcf0:	4c4c4c4c 58584c4c 4c585858 4cf1f14c     LLLLLLXXXXXLL..L
-d008bd00:	f1f14c4c 00000000 f1f10000 f10000f1     LL..............
-d008bd10:	4c4c584c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LXLLLLLLLLLLLLLL
-d008bd20:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bd30:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4cf14c4c     LLLLLLLLLLLLLL.L
-d008bd40:	f1f14c4c 00000000 f1f10000 f10000f1     LL..............
-d008bd50:	4c4c584c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LXLLLLLLLLLLLLLL
-d008bd60:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bd70:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bd80:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bd90:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bda0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bdb0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bdc0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bdd0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bde0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bdf0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008be00:	4c4c4c4c 4c4c4c4c 58585858 4c4c4c58     LLLLLLLLXXXXXLLL
-d008be10:	4c4c4c58 4c4c4c4c 4c4c4c4c 4c4c4c4c     XLLLLLLLLLLLLLLL
-d008be20:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008be30:	4c4c4c4c 4c584c4c 4c585858 4cf1f14c     LLLLLLXLXXXLL..L
-d008be40:	4c585858 0000f1f1 4c4cf100 4c0000f1     XXXL......LL...L
-d008be50:	4c4c5858 4c4c4c4c 5858584c 4c4c4c58     XXLLLLLLLXXXXLLL
-d008be60:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008be70:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4cf14c4c     LLLLLLLLLLLLLL.L
-d008be80:	4c585858 0000f1f1 4c4cf100 4cf100f1     XXXL......LL...L
-d008be90:	4c4c5858 4c4c4c4c 4c4c4c4c 4c4c4c4c     XXLLLLLLLLLLLLLL
-d008bea0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008beb0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bec0:	4c4c4c4c 4c4c4c4c 4c4c584c 5858584c     LLLLLLLLLXLLLXXX
-d008bed0:	4c585858 4c4c4c4c 4c4c4c4c 4c4c4c4c     XXXLLLLLLLLLLLLL
-d008bee0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bef0:	4c4c4c4c 4c4c4c4c 5858584c 4c4c4c58     LLLLLLLLLXXXXLLL
-d008bf00:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bf10:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bf20:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bf30:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bf40:	4c4c4c4c 584c4c4c 58584c4c 4c4c5858     LLLLLLLXLLXXXXLL
-d008bf50:	4c4c5858 4c4c4c4c 4c4c4c4c 4c4c4c4c     XXLLLLLLLLLLLLLL
-d008bf60:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bf70:	4c4c4c4c 4c584c4c 4c585858 4cf1f14c     LLLLLLXLXXXLL..L
-d008bf80:	5858584c 00f1f14c 4c4c4cf1 4cf100f1     LXXXL....LLL...L
-d008bf90:	4c4c4c58 4c4c4c4c 58584c58 4c4c4c4c     XLLLLLLLXLXXLLLL
-d008bfa0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bfb0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4cf14c4c     LLLLLLLLLLLLLL.L
-d008bfc0:	5858584c 00f1f14c 4c4c4cf1 4cf100f1     LXXXL....LLL...L
-d008bfd0:	4c4c4c58 4c4c4c4c 4c4c4c4c 4c4c4c4c     XLLLLLLLLLLLLLLL
-d008bfe0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008bff0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c000:	4c4c4c4c 4c4c4c4c 4c4c5858 58585858     LLLLLLLLXXLLXXXX
-d008c010:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c020:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c030:	4c4c4c4c 4c4c4c4c 58584c58 4c4c4c4c     LLLLLLLLXLXXLLLL
-d008c040:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c050:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c060:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c070:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c080:	4c4c4c4c 4c4c4c4c 584c4c4c 4c585858     LLLLLLLLLLLXXXXL
-d008c090:	4c4c584c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LXLLLLLLLLLLLLLL
-d008c0a0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c0b0:	4c4c4c4c 4c584c4c 4c4c5858 f1f14c4c     LLLLLLXLXXLLLL..
-d008c0c0:	4c584c4c f14c5858 4c4c4cf1 5858f121     LLXLXXL..LLL!.XX
-d008c0d0:	4c4c4c4c 584c4c4c 4c58584c 4c4c4c4c     LLLLLLLXLXXLLLLL
-d008c0e0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c0f0:	4c4c4c4c 4c4c4c4c 4c4c4c4c f1f14c4c     LLLLLLLLLLLLLL..
-d008c100:	4c584c4c f14c5858 4c4c4cf1 5858f1f1     LLXLXXL..LLL..XX
-d008c110:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c120:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c130:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c140:	4c4c4c4c 4c4c4c4c 584c4c58 4c585858     LLLLLLLLXLLXXXXL
-d008c150:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c160:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c170:	4c4c4c4c 584c4c4c 4c58584c 4c4c4c4c     LLLLLLLXLXXLLLLL
-d008c180:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c190:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c1a0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c1b0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c1c0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 58584c4c     LLLLLLLLLLLLLLXX
-d008c1d0:	4c58584c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LXXLLLLLLLLLLLLL
-d008c1e0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c1f0:	4c4c4c4c 4c4c4c4c 4c4c4c58 f1f14c4c     LLLLLLLLXLLLLL..
-d008c200:	4c584c4c f14c5858 4c4c4cf1 5858f1f1     LLXLXXL..LLL..XX
-d008c210:	4c4c4c4c 4c4c4c4c 4c58584c 4c4c4c4c     LLLLLLLLLXXLLLLL
-d008c220:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c230:	4c4c4c4c 4c4c4c4c 4c4c4c4c f1f14c4c     LLLLLLLLLLLLLL..
-d008c240:	4c584c4c f14c5858 4c4c4cf1 5858f1f1     LLXLXXL..LLL..XX
-d008c250:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c260:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c270:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c280:	4c4c4c4c 584c4c4c 58584c58 4c4c4c4c     LLLLLLLXXLXXLLLL
-d008c290:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c2a0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c2b0:	4c4c4c4c 4c4c4c4c 4c58584c 4c4c4c4c     LLLLLLLLLXXLLLLL
-d008c2c0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c2d0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c2e0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c2f0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c300:	4c4c4c4c 4c4c4c4c 4c4c4c4c 58584c4c     LLLLLLLLLLLLLLXX
-d008c310:	4c584c58 4c4c4c4c 4c4c4c4c 4c4c4c4c     XLXLLLLLLLLLLLLL
-d008c320:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c330:	4c4c4c4c 4c4c4c4c 4c4c4c58 f1f14c4c     LLLLLLLLXLLLLL..
-d008c340:	584c4c4c 4c58584c 4c4c4cf1 584cf14c     LLLXLXXL.LLLL.LX
-d008c350:	4c4c4c4c 4c4c4c4c 4c4c584c 4c4c4c4c     LLLLLLLLLXLLLLLL
-d008c360:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c370:	4c4c4c4c 4c4c4c4c 4c4c4c4c f1f14c4c     LLLLLLLLLLLLLL..
-d008c380:	584c4c4c 4c58584c 4c4c4cf1 584cf14c     LLLXLXXL.LLLL.LX
-d008c390:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c3a0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c3b0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c3c0:	4c4c4c4c 584c4c4c 5858584c 4c4c4c4c     LLLLLLLXLXXXLLLL
-d008c3d0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c3e0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c3f0:	4c4c4c4c 4c4c4c4c 4c4c584c 4c4c4c4c     LLLLLLLLLXLLLLLL
-d008c400:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c410:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c420:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c430:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c440:	4c4c4c4c 4c4c4c4c 4c4c4c4c 584c4c4c     LLLLLLLLLLLLLLLX
-d008c450:	4c584c58 4c4c4c4c 4c4c4c4c 4c4c4c4c     XLXLLLLLLLLLLLLL
-d008c460:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c470:	4c4c4c4c 4c4c4c4c 4c4c4c4c f14c4c4c     LLLLLLLLLLLLLLL.
-d008c480:	584c4c4c 4c584c4c 4c4c4c4c 4c4c4c4c     LLLXLLXLLLLLLLLL
-d008c490:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c4a0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c4b0:	4c4c4c4c 4c4c4c4c 4c4c4c4c f14c4c4c     LLLLLLLLLLLLLLL.
-d008c4c0:	584c4c4c 4c584c4c 4c4c4c4c 4c4c4c4c     LLLXLLXLLLLLLLLL
-d008c4d0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c4e0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c4f0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c500:	4c4c4c4c 584c4c4c 4c58584c 4c4c4c4c     LLLLLLLXLXXLLLLL
-d008c510:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c520:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c530:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c540:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c550:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c560:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c570:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c580:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c590:	4c4c4c58 4c4c4c4c 4c4c4c4c 4c4c4c4c     XLLLLLLLLLLLLLLL
-d008c5a0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c5b0:	4c4c4c4c 4c4c4c4c 4c4c4c4c f14c4c4c     LLLLLLLLLLLLLLL.
-d008c5c0:	4c4c4c4c 584c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLXLLLLLLLL
-d008c5d0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c5e0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c5f0:	4c4c4c4c 4c4c4c4c 4c4c4c4c f14c4c4c     LLLLLLLLLLLLLLL.
-d008c600:	4c4c4c4c 584c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLXLLLLLLLL
-d008c610:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c620:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c630:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c640:	4c4c4c4c 4c4c4c4c 4c4c584c 4c4c4c4c     LLLLLLLLLXLLLLLL
-d008c650:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c660:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c670:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c680:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c690:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c6a0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c6b0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c6c0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c6d0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c6e0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c6f0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c700:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c710:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c720:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c730:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c740:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c750:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c760:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c770:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c780:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c790:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c7a0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c7b0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c7c0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c7d0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c7e0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c7f0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c800:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c810:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c820:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c830:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c840:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c850:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c860:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c870:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c880:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c890:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c8a0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c8b0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c8c0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c8d0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c8e0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c8f0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c900:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c910:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c920:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c930:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c940:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c950:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c960:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c970:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c980:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c990:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c9a0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c9b0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c9c0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c9d0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c9e0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008c9f0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ca00:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ca10:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ca20:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ca30:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ca40:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ca50:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ca60:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ca70:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ca80:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ca90:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008caa0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cab0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cac0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cad0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cae0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008caf0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cb00:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cb10:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cb20:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cb30:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cb40:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cb50:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cb60:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cb70:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cb80:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cb90:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cba0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cbb0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cbc0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cbd0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cbe0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cbf0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cc00:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cc10:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cc20:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cc30:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cc40:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cc50:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cc60:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cc70:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cc80:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cc90:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cca0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ccb0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ccc0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ccd0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cce0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ccf0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cd00:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cd10:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cd20:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cd30:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cd40:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cd50:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cd60:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cd70:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cd80:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cd90:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cda0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cdb0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cdc0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cdd0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cde0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cdf0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ce00:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ce10:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ce20:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ce30:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ce40:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ce50:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ce60:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ce70:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ce80:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ce90:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cea0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ceb0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cec0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008ced0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cee0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cef0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cf00:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cf10:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cf20:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cf30:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cf40:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cf50:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cf60:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cf70:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cf80:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cf90:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cfa0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cfb0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cfc0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cfd0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cfe0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008cff0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008d000:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008d010:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008d020:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008d030:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008d040:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008d050:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008d060:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008d070:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008d080:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008d090:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008d0a0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008d0b0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d008d0c0:	4c4c4c4c 4c4c4c4c                       LLLLLLLL
-
-d008d0c8 <gfx_bub_treehead>:
-	...
-d008d0d4:	10000000 10101010 00101010 00000000     ................
-d008d0e4:	00109010 00101000 10000000 10101010     ................
-d008d0f4:	10101010 00000010 00000000 00000000     ................
-	...
-d008d114:	90101000 dcdcdc9c 1058d4dc 00101010     ..........X.....
-d008d124:	10e01000 0010dc10 58101010 dcdcdcdc     ...........X....
-d008d134:	00109058 00000000 00000000 00000000     X...............
-	...
-d008d154:	10000000 d4901010 d4d8d8dc 10581090     ..............X.
-d008d164:	e8581010 1090d810 e0d85810 5858d8dc     ..X......X....XX
-d008d174:	00001090 10100000 00001010 00000000     ................
-	...
-d008d194:	90101000 90909058 dcdc5858 dce8dcd8     ....X...XX......
-d008d1a4:	e8101090 581058dc 9ce0d4e8 909058d8     .....X.X.....X..
-d008d1b4:	10101010 d49c5810 101090e0 00000000     .....X..........
-	...
-d008d1d4:	e8d89010 dcdcdcdc dcdc5858 9cdcdce8     ........XX......
-d008d1e4:	dc90e0dc dcd490dc 90d8e8e0 10909090     ................
-d008d1f4:	d4d49058 10909cd4 00001010 00000000     X...............
-	...
-d008d214:	d8dc1000 d8e8d8d8 e058e0e0 e0dcdcd8     ..........X.....
-d008d224:	d8dc9cdc 9ce0dcd8 9090dcd8 58585890     .............XXX
-d008d234:	90dce0e0 00101058 00000000 00000000     ....X...........
-	...
-d008d250:	10100000 90901010 dcdcdcdc d8dcd4d4     ................
-d008d260:	9cd8e0dc 9cdce0d4 dce8d8dc 9cdcdc9c     ................
-d008d270:	d890dcdc 90909c9c 00101010 00000000     ................
-	...
-d008d290:	e8905810 90101058 d4dcdc90 dce89ce0     .X..X...........
-d008d2a0:	e8d4e0dc dcd4dce8 dcd49cd8 e8d4dcdc     ................
-d008d2b0:	dcdcd4dc dcdc90dc 1090dc9c 00001010     ................
-	...
-d008d2cc:	10000000 9cdcdcd4 dcd8dcdc dcdcdcdc     ................
-d008d2dc:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcd8dc     ................
-d008d2ec:	dcdcdcd8 9ce0dcd8 dcdcdcdc d8e8dcdc     ................
-d008d2fc:	101058dc 00000000 00000000 00000000     .X..............
-d008d30c:	00000000 e0d45810 d8e0d8dc dcdcdcdc     .....X..........
-d008d31c:	dcdcdcdc dcdcdcdc dcdcdcdc dcd8dcdc     ................
-d008d32c:	dcdcdcdc dcdc9cdc dcd8dcdc e0d4d4dc     ................
-d008d33c:	90e0dcdc 00001010 00000000 00000000     ................
-d008d34c:	00000000 9c581010 e89ce0dc dcdcdcdc     ......X.........
-d008d35c:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcdcdc     ................
-d008d36c:	dcd8dcdc d8d8dcdc 9090d8e0 58909090     ...............X
-d008d37c:	90d49090 00109090 00000000 00000000     ................
-d008d38c:	10100000 e0dce0dc d8dc9cdc dcdcdcdc     ................
-d008d39c:	dcdcdcdc dcdcdcdc dcdcdcdc d8dcdcd8     ................
-d008d3ac:	dcdcdcdc 90909090 90909058 90909058     ........X...X...
-d008d3bc:	58101010 00109090 00000000 00000000     ...X............
-d008d3cc:	d4e01000 d4d4d4d4 d4e0dcdc dcdcdcdc     ................
-d008d3dc:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcdcd8     ................
-d008d3ec:	dcdcdcdc 5890dcdc 90589090 10585890     .......X..X..XX.
-d008d3fc:	00000010 10905810 00000000 00000000     .....X..........
-d008d40c:	1090e810 dcdcdc90 9c9cdcdc dcdcdcdc     ................
-d008d41c:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcd8dc     ................
-d008d42c:	dcdcdcdc dcdcd8d8 90905890 10101010     .........X......
-d008d43c:	00101010 10101000 00000000 00000000     ................
-d008d44c:	10101000 d4581000 dcdce0d4 dcdcdcdc     ......X.........
-d008d45c:	dcdcdcdc dcdcdcdc dcdcdcdc dc9c90dc     ................
-d008d46c:	dcdcd8dc dcdcdcdc 9090909c 90905890     .............X..
-d008d47c:	10585890 10000010 00000000 00000000     .XX.............
-d008d48c:	10101000 90909010 dcdc9cdc dcdcdcdc     ................
-d008d49c:	dcdcdcdc dcdcdcdc dcdcdcdc dc9090d8     ................
-d008d4ac:	dcdcd8dc dcdcd8dc 90d89cdc 90909058     ............X...
-d008d4bc:	90585890 00101058 00000000 10000000     .XX.X...........
-d008d4cc:	dcd89010 d8dcdcdc dcdcd8d8 dcdcdcdc     ................
-d008d4dc:	dcdcdcdc dcdcdcdc dcdcdcdc d890dcdc     ................
-d008d4ec:	dcdcd8dc dcdcdcdc 90dcdcd8 90909090     ................
-d008d4fc:	90909090 10585890 00000010 dc100000     .....XX.........
-d008d50c:	e8d8e8dc dcdcdc9c d8dcdcdc dcdcdcdc     ................
-d008d51c:	dcdcdcdc dcdcdcdc dcdcdcdc 9090dcdc     ................
-d008d52c:	d8e0dc9c dcdcdcd8 d8d8dce0 90905890     .............X..
-d008d53c:	90909090 58909090 00001090 d49c1000     .......X........
-d008d54c:	9090d89c d8d89c90 d8dcdcd8 dcdcdcdc     ................
-d008d55c:	dcdcdcdc dcdcdcdc dcdcdcdc 9cd8dc9c     ................
-d008d56c:	dcdc9c90 dc9cdcdc dcdcd890 58909058     ............X..X
-d008d57c:	90909090 90909090 00001058 10101010     ........X.......
-d008d58c:	90101010 dcdcdc9c d8dcdcd8 dcdcdcdc     ................
-d008d59c:	dcdcdcdc dcdcdcdc dcdcdcdc e0dcdcdc     ................
-d008d5ac:	dcdcdc9c dcdcdcdc 9c9090dc 90909090     ................
-d008d5bc:	90905890 90909090 00001058 00000010     .X......X.......
-d008d5cc:	d8dc5810 dcdcdcdc dcd8dcdc dcdcdcdc     .X..............
-d008d5dc:	dcdcdcdc dcdcdcdc dcdcdcdc dcd89cdc     ................
-d008d5ec:	dcdcdcd8 dcdcdcdc 909090d8 90909090     ................
-d008d5fc:	909090d8 90909090 00001090 10000000     ................
-d008d60c:	d4dcdc90 dc9c9cdc dcd8dcdc dcdcdcdc     ................
-d008d61c:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcd8d8     ................
-d008d62c:	dcdcdc9c d8d8e0d8 90909090 90905890     .............X..
-d008d63c:	909cdc90 90909090 00109090 90100000     ................
-d008d64c:	d8d8dce8 dcdcdcdc d8d8dcdc dcdcdcdc     ................
-d008d65c:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcdcd8     ................
-d008d66c:	d8dcdcdc d8dcdcd8 905890e0 9090e090     ..........X.....
-d008d67c:	90e09058 58589090 00109090 d8100000     X.....XX........
-d008d68c:	e8d8dcd4 d8dcdcd8 dcdcdcd8 dcdcdcdc     ................
-d008d69c:	dcdcdcdc dcdcdcdc dcdcdcdc dcd8dcdc     ................
-d008d6ac:	dcdcd8dc d8dcd8dc 909090dc 90dc9090     ................
-d008d6bc:	d8dc9090 90909090 00105890 d49c1000     .........X......
-d008d6cc:	dcdc9cd4 dcdcdcdc dcdcdcdc dcdcdcdc     ................
-d008d6dc:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcdcdc     ................
-d008d6ec:	dcdcdcdc d8e0dcd8 909090d8 90909090     ................
-d008d6fc:	90909090 58909090 10909090 9ce8dc10     .......X........
-d008d70c:	d8dcdc9c dcdcdcd8 dcd8dcdc dcdcdcdc     ................
-d008d71c:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcdcdc     ................
-d008d72c:	dcdcdcdc d8dcd8dc 90909cdc 90909090     ................
-d008d73c:	90909090 90909090 10909090 dcd4dc10     ................
-d008d74c:	9c9cd4dc dcdcdcdc dcdcdcdc dcdcdcdc     ................
-d008d75c:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcdcdc     ................
-d008d76c:	dcdcdcdc dcdcdcdc 9090d8dc 90909090     ................
-d008d77c:	90909090 58909058 10905890 10e8d410     ....X..X.X......
-d008d78c:	dcdcdcd8 dcd8d8dc dcdcdcdc dcdcdcdc     ................
-d008d79c:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcdcdc     ................
-d008d7ac:	dcdcdcdc dcdcdcdc 9090d8d8 90909090     ................
-d008d7bc:	90909090 90909090 10905890 10101010     .........X......
-d008d7cc:	dc9c9010 dcdcdcdc dcdcdcdc dcdcdcdc     ................
-d008d7dc:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcdcdc     ................
-d008d7ec:	dcdcdcdc dcd8dcdc 9090dcdc 90909090     ................
-d008d7fc:	90909090 58909058 10909090 dc100000     ....X..X........
-d008d80c:	d8dce09c dcdcdcd8 dcd8d8dc dcdcdcdc     ................
-d008d81c:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcdcdc     ................
-d008d82c:	dcdcdcdc dcdcdcdc 90909cdc 90909090     ................
-d008d83c:	90909090 58909058 10909090 d8dc1000     ....X..X........
-d008d84c:	e0dc9cdc 9c9cdcdc dcd8dcdc dcdcdcdc     ................
-d008d85c:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcdcdc     ................
-d008d86c:	dcdcdcdc dcdcdcd8 909090d8 90905890     .............X..
-d008d87c:	90905890 90909090 10589090 10100000     .X........X.....
-d008d88c:	5890d810 9090d8dc dcd8dcd8 dcdcdcdc     ...X............
-d008d89c:	dcdcdcdc dcdcdcdc dcdcdcdc dcdcdcdc     ................
-d008d8ac:	dcdcdcdc dcd8dcdc 909090dc 9c909090     ................
-d008d8bc:	dcd89090 10589090 00109090 58100000     ......X........X
-d008d8cc:	90109010 905890d8 9090e89c e890d890     ......X.........
-d008d8dc:	9cdcdcdc d490dcdc dcdce8d8 dcd8dcdc     ................
-d008d8ec:	d8dc90dc d890d8e8 901058d8 90909090     .........X......
-d008d8fc:	dc909090 10901058 00001090 10000000     ....X...........
-d008d90c:	58109010 901010dc 905890d8 90909010     ...X......X.....
-d008d91c:	e09c9090 d890d8dc dcd8dce0 dcd8dcdc     ................
-d008d92c:	e0dc9090 9090d458 10105890 90589090     ....X....X....X.
-d008d93c:	dc101090 10581090 00001090 00000000     ......X.........
-d008d94c:	10901010 100010dc 101090dc 90901010     ................
-d008d95c:	909c9090 909090d4 dce0909c 9090dc9c     ................
-d008d96c:	909c1090 58109090 10109058 90901010     .......XX.......
-d008d97c:	90100010 10109010 00000010 00000000     ................
-d008d98c:	10901000 10001058 10101090 90101021     ....X.......!...
-d008d99c:	10105890 905890d4 d8dc9090 58585890     .X....X......XXX
-d008d9ac:	58581058 10101090 10101010 10901010     X.XX............
-d008d9bc:	90100010 00109010 00000000 00000000     ................
-d008d9cc:	10100000 00001090 10001010 90102121     ............!!..
-d008d9dc:	10901090 10109090 90909090 10101058     ............X...
-d008d9ec:	10101010 10102110 10211010 00100010     .....!....!.....
-d008d9fc:	10000000 00001010 00000000 00000000     ................
-d008da0c:	00100000 00001010 00001000 10212110     .............!!.
-d008da1c:	10901010 10109058 90101010 10109090     ....X...........
-d008da2c:	10101010 21212110 10102521 00000000     .....!!!!%......
-d008da3c:	10000000 00001000 00000000 00000000     ................
-d008da4c:	00000000 00001010 00000000 21211010     ..............!!
-d008da5c:	21102121 10105810 10102121 10105858     !!.!.X..!!..XX..
-d008da6c:	25212110 25252121 10102121 00000000     .!!%!!%%!!......
-	...
-d008da98:	25211000 21212121 21101021 10212925     ..!%!!!!!..!%)!.
-d008daa8:	21211010 25252121 21292521 00102121     ..!!!!%%!%)!!!..
-	...
-d008dad8:	21212110 29252129 25252525 25252525     .!!!)!%)%%%%%%%%
-d008dae8:	25252525 25252125 21212121 10212510     %%%%%!%%!!!!.%!.
-	...
-d008db18:	21211000 25252125 25252525 25252525     ..!!%!%%%%%%%%%%
-d008db28:	25252525 21252125 10212121 10212910     %%%%%!%!!!!..)!.
-	...
-d008db58:	21251000 25252125 25252525 25252525     ..%!%!%%%%%%%%%%
-d008db68:	25252525 21252125 10212121 00102129     %%%%%!%!!!!.)!..
-	...
-d008db98:	21292110 25252125 25252525 25252525     .!)!%!%%%%%%%%%%
-d008dba8:	25252525 21252125 10212125 00102125     %%%%%!%!%!!.%!..
-	...
-d008dbd8:	25252110 25252125 25252525 25252525     .!%%%!%%%%%%%%%%
-d008dbe8:	25252525 21252125 21212529 00102121     %%%%%!%!)%!!!!..
-	...
-d008dc18:	25211000 25252125 25252525 25252525     ..!%%!%%%%%%%%%%
-d008dc28:	25252525 25252125 21212525 00102121     %%%%%!%%%%!!!!..
-	...
-d008dc58:	25211000 29252125 25252525 25252525     ..!%%!%)%%%%%%%%
-d008dc68:	25252525 25252521 21252521 00001021     %%%%!%%%!%%!!...
-	...
-d008dc98:	25211000 25252129 25252525 25252525     ..!%)!%%%%%%%%%%
-d008dca8:	25252525 25252521 21252521 00001021     %%%%!%%%!%%!!...
-	...
-d008dcd8:	29251000 25292529 25252525 25252525     ..%))%)%%%%%%%%%
-d008dce8:	25252525 25292521 21252521 00102121     %%%%!%)%!%%!!!..
-	...
-d008dd18:	25211000 25252525 25252525 25252525     ..!%%%%%%%%%%%%%
-d008dd28:	25252525 21252521 21212525 00102121     %%%%!%%!%%!!!!..
-	...
-d008dd58:	25212110 25252129 25252525 25252525     .!!%)!%%%%%%%%%%
-d008dd68:	25252525 21252521 21212525 00102121     %%%%!%%!%%!!!!..
-	...
-d008dd98:	25211000 25252125 25252525 25252525     ..!%%!%%%%%%%%%%
-d008dda8:	25252529 21252521 21212525 00102121     )%%%!%%!%%!!!!..
-	...
-d008ddd8:	25211000 25292125 25252525 25252525     ..!%%!)%%%%%%%%%
-d008dde8:	25252529 21252521 21212521 10212110     )%%%!%%!!%!!.!!.
-	...
-d008de18:	21292110 25212125 25252525 25252525     .!)!%!!%%%%%%%%%
-d008de28:	25252525 21252121 21212921 10212110     %%%%!!%!!)!!.!!.
-	...
-d008de58:	21252110 25212125 25252525 25252525     .!%!%!!%%%%%%%%%
-d008de68:	25252525 21252121 21212521 10212510     %%%%!!%!!%!!.%!.
-	...
-d008de98:	21252110 25212125 25252525 25252525     .!%!%!!%%%%%%%%%
-d008dea8:	25252525 25252121 21212521 10212510     %%%%!!%%!%!!.%!.
-	...
-d008ded8:	21212110 29212525 25252525 25252525     .!!!%%!)%%%%%%%%
-d008dee8:	25252525 25252125 21212521 10212510     %%%%%!%%!%!!.%!.
-	...
-d008df18:	21211000 25212525 25252525 25252525     ..!!%%!%%%%%%%%%
-d008df28:	25252525 21252125 10212921 10212510     %%%%%!%!!)!..%!.
-	...
-d008df58:	21251000 29212125 25252525 25252525     ..%!%!!)%%%%%%%%
-d008df68:	25252525 21252525 10212521 00102129     %%%%%%%!!%!.)!..
-	...
-d008df98:	21252110 25212129 25252525 25252525     .!%!)!!%%%%%%%%%
-d008dfa8:	25252525 21252125 10212525 00102125     %%%%%!%!%%!.%!..
-	...
-d008dfd8:	25252110 29252125 25252525 25252525     .!%%%!%)%%%%%%%%
-d008dfe8:	25252525 21252125 21212529 00102121     %%%%%!%!)%!!!!..
-	...
-d008e018:	25211000 25292521 25252525 25252525     ..!%!%)%%%%%%%%%
-d008e028:	29252525 25252525 21212525 00102121     %%%)%%%%%%!!!!..
-	...
-d008e058:	25211000 25292521 25252525 25252525     ..!%!%)%%%%%%%%%
-d008e068:	25252525 25252525 21292525 00102121     %%%%%%%%%%)!!!..
-	...
-d008e098:	25211000 25292521 25252525 25252525     ..!%!%)%%%%%%%%%
-d008e0a8:	25252525 25252525 21212125 00001021     %%%%%%%%%!!!!...
-	...
-d008e0d8:	21212110 29252129 25252525 25252525     .!!!)!%)%%%%%%%%
-d008e0e8:	25252525 25252125 21212121 10212510     %%%%%!%%!!!!.%!.
-	...
-d008e118:	21211000 25252125 25252525 25252525     ..!!%!%%%%%%%%%%
-d008e128:	25252525 21252125 10212121 10212910     %%%%%!%!!!!..)!.
-	...
-d008e158:	21251000 25252125 25252525 25252525     ..%!%!%%%%%%%%%%
-d008e168:	25252525 21252125 10212121 00102129     %%%%%!%!!!!.)!..
-	...
-d008e198:	21292110 25252125 25252525 25252525     .!)!%!%%%%%%%%%%
-d008e1a8:	25252525 21252125 10212125 00102125     %%%%%!%!%!!.%!..
-	...
-d008e1d8:	25252110 25252125 25252525 25252525     .!%%%!%%%%%%%%%%
-d008e1e8:	25252525 21252125 21212529 00102121     %%%%%!%!)%!!!!..
-	...
-d008e218:	25211000 25252125 25252525 25252525     ..!%%!%%%%%%%%%%
-d008e228:	25252525 25252125 21212525 00102121     %%%%%!%%%%!!!!..
-	...
-d008e258:	25211000 29252125 25252525 25252525     ..!%%!%)%%%%%%%%
-d008e268:	25252525 25252521 21252521 00001021     %%%%!%%%!%%!!...
-	...
-d008e298:	25211000 25252129 25252525 25252525     ..!%)!%%%%%%%%%%
-d008e2a8:	25252525 25252521 21252521 00001021     %%%%!%%%!%%!!...
-	...
-d008e2d8:	29251000 25292529 25252525 25252525     ..%))%)%%%%%%%%%
-d008e2e8:	25252525 25292521 21252521 00102121     %%%%!%)%!%%!!!..
-	...
-d008e318:	25211000 25252525 25252525 25252525     ..!%%%%%%%%%%%%%
-d008e328:	25252525 21252521 21212525 00102121     %%%%!%%!%%!!!!..
-	...
-d008e358:	25212110 25252129 25252525 25252525     .!!%)!%%%%%%%%%%
-d008e368:	25252525 21252521 21212525 00102121     %%%%!%%!%%!!!!..
-	...
-d008e398:	25211000 25252125 25252525 25252525     ..!%%!%%%%%%%%%%
-d008e3a8:	25252529 21252521 21212525 00102121     )%%%!%%!%%!!!!..
-	...
-d008e3d8:	25211000 25292125 25252525 25252525     ..!%%!)%%%%%%%%%
-d008e3e8:	25252529 21252521 21212521 10212110     )%%%!%%!!%!!.!!.
-	...
-d008e418:	21292110 25212125 25252525 25252525     .!)!%!!%%%%%%%%%
-d008e428:	25252525 21252121 21212921 10212110     %%%%!!%!!)!!.!!.
-	...
-d008e458:	21252110 25212125 25252525 25252525     .!%!%!!%%%%%%%%%
-d008e468:	25252525 21252121 21212521 10212510     %%%%!!%!!%!!.%!.
-	...
-d008e498:	21252110 25212125 25252525 25252525     .!%!%!!%%%%%%%%%
-d008e4a8:	25252525 25252121 21212521 10212510     %%%%!!%%!%!!.%!.
-	...
-d008e4d8:	21212110 29212525 25252525 25252525     .!!!%%!)%%%%%%%%
-d008e4e8:	25252525 25252125 21212521 10212510     %%%%%!%%!%!!.%!.
-	...
-d008e518:	21211000 25212525 25252525 25252525     ..!!%%!%%%%%%%%%
-d008e528:	25252525 21252125 10212921 10212510     %%%%%!%!!)!..%!.
-	...
-d008e558:	21251000 29212125 25252525 25252525     ..%!%!!)%%%%%%%%
-d008e568:	25252525 21252525 10212521 00102129     %%%%%%%!!%!.)!..
-	...
-d008e598:	21252110 25212129 25252525 25252525     .!%!)!!%%%%%%%%%
-d008e5a8:	25252525 21252125 10212525 00102125     %%%%%!%!%%!.%!..
-	...
-d008e5d8:	25252110 29252125 25252525 25252525     .!%%%!%)%%%%%%%%
-d008e5e8:	25252525 21252125 21212529 00102121     %%%%%!%!)%!!!!..
-	...
-d008e618:	25211000 25292521 25252525 25252525     ..!%!%)%%%%%%%%%
-d008e628:	29252525 25252525 21212525 00102121     %%%)%%%%%%!!!!..
-	...
-d008e658:	25211000 25292521 25252525 25252525     ..!%!%)%%%%%%%%%
-d008e668:	25252525 25252525 21292525 00102121     %%%%%%%%%%)!!!..
-	...
-d008e698:	25211000 25292521 25252525 25252525     ..!%!%)%%%%%%%%%
-d008e6a8:	25252525 25252525 21212125 00001021     %%%%%%%%%!!!!...
-	...
-d008e6d8:	21212110 29252129 25252525 25252525     .!!!)!%)%%%%%%%%
-d008e6e8:	25252525 25252125 21212121 10212510     %%%%%!%%!!!!.%!.
-	...
-d008e718:	21211000 25252125 25252525 25252525     ..!!%!%%%%%%%%%%
-d008e728:	25252525 21252125 10212121 10212910     %%%%%!%!!!!..)!.
-	...
-d008e758:	21251000 25252125 25252525 25252525     ..%!%!%%%%%%%%%%
-d008e768:	25252525 21252125 10212121 00102129     %%%%%!%!!!!.)!..
-	...
-d008e798:	21292110 25252125 25252525 25252525     .!)!%!%%%%%%%%%%
-d008e7a8:	25252525 21252125 10212125 00102125     %%%%%!%!%!!.%!..
-	...
-d008e7d8:	25252110 25252125 25252525 25252525     .!%%%!%%%%%%%%%%
-d008e7e8:	25252525 21252125 21212529 00102121     %%%%%!%!)%!!!!..
-	...
-d008e818:	25211000 25252125 25252525 25252525     ..!%%!%%%%%%%%%%
-d008e828:	25252525 25252125 21212525 00102121     %%%%%!%%%%!!!!..
-	...
-d008e858:	25211000 29252125 25252525 25252525     ..!%%!%)%%%%%%%%
-d008e868:	25252525 25252521 21252521 00001021     %%%%!%%%!%%!!...
-	...
-d008e898:	25211000 25252129 25252525 25252525     ..!%)!%%%%%%%%%%
-d008e8a8:	25252525 25252521 21252521 00001021     %%%%!%%%!%%!!...
-	...
-d008e8d8:	29251000 25292529 25252525 25252525     ..%))%)%%%%%%%%%
-d008e8e8:	25252525 25292521 21292521 00102121     %%%%!%)%!%)!!!..
-	...
-d008e918:	25211000 25252525 25252525 25252525     ..!%%%%%%%%%%%%%
-d008e928:	25252525 21252521 21212525 00102121     %%%%!%%!%%!!!!..
-	...
-d008e958:	25212110 25252129 25252525 25252525     .!!%)!%%%%%%%%%%
-d008e968:	25252525 21252521 21212925 00102121     %%%%!%%!%)!!!!..
-	...
-d008e998:	25211000 25252125 25252525 25252525     ..!%%!%%%%%%%%%%
-d008e9a8:	25252529 21252521 21212525 00102121     )%%%!%%!%%!!!!..
-	...
-d008e9d8:	25211000 25292125 25252525 25252525     ..!%%!)%%%%%%%%%
-d008e9e8:	25252529 21252521 21212521 10212110     )%%%!%%!!%!!.!!.
-	...
-d008ea18:	21292110 25212125 25252525 25252525     .!)!%!!%%%%%%%%%
-d008ea28:	25252525 21252121 25252125 10212110     %%%%!!%!%!%%.!!.
-	...
-d008ea58:	21252110 25212125 25252525 25252525     .!%!%!!%%%%%%%%%
-d008ea68:	25252525 21252121 10252521 10212125     %%%%!!%!!%%.%!!.
-	...
-d008ea98:	21252110 25212125 25252525 25252525     .!%!%!!%%%%%%%%%
-d008eaa8:	25252525 25252121 10102521 10212510     %%%%!!%%!%...%!.
-	...
-d008ead8:	21212110 29212525 25252525 25252525     .!!!%%!)%%%%%%%%
-d008eae8:	25252525 25252125 10102510 10212510     %%%%%!%%.%...%!.
-	...
-d008eb18:	21211000 25212525 25252525 25252525     ..!!%%!%%%%%%%%%
-d008eb28:	25252525 21252125 10292510 10252510     %%%%%!%!.%)..%%.
-	...
-d008eb58:	21251000 29212125 25252525 25252525     ..%!%!!)%%%%%%%%
-d008eb68:	25252525 21252525 25251021 00102110     %%%%%%%!!.%%.!..
-	...
-d008eb98:	21252110 25212129 25252525 25252525     .!%!)!!%%%%%%%%%
-d008eba8:	25252525 21252125 10102125 00102121     %%%%%!%!%!..!!..
-	...
-d008ebd8:	25252110 29252125 25252525 25252525     .!%%%!%)%%%%%%%%
-d008ebe8:	25252525 21252125 10212125 00102121     %%%%%!%!%!!.!!..
-	...
-d008ec18:	25211000 25292521 25252525 25252525     ..!%!%)%%%%%%%%%
-d008ec28:	29252525 25252525 21212529 00102121     %%%)%%%%)%!!!!..
-	...
-d008ec58:	25211000 25292521 25252525 25252525     ..!%!%)%%%%%%%%%
-d008ec68:	25252525 25252525 21212525 00102121     %%%%%%%%%%!!!!..
-	...
-d008ec98:	25211000 25292521 25252525 25252525     ..!%!%)%%%%%%%%%
-d008eca8:	25252525 25252525 21212125 00001021     %%%%%%%%%!!!!...
+d00820ac <_printf_common>:
+d00820ac:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
+d00820b0:	4616      	mov	r6, r2
+d00820b2:	4699      	mov	r9, r3
+d00820b4:	688a      	ldr	r2, [r1, #8]
+d00820b6:	690b      	ldr	r3, [r1, #16]
+d00820b8:	f8dd 8020 	ldr.w	r8, [sp, #32]
+d00820bc:	4293      	cmp	r3, r2
+d00820be:	bfb8      	it	lt
+d00820c0:	4613      	movlt	r3, r2
+d00820c2:	6033      	str	r3, [r6, #0]
+d00820c4:	f891 2043 	ldrb.w	r2, [r1, #67]	; 0x43
+d00820c8:	4607      	mov	r7, r0
+d00820ca:	460c      	mov	r4, r1
+d00820cc:	b10a      	cbz	r2, d00820d2 <_printf_common+0x26>
+d00820ce:	3301      	adds	r3, #1
+d00820d0:	6033      	str	r3, [r6, #0]
+d00820d2:	6823      	ldr	r3, [r4, #0]
+d00820d4:	0699      	lsls	r1, r3, #26
+d00820d6:	bf42      	ittt	mi
+d00820d8:	6833      	ldrmi	r3, [r6, #0]
+d00820da:	3302      	addmi	r3, #2
+d00820dc:	6033      	strmi	r3, [r6, #0]
+d00820de:	6825      	ldr	r5, [r4, #0]
+d00820e0:	f015 0506 	ands.w	r5, r5, #6
+d00820e4:	d106      	bne.n	d00820f4 <_printf_common+0x48>
+d00820e6:	f104 0a19 	add.w	sl, r4, #25
+d00820ea:	68e3      	ldr	r3, [r4, #12]
+d00820ec:	6832      	ldr	r2, [r6, #0]
+d00820ee:	1a9b      	subs	r3, r3, r2
+d00820f0:	42ab      	cmp	r3, r5
+d00820f2:	dc26      	bgt.n	d0082142 <_printf_common+0x96>
+d00820f4:	f894 2043 	ldrb.w	r2, [r4, #67]	; 0x43
+d00820f8:	1e13      	subs	r3, r2, #0
+d00820fa:	6822      	ldr	r2, [r4, #0]
+d00820fc:	bf18      	it	ne
+d00820fe:	2301      	movne	r3, #1
+d0082100:	0692      	lsls	r2, r2, #26
+d0082102:	d42b      	bmi.n	d008215c <_printf_common+0xb0>
+d0082104:	f104 0243 	add.w	r2, r4, #67	; 0x43
+d0082108:	4649      	mov	r1, r9
+d008210a:	4638      	mov	r0, r7
+d008210c:	47c0      	blx	r8
+d008210e:	3001      	adds	r0, #1
+d0082110:	d01e      	beq.n	d0082150 <_printf_common+0xa4>
+d0082112:	6823      	ldr	r3, [r4, #0]
+d0082114:	68e5      	ldr	r5, [r4, #12]
+d0082116:	6832      	ldr	r2, [r6, #0]
+d0082118:	f003 0306 	and.w	r3, r3, #6
+d008211c:	2b04      	cmp	r3, #4
+d008211e:	bf08      	it	eq
+d0082120:	1aad      	subeq	r5, r5, r2
+d0082122:	68a3      	ldr	r3, [r4, #8]
+d0082124:	6922      	ldr	r2, [r4, #16]
+d0082126:	bf0c      	ite	eq
+d0082128:	ea25 75e5 	biceq.w	r5, r5, r5, asr #31
+d008212c:	2500      	movne	r5, #0
+d008212e:	4293      	cmp	r3, r2
+d0082130:	bfc4      	itt	gt
+d0082132:	1a9b      	subgt	r3, r3, r2
+d0082134:	18ed      	addgt	r5, r5, r3
+d0082136:	2600      	movs	r6, #0
+d0082138:	341a      	adds	r4, #26
+d008213a:	42b5      	cmp	r5, r6
+d008213c:	d11a      	bne.n	d0082174 <_printf_common+0xc8>
+d008213e:	2000      	movs	r0, #0
+d0082140:	e008      	b.n	d0082154 <_printf_common+0xa8>
+d0082142:	2301      	movs	r3, #1
+d0082144:	4652      	mov	r2, sl
+d0082146:	4649      	mov	r1, r9
+d0082148:	4638      	mov	r0, r7
+d008214a:	47c0      	blx	r8
+d008214c:	3001      	adds	r0, #1
+d008214e:	d103      	bne.n	d0082158 <_printf_common+0xac>
+d0082150:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+d0082154:	e8bd 87f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
+d0082158:	3501      	adds	r5, #1
+d008215a:	e7c6      	b.n	d00820ea <_printf_common+0x3e>
+d008215c:	18e1      	adds	r1, r4, r3
+d008215e:	1c5a      	adds	r2, r3, #1
+d0082160:	2030      	movs	r0, #48	; 0x30
+d0082162:	f881 0043 	strb.w	r0, [r1, #67]	; 0x43
+d0082166:	4422      	add	r2, r4
+d0082168:	f894 1045 	ldrb.w	r1, [r4, #69]	; 0x45
+d008216c:	f882 1043 	strb.w	r1, [r2, #67]	; 0x43
+d0082170:	3302      	adds	r3, #2
+d0082172:	e7c7      	b.n	d0082104 <_printf_common+0x58>
+d0082174:	2301      	movs	r3, #1
+d0082176:	4622      	mov	r2, r4
+d0082178:	4649      	mov	r1, r9
+d008217a:	4638      	mov	r0, r7
+d008217c:	47c0      	blx	r8
+d008217e:	3001      	adds	r0, #1
+d0082180:	d0e6      	beq.n	d0082150 <_printf_common+0xa4>
+d0082182:	3601      	adds	r6, #1
+d0082184:	e7d9      	b.n	d008213a <_printf_common+0x8e>
 	...
 
-d008ecc8 <gfx_bubgutwut>:
-	...
-d008ed48:	11000000 00000011 00000000 00000000     ................
-	...
-d008ed60:	34110000 10111030 00000000 00000000     ...40...........
-d008ed70:	2d700000 0070f4f4 34100000 34343030     ..p-..p....40044
-d008ed80:	00001110 00000000 f42d7000 2df42d1d     .........p-..-.-
-d008ed90:	3034102d 30303030 00113434 00000000     -.40000044......
-d008eda0:	702d2d00 1d2df470 34110af4 34303030     .--pp.-....40004
-d008edb0:	10343430 00000000 0070f400 70107074     044.......p.tp.p
-d008edc0:	11707070 34303030 11343434 00000000     ppp.0004444.....
-d008edd0:	00002d00 11000070 10107011 30343030     .-..p....p..0040
-d008ede0:	00111034 00000000 00000000 00000000     4...............
-d008edf0:	11118110 34303411 00103434 00000000     .....40444......
-d008ee00:	00000000 10000000 baf71171 10101110     ........q.......
-d008ee10:	00113430 00000000 00000000 07bebf11     04..............
-d008ee20:	be1a1011 70f42d10 10301010 00000000     .....-.p..0.....
-d008ee30:	00000000 7d7dba10 111a1a7d 5c5874f4     ......}}}....tX\
-d008ee40:	30107070 00000010 00000000 ba100000     pp.0............
-d008ee50:	10bebaba 7ef77070 1011702d 00001030     ....pp.~-p..0...
-d008ee60:	00000000 7d070711 797dba07 816d8110     .......}..}y..m.
-d008ee70:	34111d70 00103010 10000000 7d817d6d     p..4.0......m}.}
-d008ee80:	7d817d7d 5c757d81 11341058 11303434     }}.}.}u\X.4.440.
-d008ee90:	00000000 34341011 817d6d71 5c107179     ......44qm}.yq.\
-d008eea0:	3411105c 30343434 00000000 10100000     \..44440........
-d008eeb0:	797d7979 1111106d 10000010 11101011     yy}ym...........
-	...
-d008eec8:	75797910 00111058 00000000 00000000     .yyuX...........
-	...
-d008eee0:	75791000 00000010 00000000 00000000     ..yu............
-	...
-d008eef8:	797d1100 00000010 00000000 00000000     ..}y............
-	...
-d008ef10:	797d7d12 00000011 00000000 00000000     .}}y............
-	...
-d008ef28:	757d0710 00000010 00000000 00000000     ..}u............
-	...
-d008ef40:	75857512 00000010 00000000 00000000     .u.u............
-	...
-d008ef58:	757d1000 00000011 00000000 00000000     ..}u............
-	...
-d008ef70:	75811000 00000010 00000000 00000000     ...u............
-	...
-d008ef88:	79817910 00000010 00000000 00000000     .y.y............
-	...
-d008efa0:	71810710 00000010 00000000 00000000     ...q............
-	...
-d008efb8:	797d8111 00000011 00000000 00000000     ..}y............
-d008efc8:	00000000 10000000 717d817e 00000010     ........~.}q....
-	...
-d008efe4:	ba110000 a6117d7d 00000010 00000000     ....}}..........
-	...
-d008effc:	7d111100 a6a61081 000010a6 00000000     ...}............
-	...
-d008f014:	04711111 1022107d 0010a610 00000000     ..q.}.".........
-	...
-d008f02c:	716d1011 82111810 0010101a 00000000     ..mq............
-d008f03c:	00000000 10000000 11101818 7d6d10ac     ..............m}
-d008f04c:	10176dbf 00000000 00000000 10000000     .m..............
-d008f05c:	18171818 7d711118 11188107 00000000     ......q}........
-d008f06c:	00000000 11000000 181718a6 817d5c11     .............\}.
-d008f07c:	10717d1a 00000000 00000000 18100000     .}q.............
-d008f08c:	1818a6ac 7d7d5811 116d71ba 00000000     .....X}}.qm.....
-d008f09c:	00000000 ac100000 18181818 79711018     ..............qy
-d008f0ac:	10715c1a 00000000 00000000 18100000     .\q.............
-d008f0bc:	18a61718 815c1018 115c58ba 00000000     ......\..X\.....
-d008f0cc:	00000000 18100000 17a61818 7d111718     ...............}
-d008f0dc:	105810ba 00000011 00000000 ac100000     ..X.............
-d008f0ec:	18a61817 81171818 1810107d 00000010     ........}.......
-d008f0fc:	00000000 10100000 18ac1818 7d181817     ...............}
-d008f10c:	1818117d 00000010 00000000 10110000     }...............
-d008f11c:	18181710 7d111818 1818107d 00000011     .......}}.......
-d008f12c:	00000000 ac100000 18181818 81111718     ................
-d008f13c:	1810117d 00000010 00000000 ac110000     }...............
-d008f14c:	17181817 81101717 1071ba81 00000010     ..........q.....
-d008f15c:	00000000 18110000 18171817 7ebf1018     ...............~
-d008f16c:	bfba8107 00000011 00000000 ac100000     ................
-d008f17c:	18171818 babf1018 81078207 00000010     ................
-d008f18c:	00000000 18100000 17171822 79751117     ........".....uy
-d008f19c:	717d81ba 00000010 00000000 ac100000     ..}q............
-d008f1ac:	1822ac11 71101718 58757181 00000010     .."....q.quX....
-d008f1bc:	00000000 ac110000 ac221018 10181718     ..........".....
-d008f1cc:	10115c5c 00000010 00000000 a6100000     \\..............
-d008f1dc:	17a61118 17181818 11101010 00000025     ............%...
-d008f1ec:	00000000 a6100000 18a61018 18181818     ................
-d008f1fc:	10181717 00000000 00000000 18100000     ................
-d008f20c:	18ac1018 18181818 11171818 00000000     ................
-d008f21c:	00000000 18110000 17ac1118 17171818     ................
-d008f22c:	11171817 00000000 00000000 ac100000     ................
-d008f23c:	ac101718 17181818 11181718 00000000     ................
-d008f24c:	00000000 11000000 ac111818 18171818     ................
-d008f25c:	10181818 00000000 00000000 10000000     ................
-d008f26c:	ac101817 17181818 10171818 00000000     ................
-d008f27c:	00000000 11110000 ac1017ac 18181818     ................
-d008f28c:	10181817 00000000 00000000 10101000     ................
-d008f29c:	ac181011 17181717 18181818 00000010     ................
-d008f2ac:	00000000 1086bf11 22111010 18171818     ..........."....
-d008f2bc:	18171718 00000010 00000000 bf117d10     .............}..
-d008f2cc:	111011ba 10101110 10101111 00000011     ................
-d008f2dc:	00000000 79116d10 82827d7d 7d82ba7d     .....m.y}}..}..}
-d008f2ec:	7182077d 00002510 00000000 6d105811     }..q.%.......X.m
-d008f2fc:	07817d6d ba0782be 817e7d81 00001379     m}.......}~.y...
-d008f30c:	00000000 5c101000 6dbe71be 79797911     .......\.q.m.yyy
-d008f31c:	75797975 00001158 00000000 11000000     uyyuX...........
-d008f32c:	11111010 10111000 11101010 00001010     ................
-d008f33c:	00000000                                ....
+d0082188 <_printf_i>:
+d0082188:	e92d 47ff 	stmdb	sp!, {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, sl, lr}
+d008218c:	460c      	mov	r4, r1
+d008218e:	4691      	mov	r9, r2
+d0082190:	7e27      	ldrb	r7, [r4, #24]
+d0082192:	990c      	ldr	r1, [sp, #48]	; 0x30
+d0082194:	2f78      	cmp	r7, #120	; 0x78
+d0082196:	4680      	mov	r8, r0
+d0082198:	469a      	mov	sl, r3
+d008219a:	f104 0243 	add.w	r2, r4, #67	; 0x43
+d008219e:	d807      	bhi.n	d00821b0 <_printf_i+0x28>
+d00821a0:	2f62      	cmp	r7, #98	; 0x62
+d00821a2:	d80a      	bhi.n	d00821ba <_printf_i+0x32>
+d00821a4:	2f00      	cmp	r7, #0
+d00821a6:	f000 80d8 	beq.w	d008235a <_printf_i+0x1d2>
+d00821aa:	2f58      	cmp	r7, #88	; 0x58
+d00821ac:	f000 80a3 	beq.w	d00822f6 <_printf_i+0x16e>
+d00821b0:	f104 0642 	add.w	r6, r4, #66	; 0x42
+d00821b4:	f884 7042 	strb.w	r7, [r4, #66]	; 0x42
+d00821b8:	e03a      	b.n	d0082230 <_printf_i+0xa8>
+d00821ba:	f1a7 0363 	sub.w	r3, r7, #99	; 0x63
+d00821be:	2b15      	cmp	r3, #21
+d00821c0:	d8f6      	bhi.n	d00821b0 <_printf_i+0x28>
+d00821c2:	a001      	add	r0, pc, #4	; (adr r0, d00821c8 <_printf_i+0x40>)
+d00821c4:	f850 f023 	ldr.w	pc, [r0, r3, lsl #2]
+d00821c8:	d0082221 	.word	0xd0082221
+d00821cc:	d0082235 	.word	0xd0082235
+d00821d0:	d00821b1 	.word	0xd00821b1
+d00821d4:	d00821b1 	.word	0xd00821b1
+d00821d8:	d00821b1 	.word	0xd00821b1
+d00821dc:	d00821b1 	.word	0xd00821b1
+d00821e0:	d0082235 	.word	0xd0082235
+d00821e4:	d00821b1 	.word	0xd00821b1
+d00821e8:	d00821b1 	.word	0xd00821b1
+d00821ec:	d00821b1 	.word	0xd00821b1
+d00821f0:	d00821b1 	.word	0xd00821b1
+d00821f4:	d0082341 	.word	0xd0082341
+d00821f8:	d0082265 	.word	0xd0082265
+d00821fc:	d0082323 	.word	0xd0082323
+d0082200:	d00821b1 	.word	0xd00821b1
+d0082204:	d00821b1 	.word	0xd00821b1
+d0082208:	d0082363 	.word	0xd0082363
+d008220c:	d00821b1 	.word	0xd00821b1
+d0082210:	d0082265 	.word	0xd0082265
+d0082214:	d00821b1 	.word	0xd00821b1
+d0082218:	d00821b1 	.word	0xd00821b1
+d008221c:	d008232b 	.word	0xd008232b
+d0082220:	680b      	ldr	r3, [r1, #0]
+d0082222:	1d1a      	adds	r2, r3, #4
+d0082224:	681b      	ldr	r3, [r3, #0]
+d0082226:	600a      	str	r2, [r1, #0]
+d0082228:	f104 0642 	add.w	r6, r4, #66	; 0x42
+d008222c:	f884 3042 	strb.w	r3, [r4, #66]	; 0x42
+d0082230:	2301      	movs	r3, #1
+d0082232:	e0a3      	b.n	d008237c <_printf_i+0x1f4>
+d0082234:	6825      	ldr	r5, [r4, #0]
+d0082236:	6808      	ldr	r0, [r1, #0]
+d0082238:	062e      	lsls	r6, r5, #24
+d008223a:	f100 0304 	add.w	r3, r0, #4
+d008223e:	d50a      	bpl.n	d0082256 <_printf_i+0xce>
+d0082240:	6805      	ldr	r5, [r0, #0]
+d0082242:	600b      	str	r3, [r1, #0]
+d0082244:	2d00      	cmp	r5, #0
+d0082246:	da03      	bge.n	d0082250 <_printf_i+0xc8>
+d0082248:	232d      	movs	r3, #45	; 0x2d
+d008224a:	426d      	negs	r5, r5
+d008224c:	f884 3043 	strb.w	r3, [r4, #67]	; 0x43
+d0082250:	485e      	ldr	r0, [pc, #376]	; (d00823cc <_printf_i+0x244>)
+d0082252:	230a      	movs	r3, #10
+d0082254:	e019      	b.n	d008228a <_printf_i+0x102>
+d0082256:	f015 0f40 	tst.w	r5, #64	; 0x40
+d008225a:	6805      	ldr	r5, [r0, #0]
+d008225c:	600b      	str	r3, [r1, #0]
+d008225e:	bf18      	it	ne
+d0082260:	b22d      	sxthne	r5, r5
+d0082262:	e7ef      	b.n	d0082244 <_printf_i+0xbc>
+d0082264:	680b      	ldr	r3, [r1, #0]
+d0082266:	6825      	ldr	r5, [r4, #0]
+d0082268:	1d18      	adds	r0, r3, #4
+d008226a:	6008      	str	r0, [r1, #0]
+d008226c:	0628      	lsls	r0, r5, #24
+d008226e:	d501      	bpl.n	d0082274 <_printf_i+0xec>
+d0082270:	681d      	ldr	r5, [r3, #0]
+d0082272:	e002      	b.n	d008227a <_printf_i+0xf2>
+d0082274:	0669      	lsls	r1, r5, #25
+d0082276:	d5fb      	bpl.n	d0082270 <_printf_i+0xe8>
+d0082278:	881d      	ldrh	r5, [r3, #0]
+d008227a:	4854      	ldr	r0, [pc, #336]	; (d00823cc <_printf_i+0x244>)
+d008227c:	2f6f      	cmp	r7, #111	; 0x6f
+d008227e:	bf0c      	ite	eq
+d0082280:	2308      	moveq	r3, #8
+d0082282:	230a      	movne	r3, #10
+d0082284:	2100      	movs	r1, #0
+d0082286:	f884 1043 	strb.w	r1, [r4, #67]	; 0x43
+d008228a:	6866      	ldr	r6, [r4, #4]
+d008228c:	60a6      	str	r6, [r4, #8]
+d008228e:	2e00      	cmp	r6, #0
+d0082290:	bfa2      	ittt	ge
+d0082292:	6821      	ldrge	r1, [r4, #0]
+d0082294:	f021 0104 	bicge.w	r1, r1, #4
+d0082298:	6021      	strge	r1, [r4, #0]
+d008229a:	b90d      	cbnz	r5, d00822a0 <_printf_i+0x118>
+d008229c:	2e00      	cmp	r6, #0
+d008229e:	d04d      	beq.n	d008233c <_printf_i+0x1b4>
+d00822a0:	4616      	mov	r6, r2
+d00822a2:	fbb5 f1f3 	udiv	r1, r5, r3
+d00822a6:	fb03 5711 	mls	r7, r3, r1, r5
+d00822aa:	5dc7      	ldrb	r7, [r0, r7]
+d00822ac:	f806 7d01 	strb.w	r7, [r6, #-1]!
+d00822b0:	462f      	mov	r7, r5
+d00822b2:	42bb      	cmp	r3, r7
+d00822b4:	460d      	mov	r5, r1
+d00822b6:	d9f4      	bls.n	d00822a2 <_printf_i+0x11a>
+d00822b8:	2b08      	cmp	r3, #8
+d00822ba:	d10b      	bne.n	d00822d4 <_printf_i+0x14c>
+d00822bc:	6823      	ldr	r3, [r4, #0]
+d00822be:	07df      	lsls	r7, r3, #31
+d00822c0:	d508      	bpl.n	d00822d4 <_printf_i+0x14c>
+d00822c2:	6923      	ldr	r3, [r4, #16]
+d00822c4:	6861      	ldr	r1, [r4, #4]
+d00822c6:	4299      	cmp	r1, r3
+d00822c8:	bfde      	ittt	le
+d00822ca:	2330      	movle	r3, #48	; 0x30
+d00822cc:	f806 3c01 	strble.w	r3, [r6, #-1]
+d00822d0:	f106 36ff 	addle.w	r6, r6, #4294967295	; 0xffffffff
+d00822d4:	1b92      	subs	r2, r2, r6
+d00822d6:	6122      	str	r2, [r4, #16]
+d00822d8:	f8cd a000 	str.w	sl, [sp]
+d00822dc:	464b      	mov	r3, r9
+d00822de:	aa03      	add	r2, sp, #12
+d00822e0:	4621      	mov	r1, r4
+d00822e2:	4640      	mov	r0, r8
+d00822e4:	f7ff fee2 	bl	d00820ac <_printf_common>
+d00822e8:	3001      	adds	r0, #1
+d00822ea:	d14c      	bne.n	d0082386 <_printf_i+0x1fe>
+d00822ec:	f04f 30ff 	mov.w	r0, #4294967295	; 0xffffffff
+d00822f0:	b004      	add	sp, #16
+d00822f2:	e8bd 87f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, pc}
+d00822f6:	4835      	ldr	r0, [pc, #212]	; (d00823cc <_printf_i+0x244>)
+d00822f8:	f884 7045 	strb.w	r7, [r4, #69]	; 0x45
+d00822fc:	6823      	ldr	r3, [r4, #0]
+d00822fe:	680e      	ldr	r6, [r1, #0]
+d0082300:	061f      	lsls	r7, r3, #24
+d0082302:	f856 5b04 	ldr.w	r5, [r6], #4
+d0082306:	600e      	str	r6, [r1, #0]
+d0082308:	d514      	bpl.n	d0082334 <_printf_i+0x1ac>
+d008230a:	07d9      	lsls	r1, r3, #31
+d008230c:	bf44      	itt	mi
+d008230e:	f043 0320 	orrmi.w	r3, r3, #32
+d0082312:	6023      	strmi	r3, [r4, #0]
+d0082314:	b91d      	cbnz	r5, d008231e <_printf_i+0x196>
+d0082316:	6823      	ldr	r3, [r4, #0]
+d0082318:	f023 0320 	bic.w	r3, r3, #32
+d008231c:	6023      	str	r3, [r4, #0]
+d008231e:	2310      	movs	r3, #16
+d0082320:	e7b0      	b.n	d0082284 <_printf_i+0xfc>
+d0082322:	6823      	ldr	r3, [r4, #0]
+d0082324:	f043 0320 	orr.w	r3, r3, #32
+d0082328:	6023      	str	r3, [r4, #0]
+d008232a:	2378      	movs	r3, #120	; 0x78
+d008232c:	4828      	ldr	r0, [pc, #160]	; (d00823d0 <_printf_i+0x248>)
+d008232e:	f884 3045 	strb.w	r3, [r4, #69]	; 0x45
+d0082332:	e7e3      	b.n	d00822fc <_printf_i+0x174>
+d0082334:	065e      	lsls	r6, r3, #25
+d0082336:	bf48      	it	mi
+d0082338:	b2ad      	uxthmi	r5, r5
+d008233a:	e7e6      	b.n	d008230a <_printf_i+0x182>
+d008233c:	4616      	mov	r6, r2
+d008233e:	e7bb      	b.n	d00822b8 <_printf_i+0x130>
+d0082340:	680b      	ldr	r3, [r1, #0]
+d0082342:	6826      	ldr	r6, [r4, #0]
+d0082344:	6960      	ldr	r0, [r4, #20]
+d0082346:	1d1d      	adds	r5, r3, #4
+d0082348:	600d      	str	r5, [r1, #0]
+d008234a:	0635      	lsls	r5, r6, #24
+d008234c:	681b      	ldr	r3, [r3, #0]
+d008234e:	d501      	bpl.n	d0082354 <_printf_i+0x1cc>
+d0082350:	6018      	str	r0, [r3, #0]
+d0082352:	e002      	b.n	d008235a <_printf_i+0x1d2>
+d0082354:	0671      	lsls	r1, r6, #25
+d0082356:	d5fb      	bpl.n	d0082350 <_printf_i+0x1c8>
+d0082358:	8018      	strh	r0, [r3, #0]
+d008235a:	2300      	movs	r3, #0
+d008235c:	6123      	str	r3, [r4, #16]
+d008235e:	4616      	mov	r6, r2
+d0082360:	e7ba      	b.n	d00822d8 <_printf_i+0x150>
+d0082362:	680b      	ldr	r3, [r1, #0]
+d0082364:	1d1a      	adds	r2, r3, #4
+d0082366:	600a      	str	r2, [r1, #0]
+d0082368:	681e      	ldr	r6, [r3, #0]
+d008236a:	6862      	ldr	r2, [r4, #4]
+d008236c:	2100      	movs	r1, #0
+d008236e:	4630      	mov	r0, r6
+d0082370:	f000 f8be 	bl	d00824f0 <memchr>
+d0082374:	b108      	cbz	r0, d008237a <_printf_i+0x1f2>
+d0082376:	1b80      	subs	r0, r0, r6
+d0082378:	6060      	str	r0, [r4, #4]
+d008237a:	6863      	ldr	r3, [r4, #4]
+d008237c:	6123      	str	r3, [r4, #16]
+d008237e:	2300      	movs	r3, #0
+d0082380:	f884 3043 	strb.w	r3, [r4, #67]	; 0x43
+d0082384:	e7a8      	b.n	d00822d8 <_printf_i+0x150>
+d0082386:	6923      	ldr	r3, [r4, #16]
+d0082388:	4632      	mov	r2, r6
+d008238a:	4649      	mov	r1, r9
+d008238c:	4640      	mov	r0, r8
+d008238e:	47d0      	blx	sl
+d0082390:	3001      	adds	r0, #1
+d0082392:	d0ab      	beq.n	d00822ec <_printf_i+0x164>
+d0082394:	6823      	ldr	r3, [r4, #0]
+d0082396:	079b      	lsls	r3, r3, #30
+d0082398:	d413      	bmi.n	d00823c2 <_printf_i+0x23a>
+d008239a:	68e0      	ldr	r0, [r4, #12]
+d008239c:	9b03      	ldr	r3, [sp, #12]
+d008239e:	4298      	cmp	r0, r3
+d00823a0:	bfb8      	it	lt
+d00823a2:	4618      	movlt	r0, r3
+d00823a4:	e7a4      	b.n	d00822f0 <_printf_i+0x168>
+d00823a6:	2301      	movs	r3, #1
+d00823a8:	4632      	mov	r2, r6
+d00823aa:	4649      	mov	r1, r9
+d00823ac:	4640      	mov	r0, r8
+d00823ae:	47d0      	blx	sl
+d00823b0:	3001      	adds	r0, #1
+d00823b2:	d09b      	beq.n	d00822ec <_printf_i+0x164>
+d00823b4:	3501      	adds	r5, #1
+d00823b6:	68e3      	ldr	r3, [r4, #12]
+d00823b8:	9903      	ldr	r1, [sp, #12]
+d00823ba:	1a5b      	subs	r3, r3, r1
+d00823bc:	42ab      	cmp	r3, r5
+d00823be:	dcf2      	bgt.n	d00823a6 <_printf_i+0x21e>
+d00823c0:	e7eb      	b.n	d008239a <_printf_i+0x212>
+d00823c2:	2500      	movs	r5, #0
+d00823c4:	f104 0619 	add.w	r6, r4, #25
+d00823c8:	e7f5      	b.n	d00823b6 <_printf_i+0x22e>
+d00823ca:	bf00      	nop
+d00823cc:	d009c599 	.word	0xd009c599
+d00823d0:	d009c5aa 	.word	0xd009c5aa
 
-d008f340 <gfx_bubguy1>:
-	...
-d008f418:	10100000 00000000 00000000 00000000     ................
-	...
-d008f434:	30101010 00001034 00000000 00000000     ...04...........
-	...
-d008f44c:	10000000 30343411 00103430 2d700000     .....44004....p-
-d008f45c:	006cf4f4 00000000 00000000 10000000     ..l.............
-d008f46c:	30303434 34303030 1d2df411 2d1d2d2d     44000004..-.--.-
-d008f47c:	00000070 00000000 12000000 34303434     p...........4404
-d008f48c:	34303030 f42d7011 6c70f42d 00001d2d     0004.p-.-.pl-...
-	...
-d008f4a4:	34343410 30303034 706c7010 7070106c     .4444000.plpl.pp
-d008f4b4:	00f47000 00000000 00000000 10100000     .p..............
-d008f4c4:	30343034 6c111030 00001110 f4000070     40400..l....p...
-	...
-d008f4dc:	10000000 30343434 10101034 0000117d     ....44404...}...
-	...
-d008f4fc:	11303410 ba101010 1071101a 00000000     .40.......q.....
-	...
-d008f518:	10103010 102d1d70 1010bf1a 101aba07     .0..p.-.........
-	...
-d008f534:	6c103011 70585870 1a1a102d 7e7d7d81     .0.lpXXp-....}}~
-d008f544:	00000011 00000000 00000000 10103010     .............0..
-d008f554:	ba82f470 07116c70 107ebaba 00000000     p...pl....~.....
-	...
-d008f56c:	34103010 81701d11 7d108175 817e7e81     .0.4..p.u..}.~~.
-d008f57c:	00100707 00000000 00000000 34343010     .............044
-d008f58c:	5c103411 7d816d58 81817d81 6d81817d     .4.\Xm.}.}..}..m
-d008f59c:	00000010 00000000 34343000 10103434     .........04444..
-d008f5ac:	7110585c 71817d79 1034346d 00000011     \X.qy}.qm44.....
-d008f5bc:	00000000 11100000 00111011 11101100     ................
-d008f5cc:	81757110 11117575 00000000 00000000     .qu.uu..........
-	...
-d008f5e8:	75341010 00107975 00000000 00000000     ..4uuy..........
-	...
-d008f604:	10000000 00107575 00000000 00000000     ....uu..........
-	...
-d008f624:	10817510 00000000 00000000 00000000     .u..............
-	...
-d008f640:	7d791000 00001081 00000000 00000000     ..y}............
-	...
-d008f65c:	75110000 00100781 00000000 00000000     ...u............
-	...
-d008f678:	10000000 11758175 00000000 00000000     ....u.u.........
-	...
-d008f698:	10817511 00000000 00000000 00000000     .u..............
-	...
-d008f6b4:	7d791000 00000010 00000000 00000000     ..y}............
-	...
-d008f6d0:	75100000 0010757d 00000000 00000000     ...u}u..........
-	...
-d008f6ec:	10000000 10ba8179 00000000 00000000     ....y...........
-	...
-d008f70c:	7d7d7910 00000010 00000000 00000000     .y}}............
-	...
-d008f728:	7d711000 00127e7d 00000000 00000000     ..q}}~..........
-	...
-d008f744:	11100000 107d8110 00000000 00000000     ......}.........
-	...
-d008f760:	a6100000 ba10ac22 00001171 00000000     ...."...q.......
-	...
-d008f77c:	a6100000 22717158 105c7158 00000000     ....Xqq"Xq\.....
-	...
-d008f798:	11000000 7e817122 71711107 00000010     ...."q.~..qq....
-	...
-d008f7b4:	10000000 826dac17 10111a7d 0010a66d     ......m.}...m...
-	...
-d008f7d4:	815c2210 077d817d 1018ac10 00000000     ."\.}.}.........
-	...
-d008f7f0:	71221000 7d7d717d 18181007 00000011     .."q}q}}........
-	...
-d008f80c:	ac110000 5c58816d 107e077d 00101718     ....m.X\}.~.....
-	...
-d008f828:	10000000 717d7118 077d7110 10101710     .....q}q.q}.....
-	...
-d008f848:	75751711 81581079 18100781 00001010     ..uuy.X.........
-	...
-d008f864:	6d171000 105c7575 10077d71 00101810     ...muu\.q}......
-	...
-d008f880:	18100000 5c716d58 7d751117 10101182     ....Xmq\..u}....
-d008f890:	00001010 00000000 00000000 10000000     ................
-d008f8a0:	5c5c1018 58181811 817d7d81 12717d07     ..\\...X.}}..}q.
-	...
-d008f8bc:	18181810 18181717 81817510 7d078107     .........u.....}
-d008f8cc:	00000010 00000000 00000000 18181000     ................
-d008f8dc:	17171817 7d5c1818 1a077d81 00001010     ......\}.}......
-	...
-d008f8f4:	18100000 18171817 10171718 bf7d8175     ............u.}.
-d008f904:	00107d7e 00000000 00000000 11000000     ~}..............
-d008f914:	18181717 18181818 827d7110 12716d1a     .........q}..mq.
-	...
-d008f930:	17181100 17171818 81111817 106d6dba     .............mm.
-	...
-d008f94c:	18100000 18181717 10181717 106d716d     ............mqm.
-d008f95c:	00000010 00000000 00000000 00000000     ................
-d008f96c:	18181010 17181818 10101018 00001018     ................
-	...
-d008f988:	10101100 17181710 18181818 0010a618     ................
-	...
-d008f9a4:	10100000 18101011 18171817 10a622ac     ............."..
-	...
-d008f9c4:	18181810 18171818 22221817 00000010     ..........""....
-	...
-d008f9dc:	10000000 17171710 18171718 ac181717     ................
-d008f9ec:	00000010 00000000 00000000 10000000     ................
-d008f9fc:	18106d58 18181817 18181817 00001018     Xm..............
-	...
-d008fa18:	7d816d10 18181810 17181817 00001217     .m.}............
-	...
-d008fa34:	7d6d1000 18117d81 18181718 00001010     ..m}.}..........
-	...
-d008fa50:	10000000 1a7d8181 18181810 00001011     ......}.........
-	...
-d008fa70:	7d816d10 18107e1a 00101711 00000000     .m.}.~..........
-	...
-d008fa8c:	7d111000 7df77d81 10101111 00101100     ...}.}.}........
-	...
-d008faa8:	10100000 7d818171 6d5c107d 827d1110     ....q..}}.\m..}.
-d008fab8:	00000010 00000000 00000000 00000000     ................
-d008fac8:	7d7d1010 107d8181 7d7d6d71 00107d81     ..}}..}.qm}}.}..
-	...
-d008fae4:	115c1000 7d7d7d71 715c5c10 11757971     ..\.q}}}.\\qqyu.
-	...
-d008fb00:	10100000 10111058 10101110 11101010     ....X...........
-d008fb10:	00000000                                ....
+d00823d4 <__sread>:
+d00823d4:	b510      	push	{r4, lr}
+d00823d6:	460c      	mov	r4, r1
+d00823d8:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
+d00823dc:	f000 f926 	bl	d008262c <_read_r>
+d00823e0:	2800      	cmp	r0, #0
+d00823e2:	bfab      	itete	ge
+d00823e4:	6d63      	ldrge	r3, [r4, #84]	; 0x54
+d00823e6:	89a3      	ldrhlt	r3, [r4, #12]
+d00823e8:	181b      	addge	r3, r3, r0
+d00823ea:	f423 5380 	biclt.w	r3, r3, #4096	; 0x1000
+d00823ee:	bfac      	ite	ge
+d00823f0:	6563      	strge	r3, [r4, #84]	; 0x54
+d00823f2:	81a3      	strhlt	r3, [r4, #12]
+d00823f4:	bd10      	pop	{r4, pc}
 
-d008fb14 <gfx_bubguy2>:
-	...
-d008fbd4:	11000000 00000010 00000000 00000000     ................
-	...
-d008fbf8:	30101010 00001034 00000000 00000000     ...04...........
-	...
-d008fc18:	10100000 30303434 00001034 00000000     ....44004.......
-	...
-d008fc3c:	34341100 30303030 f4103430 f42d702d     ..44000004..-p-.
-d008fc4c:	0000702d 00000000 00000000 00000000     -p..............
-d008fc5c:	00000000 30343410 30303034 f4701134     .....44040004.p.
-d008fc6c:	2d2df4f4 00702df4 00000000 00000000     ..--.-p.........
-	...
-d008fc84:	34343410 30303034 6c746c10 6c2df46c     .4444000.ltll.-l
-d008fc94:	00f4f474 00000000 00000000 00000000     t...............
-d008fca4:	00000000 34101000 30303430 106c1110     .......40400..l.
-d008fcb4:	6c741010 002d7000 00000000 00000000     ..tl.p-.........
-	...
-d008fccc:	34341000 10343034 10811110 70000000     ..44404........p
-d008fcdc:	00f40000 00000000 00000000 00000000     ................
-d008fcec:	00000000 30341000 10101010 6d101abe     ......40.......m
-d008fcfc:	00000010 00000000 00000000 00000000     ................
-	...
-d008fd14:	10103010 102df470 10101abe 101abeba     .0..p.-.........
-	...
-d008fd34:	10000000 6c701130 f46c5c58 7d1a1a10     ....0.plX\l....}
-d008fd44:	10077d7d 00000000 00000000 00000000     }}..............
-d008fd54:	00000000 30110000 2d6c1010 746c1a82     .......0..l-..lt
-d008fd64:	bebe0710 000010ba 00000000 00000000     ................
-	...
-d008fd7c:	10301000 702d1134 117d757d baba817d     ..0.4.-p}u}.}...
-d008fd8c:	1082077d 00000000 00000000 00000000     }...............
-d008fd9c:	00000000 34343011 5c103410 7d816d5c     .....044.4.\\m.}
-d008fdac:	7d7d7d81 717d7d81 00000010 00000000     .}}}.}}q........
-	...
-d008fdc4:	34343430 58101034 796d1058 756d7d7d     04444..XX.my}}mu
-d008fdd4:	10113434 00000000 00000000 00000000     44..............
-d008fde4:	00000000 10101010 10000010 71101010     ...............q
-d008fdf4:	75757d79 00001010 00000000 00000000     y}uu............
-	...
-d008fe14:	34101100 10757575 00000000 00000000     ...4uuu.........
-	...
-d008fe38:	11000000 00107979 00000000 00000000     ....yy..........
-	...
-d008fe5c:	10000000 00108175 00000000 00000000     ....u...........
-	...
-d008fe80:	10000000 10817d79 00000000 00000000     ....y}..........
-	...
-d008fea4:	10000000 107e8175 00000000 00000000     ....u.~.........
-	...
-d008fec8:	11000000 10797975 00000000 00000000     ....uyy.........
-	...
-d008feec:	10000000 00108179 00000000 00000000     ....y...........
-	...
-d008ff10:	11000000 00107d75 00000000 00000000     ....u}..........
-	...
-d008ff34:	10000000 11757d75 00000000 00000000     ....u}u.........
-	...
-d008ff58:	10000000 10077d75 00000000 00000000     ....u}..........
-	...
-d008ff7c:	10000000 10817d75 00000000 00000000     ....u}..........
-	...
-d008ffa0:	10000000 ba7d8171 00000011 00000000     ....q.}.........
-	...
-d008ffc4:	11000000 077d1111 00000010 00000000     ......}.........
-	...
-d008ffe8:	10100000 8110a6a6 0000117d 00000000     ........}.......
-	...
-d009000c:	a6100000 10a6ac10 0000116d 00000000     ........m.......
-	...
-d0090030:	7da61000 10a61082 00001071 00000000     ...}....q.......
-	...
-d0090054:	82811000 a6100707 00107110 00000000     .........q......
-	...
-d0090078:	1a7d1000 108107ba 00106da6 00000000     ..}......m......
-	...
-d009009c:	1a811810 75816dba 10acac10 00000000     .....m.u........
-	...
-d00900c0:	817d1710 6d796d7e 10181710 00000000     ..}.~mym........
-	...
-d00900e4:	7d751810 6d756dba 10171811 00000000     ..u}.mum........
-	...
-d0090108:	7d756d10 71586dba ac181810 00000011     .mu}.mXq........
-	...
-d009012c:	815c6d10 6d5c7582 1718ac10 00000010     .m\..u\m........
-	...
-d0090150:	6d5c6d10 71587d07 18181710 00001010     .m\m.}Xq........
-	...
-d0090174:	5c6d7110 71587d07 17181711 00001010     .qm\.}Xq........
-	...
-d0090198:	10755811 1010ba7e 17181718 00117111     .Xu.~........q..
-	...
-d00901bc:	10101110 101107ba 18182218 00101018     ........."......
-	...
-d00901dc:	13000000 10181717 1810ba7e 18171817     ........~.......
-d00901ec:	001010ac 00000000 00000000 00000000     ................
-d00901fc:	00000000 10000000 10171718 18100781     ................
-d009020c:	18171718 101818ac 00000010 00000000     ................
-	...
-d0090224:	10000000 07111817 117d7d7d 17171817     ........}}}.....
-d0090234:	a6aca622 000010a6 00000000 00000000     "...............
-d0090244:	00000000 10000000 ba7d1018 10ba7d7d     ..........}.}}..
-d0090254:	18181817 22a61817 0010a6a6 00000000     ......."........
-	...
-d009026c:	10000000 07ba1018 077d8107 17181810     ..........}.....
-d009027c:	a6ac1818 0010a618 00000000 00000000     ................
-d009028c:	00000000 10000000 7e1a1017 7d7d7d7e     ...........~~}}}
-d009029c:	17171810 17181817 10a6aca6 00111000     ................
-	...
-d00902b4:	11000000 1a811018 816d811a 18181710     ..........m.....
-d00902c4:	18181718 11aca618 10811a10 00000000     ................
-d00902d4:	00000000 10000000 7d6d1017 11586dba     ..........m}.mX.
-d00902e4:	18181810 17181817 17ac1817 11586d81     .............mX.
-	...
-d00902fc:	10000000 11101818 10106d7d 18171010     ........}m......
-d009030c:	17181717 10181818 107dba7d 00000000     ........}.}.....
-d009031c:	00000000 17100000 17171718 17101010     ................
-d009032c:	10101111 17181810 10181717 10716d07     .............mq.
-	...
-d0090344:	18100000 18181818 18181818 00000010     ................
-d0090354:	18181010 7e171818 107907ba 00000000     .......~..y.....
-d0090364:	00000000 18100000 18171818 10171718     ................
-d0090374:	00000000 18171000 7d101718 10718182     ...........}..q.
-	...
-d009038c:	18171000 17181817 10181818 00000000     ................
-d009039c:	17181000 7d7d1018 10586d7d 00000000     ......}}}mX.....
-d00903ac:	00000000 18181000 17181718 00101718     ................
-d00903bc:	00000000 10181100 7d818110 00106d7d     ...........}}m..
-	...
-d00903d4:	17171100 18181718 00101817 00000000     ................
-d00903e4:	10100000 7d7d7d7d 0000106d 00000000     ....}}}}m.......
-d00903f4:	10000000 11101011 17181710 00001018     ................
-d0090404:	00000000 81100000 717d7d81 00000010     .........}}q....
-d0090414:	00000000 10000000 5c817d81 1011105c     .........}.\\...
-d0090424:	00001011 00000000 6d100000 106d6d81     ...........m.mm.
-	...
-d009043c:	7d100000 6d81817d 7d7d7d81 00110781     ...}}..m.}}}....
-d009044c:	00000000 58100000 105c7171 00000000     .......Xqq\.....
-d009045c:	00000000 817d1000 817d7d7d 7d7d7d7d     ......}.}}}.}}}}
-d009046c:	107d7d81 00000000 10000000 00115c5c     .}}.........\\..
-	...
-d0090484:	7d791000 5c716d71 6d6d5c5c 107d7d75     ..y}qmq\\\mmu}}.
-	...
-d009049c:	00001010 00000000 00000000 10101000     ................
-d00904ac:	10111010 10111010 00101010 00000000     ................
+d00823f6 <__swrite>:
+d00823f6:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+d00823fa:	461f      	mov	r7, r3
+d00823fc:	898b      	ldrh	r3, [r1, #12]
+d00823fe:	05db      	lsls	r3, r3, #23
+d0082400:	4605      	mov	r5, r0
+d0082402:	460c      	mov	r4, r1
+d0082404:	4616      	mov	r6, r2
+d0082406:	d505      	bpl.n	d0082414 <__swrite+0x1e>
+d0082408:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
+d008240c:	2302      	movs	r3, #2
+d008240e:	2200      	movs	r2, #0
+d0082410:	f000 f856 	bl	d00824c0 <_lseek_r>
+d0082414:	89a3      	ldrh	r3, [r4, #12]
+d0082416:	f9b4 100e 	ldrsh.w	r1, [r4, #14]
+d008241a:	f423 5380 	bic.w	r3, r3, #4096	; 0x1000
+d008241e:	81a3      	strh	r3, [r4, #12]
+d0082420:	4632      	mov	r2, r6
+d0082422:	463b      	mov	r3, r7
+d0082424:	4628      	mov	r0, r5
+d0082426:	e8bd 41f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, lr}
+d008242a:	f7fd bf07 	b.w	d008023c <_write_r>
+
+d008242e <__sseek>:
+d008242e:	b510      	push	{r4, lr}
+d0082430:	460c      	mov	r4, r1
+d0082432:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
+d0082436:	f000 f843 	bl	d00824c0 <_lseek_r>
+d008243a:	1c43      	adds	r3, r0, #1
+d008243c:	89a3      	ldrh	r3, [r4, #12]
+d008243e:	bf15      	itete	ne
+d0082440:	6560      	strne	r0, [r4, #84]	; 0x54
+d0082442:	f423 5380 	biceq.w	r3, r3, #4096	; 0x1000
+d0082446:	f443 5380 	orrne.w	r3, r3, #4096	; 0x1000
+d008244a:	81a3      	strheq	r3, [r4, #12]
+d008244c:	bf18      	it	ne
+d008244e:	81a3      	strhne	r3, [r4, #12]
+d0082450:	bd10      	pop	{r4, pc}
+
+d0082452 <__sclose>:
+d0082452:	f9b1 100e 	ldrsh.w	r1, [r1, #14]
+d0082456:	f000 b801 	b.w	d008245c <_close_r>
 	...
 
-d00904c8 <gfx_bubguy3>:
-	...
-d00905d0:	10000000 00000010 00000000 00000000     ................
-	...
-d00905f4:	30101010 00001034 00000000 00000000     ...04...........
-	...
-d0090614:	11110000 30303434 00001034 f42d7000     ....44004....p-.
-d0090624:	000070f4 00000000 00000000 00000000     .p..............
-d0090634:	00000000 34341000 30303030 f4113430     ......44000004..
-d0090644:	2d2d1d2d 00702d1d 00000000 00000000     -.--.-p.........
-	...
-d009065c:	30343411 30303034 2d701134 70f42df4     .44040004.p-.-.p
-d009066c:	001d2d70 00000000 00000000 00000000     p-..............
-d009067c:	00000000 34343410 30303034 70707010     .....4444000.ppp
-d009068c:	70701070 00f47000 00000000 00000000     p.pp.p..........
-	...
-d00906a4:	34101000 30303430 10701110 70000011     ...40400..p....p
-d00906b4:	00f40000 00000000 00000000 00000000     ................
-d00906c4:	00000000 34341000 10343034 117d1010     ......44404...}.
-	...
-d00906ec:	30341000 10101011 75101aba 00000010     ..40.......u....
-	...
-d0090710:	10103010 102d1d70 1010bf1a 11bf1a07     .0..p.-.........
-	...
-d0090730:	11000000 70701030 2d705858 811a1a10     ....0.ppXXp-....
-d0090740:	117e817d 00000000 00000000 00000000     }.~.............
-d0090750:	00000000 30100000 f4701010 7070babe     .......0..p...pp
-d0090760:	ba1a0711 0000107e 00000000 00000000     ....~...........
-	...
-d0090778:	10301000 701d1134 107d7181 7e7e817d     ..0.4..p.q}.}.~~
-d0090788:	10070781 00000000 00000000 00000000     ................
-d0090798:	00000000 34343010 5c103411 7d7d6d58     .....044.4.\Xm}}
-d00907a8:	7d817d81 6d817d7d 00000010 00000000     .}.}}}.m........
-	...
-d00907c0:	34343430 5c101034 79711058 6d71817d     04444..\X.qy}.qm
-d00907d0:	11103434 00000000 00000000 00000000     44..............
-d00907e0:	00000000 11111110 11000011 6d101110     ...............m
-d00907f0:	79798179 00001111 00000000 00000000     y.yy............
-	...
-d0090810:	34101000 10797579 00000000 00000000     ...4yuy.........
-	...
-d0090834:	10000000 00107579 00000000 00000000     ....yu..........
-	...
-d0090858:	10000000 00107d79 00000000 00000000     ....y}..........
-	...
-d009087c:	10000000 107d7d79 00000000 00000000     ....y}}.........
-	...
-d00908a0:	11000000 10078179 00000000 00000000     ....y...........
-	...
-d00908c4:	10000000 11798179 00000000 00000000     ....y.y.........
-	...
-d00908e8:	10000000 00108179 00000000 00000000     ....y...........
-	...
-d009090c:	11000000 00107d79 00000000 00000000     ....y}..........
-	...
-d0090930:	10000000 10797d79 00000000 00000000     ....y}y.........
-	...
-d0090954:	10000000 10077d79 00000000 00000000     ....y}..........
-	...
-d0090978:	10000000 107d8171 00000000 00000000     ....q.}.........
-	...
-d009099c:	11000000 077d7d71 00000013 00000000     ....q}}.........
-	...
-d00909c0:	11000000 82817d71 00000010 00000000     ....q}..........
-	...
-d00909e4:	11100000 7d7d8110 00000010 00000000     ......}}........
-	...
-d0090a08:	a6100000 7d7d10a6 000010ba 00000000     ......}}........
-	...
-d0090a2c:	115e1000 8110a610 00101081 00000000     ..^.............
-	...
-d0090a50:	077e1000 7d1011ba 11117181 00000000     ..~....}.q......
-	...
-d0090a74:	fb7e1000 11ac077d 10106d71 00000000     ..~.}...qm......
-	...
-d0090a98:	81f71011 ac11717d 18181010 00000011     ....}q..........
-	...
-d0090abc:	7d7e8110 1710717d 18181818 00000010     ..~}}q..........
-	...
-d0090ae0:	7d070710 115c6d5c 17181718 00000010     ...}\m\.........
-	...
-d0090b00:	13000000 797d7e7d 10587d5c 22181818     ....}~}y\}X...."
-d0090b10:	00001118 00000000 00000000 00000000     ................
-d0090b20:	00000000 10000000 1079ba7e 17107d7d     ........~.y.}}..
-d0090b30:	18acac18 10111018 0000587d 00000000     ........}X......
-	...
-d0090b48:	7d100000 58107dbe 18105c71 17181817     ...}.}.Xq\......
-d0090b58:	7d6d1018 101a077e 00000000 00000000     ..m}~...........
-d0090b68:	00000000 82110000 7910797e 17181079     ........~y.yy...
-d0090b78:	17181818 10581018 117e1010 00000000     ......X...~.....
-d0090b88:	00000000 10000000 7dba1010 715c1079     ...........}y.\q
-d0090b98:	18171158 18172218 715c1018 10be7d11     X...."....\q.}..
-d0090ba8:	00000010 00000000 7d100000 797d7d81     ...........}.}}y
-d0090bb8:	10101010 18171810 18181818 58101118     ...............X
-d0090bc8:	7e101010 00000010 00000000 7e811000     ...~...........~
-d0090bd8:	107d7e7e 17111811 18171818 10171717     ~~}.............
-d0090be8:	5c101010 10711010 00000000 00000000     ...\..q.........
-d0090bf8:	1a811000 81827e07 17181010 17181818     .....~..........
-d0090c08:	18181818 10111017 00106d5c 00000000     ........\m......
-d0090c18:	00000000 816d1100 7510071a 17171158     ......m....uX...
-d0090c28:	17181717 18181817 00001018 00001110     ................
-	...
-d0090c40:	71100000 5810817d 18181010 17181718     ...q}..X........
-d0090c50:	17171817 00101818 00000000 00000000     ................
-d0090c60:	00000000 10000000 10587175 18181711     ........uqX.....
-d0090c70:	18181717 17181818 00101718 00000000     ................
-	...
-d0090c8c:	105c5811 17181818 17171717 18181718     .X\.............
-d0090c9c:	11a6ac18 00000000 00000000 00000000     ................
-d0090cac:	00000000 18110000 18171718 17171818     ................
-d0090cbc:	17171718 17221817 00000010 00001110     ......".........
-	...
-d0090cd4:	18ac1000 18171718 18181018 18171817     ................
-d0090ce4:	a65e1818 10000011 00107dfb 00000000     ..^......}......
-d0090cf4:	00000000 1718ac10 17171718 17101018     ................
-d0090d04:	17171718 a6221718 110010a6 00116d7d     ......".....}m..
-d0090d14:	00000000 10110000 1817ac22 18181817     ........".......
-d0090d24:	10101017 18181810 ac181718 071022a6     ............."..
-d0090d34:	1181077d 00000000 71811000 1718ac11     }..........q....
-d0090d44:	18171718 00001110 17181010 18181718     ................
-d0090d54:	7e111817 106d7107 00000000 7d7d1100     ...~.qm.......}}
-d0090d64:	18171058 17181717 00000010 17101000     X...............
-d0090d74:	18171817 82101817 107d07be 00000000     ..........}.....
-d0090d84:	817d1100 18105871 10181818 00000000     ..}.qX..........
-d0090d94:	18110000 18181717 be071118 10717d7e     ............~}q.
-d0090da4:	00000000 7d7d1000 17105c81 00101817     ......}}.\......
-d0090db4:	00000000 10000000 17181818 7ebe1010     ...............~
-d0090dc4:	1158757d 00000000 7d711000 105c6d7d     }uX.......q}}m\.
-d0090dd4:	00001011 00000000 00000000 10171710     ................
-d0090de4:	7d7e7511 00115871 00000000 7d6d1000     .u~}qX........m}
-d0090df4:	ba818181 00117d07 00000000 00000000     .....}..........
-d0090e04:	18111711 58718110 0000105c 00000000     ......qX\.......
-d0090e14:	6d581100 7d7d7d6d 116d817d 00000000     ..Xmm}}}}.m.....
-d0090e24:	00000000 81101000 5c586d81 00000010     .........mX\....
-d0090e34:	00000000 58100000 716d6d58 105c716d     .......XXmmqmq\.
-	...
-d0090e4c:	58100000 115c586d 00000000 00000000     ...XmX\.........
-d0090e5c:	10000000 10111010 00101111 00000000     ................
-d0090e6c:	00000000 10100000 00101010 00000000     ................
+d008245c <_close_r>:
+d008245c:	b538      	push	{r3, r4, r5, lr}
+d008245e:	4d06      	ldr	r5, [pc, #24]	; (d0082478 <_close_r+0x1c>)
+d0082460:	2300      	movs	r3, #0
+d0082462:	4604      	mov	r4, r0
+d0082464:	4608      	mov	r0, r1
+d0082466:	602b      	str	r3, [r5, #0]
+d0082468:	f7fd ff22 	bl	d00802b0 <_close>
+d008246c:	1c43      	adds	r3, r0, #1
+d008246e:	d102      	bne.n	d0082476 <_close_r+0x1a>
+d0082470:	682b      	ldr	r3, [r5, #0]
+d0082472:	b103      	cbz	r3, d0082476 <_close_r+0x1a>
+d0082474:	6023      	str	r3, [r4, #0]
+d0082476:	bd38      	pop	{r3, r4, r5, pc}
+d0082478:	d009cbfc 	.word	0xd009cbfc
 
-d0090e7c <gfx_bubguy4>:
-	...
-d0090fa8:	12000000 00000010 00000000 00000000     ................
-	...
-d0090fcc:	30101010 00001034 2df47000 000070f4     ...04....p.-.p..
-	...
-d0090fec:	10110000 30303434 00001034 1d2d7070     ....44004...pp-.
-d0090ffc:	001d1d2d 00000000 00000000 00000000     -...............
-d009100c:	00000000 34341100 30303030 f4103430     ......44000004..
-d009101c:	701df41d 002df470 00000000 00000000     ...pp.-.........
-	...
-d0091034:	30343410 30303034 bc701034 70701d2d     .44040004.p.-.pp
-d0091044:	001d0000 00000000 00000000 00000000     ................
-d0091054:	00000000 34343410 30303034 70707010     .....4444000.ppp
-d0091064:	70001070 00000000 00000000 00000000     p..p............
-	...
-d009107c:	34101000 30303430 10701010 00000010     ...40400..p.....
-	...
-d00910a0:	34341000 10343034 107d1010 00000000     ..44404...}.....
-	...
-d00910c4:	30341100 11101210 6d101a1a 00000011     ..40.......m....
-	...
-d00910e8:	10103010 101dbc70 1110bf1a 101aba07     .0..p...........
-	...
-d0091108:	11000000 70701030 1d705c58 7d1a1a10     ....0.ppX\p....}
-d0091118:	1007817d 00000000 00000000 00000000     }...............
-d0091128:	00000000 30100000 bc701010 70701a07     .......0..p...pp
-d0091138:	ba1a7e11 00001082 00000000 00000000     .~..............
-	...
-d0091150:	10301000 702d1034 10817181 0707817d     ..0.4.-p.q..}...
-d0091160:	11077e81 00000000 00000000 00000000     .~..............
-d0091170:	00000000 34343010 5c103410 81816d58     .....044.4.\Xm..
-d0091180:	81817d81 6d817d81 00000011 00000000     .}...}.m........
-	...
-d0091198:	34343430 58111134 796d105c 716d817d     04444..X\.my}.mq
-d00911a8:	12103434 00000000 00000000 00000000     44..............
-d00911b8:	00000000 11101110 10000010 6d101011     ...............m
-d00911c8:	75797d79 00001210 00000000 00000000     y}yu............
-	...
-d00911e8:	34111100 11757575 00000000 00000000     ...4uuu.........
-	...
-d009120c:	10000000 00107579 00000000 00000000     ....yu..........
-	...
-d0091230:	10000000 00107d75 00000000 00000000     ....u}..........
-	...
-d0091254:	10000000 117d8179 00000000 00000000     ....y.}.........
-	...
-d0091278:	10000000 10078179 00000000 00000000     ....y...........
-	...
-d009129c:	11000000 10758179 00000000 00000000     ....y.u.........
-	...
-d00912c0:	10000000 00128179 00000000 00000000     ....y...........
-	...
-d00912e4:	10000000 00108175 00000000 00000000     ....u...........
-	...
-d0091308:	10000000 10758175 00000000 00000000     ....u.u.........
-	...
-d009132c:	10000000 10078179 00000000 00000000     ....y...........
-	...
-d0091350:	11000000 107d8175 00000000 00000000     ....u.}.........
-	...
-d0091374:	11000000 07817d6d 00000011 00000000     ....m}..........
-	...
-d0091398:	10000000 077d8171 00000010 00000000     ....q.}.........
-	...
-d00913bc:	10100000 817d8111 00000011 00000000     ......}.........
-	...
-d00913e0:	a6120000 817d11a6 00001007 00000000     ......}.........
-	...
-d0091404:	18ac1000 7d11a610 00101281 00000000     .......}........
-	...
-d0091428:	821a1000 81102281 1110717d 00000000     ....."..}q......
-	...
-d009144c:	821a1010 11ac107d 1010716d 00000000     ....}...mq......
-	...
-d0091470:	817eba10 ac10757d 18171110 00000011     ..~.}u..........
-	...
-d0091490:	11000000 7d818210 17106d6d 17171718     .......}mm......
-d00914a0:	00000010 00000000 00000000 00000000     ................
-d00914b0:	00000000 10000000 6d818107 11586d58     ...........mXmX.
-d00914c0:	18181718 00000011 00000000 00000000     ................
-	...
-d00914d8:	11100000 10717d7d 10717d58 22181817     ....}}q.X}q...."
-d00914e8:	00001022 00000000 00000000 00000000     "...............
-d00914f8:	00000000 07110000 58107181 115c7d75     .........q.Xu}\.
-d0091508:	17acac17 10001118 00818110 00000000     ................
-	...
-d0091520:	7d821100 755c1071 17107d81 18171718     ...}q.\u.}......
-d0091530:	6d111017 1a82817d 00000011 00000000     ...m}...........
-d0091540:	10100000 6d818110 79581010 18105881     .......m..Xy.X..
-d0091550:	18181718 5c581017 817d1011 00000010     ......X\..}.....
-d0091560:	00000000 7d7d1100 1081817d 58121111     ......}}}......X
-d0091570:	1818105c 1817ac18 585c1018 817d106d     \.........\Xm.}.
-d0091580:	00001011 00000000 7e1a7d10 00118181     .........}.~....
-d0091590:	11101810 17171810 18ac1818 5c101718     ...............\
-d00915a0:	10817d10 0000107d 00000000 bf828111     .}..}...........
-d00915b0:	1075811a 17181710 18181718 18181718     ..u.............
-d00915c0:	1010ac18 7510105c 00000010 00000000     ....\..u........
-d00915d0:	ba7d7510 10817d07 17171711 18181718     .u}..}..........
-d00915e0:	17171818 1010acac 106d5810 00000000     .........Xm.....
-d00915f0:	00000000 816d1000 1171107d 18171810     ......m.}.q.....
-d0091600:	17181817 17171718 11a6a6ac 00101000     ................
-	...
-d0091618:	6d100000 00107181 17181810 18181718     ...m.q..........
-d0091628:	18181817 a6a6ac18 00000010 00000000     ................
-d0091638:	00000000 10000000 10001010 17171817     ................
-d0091648:	18181718 18171818 a6ac1817 000010a6     ................
-	...
-d0091660:	00100000 ac111000 10171818 17171717     ................
-d0091670:	17181717 ac181717 000011a6 00000000     ................
-d0091680:	00000000 7d6d1100 17acac10 18181817     ......m}........
-d0091690:	18171012 18181817 ac171718 0010a6a6     ................
-	...
-d00916a8:	81811000 1718106d 18181717 10101017     ....m...........
-d00916b8:	17181818 18181717 001122ac 00000000     ........."......
-d00916c8:	00000000 7d811000 18171075 18181718     .......}u.......
-d00916d8:	11111017 18181010 17171818 0011ac18     ................
-	...
-d00916f0:	81811000 1718107d 18171818 10101118     ....}...........
-d0091700:	17101010 18181717 0010ac17 00000000     ................
-d0091710:	00000000 817d1000 18106d7d 17171817     ......}.}m......
-d0091720:	00101010 18101000 17181817 0011ac17     ................
-	...
-d0091738:	81791000 17107581 10121818 00000010     ..y..u..........
-d0091748:	18100000 18171817 00101818 00000000     ................
-d0091758:	00000000 816d1000 1110817d 00101010     ......m.}.......
-d0091768:	00000000 17181000 18171718 00101018     ................
-d0091778:	00101000 00000000 7d6d1100 00108181     ..........m}....
-	...
-d0091790:	10101000 11111010 10111011 101a0710     ................
-d00917a0:	00000000 756d1100 00107d81 00000000     ......mu.}......
-d00917b0:	00000000 076d1000 077d7dba ba07ba07     ......m..}}.....
-d00917c0:	117d817d 00000000 6d6d1000 10817d79     }.}.......mmy}..
-	...
-d00917d8:	07817510 ba827d7d 7d078107 1071717d     .u..}}.....}}qq.
-d00917e8:	00000000 6d120000 106d716d 00000000     .......mmqm.....
-d00917f8:	00000000 79795c11 75757975 ba71ba81     .....\yyuyuu..q.
-d0091808:	115c1a6d 00000000 10000000 00111110     m.\.............
-	...
-d0091820:	10101010 10121010 10101010 00101010     ................
+d008247c <_fstat_r>:
+d008247c:	b538      	push	{r3, r4, r5, lr}
+d008247e:	4d07      	ldr	r5, [pc, #28]	; (d008249c <_fstat_r+0x20>)
+d0082480:	2300      	movs	r3, #0
+d0082482:	4604      	mov	r4, r0
+d0082484:	4608      	mov	r0, r1
+d0082486:	4611      	mov	r1, r2
+d0082488:	602b      	str	r3, [r5, #0]
+d008248a:	f7fd ff15 	bl	d00802b8 <_fstat>
+d008248e:	1c43      	adds	r3, r0, #1
+d0082490:	d102      	bne.n	d0082498 <_fstat_r+0x1c>
+d0082492:	682b      	ldr	r3, [r5, #0]
+d0082494:	b103      	cbz	r3, d0082498 <_fstat_r+0x1c>
+d0082496:	6023      	str	r3, [r4, #0]
+d0082498:	bd38      	pop	{r3, r4, r5, pc}
+d008249a:	bf00      	nop
+d008249c:	d009cbfc 	.word	0xd009cbfc
 
-d0091830 <gfx_bubguy5>:
-	...
-d0091938:	10000000 00000010 00000000 00000000     ................
-	...
-d009195c:	30101010 00001034 00000000 00000000     ...04...........
-	...
-d009197c:	11110000 30303434 00001034 f42d7000     ....44004....p-.
-d009198c:	00006cf4 00000000 00000000 00000000     .l..............
-d009199c:	00000000 34341000 30303030 f4113430     ......44000004..
-d00919ac:	2d2d1d2d 00702d1d 00000000 00000000     -.--.-p.........
-	...
-d00919c4:	30343411 30303034 2d701134 70f42df4     .44040004.p-.-.p
-d00919d4:	001d2d6c 00000000 00000000 00000000     l-..............
-d00919e4:	00000000 34343410 30303034 706c7011     .....4444000.plp
-d00919f4:	7070106c 00f47000 00000000 00000000     l.pp.p..........
-	...
-d0091a0c:	34101000 30303430 106c1110 70000011     ...40400..l....p
-d0091a1c:	00f40000 00000000 00000000 00000000     ................
-d0091a2c:	00000000 34341000 10343034 117d1010     ......44404...}.
-	...
-d0091a54:	30341000 10101011 71101aba 00000010     ..40.......q....
-	...
-d0091a78:	10103010 102d1d70 1010bf1a 111aba07     .0..p.-.........
-	...
-d0091a98:	11000000 706c1030 2d705858 7d1a1a10     ....0.lpXXp-...}
-d0091aa8:	11827d7d 00000000 00000000 00000000     }}..............
-d0091ab8:	00000000 30100000 f4701010 6c701aba     .......0..p...pl
-d0091ac8:	baba0711 00001007 00000000 00000000     ................
-	...
-d0091ae0:	10301000 701d1134 107d7181 827e7d7d     ..0.4..p.q}.}}~.
-d0091af0:	10070781 00000000 00000000 00000000     ................
-d0091b00:	00000000 34343010 5c103411 7d7d6d58     .....044.4.\Xm}}
-d0091b10:	7d7d7d7d 6d817d7d 00000010 00000000     }}}}}}.m........
-	...
-d0091b28:	34343430 5c101034 7971105c 6d717d7d     04444..\\.qy}}qm
-d0091b38:	11103434 00000000 00000000 00000000     44..............
-d0091b48:	00000000 11111110 11000011 6d101110     ...............m
-d0091b58:	79757d79 00001111 00000000 00000000     y}uy............
-	...
-d0091b78:	34101000 10797575 00000000 00000000     ...4uuy.........
-	...
-d0091b9c:	10000000 00107579 00000000 00000000     ....yu..........
-	...
-d0091bc0:	10000000 00107d75 00000000 00000000     ....u}..........
-	...
-d0091be4:	10000000 107d7d79 00000000 00000000     ....y}}.........
-	...
-d0091c08:	11000000 10078175 00000000 00000000     ....u...........
-	...
-d0091c2c:	10000000 11797d75 00000000 00000000     ....u}y.........
-	...
-d0091c50:	10000000 00107d79 00000000 00000000     ....y}..........
-	...
-d0091c74:	10000000 00107d79 00000000 00000000     ....y}..........
-	...
-d0091c98:	10000000 10758171 00000000 00000000     ....q.u.........
-	...
-d0091cbc:	10000000 11ba7d79 00000000 00000000     ....y}..........
-	...
-d0091ce0:	10000000 107d7d79 00000000 00000000     ....y}}.........
-	...
-d0091d04:	11000000 82817d6d 00000011 00000000     ....m}..........
-	...
-d0091d28:	11000000 7d7d10a6 0000107e 00000000     ......}}~.......
-	...
-d0091d4c:	a6100000 7d10a6a6 0011107d 00000000     .......}}.......
-	...
-d0091d70:	11a61000 7d10ac10 10116d7d 00000000     .......}}m......
-	...
-d0091d94:	1a101000 11221082 10106d71 00000000     ......".qm......
-	...
-d0091db8:	1a6d1010 2210717d 17171010 00000010     ..m.}q."........
-	...
-d0091ddc:	077d5c11 17107181 18171717 00000011     .\}..q..........
-	...
-d0091e00:	1a817110 115c7d7d 18181718 00000011     .q..}}\.........
-	...
-d0091e24:	ba6d6d10 105c7d7d a6acaa18 000010a6     .mm.}}\.........
-	...
-d0091e48:	7e5c6d10 1711717d 17181718 00001017     .m\~}q..........
-	...
-d0091e6c:	7e5c5c10 17115c7d 17181717 00001017     .\\~}\..........
-	...
-d0091e90:	7e105c10 1717107d 17181817 00001117     .\.~}...........
-	...
-d0091eb4:	7d101011 1818187d 1817ac18 00001017     ...}}...........
-	...
-d0091ed4:	10000000 7d101817 1817177d 18181817     .......}}.......
-d0091ee4:	00007d18 00000000 00000000 00000000     .}..............
-d0091ef4:	00000000 13000000 81101718 1817107d     ............}...
-d0091f04:	ac181718 10fb8218 00000000 00000000     ................
-	...
-d0091f1c:	11000000 7d101018 1818107d 22171718     .......}}......"
-d0091f2c:	107d7d22 00000000 00000000 00000000     "}}.............
-	...
-d0091f44:	7d077110 17181081 18171817 101011ac     .q.}............
-d0091f54:	00000010 00000000 00000000 00000000     ................
-d0091f64:	11000000 8281821a 1810fb7e ac181818     ........~.......
-d0091f74:	111710ac 00000011 00000000 00000000     ................
-d0091f84:	00000000 10000000 077dba7d 18107e07     ........}.}..~..
-d0091f94:	18171818 101117ac 00000000 00000000     ................
-	...
-d0091fac:	10000000 7d7d7d71 18116d81 17171818     ....q}}}.m......
-d0091fbc:	10102218 00000000 00000000 00000000     ."..............
-	...
-d0091fd4:	816d6d11 1818106d 17171817 1010a618     .mm.m...........
-	...
-d0091ff8:	71711000 17181111 17181717 1010a6ac     ..qq............
-	...
-d009201c:	10110000 17181710 18181717 101118ac     ................
-	...
-d0092040:	17111011 18181710 17171717 1111ac18     ................
-	...
-d0092060:	11000000 105c6d1a 17171810 17171818     .....m\.........
-d0092070:	0010ac18 00000000 00000000 00000000     ................
-d0092080:	00000000 10000000 10717dba 17181710     .........}q.....
-d0092090:	18171818 00101722 00000000 00000000     ...."...........
-	...
-d00920ac:	106d8110 17181818 22181717 00001118     ..m........"....
-	...
-d00920d0:	107d1000 18171818 ac181717 00000010     ..}.............
-	...
-d00920f4:	18100000 18171718 18181718 00001010     ................
-	...
-d0092118:	18100000 18181817 10171717 00101110     ................
-	...
-d009213c:	10100000 10111110 10111110 101aba11     ................
-	...
-d0092160:	826d1000 077d7dba 0707827e 107d7d7d     ..m..}}.~...}}}.
-	...
-d0092184:	077d7510 7eba7d7d 7d077d07 10716d7d     .u}.}}.~.}.}}mq.
-	...
-d00921a8:	79795c10 75797575 ba6dba7d 105cba71     .\yyuuyu}.m.q.\.
-	...
-d00921cc:	10101011 11101011 10111010 00101010     ................
+d00824a0 <_isatty_r>:
+d00824a0:	b538      	push	{r3, r4, r5, lr}
+d00824a2:	4d06      	ldr	r5, [pc, #24]	; (d00824bc <_isatty_r+0x1c>)
+d00824a4:	2300      	movs	r3, #0
+d00824a6:	4604      	mov	r4, r0
+d00824a8:	4608      	mov	r0, r1
+d00824aa:	602b      	str	r3, [r5, #0]
+d00824ac:	f7fd ff2c 	bl	d0080308 <_isatty>
+d00824b0:	1c43      	adds	r3, r0, #1
+d00824b2:	d102      	bne.n	d00824ba <_isatty_r+0x1a>
+d00824b4:	682b      	ldr	r3, [r5, #0]
+d00824b6:	b103      	cbz	r3, d00824ba <_isatty_r+0x1a>
+d00824b8:	6023      	str	r3, [r4, #0]
+d00824ba:	bd38      	pop	{r3, r4, r5, pc}
+d00824bc:	d009cbfc 	.word	0xd009cbfc
+
+d00824c0 <_lseek_r>:
+d00824c0:	b538      	push	{r3, r4, r5, lr}
+d00824c2:	4d07      	ldr	r5, [pc, #28]	; (d00824e0 <_lseek_r+0x20>)
+d00824c4:	4604      	mov	r4, r0
+d00824c6:	4608      	mov	r0, r1
+d00824c8:	4611      	mov	r1, r2
+d00824ca:	2200      	movs	r2, #0
+d00824cc:	602a      	str	r2, [r5, #0]
+d00824ce:	461a      	mov	r2, r3
+d00824d0:	f7fd fef8 	bl	d00802c4 <_lseek>
+d00824d4:	1c43      	adds	r3, r0, #1
+d00824d6:	d102      	bne.n	d00824de <_lseek_r+0x1e>
+d00824d8:	682b      	ldr	r3, [r5, #0]
+d00824da:	b103      	cbz	r3, d00824de <_lseek_r+0x1e>
+d00824dc:	6023      	str	r3, [r4, #0]
+d00824de:	bd38      	pop	{r3, r4, r5, pc}
+d00824e0:	d009cbfc 	.word	0xd009cbfc
 	...
 
-d00921e4 <gfx_bubguy6>:
-	...
-d00922a4:	11000000 00000010 00000000 00000000     ................
-	...
-d00922c8:	30101010 00001034 00000000 00000000     ...04...........
-	...
-d00922e8:	10100000 30303434 00001034 00000000     ....44004.......
-	...
-d009230c:	34341100 30303030 f4103430 f42d702d     ..44000004..-p-.
-d009231c:	0000702d 00000000 00000000 00000000     -p..............
-d009232c:	00000000 30343411 30303034 f4701134     .....44040004.p.
-d009233c:	2d2df4f4 00702df4 00000000 00000000     ..--.-p.........
-	...
-d0092354:	34343410 30303034 70746c10 6c2df470     .4444000.ltpp.-l
-d0092364:	00f4f474 00000000 00000000 00000000     t...............
-d0092374:	00000000 34101000 30303430 106c1110     .......40400..l.
-d0092384:	6c741010 002d7000 00000000 00000000     ..tl.p-.........
-	...
-d009239c:	34341000 10343034 107d1110 70000000     ..44404...}....p
-d00923ac:	00f40000 00000000 00000000 00000000     ................
-d00923bc:	00000000 30341000 10101010 6d10fbba     ......40.......m
-d00923cc:	00000010 00000000 00000000 00000000     ................
-	...
-d00923e4:	10103010 112df470 10101abe 10bfbe82     .0..p.-.........
-	...
-d0092404:	10000000 6c701130 f46c5c58 7d1abf10     ....0.plX\l....}
-d0092414:	10077d7d 00000000 00000000 00000000     }}..............
-d0092424:	00000000 30110000 2d6c1010 746c1a82     .......0..l-..lt
-d0092434:	beba0710 00001007 00000000 00000000     ................
-	...
-d009244c:	10301000 702d1134 117d717d 7e7e817d     ..0.4.-p}q}.}.~~
-d009245c:	10827e7d 00000000 00000000 00000000     }~..............
-d009246c:	00000000 34343011 5c103410 7d816d5c     .....044.4.\\m.}
-d009247c:	7d7d7d81 717d7d81 00000010 00000000     .}}}.}}q........
-	...
-d0092494:	34343430 58101034 796d1158 716d7d7d     04444..XX.my}}mq
-d00924a4:	10113434 00000000 00000000 00000000     44..............
-d00924b4:	00000000 10101011 10000010 75101010     ...............u
-d00924c4:	75797d79 00001010 00000000 00000000     y}yu............
-	...
-d00924e4:	34101100 10797579 00000000 00000000     ...4yuy.........
-	...
-d0092508:	11000000 00107979 00000000 00000000     ....yy..........
-	...
-d009252c:	10000000 00108175 00000000 00000000     ....u...........
-	...
-d0092550:	10000000 10817d79 00000000 00000000     ....y}..........
-	...
-d0092574:	10000000 10078179 00000000 00000000     ....y...........
-	...
-d0092598:	10000000 10797d79 00000000 00000000     ....y}y.........
-	...
-d00925bc:	10000000 00108179 00000000 00000000     ....y...........
-	...
-d00925e0:	11000000 00108179 00000000 00000000     ....y...........
-	...
-d0092604:	10000000 11758175 00000000 00000000     ....u.u.........
-	...
-d0092628:	10000000 10828179 00000000 00000000     ....y...........
-	...
-d009264c:	10000000 107d7d79 00000000 00000000     ....y}}.........
-	...
-d0092670:	10000000 7e81816d 00000011 00000000     ....m..~........
-	...
-d0092694:	10000000 077d816d 00000010 00000000     ....m.}.........
-	...
-d00926b8:	10000000 7e7d1010 0000117d 00000000     ......}~}.......
-	...
-d00926dc:	a6110000 7d11a6a6 0000106d 00000000     .......}m.......
-	...
-d0092700:	aca61000 10181011 00117171 00000000     ........qq......
-	...
-d0092724:	10a61000 a6107d7d 10106d11 00000000     ....}}...m......
-	...
-d0092748:	10101100 a6117e82 11171010 00000000     .....~..........
-	...
-d009276c:	81111810 ac81bf82 17171710 00000011     ................
-	...
-d0092790:	81581710 ac1a077d 18ac1811 00000010     ..X.}...........
-	...
-d00927b4:	7d711810 7d1a817d 18171710 00000010     ..q}}..}........
-	...
-d00927d8:	816d1710 fb827d71 1718187d 00001017     ..m.q}..}.......
-	...
-d00927fc:	7d711810 827d7111 17181007 00001018     ..q}.q}.........
-	...
-d0092820:	6d6d1011 7d75116d 17107d82 00001018     ..mmm.u}.}......
-	...
-d0092844:	6d5c1010 7d101020 10117e81 00001018     ..\m ..}.~......
-	...
-d0092868:	10111710 10181710 117d7d7d 00101011     ........}}}.....
-	...
-d009288c:	18171811 17181717 817d7d10 10107d7d     .........}}.}}..
-d009289c:	00000010 00000000 00000000 00000000     ................
-d00928ac:	00000000 17181811 18171818 7d7d1118     ..............}}
-d00928bc:	107d8181 00001018 00000000 00000000     ..}.............
-	...
-d00928d4:	17171810 18181818 7d101717 81818181     ...........}....
-d00928e4:	0010a610 00000000 00000000 00000000     ................
-d00928f4:	00000000 18181710 17181817 7d811118     ...............}
-d0092904:	bf077e7d 10a61810 00000000 00000000     }~..............
-d0092914:	00000000 11000000 17181717 18181718     ................
-d0092924:	81101018 6d7e1a82 11a61811 00000000     ......~m........
-	...
-d009293c:	10000000 18171818 17181717 81581017     ..............X.
-d009294c:	11757d81 10181717 00000000 00000000     .}u.............
-d009295c:	00000000 18100000 18171818 18171818     ................
-d009296c:	5c101718 18105871 10171817 00000000     ...\qX..........
-	...
-d0092984:	18100000 17181818 18171718 11181818     ................
-d0092994:	17111010 11181818 00101010 00000000     ................
-d00929a4:	00000000 18100000 17171817 18181818     ................
-d00929b4:	18181818 17181010 11181718 00117e1a     .............~..
-	...
-d00929cc:	18100000 18171718 18181818 10101018     ................
-d00929dc:	18181818 71101818 00118182 00000000     .......q........
-d00929ec:	00000000 17181000 18181818 18171718     ................
-d00929fc:	11101017 17181810 7d6d1017 00107d7d     ..........m}}}..
-	...
-d0092a14:	18181000 18181718 18181717 11000010     ................
-d0092a24:	17181810 81817110 00106d81 00000000     .....q...m......
-d0092a34:	00000000 18171710 18181717 17181817     ................
-d0092a44:	00000010 18181710 7d7d7d10 00105c81     .........}}}.\..
-	...
-d0092a5c:	18181711 18181818 11171818 00000000     ................
-d0092a6c:	11181710 717d7d81 0000115c 00000000     .....}}q\.......
-d0092a7c:	00000000 18181711 17181818 00101017     ................
-d0092a8c:	00000000 7d101810 58717d7d 00000010     .......}}}qX....
-d0092a9c:	00000000 11000000 18181718 18181717     ................
-d0092aac:	00001017 00000000 81711011 1071717d     ..........q.}qq.
-	...
-d0092ac4:	10000000 18181718 18171817 10101011     ................
-d0092ad4:	00000000 7d811100 00106d81 00000000     .......}.m......
-d0092ae4:	00000000 10100000 10101010 10101011     ................
-d0092af4:	1a821010 00000011 7d711000 00115c71     ..........q}q\..
-	...
-d0092b0c:	6d100000 7d817e7e 0782827e 7d817d82     ...m~~.}~....}.}
-d0092b1c:	00000010 715c1000 00001020 00000000     ......\q .......
-d0092b2c:	00000000 7d751000 077d817e 07817e7e     ......u}~.}.~~..
-d0092b3c:	716d817d 00000010 10110000 00000010     }.mq............
-	...
-d0092b54:	79581000 75797579 71ba7d79 5cba6d1a     ..Xyyuyuy}.q.m.\
-d0092b64:	00000010 00000000 00000000 00000000     ................
-d0092b74:	00000000 10111000 10101010 10101110     ................
-d0092b84:	10111111 00000000 00000000 00000000     ................
-d0092b94:	00000000                                ....
+d00824f0 <memchr>:
+d00824f0:	f001 01ff 	and.w	r1, r1, #255	; 0xff
+d00824f4:	2a10      	cmp	r2, #16
+d00824f6:	db2b      	blt.n	d0082550 <memchr+0x60>
+d00824f8:	f010 0f07 	tst.w	r0, #7
+d00824fc:	d008      	beq.n	d0082510 <memchr+0x20>
+d00824fe:	f810 3b01 	ldrb.w	r3, [r0], #1
+d0082502:	3a01      	subs	r2, #1
+d0082504:	428b      	cmp	r3, r1
+d0082506:	d02d      	beq.n	d0082564 <memchr+0x74>
+d0082508:	f010 0f07 	tst.w	r0, #7
+d008250c:	b342      	cbz	r2, d0082560 <memchr+0x70>
+d008250e:	d1f6      	bne.n	d00824fe <memchr+0xe>
+d0082510:	b4f0      	push	{r4, r5, r6, r7}
+d0082512:	ea41 2101 	orr.w	r1, r1, r1, lsl #8
+d0082516:	ea41 4101 	orr.w	r1, r1, r1, lsl #16
+d008251a:	f022 0407 	bic.w	r4, r2, #7
+d008251e:	f07f 0700 	mvns.w	r7, #0
+d0082522:	2300      	movs	r3, #0
+d0082524:	e8f0 5602 	ldrd	r5, r6, [r0], #8
+d0082528:	3c08      	subs	r4, #8
+d008252a:	ea85 0501 	eor.w	r5, r5, r1
+d008252e:	ea86 0601 	eor.w	r6, r6, r1
+d0082532:	fa85 f547 	uadd8	r5, r5, r7
+d0082536:	faa3 f587 	sel	r5, r3, r7
+d008253a:	fa86 f647 	uadd8	r6, r6, r7
+d008253e:	faa5 f687 	sel	r6, r5, r7
+d0082542:	b98e      	cbnz	r6, d0082568 <memchr+0x78>
+d0082544:	d1ee      	bne.n	d0082524 <memchr+0x34>
+d0082546:	bcf0      	pop	{r4, r5, r6, r7}
+d0082548:	f001 01ff 	and.w	r1, r1, #255	; 0xff
+d008254c:	f002 0207 	and.w	r2, r2, #7
+d0082550:	b132      	cbz	r2, d0082560 <memchr+0x70>
+d0082552:	f810 3b01 	ldrb.w	r3, [r0], #1
+d0082556:	3a01      	subs	r2, #1
+d0082558:	ea83 0301 	eor.w	r3, r3, r1
+d008255c:	b113      	cbz	r3, d0082564 <memchr+0x74>
+d008255e:	d1f8      	bne.n	d0082552 <memchr+0x62>
+d0082560:	2000      	movs	r0, #0
+d0082562:	4770      	bx	lr
+d0082564:	3801      	subs	r0, #1
+d0082566:	4770      	bx	lr
+d0082568:	2d00      	cmp	r5, #0
+d008256a:	bf06      	itte	eq
+d008256c:	4635      	moveq	r5, r6
+d008256e:	3803      	subeq	r0, #3
+d0082570:	3807      	subne	r0, #7
+d0082572:	f015 0f01 	tst.w	r5, #1
+d0082576:	d107      	bne.n	d0082588 <memchr+0x98>
+d0082578:	3001      	adds	r0, #1
+d008257a:	f415 7f80 	tst.w	r5, #256	; 0x100
+d008257e:	bf02      	ittt	eq
+d0082580:	3001      	addeq	r0, #1
+d0082582:	f415 3fc0 	tsteq.w	r5, #98304	; 0x18000
+d0082586:	3001      	addeq	r0, #1
+d0082588:	bcf0      	pop	{r4, r5, r6, r7}
+d008258a:	3801      	subs	r0, #1
+d008258c:	4770      	bx	lr
+d008258e:	bf00      	nop
 
-d0092b98 <gfx_bubguy7>:
-	...
-d0092ca0:	10000000 00000010 00000000 00000000     ................
-	...
-d0092cc4:	30101010 00001034 00000000 00000000     ...04...........
-	...
-d0092ce4:	11110000 30303434 00001034 f42d7000     ....44004....p-.
-d0092cf4:	00006cf4 00000000 00000000 00000000     .l..............
-d0092d04:	00000000 34341000 30303030 f4113430     ......44000004..
-d0092d14:	2d2d1d2d 00702d1d 00000000 00000000     -.--.-p.........
-	...
-d0092d2c:	30343412 30303034 2d701134 70f42df4     .44040004.p-.-.p
-d0092d3c:	001d2d6c 00000000 00000000 00000000     l-..............
-d0092d4c:	00000000 34343410 30303034 706c7010     .....4444000.plp
-d0092d5c:	7070106c 00f47000 00000000 00000000     l.pp.p..........
-	...
-d0092d74:	34101000 30303430 106c1210 70000011     ...40400..l....p
-d0092d84:	00f40000 00000000 00000000 00000000     ................
-d0092d94:	00000000 34341000 10343034 117d1010     ......44404...}.
-	...
-d0092dbc:	30341000 10101011 71101aba 00000010     ..40.......q....
-	...
-d0092de0:	10103010 102d1d70 1010bf1a 111a1aba     .0..p.-.........
-	...
-d0092e00:	11000000 706c1030 2d705858 811a1a10     ....0.lpXXp-....
-d0092e10:	11827d7d 00000000 00000000 00000000     }}..............
-d0092e20:	00000000 30100000 f4701010 6c70baba     .......0..p...pl
-d0092e30:	ba1a0711 000010ba 00000000 00000000     ................
-	...
-d0092e48:	10301000 701d1134 10817181 82ba817d     ..0.4..p.q..}...
-d0092e58:	107e0781 00000000 00000000 00000000     ..~.............
-d0092e68:	00000000 34343010 5c103411 7d7d6d58     .....044.4.\Xm}}
-d0092e78:	81817d81 6d817d7d 00000010 00000000     .}..}}.m........
-	...
-d0092e90:	34343430 5c101034 7971105c 6d717d7d     04444..\\.qy}}qm
-d0092ea0:	11103434 00000000 00000000 00000000     44..............
-d0092eb0:	00000000 11111110 11000012 71101110     ...............q
-d0092ec0:	75798175 00001111 00000000 00000000     u.yu............
-	...
-d0092ee0:	34101000 10757575 00000000 00000000     ...4uuu.........
-	...
-d0092f04:	10000000 00107575 00000000 00000000     ....uu..........
-	...
-d0092f28:	10000000 00107d75 00000000 00000000     ....u}..........
-	...
-d0092f4c:	10000000 107d7d79 00000000 00000000     ....y}}.........
-	...
-d0092f70:	11000000 117e8175 00000000 00000000     ....u.~.........
-	...
-d0092f94:	10000000 11758175 00000000 00000000     ....u.u.........
-	...
-d0092fb8:	10000000 00108175 00000000 00000000     ....u...........
-	...
-d0092fdc:	10000000 00108175 00000000 00000000     ....u...........
-	...
-d0093000:	10000000 10797d79 00000000 00000000     ....y}y.........
-	...
-d0093024:	10000000 10077d75 00000000 00000000     ....u}..........
-	...
-d0093048:	10000000 107d7d75 00000000 00000000     ....u}}.........
-	...
-d009306c:	10000000 7e7d816d 00000012 00000000     ....m.}~........
-	...
-d0093090:	10000000 07811010 00000010 00000000     ................
-	...
-d00930b4:	11100000 8110a6a6 0000126d 00000000     ........m.......
-	...
-d00930d8:	a6100000 10ac1a71 00001071 00000000     ....q...q.......
-	...
-d00930fc:	5c100000 ac1aba7d 00107110 00000000     ...\}....q......
-	...
-d0093120:	5ca61000 bf827d81 00107110 00000000     ...\.}...q......
-	...
-d0093144:	6dac1000 ba7d817d 1110101a 00000000     ...m}.}.........
-	...
-d0093168:	7d102210 7d817d7d 1082ba07 00000000     .".}}}.}........
-	...
-d009318c:	81101810 816d5881 07077d7d 00001110     .....Xm.}}......
-	...
-d00931b0:	7d101810 1058817d 7d7d7d6d 11117e82     ...}}.X.m}}}.~..
-d00931c0:	12111011 00000000 00000000 00000000     ................
-d00931d0:	00000000 7d101811 5c717181 7d711010     .......}.qq\..q}
-d00931e0:	ba07817d 820707ba 00000012 00000000     }...............
-d00931f0:	00000000 10000000 71111710 105c6d71     ...........qqm\.
-d0093200:	11101017 7d817d71 1aba8281 00001007     ....q}.}........
-	...
-d0093218:	7d110000 5c111810 18115c71 18181718     ...}...\q\......
-d0093228:	7d6d1010 bfbaba81 0011817e 00000000     ..m}....~.......
-d0093238:	00000000 6d6d1000 10181810 17181011     ......mm........
-d0093248:	17181817 7d100011 ba1a8281 00107d7d     .......}....}}..
-	...
-d0093260:	5c711000 18171812 17181818 17171818     ..q\............
-d0093270:	10001118 7d827d6d 00106d7d 00000000     ....m}.}}m......
-d0093280:	00000000 5c711000 18181710 18181817     ......q\........
-d0093290:	18181718 10001018 7d817171 0000106d     ........qq.}m...
-	...
-d00932a8:	106d1100 18181817 18181718 17181817     ..m.............
-d00932b8:	00101818 6d717111 00000010 00000000     .....qqm........
-d00932c8:	00000000 10100000 18181818 18181718     ................
-d00932d8:	18171818 00101718 12101000 00000000     ................
-	...
-d00932f0:	10000000 18181817 17181818 18181718     ................
-d0093300:	10ac1718 00000000 00000000 00000000     ................
-d0093310:	00000000 10000000 18181818 17181818     ................
-d0093320:	18171817 11221718 00000000 00000000     ......".........
-	...
-d0093338:	11000000 17181817 18181818 18171718     ................
-d0093348:	a6181717 00000012 00000000 00000000     ................
-d0093358:	00000000 10110000 18171811 18181717     ................
-d0093368:	18181717 ac171817 000010a6 00000000     ................
-	...
-d0093380:	11111000 18171717 18181818 18171718     ................
-d0093390:	ac181717 000011a6 00000000 00000000     ................
-d00933a0:	10000000 1722a610 17181718 17181717     ......".........
-d00933b0:	18181810 18181718 00001022 00000000     ........".......
-d00933c0:	00000000 22100000 181817a6 18181717     ......."........
-d00933d0:	18181817 17171110 18181818 000010ac     ................
-d00933e0:	00101100 00000000 18110000 17181718     ................
-d00933f0:	17181718 10171818 18181010 18181817     ................
-d0093400:	00101817 10811a10 00000000 10100000     ................
-d0093410:	17181817 17181718 00121717 18101012     ................
-d0093420:	18171818 00101817 107d7d10 00000000     .........}}.....
-d0093430:	7d811000 18181810 18171817 00001017     ...}............
-d0093440:	17111000 18181818 11181718 5c7d7d71     ............q}}\
-d0093450:	00000000 81811000 17181710 10181818     ................
-d0093460:	00000011 18100000 18171818 10181818     ................
-d0093470:	71818171 00000000 817d1000 1818107d     q..q......}.}...
-d0093480:	00101818 00000000 10100000 18181818     ................
-d0093490:	7d101818 717d7d7d 00000000 81811000     ...}}}}q........
-d00934a0:	1010717d 10101010 00000000 11000000     }q..............
-d00934b0:	18181817 817d1018 5c71817d 00000000     ......}.}.q\....
-d00934c0:	7d811000 817d817d 117d8182 00000000     ...}}.}...}.....
-d00934d0:	11000000 10101810 817d7d11 115c717d     .........}}.}q\.
-d00934e0:	00000000 81100000 7dba7d81 116d717d     .........}.}}qm.
-	...
-d00934f8:	5c111010 7d817d7d 00105871 00000000     ...\}}.}qX......
-d0093508:	5c100000 076d7e81 105c7e71 00000000     ...\.~m.q~\.....
-d0093518:	00000000 81100000 5c6d8181 00001010     ..........m\....
-d0093528:	00000000 10000000 1010105c 00101010     ........\.......
-	...
-d0093540:	10100000 10101010 00000000              ............
+d0082590 <memcpy>:
+d0082590:	440a      	add	r2, r1
+d0082592:	4291      	cmp	r1, r2
+d0082594:	f100 33ff 	add.w	r3, r0, #4294967295	; 0xffffffff
+d0082598:	d100      	bne.n	d008259c <memcpy+0xc>
+d008259a:	4770      	bx	lr
+d008259c:	b510      	push	{r4, lr}
+d008259e:	f811 4b01 	ldrb.w	r4, [r1], #1
+d00825a2:	f803 4f01 	strb.w	r4, [r3, #1]!
+d00825a6:	4291      	cmp	r1, r2
+d00825a8:	d1f9      	bne.n	d008259e <memcpy+0xe>
+d00825aa:	bd10      	pop	{r4, pc}
 
-d009354c <gfx_bubguy8>:
-	...
-d0093678:	11000000 00000010 00000000 00000000     ................
-	...
-d009369c:	30101010 00001034 2df47000 000070f4     ...04....p.-.p..
-	...
-d00936bc:	10110000 30303434 00001034 1d2d7070     ....44004...pp-.
-d00936cc:	001d1d2d 00000000 00000000 00000000     -...............
-d00936dc:	00000000 34341100 30303030 f4103430     ......44000004..
-d00936ec:	701df41d 002df470 00000000 00000000     ...pp.-.........
-	...
-d0093704:	30343410 30303034 bc701034 70701d2d     .44040004.p.-.pp
-d0093714:	001d0000 00000000 00000000 00000000     ................
-d0093724:	00000000 34343410 30303034 70707010     .....4444000.ppp
-d0093734:	70001070 00000000 00000000 00000000     p..p............
-	...
-d009374c:	34101000 30303430 10701010 00000010     ...40400..p.....
-	...
-d0093770:	34341000 11343034 107d1010 00000000     ..44404...}.....
-	...
-d0093794:	30341100 11101010 6d101aba 00000011     ..40.......m....
-	...
-d00937b8:	10103010 101dbc70 11101aba 101aba07     .0..p...........
-	...
-d00937d8:	11000000 70701030 1d705858 7d1a1a10     ....0.ppXXp....}
-d00937e8:	1007817d 00000000 00000000 00000000     }...............
-d00937f8:	00000000 30100000 bc701010 70701a07     .......0..p...pp
-d0093808:	ba1a8210 00001082 00000000 00000000     ................
-	...
-d0093820:	10301000 702d1034 10817181 0707817d     ..0.4.-p.q..}...
-d0093830:	11077e81 00000000 00000000 00000000     .~..............
-d0093840:	00000000 34343010 58103410 81816d58     .....044.4.XXm..
-d0093850:	7d817d81 6d817d7d 00000011 00000000     .}.}}}.m........
-	...
-d0093868:	34343430 58111034 7971105c 716d817d     04444..X\.qy}.mq
-d0093878:	11103434 00000000 00000000 00000000     44..............
-d0093888:	00000000 11101110 10000010 6d101011     ...............m
-d0093898:	79797d79 00001111 00000000 00000000     y}yy............
-	...
-d00938b8:	34111100 11757579 00000000 00000000     ...4yuu.........
-	...
-d00938dc:	10000000 00107979 00000000 00000000     ....yy..........
-	...
-d0093900:	10000000 00107d75 00000000 00000000     ....u}..........
-	...
-d0093924:	10000000 107d8179 00000000 00000000     ....y.}.........
-	...
-d0093948:	10000000 10078179 00000000 00000000     ....y...........
-	...
-d009396c:	10000000 10757d79 00000000 00000000     ....y}u.........
-	...
-d0093990:	10000000 00107d79 00000000 00000000     ....y}..........
-	...
-d00939b4:	10000000 00108175 00000000 00000000     ....u...........
-	...
-d00939d8:	10000000 10757d79 00000000 00000000     ....y}u.........
-	...
-d00939fc:	10000000 11077d79 00000000 00000000     ....y}..........
-	...
-d0093a20:	11000000 107d7d79 00000000 00000000     ....y}}.........
-	...
-d0093a44:	10000000 ba7d816d 00000010 00000000     ....m.}.........
-	...
-d0093a68:	10100000 8110acac 0000106d 00000000     ........m.......
-	...
-d0093a8c:	ac110000 10227d6d 00001071 00000000     ....m}".q.......
-	...
-d0093ab0:	58100000 22111aba 00107110 00000000     ...X...".q......
-	...
-d0093ad4:	5cac1000 101a077d 00101111 00000000     ...\}...........
-	...
-d0093af8:	71181000 bf078181 10101007 00000000     ...q............
-	...
-d0093b1c:	6d181100 077d7d81 101107ba 00000000     ...m.}}.........
-	...
-d0093b40:	7d10ac10 796d5881 7dbaba7d 00111058     ...}.Xmy}..}X...
-d0093b50:	10100000 00001011 00000000 00000000     ................
-d0093b60:	00000000 79101810 11586d81 7d817d71     .......y.mX.q}.}
-d0093b70:	82070707 8181ba82 00107d7d 00000000     ........}}......
-	...
-d0093b88:	81111810 58757d81 6d101010 817d7d81     .....}uX...m.}}.
-d0093b98:	817d7d81 00101a1a 00000000 00000000     .}}.............
-d0093ba8:	11100000 6d111810 106d7d7d 10181118     .......m}}m.....
-d0093bb8:	7d711010 07817d7d 1081ba1a 00000000     ..q}}}..........
-d0093bc8:	00000000 6d7d1000 6d101810 115c6d75     ......}m...mum\.
-d0093bd8:	17181818 10100010 ba7d7110 107d7d82     .........q}..}}.
-	...
-d0093bf0:	71717110 5c101810 1711585c 18171718     .qqq...\\X......
-d0093c00:	00001018 7d7d1011 10717d81 00000000     ......}}.}q.....
-d0093c10:	00000000 715c6d10 10171710 18171010     .....m\q........
-d0093c20:	17181817 00001018 816d1000 0011717d     ..........m.}q..
-	...
-d0093c38:	10587110 18171818 17181818 18181818     .qX.............
-d0093c48:	00111717 71581000 00001058 00000000     ......XqX.......
-d0093c58:	00000000 10106d11 18171718 18181718     .....m..........
-d0093c68:	18171717 10ac1718 10100000 00000010     ................
-	...
-d0093c80:	17101000 17181717 18181717 18181718     ................
-d0093c90:	11a61817 00000000 00000000 00000000     ................
-d0093ca0:	00000000 18110000 18181818 17171818     ................
-d0093cb0:	18171818 ac171818 00000011 00000000     ................
-	...
-d0093cc8:	18101000 18171818 17171817 18171818     ................
-d0093cd8:	ac171818 00000010 00000000 00000000     ................
-d0093ce8:	10000000 1818a610 18181818 18181817     ................
-d0093cf8:	17171017 ac171817 000011ac 00000000     ................
-d0093d08:	00000000 22100000 171818a6 17171718     ......."........
-d0093d18:	18171817 18181711 18181817 000010ac     ................
-	...
-d0093d30:	ac101000 17181818 18181817 18181817     ................
-d0093d40:	18181810 17171718 000011ac 00000000     ................
-d0093d50:	00000000 107d6d10 17181817 17181717     .....m}.........
-d0093d60:	10171818 17171011 17171718 00001017     ................
-	...
-d0093d78:	10ba8110 18181818 17181718 10101818     ................
-d0093d88:	18171010 18181817 00001010 00000000     ................
-d0093d98:	00000000 7d820711 18171710 18171818     .......}........
-d0093da8:	00001117 18181011 18181818 00000010     ................
-	...
-d0093dc0:	81ba0710 18171810 10171817 00000010     ................
-d0093dd0:	17181011 18171717 00000011 00000000     ................
-d0093de0:	00000000 7d818110 18181010 00111010     .......}........
-d0093df0:	00000000 18181000 17181717 00000010     ................
-	...
-d0093e08:	7d818111 10111010 00000011 00000000     ...}............
-d0093e18:	17171000 18181818 00000010 00000000     ................
-d0093e28:	00000000 817d8110 0000107d 00000000     ......}.}.......
-d0093e38:	00000000 17181810 18181817 11101011     ................
-d0093e48:	00000010 00000000 7d7d8110 0000107d     ..........}}}...
-	...
-d0093e60:	11171710 10101011 817d1010 00001007     ..........}.....
-d0093e70:	00000000 7d7d8110 00001181 00000000     ......}}........
-d0093e80:	00000000 7d101010 7d7d7d81 817d7d7d     .......}.}}}}}}.
-d0093e90:	0000106d 00000000 817d6d10 0010817d     m........m}.}...
-	...
-d0093ea8:	81817d11 7d817d7d 6d7d7d81 0000115c     .}..}}.}.}}m\...
-d0093eb8:	00000000 81711100 00117d81 00000000     ......q..}......
-d0093ec8:	00000000 817d5810 58586d71 5c6d716d     .....X}.qmXXmqm\
-d0093ed8:	00000010 00000000 11100000 00001110     ................
-	...
-d0093ef0:	11101110 10101110 10101110 00000000     ................
+d00825ac <memmove>:
+d00825ac:	4288      	cmp	r0, r1
+d00825ae:	b510      	push	{r4, lr}
+d00825b0:	eb01 0402 	add.w	r4, r1, r2
+d00825b4:	d902      	bls.n	d00825bc <memmove+0x10>
+d00825b6:	4284      	cmp	r4, r0
+d00825b8:	4623      	mov	r3, r4
+d00825ba:	d807      	bhi.n	d00825cc <memmove+0x20>
+d00825bc:	1e43      	subs	r3, r0, #1
+d00825be:	42a1      	cmp	r1, r4
+d00825c0:	d008      	beq.n	d00825d4 <memmove+0x28>
+d00825c2:	f811 2b01 	ldrb.w	r2, [r1], #1
+d00825c6:	f803 2f01 	strb.w	r2, [r3, #1]!
+d00825ca:	e7f8      	b.n	d00825be <memmove+0x12>
+d00825cc:	4402      	add	r2, r0
+d00825ce:	4601      	mov	r1, r0
+d00825d0:	428a      	cmp	r2, r1
+d00825d2:	d100      	bne.n	d00825d6 <memmove+0x2a>
+d00825d4:	bd10      	pop	{r4, pc}
+d00825d6:	f813 4d01 	ldrb.w	r4, [r3, #-1]!
+d00825da:	f802 4d01 	strb.w	r4, [r2, #-1]!
+d00825de:	e7f7      	b.n	d00825d0 <memmove+0x24>
 
-d0093f00 <gradient_cols.9259>:
-d0093f00:	21202020 23222221 25242423 27262625        !!""##$$%%&&'
-d0093f10:	00002727                                ''..
+d00825e0 <_realloc_r>:
+d00825e0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+d00825e2:	4607      	mov	r7, r0
+d00825e4:	4614      	mov	r4, r2
+d00825e6:	460e      	mov	r6, r1
+d00825e8:	b921      	cbnz	r1, d00825f4 <_realloc_r+0x14>
+d00825ea:	e8bd 40f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, lr}
+d00825ee:	4611      	mov	r1, r2
+d00825f0:	f7fe bf58 	b.w	d00814a4 <_malloc_r>
+d00825f4:	b922      	cbnz	r2, d0082600 <_realloc_r+0x20>
+d00825f6:	f7fe ff05 	bl	d0081404 <_free_r>
+d00825fa:	4625      	mov	r5, r4
+d00825fc:	4628      	mov	r0, r5
+d00825fe:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+d0082600:	f000 f826 	bl	d0082650 <_malloc_usable_size_r>
+d0082604:	42a0      	cmp	r0, r4
+d0082606:	d20f      	bcs.n	d0082628 <_realloc_r+0x48>
+d0082608:	4621      	mov	r1, r4
+d008260a:	4638      	mov	r0, r7
+d008260c:	f7fe ff4a 	bl	d00814a4 <_malloc_r>
+d0082610:	4605      	mov	r5, r0
+d0082612:	2800      	cmp	r0, #0
+d0082614:	d0f2      	beq.n	d00825fc <_realloc_r+0x1c>
+d0082616:	4631      	mov	r1, r6
+d0082618:	4622      	mov	r2, r4
+d008261a:	f7ff ffb9 	bl	d0082590 <memcpy>
+d008261e:	4631      	mov	r1, r6
+d0082620:	4638      	mov	r0, r7
+d0082622:	f7fe feef 	bl	d0081404 <_free_r>
+d0082626:	e7e9      	b.n	d00825fc <_realloc_r+0x1c>
+d0082628:	4635      	mov	r5, r6
+d008262a:	e7e7      	b.n	d00825fc <_realloc_r+0x1c>
 
-d0093f14 <guywidthheight>:
-d0093f14:	45454545 45454545 00000040              EEEEEEEE@...
+d008262c <_read_r>:
+d008262c:	b538      	push	{r3, r4, r5, lr}
+d008262e:	4d07      	ldr	r5, [pc, #28]	; (d008264c <_read_r+0x20>)
+d0082630:	4604      	mov	r4, r0
+d0082632:	4608      	mov	r0, r1
+d0082634:	4611      	mov	r1, r2
+d0082636:	2200      	movs	r2, #0
+d0082638:	602a      	str	r2, [r5, #0]
+d008263a:	461a      	mov	r2, r3
+d008263c:	f7fd fe2e 	bl	d008029c <_read>
+d0082640:	1c43      	adds	r3, r0, #1
+d0082642:	d102      	bne.n	d008264a <_read_r+0x1e>
+d0082644:	682b      	ldr	r3, [r5, #0]
+d0082646:	b103      	cbz	r3, d008264a <_read_r+0x1e>
+d0082648:	6023      	str	r3, [r4, #0]
+d008264a:	bd38      	pop	{r3, r4, r5, pc}
+d008264c:	d009cbfc 	.word	0xd009cbfc
 
-d0093f20 <guywidthwidth>:
-d0093f20:	2424241d 24242424 00000018              .$$$$$$$....
+d0082650 <_malloc_usable_size_r>:
+d0082650:	f851 3c04 	ldr.w	r3, [r1, #-4]
+d0082654:	1f18      	subs	r0, r3, #4
+d0082656:	2b00      	cmp	r3, #0
+d0082658:	bfbc      	itt	lt
+d008265a:	580b      	ldrlt	r3, [r1, r0]
+d008265c:	18c0      	addlt	r0, r0, r3
+d008265e:	4770      	bx	lr
 
-d0093f2c <scr_bub_floor>:
+d0082660 <clut>:
+d0082660:	0000 0000 afaf ffaf ffff ffff 67a2 ff3b     .............g;.
+d0082670:	907c ffaa 9595 ff95 7b7b ff7b a997 ffff     |.......{{{.....
+d0082680:	a91d ff37 a9ff ff7c 8112 ffbf bf66 ffeb     ..7...|.....f...
+d0082690:	c178 ff78 9318 ff3d 3418 ffb3 311c ffd9     x.x...=..4...1..
+d00826a0:	0000 ff00 000e ff00 001d ff00 002b ff00     ............+...
+d00826b0:	0139 ff00 0147 ff00 0156 ff00 0164 ff00     9...G...V...d...
+d00826c0:	01d2 ff00 01ff ff00 cece ffce ff00 ff00     ................
+d00826d0:	ff00 ffb2 e700 ffff 9600 ffff 1100 ffff     ................
+d00826e0:	1200 ff49 1355 ff49 14aa ff49 16ff ff49     ..I.U.I...I...I.
+d00826f0:	1700 ff5b 1855 ff5b 19aa ff5b 1aff ff5b     ..[.U.[...[...[.
+d0082700:	1b00 ff6d 1c55 ff6d e300 ff00 ff54 ff85     ..m.U.m.....T...
+d0082710:	ff00 ffc4 d900 ffff a41f ffff 5400 ffe0     .............T..
+d0082720:	0000 ffff 2655 ff92 27aa ff92 28ff ff92     ....U&...'...(..
+d0082730:	2900 ffa4 2a55 ffa4 2baa ffa4 2cff ffa4     .)..U*...+...,..
+d0082740:	2d00 ffb6 2f55 ffb6 30aa ffb6 31ff ffb6     .-..U/...0...1..
+d0082750:	3200 ffc9 3355 ffc9 34aa ffc9 35ff ffc9     .2..U3...4...5..
+d0082760:	3700 ffdb 3855 ffdb 39aa ffdb 3aff ffdb     .7..U8...9...:..
+d0082770:	3b00 ffed 3c55 ffed 3daa ffed 3fff ffed     .;..U<...=...?..
+d0082780:	4000 ffff 4155 ffff 42aa ffff 43ff ffff     .@..UA...B...C..
+d0082790:	4400 ff00 4555 ff00 46aa ff00 48ff ff00     .D..UE...F...H..
+d00827a0:	ff00 ffff ff55 ff12 ee55 ff12 b6ff ff12     ....U...U.......
+d00827b0:	1fff ff00 0ec7 ff9d 0000 fff1 7700 ffff     .............w..
+d00827c0:	5200 ff37 5355 ff37 54aa ff37 55ff ff37     .R7.US7..T7..U7.
+d00827d0:	5600 ff49 5855 ff49 59aa ff49 5aff ff49     .VI.UXI..YI..ZI.
+d00827e0:	5b00 ff5b 5c55 ff5b 5daa ff5b 5eff ff5b     .[[.U\[..][..^[.
+d00827f0:	6000 ff6d 6155 ff6d 62aa ff6d 63ff ff6d     .`m.Uam..bm..cm.
+d0082800:	6400 ff6d 6555 ff80 66aa ff80 67ff ff80     .dm.Ue...f...g..
+d0082810:	6900 ff92 6a55 ff92 6baa ff92 6cff ff92     .i..Uj...k...l..
+d0082820:	6d00 ffa4 6e55 ffa4 6faa ffa4 71ff ffa4     .m..Un...o...q..
+d0082830:	7200 ffb6 7355 ffb6 74aa ffb6 75ff ffb6     .r..Us...t...u..
+d0082840:	7600 ffc9 7755 ffc9 79aa ffc9 7aff ffc9     .v..Uw...y...z..
+d0082850:	7b00 ffdb 7c55 ffdb 7daa ffdb 7eff ffdb     .{..U|...}...~..
+d0082860:	7f00 ffed 8055 ffed 82aa ffed 83ff ffed     ....U...........
+d0082870:	8400 ffff 8555 ffff 86aa ffff 87ff ffff     ....U...........
+d0082880:	8800 ff00 8a55 ff00 8baa ff00 8cff ff00     ....U...........
+d0082890:	8d00 ff12 8e55 ff12 8faa ff12 90ff ff12     ....U...........
+d00828a0:	9200 ff24 9355 ff24 94aa ff24 95ff ff24     ..$.U.$...$...$.
+d00828b0:	9600 ff37 9755 ff37 98aa ff37 99ff ff37     ..7.U.7...7...7.
+d00828c0:	9b00 ff49 9c55 ff49 9daa ff49 9eff ff49     ..I.U.I...I...I.
+d00828d0:	9f00 ff5b a055 ff5b a1aa ff5b a3ff ff5b     ..[.U.[...[...[.
+d00828e0:	b5d5 ffa4 b0f8 ffa0 a3e6 ff94 89c1 ff7c     ..............|.
+d00828f0:	81c0 ff62 62a1 ff1c 54ea ff42 a1bd ff62     ..b..b...TB...b.
+d0082900:	93c0 ff70 77a1 ff49 3faa ff00 54ff ff15     ..p..wI..?...T..
+d0082910:	50b9 ff1c b3ff ff00 88aa ff00 b5ff ff00     .P..............
+d0082920:	62ff ff0e b7e3 ff5e c0b9 ffbd b9ff ff85     .b....^.........
+d0082930:	6caf ff00 81b9 ff1f 5baa ff3f beff ffc9     .l.......[?.....
+d0082940:	afcb ff5b c055 ffdb c1aa ffdb c0c0 ffbd     ..[.U...........
+d0082950:	c400 ffed c555 ffed c6aa ffed c7ff ffed     ....U...........
+d0082960:	c800 ffff c955 ffff caaa ffff ccff ffff     ....U...........
+d0082970:	cd00 ff00 ce55 ff00 cfaa ff00 d0ff ff00     ....U...........
+d0082980:	d100 ff12 d255 ff12 d3aa ff12 d5ff ff12     ....U...........
+d0082990:	d600 ff24 d755 ff24 d8aa ff24 d9ff ff24     ..$.U.$...$...$.
+d00829a0:	da00 ff37 db55 ff37 ddaa ff37 deff ff37     ..7.U.7...7...7.
+d00829b0:	df00 ff49 e055 ff49 e1aa ff49 e2ff ff49     ..I.U.I...I...I.
+d00829c0:	e300 ff5b e555 ff5b e6aa ff5b e7ff ff5b     ..[.U.[...[...[.
+d00829d0:	e800 ff6d e955 ff6d eaaa ff6d ebff ff6d     ..m.U.m...m...m.
+d00829e0:	58ec ff04 22ac ff04 77ff ff00 54ee ff00     .X..."...w...T..
+d00829f0:	33dd ff00 0000 ff99 0000 ffff 6600 ffff     .3...........f..
+d0082a00:	dd00 ffff f755 ffa4 f8aa ffa4 f9ff ffa4     ....U...........
+d0082a10:	fa00 ffb6 fb55 ffb6 fcaa ffb6 feff ffb6     ....U...........
+d0082a20:	00ff ffff 0000 ff00 1313 ff13 2727 ff27     ............'''.
+d0082a30:	3a3a ff3a 4e4e ff4e 6262 ff62 7575 ff75     :::.NNN.bbb.uuu.
+d0082a40:	8989 ff89 9c9c ff9c b0b0 ffb0 c4c4 ffc4     ................
+d0082a50:	d7d7 ffd7 ebeb ffeb ffff ffff ffff ffff     ................
+
+d0082a60 <topscroll_bar_bg1>:
+d0082a60:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 02a0 0202     ................
+d0082a70:	0202 a002 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082a80:	9f9f 029f 0202 0202 a002 9f9f 9f9f 9f9f     ................
+d0082a90:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082aa0:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 029f     ................
+d0082ab0:	0202 0202 0202 0202 0202 9f02 9f9f 9f9f     ................
+d0082ac0:	9f9f 9f9f a09f 0202 0202 a302 a3a3 9f9f     ................
+d0082ad0:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082ae0:	02a0 a002 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082af0:	9f9f 0202 0202 0202 0202 0202 a002 9f9f     ................
+d0082b00:	9f9f 9f9f 9f9f 9f9f a09f 0202 0202 0202     ................
+d0082b10:	0202 0202 0202 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082b20:	029f 0202 0202 0202 9f9f 9f9f 9f9f 9f9f     ................
+d0082b30:	9f9f 9f9f 9f9f 9f9f 02a0 a002 9f9f 02a0     ................
+d0082b40:	9f02 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082b50:	0202 0202 0202 9f02 9f9f 9f9f 9f9f 9f9f     ................
+d0082b60:	9f9f a09f 0202 0202 0202 0202 0202 9f9f     ................
+d0082b70:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082b80:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082b90:	9f9f 029f a0a0 0202 0202 9f9f 9f9f 9f9f     ................
+d0082ba0:	9f9f 9f9f 9f9f 9f9f a09f 0202 0202 0202     ................
+d0082bb0:	9f02 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082bc0:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082bd0:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082be0:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082bf0:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082c00:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082c10:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082c20:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082c30:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082c40:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082c50:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082c60:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082c70:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082c80:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082c90:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082ca0:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082cb0:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082cc0:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082cd0:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082ce0:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082cf0:	a09f a0a0 a0a0 a0a0 9f9f 9f9f 9f9f 9f9f     ................
+d0082d00:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082d10:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082d20:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082d30:	9f9f b79f 0202 0202 02a0 b7b7 a0a0 9fa0     ................
+d0082d40:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 8f8f     ................
+d0082d50:	8f8f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082d60:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082d70:	9f9f 9f9f 9f9f b7b7 0202 02a0 0202 b702     ................
+d0082d80:	a0b7 9f9f 9f9f 9f9f 9f9f 8f9f 8f8f 8f8f     ................
+d0082d90:	8f8f 8f8f 8f8f 8f8f a0a0 a0a0 a0a0 9fa0     ................
+d0082da0:	9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f 9f9f     ................
+d0082db0:	8f8f 8f8f 8f8f 8f8f 8f8f 0909 a009 a0a0     ................
+d0082dc0:	a0a0 9fa0 9f9f 9f9f 8f9f 8f8f 8f8f 8f8f     ................
+d0082dd0:	8f8f 8f8f 8f8f 8f8f 8f8f 02b7 0202 a002     ................
+d0082de0:	b702 a0b7 a0a0 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082df0:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082e00:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082e10:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f b78f 02b7     ................
+d0082e20:	a002 0202 0202 b7b7 8fa0 8f8f 8f8f 8f8f     ................
+d0082e30:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082e40:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082e50:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082e60:	8f8f 8f8f a0a0 a0a0 a0a0 8f8f 8f8f 0606     ................
+d0082e70:	0606 0606 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082e80:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082e90:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082ea0:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082eb0:	068f 0605 0606 0606 8f06 8f8f 8f8f 8f8f     ................
+d0082ec0:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082ed0:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082ee0:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082ef0:	8f8f 8f8f 0506 0606 0606 0606 0606 8f8f     ................
+d0082f00:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082f10:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082f20:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082f30:	8f8f 8f8f 8f8f 068f 0605 0606 0606 0606     ................
+d0082f40:	0606 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082f50:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082f60:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082f70:	8f8f 8f8f 8f8f 8f8f 8f8f 0506 0606 0606     ................
+d0082f80:	0606 0606 6006 8f06 8f8f 8f8f 8f8f 8f8f     .....`..........
+d0082f90:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082fa0:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082fb0:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 068f 0605     ................
+d0082fc0:	0606 0606 0606 0606 0606 0660 8f8f 8f8f     ..........`.....
+d0082fd0:	8f8f 0505 0505 0505 0505 0505 8f8f 8f8f     ................
+d0082fe0:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0082ff0:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0083000:	0606 0605 0606 0606 0606 0606 0606 0660     ..............`.
+d0083010:	8f06 8f8f 0505 0501 0505 0505 0505 0505     ................
+d0083020:	0505 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0083030:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0083040:	8f8f 068f 0506 0606 0606 0606 0606 0606     ................
+d0083050:	0606 6006 8f06 0505 0101 0505 0505 0505     ...`............
+d0083060:	0505 0505 0605 8f05 8f8f 8f8f 8f8f 8f8f     ................
+d0083070:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0083080:	8f8f 8f8f 8f8f 0606 0605 0606 0606 0606     ................
+d0083090:	0606 0606 0606 6006 0505 0105 0505 0505     .......`........
+d00830a0:	0505 0505 0505 0505 0505 0506 8f8f 8f8f     ................
+d00830b0:	8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d00830c0:	8f8f 8f8f 8f8f 8f8f 068f 0506 0606 0606     ................
+d00830d0:	0606 0606 0606 0606 0606 0505 0105 0501     ................
+d00830e0:	0505 0505 0505 0505 0505 0505 0505 0605     ................
+d00830f0:	0505 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f 8f8f     ................
+d0083100:	8f8f 8f8f 8f8f 8f8f 0d8f 8f8f 0606 0605     ................
+d0083110:	0606 0606 0606 0606 0606 0606 0505 050d     ................
+d0083120:	0501 0505 0505 0505 0505 0505 0505 0505     ................
+d0083130:	0505 0505 0506 8f05 8f8f 8f8f 8f8f 8f8f     ................
+d0083140:	8f8f 8f8f 8f8f 8f8f 8f8f 8f0d 0d8f 068f     ................
+d0083150:	0606 0606 0606 0606 0606 060d 0606 0506     ................
+d0083160:	0505 050d 0d05 0505 0505 0505 050d 050d     ................
+d0083170:	0505 0505 0505 0505 0605 0505 8f05 0d8f     ................
+d0083180:	8f8f 8f8f 8f0d 8f0d 8f8f 8f8f 0d0d 0d0d     ................
+d0083190:	0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d     ................
+d00831a0:	0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d     ................
+d00831b0:	0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d     ................
+d00831c0:	0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d 0d0d     ................
+d00831d0:	0b0a 0d0a 0a0d 0a0a 0b0a 0b0a 0a0a 0a0a     ................
+d00831e0:	0a0a 0a0a 0a0a 680a 0a68 0b0b 0a0a 0a0a     .......hh.......
+d00831f0:	0b0a 0a0a 0a0a 680a 0a0a 0a0a 680a 6868     .......h.....hhh
+d0083200:	0b0a 0b0b 0b0a 0a0a 0b0a 0a0a 0b0b 0a0b     ................
+d0083210:	0b0b 0a0a 0a0a 0b0b 0a0a 0b0a 0a0b 0a0a     ................
+d0083220:	0a0a 0a0a 0a0a 0a0b 0a0a 0a0a 0a0a 0a0a     ................
+d0083230:	0a0a 0b0a 0a0a 0a0a 0a0a 0a0a 0a0a 0b0b     ................
+d0083240:	0a0a 0a0a 0a0b 0a0a 0b0a 0a0a 0a0a 0a0a     ................
+d0083250:	0a0a 0a0a 0a0a 0b0b 0b0a 0a0a 0b0a 0a0a     ................
+d0083260:	0a0b 0a68 0a0a 0b0a 0b0b 0a0a 6868 0a0a     ..h.........hh..
+d0083270:	0a0a 680a 0a68 0a0b 6868 0a68 0a0a 680a     ...hh...hhh....h
+d0083280:	6868 0a0a 0a0a 0b0a 0a0a 0a0a 0a0a 0b0b     hh..............
+d0083290:	0a0a 0a0a 0a0a 0a0a 0a0a 0b0a 0a0a 0a0a     ................
+d00832a0:	680b 6868 0a0a 0a0a 0a0a 6868 0a0a 0a0a     .hhh......hh....
+d00832b0:	0a0a 0b0a 0a0b 0a0a 0a0a 0a0a 0a0a 0a0a     ................
+d00832c0:	0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a 0a0a     ................
+d00832d0:	0a0a 0a0a 0a0a 680a 6868 0b0b 0a0a 0a0a     .......hhh......
+d00832e0:	7559 7070 5420 6f6f 6874 6361 6568 6420     Yupp Toothache d
+d00832f0:	7365 746b 706f 4520 646e 6465 3a20 0029     esktop Ended :).
+
+d0083300 <thePallete>:
+d0083300:	0000 0000 afaf ffaf ffff ffff 67a2 ff3b     .............g;.
+d0083310:	907c ffaa 9595 ff95 7b7b ff7b a997 ffff     |.......{{{.....
+d0083320:	a91d ff37 a9ff ff7c 8112 ffbf bf66 ffeb     ..7...|.....f...
+d0083330:	c178 ff78 9318 ff3d 3418 ffb3 311c ffd9     x.x...=..4...1..
+d0083340:	0000 ff00 000e ff00 001d ff00 002b ff00     ............+...
+d0083350:	0139 ff00 0147 ff00 0156 ff00 0164 ff00     9...G...V...d...
+d0083360:	01d2 ff00 01ff ff00 cece ffce ff00 ff00     ................
+d0083370:	ff00 ffb2 e700 ffff 9600 ffff 1100 ffff     ................
+d0083380:	13d5 ffbf 11c7 ffa4 0eb9 ff89 0baa ff6e     ..............n.
+d0083390:	099c ff52 068d ff37 037f ff1c 0070 ff00     ..R...7.....p...
+d00833a0:	1b00 ff6d 1c55 ff6d e300 ff00 ff54 ff85     ..m.U.m.....T...
+d00833b0:	ff00 ffc4 d900 ffff a41f ffff 5400 ffe0     .............T..
+d00833c0:	0000 ffff 2655 ff92 27aa ff92 28ff ff92     ....U&...'...(..
+d00833d0:	2900 ffa4 2a55 ffa4 2baa ffa4 2cff ffa4     .)..U*...+...,..
+d00833e0:	2d00 ffb6 2f55 ffb6 30aa ffb6 31ff ffb6     .-..U/...0...1..
+d00833f0:	3200 ffc9 3355 ffc9 34aa ffc9 35ff ffc9     .2..U3...4...5..
+d0083400:	3700 ffdb 3855 ffdb 39aa ffdb 3aff ffdb     .7..U8...9...:..
+d0083410:	3b00 ffed 3c55 ffed 3daa ffed 3fff ffed     .;..U<...=...?..
+d0083420:	4000 ffff 4155 ffff 42aa ffff 43ff ffff     .@..UA...B...C..
+d0083430:	4400 ff00 4555 ff00 46aa ff00 48ff ff00     .D..UE...F...H..
+d0083440:	ff00 ffff ff55 ff12 ee55 ff12 b6ff ff12     ....U...U.......
+d0083450:	1fff ff00 0ec7 ff9d 0000 fff1 7700 ffff     .............w..
+d0083460:	5200 ff37 5355 ff37 54aa ff37 55ff ff37     .R7.US7..T7..U7.
+d0083470:	5600 ff49 5855 ff49 59aa ff49 5aff ff49     .VI.UXI..YI..ZI.
+d0083480:	5b00 ff5b 5c55 ff5b 5daa ff5b 5eff ff5b     .[[.U\[..][..^[.
+d0083490:	6000 ff6d 6155 ff6d 62aa ff6d 63ff ff6d     .`m.Uam..bm..cm.
+d00834a0:	6400 ff6d 6555 ff80 66aa ff80 67ff ff80     .dm.Ue...f...g..
+d00834b0:	6900 ff92 6a55 ff92 6baa ff92 6cff ff92     .i..Uj...k...l..
+d00834c0:	6d00 ffa4 6e55 ffa4 6faa ffa4 71ff ffa4     .m..Un...o...q..
+d00834d0:	7200 ffb6 7355 ffb6 74aa ffb6 75ff ffb6     .r..Us...t...u..
+d00834e0:	7600 ffc9 7755 ffc9 79aa ffc9 7aff ffc9     .v..Uw...y...z..
+d00834f0:	7b00 ffdb 7c55 ffdb 7daa ffdb 7eff ffdb     .{..U|...}...~..
+d0083500:	7f00 ffed 8055 ffed 82aa ffed 83ff ffed     ....U...........
+d0083510:	8400 ffff 8555 ffff 86aa ffff 87ff ffff     ....U...........
+d0083520:	8800 ff00 8a55 ff00 8baa ff00 8cff ff00     ....U...........
+d0083530:	8d00 ff12 8e55 ff12 8faa ff12 90ff ff12     ....U...........
+d0083540:	9200 ff24 9355 ff24 94aa ff24 95ff ff24     ..$.U.$...$...$.
+d0083550:	9600 ff37 9755 ff37 98aa ff37 99ff ff37     ..7.U.7...7...7.
+d0083560:	9b00 ff49 9c55 ff49 9daa ff49 9eff ff49     ..I.U.I...I...I.
+d0083570:	9f00 ff5b a055 ff5b a1aa ff5b a3ff ff5b     ..[.U.[...[...[.
+d0083580:	b5d5 ffa4 b0f8 ffa0 a3e6 ff94 89c1 ff7c     ..............|.
+d0083590:	81c0 ff62 62a1 ff1c 54ea ff42 a1bd ff62     ..b..b...TB...b.
+d00835a0:	93c0 ff70 77a1 ff49 3faa ff00 54ff ff15     ..p..wI..?...T..
+d00835b0:	50b9 ff1c b3ff ff00 88aa ff00 b5ff ff00     .P..............
+d00835c0:	62ff ff0e b7e3 ff5e c0b9 ffbd b9ff ff85     .b....^.........
+d00835d0:	6caf ff00 81b9 ff1f 5baa ff3f beff ffc9     .l.......[?.....
+d00835e0:	afcb ff5b c055 ffdb c1aa ffdb c0c0 ffbd     ..[.U...........
+d00835f0:	c400 ffed c555 ffed c6aa ffed c7ff ffed     ....U...........
+d0083600:	c800 ffff c955 ffff caaa ffff ccff ffff     ....U...........
+d0083610:	cd00 ff00 ce55 ff00 cfaa ff00 d0ff ff00     ....U...........
+d0083620:	d100 ff12 d255 ff12 d3aa ff12 d5ff ff12     ....U...........
+d0083630:	d600 ff24 d755 ff24 d8aa ff24 d9ff ff24     ..$.U.$...$...$.
+d0083640:	da00 ff37 db55 ff37 ddaa ff37 deff ff37     ..7.U.7...7...7.
+d0083650:	df00 ff49 e055 ff49 e1aa ff49 e2ff ff49     ..I.U.I...I...I.
+d0083660:	e300 ff5b e555 ff5b e6aa ff5b e7ff ff5b     ..[.U.[...[...[.
+d0083670:	e800 ff6d e955 ff6d eaaa ff6d ebff ff6d     ..m.U.m...m...m.
+d0083680:	ec00 ff6d ee55 ff80 efaa ff80 f0ff ff80     ..m.U...........
+d0083690:	cea2 ff93 f255 ff92 f3aa ff92 f4ff ff92     ....U...........
+d00836a0:	f600 ffa4 f755 ffa4 f8aa ffa4 f9ff ffa4     ....U...........
+d00836b0:	fa00 ffb6 fb55 ffb6 fcaa ffb6 feff ffb6     ....U...........
+d00836c0:	ff00 ffc9 ff55 ffc9 ffaa ffc9 ffff ffc9     ....U...........
+d00836d0:	ff00 ffdb ff55 ffdb ffaa ffdb ffff ffdb     ....U...........
+d00836e0:	ff00 ffed ff55 ffed ffaa ffed ffff ffed     ....U...........
+d00836f0:	ff00 ffff ff55 ffff ffaa ffff ffff ffff     ....U...........
+
+d0083700 <txtTitle>:
+d0083700:	6874 7369 6920 2073 2061 6574 7473 7320     this is a test s
+d0083710:	7263 6c6f 796c 202c 6f73 656d 6874 6e69     crolly, somethin
+d0083720:	2067 6f74 7420 7365 2074 6f66 2072 6f6e     g to test for no
+d0083730:	2c77 6220 7475 7720 6c69 206c 616d 656b     w, but will make
+d0083740:	6920 2074 2061 696c 7474 656c 6220 7465      it a little bet
+d0083750:	6574 2072 6966 6c6c 2079 6574 7478 2079     ter filly texty 
+d0083760:	7473 6675 0066 0000 3025 7532 253a 3230     stuff...%02u:%02
+d0083770:	3a75 3025 7532 0000                         u:%02u..
+
+d0083778 <bk_bub_tree1>:
 	...
-d0093fd0:	10101010 10101000 00001010 00000000     ................
+d008378c:	2110 2129 2525 2125 2529 2121 5d29 2925     .!)!%%%!)%!!)]%)
+d008379c:	2121 2121 2529 2121 2121 1029 1021 0000     !!!!)%!!!!).!...
 	...
-d0093ff0:	10101010 10101000 00001010 00000000     ................
+d00837cc:	2910 2129 2521 2921 2925 2525 2529 2529     .))!!%!)%)%%)%)%
+d00837dc:	2929 2121 2110 2121 2525 2929 1010 0000     ))!!.!!!%%))....
 	...
-d00940e8:	10000000 10606060 60601010 00106060     ....```...````..
-d00940f8:	10000000 10101010 00000000 00000000     ................
-d0094108:	10000000 10606060 60601010 00106060     ....```...````..
-d0094118:	10000000 10101010 00000000 00000000     ................
+d0083808:	0000 1000 2921 2521 2521 2921 215d 1010     ....!)!%!%!)]!..
+d0083818:	2110 2921 2525 2529 1010 2921 2529 1010     .!!)%%)%..!))%..
+d0083828:	0010 0000 0000 0000 0000 0000 0000 0000     ................
 	...
-d0094200:	10100000 60100010 60606060 60606010     .......`````.```
-d0094210:	10606060 10100010 60606060 00000010     ```.....````....
-d0094220:	00000000 60100000 60606060 60606010     .......`````.```
-d0094230:	10606060 10100010 60606060 00000010     ```.....````....
+d0083848:	0000 1000 2121 2521 2925 2529 1010 1010     ....!!!%%))%....
+d0083858:	1010 2110 1021 1010 1025 2910 1010 1010     ...!!...%..)....
+d0083868:	0010 0000 0000 0000 0000 0000 0000 0000     ................
 	...
-d00942ec:	10101010 10100000 00101010 00000000     ................
+d0083888:	0000 1000 2121 2925 2925 2925 2110 1021     ....!!%)%)%).!!.
+d0083898:	2121 1010 1010 1010 1010 1010 1010 6721     !!............!g
+d00838a8:	0010 0000 0000 0000 0000 0000 0000 0000     ................
 	...
-d009431c:	60601000 60101060 60606060 60606060     ..```..`````````
-d009432c:	60606060 60101010 60606060 00001060     ````...``````...
-d009433c:	00000000 60100000 60606060 60606060     .......`````````
-d009434c:	60606060 60101010 60606060 00001060     ````...``````...
+d00838cc:	2110 2529 2925 2525 2121 1025 6725 6767     .!)%%)%%!!%.%ggg
+d00838dc:	2121 1010 1010 1010 2110 bb67 1010 0000     !!.......!g.....
 	...
-d0094364:	10101010 00000000 00000000 00000000     ................
+d008390c:	2110 2921 2525 2525 2125 1021 bb21 bbbb     .!!)%%%%%!!.!...
+d008391c:	bbbb 67bb 1010 2110 6710 67bb 1010 0000     ...g...!.g.g....
 	...
-d0094404:	10000000 60606060 60601010 10106060     ....````..````..
+d008394c:	2110 2521 2521 2929 2925 2121 6710 bbbb     .!!%!%))%)!!.g..
+d008395c:	bbbb bbbb 67bb 2110 bb10 1010 1021 0000     .....g.!....!...
 	...
-d0094438:	60606010 10101060 60606060 60606060     .````...````````
-d0094448:	10606060 60106060 60606060 00001060     ```.``.``````...
-d0094458:	00000000 10100000 60606060 60606060     ........````````
-d0094468:	10606060 60106060 60606060 00001060     ```.``.``````...
-d0094478:	00000000 10100000 60606060 00000010     ........````....
+d0083988:	0000 1000 2921 2521 2921 1021 2521 2929     ....!)!%!)!.!%))
+d0083998:	1021 6710 bbbb bbbb 1010 2510 2110 1010     !..g.......%.!..
+d00839a8:	1021 0000 0000 0000 0000 0000 0000 0000     !...............
 	...
-d0094520:	60100000 60606060 60606060 10606060     ...````````````.
-d0094530:	00000010 00000000 00000000 00000000     ................
+d00839c8:	0000 1000 2521 2121 2925 2110 2561 2510     ....!%!!%).!a%.%
+d00839d8:	2125 1021 2510 2567 1010 2110 1021 2110     %!!..%g%...!!..!
+d00839e8:	1010 0010 0000 0000 0000 0000 0000 0000     ................
 	...
-d0094550:	10000000 60606010 60606060 60606010     .....```````.```
-d0094560:	60606060 60106060 60606060 60606060     ``````.`````````
-d0094570:	00106060 10101000 60601010 60606010     ``........``.```
-d0094580:	60606060 60106060 60606060 60606060     ``````.`````````
-d0094590:	00106060 10101000 60601010 60606060     ``........``````
-d00945a0:	00001060 00000000 00000000 00000000     `...............
+d0083a08:	0000 1000 2521 2125 2129 1010 1010 1021     ....!%%!)!....!.
+d0083a18:	2525 2125 1021 1010 1010 2921 2525 1025     %%%!!.....!)%%%.
+d0083a28:	2125 0010 0000 0000 0000 0000 0000 0000     %!..............
 	...
-d009463c:	60100000 60606060 60606060 60606060     ...`````````````
-d009464c:	00001060 00000000 00000000 00000000     `...............
+d0083a48:	0000 1000 2121 2129 1025 2921 2525 1021     ....!!)!%.!)%%!.
+d0083a58:	2121 1010 2525 2929 2529 1025 1010 2110     !!..%%)))%%....!
+d0083a68:	2125 0010 0000 0000 0000 0000 0000 0000     %!..............
 	...
-d009466c:	60100000 60601060 60606060 60606060     ...``.``````````
-d009467c:	60606060 60106060 60606060 60606060     ``````.`````````
-d009468c:	00106060 60606010 60606060 60606060     ``...```````````
-d009469c:	60606060 60106060 60606060 60606060     ``````.`````````
-d00946ac:	00106060 60606010 60606060 60606060     ``...```````````
-d00946bc:	00001060 00000000 00000000 00000000     `...............
+d0083a88:	0000 1000 2121 2525 1029 2921 2529 2125     ....!!%%).!))%%!
+d0083a98:	1010 2121 1010 1010 1010 2110 2521 2925     ..!!.......!!%%)
+d0083aa8:	2121 0010 0000 0000 0000 0000 0000 0000     !!..............
 	...
-d0094758:	60100000 60606060 60606060 60606060     ...`````````````
-d0094768:	00001060 00000000 00000000 00000000     `...............
+d0083acc:	2110 2125 2529 5d21 2925 2525 2929 2525     .!%!)%!]%)%%))%%
+d0083adc:	2529 2529 2529 5d25 2929 2129 1021 0000     )%)%)%%])))!!...
 	...
-d0094788:	60100000 60606060 60606060 60606060     ...`````````````
-d0094798:	60606060 60106060 60606060 60606060     ``````.`````````
-d00947a8:	10106060 60606060 60606060 60606060     ``..````````````
-d00947b8:	60606060 60106060 60606060 60606060     ``````.`````````
-d00947c8:	10106060 60606060 60606060 60606060     ``..````````````
-d00947d8:	00001060 00000000 00000000 00000000     `...............
+d0083b0c:	2110 2125 2529 2525 2929 2529 2525 2525     .!%!)%%%)))%%%%%
+d0083b1c:	2125 2525 2925 2129 2525 255d 0010 0000     %!%%%))!%%]%....
 	...
-d0094874:	60100000 60606060 60606060 60606060     ...`````````````
-d0094884:	10001060 10101010 00000000 00000000     `...............
+d0083b4c:	2110 2125 2525 2529 2529 2525 2525 2529     .!%!%%)%)%%%%%)%
+d0083b5c:	2125 2121 2121 2121 2529 2529 0010 0000     %!!!!!!!)%)%....
 	...
-d00948a0:	10101010 60100010 60606060 60606060     .......`````````
-d00948b0:	60606060 60606060 10606060 60606010     ```````````..```
-d00948c0:	60606060 10606060 60606060 60606060     ```````.````````
-d00948d0:	60606060 60606060 10606060 60606010     ```````````..```
-d00948e0:	60606060 10606060 60606060 60606060     ```````.````````
-d00948f0:	60606060 00001060 00000000 00000000     `````...........
+d0083b84:	0000 1000 1010 1010 1010 2525 2929 2525     ..........%%))%%
+d0083b94:	2525 2521 2925 2925 2925 2125 2121 2925     %%!%%)%)%)%!!!%)
+d0083ba4:	2525 2525 2129 1010 1010 0010 0000 0000     %%%%)!..........
 	...
-d0094990:	60100000 60606060 60606060 60606060     ...`````````````
-d00949a0:	60101010 10606060 00000000 00000000     ...````.........
+d0083bc4:	0000 2110 2525 6129 2525 2910 255d 2121     ...!%%)a%%.)]%!!
+d0083bd4:	2525 2121 2525 2525 2929 2929 2925 2925     %%!!%%%%))))%)%)
+d0083be4:	2925 2929 2529 2525 2525 1025 1010 0000     %))))%%%%%%.....
 	...
-d00949bc:	60606010 10101060 60606060 60606060     .````...````````
-d00949cc:	60606060 60606060 60606060 60606060     ````````````````
-d00949dc:	60606060 10106060 60606010 60606060     ``````...```````
-d00949ec:	60606060 60606060 60606060 60606060     ````````````````
-d00949fc:	60606060 10106060 60606010 60606060     ``````...```````
-d0094a0c:	60606060 00001060 00000000 00000000     `````...........
+d0083c04:	1010 2921 2925 2525 2525 1025 2121 2521     ..!)%)%%%%%.!!!%
+d0083c14:	2525 2121 2121 2521 2525 1010 1010 2521     %%!!!!!%%%....!%
+d0083c24:	2529 2929 2925 2129 2525 2525 6129 1010     )%))%))!%%%%)a..
+d0083c34:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+d0083c44:	2110 2525 2529 2525 2929 2125 2110 2921     .!%%)%%%))%!.!!)
+d0083c54:	2125 2521 2925 2525 1010 2561 2529 1010     %!!%%)%%..a%)%..
+d0083c64:	2121 2121 2525 2525 2925 2525 2529 2525     !!!!%%%%%)%%)%%%
+d0083c74:	1010 0000 0000 0000 0000 0000 0000 0000     ................
+d0083c84:	2910 2925 2525 2529 2521 2529 2110 2529     .)%)%%)%!%)%.!)%
+d0083c94:	2129 2525 2529 2925 2929 2929 2525 2121     )!%%)%%)))))%%!!
+d0083ca4:	2110 2121 2125 2921 2925 2929 2529 2529     .!!!%!!)%))))%)%
+d0083cb4:	1029 0000 0000 0000 0000 0000 0000 0000     )...............
+d0083cc4:	2510 2529 2125 2529 2110 2529 1025 2529     .%)%%!)%.!)%%.)%
+d0083cd4:	2529 2525 2525 2929 5d25 2521 2929 2125     )%%%%%))%]!%))%!
+d0083ce4:	1021 2521 2929 2525 2525 2529 2925 2925     !.!%))%%%%)%%)%)
+d0083cf4:	1025 0010 0000 0000 0000 0000 0000 1000     %...............
+d0083d04:	2521 2525 5d29 1021 2121 2925 2925 2925     !%%%)]!.!!%)%)%)
+d0083d14:	2525 2521 2525 2129 2925 2129 2525 2125     %%!%%%)!%))!%%%!
+d0083d24:	2121 2510 2925 2121 2521 2529 2925 2525     !!.%%)!!!%)%%)%%
+d0083d34:	2925 0010 0000 0000 0000 0000 0000 1000     %)..............
+d0083d44:	2121 2529 2929 1025 2121 2521 2929 255d     !!)%))%.!!!%))]%
+d0083d54:	2121 2521 2125 2521 2925 2121 2525 2129     !!!%%!!%%)!!%%)!
+d0083d64:	2121 2110 2121 2921 2121 2521 2925 2925     !!.!!!!)!!!%%)%)
+d0083d74:	2525 0010 0000 0000 0000 0000 0000 1000     %%..............
+d0083d84:	2125 2925 2925 1029 1021 2921 2125 2529     %!%)%)).!.!)%!)%
+d0083d94:	2929 2129 2521 2129 2525 2521 2529 2129     )))!!%)!%%!%)%)!
+d0083da4:	2121 2110 2929 295d 2925 1021 2925 2925     !!.!))])%)!.%)%)
+d0083db4:	2525 0010 0000 0000 0000 0000 0000 1000     %%..............
+d0083dc4:	2121 2921 2525 2525 1010 1021 2561 2525     !!!)%%%%..!.a%%%
+d0083dd4:	2121 2521 2129 2121 2125 2525 2925 2125     !!!%)!!!%!%%%)%!
+d0083de4:	2110 2510 2925 2121 2521 2129 2910 2529     .!.%%)!!!%)!.))%
+d0083df4:	2525 0010 0000 0000 0000 0000 0000 0000     %%..............
+d0083e04:	2510 2121 2129 2925 1021 2125 2110 2525     .%!!)!%)!.%!.!%%
+d0083e14:	2929 2125 2121 2510 2125 2929 2925 2129     ))%!!!.%%!))%))!
+d0083e24:	2110 2110 1021 2110 2110 2525 5d21 2529     .!.!!..!.!%%!])%
+d0083e34:	2925 1021 0000 0000 0000 0000 0000 0000     %)!.............
+d0083e44:	2510 2129 2929 2521 2125 2110 2110 2121     .%)!))!%%!.!.!!!
+d0083e54:	1021 2121 1010 2521 2110 2525 2525 2121     !.!!..!%.!%%%%!!
+d0083e64:	2110 1010 2110 1021 1021 2921 1021 2925     .!...!!.!.!)!.%)
+d0083e74:	2525 1021 0000 0000 0000 0000 0000 0000     %%!.............
+d0083e84:	2110 2129 2921 2921 2129 1010 2121 1010     .!)!!)!))!..!!..
+d0083e94:	2110 1021 1010 2525 2110 2525 2925 1021     .!!...%%.!%%%)!.
+d0083ea4:	1021 1010 2121 1010 1021 2921 105d 2929     !...!!..!.!)].))
+d0083eb4:	2525 1021 0000 0000 0000 0000 0000 0000     %%!.............
+d0083ec4:	1000 2521 2521 2125 2125 1021 2110 2121     ..!%!%%!%!!..!!!
+d0083ed4:	1021 1010 2110 2110 2521 2525 2121 1021     !....!.!!%%%!!!.
+d0083ee4:	1021 1010 1010 0000 2110 2121 1021 2921     !........!!!!.!)
+d0083ef4:	2525 0010 0000 0000 0000 0000 0000 0000     %%..............
+d0083f04:	1000 2121 2121 2121 2121 1021 1010 1010     ..!!!!!!!!!.....
+d0083f14:	1010 1010 1021 1021 2110 2121 2121 2121     ....!.!..!!!!!!!
+d0083f24:	1010 1010 0000 0000 1000 2121 2121 2121     ..........!!!!!!
+d0083f34:	2121 0010 0000 0000 0000 0000 0000 0000     !!..............
+d0083f44:	0000 1010 1010 1010 1010 0010 0000 0000     ................
+d0083f54:	0000 0000 1010 1010 1010 1010 1010 1010     ................
 	...
-d0094aac:	60100000 60606060 60606060 60606060     ...`````````````
-d0094abc:	60606010 10606060 00000000 00000000     .``````.........
+d0083f6c:	0000 1010 1010 1010 1010 0000               ............
+
+d0083f78 <bk_bub_tree2>:
 	...
-d0094ad8:	60606010 60606060 60606060 60606060     .```````````````
-d0094ae8:	60606060 60606060 60606060 60606060     ````````````````
-d0094af8:	60606060 60101060 60606060 60606060     `````..`````````
-d0094b08:	60606060 60606060 60606060 60606060     ````````````````
-d0094b18:	60606060 60101060 60606060 60606060     `````..`````````
-d0094b28:	60606060 00001060 00000000 00000000     `````...........
+d0083f8c:	2110 2129 2525 2125 2529 2121 2529 2925     .!)!%%%!)%!!)%%)
+d0083f9c:	2121 2121 2529 2121 2121 1029 1021 0000     !!!!)%!!!!).!...
 	...
-d0094bc4:	10101000 4c100010 60606060 60606060     .......L````````
-d0094bd4:	60606060 60606060 10106060 00000000     ``````````......
+d0083fc8:	0000 2910 2129 2521 2921 2925 2525 2529     ...))!!%!)%)%%)%
+d0083fd8:	2529 2929 2121 2110 2121 2525 2929 1010     )%))!!.!!!%%))..
 	...
-d0094bf4:	60601010 60606060 60606060 60606060     ..``````````````
-d0094c04:	60606060 60606060 60606060 60606060     ````````````````
-d0094c14:	60606060 60601060 60606060 60606060     `````.``````````
-d0094c24:	60606060 60606060 60606060 60606060     ````````````````
-d0094c34:	60606060 60601060 60606060 60606060     `````.``````````
-d0094c44:	60606060 1000104c 00101010 00000000     ````L...........
+d0084004:	0000 1100 2921 2521 2521 2921 2125 1010     ....!)!%!%!)%!..
+d0084014:	2110 2921 2525 2529 1010 2921 2529 1010     .!!)%%)%..!))%..
+d0084024:	0010 0000 0000 0000 0000 0000 0000 0000     ................
 	...
-d0094ce0:	60606010 10101010 60601010 60606060     .```......``````
-d0094cf0:	60606060 60606060 60606060 00000010     ````````````....
+d0084044:	1000 2121 2521 2925 2529 1110 1010 1010     ..!!!%%))%......
+d0084054:	2110 1021 1010 1125 2510 1010 1010 0010     .!!...%..%......
 	...
-d0094d0c:	10000000 60606060 60606060 60606060     ....````````````
-d0094d1c:	60606060 60606060 60606060 60606060     ````````````````
-d0094d2c:	60606060 60606060 60606010 60606060     ````````.```````
-d0094d3c:	60606060 60606060 60606060 60606060     ````````````````
-d0094d4c:	60606060 60606060 60606010 60606060     ````````.```````
-d0094d5c:	60606060 10606060 10101010 10606060     ```````.....```.
+d0084080:	0000 1100 2121 2929 2925 2925 2110 1021     ....!!))%)%).!!.
+d0084090:	2121 1010 1111 1010 1010 1010 1110 6721     !!............!g
+d00840a0:	0010 0000 0000 0000 0000 0000 0000 0000     ................
 	...
-d0094df8:	10000000 60606060 60606060 60601060     ....`````````.``
-d0094e08:	60606060 60606060 60606060 60606060     ````````````````
-d0094e18:	00000010 00000000 00000000 00000000     ................
-d0094e28:	10000000 60606060 60606060 60606060     ....````````````
-d0094e38:	60606060 60606060 60606060 60606060     ````````````````
-d0094e48:	60606060 60606060 60606060 60606060     ````````````````
-d0094e58:	60606060 60606060 60606060 60606060     ````````````````
-d0094e68:	60606060 60606060 60606060 60606060     ````````````````
-d0094e78:	60606060 60606060 60606060 60606060     ````````````````
-d0094e88:	00000010 00000000 00000000 00000000     ................
+d00840c0:	0000 2110 2529 2925 2525 2121 1021 6725     ...!)%%)%%!!!.%g
+d00840d0:	6767 2121 1110 1010 1010 2110 bb67 1011     gg!!.......!g...
 	...
-d0094f14:	10000000 60606060 60606060 60606060     ....````````````
-d0094f24:	60606060 60606060 60606060 10606060     ```````````````.
+d0084100:	2110 2921 2925 2525 2125 1021 bb25 bbbb     .!!)%)%%%!!.%...
+d0084110:	bbbb 67bb 1010 2110 6710 67bb 1010 0000     ...g...!.g.g....
 	...
-d0094f48:	60606010 60606060 60606060 60606060     .```````````````
-d0094f58:	60606060 60606060 60606060 60606060     ````````````````
-d0094f68:	60606060 60606060 60606060 60606060     ````````````````
-d0094f78:	60606060 60606060 60606060 60606060     ````````````````
-d0094f88:	60606060 60606060 60606060 60606060     ````````````````
-d0094f98:	60606060 60606060 60606060 00000010     ````````````....
+d008413c:	0000 2110 2521 2521 2929 2925 2121 6710     ...!!%!%))%)!!.g
+d008414c:	bbbb bbbb bbbb 67bb 2110 bb10 1010 1021     .......g.!....!.
 	...
-d0095034:	60606010 60606060 60606060 60606060     .```````````````
-d0095044:	60606060 60601060 60606060 00000010     `````.``````....
+d0084178:	0000 1000 2921 2521 2921 1121 2521 2929     ....!)!%!)!.!%))
+d0084188:	1121 6710 bbbb bbbb 1110 2510 2510 1011     !..g.......%.%..
+d0084198:	1021 0000 0000 0000 0000 0000 0000 0000     !...............
 	...
-d0095060:	10000000 60606060 60606060 60606060     ....````````````
-d0095070:	60606060 60606060 60606060 60606060     ````````````````
-d0095080:	60606060 60606060 60606060 60606060     ````````````````
-d0095090:	60606060 60606060 60606060 60606060     ````````````````
-d00950a0:	60606060 60606060 60606060 60606060     ````````````````
-d00950b0:	60606060 60606060 60606060 10606060     ```````````````.
+d00841b8:	1000 2521 2121 2929 2110 2525 2511 2125     ..!%!!)).!%%.%%!
+d00841c8:	1021 2510 2567 1010 2110 1021 2110 1010     !..%g%...!!..!..
+d00841d8:	0010 0000 0000 0000 0000 0000 0000 0000     ................
 	...
-d009514c:	10000000 60606010 60606060 60606010     .....```````.```
-d009515c:	10606060 60606060 60606060 10606060     ```.```````````.
-d009516c:	00000010 00000000 00000000 00000000     ................
-d009517c:	10001010 60606010 60606060 60606060     .....```````````
-d009518c:	60606060 60606060 60606060 60606060     ````````````````
-d009519c:	60606060 60606060 60606060 60606060     ````````````````
-d00951ac:	60606060 60606060 60606060 60606060     ````````````````
-d00951bc:	60606060 60606060 60606060 60606060     ````````````````
-d00951cc:	60606060 60606060 60606060 10606060     ```````````````.
-d00951dc:	00000010 00000000 00000000 00000000     ................
+d00841f4:	0000 1000 2521 2125 2129 1010 1010 1121     ....!%%!)!....!.
+d0084204:	2525 2125 1021 1011 1110 2921 2525 1025     %%%!!.....!)%%%.
+d0084214:	2121 0010 0000 0000 0000 0000 0000 0000     !!..............
 	...
-d0095264:	10100000 60101010 60601060 60606060     .......``.``````
-d0095274:	60606010 60606060 60606010 60606060     .```````.```````
-d0095284:	60106060 00101060 00101010 00000000     ``.``...........
-d0095294:	10000000 60106010 60601060 60606060     .....`.``.``````
-d00952a4:	60606060 60606060 4c606060 60606060     ```````````L````
-d00952b4:	60606060 60606060 60606060 60606060     ````````````````
-d00952c4:	60606060 60606060 4c606060 60606060     ```````````L````
-d00952d4:	60606060 60606060 60606060 60606060     ````````````````
-d00952e4:	60606060 60606060 60606060 60606060     ````````````````
-d00952f4:	60106060 10101060 00001010 00000000     ``.``...........
+d0084234:	1000 2121 2125 1025 2921 2529 1021 2121     ..!!%!%.!))%!.!!
+d0084244:	1011 2525 2929 2529 1025 1011 2110 2125     ..%%)))%%....!%!
+d0084254:	0010 0000 0000 0000 0000 0000 0000 0000     ................
 	...
-d0095380:	60601000 60106060 60606060 60606060     ..````.`````````
-d0095390:	60606060 60606060 60606060 60606060     ````````````````
-d00953a0:	60606060 10101060 10606060 10100000     `````...```.....
-d00953b0:	60100010 60106060 60606060 60606060     ...```.`````````
-d00953c0:	60606060 60606060 4c606060 6060604c     ```````````LL```
-d00953d0:	60606060 60606060 60606060 60606060     ````````````````
-d00953e0:	60606060 60606060 4c606060 6060604c     ```````````LL```
-d00953f0:	60606060 60606060 60606060 60606060     ````````````````
-d0095400:	60606060 60606060 60606060 60606060     ````````````````
-d0095410:	60606060 60601060 00106060 00000000     `````.````......
+d0084270:	0000 1100 2121 2125 1025 2921 2529 2129     ....!!%!%.!))%)!
+d0084280:	1011 2121 1010 1010 1010 2110 2921 2925     ..!!.......!!)%)
+d0084290:	2121 0011 0000 0000 0000 0000 0000 0000     !!..............
 	...
-d0095498:	10100000 60606010 60106060 60606060     .....`````.`````
-d00954a8:	60606060 60606060 60606060 60606060     ````````````````
-d00954b8:	60606060 60606060 60601060 60606060     `````````.``````
-d00954c8:	60601010 60101060 60106060 60606060     ..```..```.`````
-d00954d8:	60606060 60606060 60606060 4c606060     ```````````````L
-d00954e8:	60604c4c 60606060 60606060 4c606060     LL`````````````L
-d00954f8:	60606060 60606060 60606060 4c606060     ```````````````L
-d0095508:	60604c4c 60606060 60606060 4c606060     LL`````````````L
-d0095518:	60606060 60606060 60606060 60606060     ````````````````
-d0095528:	60606060 60606060 60601060 10606060     `````````.`````.
-d0095538:	00001010 00000000 00000000 00000000     ................
+d00842b0:	0000 2110 2125 2529 2521 2929 2925 2929     ...!%!)%!%))%)))
+d00842c0:	2525 2529 2529 2529 2125 2929 2129 1021     %%)%)%)%%!)))!!.
 	...
-d00955b4:	60601010 60606010 60606060 60606060     ..``.```````````
-d00955c4:	60606060 60606060 60606060 60606060     ````````````````
-d00955d4:	60606060 60606060 60606060 60606060     ````````````````
-d00955e4:	60606060 60106060 60606060 60606060     ``````.`````````
-d00955f4:	60606060 60606060 60606060 60606060     ````````````````
-d0095604:	604c4c4c 60606060 60606060 4c4c6060     LLL```````````LL
-d0095614:	60606060 60606060 60606060 60606060     ````````````````
-d0095624:	604c4c4c 60606060 60606060 4c4c6060     LLL```````````LL
-d0095634:	60606060 60606060 60606060 60606060     ````````````````
-d0095644:	60606060 60606060 60606060 10606060     ```````````````.
-d0095654:	10106060 00000000 00000000 00000000     ``..............
+d00842f0:	2110 2125 2529 2525 2929 2529 2525 2525     .!%!)%%%)))%%%%%
+d0084300:	2125 2525 2925 2129 2525 2525 0010 0000     %!%%%))!%%%%....
 	...
-d00956cc:	10000000 60606060 60606060 60606060     ....````````````
-d00956dc:	60606060 60606060 60606060 60606060     ````````````````
-d00956ec:	60606060 60606060 60606060 60606060     ````````````````
-d00956fc:	60606060 60606060 60606060 60606060     ````````````````
-d009570c:	60606060 60606060 60606060 60606060     ````````````````
-d009571c:	60606060 4c4c4c4c 6060604c 60606060     ````LLLLL```````
-d009572c:	604c4c60 60606060 60606060 60606060     `LL`````````````
-d009573c:	60606060 4c4c4c4c 6060604c 60606060     ````LLLLL```````
-d009574c:	604c4c60 60606060 60606060 60606060     `LL`````````````
-d009575c:	60606060 60606060 60606060 60606060     ````````````````
-d009576c:	60606060 60606060 00000010 00000000     ````````........
+d008432c:	0000 2110 2125 2525 2929 2529 2925 2925     ...!%!%%)))%%)%)
+d008433c:	2529 2125 2121 2121 2121 2925 2525 0011     )%%!!!!!!!%)%%..
 	...
-d00957e8:	60100000 60606060 60606060 60606060     ...`````````````
-d00957f8:	60606060 60606060 60606060 60606060     ````````````````
-d0095808:	60606060 60606060 60606060 60606060     ````````````````
-d0095818:	60606060 60606060 60606060 60606060     ````````````````
-d0095828:	60606060 60606060 60606060 60606060     ````````````````
-d0095838:	4c606060 4c4c4c4c 4c4c4c4c 4c4c4c4c     ```LLLLLLLLLLLLL
-d0095848:	604c4c4c 60606060 60606060 60606060     LLL`````````````
-d0095858:	4c606060 4c4c4c4c 4c4c4c4c 4c4c4c4c     ```LLLLLLLLLLLLL
-d0095868:	604c4c4c 60606060 60606060 60606060     LLL`````````````
-d0095878:	60606060 60606060 60606060 60606060     ````````````````
-d0095888:	60606060 60606060 00001060 00000000     `````````.......
+d008436c:	2110 2129 2925 2925 2529 2121 2925 2529     .!)!%)%))%!!%))%
+d008437c:	2525 2125 2121 2925 2929 2529 1125 1010     %%%!!!%))))%%...
+d008438c:	1010 0011 0000 0000 0000 0000 0000 0000     ................
 	...
-d0095904:	4c101010 60606060 60606060 60606060     ...L````````````
-d0095914:	60606060 60606060 60606060 60606060     ````````````````
-d0095924:	60606060 60606060 60606060 60606060     ````````````````
-d0095934:	60606060 60606060 60606060 60606060     ````````````````
-d0095944:	60606060 60606060 60606060 60606060     ````````````````
-d0095954:	4c606060 4c4c4c4c 4c4c4c4c 4c4c4c4c     ```LLLLLLLLLLLLL
-d0095964:	604c4c4c 60606060 60606060 60606060     LLL`````````````
-d0095974:	4c606060 4c4c4c4c 4c4c4c4c 4c4c4c4c     ```LLLLLLLLLLLLL
-d0095984:	604c4c4c 60606060 60606060 60606060     LLL`````````````
-d0095994:	60606060 60606060 60606060 60606060     ````````````````
-d00959a4:	60606060 60606060 1010104c 00000000     ````````L.......
+d00843a8:	0000 2110 2125 2525 2929 2129 2121 2521     ...!%!%%)))!!!!%
+d00843b8:	2925 2929 2525 2129 2521 2925 2925 2529     %)))%%)!!%%)%))%
+d00843c8:	2925 2925 1029 0010 0000 0000 0000 0000     %)%))...........
 	...
-d0095a1c:	10100000 6060604c 60606060 60606060     ....L```````````
-d0095a2c:	60606060 60606060 60606060 4c606060     ```````````````L
-d0095a3c:	60606060 60606060 60606060 60606060     ````````````````
-d0095a4c:	60606060 604c6060 60606060 60606060     ``````L`````````
-d0095a5c:	60606060 60606060 60606060 60606060     ````````````````
-d0095a6c:	60606060 4c4c6060 4c4c4c4c 4c4c4c4c     ``````LLLLLLLLLL
-d0095a7c:	4c4c4c4c 4c4c4c4c 6060604c 60606060     LLLLLLLLL```````
-d0095a8c:	60606060 4c4c6060 4c4c4c4c 4c4c4c4c     ``````LLLLLLLLLL
-d0095a9c:	4c4c4c4c 4c4c4c4c 6060604c 60606060     LLLLLLLLL```````
-d0095aac:	60606060 60606060 60606060 60606060     ````````````````
-d0095abc:	60606060 60606060 10606060 4c606060     ```````````.```L
-d0095acc:	00001010 00000000 00000000 00000000     ................
+d00843e4:	0000 1100 2521 2921 2529 2525 2921 2929     ....!%!))%%%!)))
+d00843f4:	1125 2510 2921 2529 2929 2129 2525 2929     %..%!))%)))!%%))
+d0084404:	2929 2929 2529 2929 1129 0010 0000 0000     )))))%))).......
 	...
-d0095b38:	604c1000 60606060 60606060 60606060     ..L`````````````
-d0095b48:	60606060 60606060 60606060 4c606060     ```````````````L
-d0095b58:	60606060 4c606060 604c4c4c 60606060     ```````LLLL`````
-d0095b68:	60606060 4c4c6060 6060604c 60606060     ``````LLL```````
-d0095b78:	60606060 60606060 60606060 60604c4c     ````````````LL``
-d0095b88:	60606060 4c4c4c60 4c4c4c4c 4c4c4c4c     `````LLLLLLLLLLL
-d0095b98:	4c4c4c4c 4c4c4c4c 604c4c4c 60606060     LLLLLLLLLLL`````
-d0095ba8:	60606060 4c4c4c60 4c4c4c4c 4c4c4c4c     `````LLLLLLLLLLL
-d0095bb8:	4c4c4c4c 4c4c4c4c 604c4c4c 60606060     LLLLLLLLLLL`````
-d0095bc8:	60606060 4c4c6060 60606060 60606060     ``````LL````````
-d0095bd8:	60606060 60606060 60106060 60606060     ``````````.`````
-d0095be8:	0000104c 00000000 00000000 00000000     L...............
+d0084424:	2111 2125 2925 2129 2121 2529 2929 2525     .!%!%))!!!)%))%%
+d0084434:	1121 2111 2925 2925 2525 2529 2525 2121     !..!%)%)%%)%%%!!
+d0084444:	2121 2929 2925 2125 1125 0000 0000 0000     !!))%)%!%.......
 	...
-d0095c10:	10101010 10101010 00000010 00000000     ................
+d0084460:	0000 2910 2525 2929 1121 2525 2929 2525     ...)%%))!.%%))%%
+d0084470:	2929 2129 1121 2921 2529 2925 2929 2525     )))!!.!))%%)))%%
+d0084480:	2525 2525 2525 2925 2929 2925 0010 0000     %%%%%%%)))%)....
 	...
-d0095c54:	60601000 60606060 60606060 60606060     ..``````````````
-d0095c64:	60606060 60606060 4c606060 4c4c4c4c     ```````````LLLLL
-d0095c74:	4c4c4c4c 4c4c4c60 4c4c4c4c 6060604c     LLLL`LLLLLLLL```
-d0095c84:	60606060 4c4c6060 60604c4c 60606060     ``````LLLL``````
-d0095c94:	60606060 60606060 4c606060 4c4c4c4c     ```````````LLLLL
-d0095ca4:	4c4c604c 4c4c4c4c 4c4c4c4c 4c4c4c4c     L`LLLLLLLLLLLLLL
-d0095cb4:	4c4c4c4c 4c4c4c4c 4c4c4c4c 60604c4c     LLLLLLLLLLLLLL``
-d0095cc4:	4c4c6060 4c4c4c4c 4c4c4c4c 4c4c4c4c     ``LLLLLLLLLLLLLL
-d0095cd4:	4c4c4c4c 4c4c4c4c 4c4c4c4c 60604c4c     LLLLLLLLLLLLLL``
-d0095ce4:	4c606060 4c4c4c4c 6060604c 60606060     ```LLLLLL```````
-d0095cf4:	60606060 60606060 60606060 60606060     ````````````````
-d0095d04:	00001060 00000000 00000000 00000000     `...............
+d008449c:	0000 1000 2921 2525 2129 2510 2929 2529     ....!)%%)!.%)))%
+d00844ac:	2925 2929 2129 1121 2121 2925 2529 2121     %))))!!.!!%))%!!
+d00844bc:	2929 2125 2121 2529 2929 2925 2129 0010     ))%!!!)%))%))!..
 	...
-d0095d28:	10101000 70707070 70707070 10101070     ....ppppppppp...
+d00844dc:	2110 2925 2529 1121 2925 2525 2529 2529     .!%))%!.%)%%)%)%
+d00844ec:	2925 2129 2121 2511 2929 2121 2521 2529     %))!!!.%))!!!%)%
+d00844fc:	2121 2529 2921 2529 2529 2525 0010 0000     !!)%!))%)%%%....
+d008450c:	0000 0000 0000 1011 1010 0000 1011 2521     ..............!%
+d008451c:	2525 2129 2521 2925 2125 2925 2925 2529     %%)!!%%)%!%)%))%
+d008452c:	2121 2111 2111 2121 2521 2529 2125 2529     !!.!.!!!!%)%%!)%
+d008453c:	2125 2521 2925 2525 2529 0010 0000 0000     %!!%%)%%)%......
+d008454c:	0000 1010 2921 2129 1011 2521 2929 2525     ....!))!..!%))%%
+d008455c:	2921 2925 2529 2110 2525 2521 2525 1021     !)%))%.!%%!%%%!.
+d008456c:	2121 1010 2511 2525 2529 2121 2129 2125     !!...%%%)%!!)!%!
+d008457c:	2525 2925 2525 2125 0010 0000 0000 1000     %%%)%%%!........
+d008458c:	2521 2525 2925 2929 2929 2929 2529 2925     !%%%%))))))))%%)
+d008459c:	2525 2129 2910 2125 2929 2929 1021 1121     %%)!.)%!))))!.!.
+d00845ac:	2121 2925 2529 2121 2121 2121 2129 2125     !!%))%!!!!!!)!%!
+d00845bc:	2529 2925 1021 0000 0000 0000 2111 2929     )%%)!........!))
+d00845cc:	2129 2525 2525 2525 2925 2929 2929 2529     )!%%%%%%%))))))%
+d00845dc:	1021 2921 2125 2921 2129 2121 1121 2525     !.!)%!!))!!!!.%%
+d00845ec:	2529 2125 2121 2110 2111 2125 2521 2525     )%%!!!.!.!%!!%%%
+d00845fc:	2929 1021 0000 0000 0000 2510 2125 2921     ))!........%%!!)
+d008460c:	2525 2125 2925 2529 1025 2510 2121 1121     %%%!%))%%..%!!!.
+d008461c:	2529 2111 2929 2125 2121 1111 2121 2121     )%.!))%!!!..!!!!
+d008462c:	2121 1110 1021 2921 2110 2525 2525 2129     !!..!.!).!%%%%)!
+d008463c:	0010 0000 0000 1000 2921 2121 2521 2929     ........!)!!!%))
+d008464c:	2921 2525 1010 2110 2121 1021 2110 1121     !)%%...!!!!..!!.
+d008465c:	2521 2525 2121 2111 1010 1010 1010 1010     !%%%!!.!........
+d008466c:	2121 2110 1025 2121 2529 2929 2121 0010     !!.!%.!!)%))!!..
+d008467c:	0000 0000 1000 2521 2121 2925 2129 2121     ......!%!!%))!!!
+d008468c:	2121 2121 2121 2121 1011 2121 1021 2921     !!!!!!!!..!!!.!)
+d008469c:	2129 1121 1021 1010 2121 2121 2121 1010     )!!.!...!!!!!!..
+d00846ac:	2110 1121 2921 2925 2129 1121 0000 0000     .!!.!)%))!!.....
+d00846bc:	0000 1000 2121 2121 2121 2121 2121 1121     ....!!!!!!!!!!!.
+d00846cc:	1010 1010 1010 1010 1021 2111 2121 2121     ........!..!!!!!
+d00846dc:	1010 1021 1010 2110 1011 1010 1010 2110     ..!....!.......!
+d00846ec:	2111 2521 2125 2121 0010 0000 0000 0000     .!!%%!!!........
+d00846fc:	0000 1011 1010 1010 1110 1010 0010 0000     ................
+d008470c:	0000 0000 1000 1010 1010 1010 1010 1010     ................
+d008471c:	1010 1010 1010 0000 0000 0000 1000 1010     ................
+d008472c:	1010 1010 1010 0000 0000 0000               ............
+
+d0084738 <bk_bub_tree3>:
 	...
-d0095d70:	60601000 60606060 60606060 60606060     ..``````````````
-d0095d80:	4c606060 4c4c4c4c 4c4c4c4c 4c4c4c4c     ```LLLLLLLLLLLLL
-d0095d90:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d0095da0:	6060604c 4c4c4c4c 60604c4c 60606060     L```LLLLLL``````
-d0095db0:	4c606060 4c4c4c4c 4c4c4c4c 4c4c4c4c     ```LLLLLLLLLLLLL
-d0095dc0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d0095dd0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d0095de0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d0095df0:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d0095e00:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d0095e10:	6060604c 60606060 60606060 60606060     L```````````````
-d0095e20:	00001060 00000000 00000000 00000000     `...............
+d008474c:	2110 2129 2525 2125 2529 2121 5d29 2525     .!)!%%%!)%!!)]%%
+d008475c:	2121 2121 2529 2121 2121 1029 1021 0000     !!!!)%!!!!).!...
 	...
-d0095e44:	70707010 70707070 70707070 70707070     .ppppppppppppppp
-d0095e54:	10101010 10101010 10101010 10101010     ................
-d0095e64:	10101010 10101010 10101010 10101010     ................
-d0095e74:	10101010 00000000 00000000 00000000     ................
-d0095e84:	00000000 10101000 60606010 60606060     .........```````
-d0095e94:	60606060 4c606060 4c4c4c4c 4c10104c     ```````LLLLLL..L
-d0095ea4:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d0095eb4:	4c4c4c4c 4c10104c 4c604c4c 4c4c4c4c     LLLLL..LLL`LLLLL
-d0095ec4:	60604c4c 604c4c60 4c4c4c60 4c10104c     LL```LL``LLLL..L
-d0095ed4:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d0095ee4:	4c4c4c4c 4c104c4c 4c4c4c4c 4c4c4c4c     LLLLLL.LLLLLLLLL
-d0095ef4:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d0095f04:	4c4c4c4c 4c104c4c 4c4c4c4c 4c4c4c4c     LLLLLL.LLLLLLLLL
-d0095f14:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d0095f24:	4c4c4c4c 4c10104c 4c4c4c4c 6060604c     LLLLL..LLLLLL```
-d0095f34:	60604c60 4c4c6060 0000104c 00000000     `L````LLL.......
+d0084790:	2910 2129 2521 2921 2925 2525 2529 2529     .))!!%!)%)%%)%)%
+d00847a0:	2929 2121 2110 2121 2525 2929 1010 0000     ))!!.!!!%%))....
 	...
-d0095f58:	10101010 10101010 70707070 70707070     ........pppppppp
-d0095f68:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0095f78:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0095f88:	70707070 70707070 70707070 10101010     pppppppppppp....
-d0095f98:	10101010 10101010 10101010 70707010     .............ppp
-d0095fa8:	60606010 60606060 60606060 104c4c60     .````````````LL.
-d0095fb8:	4c4c4c4c 10104c4c 4c4c4c10 4c4c4c4c     LLLLLL...LLLLLLL
-d0095fc8:	1010104c 10101010 104c4c4c 4c4c1010     L.......LLL...LL
-d0095fd8:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d0095fe8:	4c4c4c4c 10104c4c 4c4c4c10 4c4c4c4c     LLLLLL...LLLLLLL
-d0095ff8:	4c4c4c4c 4c4c4c4c 104c4c4c 10201010     LLLLLLLLLLL... .
-d0096008:	4c4c4c4c 4c4c4c4c 4c4c1010 4c4c4c4c     LLLLLLLL..LLLLLL
-d0096018:	4c4c4c4c 4c4c4c4c 104c4c4c 10201010     LLLLLLLLLLL... .
-d0096028:	4c4c4c4c 4c4c4c4c 4c4c1010 4c4c4c4c     LLLLLLLL..LLLLLL
-d0096038:	4c4c4c4c 4c4c4c4c 104c4c4c 4c4c1010     LLLLLLLLLLL...LL
-d0096048:	4c4c4c4c 4c4c4c4c 4c4c4c4c 4c4c4c4c     LLLLLLLLLLLLLLLL
-d0096058:	10107010 10101010 10101010 10101010     .p..............
-d0096068:	10101010 10101010 10101010 70707070     ............pppp
-d0096078:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096088:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096098:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00960a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00960b8:	70707070 70707070 70707070 10101070     ppppppppppppp...
-d00960c8:	4c4c4c4c 4c4c4c4c 104c4c4c 4c4c4c4c     LLLLLLLLLLL.LLLL
-d00960d8:	104c4c4c 10101010 10101010 70707010     LLL..........ppp
-d00960e8:	70707070 10101010 4c4c4c10 104c4c4c     pppp.....LLLLLL.
-d00960f8:	4c4c4c10 4c4c4c4c 10104c4c 4c4c4c4c     .LLLLLLLLL..LLLL
-d0096108:	104c4c4c 10101010 4c4c4c4c 4c4c4c4c     LLL.....LLLLLLLL
-d0096118:	4c4c4c4c 10101010 28282810 4c4c1010     LLLL.....(((..LL
-d0096128:	104c4c4c 4c101010 4c4c4c4c 4c4c4c4c     LLL....LLLLLLLLL
-d0096138:	4c4c4c4c 10101010 28282810 4c4c1010     LLLL.....(((..LL
-d0096148:	104c4c4c 4c101010 4c4c4c4c 4c4c4c4c     LLL....LLLLLLLLL
-d0096158:	4c4c4c4c 10101010 4c4c4c10 4c4c4c4c     LLLL.....LLLLLLL
-d0096168:	10104c4c 4c4c4c4c 104c4c4c 70707070     LL..LLLLLLL.pppp
-d0096178:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096188:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096198:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00961a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00961b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00961c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00961d8:	70707070 70707070 70707070 10101010     pppppppppppp....
-d00961e8:	10104c4c 10101010 10101010 10101010     LL..............
-d00961f8:	70702810 70707070 70707070 70707070     .(pppppppppppppp
-d0096208:	10287070 10101010 70101010 10101070     pp(........pp...
-d0096218:	10101010 10701010 10101010 10101010     ......p.........
-d0096228:	10702810 10101010 10101010 10101010     .(p.............
-d0096238:	70282810 70707070 10101070 10101010     .((pppppp.......
-d0096248:	10207028 10101010 10101010 10101010     (p .............
-d0096258:	70282810 70707070 10101070 10101010     .((pppppp.......
-d0096268:	10207028 10101010 10101010 10101010     (p .............
-d0096278:	10287010 10101010 10101010 10101010     .p(.............
-d0096288:	10101010 70101010 70707070 70707070     .......ppppppppp
-d0096298:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00962a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00962b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00962c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00962d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00962e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00962f8:	70707070 70707070 70707070 70701010     pppppppppppp..pp
-d0096308:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096318:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096328:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096338:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096348:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096358:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096368:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096378:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096388:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096398:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00963a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00963b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00963c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00963d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00963e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00963f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096408:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096418:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096428:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096438:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096448:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096458:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096468:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096478:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096488:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096498:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00964a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00964b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00964c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00964d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00964e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00964f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096508:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096518:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096528:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096538:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096548:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096558:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096568:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096578:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096588:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096598:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00965a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00965b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00965c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00965d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00965e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00965f8:	70702870 70707070 70707070 70707070     p(pppppppppppppp
-d0096608:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096618:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096628:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096638:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096648:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096658:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096668:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096678:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096688:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096698:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00966a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00966b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00966c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00966d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00966e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00966f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096708:	70707070 70707070 70707070 70702028     pppppppppppp( pp
-d0096718:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096728:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096738:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096748:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096758:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096768:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096778:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096788:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096798:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00967a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00967b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00967c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00967d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00967e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00967f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096808:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096818:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096828:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096838:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096848:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096858:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096868:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096878:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096888:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096898:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00968a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00968b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00968c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00968d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00968e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00968f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096908:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096918:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096928:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096938:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096948:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096958:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096968:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096978:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096988:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096998:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00969a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00969b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00969c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00969d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00969e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00969f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096a08:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096a18:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096a28:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096a38:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096a48:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096a58:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096a68:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096a78:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096a88:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096a98:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096aa8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096ab8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096ac8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096ad8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096ae8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096af8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096b08:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096b18:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096b28:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096b38:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096b48:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096b58:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096b68:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096b78:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096b88:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096b98:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096ba8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096bb8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096bc8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096bd8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096be8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096bf8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096c08:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096c18:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096c28:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096c38:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096c48:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096c58:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096c68:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096c78:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096c88:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096c98:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096ca8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096cb8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096cc8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096cd8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096ce8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096cf8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096d08:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096d18:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096d28:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096d38:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096d48:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096d58:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096d68:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096d78:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096d88:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096d98:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096da8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096db8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096dc8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096dd8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096de8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096df8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096e08:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096e18:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096e28:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096e38:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096e48:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096e58:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096e68:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096e78:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096e88:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096e98:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096ea8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096eb8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096ec8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096ed8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096ee8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096ef8:	70707070 70707070 70707070 70702870     ppppppppppppp(pp
-d0096f08:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096f18:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096f28:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096f38:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096f48:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096f58:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096f68:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096f78:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096f88:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096f98:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096fa8:	70707070 70707070 70707070 70702870     ppppppppppppp(pp
-d0096fb8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096fc8:	70707070 70707070 70707070 70702870     ppppppppppppp(pp
-d0096fd8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096fe8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0096ff8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097008:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097018:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097028:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097038:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097048:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097058:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097068:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097078:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097088:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097098:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00970a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00970b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00970c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00970d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00970e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00970f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097108:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097118:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097128:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097138:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097148:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097158:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097168:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097178:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097188:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097198:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00971a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00971b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00971c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00971d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00971e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00971f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097208:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097218:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097228:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097238:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097248:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097258:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097268:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097278:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097288:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097298:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00972a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00972b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00972c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00972d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00972e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00972f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097308:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097318:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097328:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097338:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097348:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097358:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097368:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097378:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097388:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097398:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00973a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00973b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00973c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00973d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00973e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00973f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097408:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097418:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097428:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097438:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097448:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097458:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097468:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097478:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097488:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097498:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00974a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00974b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00974c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00974d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00974e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00974f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097508:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097518:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097528:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097538:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097548:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097558:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097568:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097578:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097588:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097598:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00975a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00975b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00975c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00975d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00975e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00975f8:	70707070 70707070 70707070 10101010     pppppppppppp....
-d0097608:	10101010 70707010 70707070 70707070     .....ppppppppppp
-d0097618:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097628:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097638:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097648:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097658:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097668:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097678:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097688:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097698:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00976a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00976b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00976c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00976d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00976e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00976f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097708:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097718:	70707070 70707070 20101070 10202020     ppppppppp..    .
-d0097728:	70707070 10107070 10101010 10101010     pppppp..........
-d0097738:	10101010 10101010 10101010 10101010     ................
-d0097748:	10101010 10101010 10101010 10101010     ................
-d0097758:	10101010 10101010 10101010 10101010     ................
-d0097768:	10101010 10101010 10101010 70707070     ............pppp
-d0097778:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097788:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097798:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00977a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00977b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00977c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00977d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00977e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00977f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097808:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097818:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097828:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097838:	70707070 20107070 10202020 10101010     pppppp.    .....
-d0097848:	28281010 28282828 28282828 28282828     ..((((((((((((((
-d0097858:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097868:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097878:	28282828 28282828 28282828 20202020     ((((((((((((    
-d0097888:	10202020 70701010 70707070 70707070        ...pppppppppp
-d0097898:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00978a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00978b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00978c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00978d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00978e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00978f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097908:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097918:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097928:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097938:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097948:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097958:	10707070 10202020 28282828 28282828     ppp.   .((((((((
-d0097968:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097978:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097988:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097998:	28282828 28282828 28202828 20202020     (((((((((( (    
-d00979a8:	10101020 70707010 70707070 70707070      ....ppppppppppp
-d00979b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00979c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00979d8:	70102070 70707070 70707070 70707070     p .ppppppppppppp
-d00979e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00979f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097a08:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097a18:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097a28:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097a38:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097a48:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097a58:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097a68:	70707070 70707070 70707070 10101070     ppppppppppppp...
-d0097a78:	10202020 28282820 28282828 28282828        . (((((((((((
-d0097a88:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097a98:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097aa8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097ab8:	28282828 20282828 20282028 10102020     ((((((( ( (   ..
-d0097ac8:	10101010 70707070 70707070 70707070     ....pppppppppppp
-d0097ad8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097ae8:	70707070 70707070 70707070 70201010     pppppppppppp.. p
-d0097af8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097b08:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097b18:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097b28:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097b38:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097b48:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097b58:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097b68:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097b78:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097b88:	70707070 10107070 10202010 10202020     pppppp...  .   .
-d0097b98:	28282820 28282828 28282828 28282828      (((((((((((((((
-d0097ba8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097bb8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097bc8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097bd8:	28282828 28202028 10202820 20202010     (((((  ( ( ..   
-d0097be8:	10101010 70707070 70707070 70707070     ....pppppppppppp
-d0097bf8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097c08:	70707070 20707070 70702010 70707070     ppppppp . pppppp
-d0097c18:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097c28:	70707070 70707070 70707010 70707070     pppppppp.ppppppp
-d0097c38:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097c48:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097c58:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097c68:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097c78:	70707070 70707070 70707070 10707070     ppppppppppppppp.
-d0097c88:	10101010 10101010 10101010 10101010     ................
-d0097c98:	10101010 10101010 10101010 10101010     ................
-d0097ca8:	28201010 20102828 20202020 28282010     .. (((.     . ((
-d0097cb8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097cc8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097cd8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097ce8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097cf8:	20282828 20282028 28202010 20202020     ((( ( ( .  (    
-d0097d08:	10101010 10101010 10101010 10101010     ................
-d0097d18:	10101010 10101010 10101010 10101010     ................
-d0097d28:	10201010 10102010 10101010 10101010     .. .. ..........
-d0097d38:	10101010 10101010 10101010 10101010     ................
-d0097d48:	10101010 10101028 70707070 70707070     ....(...pppppppp
-d0097d58:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097d68:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097d78:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097d88:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097d98:	70707070 10107070 28101010 28282828     pppppp.....(((((
-d0097da8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097db8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097dc8:	70281028 70707070 28282010 28282828     (.(ppppp. ((((((
-d0097dd8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097de8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097df8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097e08:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097e18:	28202828 28201020 20202028 20202020     (( ( . ((       
-d0097e28:	28202020 28282828 28282828 28282828        (((((((((((((
-d0097e38:	28282828 28282828 28282828 10202828     (((((((((((((( .
-d0097e48:	28282810 28282828 28282828 28282828     .(((((((((((((((
-d0097e58:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097e68:	20202028 10101010 70707010 70707070     (   .....ppppppp
-d0097e78:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097e88:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097e98:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097ea8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097eb8:	20101010 28282820 28282828 28282828     ...  (((((((((((
-d0097ec8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097ed8:	28282828 28282828 28282828 70701028     (((((((((((((.pp
-d0097ee8:	28707070 28202020 28282828 28282828     ppp(   (((((((((
-d0097ef8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097f08:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097f18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097f28:	28282828 28282828 28282828 20282828     ((((((((((((((( 
-d0097f38:	28102028 20202828 20282028 28282028     ( .(((  ( ( ( ((
-d0097f48:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097f58:	28282828 28282828 20282828 28281010     ((((((((((( ..((
-d0097f68:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097f78:	28282828 28282828 28282828 20202828     ((((((((((((((  
-d0097f88:	20202020 70101020 70707070 70707070          ..ppppppppp
-d0097f98:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097fa8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097fb8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0097fc8:	70707070 70707070 10107070 20201020     pppppppppp.. .  
-d0097fd8:	28202820 28282828 28282828 28282828      ( (((((((((((((
-d0097fe8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0097ff8:	28282828 28282828 70701028 70707070     (((((((((.pppppp
-d0098008:	20707070 28282828 28282828 28282828     ppp ((((((((((((
-d0098018:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098028:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098038:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098048:	28282828 28282828 28282828 10202028     (((((((((((((  .
-d0098058:	28282828 28282820 28282820 28282828     (((( ((( (((((((
-d0098068:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098078:	28282828 28202828 28201020 28282828     (((((( ( . (((((
-d0098088:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098098:	28282828 28282828 28282828 20202020     ((((((((((((    
-d00980a8:	70102020 70707070 70707070 70707070       .ppppppppppppp
-d00980b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00980c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00980d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00980e8:	70707070 10107070 20202010 28202020     pppppp...      (
-d00980f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098108:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098118:	28282828 10101028 70707070 20207070     (((((...pppppp  
-d0098128:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098138:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098148:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098158:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098168:	28282828 28282828 20282828 28282820     (((((((((((  (((
-d0098178:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098188:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098198:	28282828 28281020 28282828 28282828     (((( .((((((((((
-d00981a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00981b8:	28282828 28282828 20282828 70102020     (((((((((((   .p
-d00981c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00981d8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00981e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00981f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098208:	70707070 20202010 20202020 28282820     pppp.        (((
-d0098218:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098228:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098238:	20202028 20202020 28102828 28282828     (       ((.(((((
-d0098248:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098258:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098268:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098278:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098288:	28282828 28282828 28282820 28282828     (((((((( (((((((
-d0098298:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00982a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00982b8:	28202028 28282828 28282828 28282828     (  (((((((((((((
-d00982c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00982d8:	28282828 20282828 70701020 70707070     (((((((  .pppppp
-d00982e8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00982f8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098308:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098318:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098328:	20107070 20202020 20282020 28282828     pp.       ( ((((
-d0098338:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098348:	28282828 28282828 28282828 20282028     ((((((((((((( ( 
-d0098358:	28282820 28201028 28282828 28282828      ((((. (((((((((
-d0098368:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098378:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098388:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098398:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00983a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00983b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00983c8:	28282828 28282828 28282828 28282028     ((((((((((((( ((
-d00983d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00983e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00983f8:	20282828 70707010 70707070 70707070     ((( .ppppppppppp
-d0098408:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098418:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098428:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098438:	70707070 70707070 70707070 10707070     ppppppppppppppp.
-d0098448:	20202010 20202020 28202820 28282828     .        ( (((((
-d0098458:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098468:	28282828 28282828 28202828 28282828     (((((((((( (((((
-d0098478:	28282010 28282828 28282828 28282828     . ((((((((((((((
-d0098488:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098498:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00984a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00984b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00984c8:	28282028 28282828 28282828 28282828     ( ((((((((((((((
-d00984d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00984e8:	28282828 28282828 28202828 28282828     (((((((((( (((((
-d00984f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098508:	28282828 28282828 28282828 10202828     (((((((((((((( .
-d0098518:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098528:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098538:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098548:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098558:	70707070 70707070 70707070 20101070     ppppppppppppp.. 
-d0098568:	20202020 20282020 28282028 28282828           ( ( ((((((
-d0098578:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098588:	28282828 28202828 20282828 28202820     (((((( ((((  ( (
-d0098598:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00985a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00985b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00985c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00985d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00985e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00985f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098608:	28282828 20282828 28282828 28282828     ((((((( ((((((((
-d0098618:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098628:	28282828 28282828 10202028 70707070     (((((((((  .pppp
-d0098638:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098648:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098658:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098668:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098678:	70707070 70707070 10707070 20202010     ppppppppppp..   
-d0098688:	20202020 28282020 28282828 28282828           ((((((((((
-d0098698:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00986a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00986b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00986c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00986d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00986e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00986f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098708:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098718:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098728:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098738:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098748:	28282828 70102020 70707070 70707070     ((((  .ppppppppp
-d0098758:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098768:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098778:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098788:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098798:	70707070 70707070 10101070 20202020     ppppppppp...    
-d00987a8:	28282820 20202028 28282020 20202828      ((((     ((((  
-d00987b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00987c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00987d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00987e8:	28282828 28282828 28282828 28202020     ((((((((((((   (
-d00987f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098808:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098818:	28282828 28282828 28202828 28282828     (((((((((( (((((
-d0098828:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098838:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098848:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098858:	28282828 28282828 28282828 20282828     ((((((((((((((( 
-d0098868:	70701020 70707070 70707070 70707070      .pppppppppppppp
-d0098878:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098888:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098898:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00988a8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00988b8:	70707070 70707070 28201010 28282828     pppppppp.. (((((
-d00988c8:	28282028 28202828 28202828 28282820     ( (((( ((( ( (((
-d00988d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00988e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00988f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098908:	28282828 20282828 20282828 28282828     ((((((( ((( ((((
-d0098918:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098928:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098938:	28282828 28202828 28282828 28282828     (((((( (((((((((
-d0098948:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098958:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098968:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098978:	28282828 28282828 20282828 70707010     ((((((((((( .ppp
-d0098988:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098998:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00989a8:	70707070 70707070 70707070 70207070     pppppppppppppp p
-d00989b8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00989c8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d00989d8:	70707070 10107070 28282828 28202828     pppppp..(((((( (
-d00989e8:	28202828 20282828 28282828 28282828     (( (((( ((((((((
-d00989f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098a08:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098a18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098a28:	28202828 28282828 28282820 28282828     (( ((((( (((((((
-d0098a38:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098a48:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098a58:	10282828 28282828 28282828 28282828     (((.((((((((((((
-d0098a68:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098a78:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098a88:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098a98:	28282828 20202828 70707070 70707070     ((((((  pppppppp
-d0098aa8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098ab8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098ac8:	70707070 70707070 20107070 70707070     pppppppppp. pppp
-d0098ad8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098ae8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098af8:	70707070 28282810 28202828 20282828     pppp.((((( (((( 
-d0098b08:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098b18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098b28:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098b38:	28282828 28282828 28282828 28282028     ((((((((((((( ((
-d0098b48:	28282828 28282820 28282828 28282828     (((( (((((((((((
-d0098b58:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098b68:	28282828 28282828 28282828 10282828     (((((((((((((((.
-d0098b78:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098b88:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098b98:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098ba8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098bb8:	70102828 70707070 70707070 70707070     ((.ppppppppppppp
-d0098bc8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098bd8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098be8:	70707070 10207070 70701020 70707070     pppppp . .pppppp
-d0098bf8:	70707070 70707070 70707070 10101070     ppppppppppppp...
-d0098c08:	10101010 10101010 10101010 10101010     ................
-d0098c18:	28282810 28282028 20282828 28282828     .(((( ((((( ((((
-d0098c28:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098c38:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098c48:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098c58:	28282828 28282828 28282820 28282828     (((((((( (((((((
-d0098c68:	28282028 28282828 28282828 28282828     ( ((((((((((((((
-d0098c78:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098c88:	28282828 28282828 20282828 28282810     ((((((((((( .(((
-d0098c98:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098ca8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098cb8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098cc8:	28282828 28282828 28282828 70701028     (((((((((((((.pp
-d0098cd8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098ce8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098cf8:	70707070 70707070 70707070 70707070     pppppppppppppppp
-d0098d08:	20707070 70102010 70707070 70707070     ppp . .ppppppppp
-d0098d18:	70707070 70707070 10707070 20101010     ppppppppppp.... 
-d0098d28:	20202020 20202020 10202020 28282828                .((((
-d0098d38:	28282820 28202828 28282828 28282828      ((((( (((((((((
-d0098d48:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098d58:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098d68:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098d78:	20282828 28282828 28282828 28282028     ((( ((((((((( ((
-d0098d88:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098d98:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098da8:	28282828 28282828 28281010 28282828     ((((((((..((((((
-d0098db8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098dc8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098dd8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098de8:	28282828 28282828 10101028 10101010     (((((((((.......
-d0098df8:	10101010 10101010 10101010 10101010     ................
-d0098e08:	10101010 10101010 10101010 10101010     ................
-d0098e18:	10101010 10101010 10101010 10101010     ................
-d0098e28:	10101010 10101010 10101010 10101010     ................
-d0098e38:	10101010 10101010 20202020 20282020     ........      ( 
-d0098e48:	28202028 28102020 28282828 28282820     (  (  .((((( (((
-d0098e58:	28282028 28282828 28282828 28282828     ( ((((((((((((((
-d0098e68:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098e78:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098e88:	28282828 28282828 28282828 28202828     (((((((((((((( (
-d0098e98:	28282828 28282828 28282028 28282828     ((((((((( ((((((
-d0098ea8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098eb8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098ec8:	28282828 28201028 28282828 28282828     (((((. (((((((((
-d0098ed8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098ee8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098ef8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098f08:	28282828 20102828 28282820 28282828     ((((((.  (((((((
-d0098f18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098f28:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098f38:	28282828 28282828 20282828 20101010     ((((((((((( ... 
-d0098f48:	28282828 28282828 28282828 28202028     (((((((((((((  (
-d0098f58:	20102020 20202020 28202828 28282820       .     (( ( (((
-d0098f68:	28201020 20282828 28282828 28282820      . (((( (((( (((
-d0098f78:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098f88:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098f98:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098fa8:	28282828 28282828 28202828 28282828     (((((((((( (((((
-d0098fb8:	28282828 28282820 28282828 20282828     (((( (((((((((( 
-d0098fc8:	28282020 28282828 28282828 28282828       ((((((((((((((
-d0098fd8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0098fe8:	28102828 28282828 28282828 28282828     ((.(((((((((((((
-d0098ff8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099008:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099018:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099028:	28102828 28282828 28282828 28282828     ((.(((((((((((((
-d0099038:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099048:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099058:	28282828 20282828 28201010 28282828     ((((((( .. (((((
-d0099068:	28282828 28282828 20282828 20102028     ((((((((((( ( . 
-d0099078:	28282820 28282828 20282828 28282010      (((((((((( . ((
-d0099088:	28282828 20282020 28282828 28282828     ((((  ( ((((((((
-d0099098:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00990a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00990b8:	28282828 28282828 28282828 28202028     (((((((((((((  (
-d00990c8:	28282828 20282828 28282828 20282828     ((((((( ((((((( 
-d00990d8:	28282828 28282828 20282828 20202828     ((((((((((( ((  
-d00990e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00990f8:	28282828 28282828 28282828 28202828     (((((((((((((( (
-d0099108:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099118:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099128:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099138:	28282828 28282828 28282828 28102828     ((((((((((((((.(
-d0099148:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099158:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099168:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099178:	10282828 28201010 28282828 28282828     (((... (((((((((
-d0099188:	28282828 28282828 28201020 28282828     (((((((( . (((((
-d0099198:	28282828 10202828 28282820 28282828     (((((( . (((((((
-d00991a8:	28202828 28282828 20202828 28282828     (( (((((((  ((((
-d00991b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00991c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00991d8:	28282828 28282828 28202820 28282828     (((((((( ( (((((
-d00991e8:	28282828 28282820 20282828 28282828     (((( (((((( ((((
-d00991f8:	28282828 20282828 20282828 28282828     ((((((( ((( ((((
-d0099208:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099218:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099228:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099238:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099248:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099258:	28282828 28282828 20282828 28282828     ((((((((((( ((((
-d0099268:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099278:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099288:	28282828 28282828 28282828 10282828     (((((((((((((((.
-d0099298:	28281010 28282828 28282828 28282828     ..((((((((((((((
-d00992a8:	28282828 28282010 28282828 28282828     ((((. ((((((((((
-d00992b8:	10202828 28282828 28282828 28282828     (( .((((((((((((
-d00992c8:	28282828 20282028 28282828 28282828     ((((( ( ((((((((
-d00992d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00992e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00992f8:	20282828 20282828 28282828 28282828     ((( ((( ((((((((
-d0099308:	28202028 28202028 28282828 28282828     (  ((  (((((((((
-d0099318:	20282828 28282828 28282820 28282828     ((( (((( (((((((
-d0099328:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099338:	28282828 20282828 28282828 28282828     ((((((( ((((((((
-d0099348:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099358:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099368:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099378:	28282828 20282828 28282828 28282828     ((((((( ((((((((
-d0099388:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099398:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00993a8:	28282828 28282828 10202828 28282010     (((((((((( .. ((
-d00993b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00993c8:	28282810 28282828 28282828 28102828     .(((((((((((((.(
-d00993d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00993e8:	20282820 28282828 28282828 28282828      (( ((((((((((((
-d00993f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099408:	28282828 28282828 28282828 20282828     ((((((((((((((( 
-d0099418:	20282828 28282828 28282828 20282828     ((( ((((((((((( 
-d0099428:	28282820 28282828 28282828 28282828      (((((((((((((((
-d0099438:	28282020 28282820 28282828 28282828       (( (((((((((((
-d0099448:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099458:	28282828 28282820 28282828 28282828     (((( (((((((((((
-d0099468:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099478:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099488:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099498:	28282828 28282810 28282828 28282828     ((((.(((((((((((
-d00994a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00994b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00994c8:	28282828 10282828 28282828 28282828     (((((((.((((((((
-d00994d8:	28282828 28282828 28282828 28282820     (((((((((((( (((
-d00994e8:	28282828 28282828 28282028 28282828     ((((((((( ((((((
-d00994f8:	28282828 28282828 28282828 28282820     (((((((((((( (((
-d0099508:	28282820 28282828 28282828 28282828      (((((((((((((((
-d0099518:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099528:	28282828 28282828 20282828 28282828     ((((((((((( ((((
-d0099538:	28282820 28282828 28282828 28282828      (((((((((((((((
-d0099548:	28282828 28282828 28282828 20202828     ((((((((((((((  
-d0099558:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099568:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099578:	28282820 28282828 28282828 28282828      (((((((((((((((
-d0099588:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099598:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00995a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00995b8:	28282810 28282828 28282828 28282828     .(((((((((((((((
-d00995c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00995d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00995e8:	28202828 28282828 28282828 28282828     (( (((((((((((((
-d00995f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099608:	28282828 28282028 28282828 28282828     ((((( ((((((((((
-d0099618:	28282828 20282828 20282828 28282828     ((((((( ((( ((((
-d0099628:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099638:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099648:	28282828 20282828 20282828 28282828     ((((((( ((( ((((
-d0099658:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099668:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099678:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099688:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099698:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00996a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00996b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00996c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00996d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00996e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00996f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099708:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099718:	20282828 28282828 28282828 28282828     ((( ((((((((((((
-d0099728:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099738:	28282828 28202020 28282828 28282828     ((((   (((((((((
-d0099748:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099758:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099768:	28282828 28202020 28282828 28282828     ((((   (((((((((
-d0099778:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099788:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099798:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00997a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00997b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00997c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00997d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00997e8:	28282828 28282828 28282028 28282828     ((((((((( ((((((
-d00997f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099808:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099818:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099828:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099838:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099848:	28282828 28282828 20202828 28282828     ((((((((((  ((((
-d0099858:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099868:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099878:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099888:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099898:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00998a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00998b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00998c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00998d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00998e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00998f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099908:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099918:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099928:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099938:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099948:	28282828 28282828 20282828 28282828     ((((((((((( ((((
-d0099958:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099968:	28282828 20282028 28282828 28282828     ((((( ( ((((((((
-d0099978:	28282828 28282828 28282028 28282828     ((((((((( ((((((
-d0099988:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099998:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00999a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00999b8:	28282828 20202028 28282020 20202828     (((((     ((((  
-d00999c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00999d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00999e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d00999f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099a08:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099a18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099a28:	28281028 28282828 28282828 28282828     (.((((((((((((((
-d0099a38:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099a48:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099a58:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099a68:	28282828 20282828 28282828 28282828     ((((((( ((((((((
-d0099a78:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099a88:	10282820 28101010 28282828 10102828      ((....(((((((..
-d0099a98:	28281010 28282028 28282828 28282828     ..((( ((((((((((
-d0099aa8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099ab8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099ac8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099ad8:	28282028 28202828 28202828 28282820     ( (((( ((( ( (((
-d0099ae8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099af8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099b08:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099b18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099b28:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099b38:	28282828 28282828 28282828 28282028     ((((((((((((( ((
-d0099b48:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099b58:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099b68:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099b78:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099b88:	28102828 28282828 28282828 28282828     ((.(((((((((((((
-d0099b98:	28282828 28282828 10101028 20282820     (((((((((... (( 
-d0099ba8:	28104c10 28282828 4c4c1010 28282810     .L.(((((..LL.(((
-d0099bb8:	28282810 28282828 28282828 28282828     .(((((((((((((((
-d0099bc8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099bd8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099be8:	28282828 28282828 28282828 28202828     (((((((((((((( (
-d0099bf8:	28202828 20282828 28282828 28282828     (( (((( ((((((((
-d0099c08:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099c18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099c28:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099c38:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099c48:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099c58:	28282828 28282828 28282028 28282828     ((((((((( ((((((
-d0099c68:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099c78:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099c88:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099c98:	28282828 28282828 28282828 28102828     ((((((((((((((.(
-d0099ca8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099cb8:	28282828 4c4c1028 28101010 104c4c10     (((((.LL...(.LL.
-d0099cc8:	10102828 104c4c4c 28282828 28282810     ((..LLL.((((.(((
-d0099cd8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099ce8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099cf8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099d08:	28282828 28282828 28202828 20282828     (((((((((( (((( 
-d0099d18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099d28:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099d38:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099d48:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099d58:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099d68:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099d78:	28282828 28281028 28282828 28282828     (((((.((((((((((
-d0099d88:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099d98:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099da8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099db8:	28282828 28282828 28201028 28282828     (((((((((. (((((
-d0099dc8:	28282828 28282828 10282828 28101010     (((((((((((....(
-d0099dd8:	4c102828 104c5858 10581010 584c1010     ((.LXXL...X...LX
-d0099de8:	28104c4c 10282828 28282820 28282828     LL.((((. (((((((
-d0099df8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099e08:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099e18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099e28:	28282828 28282028 20282828 28282828     ((((( ((((( ((((
-d0099e38:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099e48:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099e58:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099e68:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099e78:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099e88:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099e98:	28282028 28282828 28282828 28282828     ( ((((((((((((((
-d0099ea8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099eb8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099ec8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099ed8:	28282828 28281010 28282828 28282828     ((((..((((((((((
-d0099ee8:	28282828 10102828 104c4c4c 10101010     ((((((..LLL.....
-d0099ef8:	4c58584c 4c58104c 58584c4c 2828104c     LXXLL.XLLLXXL.((
-d0099f08:	10102828 28282828 28282828 28282828     ((..((((((((((((
-d0099f18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099f28:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099f38:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099f48:	28282820 28202828 28282828 28282828      ((((( (((((((((
-d0099f58:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099f68:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099f78:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099f88:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099f98:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099fa8:	28282828 28282828 28282828 28202028     (((((((((((((  (
-d0099fb8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099fc8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099fd8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d0099fe8:	28282828 28282828 28282828 20282828     ((((((((((((((( 
-d0099ff8:	28282810 28282828 28282828 28282828     .(((((((((((((((
-d009a008:	28282828 584c1010 10104c58 58584c10     ((((..LXXL...LXX
-d009a018:	58584c58 4c585858 2828104c 28102028     XLXXXXXLL.((( .(
-d009a028:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a038:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a048:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a058:	28282828 28282828 28282828 28282820     (((((((((((( (((
-d009a068:	28282028 28282828 28282828 28282828     ( ((((((((((((((
-d009a078:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a088:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a098:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a0a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a0b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a0c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a0d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a0e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a0f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a108:	28282828 28282828 10282828 28282828     (((((((((((.((((
-d009a118:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a128:	4c102828 58585858 58584c58 58585858     ((.LXXXXXLXXXXXX
-d009a138:	4c4c5858 10282810 28281010 28282828     XXLL.((...((((((
-d009a148:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a158:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a168:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a178:	28282828 20282828 28282828 28282820     ((((((( (((( (((
-d009a188:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a198:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a1a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a1b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a1c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a1d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a1e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a1f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a208:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a218:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a228:	28282828 20282828 28282828 28282828     ((((((( ((((((((
-d009a238:	28282828 28282828 28282828 10102828     ((((((((((((((..
-d009a248:	584c4c10 58585858 58585858 4c4c5858     .LLXXXXXXXXXXXLL
-d009a258:	4c101010 28104c4c 28282828 28282828     ...LLL.(((((((((
-d009a268:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a278:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a288:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a298:	28282828 20282020 28282828 28282828     ((((  ( ((((((((
-d009a2a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a2b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a2c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a2d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a2e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a2f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a308:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a318:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a328:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a338:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a348:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a358:	28282828 10102828 4c101010 4c4c104c     ((((((.....LL.LL
-d009a368:	5858584c 58585858 58585858 4c4c4c4c     LXXXXXXXXXXXLLLL
-d009a378:	28281010 10101010 28282828 10282828     ..((....(((((((.
-d009a388:	28101010 28282828 28282828 28282828     ...(((((((((((((
-d009a398:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a3a8:	10282828 28101010 28282828 10102828     (((....(((((((..
-d009a3b8:	28201010 28282828 20202828 28282828     .. (((((((  ((((
-d009a3c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a3d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a3e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a3f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a408:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a418:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a428:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a438:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a448:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a458:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a468:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a478:	4c4c1028 584c104c 584c5858 58585858     (.LLL.LXXXLXXXXX
-d009a488:	58585858 4c4c5858 10104c4c 28282820     XXXXXXLLLL.. (((
-d009a498:	4c4c1028 28281010 10282828 2828104c     (.LL..(((((.L.((
-d009a4a8:	10102828 28282810 28282828 28282828     ((...(((((((((((
-d009a4b8:	28282828 28282828 10101028 28282828     (((((((((...((((
-d009a4c8:	28104c10 28282828 4c4c1010 28282810     .L.(((((..LL.(((
-d009a4d8:	28282828 20282028 28282828 28282828     ((((( ( ((((((((
-d009a4e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a4f8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a508:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a518:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a528:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a538:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a548:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a558:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a568:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a578:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a588:	28282828 28282828 28282828 10104c10     ((((((((((((.L..
-d009a598:	58584c10 58585858 58585858 58585858     .LXXXXXXXXXXXXXX
-d009a5a8:	4c4c584c 20281010 28282828 4c102828     LXLL..( ((((((.L
-d009a5b8:	10104c4c 4c102828 1028104c 4c4c1010     LL..((.LL.(...LL
-d009a5c8:	28282810 28282828 28282828 28282828     .(((((((((((((((
-d009a5d8:	28282828 4c4c1028 28101010 104c4c10     (((((.LL...(.LL.
-d009a5e8:	10102828 104c4c4c 28282828 28282828     ((..LLL.((((((((
-d009a5f8:	20282820 28282828 28282828 28282828      (( ((((((((((((
-d009a608:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a618:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a628:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a638:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a648:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a658:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a668:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a678:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a688:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a698:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a6a8:	28282828 28282828 10281010 4c58584c     ((((((((..(.LXXL
-d009a6b8:	4c4c4c4c 5858584c 58585858 104c4c4c     LLLLLXXXXXXXLLL.
-d009a6c8:	20282810 28282828 10282828 4c584c4c     .(( (((((((.LLXL
-d009a6d8:	58101010 4c101010 104c5858 10282828     ...X...LXXL.(((.
-d009a6e8:	28101010 28282828 10282828 28101010     ...((((((((....(
-d009a6f8:	4c102828 104c5858 10581010 584c1010     ((.LXXL...X...LX
-d009a708:	28104c4c 28282828 28282828 28282820     LL.((((((((( (((
-d009a718:	28282820 28282828 28282828 28282828      (((((((((((((((
-d009a728:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a738:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a748:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a758:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a768:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a778:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a788:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a798:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a7a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a7b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a7c8:	28282828 10282828 4c4c5858 1010104c     (((((((.XXLLL...
-d009a7d8:	4c4c5858 4c585858 4c4c4c4c 1010104c     XXLLXXXLLLLLL...
-d009a7e8:	28282828 28282828 58584c10 584c4c4c     ((((((((.LXXLLLX
-d009a7f8:	584c4c10 10104c58 4c101010 10104c4c     .LLXXL.....LLL..
-d009a808:	28282828 10102828 104c4c4c 10101010     ((((((..LLL.....
-d009a818:	4c58584c 4c58104c 58584c4c 2828104c     LXXLL.XLLLXXL.((
-d009a828:	28282828 20282828 20282828 28282828     ((((((( ((( ((((
-d009a838:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a848:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a858:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a868:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a878:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a888:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a898:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a8a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a8b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a8c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a8d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a8e8:	4c102828 104c4c58 4c102810 4c4c4c58     ((.LXLL..(.LXLLL
-d009a8f8:	4c4c5858 4c4c4c4c 4c4c4c4c 28282810     XXLLLLLLLLLL.(((
-d009a908:	28282828 584c4c10 58585858 5858584c     ((((.LLXXXXXLXXX
-d009a918:	1010104c 4c58584c 28281010 28282828     L...LXXL..((((((
-d009a928:	28282828 584c1010 10104c58 58584c10     ((((..LXXL...LXX
-d009a938:	58584c58 4c585858 2828104c 28282828     XLXXXXXLL.((((((
-d009a948:	28282828 28202020 28282828 28282828     ((((   (((((((((
-d009a958:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a968:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a978:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a988:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a998:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a9a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a9b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a9c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a9d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a9e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009a9f8:	28282828 28282828 28282828 4c102828     ((((((((((((((.L
-d009aa08:	2810104c 4c4c1028 1010104c 4c4c584c     L..((.LLL...LXLL
-d009aa18:	4c4c4c4c 10101010 28282810 28101010     LLLL.....(((...(
-d009aa28:	4c4c1028 58585858 58585858 5858584c     (.LLXXXXXXXXLXXX
-d009aa38:	104c5858 28282828 28282828 28282828     XXL.((((((((((((
-d009aa48:	4c102828 58585858 58584c58 58585858     ((.LXXXXXLXXXXXX
-d009aa58:	4c4c5858 10282810 28281010 28282828     XXLL.((...((((((
-d009aa68:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009aa78:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009aa88:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009aa98:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009aaa8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009aab8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009aac8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009aad8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009aae8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009aaf8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ab08:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ab18:	28282828 28282828 4c102828 28282810     ((((((((((.L.(((
-d009ab28:	4c4c4c10 10101010 4c10584c 104c4c4c     .LLL....LX.LLLL.
-d009ab38:	28281010 10282828 104c4c4c 4c4c1010     ..(((((.LLL...LL
-d009ab48:	58585858 58585858 4c585858 1010104c     XXXXXXXXXXXLL...
-d009ab58:	28282828 28282828 28282828 10102828     ((((((((((((((..
-d009ab68:	584c4c10 58585858 58585858 4c4c5858     .LLXXXXXXXXXXXLL
-d009ab78:	4c101010 28104c4c 28282828 28282828     ...LLL.(((((((((
-d009ab88:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ab98:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009aba8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009abb8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009abc8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009abd8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009abe8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009abf8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ac08:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ac18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ac28:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ac38:	28282828 20282828 28282028 4c4c4c10     ((((((( ( ((.LLL
-d009ac48:	10282810 104c4c4c 114c104c 28101111     .((.LLL.L.L....(
-d009ac58:	28282828 4c4c1010 58584c4c 58585858     ((((..LLLLXXXXXX
-d009ac68:	58585858 4c4c4c58 104c4c10 10101010     XXXXXLLL.LL.....
-d009ac78:	28282828 10102828 4c101010 4c4c104c     ((((((.....LL.LL
-d009ac88:	5858584c 58585858 58585858 4c4c4c4c     LXXXXXXXXXXXLLLL
-d009ac98:	28281010 28282828 28282828 28282828     ..((((((((((((((
-d009aca8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009acb8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009acc8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009acd8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ace8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009acf8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ad08:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ad18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ad28:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ad38:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ad48:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ad58:	20282828 28202828 4c4c4c10 10282810     ((( (( (.LLL.((.
-d009ad68:	104c4c10 1010104c 10112111 28282828     .LL.L....!..((((
-d009ad78:	10101028 4c4c4c4c 58585858 58585858     (...LLLLXXXXXXXX
-d009ad88:	4c585858 4c585858 4c4c4c10 28282810     XXXLXXXL.LLL.(((
-d009ad98:	4c4c1028 584c104c 584c5858 58585858     (.LLL.LXXXLXXXXX
-d009ada8:	58585858 4c4c5858 10104c4c 28282828     XXXXXXLLLL..((((
-d009adb8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009adc8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009add8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ade8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009adf8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ae08:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ae18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ae28:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ae38:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ae48:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ae58:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009ae68:	28282828 28282828 28282828 28202828     (((((((((((((( (
-d009ae78:	28202828 4c4c1010 10282810 10104c10     (( (..LL.((..L..
-d009ae88:	2828104c 11211110 10282810 21211010     L.((..!..((...!!
-d009ae98:	4c4c1010 58584c58 58585858 58585858     ..LLXLXXXXXXXXXX
-d009aea8:	58585858 1010104c 2828104c 10104c10     XXXXL...L.((.L..
-d009aeb8:	58584c10 58585858 58585858 58585858     .LXXXXXXXXXXXXXX
-d009aec8:	4c4c584c 28281010 28282828 28282828     LXLL..((((((((((
-d009aed8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009aee8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009aef8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009af08:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009af18:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009af28:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009af38:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009af48:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009af58:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009af68:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009af78:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009af88:	28282828 28282828 28202828 28202828     (((((((((( ((( (
-d009af98:	4c101028 28282810 28104c10 28104c10     (..L.(((.L.(.L.(
-d009afa8:	21111028 10101011 21212929 4c101021     (..!....))!!!..L
-d009afb8:	58584c4c 58585858 4c4c4c58 584c4c4c     LLXXXXXXXLLLLLLX
-d009afc8:	28104c58 28281010 10281010 4c58584c     XL.(..((..(.LXXL
-d009afd8:	4c4c4c4c 5858584c 58585858 104c4c4c     LLLLLXXXXXXXLLL.
-d009afe8:	28282810 28282828 28282828 28282828     .(((((((((((((((
-d009aff8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b008:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b018:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b028:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b038:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b048:	20282828 28282828 28282828 28282828     ((( ((((((((((((
-d009b058:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b068:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b078:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b088:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b098:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b0a8:	28282828 28202828 28202828 10102828     (((((( ((( (((..
-d009b0b8:	28282810 28281010 28104c10 21111028     .(((..((.L.((..!
-d009b0c8:	29211021 10102129 4c4c4c10 584c4c4c     !.!))!...LLLLLLX
-d009b0d8:	4c4c5858 10105858 4c4c4c10 28105858     XXLLXX...LLLXX.(
-d009b0e8:	28282828 10282828 4c4c5858 1010104c     (((((((.XXLLL...
-d009b0f8:	4c4c5858 4c585858 4c4c4c4c 1010104c     XXLLXXXLLLLLL...
-d009b108:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b118:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b128:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b138:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b148:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b158:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b168:	28282820 28282828 28282828 28282828      (((((((((((((((
-d009b178:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b188:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b198:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b1a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b1b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b1c8:	28282028 28202828 28282828 28282810     ( (((( (((((.(((
-d009b1d8:	28281010 28101028 21102828 29211029     ..(((..(((.!).!)
-d009b1e8:	4c4c1021 4c4c4c4c 4c4c4c4c 4c4c5858     !.LLLLLLLLLLXXLL
-d009b1f8:	104c584c 4c101028 104c584c 28282828     LXL.(..LLXL.((((
-d009b208:	4c102828 104c4c58 4c102810 4c4c4c58     ((.LXLL..(.LXLLL
-d009b218:	4c4c5858 4c4c4c4c 4c4c4c4c 28282810     XXLLLLLLLLLL.(((
-d009b228:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b238:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b248:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b258:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b268:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b278:	28282828 28282828 28282828 28282820     (((((((((((( (((
-d009b288:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b298:	28282828 28282828 28282828 20282828     ((((((((((((((( 
-d009b2a8:	28282020 28282828 28282828 28282828       ((((((((((((((
-d009b2b8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b2c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b2d8:	28282828 28282828 28282828 28282028     ((((((((((((( ((
-d009b2e8:	28282028 28282828 28282828 28282810     ( ((((((((((.(((
-d009b2f8:	28102828 11102828 21102129 10101010     ((.(((..)!.!....
-d009b308:	4c4c1010 4c4c4c4c 10104c58 4c584c10     ..LLLLLLXL...LXL
-d009b318:	10282810 104c4c10 28282828 4c102828     .((..LL.((((((.L
-d009b328:	2810104c 4c4c1028 1010104c 4c4c584c     L..((.LLL...LXLL
-d009b338:	4c4c4c4c 10101010 28282810 28282828     LLLL.....(((((((
-d009b348:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b358:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b368:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b378:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b388:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b398:	28282828 28282828 28282820 28282828     (((((((( (((((((
-d009b3a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b3b8:	28282828 28282828 20282828 20202828     ((((((((((( ((  
-d009b3c8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b3d8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b3e8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b3f8:	28282828 28282828 28282028 28282820     ((((((((( (( (((
-d009b408:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b418:	10102828 10212929 28281010 4c101010     ((..))!...((...L
-d009b428:	104c4c4c 10104c58 58581010 2828104c     LLL.XL....XXL.((
-d009b438:	104c1028 28282828 4c102828 28282810     (.L.((((((.L.(((
-d009b448:	4c4c4c10 10101010 4c10584c 104c4c4c     .LLL....LX.LLLL.
-d009b458:	28281010 28282828 28282828 28282828     ..((((((((((((((
-d009b468:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b478:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b488:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b498:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b4a8:	28282828 28282828 28282828 28282828     ((((((((((((((((
-d009b4b8:	28282828 28282828 28282828 00000000     ((((((((((((....
+d00847d0:	0000 1100 2921 2521 2521 2921 215d 1110     ....!)!%!%!)]!..
+d00847e0:	2110 2921 2525 2529 1110 2521 6129 1010     .!!)%%)%..!%)a..
+d00847f0:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d0084814:	0000 1000 2121 2521 2925 2529 1110 1010     ....!!!%%))%....
+d0084824:	1010 2110 1021 1010 1125 2910 1010 1010     ...!!...%..)....
+d0084834:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d0084858:	0000 1100 2121 2925 2925 2925 2110 1021     ....!!%)%)%).!!.
+d0084868:	2121 1010 1111 1010 1010 1010 1110 6721     !!............!g
+d0084878:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d00848a0:	2110 2529 2925 2525 2121 1021 6725 6767     .!)%%)%%!!!.%ggg
+d00848b0:	2121 1110 1010 1010 2110 bb67 1011 0000     !!.......!g.....
+	...
+d00848e4:	2110 2921 2525 2525 2125 1021 bb25 bbbb     .!!)%%%%%!!.%...
+d00848f4:	bbbb 67bb 1010 2110 6710 67bb 1010 0000     ...g...!.g.g....
+	...
+d0084928:	2110 2521 2521 2929 2925 2121 6711 bbbb     .!!%!%))%)!!.g..
+d0084938:	bbbb bbbb 67bb 2110 bb10 1010 1021 0000     .....g.!....!...
+	...
+d0084968:	0000 1000 2921 2521 2921 1121 2521 2929     ....!)!%!)!.!%))
+d0084978:	1121 6710 bbbb bbbb 1110 2510 2510 1011     !..g.......%.%..
+d0084988:	1021 0000 0000 0000 0000 0000 0000 0000     !...............
+	...
+d00849ac:	0000 1000 2521 2121 2929 2110 2561 2511     ....!%!!)).!a%.%
+d00849bc:	2125 1021 2510 2567 1010 2110 1021 2110     %!!..%g%...!!..!
+d00849cc:	1010 0010 0000 0000 0000 0000 0000 0000     ................
+	...
+d00849f0:	0000 1000 2521 2125 2129 1010 1010 1121     ....!%%!)!....!.
+d0084a00:	2525 2125 1021 1011 1111 2921 2525 1025     %%%!!.....!)%%%.
+d0084a10:	2125 0010 0000 0000 0000 0000 0000 0000     %!..............
+	...
+d0084a34:	0000 1000 2121 2129 1025 2921 2525 1021     ....!!)!%.!)%%!.
+d0084a44:	2121 1011 2525 2925 2529 1025 1011 2110     !!..%%%))%%....!
+d0084a54:	2125 0010 0000 0000 0000 0000 0000 0000     %!..............
+	...
+d0084a78:	0000 1100 2121 2525 1025 2921 2525 2125     ....!!%%%.!)%%%!
+d0084a88:	1011 2121 1010 1010 1110 2110 2525 2525     ..!!.......!%%%%
+d0084a98:	2121 0011 0000 0000 0000 0000 0000 0000     !!..............
+	...
+d0084ac0:	2110 2125 2529 5d21 2925 2525 2929 2525     .!%!)%!]%)%%))%%
+d0084ad0:	2529 2529 2529 5d25 2929 2129 1021 0000     )%)%)%%])))!!...
+	...
+d0084b04:	2110 2125 2525 2525 2929 2529 2525 2525     .!%!%%%%)))%%%%%
+d0084b14:	2125 2525 2925 2129 2525 255d 0010 0000     %!%%%))!%%]%....
+	...
+d0084b48:	2110 2125 2525 2529 2529 2525 2525 2529     .!%!%%)%)%%%%%)%
+d0084b58:	2129 2121 2121 2121 2525 2525 0011 0000     )!!!!!!!%%%%....
+	...
+d0084b8c:	2111 2125 2925 2925 2925 2529 2529 1025     .!%!%)%)%))%)%%.
+d0084b9c:	1010 1010 1010 2110 2121 2525 2525 1025     .......!!!%%%%%.
+d0084bac:	1010 1010 1010 1010 0010 0000 0000 0000     ................
+	...
+d0084bcc:	0000 1100 2121 2521 2929 2925 2525 2529     ....!!!%))%)%%)%
+d0084bdc:	2525 2111 2525 2925 2525 1121 1111 2121     %%.!%%%)%%!...!!
+d0084bec:	2529 2529 2525 2525 2925 6125 1021 0010     )%)%%%%%%)%a!...
+	...
+d0084c10:	2000 2110 2125 2925 2529 2529 2929 2925     . .!%!%))%)%))%)
+d0084c20:	2125 2925 2929 2529 2529 2529 2525 2111     %!%))))%)%)%%%.!
+d0084c30:	2121 2925 2529 2525 2525 2525 2525 1025     !!%))%%%%%%%%%%.
+	...
+d0084c4c:	1000 1110 1111 1010 2111 2925 2525 2525     .........!%)%%%%
+d0084c5c:	2925 2929 2925 2525 2529 2525 2525 2521     %)))%)%%)%%%%%!%
+d0084c6c:	2525 2525 2561 1125 2521 2525 2525 2525     %%%%a%%.!%%%%%%%
+d0084c7c:	2525 2525 2929 2929 0010 0000 0000 0000     %%%%))))........
+d0084c8c:	0000 1000 2110 2921 2525 2925 2929 2525     .....!!)%%%)))%%
+d0084c9c:	2925 2925 2529 215d 2525 2925 2925 2525     %)%))%]!%%%)%)%%
+d0084cac:	1125 2925 2525 2529 2525 2125 2511 2121     %.%)%%)%%%%!.%!!
+d0084cbc:	2929 2121 2525 2925 2529 2525 1021 0000     ))!!%%%))%%%!...
+d0084ccc:	0000 0000 0000 2110 2925 2529 2925 2529     .......!%))%%))%
+d0084cdc:	2925 2529 2529 2929 2125 2521 2525 2929     %))%)%))%!!%%%))
+d0084cec:	2925 2525 2511 2529 2925 2925 2929 2125     %)%%.%)%%)%)))%!
+d0084cfc:	2110 2525 2525 2525 2125 2529 2525 2529     .!%%%%%%%!)%%%)%
+d0084d0c:	1029 0000 0000 0000 0000 2910 2529 2525     )..........))%%%
+d0084d1c:	2925 2929 2529 2925 2529 2121 2521 2529     %))))%%))%!!!%)%
+d0084d2c:	2929 2525 2125 1121 6121 2525 2529 2525     ))%%%!!.!a%%)%%%
+d0084d3c:	2925 2121 2111 2129 2121 2121 2525 2121     %)!!.!)!!!!!%%!!
+d0084d4c:	2925 2529 1025 0000 0000 0000 1000 2521     %))%%.........!%
+d0084d5c:	2121 2925 2525 2525 2525 2525 2925 2529     !!%)%%%%%%%%%))%
+d0084d6c:	2925 2525 2525 2125 2121 2111 2525 2125     %)%%%%%!!!.!%%%!
+d0084d7c:	2925 2529 2529 2121 2110 2121 1111 2121     %))%)%!!.!!!..!!
+d0084d8c:	2521 2125 5d21 2525 2125 0010 0000 0000     !%%!!]%%%!......
+d0084d9c:	2110 1025 2929 2525 2529 2525 2925 2529     .!%.))%%)%%%%))%
+d0084dac:	2929 2525 2525 2925 2125 2921 2529 2110     ))%%%%%)%!!))%.!
+d0084dbc:	2525 2521 2525 2925 2121 2121 2110 1010     %%!%%%%)!!!!.!..
+d0084dcc:	2121 1021 2121 2525 2921 2561 2125 0010     !!!.!!%%!)a%%!..
+d0084ddc:	0000 0000 2110 2511 2925 2925 295d 2529     .....!.%%)%)]))%
+d0084dec:	2529 2529 2925 2129 2121 2121 2925 2529     )%)%%))!!!!!%))%
+d0084dfc:	115d 2121 2121 2521 2529 2121 2121 2121     ].!!!!!%)%!!!!!!
+d0084e0c:	1010 2121 1010 2110 2110 2921 2121 2125     ..!!...!.!!)!!%!
+d0084e1c:	2121 0011 0000 1000 2121 2529 2529 2525     !!......!!)%)%%%
+d0084e2c:	2121 2121 2121 2121 2925 2525 2525 2125     !!!!!!!!%)%%%%%!
+d0084e3c:	2121 2121 1011 2121 2121 2529 2121 2121     !!!!..!!!!)%!!!!
+d0084e4c:	2110 1021 2121 1021 0000 1120 2121 2121     .!!.!!!... .!!!!
+d0084e5c:	2121 2121 1021 0000 0000 1000 2929 2125     !!!!!.......))%!
+d0084e6c:	2525 2121 2121 2121 2121 1010 2121 2921     %%!!!!!!!!..!!!)
+d0084e7c:	2121 2121 2121 1021 1010 2121 2121 2121     !!!!!!!...!!!!!!
+d0084e8c:	2121 1021 2121 1010 1121 0010 0000 1000     !!!.!!..!.......
+d0084e9c:	2121 1021 2121 2121 1021 0000 0000 1000     !!!.!!!!!.......
+d0084eac:	2521 2521 2925 1021 2110 1010 2111 2121     !%!%%)!..!...!!!
+d0084ebc:	1111 2121 1011 1111 1021 1010 1010 2110     ..!!....!......!
+d0084ecc:	2111 2121 2121 1010 2121 1010 1010 0010     .!!!!!..!!......
+d0084edc:	0000 0000 1010 2121 2121 1021 0010 0000     ......!!!!!.....
+d0084eec:	0000 0000 2111 2925 2125 2110 1021 0000     .....!%)%!.!!...
+d0084efc:	1000 2110 2121 1010 1010 2110 2121 1010     ...!!!.....!!!..
+d0084f0c:	1010 1010 2121 2121 1010 2110 1021 1010     ....!!!!...!!...
+d0084f1c:	1110 0000 0000 0000 0000 1011 1010 0010     ................
+	...
+d0084f34:	1000 2125 1021 2121 0010 0000 0000 1000     ..%!!.!!........
+d0084f44:	2110 2121 2121 1010 1010 0010 0000 1000     .!!!!!..........
+d0084f54:	2110 1011 1010 2121 0011 0000 0000 0000     .!....!!........
+	...
+d0084f78:	0000 1010 1010 1110 0000 0000 0000 0000     ................
+d0084f88:	1100 1010 1010 0010 0000 0000 0000 0000     ................
+d0084f98:	1000 1010 1010 1010 0000 0000 0000 0000     ................
 	...
 
-d009b4e0 <treewalkwidth>:
-d009b4e0:	44443e40                                @>DD
+d0084fb8 <bk_bub_tree4>:
+	...
+d0084fcc:	2110 2529 2525 2129 2529 2121 2529 2925     .!)%%%)!)%!!)%%)
+d0084fdc:	2121 2121 2529 2121 2121 1025 1021 0000     !!!!)%!!!!%.!...
+	...
+d0085010:	2910 2129 2521 2521 2925 2525 2525 2529     .))!!%!%%)%%%%)%
+d0085020:	2929 2121 2110 2121 2525 2929 1010 0000     ))!!.!!!%%))....
+	...
+d0085050:	0000 1000 2921 2521 2521 2921 2125 1010     ....!)!%!%!)%!..
+d0085060:	2110 2521 2525 2529 1010 2921 2525 1010     .!!%%%)%..!)%%..
+d0085070:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d0085094:	0000 1000 2121 2521 2921 2529 1010 1010     ....!!!%!))%....
+d00850a4:	1010 2110 1021 1010 1025 2510 1010 1010     ...!!...%..%....
+d00850b4:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d00850d8:	0000 1000 2121 2925 2929 2925 2110 1021     ....!!%)))%).!!.
+d00850e8:	2121 1010 1010 1010 1010 1010 1010 6721     !!............!g
+d00850f8:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d0085120:	2110 2525 2525 2525 2121 1025 6725 6767     .!%%%%%%!!%.%ggg
+d0085130:	2121 1010 1010 1010 2110 bb67 1010 0000     !!.......!g.....
+	...
+d0085164:	2110 2921 2525 2525 2125 1021 bb25 bbbb     .!!)%%%%%!!.%...
+d0085174:	bbbb 67bb 1010 2110 6710 67bb 1010 0000     ...g...!.g.g....
+	...
+d00851a8:	2110 2521 2521 2925 2925 2121 6710 bbbb     .!!%!%%)%)!!.g..
+d00851b8:	bbbb bbbb 67bb 2110 bb10 1010 1021 0000     .....g.!....!...
+	...
+d00851e8:	0000 1000 2921 2521 2921 1021 2521 2529     ....!)!%!)!.!%)%
+d00851f8:	1021 6710 bbbb bbbb 1010 2510 2510 1010     !..g.......%.%..
+d0085208:	1021 0000 0000 0000 0000 0000 0000 0000     !...............
+	...
+d008522c:	0000 1000 2521 2121 2929 2110 2525 2110     ....!%!!)).!%%.!
+d008523c:	2125 1021 2510 2567 1010 2110 1021 2110     %!!..%g%...!!..!
+d008524c:	1010 0010 0000 0000 0000 0000 0000 0000     ................
+	...
+d0085270:	0000 1000 2521 2125 2129 1010 1010 1021     ....!%%!)!....!.
+d0085280:	2521 2125 1021 1010 1010 2921 2525 1025     !%%!!.....!)%%%.
+d0085290:	2125 0010 0000 0000 0000 0000 0000 0000     %!..............
+	...
+d00852b4:	0000 1000 2121 2129 1025 2921 2925 1021     ....!!)!%.!)%)!.
+d00852c4:	2121 1010 2525 2929 2525 1025 1010 2110     !!..%%))%%%....!
+d00852d4:	2121 0010 0000 0000 0000 0000 0000 0000     !!..............
+	...
+d00852f8:	0000 1000 2121 2125 1029 2921 2529 2125     ....!!%!).!))%%!
+d0085308:	1010 2121 1010 1010 1010 2110 2521 2525     ..!!.......!!%%%
+d0085318:	2121 0010 0000 0000 0000 0000 0000 0000     !!..............
+	...
+d0085340:	2110 2125 2529 2521 2529 2525 2929 2925     .!%!)%!%)%%%))%)
+d0085350:	2525 2529 2525 2125 2929 2129 1021 0000     %%)%%%%!)))!!...
+	...
+d0085384:	2110 2125 2529 2525 2929 2529 2525 2525     .!%!)%%%)))%%%%%
+d0085394:	2125 2525 2525 2525 2525 2525 0010 0000     %!%%%%%%%%%%....
+	...
+d00853c8:	2110 2125 2525 2529 2529 2925 2525 2529     .!%!%%)%)%%)%%)%
+d00853d8:	2125 2121 2121 2121 2529 2529 0010 0000     %!!!!!!!)%)%....
+	...
+d008540c:	2110 2129 2525 2929 2129 2525 2529 2525     .!)!%%)))!%%)%%%
+d008541c:	2929 2125 2121 2925 2525 2925 1025 1010     ))%!!!%)%%%)%...
+	...
+d0085444:	0000 1000 1010 1010 0020 0000 2110 2921     ........ ....!!)
+d0085454:	2525 2529 2121 2521 2525 2529 2525 2529     %%)%!!!%%%)%%%)%
+d0085464:	2121 2521 2925 2525 2525 2925 0010 0000     !!!%%)%%%%%)....
+	...
+d0085488:	1010 2110 2925 2529 1021 2010 2921 2525     ...!%))%!.. !)%%
+d0085498:	2529 2925 2121 2121 1010 1010 2510 2925     )%%)!!!!.....%%)
+d00854a8:	2529 2529 2929 2929 2525 2529 1025 1010     )%)%))))%%)%%...
+	...
+d00854c8:	0000 1000 2921 2921 2525 2525 2925 2525     ....!)!)%%%%%)%%
+d00854d8:	2121 2925 2525 2129 2521 1010 2521 2925     !!%)%%)!!%..!%%)
+d00854e8:	1029 1010 2110 2121 2521 2929 2525 2525     )....!!!!%))%%%%
+d00854f8:	2529 2525 1010 0000 0000 0000 0000 0000     )%%%............
+d0085508:	0000 0000 0000 2110 2529 2529 2929 2925     .......!)%)%))%)
+d0085518:	2525 2525 2529 2525 2929 2121 2925 2525     %%%%)%%%))!!%)%%
+d0085528:	2525 2525 2925 2529 1025 1010 2121 2121     %%%%%))%%...!!!!
+d0085538:	2521 2921 2929 2929 2525 0010 0000 0000     !%!)))))%%......
+	...
+d0085550:	1000 2521 2525 2525 2929 2529 2525 2529     ..!%%%%%)))%%%)%
+d0085560:	2529 2529 2121 2529 2925 2925 2529 2529     )%)%!!)%%)%))%)%
+d0085570:	2529 2925 2925 2129 2110 2121 2521 2125     )%%)%))!.!!!!%%!
+d0085580:	2521 2529 2925 1025 0000 0000 0000 0000     !%)%%)%.........
+d0085590:	0000 0000 1000 2525 2929 2529 2525 2529     ......%%)))%%%)%
+d00855a0:	2929 2525 2129 2521 2529 2525 2925 2525     ))%%)!!%)%%%%)%%
+d00855b0:	2925 2929 2529 2925 2925 2525 1021 2521     %))))%%)%)%%!.!%
+d00855c0:	2529 2925 2529 2925 2525 2525 0010 0000     )%%))%%)%%%%....
+	...
+d00855d8:	2110 2521 2525 2925 2529 2525 2525 2529     .!!%%%%))%%%%%)%
+d00855e8:	2525 2525 2925 2129 2521 2129 2521 2925     %%%%%))!!%)!!%%)
+d00855f8:	2521 2529 2929 2925 2125 2510 2529 2121     !%)%))%)%!.%)%!!
+d0085608:	2925 2121 2929 2525 1029 0000 0000 0000     %)!!))%%).......
+d0085618:	0000 0000 2510 2521 2521 2129 2125 2121     .....%!%!%)!%!!!
+d0085628:	2525 2929 2525 2529 2525 2525 2125 2121     %%))%%)%%%%%%!!!
+d0085638:	2525 2929 2929 2125 2529 2525 2529 1021     %%))))%!)%%%)%!.
+d0085648:	2121 2529 2525 2525 2121 2929 2525 0010     !!)%%%%%!!))%%..
+	...
+d0085660:	2510 2125 2529 2121 1021 1010 2121 2525     .%%!)%!!!...!!%%
+d0085670:	2925 2125 2129 2121 2121 2529 1010 2521     %)%!)!!!!!)%..!%
+d0085680:	2525 2125 2521 2929 2525 1021 1010 2110     %%%!!%))%%!....!
+d0085690:	2121 2521 2925 2921 2525 1029 0000 0000     !!!%%)!)%%).....
+d00856a0:	0000 0000 2510 2129 2125 1021 2121 2121     .....%)!%!!.!!!!
+d00856b0:	2110 2521 2929 2929 2925 2925 2125 2121     .!!%))))%)%)%!!!
+d00856c0:	1010 2110 2529 2125 2521 2525 2925 1021     ...!)%%!!%%%%)!.
+d00856d0:	2121 1021 1010 2121 2929 2129 2525 2925     !!!...!!)))!%%%)
+d00856e0:	0010 0000 0000 1000 2521 2129 2129 2110     ........!%)!)!.!
+d00856f0:	1021 2110 2121 2121 2121 2121 2121 2121     !..!!!!!!!!!!!!!
+d0085700:	2121 1010 1021 1010 2525 2129 2910 2529     !!..!...%%)!.))%
+d0085710:	2125 1021 1010 2121 2121 2110 2121 2925     %!!...!!!!.!!!%)
+d0085720:	2521 2925 1025 0000 0000 1000 2525 2521     !%%)%.......%%!%
+d0085730:	2125 2121 0010 1020 1010 2521 1021 2110     %!!!.. ...!%!..!
+d0085740:	2121 1010 1010 2110 1021 1010 2921 1021     !!.....!!...!)!.
+d0085750:	2521 2929 2121 1021 1010 1010 1010 2121     !%))!!!.......!!
+d0085760:	2121 2921 2125 2521 1025 0000 0000 1000     !!!)%!!%%.......
+d0085770:	2529 2921 2121 1021 0000 0000 2000 1010     )%!)!!!...... ..
+d0085780:	2110 2521 2121 2121 2121 1021 1010 2110     .!!%!!!!!!!....!
+d0085790:	2110 1021 2125 2121 2110 1010 1010 0000     .!!.%!!!.!......
+d00857a0:	0000 1010 1021 2110 2121 2521 2125 0010     ....!..!!!!%%!..
+d00857b0:	0000 1000 2121 2121 2125 1021 0000 0000     ....!!!!%!!.....
+d00857c0:	0000 0000 1020 1010 1010 1010 1010 0010     .... ...........
+d00857d0:	0000 1010 2121 2110 2121 1010 1021 0000     ....!!.!!!..!...
+	...
+d00857e8:	2110 1010 2110 2121 2121 0010 0000 0000     .!...!!!!!......
+d00857f8:	1010 1010 1010 0010 0000 0000 0000 0000     ................
+	...
+d0085814:	0000 1000 1010 1010 1010 1010 0010 0000     ................
+	...
+d008582c:	1000 1010 1010 1010 1010 0000               ............
 
-d009b4e4 <_global_impure_ptr>:
-d009b4e4:	d009b5f4                                ....
+d0085838 <bk_bub_treehide>:
+d0085838:	0000 0000 1000 2921 2521 2929 2521 2125     ......!)!%))!%%!
+d0085848:	6121 2925 2129 2121 2521 2129 2121 2521     !a%))!!!!%)!!!!%
+d0085858:	2110 0010 0000 0000 0000 0000 1000 2929     .!............))
+d0085868:	2121 2125 2929 2925 2525 2929 2925 2129     !!%!))%)%%))%))!
+d0085878:	1021 2120 2121 2529 1025 0011 0000 0000     !. !!!)%%.......
+d0085888:	0000 0000 2111 2129 2125 2125 2129 1121     .....!)!%!%!)!!.
+d0085898:	1011 2121 2525 2525 1021 2110 2921 1029     ..!!%%%%!..!!)).
+d00858a8:	1010 0000 0000 0000 0000 0000 2110 2121     .............!!!
+d00858b8:	2525 2929 1025 1010 1010 1010 2121 1110     %%))%.......!!..
+d00858c8:	2510 1011 1029 1011 1010 0000 0000 0000     .%..)...........
+d00858d8:	0000 0000 5910 2521 2529 2529 1029 2121     .....Y!%)%)%).!!
+d00858e8:	2110 1021 1011 1010 1010 1010 1010 2110     .!!............!
+d00858f8:	1021 0000 0000 0000 0000 0000 1000 2921     !.............!)
+d0085908:	2525 2529 2125 2121 2111 2121 2121 1021     %%)%%!!!.!!!!!!.
+d0085918:	1010 1010 1010 2559 1021 0010 0000 0000     ......Y%!.......
+d0085928:	0000 0000 1000 2121 2525 2525 2525 2121     ......!!%%%%%%!!
+d0085938:	2110 2121 2125 2125 2021 1010 1021 2921     .!!!%!%!! ..!.!)
+d0085948:	1021 0010 0000 0000 0000 0000 1000 2121     !.............!!
+d0085958:	2125 2925 2529 1025 1010 2121 2121 2521     %!%))%%...!!!!!%
+d0085968:	2125 1021 1021 2121 1010 0010 0000 0000     %!!.!.!!........
+d0085978:	0000 0000 2110 2129 2125 2129 2111 2925     .....!)!%!)!.!%)
+d0085988:	2129 1010 2110 2121 2121 1021 1029 1010     )!...!!!!!!.)...
+d0085998:	2110 0010 0000 0000 0000 0000 2110 2125     .!...........!%!
+d00859a8:	2521 1029 6121 1125 2521 2121 1010 1010     !%).!a%.!%!!....
+d00859b8:	1010 1010 2121 1010 1021 1010 0000 0000     ....!!..!.......
+d00859c8:	0000 0000 2110 2525 2921 1021 1010 2110     .....!%%!)!....!
+d00859d8:	2111 2525 2121 1010 1010 2110 2125 2929     .!%%!!.....!%!))
+d00859e8:	2110 1021 0000 0000 0000 0000 2110 2921     .!!..........!!)
+d00859f8:	2521 2110 2525 2125 2110 1021 2511 2525     !%.!%%%!.!!..%%%
+d0085a08:	2925 2525 1110 1010 2121 1021 0000 0000     %)%%....!!!.....
+d0085a18:	0000 0000 2111 2521 2921 2110 2929 2525     .....!!%!).!))%%
+d0085a28:	1021 2110 1021 1010 1010 1010 2121 2525     !..!!.......!!%%
+d0085a38:	2129 1021 0000 0000 0000 0000 1000 2521     )!!...........!%
+d0085a48:	2921 2161 2525 2525 2925 2529 2525 2929     !)a!%%%%%))%%%))
+d0085a58:	2929 2525 2925 6129 2121 0010 0000 0000     ))%%%))a!!......
+d0085a68:	0000 0000 1000 2521 2921 2525 2525 2925     ......!%!)%%%%%)
+d0085a78:	2525 2525 2929 2521 2561 2525 2521 6125     %%%%))!%a%%%!%%a
+d0085a88:	1025 0000 0000 0000 0000 0000 1000 2521     %.............!%
+d0085a98:	2521 2925 2925 2525 2525 2929 2525 2121     !%%)%)%%%%))%%!!
+d0085aa8:	2121 2121 2521 2929 1029 0000 0000 0000     !!!!!%))).......
 
-d009b4e8 <__sf_fake_stderr>:
+d0085ab8 <bub_background>:
+	...
+d0085adc:	0000 fffe 0001 0000 0000 0000 0000 0fc0     ................
+	...
+d0085b18:	8000 0003 001f 0000 0000 0000 0000 7820     .............. x
+	...
+d0085b54:	8000 ffc0 0070 0000 0000 0000 0000 6018     ....p..........`
+	...
+d0085b90:	c000 81f8 0043 0000 0000 0000 0000 3004     ....C..........0
+	...
+d0085bcc:	4000 0700 00c6 0000 0000 0000 0000 1802     .@..............
+	...
+d0085c08:	4000 0cfe 0086 0000 0000 0000 0000 1c02     .@..............
+	...
+d0085c44:	c000 0b83 0087 0000 0000 0000 0000 1e02     ................
+d0085c54:	0000 0000 0700 0000 0000 0000 0000 0000     ................
+	...
+d0085c80:	8000 9a00 0083 0000 0000 0000 0000 1e02     ................
+d0085c90:	0000 0000 0580 0000 0000 0000 0000 0000     ................
+	...
+d0085cac:	0000 00c0 0000 0000 0000 0000 0000 0000     ................
+d0085cbc:	0000 b200 0083 0000 0e00 0000 0000 1e02     ................
+d0085ccc:	0000 0000 0ec0 0000 0000 1fc0 0000 0000     ................
+	...
+d0085ce8:	0000 0330 0000 0000 0000 0000 0000 0000     ..0.............
+d0085cf8:	0000 e600 00c3 0000 1b00 0000 0000 3c04     ...............<
+d0085d08:	0000 0060 1a30 0000 0000 2060 0000 0000     ..`.0.....` ....
+	...
+d0085d24:	0000 0ccc 0000 0000 0000 0000 0000 0000     ................
+d0085d34:	0000 e400 0061 ff80 1181 0000 0000 3c08     ....a..........<
+d0085d44:	0000 007c 1718 0000 0000 4390 0000 0000     ..|........C....
+	...
+d0085d60:	0000 0b72 0000 0000 0000 0000 0000 0000     ..r.............
+d0085d70:	0000 6400 0030 0070 3083 0000 0000 3808     ...d0.p..0.....8
+d0085d80:	01e0 007e 3706 0070 0000 86e8 0001 0000     ..~..7p.........
+	...
+d0085d9c:	8000 097d 0000 0000 0000 0000 01e0 0000     ..}.............
+d0085dac:	0000 0200 0018 0018 30c2 0000 0000 3810     .........0.....8
+d0085dbc:	01fe c0ff 2f01 03fc 0000 8c26 0000 0000     ...../....&.....
+d0085dcc:	0000 0000 0010 0000 0000 0000 6000 0cfe     .............`..
+	...
+d0085de4:	0610 0000 0000 0200 000c 3c0c 3044 7f00     ...........<D0..
+d0085df4:	0300 7860 81ff 60ff 7f80 0fc7 0000 9c19     ..`x...`........
+	...
+d0085e0c:	0010 0000 0000 0000 2000 067f 0000 0000     ......... ......
+d0085e1c:	0000 0000 04c8 0000 0000 0200 0004 4f04     ...............O
+d0085e2c:	706c 7f80 0780 f080 e0ff 3fff df80 1f81     lp.........?....
+d0085e3c:	0000 dc09 0000 0000 0000 4000 0310 0000     ...........@....
+d0085e4c:	0000 0000 c000 073e 0000 0000 0000 0000     ......>.........
+d0085e5c:	05a4 0000 0000 0100 000e c786 f038 ff80     ............8...
+d0085e6c:	0fc0 f100 f8ff 3fff 3f80 1780 0000 4f09     .......?.?.....O
+d0085e7c:	0000 0000 0000 8000 00d9 0000 0000 0000     ................
+d0085e8c:	8000 0781 0000 0000 0000 0000 05d2 0000     ................
+d0085e9c:	0000 0180 001e 81c2 f018 ffc0 0fe0 fe00     ................
+d0085eac:	ff7f 3fff 0700 17c0 0003 67d1 0000 0000     ...?.......g....
+d0085ebc:	0000 0000 0067 0000 0000 0000 8000 0566     ....g.........f.
+	...
+d0085ed4:	0cf2 0380 0000 00f0 001e 40e2 e018 ffe1     ...........@....
+d0085ee4:	1ff1 f800 ffff 3fff 0000 1fb0 0007 31e1     .......?.......1
+d0085ef4:	0000 7c00 0000 0000 0181 0000 3c00 0000     ...|.........<..
+d0085f04:	0000 0399 0000 0000 0000 0000 3272 0c40     ............r2@.
+d0085f14:	0000 00f8 003e 6072 c00c fffb 1ff8 fc00     ....>.r`........
+d0085f24:	ffff 3fff 0000 3edc 0006 1001 0000 8380     ...?...>........
+d0085f34:	0000 9c00 0f1c 0000 6300 0000 0000 03c1     .........c......
+	...
+d0085f4c:	6106 3020 0000 00fe 003f 3072 c006 7fff     .a 0....?.r0....
+d0085f5c:	3ffe fe00 ffff 3fff 0000 ffb7 0107 18e6     .?.....?........
+d0085f6c:	0000 3860 0001 7000 0334 0000 dd80 0000     ..`8...p4.......
+d0085f7c:	0000 03c1 0000 0000 0000 0000 40e6 2710     .............@.'
+d0085f8c:	0018 81ff 003f 18e2 0003 3fff 3fff ff00     ....?......?.?..
+d0085f9c:	ffff 3fff c070 fffb 01c7 187c 0000 7f30     ...?p.....|...0.
+d0085fac:	0001 4000 038e 0000 d640 0000 0000 01c1     ...@....@.......
+	...
+d0085fc4:	401c 2d90 801f e1ff 007f 8786 0001 3ffe     .@.-...........?
+d0085fd4:	3fff fff6 ffff ffff e3ff fffe 01e7 1840     .?............@.
+d0085fe4:	0000 7110 0001 8000 01c0 0000 f340 0000     ...q........@...
+d0085ff4:	8000 05e0 0000 0000 0008 0000 4f1a ee90     .............O..
+d0086004:	e01f f3ff 007f c004 0000 ffff 3fff ffff     .............?..
+d0086014:	ffff ffff 3fff ffff 03ff 3020 0000 6090     .....?.... 0...`
+d0086024:	0001 0000 00e7 0000 7b40 0000 8000 07f0     ........@{......
+d0086034:	0000 0000 000e 0c00 71f0 fe88 f3ff ffff     .........q......
+d0086044:	007f 400c 801e ffff 3fff ffff ffff ffff     ...@.....?......
+d0086054:	ffff ffff 03ff e020 0000 6090 0001 0000     ...... ....`....
+d0086064:	0068 0000 ef40 001f c000 02f0 0000 9400     h...@...........
+d0086074:	000f 1c00 3020 ff18 ffff ffff 03ff 4038     .... 0........8@
+d0086084:	c03f ffff bfff ffff ffff ffff ffff ffff     ?...............
+d0086094:	00ff f81f 0003 31b0 0601 0000 0068 0000     .......1....h...
+d00860a4:	0040 0030 4000 03f0 0000 fc00 019f 1a00     @.0..@..........
+d00860b4:	1e20 fffc ffff ffff 1fff 40e0 e03f ffff      ..........@?...
+d00860c4:	bfff ffff ffff ffff ffff ffff 80ff ff87     ................
+d00860d4:	0307 8f30 0581 0000 0048 0000 e480 0021     ..0.....H.....!.
+d00860e4:	2000 03f8 0000 fe00 01ff 3b00 1040 fffc     . .........;@...
+d00860f4:	ffff ffff 7fff ff80 ff3f ffff ffff ffff     ........?.......
+d0086104:	ffff ffff ffff ffff fe3f ffff 03ff 8060     ........?.....`.
+d0086114:	0670 0000 0048 0000 f300 0063 1004 0170     p...H.....c...p.
+d0086124:	0000 fd80 01ff 7900 1140 ffe4 ffff ffff     .......y@.......
+d0086134:	ffff ffe3 ffff ffff ffff ffff ffff ffff     ................
+d0086144:	ffff ffff ffff ffff 07ff 1fc0 0b1d 0000     ................
+d0086154:	00d0 0000 7900 0064 1816 01f0 0000 ffc0     .....yd.........
+d0086164:	43ff fc80 0bc0 ffc2 ffff ffff ffff ffff     .C..............
+d0086174:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d0086184:	ffff ffff 1fff 0f98 0b87 0000 00d0 0000     ................
+d0086194:	1c80 8874 0817 c0f0 00ef ffe0 63ff f880     ..t..........c..
+d00861a4:	0ec1 fff2 ffff ffff ffff ffff ffff ffff     ................
+d00861b4:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d00861c4:	3fff 8c24 edc3 0000 0090 0000 0c80 8c74     .?$...........t.
+d00861d4:	042f f0f1 ffff ffff ffff fe40 0e63 fff6     /.........@.c...
+d00861e4:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d00861f4:	ffff ffff ffff ffff ffff ffff 7fff 4c66     ..............fL
+d0086204:	9fc0 0003 0090 0000 0640 ef76 866f fff0     ........@.v.o...
+d0086214:	ffff ffff ffff fff0 043f fffe ffff ffff     ........?.......
+d0086224:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d0086234:	ffff ffff ffff ffff ffff 7fe1 83c0 000f     ................
+d0086244:	01a0 0000 0638 ff3b 43e7 fff7 ffff ffff     ....8.;..C......
+d0086254:	ffff ffff 841f ffff ffff ffff ffff ffff     ................
+d0086264:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d0086274:	ffff ffff ffff 0ffc c0e0 000f 01a0 0000     ................
+d0086284:	863c ff9d c1f3 ffff ffff ffff ffff ffff     <...............
+d0086294:	ff8f ffff ffff ffff ffff ffff ffff ffff     ................
+d00862a4:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d00862b4:	ffff ffff f000 000f 0120 0000 6604 ffee     ........ ....f..
+d00862c4:	e037 ffff ffff ffff ffff ffff fff0 ffff     7...............
+d00862d4:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d00862e4:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d00862f4:	fc3f 000f 0140 8e00 3c07 ffff edbf ffff     ?...@....<......
+d0086304:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d0086314:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d0086324:	ffff ffff ffff ffff ffff ffff feff 0003     ................
+d0086334:	0340 8f00 c001 ffff ffdf ffff ffff ffff     @...............
+d0086344:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d0086354:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d0086364:	ffff ffff ffff ffff ffff 0007 0340 7ff0     ............@...
+d0086374:	ff70 ffff ffff ffff ffff ffff ffff ffff     p...............
+d0086384:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d0086394:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d00863a4:	ffff ffff ffff ffff 0341 fff0 fff7 ffff     ........A.......
+d00863b4:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d00863c4:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d00863d4:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d00863e4:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d00863f4:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d0086404:	ffff ffff ffff ffff ffff ffff ffff ffff     ................
+d0086414:	ffff ffff                                   ....
+
+d0086418 <bub_leaves_img>:
+	...
+d0086450:	1000 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d008646c:	0000 1000 6410 0010 0000 0000 0000 0000     .....d..........
+	...
+d008648c:	0000 5c10 105c 0000 0000 0000 0000 0000     ...\\...........
+	...
+d00864a8:	1010 1010 1010 105c 0010 0000 0000 0000     ......\.........
+	...
+d00864c4:	0000 1000 6010 6060 1060 1010 0010 0000     .....````.......
+	...
+d00864e4:	1000 1010 5c60 6060 5c60 6060 1010 0000     ....`\```\``....
+	...
+d0086500:	0000 1000 1010 6060 6068 5c5c 605c 6060     ......``h`\\\```
+d0086510:	1060 0000 0000 0000 0000 0000 0000 0000     `...............
+d0086520:	0000 1010 5c5c 6868 6068 5c5c 6060 6060     ....\\hhh`\\````
+d0086530:	1010 0000 0000 0000 0000 0000 0000 0000     ................
+d0086540:	1000 6010 6860 6068 5c5c 6060 605c 6060     ...``hh`\\``\```
+d0086550:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+d0086560:	1010 6860 6868 5c60 605c 6060 5c60 6060     ..`hhh`\\````\``
+d0086570:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+d0086580:	6010 6868 6060 605c 605c 6060 6060 105c     .`hh``\`\`````\.
+d0086590:	0010 0000 0000 0000 0000 0000 0000 1000     ................
+d00865a0:	6810 6068 5c60 6060 605c 6060 6060 1010     .hh``\``\`````..
+	...
+d00865bc:	0000 1010 6860 5c5c 605c 6060 605c 6060     ....`h\\\```\```
+d00865cc:	1060 0010 0000 0000 0000 0000 0000 0000     `...............
+d00865dc:	0000 6010 6060 5c60 605c 6060 605c 1060     ...````\\```\``.
+d00865ec:	1010 0000 0000 0000 0000 0000 0000 0000     ................
+d00865fc:	0000 6010 6060 605c 605c 6060 105c 1010     ...```\`\```\...
+d008660c:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+d008661c:	1000 6010 5c60 6060 605c 1060 1010 104c     ...``\``\``...L.
+d008662c:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+d008663c:	1000 6060 605c 6060 105c 1010 4c4c 1058     ..``\```\...LLX.
+	...
+d008665c:	1000 5c60 6060 1010 1010 4c10 4c4c 1058     ..`\``.....LLLX.
+	...
+d008667c:	1000 605c 1010 0010 0000 5810 584c 1010     ..\`.......XLX..
+	...
+d008669c:	1000 1010 0010 0000 0000 1010 5858 0010     ............XX..
+	...
+d00866c4:	0000 1000 1010 0010 0000 0000 0000 0000     ................
+	...
+d00866e8:	1000 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d008676c:	0000 1000 0010 0010 0000 0000 0000 0000     ................
+	...
+d008678c:	0000 5c10 5c5c 1010 0000 0000 0000 0000     ...\\\..........
+	...
+d00867a8:	1000 1010 1010 5c5c 105c 0010 0000 0000     ......\\\.......
+	...
+d00867c4:	0000 1000 6010 6060 1060 1010 0010 0000     .....````.......
+	...
+d00867e4:	1000 1010 5c60 6060 5c60 6060 1010 0000     ....`\```\``....
+	...
+d0086800:	0000 1000 1010 6060 6068 5c5c 605c 6060     ......``h`\\\```
+d0086810:	1060 0000 0000 0000 0000 0000 1000 1010     `...............
+d0086820:	1010 1010 5c5c 6868 6068 5c5c 6060 6060     ....\\hhh`\\````
+d0086830:	1010 0000 0000 0000 0000 1000 1010 6060     ..............``
+d0086840:	6060 6060 6868 6068 5c5c 6060 605c 6060     ````hhh`\\``\```
+d0086850:	0010 0000 0000 0000 0000 1010 6060 5c5c     ............``\\
+d0086860:	6860 6868 6868 5c60 605c 6060 5c60 6060     `hhhhh`\\````\``
+d0086870:	0010 0000 0000 0000 1000 6010 6060 6060     ...........`````
+d0086880:	605c 6868 5c60 605c 6060 6060 6060 105c     \`hh`\\```````\.
+d0086890:	0010 0000 0000 0000 1000 6060 5c5c 5c5c     ..........``\\\\
+d00868a0:	5c5c 5c5c 605c 6060 605c 6060 6060 1010     \\\\\```\`````..
+	...
+d00868b8:	1000 5c10 6060 6060 5c60 6060 5c60 6060     ...\`````\```\``
+d00868c8:	605c 6060 1060 0010 0000 0000 0000 0000     \````...........
+d00868d8:	0000 1000 1010 5c60 605c 6060 605c 6060     ......`\\```\```
+d00868e8:	605c 1060 1010 0000 0000 0000 0000 0000     \``.............
+d00868f8:	0000 0000 1000 1010 6010 6060 605c 6060     .........```\```
+d0086908:	105c 1010 0000 0000 0000 0000 0000 0000     \...............
+	...
+d0086920:	1010 1010 1010 1060 1010 104c 0000 0000     ......`...L.....
+	...
+d0086944:	1000 1010 4c4c 1058 0000 0000 0000 0000     ....LLX.........
+	...
+d0086964:	1000 4c4c 584c 104c 0000 0000 0000 0000     ..LLLXL.........
+	...
+d0086984:	4c10 584c 4c58 1010 0000 0000 0000 0000     .LLXXL..........
+	...
+d00869a4:	4c10 584c 104c 0010 0000 0000 0000 0000     .LLXL...........
+	...
+d00869c4:	5810 4c4c 1010 0000 0000 0000 0000 0000     .XLL............
+	...
+d00869e0:	0000 1000 1010 1010 0000 0000 0000 0000     ................
 	...
 
-d009b508 <__sf_fake_stdin>:
+d0086a18 <bubtreeforeground>:
+d0086a18:	0000 2110 2121 2121 2525 2525 2525 2525     ...!!!!!%%%%%%%%
+d0086a28:	2525 2525 2525 2525 2121 2110 0000 0000     %%%%%%%%!!.!....
+d0086a38:	0000 2110 2121 2121 2525 2525 2525 2525     ...!!!!!%%%%%%%%
+d0086a48:	2525 2525 2525 2525 2121 2110 0010 0000     %%%%%%%%!!.!....
+d0086a58:	0000 2110 2121 2525 2525 2525 2525 2525     ...!!!%%%%%%%%%%
+d0086a68:	2525 2525 2525 2525 2121 1010 0010 0000     %%%%%%%%!!......
+d0086a78:	0000 2110 2121 2525 2525 2525 2525 2525     ...!!!%%%%%%%%%%
+d0086a88:	2525 2525 2525 2525 2125 2110 0010 0000     %%%%%%%%%!.!....
+d0086a98:	0000 2110 2121 2525 2525 2525 2525 2525     ...!!!%%%%%%%%%%
+d0086aa8:	2525 2525 2525 2525 2125 1010 1021 0000     %%%%%%%%%!..!...
+d0086ab8:	0000 2110 2121 2521 2525 2525 2525 2525     ...!!!!%%%%%%%%%
+d0086ac8:	2525 2525 2525 2125 2125 1010 1021 0000     %%%%%%%!%!..!...
+d0086ad8:	0000 2110 2121 2521 2525 2525 2525 2525     ...!!!!%%%%%%%%%
+d0086ae8:	2525 2525 2525 2125 2121 1021 1021 0010     %%%%%%%!!!!.!...
+d0086af8:	0000 2110 2121 2521 2525 2525 2525 2525     ...!!!!%%%%%%%%%
+d0086b08:	2525 2525 2525 2121 2121 1021 1021 0010     %%%%%%!!!!!.!...
+d0086b18:	0000 2110 2121 2121 2525 2525 2525 2525     ...!!!!!%%%%%%%%
+d0086b28:	2525 2525 2525 2121 2121 1021 1021 0010     %%%%%%!!!!!.!...
+d0086b38:	0000 2110 2121 2121 2525 2525 2525 2525     ...!!!!!%%%%%%%%
+d0086b48:	2525 2525 2525 2121 2121 1021 1021 0010     %%%%%%!!!!!.!...
+d0086b58:	0000 2110 2125 2121 2525 2525 2525 2525     ...!%!!!%%%%%%%%
+d0086b68:	2525 2525 2525 2121 2121 1021 1010 0000     %%%%%%!!!!!.....
+d0086b78:	0000 2110 2125 2121 2525 2525 2525 2525     ...!%!!!%%%%%%%%
+d0086b88:	2525 2525 1025 2125 2121 1021 1021 0000     %%%%%.%!!!!.!...
+d0086b98:	0000 1000 2125 2121 2525 2525 2525 2525     ....%!!!%%%%%%%%
+d0086ba8:	2525 2525 1025 2125 2121 1021 0010 0000     %%%%%.%!!!!.....
+d0086bb8:	0000 1000 2125 2121 2525 2521 2525 2525     ....%!!!%%!%%%%%
+d0086bc8:	2525 2525 1025 2125 2121 1021 0010 0000     %%%%%.%!!!!.....
+d0086bd8:	0000 1000 2125 2121 2525 2521 2525 2525     ....%!!!%%!%%%%%
+d0086be8:	2525 2525 2525 2110 2121 2110 0010 0000     %%%%%%.!!!.!....
+d0086bf8:	0000 1000 2125 2121 2525 2521 2525 2525     ....%!!!%%!%%%%%
+d0086c08:	2525 2525 2525 2110 2121 1010 0000 0000     %%%%%%.!!!......
+d0086c18:	0000 1000 2125 2121 2525 2521 2525 2525     ....%!!!%%!%%%%%
+d0086c28:	2525 2525 2525 2110 2121 1010 0000 0000     %%%%%%.!!!......
+d0086c38:	0000 1000 2125 2121 2525 2521 2525 2525     ....%!!!%%!%%%%%
+d0086c48:	2525 2525 2525 2110 2121 1010 0000 0000     %%%%%%.!!!......
+d0086c58:	0000 1000 2125 2121 2525 2521 2525 2525     ....%!!!%%!%%%%%
+d0086c68:	2525 2525 2525 2525 1021 1010 0000 0000     %%%%%%%%!.......
+d0086c78:	0000 1000 2125 2121 2525 2521 2525 2525     ....%!!!%%!%%%%%
+d0086c88:	2525 2525 2525 2525 1021 2110 0000 0000     %%%%%%%%!..!....
+d0086c98:	0000 1000 2125 2121 2521 2521 2525 2525     ....%!!!!%!%%%%%
+d0086ca8:	2525 2525 2525 2525 1021 2110 0000 0000     %%%%%%%%!..!....
+d0086cb8:	0000 1000 2125 2121 2521 2521 2525 2525     ....%!!!!%!%%%%%
+d0086cc8:	2525 2525 2525 2525 1021 1021 0000 0000     %%%%%%%%!.!.....
+d0086cd8:	0000 1000 2125 2121 2525 2521 2525 2525     ....%!!!%%!%%%%%
+d0086ce8:	2525 2525 2525 2525 1025 1021 0000 0000     %%%%%%%%%.!.....
+d0086cf8:	0000 1000 2125 2121 2525 2521 2525 2525     ....%!!!%%!%%%%%
+d0086d08:	2525 2525 2525 2525 1025 1021 0000 0000     %%%%%%%%%.!.....
+d0086d18:	0000 1000 2125 2121 2525 2521 2525 2525     ....%!!!%%!%%%%%
+d0086d28:	2525 2525 2525 2525 1025 1021 0000 0000     %%%%%%%%%.!.....
+d0086d38:	0000 1000 2521 2121 2525 2521 2525 2525     ....!%!!%%!%%%%%
+d0086d48:	2525 2525 2525 2525 1025 1021 0000 0000     %%%%%%%%%.!.....
+d0086d58:	0000 1000 2521 2121 2525 2521 2525 2525     ....!%!!%%!%%%%%
+d0086d68:	2525 2525 2125 2525 1025 1021 0000 0000     %%%%%!%%%.!.....
+d0086d78:	0000 1000 2521 2121 2525 2521 2525 2525     ....!%!!%%!%%%%%
+d0086d88:	2525 2525 2125 2525 1025 1021 0000 0000     %%%%%!%%%.!.....
+d0086d98:	0000 1000 2521 2121 2525 2521 2525 2525     ....!%!!%%!%%%%%
+d0086da8:	2525 2525 2125 1025 1025 1021 0000 0000     %%%%%!%.%.!.....
+d0086db8:	0000 1000 2521 2121 2525 2521 2525 2525     ....!%!!%%!%%%%%
+d0086dc8:	2525 2525 2525 2525 1010 1010 0000 0000     %%%%%%%%........
+d0086dd8:	0000 0000 2510 2121 2525 2521 2525 2525     .....%!!%%!%%%%%
+d0086de8:	2525 2525 2525 2525 1010 1010 0000 0000     %%%%%%%%........
+d0086df8:	0000 0000 2510 2521 2525 2521 2525 2525     .....%!%%%!%%%%%
+d0086e08:	2525 2525 2525 2525 1025 1010 0000 0000     %%%%%%%%%.......
+d0086e18:	0000 0000 2510 2521 2525 2521 2525 2525     .....%!%%%!%%%%%
+d0086e28:	2525 2525 2525 2525 2125 1010 0000 0000     %%%%%%%%%!......
+d0086e38:	0000 0000 2510 2521 2525 2521 2525 2525     .....%!%%%!%%%%%
+d0086e48:	2525 2525 2525 2525 1025 1010 0010 0000     %%%%%%%%%.......
+d0086e58:	0000 0000 2510 2521 2525 2521 2525 2525     .....%!%%%!%%%%%
+d0086e68:	2525 2525 2525 2525 1025 1010 0010 0000     %%%%%%%%%.......
+d0086e78:	0000 0000 2510 2521 2525 2521 2525 2525     .....%!%%%!%%%%%
+d0086e88:	2525 2525 2525 2525 1021 1010 0010 0000     %%%%%%%%!.......
+d0086e98:	0000 0000 2510 2521 2525 2521 2525 2525     .....%!%%%!%%%%%
+d0086ea8:	2525 2525 2525 2525 1021 1010 0010 0000     %%%%%%%%!.......
+d0086eb8:	0000 0000 2510 2521 2525 2521 2525 2525     .....%!%%%!%%%%%
+d0086ec8:	2525 2525 2525 2525 1021 1010 0010 0000     %%%%%%%%!.......
+d0086ed8:	0000 0000 2510 2521 2525 2521 2525 2525     .....%!%%%!%%%%%
+d0086ee8:	2525 2525 2525 2525 1025 1010 0010 0000     %%%%%%%%%.......
+d0086ef8:	0000 1000 2121 2521 2525 2521 2525 2525     ....!!!%%%!%%%%%
+d0086f08:	2525 2525 2525 2125 2125 1010 1010 0000     %%%%%%%!%!......
+d0086f18:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d0086f28:	2525 2525 2525 2125 2125 1010 1010 0000     %%%%%%%!%!......
+d0086f38:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d0086f48:	2525 2525 2525 2521 2125 1010 1010 0000     %%%%%%!%%!......
+d0086f58:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d0086f68:	2525 2525 2525 2521 2125 1010 1010 0000     %%%%%%!%%!......
+d0086f78:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d0086f88:	2525 2525 2525 2521 1025 1010 0010 0000     %%%%%%!%%.......
+d0086f98:	0000 1000 2121 2525 2525 2525 2525 2525     ....!!%%%%%%%%%%
+d0086fa8:	2525 2525 2525 2525 1025 1010 0010 0000     %%%%%%%%%.......
+d0086fb8:	0000 1000 2121 2525 2525 2525 2525 2525     ....!!%%%%%%%%%%
+d0086fc8:	2525 2525 2125 2525 1025 1021 0010 0000     %%%%%!%%%.!.....
+d0086fd8:	0000 2110 2121 2525 2525 2525 2525 2525     ...!!!%%%%%%%%%%
+d0086fe8:	2525 2525 2525 2521 1025 1021 0010 0000     %%%%%%!%%.!.....
+d0086ff8:	0000 2110 2121 2521 2525 2525 2525 2525     ...!!!!%%%%%%%%%
+d0087008:	2525 2525 2525 2521 1025 1021 1010 0000     %%%%%%!%%.!.....
+d0087018:	0000 2110 2121 2521 2525 2525 2525 2525     ...!!!!%%%%%%%%%
+d0087028:	2525 2525 2525 2525 1025 2110 1010 0000     %%%%%%%%%..!....
+d0087038:	0000 2110 2125 2521 2525 2525 2525 2525     ...!%!!%%%%%%%%%
+d0087048:	2525 2525 2525 2525 1010 2110 1010 0010     %%%%%%%%...!....
+d0087058:	0000 2110 2125 2121 2525 2525 2525 2525     ...!%!!!%%%%%%%%
+d0087068:	2525 2525 2525 2521 1010 2110 1010 0010     %%%%%%!%...!....
+d0087078:	1000 2121 2125 2121 2525 2525 2525 2525     ..!!%!!!%%%%%%%%
+d0087088:	2525 2525 2525 2521 2125 2110 1010 0010     %%%%%%!%%!.!....
+d0087098:	1000 2121 2125 2121 2525 2521 2525 2525     ..!!%!!!%%!%%%%%
+d00870a8:	2525 2525 2525 2521 2125 1021 1010 0000     %%%%%%!%%!!.....
+d00870b8:	1000 2121 2125 2121 2525 2521 2525 2525     ..!!%!!!%%!%%%%%
+d00870c8:	2525 2525 2525 2521 2125 1021 1010 0000     %%%%%%!%%!!.....
+d00870d8:	1000 2121 2125 2121 2525 2521 2525 2525     ..!!%!!!%%!%%%%%
+d00870e8:	2525 2525 2525 2525 2125 1021 1010 0000     %%%%%%%%%!!.....
+d00870f8:	1000 2121 2125 2121 2525 2521 2525 2525     ..!!%!!!%%!%%%%%
+d0087108:	2525 2525 2525 2525 2125 1021 1010 0000     %%%%%%%%%!!.....
+d0087118:	1000 2121 2125 2521 2525 2521 2525 2525     ..!!%!!%%%!%%%%%
+d0087128:	2525 2525 2525 2525 2121 1010 0010 0000     %%%%%%%%!!......
+d0087138:	0000 2110 2125 2521 2525 2521 2525 2525     ...!%!!%%%!%%%%%
+d0087148:	2525 2525 2525 2525 2121 1010 0010 0000     %%%%%%%%!!......
+d0087158:	0000 2110 2125 2521 2525 2125 2525 2525     ...!%!!%%%%!%%%%
+d0087168:	2525 2525 2525 2525 2121 1010 0010 0000     %%%%%%%%!!......
+d0087178:	0000 2110 2125 2521 2525 2125 2525 2525     ...!%!!%%%%!%%%%
+d0087188:	2525 2525 2125 2525 2121 1010 0010 0000     %%%%%!%%!!......
+d0087198:	0000 2110 2125 2521 2525 2125 2525 2525     ...!%!!%%%%!%%%%
+d00871a8:	2525 2525 2125 2525 2125 1010 0010 0000     %%%%%!%%%!......
+d00871b8:	0000 1000 2125 2521 2525 2125 2525 2525     ....%!!%%%%!%%%%
+d00871c8:	2525 2525 2125 2525 2125 2110 0010 0000     %%%%%!%%%!.!....
+d00871d8:	0000 1000 2125 2521 2525 2125 2525 2525     ....%!!%%%%!%%%%
+d00871e8:	2525 2525 2125 2525 1025 2110 0010 0000     %%%%%!%%%..!....
+d00871f8:	0000 1000 2121 2521 2525 2125 2525 2525     ....!!!%%%%!%%%%
+d0087208:	2525 2525 2125 2525 1025 2110 0010 0000     %%%%%!%%%..!....
+d0087218:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d0087228:	2525 2525 2125 2525 1025 1021 0000 0000     %%%%%!%%%.!.....
+d0087238:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d0087248:	2525 2525 2521 2525 1025 1021 0000 0000     %%%%!%%%%.!.....
+d0087258:	0000 0000 2110 2521 2525 2525 2525 2525     .....!!%%%%%%%%%
+d0087268:	2525 2525 2521 2525 1025 1021 0000 0000     %%%%!%%%%.!.....
+d0087278:	0000 0000 2110 2521 2525 2525 2525 2525     .....!!%%%%%%%%%
+d0087288:	2525 2525 2521 2525 1025 1010 0000 0000     %%%%!%%%%.......
+d0087298:	0000 0000 2110 2521 2525 2521 2525 2525     .....!!%%%!%%%%%
+d00872a8:	2525 2525 2521 2525 1025 0010 0000 0000     %%%%!%%%%.......
+d00872b8:	0000 0000 2110 2521 2525 2521 2525 2525     .....!!%%%!%%%%%
+d00872c8:	2525 2525 2521 2525 1025 0010 0000 0000     %%%%!%%%%.......
+d00872d8:	0000 0000 2110 2521 2525 2521 2525 2525     .....!!%%%!%%%%%
+d00872e8:	2525 2525 2521 2525 1025 0010 0000 0000     %%%%!%%%%.......
+d00872f8:	0000 0000 2110 2521 2525 2521 2525 2525     .....!!%%%!%%%%%
+d0087308:	2525 2525 2521 2525 1025 1010 0000 0000     %%%%!%%%%.......
+d0087318:	0000 0000 2110 2521 2525 2521 2525 2525     .....!!%%%!%%%%%
+d0087328:	2525 2525 2525 2525 1025 1010 0000 0000     %%%%%%%%%.......
+d0087338:	0000 1000 2121 2521 2525 2521 2525 2525     ....!!!%%%!%%%%%
+d0087348:	2525 2525 2525 2525 1025 1010 0000 0000     %%%%%%%%%.......
+d0087358:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d0087368:	2525 2525 2525 2525 1010 1010 0000 0000     %%%%%%%%........
+d0087378:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d0087388:	2525 2525 2525 2525 1010 1010 0000 0000     %%%%%%%%........
+d0087398:	0000 1000 2121 2525 2525 2525 2525 2525     ....!!%%%%%%%%%%
+d00873a8:	2525 2525 2525 2525 1010 1010 0000 0000     %%%%%%%%........
+d00873b8:	0000 1000 2121 2525 2525 2525 2525 2525     ....!!%%%%%%%%%%
+d00873c8:	2525 2525 2525 2525 1010 1010 0000 0000     %%%%%%%%........
+d00873d8:	0000 1000 2121 2525 2525 2525 2525 2525     ....!!%%%%%%%%%%
+d00873e8:	2525 2525 2525 2525 1010 1010 0010 0000     %%%%%%%%........
+d00873f8:	0000 1000 2121 2525 2521 2525 2525 2525     ....!!%%!%%%%%%%
+d0087408:	2525 2525 2525 2525 1010 2110 0010 0000     %%%%%%%%...!....
+d0087418:	0000 1000 2121 2525 2521 2525 2525 2525     ....!!%%!%%%%%%%
+d0087428:	2525 2525 2525 2525 1010 2110 1010 0000     %%%%%%%%...!....
+d0087438:	0000 1000 2121 2525 2521 2525 2525 2525     ....!!%%!%%%%%%%
+d0087448:	2525 2525 2525 2525 1010 2110 1010 0000     %%%%%%%%...!....
+d0087458:	0000 2110 2121 2525 2521 2525 2525 2525     ...!!!%%!%%%%%%%
+d0087468:	2525 2525 2525 2525 1010 2110 1010 0000     %%%%%%%%...!....
+d0087478:	0000 2110 2121 2525 2521 2525 2525 2525     ...!!!%%!%%%%%%%
+d0087488:	2525 2525 2525 2525 1010 2110 1010 0000     %%%%%%%%...!....
+d0087498:	0000 2110 2121 2525 2521 2525 2525 2525     ...!!!%%!%%%%%%%
+d00874a8:	2525 2525 2525 2521 1010 1010 1021 0000     %%%%%%!%....!...
+d00874b8:	0000 2110 2121 2525 2521 2525 2525 2525     ...!!!%%!%%%%%%%
+d00874c8:	2525 2525 2525 2521 1010 1010 1021 0000     %%%%%%!%....!...
+d00874d8:	0000 2110 2121 2525 2521 2525 2525 2525     ...!!!%%!%%%%%%%
+d00874e8:	2525 2525 2525 2521 1025 1010 1021 0000     %%%%%%!%%...!...
+d00874f8:	0000 2110 2121 2525 2521 2525 2525 2525     ...!!!%%!%%%%%%%
+d0087508:	2525 2525 2525 2521 1025 1010 1021 0000     %%%%%%!%%...!...
+d0087518:	0000 2110 2121 2525 2521 2525 2525 2525     ...!!!%%!%%%%%%%
+d0087528:	2525 2525 2525 2125 1025 1010 1021 0000     %%%%%%%!%...!...
+d0087538:	0000 2110 2121 2525 2521 2525 2525 2525     ...!!!%%!%%%%%%%
+d0087548:	2525 2525 2525 2125 1025 1010 0010 0000     %%%%%%%!%.......
+d0087558:	0000 2110 2121 2525 2521 2525 2525 2525     ...!!!%%!%%%%%%%
+d0087568:	2525 2525 2525 2125 1025 1010 0010 0000     %%%%%%%!%.......
+d0087578:	0000 1000 2121 2525 2521 2525 2525 2525     ....!!%%!%%%%%%%
+d0087588:	2525 2525 2525 2125 1025 1025 0010 0000     %%%%%%%!%.%.....
+d0087598:	0000 1000 2121 2525 2525 2525 2525 2525     ....!!%%%%%%%%%%
+d00875a8:	2525 2525 2525 2125 2525 1010 0010 0000     %%%%%%%!%%......
+d00875b8:	0000 1000 2121 2525 2525 2525 2525 2525     ....!!%%%%%%%%%%
+d00875c8:	2525 2525 2525 2525 2510 1010 0010 0000     %%%%%%%%.%......
+d00875d8:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d00875e8:	2525 2525 2525 2525 2510 1010 0010 0000     %%%%%%%%.%......
+d00875f8:	0000 0000 2110 2521 2525 2525 2525 2525     .....!!%%%%%%%%%
+d0087608:	2525 2525 2525 1025 2521 1010 0010 0000     %%%%%%%.!%......
+d0087618:	0000 0000 2110 2521 2525 2525 2525 2525     .....!!%%%%%%%%%
+d0087628:	2525 2525 2525 1025 1021 2110 0010 0000     %%%%%%%.!..!....
+d0087638:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d0087648:	2525 2525 2525 2510 1025 2110 0010 0000     %%%%%%.%%..!....
+d0087658:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d0087668:	2525 2525 2525 2510 1025 2110 0010 0000     %%%%%%.%%..!....
+d0087678:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d0087688:	2525 2525 1025 2525 1025 2110 1010 0000     %%%%%.%%%..!....
+d0087698:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d00876a8:	2525 2525 1025 2525 1021 1010 1010 0000     %%%%%.%%!.......
+d00876b8:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d00876c8:	2525 2525 2525 2525 1021 1010 1010 0000     %%%%%%%%!.......
+d00876d8:	0000 1000 2121 2521 2525 2525 2525 2525     ....!!!%%%%%%%%%
+d00876e8:	2525 2525 2525 2525 1021 1010 1010 0000     %%%%%%%%!.......
+d00876f8:	0000 2110 2121 2521 2525 2521 2525 2525     ...!!!!%%%!%%%%%
+d0087708:	2525 2525 2525 2125 1021 1010 1010 0000     %%%%%%%!!.......
+d0087718:	0000 2110 2121 2525 2525 2521 2525 2525     ...!!!%%%%!%%%%%
+d0087728:	2525 2525 2525 2525 1025 1010 0010 0000     %%%%%%%%%.......
+d0087738:	0000 2110 2121 2525 2525 2521 2525 2525     ...!!!%%%%!%%%%%
+d0087748:	2525 2525 2525 2525 1025 1010 0010 0000     %%%%%%%%%.......
+d0087758:	0000 2110 2121 2525 2525 2521 2525 2525     ...!!!%%%%!%%%%%
+d0087768:	2525 2525 2525 2525 1025 1010 0000 0000     %%%%%%%%%.......
+d0087778:	0000 2110 2121 2525 2525 2521 2525 2525     ...!!!%%%%!%%%%%
+d0087788:	2525 2525 2525 2525 1025 1010 0010 0000     %%%%%%%%%.......
+d0087798:	0000 2110 2121 2525 2125 2525 2525 2525     ...!!!%%%!%%%%%%
+d00877a8:	2525 2525 2125 2525 1025 1010 0010 0000     %%%%%!%%%.......
+d00877b8:	0000 2110 2521 2521 2125 2525 2525 2525     ...!!%!%%!%%%%%%
+d00877c8:	2525 2525 2125 2525 1025 1010 0010 0000     %%%%%!%%%.......
+d00877d8:	0000 2110 2521 2521 2125 2525 2525 2525     ...!!%!%%!%%%%%%
+d00877e8:	2525 2525 2125 2525 1025 1010 0010 0000     %%%%%!%%%.......
+d00877f8:	0000 2110 2521 2521 2125 2525 2525 2525     ...!!%!%%!%%%%%%
+d0087808:	2525 2525 2125 2525 1010 2110 0010 0000     %%%%%!%%...!....
+d0087818:	0000 2110 2521 2525 2125 2525 2525 2525     ...!!%%%%!%%%%%%
+d0087828:	2525 2525 2525 2521 1010 2110 0010 0000     %%%%%%!%...!....
+d0087838:	0000 2110 2521 2525 2525 2525 2525 2525     ...!!%%%%%%%%%%%
+d0087848:	2525 2525 2525 2521 1010 1010 0021 0000     %%%%%%!%....!...
+d0087858:	0000 2110 2121 2525 2525 2525 2525 2525     ...!!!%%%%%%%%%%
+d0087868:	2525 2525 2525 2521 1025 1010 0021 0000     %%%%%%!%%...!...
+d0087878:	0000 2110 2121 2525 2525 2525 2525 2525     ...!!!%%%%%%%%%%
+d0087888:	2525 2525 2525 2521 1025 1010 0010 0000     %%%%%%!%%.......
+d0087898:	0000 2110 2121 2525 2525 2525 2525 2525     ...!!!%%%%%%%%%%
+d00878a8:	2525 2525 2525 2525 1025 1010 1010 0000     %%%%%%%%%.......
+d00878b8:	0000 2110 2121 2525 2125 2525 2525 2525     ...!!!%%%!%%%%%%
+d00878c8:	2525 2525 2525 2525 1025 1010 1010 0000     %%%%%%%%%.......
+d00878d8:	0000 2110 2521 2525 2125 2525 2525 2525     ...!!%%%%!%%%%%%
+d00878e8:	2525 2525 2525 2525 1025 1010 2110 0000     %%%%%%%%%....!..
+d00878f8:	0000 2110 2521 2525 2125 2525 2525 2525     ...!!%%%%!%%%%%%
+d0087908:	2525 2525 2525 2525 2125 1010 2110 0000     %%%%%%%%%!...!..
+d0087918:	0000 2110 2525 2525 2125 2525 2525 2525     ...!%%%%%!%%%%%%
+d0087928:	2525 2525 2525 2525 2125 1010 1021 0000     %%%%%%%%%!..!...
+d0087938:	0000 2110 2525 2525 2125 2525 2525 2525     ...!%%%%%!%%%%%%
+d0087948:	2525 2525 2525 2525 2125 1010 1021 0000     %%%%%%%%%!..!...
+d0087958:	0000 2110 2525 2525 2525 2525 2525 2525     ...!%%%%%%%%%%%%
+d0087968:	2525 2525 2525 2525 2525 1010 1021 0000     %%%%%%%%%%..!...
+d0087978:	1000 2121 2525 2525 2525 2525 2525 2525     ..!!%%%%%%%%%%%%
+d0087988:	2525 2525 2525 2125 2525 1021 1010 0000     %%%%%%%!%%!.....
+d0087998:	1000 2121 2521 2525 2525 2525 2525 2525     ..!!!%%%%%%%%%%%
+d00879a8:	2525 2525 2525 2125 2525 1021 1010 0000     %%%%%%%!%%!.....
+d00879b8:	1000 2121 2521 2525 2525 2525 2525 2525     ..!!!%%%%%%%%%%%
+d00879c8:	2525 2525 2525 2125 2525 1021 1010 0000     %%%%%%%!%%!.....
+d00879d8:	1000 2121 2521 2525 2525 2525 2525 2525     ..!!!%%%%%%%%%%%
+d00879e8:	2525 2525 2525 2125 2525 1021 1010 0000     %%%%%%%!%%!.....
+d00879f8:	1000 2121 2121 2521 2525 2525 2525 2525     ..!!!!!%%%%%%%%%
+d0087a08:	2525 2525 2525 2125 2525 1021 1010 0000     %%%%%%%!%%!.....
+d0087a18:	1000 2121 2121 2121 2525 2525 2525 2525     ..!!!!!!%%%%%%%%
+d0087a28:	2525 2525 2525 2125 2525 1010 1010 0000     %%%%%%%!%%......
+d0087a38:	1000 2121 2121 2121 2521 2525 2525 2525     ..!!!!!!!%%%%%%%
+d0087a48:	2525 2525 2525 2125 2525 1010 1010 0000     %%%%%%%!%%......
+d0087a58:	1000 2121 2121 2121 2121 2525 2525 2525     ..!!!!!!!!%%%%%%
+d0087a68:	2525 2525 2525 2525 1025 1010 1010 0000     %%%%%%%%%.......
+d0087a78:	1000 2121 2121 2521 2525 2525 2525 2525     ..!!!!!%%%%%%%%%
+d0087a88:	2525 2525 2525 2525 1025 1010 1010 0000     %%%%%%%%%.......
+d0087a98:	1000 2121 2121 2521 2525 2525 2525 2525     ..!!!!!%%%%%%%%%
+d0087aa8:	2525 2525 2525 2525 2521 1010 1010 0000     %%%%%%%%!%......
+d0087ab8:	1000 2121 2121 2121 2525 2525 2525 2525     ..!!!!!!%%%%%%%%
+d0087ac8:	2525 2525 2525 2525 2521 1010 1010 0000     %%%%%%%%!%......
+d0087ad8:	1000 2121 2121 2121 2525 2525 2525 2525     ..!!!!!!%%%%%%%%
+d0087ae8:	2525 2525 2525 2525 2521 1010 1010 0000     %%%%%%%%!%......
+d0087af8:	1000 2121 2121 2121 2525 2525 2525 2525     ..!!!!!!%%%%%%%%
+d0087b08:	2525 2525 2525 2125 2525 1021 1010 0000     %%%%%%%!%%!.....
+d0087b18:	1000 2121 2121 2121 2525 2125 2525 2525     ..!!!!!!%%%!%%%%
+d0087b28:	2525 2525 2525 2125 2525 1025 1010 0010     %%%%%%%!%%%.....
+d0087b38:	1000 2121 2121 2121 2525 2125 2525 2525     ..!!!!!!%%%!%%%%
+d0087b48:	2525 2525 2525 2125 2125 1021 1025 0010     %%%%%%%!%!!.%...
+d0087b58:	1000 2121 2121 2121 2525 2125 2525 2525     ..!!!!!!%%%!%%%%
+d0087b68:	2525 2525 2525 2125 2510 1021 1010 0010     %%%%%%%!.%!.....
+d0087b78:	1000 2121 2121 2121 2525 2125 2525 2525     ..!!!!!!%%%!%%%%
+d0087b88:	2525 2525 2525 2525 2510 1021 1010 0010     %%%%%%%%.%!.....
+d0087b98:	1000 2121 2121 2121 2525 2125 2525 2525     ..!!!!!!%%%!%%%%
+d0087ba8:	2525 2525 2525 2525 2110 1025 1010 0010     %%%%%%%%.!%.....
+d0087bb8:	1000 2121 2121 2121 2525 2125 2525 2525     ..!!!!!!%%%!%%%%
+d0087bc8:	2525 2525 2525 2525 1025 1025 1010 0010     %%%%%%%%%.%.....
+d0087bd8:	1000 2121 2121 2121 2525 2125 2525 2525     ..!!!!!!%%%!%%%%
+d0087be8:	2525 2525 2525 2525 1025 1021 1010 0010     %%%%%%%%%.!.....
+d0087bf8:	0000 2110 2121 2121 2525 2125 2525 2525     ...!!!!!%%%!%%%%
+d0087c08:	2525 2525 2525 2525 1025 1021 1010 0010     %%%%%%%%%.!.....
+d0087c18:	0000 2110 2121 2521 2525 2125 2525 2525     ...!!!!%%%%!%%%%
+d0087c28:	2525 2525 2525 2525 2525 1025 1010 0010     %%%%%%%%%%%.....
+d0087c38:	0000 2110 2121 2521 2525 2525 2525 2525     ...!!!!%%%%%%%%%
+d0087c48:	2525 2525 2525 2525 2525 1010 1010 0010     %%%%%%%%%%......
+d0087c58:	0000 2110 2121 2521 2525 2525 2525 2525     ...!!!!%%%%%%%%%
+d0087c68:	2525 2525 2525 2525 2510 2510 1010 0010     %%%%%%%%.%.%....
+d0087c78:	0000 2110 2121 2521 2525 2525 2525 2525     ...!!!!%%%%%%%%%
+d0087c88:	2525 2525 2525 1025 2525 2510 1010 0010     %%%%%%%.%%.%....
+d0087c98:	0000 2110 2121 2521 2525 2525 2525 2525     ...!!!!%%%%%%%%%
+d0087ca8:	2525 2525 2525 1025 2525 2510 1010 0010     %%%%%%%.%%.%....
+d0087cb8:	0000 2110 2121 2521 2525 2525 2525 2525     ...!!!!%%%%%%%%%
+d0087cc8:	2525 2525 2525 1021 2525 1010 1010 0010     %%%%%%!.%%......
+
+d0087cd8 <frontbush>:
+	...
+d0087d40:	f100 00f1 f100 00f1 0000 0000 0000 0000     ................
+	...
+d0087e80:	f100 f14c f100 f14c 0000 0000 0000 f100     ..L...L.........
+d0087e90:	f1f1 f1f1 0000 0000 0000 0000 0000 0000     ................
+	...
+d0087fc0:	f100 4c4c f1f1 4c4c 00f1 0000 f100 f1f1     ..LL..LL........
+d0087fd0:	4c4c 00f1 0000 0000 0000 0000 0000 0000     LL..............
+	...
+d0088100:	f100 584c f14c 58f1 f14c f1f1 4cf1 5858     ..LXL..XL....LXX
+d0088110:	f14c 0000 0000 0000 0000 0000 0000 0000     L...............
+	...
+d0088238:	f100 f1f1 f1f1 f1f1 f1f1 584c 4c58 f14c     ..........LXXLL.
+d0088248:	4c58 4c4c 5858 f14c 00f1 0000 0000 0000     XLLLXXL.........
+	...
+d0088378:	4cf1 584c 5858 4c58 f14c 4cf1 5858 4c58     .LLXXXXLL..LXXXL
+d0088388:	5858 5858 4c58 f14c 0000 0000 0000 0000     XXXXXLL.........
+	...
+d00884b8:	f100 f1f1 4cf1 5858 5858 4c58 5858 5858     .....LXXXXXLXXXX
+d00884c8:	5858 5858 4c4c 00f1 0000 0000 0000 0000     XXXXLL..........
+	...
+d00885fc:	f1f1 4cf1 584c 5858 5858 5858 5858 5858     ...LLXXXXXXXXXXX
+d008860c:	4c4c f1f1 f1f1 0000 0000 0000 0000 0000     LL..............
+	...
+d0088734:	0000 f100 f1f1 f1f1 4cf1 f14c 4c4c 584c     .........LL.LLLX
+d0088744:	5858 5858 5858 5858 5858 4c4c 4c4c f1f1     XXXXXXXXXXLLLL..
+	...
+d0088874:	0000 4cf1 4c4c f14c 584c 5858 584c 5858     ...LLLL.LXXXLXXX
+d0088884:	5858 5858 5858 5858 4c4c 4c4c f1f1 4c4c     XXXXXXXXLLLL..LL
+d0088894:	00f1 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d00889b4:	0000 f1f1 f1f1 4cf1 5858 5858 5858 5858     .......LXXXXXXXX
+d00889c4:	5858 5858 5858 584c 4c4c f1f1 0000 f1f1     XXXXXXLXLL......
+	...
+d0088af8:	f100 584c 4c58 4c4c 4c4c 584c 5858 5858     ..LXXLLLLLLXXXXX
+d0088b08:	4c58 4c4c f14c 00f1 f1f1 0000 0000 0000     XLLLL...........
+	...
+d0088c38:	f100 5858 4c4c f14c f1f1 5858 4c4c 5858     ..XXLLL...XXLLXX
+d0088c48:	4c58 4c4c 4c4c f14c 4c4c 00f1 0000 0000     XLLLLLL.LL......
+	...
+d0088d78:	4cf1 4c58 f14c 00f1 4cf1 4c58 4c4c 5858     .LXLL....LXLLLXX
+d0088d88:	4c4c 4c4c 4c4c 4c4c f1f1 00f1 0000 0000     LLLLLLLL........
+	...
+d0088eb8:	4cf1 f14c 00f1 f100 4c4c f14c f1f1 584c     .LL.....LLL...LX
+d0088ec8:	4c4c 4c4c 4c4c f1f1 0000 0000 0000 0000     LLLLLL..........
+	...
+d0088ff8:	4cf1 00f1 0000 4cf1 4c4c f1f1 f1f1 584c     .L.....LLL....LX
+d0089008:	4cf1 4c4c f14c f1f1 0000 0000 0000 0000     .LLLL...........
+	...
+d0089120:	f100 00f1 f100 00f1 0000 0000 0000 0000     ................
+	...
+d008913c:	f100 4c4c f14c f100 f1f1 4c4c f14c f14c     ..LLL.....LLL.L.
+d008914c:	4c4c f14c 00f1 0000 0000 0000 0000 0000     LLL.............
+	...
+d0089200:	0000 f100 00f1 f100 00f1 0000 0000 0000     ................
+	...
+d0089260:	f100 f14c f100 f14c 0000 0000 0000 f100     ..L...L.........
+d0089270:	f1f1 f1f1 0000 0000 0000 0000 f100 4c4c     ..............LL
+d0089280:	00f1 f2f1 f1f2 4cf1 f14c f14c f1f1 f14c     .......LL.L...L.
+d0089290:	f100 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d0089334:	0000 f1f1 f1f1 00f1 0000 0000 0000 4cf1     ...............L
+d0089344:	00f1 4cf1 00f1 0000 0000 0000 0000 0000     ...L............
+	...
+d00893a0:	f100 4c4c f1f1 4c4c 00f1 0000 f100 f1f1     ..LL..LL........
+d00893b0:	4c4c 00f1 0000 0000 0000 0000 f100 f14c     LL............L.
+d00893c0:	f100 f220 f1f1 4cf1 f1f1 f14c 0000 f1f1     .. ....L..L.....
+	...
+d0089474:	0000 f100 4c4c f1f1 00f1 0000 f100 4c4c     ....LL........LL
+d0089484:	f1f1 4c4c 00f1 0000 0000 0000 0000 0000     ..LL............
+	...
+d00894e0:	f100 584c f14c 58f1 f14c f1f1 4cf1 5858     ..LXL..XL....LXX
+d00894f0:	f14c 0000 0000 0000 0000 0000 0000 00f1     L...............
+d0089500:	20f1 f220 00f1 f100 f14c f14c 0000 f100     .  .....L.L.....
+	...
+d00895b8:	4cf1 5858 f14c f1f1 4cf1 f158 4cf1 4c58     .LXXL....LX..LXL
+d00895c8:	00f1 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d0089618:	f100 f1f1 f1f1 f1f1 f1f1 584c 4c58 f14c     ..........LXXLL.
+d0089628:	4c58 4c4c 5858 f14c 00f1 0000 0000 0000     XLLLXXL.........
+d0089638:	0000 0000 0000 f100 2020 f120 0000 f100     ........   .....
+d0089648:	f1f1 f14c 0000 0000 0000 0000 0000 0000     ..L.............
+	...
+d00896f8:	f100 4cf1 5858 4c4c 584c 4cf1 584c 4c58     ...LXXLLLX.LLXXL
+d0089708:	f1f1 f1f1 f1f1 f1f1 00f1 0000 0000 0000     ................
+	...
+d0089758:	4cf1 584c 5858 4c58 f14c 4cf1 5858 4c58     .LLXXXXLL..LXXXL
+d0089768:	5858 5858 4c58 f14c 0000 0000 0000 0000     XXXXXLL.........
+d0089778:	0000 0000 0000 20f1 2029 00f1 0000 0000     ....... ) ......
+d0089788:	f1f1 f1f1 0000 0000 0000 0000 0000 0000     ................
+	...
+d0089838:	0000 4cf1 584c 5858 5858 584c 5858 f14c     ...LLXXXXXLXXXL.
+d0089848:	4cf1 584c 5858 4c58 f14c 0000 0000 0000     .LLXXXXLL.......
+	...
+d0089898:	f100 f1f1 4cf1 5858 5858 4c58 5858 5858     .....LXXXXXLXXXX
+d00898a8:	5858 5858 4c4c 00f1 0000 0000 0000 0000     XXXXLL..........
+d00898b8:	0000 0000 0000 29f1 f120 0000 0000 0000     .......) .......
+d00898c8:	00f1 f100 0000 0000 0000 0000 0000 0000     ................
+	...
+d0089978:	0000 f100 4c4c 5858 5858 5858 5858 584c     ....LLXXXXXXXXLX
+d0089988:	5858 5858 f14c f1f1 00f1 0000 0000 0000     XXXXL...........
+	...
+d00899dc:	f1f1 4cf1 584c 5858 5858 5858 5858 5858     ...LLXXXXXXXXXXX
+d00899ec:	4c4c f1f1 f1f1 0000 0000 0000 0000 0000     LL..............
+d00899fc:	f100 2029 00f1 0000 0000 0000 0000 0000     ..) ............
+	...
+d0089ab8:	f1f1 f1f1 4c4c 5858 5858 5858 5858 5858     ....LLXXXXXXXXXX
+d0089ac8:	4c58 f14c f1f1 0000 0000 0000 0000 0000     XLL.............
+	...
+d0089b14:	0000 f100 f1f1 f1f1 4cf1 f14c 4c4c 584c     .........LL.LLLX
+d0089b24:	5858 5858 5858 5858 5858 4c4c 4c4c f1f1     XXXXXXXXXXLLLL..
+	...
+d0089b3c:	f1f1 f220 00f1 0000 0000 0000 0000 0000     .. .............
+	...
+d0089bf4:	0000 f1f1 4c4c 4c4c 5858 5858 5858 5858     ....LLLLXXXXXXXX
+d0089c04:	5858 4c58 4c4c 4cf1 f14c f1f1 f1f1 00f1     XXXLLL.LL.......
+	...
+d0089c54:	0000 4cf1 4c4c f14c 584c 5858 584c 5858     ...LLLL.LXXXLXXX
+d0089c64:	5858 5858 5858 5858 4c4c 4c4c f1f1 4c4c     XXXXXXXXLLLL..LL
+d0089c74:	00f1 0000 0000 f100 f120 f1f1 0000 0000     ........ .......
+	...
+d0089d34:	f100 4c4c f1f1 4c4c 4c4c 5858 5858 5858     ..LL..LLLLXXXXXX
+d0089d44:	5858 5858 4c58 5858 4c58 4cf1 4c4c f14c     XXXXXLXXXL.LLLL.
+	...
+d0089d94:	0000 f1f1 f1f1 f1f1 f1f1 5858 5858 5858     ..........XXXXXX
+d0089da4:	5858 5858 5858 584c 4c4c f1f1 0000 f1f1     XXXXXXLXLL......
+d0089db4:	0000 0000 0000 f100 2020 00f1 0000 0000     ........  ......
+	...
+d0089e74:	0000 f1f1 0000 f1f1 4c4c 4c58 5858 5858     ........LLXLXXXX
+d0089e84:	5858 5858 5858 5858 5858 f14c f1f1 f1f1     XXXXXXXXXXL.....
+	...
+d0089edc:	0000 f1f1 4c4c 584c 5858 5858 4c58 4c4c     ....LLLXXXXXXLLL
+d0089eec:	f14c 00f1 f1f1 0000 0000 0000 0000 20f1     L.............. 
+d0089efc:	2029 00f1 0000 0000 0000 0000 0000 0000     ) ..............
+	...
+d0089fb8:	f1f1 f100 4cf1 4c4c 584c 5858 5858 4c58     .....LLLLXXXXXXL
+d0089fc8:	4c4c 4c4c 584c 4c58 00f1 0000 0000 0000     LLLLLXXL........
+	...
+d008a020:	f1f1 5858 4c4c 5858 4c58 4c4c 4c4c f14c     ..XXLLXXXLLLLLL.
+d008a030:	4c4c 00f1 0000 0000 f100 2920 f120 0000     LL........ ) ...
+	...
+d008a0f4:	0000 f100 4c4c 4cf1 4c4c 4c4c 584c 5858     ....LL.LLLLLLXXX
+d008a104:	4c4c 5858 f1f1 4cf1 4c4c 5858 00f1 0000     LLXX...LLLXX....
+	...
+d008a160:	0000 4cf1 4c4c 5858 4c4c 4c4c 4c4c 4c4c     ...LLLXXLLLLLLLL
+d008a170:	f1f1 00f1 0000 0000 20f1 f129 f1f1 0000     ......... ).....
+	...
+d008a234:	0000 f100 f1f1 4c4c 4c4c 4c4c 4c4c 5858     ......LLLLLLLLXX
+d008a244:	4c4c 584c f14c f100 4cf1 584c f14c 0000     LLLXL....LLXL...
+	...
+d008a2a0:	0000 f100 f1f1 584c 4c4c 4c4c 4c4c f1f1     ......LXLLLLLL..
+	...
+d008a2b8:	f1f1 20f1 00f1 0000 0000 0000 0000 0000     ... ............
+	...
+d008a378:	0000 f1f1 4c4c 4c4c 4c4c 4c58 f1f1 4cf1     ....LLLLLLXL...L
+d008a388:	4c4c 00f1 f100 4cf1 f14c 0000 0000 0000     LL.....LL.......
+	...
+d008a3e4:	f1f1 584c 4cf1 4c4c f14c f1f1 0000 0000     ..LX.LLLL.......
+d008a3f4:	0000 f100 2020 2020 00f1 0000 0000 0000     ....    ........
+	...
+d008a4b8:	0000 f1f1 4cf1 4c4c f14c 4c58 f1f1 f1f1     .....LLLL.XL....
+d008a4c8:	4c4c f14c 0000 f100 f14c 0000 0000 0000     LLL.....L.......
+	...
+d008a524:	f1f1 4c4c f14c f14c f24c f2f2 00f1 0000     ..LLL.L.L.......
+d008a534:	0000 20f1 2029 f120 0000 0000 0000 0000     ... )  .........
+	...
+d008a5f8:	f100 4cf1 4c4c 4cf1 4cf1 4c4c f1f1 00f1     ...LLL.L.LLL....
+d008a608:	4cf1 4c4c 00f1 0000 0000 0000 0000 0000     .LLL............
+	...
+d008a664:	f100 4cf1 f14c f14c f1f1 20f2 f1f2 0000     ...LL.L.... ....
+d008a674:	f100 2920 2020 00f1 0000 0000 0000 0000     .. )  ..........
+	...
+d008a738:	00f1 4cf1 f1f1 4cf1 4cf1 f14c f2f1 f1f2     ...L...L.LL.....
+d008a748:	f100 4c4c 00f1 0000 0000 0000 0000 0000     ..LL............
+	...
+d008a7a4:	f100 4cf1 f1f1 f14c 0000 29f1 f220 f1f1     ...L..L....) ...
+d008a7b4:	20f1 2029 2020 00f1 0000 0000 0000 0000     . )   ..........
+	...
+d008a878:	0000 f1f1 0000 4cf1 f1f1 f14c f1f1 20f2     .......L..L.... 
+d008a888:	00f1 4cf1 00f1 0000 0000 0000 0000 0000     ...L............
+	...
+d008a8e4:	0000 f100 f14c f14c f100 29f1 2029 f1f2     ....L.L....)) ..
+d008a8f4:	2920 2029 f120 0000 0000 0000 0000 0000      ))  ...........
+	...
+d008a9b8:	0000 00f1 0000 4cf1 4cf1 00f1 f100 20f2     .......L.L..... 
+d008a9c8:	f120 f100 0000 0000 0000 0000 0000 0000      ...............
+	...
+d008aa24:	0000 f100 f1f1 f14c 0000 20f1 2020 20f1     ......L....   . 
+d008aa34:	2020 2020 f1f2 0000 0000 0000 0000 0000         ............
+	...
+d008aafc:	0000 4cf1 f1f1 00f1 0000 20f1 2020 00f1     ...L.......   ..
+	...
+d008ab68:	f1f1 00f1 0000 20f1 2020 2020 2029 f120     .......     )  .
+d008ab78:	00f1 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d008ac3c:	0000 f1f1 f1f1 0000 0000 f100 2920 f120     ............ ) .
+	...
+d008acac:	0000 f100 20f1 2020 2020 00f1 0000 0000     .....     ......
+	...
+d008ad7c:	0000 00f1 f100 0000 0000 0000 20f1 f129     ............. ).
+	...
+d008adf0:	f100 2020 2020 00f1 0000 0000 0000 0000     ..    ..........
+	...
+d008aec8:	f100 2920 00f1 0000 0000 0000 0000 0000     .. )............
+	...
+d008af30:	20f1 2020 2020 00f1 0000 0000 0000 0000     .     ..........
+	...
+d008b008:	f100 20f2 f1f1 0000 0000 0000 0000 0000     ... ............
+	...
+d008b070:	20f1 2020 f120 0000 0000 0000 0000 0000     .    ...........
+	...
+d008b148:	0000 f1f1 20f1 00f1 0000 0000 0000 0000     ..... ..........
+	...
+d008b1b0:	20f1 2020 f120 0000 0000 0000 0000 0000     .    ...........
+	...
+d008b288:	0000 f100 2020 00f1 0000 0000 0000 0000     ....  ..........
+	...
+d008b2ec:	0000 f100 20f1 2020 00f1 0000 0000 0000     .....   ........
+	...
+d008b3c8:	0000 f100 2920 f120 0000 0000 0000 0000     .... ) .........
+	...
+d008b42c:	0000 f100 2020 2020 00f1 0000 0000 0000     ....    ........
+	...
+d008b50c:	20f1 2029 00f1 0000 0000 0000 0000 0000     . ) ............
+	...
+d008b56c:	0000 f1f1 2020 f220 00f1 0000 0000 0000     ....   .........
+	...
+d008b64c:	f1f1 29f1 f120 0000 0000 0000 0000 0000     ...) ...........
+	...
+d008b6ac:	0000 20f1 f120 f1f1 0000 0000 0000 0000     ...  ...........
+	...
+d008b78c:	f100 f120 f1f1 0000 0000 0000 0000 0000     .. .............
+	...
+d008b7ec:	0000 20f1 f120 0000 0000 0000 0000 0000     ...  ...........
+	...
+d008b8cc:	f100 2020 2020 00f1 0000 0000 0000 0000     ..    ..........
+	...
+d008b8f4:	f1f1 f1f1 0000 0000 0000 0000 0000 0000     ................
+	...
+d008b92c:	f100 20f1 2020 00f1 0000 0000 0000 0000     ...   ..........
+	...
+d008b9ac:	0000 f1f1 0000 0000 0000 0000 0000 0000     ................
+	...
+d008b9f4:	f1f1 f1f1 0000 0000 0000 0000 0000 0000     ................
+	...
+d008ba0c:	0000 20f1 2029 00f1 0000 0000 0000 0000     ... ) ..........
+	...
+d008ba24:	f100 f1f1 00f1 0000 0000 0000 0000 f100     ................
+d008ba34:	4c4c 4c4c f1f1 f1f1 f1f1 0000 0000 0000     LLLL............
+d008ba44:	0000 f1f1 0000 0000 0000 0000 0000 0000     ................
+	...
+d008ba64:	f100 f1f1 00f1 0000 f100 2020 2020 00f1     ..........    ..
+d008ba74:	0000 0000 f100 f1f1 f1f1 0000 0000 0000     ................
+	...
+d008baec:	f100 4cf1 00f1 f100 f1f1 f1f1 00f1 0000     ...L............
+	...
+d008bb24:	f100 f1f1 00f1 0000 0000 0000 0000 f100     ................
+d008bb34:	4c4c 4c4c f1f1 f1f1 f1f1 0000 0000 0000     LLLL............
+	...
+d008bb4c:	0000 20f1 2929 f1f2 0000 0000 0000 0000     ... ))..........
+	...
+d008bb64:	4c00 4c4c 4c4c f1f1 0000 0000 0000 4cf1     .LLLLL.........L
+d008bb74:	584c 5858 5858 4c4c 4c4c f1f1 0000 0000     LXXXXXLLLL......
+d008bb84:	0000 4cf1 00f1 0000 0000 0000 0000 0000     ...L............
+	...
+d008bba4:	4c00 4c4c 4c4c f1f1 f1f1 2920 2020 f1f1     .LLLLL.... )  ..
+d008bbb4:	f1f1 f1f1 f1f1 4c4c 4c4c f1f1 0000 0000     ......LLLL......
+	...
+d008bc2c:	4cf1 4c58 f14c 4cf1 5858 4c4c 584c 0000     .LXLL..LXXLLLX..
+	...
+d008bc4c:	0000 f1f1 00f1 0000 0000 0000 0000 0000     ................
+	...
+d008bc64:	4c00 4c4c 4c4c f1f1 0000 0000 0000 4cf1     .LLLLL.........L
+d008bc74:	584c 5858 5858 4c4c 4c4c f1f1 0000 0000     LXXXXXLLLL......
+	...
+d008bc8c:	0000 f2f1 2929 f120 0000 0000 0000 0000     ....)) .........
+	...
+d008bca4:	f100 584c 5858 4c4c 00f1 0000 0000 4cf1     ..LXXXLL.......L
+d008bcb4:	5858 5858 5858 5858 4c58 4c4c 00f1 0000     XXXXXXXXXLLL....
+d008bcc4:	0000 4cf1 00f1 0000 0000 0000 0000 0000     ...L............
+	...
+d008bce4:	f100 584c 5858 4c4c f1f1 2920 f120 4cf1     ..LXXXLL.. ) ..L
+d008bcf4:	5858 5858 5858 5858 4c58 4c4c 00f1 0000     XXXXXXXXXLLL....
+d008bd04:	0000 0000 f100 0000 0000 0000 0000 0000     ................
+	...
+d008bd28:	0000 f1f1 00f1 0000 0000 f200 f1f1 f1f1     ................
+d008bd38:	00f1 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d008bd68:	0000 f1f1 584c 5858 f14c 584c 5858 4c58     ....LXXXL.LXXXXL
+d008bd78:	5858 00f1 0000 0000 0000 0000 0000 0000     XX..............
+d008bd88:	f100 0000 0000 f100 f14c f1f1 00f1 0000     ........L.......
+	...
+d008bda4:	f100 584c 5858 4c4c 00f1 0000 0000 4cf1     ..LXXXLL.......L
+d008bdb4:	5858 5858 5858 5858 4c58 4c4c 00f1 0000     XXXXXXXXXLLL....
+d008bdc4:	0000 0000 f100 0000 0000 f100 2920 f120     ............ ) .
+d008bdd4:	00f1 0000 0000 0000 0000 0000 0000 0000     ................
+d008bde4:	0000 4cf1 584c 5858 f14c 0000 f100 4c4c     ...LLXXXL.....LL
+d008bdf4:	5858 5858 5858 5858 4c58 f14c 0000 0000     XXXXXXXXXLL.....
+d008be04:	0000 58f1 f14c 0000 0000 0000 0000 0000     ...XL...........
+	...
+d008be24:	0000 4cf1 584c 5858 f14c 2020 f1f2 4c4c     ...LLXXXL.  ..LL
+d008be34:	5858 5858 5858 5858 4c58 f14c 0000 0000     XXXXXXXXXLL.....
+d008be44:	0000 0000 f100 00f1 0000 0000 0000 0000     ................
+	...
+d008be68:	f100 f1f1 f1f1 f1f1 f100 f1f1 f1f1 5858     ..............XX
+d008be78:	00f1 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d008bea8:	f100 4c4c 5858 4c58 f1f1 5858 5858 5858     ..LLXXXL..XXXXXX
+d008beb8:	4c58 00f1 0000 0000 0000 0000 0000 0000     XL..............
+d008bec8:	f100 00f1 0000 0000 4cf1 584c f158 00f1     .........LLXX...
+	...
+d008bee4:	0000 4cf1 584c 5858 f14c 0000 f100 4c4c     ...LLXXXL.....LL
+d008bef4:	5858 5858 5858 5858 4c58 f14c 0000 0000     XXXXXXXXXLL.....
+d008bf04:	0000 0000 f100 00f1 0000 f100 2920 f120     ............ ) .
+d008bf14:	f14c 00f1 f1f1 0000 0000 0000 0000 0000     L...............
+d008bf24:	0000 f100 584c 5858 4c58 00f1 f100 584c     ....LXXXXL....LX
+d008bf34:	5858 5858 5858 5858 4c4c f14c 0000 0000     XXXXXXXXLLL.....
+d008bf44:	f100 584c f14c 0000 0000 0000 0000 0000     ..LXL...........
+	...
+d008bf64:	0000 f100 584c 5858 4c58 f2f1 f1f2 584c     ....LXXXXL....LX
+d008bf74:	5858 5858 5858 5858 4c4c f14c 0000 0000     XXXXXXXXLLL.....
+d008bf84:	0000 0000 f100 f14c 0000 0000 0000 0000     ......L.........
+	...
+d008bfa8:	4cf1 4c4c 4c4c f14c f1f1 58f1 5858 f158     .LLLLLL....XXXX.
+d008bfb8:	f1f1 f1f1 00f1 0000 0000 0000 0000 0000     ................
+d008bfc8:	0000 f1f1 f1f1 0000 0000 0000 0000 0000     ................
+	...
+d008bfe8:	4cf1 5858 5858 5858 4cf1 5858 5858 5858     .LXXXXXX.LXXXXXX
+d008bff8:	5858 f14c 0000 0000 0000 0000 0000 0000     XXL.............
+d008c008:	f100 f14c 0000 0000 f100 4cf1 4c4c f14c     ..L........LLLL.
+d008c018:	f1f1 0000 0000 0000 0000 0000 0000 f100     ................
+d008c028:	584c 5858 4c58 00f1 f100 584c 5858 5858     LXXXXL....LXXXXX
+d008c038:	5858 5858 4c4c f14c 0000 0000 0000 0000     XXXXLLL.........
+d008c048:	f100 f14c 0000 f100 2920 f120 4c4c f14c     ..L..... ) .LLL.
+d008c058:	4c4c f1f1 0000 0000 0000 0000 0000 f100     LL..............
+d008c068:	584c 5858 4c58 f14c 4cf1 584c 5858 5858     LXXXXLL..LLXXXXX
+d008c078:	5858 4c58 4c4c 00f1 0000 0000 f100 584c     XXXLLL........LX
+d008c088:	f158 0000 0000 0000 0000 0000 0000 0000     X...............
+	...
+d008c0a4:	0000 f100 584c 5858 4c58 f14c 4cf1 584c     ....LXXXXLL..LLX
+d008c0b4:	5858 5858 5858 4c58 4c4c 00f1 0000 0000     XXXXXXXLLL......
+d008c0c4:	0000 0000 f100 f14c 0000 0000 0000 0000     ......L.........
+	...
+d008c0e8:	58f1 5858 4c58 4c4c f1f1 5858 5858 5858     .XXXXLLL..XXXXXX
+d008c0f8:	5858 4c58 f14c 0000 0000 0000 0000 0000     XXXLL...........
+d008c108:	f100 f1f1 f1f1 0000 0000 0000 f100 f1f1     ................
+d008c118:	f1f1 f1f1 0000 0000 0000 0000 0000 f100     ................
+d008c128:	584c 5858 584c 5858 4cf1 5858 5858 5858     LXXXLXXX.LXXXXXX
+d008c138:	5858 f14c 0000 0000 0000 0000 0000 0000     XXL.............
+d008c148:	f100 4c4c f1f1 0000 0000 f100 584c 4c58     ..LL........LXXL
+d008c158:	4c4c f1f1 0000 0000 0000 0000 0000 f100     LL..............
+d008c168:	584c 5858 4c58 f14c 4cf1 584c 5858 5858     LXXXXLL..LLXXXXX
+d008c178:	5858 4c58 4c4c 00f1 0000 0000 0000 0000     XXXLLL..........
+d008c188:	f100 4c4c f1f1 0000 20f2 2020 58f1 4c58     ..LL.....   .XXL
+d008c198:	5858 4c58 00f1 0000 0000 0000 0000 f100     XXXL............
+d008c1a8:	584c 5858 5858 4c58 4cf1 5858 5858 4c58     LXXXXXXL.LXXXXXL
+d008c1b8:	5858 4c58 4c4c 00f1 0000 0000 f100 4c4c     XXXLLL........LL
+d008c1c8:	4c58 00f1 0000 0000 0000 0000 0000 0000     XL..............
+	...
+d008c1e4:	0000 f100 584c 5858 5858 4c58 4cf1 5858     ....LXXXXXXL.LXX
+d008c1f4:	5858 4c58 5858 4c58 4c4c 00f1 0000 0000     XXXLXXXLLL......
+d008c204:	0000 0000 4cf1 f158 0000 0000 0000 0000     .....LX.........
+	...
+d008c224:	0000 f100 584c 5858 5858 4c58 4cf1 5858     ....LXXXXXXL.LXX
+d008c234:	5858 4c58 5858 4c58 4c4c 00f1 0000 0000     XXXLXXXLLL......
+d008c244:	0000 0000 4cf1 4c58 4c4c f1f1 0000 0000     .....LXLLL......
+d008c254:	4cf1 584c 5858 4c58 00f1 0000 0000 0000     .LLXXXXL........
+d008c264:	0000 f100 5858 5858 5858 4c58 4cf1 5858     ....XXXXXXXL.LXX
+d008c274:	5858 4c58 5858 f158 0000 0000 0000 0000     XXXLXXX.........
+d008c284:	0000 0000 4cf1 4c58 4c4c f1f1 0000 0000     .....LXLLL......
+d008c294:	4cf1 584c 5858 4c58 00f1 0000 0000 0000     .LLXXXXL........
+d008c2a4:	0000 f100 584c 5858 5858 4c58 4cf1 5858     ....LXXXXXXL.LXX
+d008c2b4:	5858 4c58 5858 4c58 4c4c 00f1 0000 0000     XXXLXXXLLL......
+d008c2c4:	0000 0000 4cf1 4c58 4c4c f1f1 20f1 f220     .....LXLLL...  .
+d008c2d4:	4cf1 584c 5858 5858 4c58 f14c f1f1 0000     .LLXXXXXXLL.....
+d008c2e4:	0000 f100 584c 5858 5858 4c4c 4c4c 5858     ....LXXXXXLLLLXX
+d008c2f4:	5858 4c58 5858 4c4c f14c 0000 0000 0000     XXXLXXLLL.......
+d008c304:	f100 4c4c 4c58 00f1 0000 0000 0000 0000     ..LLXL..........
+	...
+d008c324:	0000 f100 584c 5858 5858 4c4c 4c4c 5858     ....LXXXXXLLLLXX
+d008c334:	5858 4c58 5858 4c4c f14c 0000 0000 0000     XXXLXXLLL.......
+d008c344:	0000 f100 4cf1 5858 00f1 0000 0000 0000     .....LXX........
+	...
+d008c364:	0000 f100 584c 5858 5858 4c4c 4c4c 5858     ....LXXXXXLLLLXX
+d008c374:	5858 4c58 5858 4c4c f14c 00f1 0000 0000     XXXLXXLLL.......
+d008c384:	0000 f100 4cf1 5858 584c 4c4c f1f1 f1f1     .....LXXLXLL....
+d008c394:	4c4c 4c4c 5858 5858 4c58 f14c f1f1 0000     LLLLXXXXXLL.....
+d008c3a4:	0000 f100 584c 5858 5858 4c4c 4c4c 5858     ....LXXXXXLLLLXX
+d008c3b4:	5858 4c58 5858 4c4c f1f1 0000 0000 0000     XXXLXXLL........
+d008c3c4:	0000 0000 4cf1 5858 584c 4c4c f1f1 f100     .....LXXLXLL....
+d008c3d4:	4c4c 4c4c 5858 5858 4c58 f14c f1f1 0000     LLLLXXXXXLL.....
+d008c3e4:	0000 f100 584c 5858 5858 4c4c 4c4c 5858     ....LXXXXXLLLLXX
+d008c3f4:	5858 4c58 5858 4c4c f14c 00f1 0000 0000     XXXLXXLLL.......
+d008c404:	0000 0000 4cf1 5858 584c 4c4c f1f1 f1f1     .....LXXLXLL....
+d008c414:	4c4c 4c4c 4c4c 5858 5858 4c58 4c4c f1f1     LLLLLLXXXXXLLL..
+d008c424:	0000 f100 584c 5858 5858 4c4c 584c 5858     ....LXXXXXLLLXXX
+d008c434:	5858 4c4c 4c58 4c4c f14c 00f1 0000 0000     XXLLXLLLL.......
+d008c444:	f100 4c4c 4c58 00f1 0000 0000 0000 0000     ..LLXL..........
+	...
+d008c460:	0000 00f1 0000 f100 584c 5858 5858 4c4c     ........LXXXXXLL
+d008c470:	584c 5858 5858 4c4c 4c58 4c4c f14c 00f1     LXXXXXLLXLLLL...
+d008c480:	0000 0000 0000 f100 584c 5858 00f1 0000     ........LXXX....
+	...
+d008c4a0:	0000 f1f1 0000 f100 584c 5858 5858 4c4c     ........LXXXXXLL
+d008c4b0:	584c 5858 5858 4c4c 4c58 4c4c f14c 00f1     LXXXXXLLXLLLL...
+d008c4c0:	0000 0000 0000 f100 584c 5858 4c4c 4c58     ........LXXXLLXL
+d008c4d0:	4c4c f1f1 4c4c 4c58 4c4c 5858 5858 4c58     LL..LLXLLLXXXXXL
+d008c4e0:	4c4c f1f1 0000 f100 584c 5858 5858 4c4c     LL......LXXXXXLL
+d008c4f0:	584c 5858 5858 4c4c 4c58 4c4c f14c 00f1     LXXXXXLLXLLLL...
+d008c500:	0000 0000 0000 f100 584c 5858 4c4c 4c58     ........LXXXLLXL
+d008c510:	4c4c f1f1 4c4c 4c58 4c4c 5858 5858 4c58     LL..LLXLLLXXXXXL
+d008c520:	4c4c f1f1 0000 f100 584c 5858 5858 4c4c     LL......LXXXXXLL
+d008c530:	584c 5858 5858 4c4c 4c58 4c4c f14c 00f1     LXXXXXLLXLLLL...
+d008c540:	0000 0000 0000 f100 584c 5858 4c4c 4c58     ........LXXXLLXL
+d008c550:	4c4c f1f1 4c4c 4c58 4c58 584c 5858 5858     LL..LLXLXLLXXXXX
+d008c560:	4c58 4c4c f1f1 f100 584c 584c 5858 4c4c     XLLL....LXLXXXLL
+d008c570:	584c 5858 4c58 584c 4c58 4c4c 4c4c f14c     LXXXXLLXXLLLLLL.
+d008c580:	f1f1 00f1 f100 584c 4c58 f14c 0000 0000     ......LXXLL.....
+	...
+d008c5a0:	f100 f14c f100 f100 584c 584c 5858 4c4c     ..L.....LXLXXXLL
+d008c5b0:	584c 5858 4c58 584c 4c58 4c4c 4c4c f14c     LXXXXLLXXLLLLLL.
+d008c5c0:	f1f1 00f1 0000 f100 584c 4c58 00f1 0000     ........LXXL....
+	...
+d008c5e0:	f100 f14c f100 f100 584c 584c 5858 4c4c     ..L.....LXLXXXLL
+d008c5f0:	584c 5858 4c58 584c 4c58 4c4c 4c4c f14c     LXXXXLLXXLLLLLL.
+d008c600:	f1f1 00f1 0000 f100 584c 4c58 4c4c 584c     ........LXXLLLLX
+d008c610:	4c4c 4c4c 4c4c 584c 4c58 584c 5858 5858     LLLLLLLXXLLXXXXX
+d008c620:	4c58 4c4c f1f1 f100 584c 584c 5858 4c4c     XLLL....LXLXXXLL
+d008c630:	584c 5858 4c58 584c 4c58 4c4c 4c4c f14c     LXXXXLLXXLLLLLL.
+d008c640:	f1f1 00f1 0000 f100 584c 4c58 4c4c 584c     ........LXXLLLLX
+d008c650:	4c4c 4c4c 4c4c 584c 4c58 584c 5858 5858     LLLLLLLXXLLXXXXX
+d008c660:	4c58 4c4c f1f1 f100 584c 584c 5858 4c4c     XLLL....LXLXXXLL
+d008c670:	584c 5858 4c58 584c 4c58 4c4c 4c4c f14c     LXXXXLLXXLLLLLL.
+d008c680:	f1f1 00f1 0000 f100 584c 4c58 4c4c 584c     ........LXXLLLLX
+d008c690:	4c4c 4c4c 4c4c 584c 4c58 4c4c 584c 5858     LLLLLLLXXLLLLXXX
+d008c6a0:	5858 4c58 4c4c f1f1 584c 4c4c 4c58 4c4c     XXXLLL..LXLLXLLL
+d008c6b0:	584c 5858 4c58 4c4c 4c4c 4c4c 4c4c 4c4c     LXXXXLLLLLLLLLLL
+d008c6c0:	4c4c f14c f1f1 584c 4c58 f14c 0000 0000     LLL...LXXLL.....
+	...
+d008c6e0:	f100 f14c 4c00 f1f1 584c 4c4c 4c58 4c4c     ..L..L..LXLLXLLL
+d008c6f0:	584c 5858 4c58 4c4c 4c4c 4c4c 4c4c 4c4c     LXXXXLLLLLLLLLLL
+d008c700:	4c4c f14c f1f1 4cf1 5858 4c4c f14c 0000     LLL....LXXLLL...
+	...
+d008c720:	f100 f14c 4c00 f1f1 584c 4c4c 4c58 4c4c     ..L..L..LXLLXLLL
+d008c730:	584c 5858 4c58 4c4c 4c4c 4c4c 4c4c 4c4c     LXXXXLLLLLLLLLLL
+d008c740:	4c4c f14c f1f1 4cf1 5858 4c4c 4c4c 584c     LLL....LXXLLLLLX
+d008c750:	4c58 4c4c 4c4c 4c4c 4c58 4c4c 584c 5858     XLLLLLLLXLLLLXXX
+d008c760:	5858 4c58 4c4c f1f1 584c 4c4c 4c58 4c4c     XXXLLL..LXLLXLLL
+d008c770:	584c 5858 4c58 4c4c 4c4c 4c4c 4c4c 4c4c     LXXXXLLLLLLLLLLL
+d008c780:	4c4c f14c f1f1 4cf1 5858 4c4c 4c4c 584c     LLL....LXXLLLLLX
+d008c790:	4c58 4c4c 4c4c 4c4c 4c58 4c4c 584c 5858     XLLLLLLLXLLLLXXX
+d008c7a0:	5858 4c58 4c4c f1f1 584c 4c4c 4c58 4c4c     XXXLLL..LXLLXLLL
+d008c7b0:	584c 5858 4c58 4c4c 4c4c 4c4c 4c4c 4c4c     LXXXXLLLLLLLLLLL
+d008c7c0:	4c4c f14c f1f1 4cf1 5858 4c4c 4c4c 584c     LLL....LXXLLLLLX
+d008c7d0:	4c58 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 5858     XLLLLLLLLLLLLLXX
+d008c7e0:	5858 4c58 4c4c 4c4c 4c4c 4c4c 5858 4c4c     XXXLLLLLLLLLXXLL
+d008c7f0:	4c58 5858 4c4c 584c 4c4c 4c4c 4c4c 4c4c     XLXXLLLXLLLLLLLL
+d008c800:	4c4c 4c4c 4c4c 584c 4c58 f14c 0000 0000     LLLLLLLXXLL.....
+	...
+d008c820:	4cf1 f158 4c00 4c4c 4c4c 4c4c 5858 4c4c     .LX..LLLLLLLXXLL
+d008c830:	4c58 5858 4c4c 584c 4c4c 4c4c 4c4c 4c4c     XLXXLLLXLLLLLLLL
+d008c840:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c f14c 0000     LLLLLLLLLLLLL...
+	...
+d008c860:	4cf1 f158 4c00 4c4c 4c4c 4c4c 5858 4c4c     .LX..LLLLLLLXXLL
+d008c870:	4c58 5858 4c4c 584c 4c4c 4c4c 4c4c 4c4c     XLXXLLLXLLLLLLLL
+d008c880:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008c890:	5858 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 5858     XXLLLLLLLLLLLLXX
+d008c8a0:	5858 4c58 4c4c 4c4c 4c4c 4c4c 5858 4c4c     XXXLLLLLLLLLXXLL
+d008c8b0:	4c58 5858 4c4c 584c 4c4c 4c4c 4c4c 4c4c     XLXXLLLXLLLLLLLL
+d008c8c0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008c8d0:	5858 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 5858     XXLLLLLLLLLLLLXX
+d008c8e0:	5858 4c58 4c4c 4c4c 4c4c 4c4c 5858 4c4c     XXXLLLLLLLLLXXLL
+d008c8f0:	4c58 5858 4c4c 584c 4c4c 4c4c 4c4c 4c4c     XLXXLLLXLLLLLLLL
+d008c900:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008c910:	5858 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     XXLLLLLLLLLLLLLL
+d008c920:	584c 5858 4c58 4c4c 4c4c 4c4c 584c 4c4c     LXXXXLLLLLLLLXLL
+d008c930:	5858 4c4c 4c4c 5858 4c4c 4c4c 4c4c 4c4c     XXLLLLXXLLLLLLLL
+d008c940:	4c4c 4c4c 4c4c 5858 584c f14c 0000 0000     LLLLLLXXLXL.....
+	...
+d008c960:	4cf1 4c58 4cf1 4c4c 4c4c 4c4c 584c 4c4c     .LXL.LLLLLLLLXLL
+d008c970:	5858 4c4c 4c4c 5858 4c4c 4c4c 4c4c 4c4c     XXLLLLXXLLLLLLLL
+d008c980:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c f14c 0000     LLLLLLLLLLLLL...
+	...
+d008c9a0:	4cf1 4c58 4cf1 4c4c 4c4c 4c4c 584c 4c4c     .LXL.LLLLLLLLXLL
+d008c9b0:	5858 4c4c 4c4c 5858 4c4c 4c4c 4c4c 4c4c     XXLLLLXXLLLLLLLL
+d008c9c0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008c9d0:	584c 584c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LXLXLLLLLLLLLLLL
+d008c9e0:	584c 5858 4c58 4c4c 4c4c 4c4c 584c 4c4c     LXXXXLLLLLLLLXLL
+d008c9f0:	5858 4c4c 4c4c 5858 4c4c 4c4c 4c4c 4c4c     XXLLLLXXLLLLLLLL
+d008ca00:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ca10:	584c 584c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LXLXLLLLLLLLLLLL
+d008ca20:	584c 5858 4c58 4c4c 4c4c 4c4c 584c 4c4c     LXXXXLLLLLLLLXLL
+d008ca30:	5858 4c4c 4c4c 5858 4c4c 4c4c 4c4c 4c4c     XXLLLLXXLLLLLLLL
+d008ca40:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ca50:	584c 584c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LXLXLLLLLLLLLLLL
+d008ca60:	4c4c 584c 5858 4c4c 4c4c 4c4c 4c4c 4c4c     LLLXXXLLLLLLLLLL
+d008ca70:	4c4c 4c4c 4c4c 4c58 4c4c 4c4c 4c4c 4c4c     LLLLLLXLLLLLLLLL
+d008ca80:	4c4c 4c4c 4c4c 5858 584c 4c4c 00f1 0000     LLLLLLXXLXLL....
+	...
+d008caa0:	58f1 4c58 58f1 4c4c 4c4c 4c4c 4c4c 4c4c     .XXL.XLLLLLLLLLL
+d008cab0:	4c4c 4c4c 4c4c 4c58 4c4c 4c4c 4c4c 4c4c     LLLLLLXLLLLLLLLL
+d008cac0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c f14c 0000     LLLLLLLLLLLLL...
+	...
+d008cae0:	58f1 4c58 58f1 4c4c 4c4c 4c4c 4c4c 4c4c     .XXL.XLLLLLLLLLL
+d008caf0:	4c4c 4c4c 4c4c 4c58 4c4c 4c4c 4c4c 4c4c     LLLLLLXLLLLLLLLL
+d008cb00:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cb10:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cb20:	4c4c 584c 5858 4c4c 4c4c 4c4c 4c4c 4c4c     LLLXXXLLLLLLLLLL
+d008cb30:	4c4c 4c4c 4c4c 4c58 4c4c 4c4c 4c4c 4c4c     LLLLLLXLLLLLLLLL
+d008cb40:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cb50:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cb60:	4c4c 584c 5858 4c4c 4c4c 4c4c 4c4c 4c4c     LLLXXXLLLLLLLLLL
+d008cb70:	4c4c 4c4c 4c4c 4c58 4c4c 4c4c 4c4c 4c4c     LLLLLLXLLLLLLLLL
+d008cb80:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cb90:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cba0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cbb0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cbc0:	4c4c 4c4c 584c 5858 584c 4c58 00f1 f100     LLLLLXXXLXXL....
+d008cbd0:	f1f1 0000 0000 0000 0000 0000 0000 f100     ................
+d008cbe0:	584c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LXLLLLLLLLLLLLLL
+d008cbf0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cc00:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c f1f1     LLLLLLLLLLLLLL..
+d008cc10:	f1f1 0000 0000 0000 0000 0000 0000 f100     ................
+d008cc20:	584c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LXLLLLLLLLLLLLLL
+d008cc30:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cc40:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cc50:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cc60:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cc70:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cc80:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cc90:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cca0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ccb0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ccc0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ccd0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cce0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ccf0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cd00:	4c4c 4c4c 4c4c 5858 5858 4c58 f14c 4cf1     LLLLLLXXXXXLL..L
+d008cd10:	4c4c f1f1 0000 0000 0000 f1f1 00f1 f100     LL..............
+d008cd20:	584c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LXLLLLLLLLLLLLLL
+d008cd30:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cd40:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4cf1     LLLLLLLLLLLLLL.L
+d008cd50:	4c4c f1f1 0000 0000 0000 f1f1 00f1 f100     LL..............
+d008cd60:	584c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LXLLLLLLLLLLLLLL
+d008cd70:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cd80:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cd90:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cda0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cdb0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cdc0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cdd0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cde0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cdf0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ce00:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ce10:	4c4c 4c4c 4c4c 4c4c 5858 5858 4c58 4c4c     LLLLLLLLXXXXXLLL
+d008ce20:	4c58 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     XLLLLLLLLLLLLLLL
+d008ce30:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ce40:	4c4c 4c4c 4c4c 4c58 5858 4c58 f14c 4cf1     LLLLLLXLXXXLL..L
+d008ce50:	5858 4c58 f1f1 0000 f100 4c4c 00f1 4c00     XXXL......LL...L
+d008ce60:	5858 4c4c 4c4c 4c4c 584c 5858 4c58 4c4c     XXLLLLLLLXXXXLLL
+d008ce70:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ce80:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4cf1     LLLLLLLLLLLLLL.L
+d008ce90:	5858 4c58 f1f1 0000 f100 4c4c 00f1 4cf1     XXXL......LL...L
+d008cea0:	5858 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     XXLLLLLLLLLLLLLL
+d008ceb0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cec0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ced0:	4c4c 4c4c 4c4c 4c4c 584c 4c4c 584c 5858     LLLLLLLLLXLLLXXX
+d008cee0:	5858 4c58 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     XXXLLLLLLLLLLLLL
+d008cef0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cf00:	4c4c 4c4c 4c4c 4c4c 584c 5858 4c58 4c4c     LLLLLLLLLXXXXLLL
+d008cf10:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cf20:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cf30:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cf40:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cf50:	4c4c 4c4c 4c4c 584c 4c4c 5858 5858 4c4c     LLLLLLLXLLXXXXLL
+d008cf60:	5858 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     XXLLLLLLLLLLLLLL
+d008cf70:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cf80:	4c4c 4c4c 4c4c 4c58 5858 4c58 f14c 4cf1     LLLLLLXLXXXLL..L
+d008cf90:	584c 5858 f14c 00f1 4cf1 4c4c 00f1 4cf1     LXXXL....LLL...L
+d008cfa0:	4c58 4c4c 4c4c 4c4c 4c58 5858 4c4c 4c4c     XLLLLLLLXLXXLLLL
+d008cfb0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008cfc0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4cf1     LLLLLLLLLLLLLL.L
+d008cfd0:	584c 5858 f14c 00f1 4cf1 4c4c 00f1 4cf1     LXXXL....LLL...L
+d008cfe0:	4c58 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     XLLLLLLLLLLLLLLL
+d008cff0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d000:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d010:	4c4c 4c4c 4c4c 4c4c 5858 4c4c 5858 5858     LLLLLLLLXXLLXXXX
+d008d020:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d030:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d040:	4c4c 4c4c 4c4c 4c4c 4c58 5858 4c4c 4c4c     LLLLLLLLXLXXLLLL
+d008d050:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d060:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d070:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d080:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d090:	4c4c 4c4c 4c4c 4c4c 4c4c 584c 5858 4c58     LLLLLLLLLLLXXXXL
+d008d0a0:	584c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LXLLLLLLLLLLLLLL
+d008d0b0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d0c0:	4c4c 4c4c 4c4c 4c58 5858 4c4c 4c4c f1f1     LLLLLLXLXXLLLL..
+d008d0d0:	4c4c 4c58 5858 f14c 4cf1 4c4c f121 5858     LLXLXXL..LLL!.XX
+d008d0e0:	4c4c 4c4c 4c4c 584c 584c 4c58 4c4c 4c4c     LLLLLLLXLXXLLLLL
+d008d0f0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d100:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c f1f1     LLLLLLLLLLLLLL..
+d008d110:	4c4c 4c58 5858 f14c 4cf1 4c4c f1f1 5858     LLXLXXL..LLL..XX
+d008d120:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d130:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d140:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d150:	4c4c 4c4c 4c4c 4c4c 4c58 584c 5858 4c58     LLLLLLLLXLLXXXXL
+d008d160:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d170:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d180:	4c4c 4c4c 4c4c 584c 584c 4c58 4c4c 4c4c     LLLLLLLXLXXLLLLL
+d008d190:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d1a0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d1b0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d1c0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d1d0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 5858     LLLLLLLLLLLLLLXX
+d008d1e0:	584c 4c58 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LXXLLLLLLLLLLLLL
+d008d1f0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d200:	4c4c 4c4c 4c4c 4c4c 4c58 4c4c 4c4c f1f1     LLLLLLLLXLLLLL..
+d008d210:	4c4c 4c58 5858 f14c 4cf1 4c4c f1f1 5858     LLXLXXL..LLL..XX
+d008d220:	4c4c 4c4c 4c4c 4c4c 584c 4c58 4c4c 4c4c     LLLLLLLLLXXLLLLL
+d008d230:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d240:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c f1f1     LLLLLLLLLLLLLL..
+d008d250:	4c4c 4c58 5858 f14c 4cf1 4c4c f1f1 5858     LLXLXXL..LLL..XX
+d008d260:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d270:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d280:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d290:	4c4c 4c4c 4c4c 584c 4c58 5858 4c4c 4c4c     LLLLLLLXXLXXLLLL
+d008d2a0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d2b0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d2c0:	4c4c 4c4c 4c4c 4c4c 584c 4c58 4c4c 4c4c     LLLLLLLLLXXLLLLL
+d008d2d0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d2e0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d2f0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d300:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d310:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 5858     LLLLLLLLLLLLLLXX
+d008d320:	4c58 4c58 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     XLXLLLLLLLLLLLLL
+d008d330:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d340:	4c4c 4c4c 4c4c 4c4c 4c58 4c4c 4c4c f1f1     LLLLLLLLXLLLLL..
+d008d350:	4c4c 584c 584c 4c58 4cf1 4c4c f14c 584c     LLLXLXXL.LLLL.LX
+d008d360:	4c4c 4c4c 4c4c 4c4c 584c 4c4c 4c4c 4c4c     LLLLLLLLLXLLLLLL
+d008d370:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d380:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c f1f1     LLLLLLLLLLLLLL..
+d008d390:	4c4c 584c 584c 4c58 4cf1 4c4c f14c 584c     LLLXLXXL.LLLL.LX
+d008d3a0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d3b0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d3c0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d3d0:	4c4c 4c4c 4c4c 584c 584c 5858 4c4c 4c4c     LLLLLLLXLXXXLLLL
+d008d3e0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d3f0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d400:	4c4c 4c4c 4c4c 4c4c 584c 4c4c 4c4c 4c4c     LLLLLLLLLXLLLLLL
+d008d410:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d420:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d430:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d440:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d450:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 584c     LLLLLLLLLLLLLLLX
+d008d460:	4c58 4c58 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     XLXLLLLLLLLLLLLL
+d008d470:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d480:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c f14c     LLLLLLLLLLLLLLL.
+d008d490:	4c4c 584c 4c4c 4c58 4c4c 4c4c 4c4c 4c4c     LLLXLLXLLLLLLLLL
+d008d4a0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d4b0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d4c0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c f14c     LLLLLLLLLLLLLLL.
+d008d4d0:	4c4c 584c 4c4c 4c58 4c4c 4c4c 4c4c 4c4c     LLLXLLXLLLLLLLLL
+d008d4e0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d4f0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d500:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d510:	4c4c 4c4c 4c4c 584c 584c 4c58 4c4c 4c4c     LLLLLLLXLXXLLLLL
+d008d520:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d530:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d540:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d550:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d560:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d570:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d580:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d590:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d5a0:	4c58 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     XLLLLLLLLLLLLLLL
+d008d5b0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d5c0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c f14c     LLLLLLLLLLLLLLL.
+d008d5d0:	4c4c 4c4c 4c4c 584c 4c4c 4c4c 4c4c 4c4c     LLLLLLLXLLLLLLLL
+d008d5e0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d5f0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d600:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c f14c     LLLLLLLLLLLLLLL.
+d008d610:	4c4c 4c4c 4c4c 584c 4c4c 4c4c 4c4c 4c4c     LLLLLLLXLLLLLLLL
+d008d620:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d630:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d640:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d650:	4c4c 4c4c 4c4c 4c4c 584c 4c4c 4c4c 4c4c     LLLLLLLLLXLLLLLL
+d008d660:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d670:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d680:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d690:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d6a0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d6b0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d6c0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d6d0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d6e0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d6f0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d700:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d710:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d720:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d730:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d740:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d750:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d760:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d770:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d780:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d790:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d7a0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d7b0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d7c0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d7d0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d7e0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d7f0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d800:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d810:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d820:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d830:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d840:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d850:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d860:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d870:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d880:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d890:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d8a0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d8b0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d8c0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d8d0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d8e0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d8f0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d900:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d910:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d920:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d930:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d940:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d950:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d960:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d970:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d980:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d990:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d9a0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d9b0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d9c0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d9d0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d9e0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008d9f0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008da00:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008da10:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008da20:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008da30:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008da40:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008da50:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008da60:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008da70:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008da80:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008da90:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008daa0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dab0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dac0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dad0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dae0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008daf0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008db00:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008db10:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008db20:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008db30:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008db40:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008db50:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008db60:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008db70:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008db80:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008db90:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dba0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dbb0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dbc0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dbd0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dbe0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dbf0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dc00:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dc10:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dc20:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dc30:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dc40:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dc50:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dc60:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dc70:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dc80:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dc90:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dca0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dcb0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dcc0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dcd0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dce0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dcf0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dd00:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dd10:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dd20:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dd30:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dd40:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dd50:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dd60:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dd70:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dd80:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dd90:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dda0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ddb0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ddc0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ddd0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dde0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ddf0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008de00:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008de10:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008de20:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008de30:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008de40:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008de50:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008de60:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008de70:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008de80:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008de90:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dea0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008deb0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dec0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008ded0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dee0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008def0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008df00:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008df10:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008df20:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008df30:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008df40:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008df50:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008df60:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008df70:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008df80:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008df90:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dfa0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dfb0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dfc0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dfd0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dfe0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008dff0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e000:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e010:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e020:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e030:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e040:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e050:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e060:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e070:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e080:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e090:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e0a0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e0b0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e0c0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d008e0d0:	4c4c 4c4c 4c4c 4c4c                         LLLLLLLL
+
+d008e0d8 <gfx_bub_treehead>:
+	...
+d008e0e4:	0000 1000 1010 1010 1010 0010 0000 0000     ................
+d008e0f4:	9010 0010 1000 0010 0000 1000 1010 1010     ................
+d008e104:	1010 1010 0010 0000 0000 0000 0000 0000     ................
+	...
+d008e124:	1000 9010 dc9c dcdc d4dc 1058 1010 0010     ..........X.....
+d008e134:	1000 10e0 dc10 0010 1010 5810 dcdc dcdc     ...........X....
+d008e144:	9058 0010 0000 0000 0000 0000 0000 0000     X...............
+	...
+d008e164:	0000 1000 1010 d490 d8dc d4d8 1090 1058     ..............X.
+d008e174:	1010 e858 d810 1090 5810 e0d8 d8dc 5858     ..X......X....XX
+d008e184:	1090 0000 0000 1010 1010 0000 0000 0000     ................
+	...
+d008e1a4:	1000 9010 9058 9090 5858 dcdc dcd8 dce8     ....X...XX......
+d008e1b4:	1090 e810 58dc 5810 d4e8 9ce0 58d8 9090     .....X.X.....X..
+d008e1c4:	1010 1010 5810 d49c 90e0 1010 0000 0000     .....X..........
+	...
+d008e1e4:	9010 e8d8 dcdc dcdc 5858 dcdc dce8 9cdc     ........XX......
+d008e1f4:	e0dc dc90 90dc dcd4 e8e0 90d8 9090 1090     ................
+d008e204:	9058 d4d4 9cd4 1090 1010 0000 0000 0000     X...............
+	...
+d008e224:	1000 d8dc d8d8 d8e8 e0e0 e058 dcd8 e0dc     ..........X.....
+d008e234:	9cdc d8dc dcd8 9ce0 dcd8 9090 5890 5858     .............XXX
+d008e244:	e0e0 90dc 1058 0010 0000 0000 0000 0000     ....X...........
+	...
+d008e260:	0000 1010 1010 9090 dcdc dcdc d4d4 d8dc     ................
+d008e270:	e0dc 9cd8 e0d4 9cdc d8dc dce8 dc9c 9cdc     ................
+d008e280:	dcdc d890 9c9c 9090 1010 0010 0000 0000     ................
+	...
+d008e2a0:	5810 e890 1058 9010 dc90 d4dc 9ce0 dce8     .X..X...........
+d008e2b0:	e0dc e8d4 dce8 dcd4 9cd8 dcd4 dcdc e8d4     ................
+d008e2c0:	d4dc dcdc 90dc dcdc dc9c 1090 1010 0000     ................
+	...
+d008e2dc:	0000 1000 dcd4 9cdc dcdc dcd8 dcdc dcdc     ................
+d008e2ec:	dcdc dcdc dcdc dcdc dcdc dcdc d8dc dcdc     ................
+d008e2fc:	dcd8 dcdc dcd8 9ce0 dcdc dcdc dcdc d8e8     ................
+d008e30c:	58dc 1010 0000 0000 0000 0000 0000 0000     .X..............
+d008e31c:	0000 0000 5810 e0d4 d8dc d8e0 dcdc dcdc     .....X..........
+d008e32c:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc dcd8     ................
+d008e33c:	dcdc dcdc 9cdc dcdc dcdc dcd8 d4dc e0d4     ................
+d008e34c:	dcdc 90e0 1010 0000 0000 0000 0000 0000     ................
+d008e35c:	0000 0000 1010 9c58 e0dc e89c dcdc dcdc     ......X.........
+d008e36c:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc dcdc     ................
+d008e37c:	dcdc dcd8 dcdc d8d8 d8e0 9090 9090 5890     ...............X
+d008e38c:	9090 90d4 9090 0010 0000 0000 0000 0000     ................
+d008e39c:	0000 1010 e0dc e0dc 9cdc d8dc dcdc dcdc     ................
+d008e3ac:	dcdc dcdc dcdc dcdc dcdc dcdc dcd8 d8dc     ................
+d008e3bc:	dcdc dcdc 9090 9090 9058 9090 9058 9090     ........X...X...
+d008e3cc:	1010 5810 9090 0010 0000 0000 0000 0000     ...X............
+d008e3dc:	1000 d4e0 d4d4 d4d4 dcdc d4e0 dcdc dcdc     ................
+d008e3ec:	dcdc dcdc dcdc dcdc dcdc dcdc dcd8 dcdc     ................
+d008e3fc:	dcdc dcdc dcdc 5890 9090 9058 5890 1058     .......X..X..XX.
+d008e40c:	0010 0000 5810 1090 0000 0000 0000 0000     .....X..........
+d008e41c:	e810 1090 dc90 dcdc dcdc 9c9c dcdc dcdc     ................
+d008e42c:	dcdc dcdc dcdc dcdc dcdc dcdc d8dc dcdc     ................
+d008e43c:	dcdc dcdc d8d8 dcdc 5890 9090 1010 1010     .........X......
+d008e44c:	1010 0010 1000 1010 0000 0000 0000 0000     ................
+d008e45c:	1000 1010 1000 d458 e0d4 dcdc dcdc dcdc     ......X.........
+d008e46c:	dcdc dcdc dcdc dcdc dcdc dcdc 90dc dc9c     ................
+d008e47c:	d8dc dcdc dcdc dcdc 909c 9090 5890 9090     .............X..
+d008e48c:	5890 1058 0010 1000 0000 0000 0000 0000     .XX.............
+d008e49c:	1000 1010 9010 9090 9cdc dcdc dcdc dcdc     ................
+d008e4ac:	dcdc dcdc dcdc dcdc dcdc dcdc 90d8 dc90     ................
+d008e4bc:	d8dc dcdc d8dc dcdc 9cdc 90d8 9058 9090     ............X...
+d008e4cc:	5890 9058 1058 0010 0000 0000 0000 1000     .XX.X...........
+d008e4dc:	9010 dcd8 dcdc d8dc d8d8 dcdc dcdc dcdc     ................
+d008e4ec:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc d890     ................
+d008e4fc:	d8dc dcdc dcdc dcdc dcd8 90dc 9090 9090     ................
+d008e50c:	9090 9090 5890 1058 0010 0000 0000 dc10     .....XX.........
+d008e51c:	e8dc e8d8 dc9c dcdc dcdc d8dc dcdc dcdc     ................
+d008e52c:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc 9090     ................
+d008e53c:	dc9c d8e0 dcd8 dcdc dce0 d8d8 5890 9090     .............X..
+d008e54c:	9090 9090 9090 5890 1090 0000 1000 d49c     .......X........
+d008e55c:	d89c 9090 9c90 d8d8 dcd8 d8dc dcdc dcdc     ................
+d008e56c:	dcdc dcdc dcdc dcdc dcdc dcdc dc9c 9cd8     ................
+d008e57c:	9c90 dcdc dcdc dc9c d890 dcdc 9058 5890     ............X..X
+d008e58c:	9090 9090 9090 9090 1058 0000 1010 1010     ........X.......
+d008e59c:	1010 9010 dc9c dcdc dcd8 d8dc dcdc dcdc     ................
+d008e5ac:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc e0dc     ................
+d008e5bc:	dc9c dcdc dcdc dcdc 90dc 9c90 9090 9090     ................
+d008e5cc:	5890 9090 9090 9090 1058 0000 0010 0000     .X......X.......
+d008e5dc:	5810 d8dc dcdc dcdc dcdc dcd8 dcdc dcdc     .X..............
+d008e5ec:	dcdc dcdc dcdc dcdc dcdc dcdc 9cdc dcd8     ................
+d008e5fc:	dcd8 dcdc dcdc dcdc 90d8 9090 9090 9090     ................
+d008e60c:	90d8 9090 9090 9090 1090 0000 0000 1000     ................
+d008e61c:	dc90 d4dc 9cdc dc9c dcdc dcd8 dcdc dcdc     ................
+d008e62c:	dcdc dcdc dcdc dcdc dcdc dcdc d8d8 dcdc     ................
+d008e63c:	dc9c dcdc e0d8 d8d8 9090 9090 5890 9090     .............X..
+d008e64c:	dc90 909c 9090 9090 9090 0010 0000 9010     ................
+d008e65c:	dce8 d8d8 dcdc dcdc dcdc d8d8 dcdc dcdc     ................
+d008e66c:	dcdc dcdc dcdc dcdc dcdc dcdc dcd8 dcdc     ................
+d008e67c:	dcdc d8dc dcd8 d8dc 90e0 9058 e090 9090     ..........X.....
+d008e68c:	9058 90e0 9090 5858 9090 0010 0000 d810     X.....XX........
+d008e69c:	dcd4 e8d8 dcd8 d8dc dcd8 dcdc dcdc dcdc     ................
+d008e6ac:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc dcd8     ................
+d008e6bc:	d8dc dcdc d8dc d8dc 90dc 9090 9090 90dc     ................
+d008e6cc:	9090 d8dc 9090 9090 5890 0010 1000 d49c     .........X......
+d008e6dc:	9cd4 dcdc dcdc dcdc dcdc dcdc dcdc dcdc     ................
+d008e6ec:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc dcdc     ................
+d008e6fc:	dcdc dcdc dcd8 d8e0 90d8 9090 9090 9090     ................
+d008e70c:	9090 9090 9090 5890 9090 1090 dc10 9ce8     .......X........
+d008e71c:	dc9c d8dc dcd8 dcdc dcdc dcd8 dcdc dcdc     ................
+d008e72c:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc dcdc     ................
+d008e73c:	dcdc dcdc d8dc d8dc 9cdc 9090 9090 9090     ................
+d008e74c:	9090 9090 9090 9090 9090 1090 dc10 dcd4     ................
+d008e75c:	d4dc 9c9c dcdc dcdc dcdc dcdc dcdc dcdc     ................
+d008e76c:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc dcdc     ................
+d008e77c:	dcdc dcdc dcdc dcdc d8dc 9090 9090 9090     ................
+d008e78c:	9090 9090 9058 5890 5890 1090 d410 10e8     ....X..X.X......
+d008e79c:	dcd8 dcdc d8dc dcd8 dcdc dcdc dcdc dcdc     ................
+d008e7ac:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc dcdc     ................
+d008e7bc:	dcdc dcdc dcdc dcdc d8d8 9090 9090 9090     ................
+d008e7cc:	9090 9090 9090 9090 5890 1090 1010 1010     .........X......
+d008e7dc:	9010 dc9c dcdc dcdc dcdc dcdc dcdc dcdc     ................
+d008e7ec:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc dcdc     ................
+d008e7fc:	dcdc dcdc dcdc dcd8 dcdc 9090 9090 9090     ................
+d008e80c:	9090 9090 9058 5890 9090 1090 0000 dc10     ....X..X........
+d008e81c:	e09c d8dc dcd8 dcdc d8dc dcd8 dcdc dcdc     ................
+d008e82c:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc dcdc     ................
+d008e83c:	dcdc dcdc dcdc dcdc 9cdc 9090 9090 9090     ................
+d008e84c:	9090 9090 9058 5890 9090 1090 1000 d8dc     ....X..X........
+d008e85c:	9cdc e0dc dcdc 9c9c dcdc dcd8 dcdc dcdc     ................
+d008e86c:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc dcdc     ................
+d008e87c:	dcdc dcdc dcd8 dcdc 90d8 9090 5890 9090     .............X..
+d008e88c:	5890 9090 9090 9090 9090 1058 0000 1010     .X........X.....
+d008e89c:	d810 5890 d8dc 9090 dcd8 dcd8 dcdc dcdc     ...X............
+d008e8ac:	dcdc dcdc dcdc dcdc dcdc dcdc dcdc dcdc     ................
+d008e8bc:	dcdc dcdc dcdc dcd8 90dc 9090 9090 9c90     ................
+d008e8cc:	9090 dcd8 9090 1058 9090 0010 0000 5810     ......X........X
+d008e8dc:	9010 9010 90d8 9058 e89c 9090 d890 e890     ......X.........
+d008e8ec:	dcdc 9cdc dcdc d490 e8d8 dcdc dcdc dcd8     ................
+d008e8fc:	90dc d8dc d8e8 d890 58d8 9010 9090 9090     .........X......
+d008e90c:	9090 dc90 1058 1090 1090 0000 0000 1000     ....X...........
+d008e91c:	9010 5810 10dc 9010 90d8 9058 9010 9090     ...X......X.....
+d008e92c:	9090 e09c d8dc d890 dce0 dcd8 dcdc dcd8     ................
+d008e93c:	9090 e0dc d458 9090 5890 1010 9090 9058     ....X....X....X.
+d008e94c:	1090 dc10 1090 1058 1090 0000 0000 0000     ......X.........
+d008e95c:	1010 1090 10dc 1000 90dc 1010 1010 9090     ................
+d008e96c:	9090 909c 90d4 9090 909c dce0 dc9c 9090     ................
+d008e97c:	1090 909c 9090 5810 9058 1010 1010 9090     .......XX.......
+d008e98c:	0010 9010 9010 1010 0010 0000 0000 0000     ................
+d008e99c:	1000 1090 1058 1000 1090 1010 1021 9010     ....X.......!...
+d008e9ac:	5890 1010 90d4 9058 9090 d8dc 5890 5858     .X....X......XXX
+d008e9bc:	1058 5858 1090 1010 1010 1010 1010 1090     X.XX............
+d008e9cc:	0010 9010 9010 0010 0000 0000 0000 0000     ................
+d008e9dc:	0000 1010 1090 0000 1010 1000 2121 9010     ............!!..
+d008e9ec:	1090 1090 9090 1010 9090 9090 1058 1010     ............X...
+d008e9fc:	1010 1010 2110 1010 1010 1021 0010 0010     .....!....!.....
+d008ea0c:	0000 1000 1010 0000 0000 0000 0000 0000     ................
+d008ea1c:	0000 0010 1010 0000 1000 0000 2110 1021     .............!!.
+d008ea2c:	1010 1090 9058 1010 1010 9010 9090 1010     ....X...........
+d008ea3c:	1010 1010 2110 2121 2521 1010 0000 0000     .....!!!!%......
+d008ea4c:	0000 1000 1000 0000 0000 0000 0000 0000     ................
+d008ea5c:	0000 0000 1010 0000 0000 0000 1010 2121     ..............!!
+d008ea6c:	2121 2110 5810 1010 2121 1010 5858 1010     !!.!.X..!!..XX..
+d008ea7c:	2110 2521 2121 2525 2121 1010 0000 0000     .!!%!!%%!!......
+	...
+d008eaa8:	1000 2521 2121 2121 1021 2110 2925 1021     ..!%!!!!!..!%)!.
+d008eab8:	1010 2121 2121 2525 2521 2129 2121 0010     ..!!!!%%!%)!!!..
+	...
+d008eae8:	2110 2121 2129 2925 2525 2525 2525 2525     .!!!)!%)%%%%%%%%
+d008eaf8:	2525 2525 2125 2525 2121 2121 2510 1021     %%%%%!%%!!!!.%!.
+	...
+d008eb28:	1000 2121 2125 2525 2525 2525 2525 2525     ..!!%!%%%%%%%%%%
+d008eb38:	2525 2525 2125 2125 2121 1021 2910 1021     %%%%%!%!!!!..)!.
+	...
+d008eb68:	1000 2125 2125 2525 2525 2525 2525 2525     ..%!%!%%%%%%%%%%
+d008eb78:	2525 2525 2125 2125 2121 1021 2129 0010     %%%%%!%!!!!.)!..
+	...
+d008eba8:	2110 2129 2125 2525 2525 2525 2525 2525     .!)!%!%%%%%%%%%%
+d008ebb8:	2525 2525 2125 2125 2125 1021 2125 0010     %%%%%!%!%!!.%!..
+	...
+d008ebe8:	2110 2525 2125 2525 2525 2525 2525 2525     .!%%%!%%%%%%%%%%
+d008ebf8:	2525 2525 2125 2125 2529 2121 2121 0010     %%%%%!%!)%!!!!..
+	...
+d008ec28:	1000 2521 2125 2525 2525 2525 2525 2525     ..!%%!%%%%%%%%%%
+d008ec38:	2525 2525 2125 2525 2525 2121 2121 0010     %%%%%!%%%%!!!!..
+	...
+d008ec68:	1000 2521 2125 2925 2525 2525 2525 2525     ..!%%!%)%%%%%%%%
+d008ec78:	2525 2525 2521 2525 2521 2125 1021 0000     %%%%!%%%!%%!!...
+	...
+d008eca8:	1000 2521 2129 2525 2525 2525 2525 2525     ..!%)!%%%%%%%%%%
+d008ecb8:	2525 2525 2521 2525 2521 2125 1021 0000     %%%%!%%%!%%!!...
+	...
+d008ece8:	1000 2925 2529 2529 2525 2525 2525 2525     ..%))%)%%%%%%%%%
+d008ecf8:	2525 2525 2521 2529 2521 2125 2121 0010     %%%%!%)%!%%!!!..
+	...
+d008ed28:	1000 2521 2525 2525 2525 2525 2525 2525     ..!%%%%%%%%%%%%%
+d008ed38:	2525 2525 2521 2125 2525 2121 2121 0010     %%%%!%%!%%!!!!..
+	...
+d008ed68:	2110 2521 2129 2525 2525 2525 2525 2525     .!!%)!%%%%%%%%%%
+d008ed78:	2525 2525 2521 2125 2525 2121 2121 0010     %%%%!%%!%%!!!!..
+	...
+d008eda8:	1000 2521 2125 2525 2525 2525 2525 2525     ..!%%!%%%%%%%%%%
+d008edb8:	2529 2525 2521 2125 2525 2121 2121 0010     )%%%!%%!%%!!!!..
+	...
+d008ede8:	1000 2521 2125 2529 2525 2525 2525 2525     ..!%%!)%%%%%%%%%
+d008edf8:	2529 2525 2521 2125 2521 2121 2110 1021     )%%%!%%!!%!!.!!.
+	...
+d008ee28:	2110 2129 2125 2521 2525 2525 2525 2525     .!)!%!!%%%%%%%%%
+d008ee38:	2525 2525 2121 2125 2921 2121 2110 1021     %%%%!!%!!)!!.!!.
+	...
+d008ee68:	2110 2125 2125 2521 2525 2525 2525 2525     .!%!%!!%%%%%%%%%
+d008ee78:	2525 2525 2121 2125 2521 2121 2510 1021     %%%%!!%!!%!!.%!.
+	...
+d008eea8:	2110 2125 2125 2521 2525 2525 2525 2525     .!%!%!!%%%%%%%%%
+d008eeb8:	2525 2525 2121 2525 2521 2121 2510 1021     %%%%!!%%!%!!.%!.
+	...
+d008eee8:	2110 2121 2525 2921 2525 2525 2525 2525     .!!!%%!)%%%%%%%%
+d008eef8:	2525 2525 2125 2525 2521 2121 2510 1021     %%%%%!%%!%!!.%!.
+	...
+d008ef28:	1000 2121 2525 2521 2525 2525 2525 2525     ..!!%%!%%%%%%%%%
+d008ef38:	2525 2525 2125 2125 2921 1021 2510 1021     %%%%%!%!!)!..%!.
+	...
+d008ef68:	1000 2125 2125 2921 2525 2525 2525 2525     ..%!%!!)%%%%%%%%
+d008ef78:	2525 2525 2525 2125 2521 1021 2129 0010     %%%%%%%!!%!.)!..
+	...
+d008efa8:	2110 2125 2129 2521 2525 2525 2525 2525     .!%!)!!%%%%%%%%%
+d008efb8:	2525 2525 2125 2125 2525 1021 2125 0010     %%%%%!%!%%!.%!..
+	...
+d008efe8:	2110 2525 2125 2925 2525 2525 2525 2525     .!%%%!%)%%%%%%%%
+d008eff8:	2525 2525 2125 2125 2529 2121 2121 0010     %%%%%!%!)%!!!!..
+	...
+d008f028:	1000 2521 2521 2529 2525 2525 2525 2525     ..!%!%)%%%%%%%%%
+d008f038:	2525 2925 2525 2525 2525 2121 2121 0010     %%%)%%%%%%!!!!..
+	...
+d008f068:	1000 2521 2521 2529 2525 2525 2525 2525     ..!%!%)%%%%%%%%%
+d008f078:	2525 2525 2525 2525 2525 2129 2121 0010     %%%%%%%%%%)!!!..
+	...
+d008f0a8:	1000 2521 2521 2529 2525 2525 2525 2525     ..!%!%)%%%%%%%%%
+d008f0b8:	2525 2525 2525 2525 2125 2121 1021 0000     %%%%%%%%%!!!!...
+	...
+d008f0e8:	2110 2121 2129 2925 2525 2525 2525 2525     .!!!)!%)%%%%%%%%
+d008f0f8:	2525 2525 2125 2525 2121 2121 2510 1021     %%%%%!%%!!!!.%!.
+	...
+d008f128:	1000 2121 2125 2525 2525 2525 2525 2525     ..!!%!%%%%%%%%%%
+d008f138:	2525 2525 2125 2125 2121 1021 2910 1021     %%%%%!%!!!!..)!.
+	...
+d008f168:	1000 2125 2125 2525 2525 2525 2525 2525     ..%!%!%%%%%%%%%%
+d008f178:	2525 2525 2125 2125 2121 1021 2129 0010     %%%%%!%!!!!.)!..
+	...
+d008f1a8:	2110 2129 2125 2525 2525 2525 2525 2525     .!)!%!%%%%%%%%%%
+d008f1b8:	2525 2525 2125 2125 2125 1021 2125 0010     %%%%%!%!%!!.%!..
+	...
+d008f1e8:	2110 2525 2125 2525 2525 2525 2525 2525     .!%%%!%%%%%%%%%%
+d008f1f8:	2525 2525 2125 2125 2529 2121 2121 0010     %%%%%!%!)%!!!!..
+	...
+d008f228:	1000 2521 2125 2525 2525 2525 2525 2525     ..!%%!%%%%%%%%%%
+d008f238:	2525 2525 2125 2525 2525 2121 2121 0010     %%%%%!%%%%!!!!..
+	...
+d008f268:	1000 2521 2125 2925 2525 2525 2525 2525     ..!%%!%)%%%%%%%%
+d008f278:	2525 2525 2521 2525 2521 2125 1021 0000     %%%%!%%%!%%!!...
+	...
+d008f2a8:	1000 2521 2129 2525 2525 2525 2525 2525     ..!%)!%%%%%%%%%%
+d008f2b8:	2525 2525 2521 2525 2521 2125 1021 0000     %%%%!%%%!%%!!...
+	...
+d008f2e8:	1000 2925 2529 2529 2525 2525 2525 2525     ..%))%)%%%%%%%%%
+d008f2f8:	2525 2525 2521 2529 2521 2125 2121 0010     %%%%!%)%!%%!!!..
+	...
+d008f328:	1000 2521 2525 2525 2525 2525 2525 2525     ..!%%%%%%%%%%%%%
+d008f338:	2525 2525 2521 2125 2525 2121 2121 0010     %%%%!%%!%%!!!!..
+	...
+d008f368:	2110 2521 2129 2525 2525 2525 2525 2525     .!!%)!%%%%%%%%%%
+d008f378:	2525 2525 2521 2125 2525 2121 2121 0010     %%%%!%%!%%!!!!..
+	...
+d008f3a8:	1000 2521 2125 2525 2525 2525 2525 2525     ..!%%!%%%%%%%%%%
+d008f3b8:	2529 2525 2521 2125 2525 2121 2121 0010     )%%%!%%!%%!!!!..
+	...
+d008f3e8:	1000 2521 2125 2529 2525 2525 2525 2525     ..!%%!)%%%%%%%%%
+d008f3f8:	2529 2525 2521 2125 2521 2121 2110 1021     )%%%!%%!!%!!.!!.
+	...
+d008f428:	2110 2129 2125 2521 2525 2525 2525 2525     .!)!%!!%%%%%%%%%
+d008f438:	2525 2525 2121 2125 2921 2121 2110 1021     %%%%!!%!!)!!.!!.
+	...
+d008f468:	2110 2125 2125 2521 2525 2525 2525 2525     .!%!%!!%%%%%%%%%
+d008f478:	2525 2525 2121 2125 2521 2121 2510 1021     %%%%!!%!!%!!.%!.
+	...
+d008f4a8:	2110 2125 2125 2521 2525 2525 2525 2525     .!%!%!!%%%%%%%%%
+d008f4b8:	2525 2525 2121 2525 2521 2121 2510 1021     %%%%!!%%!%!!.%!.
+	...
+d008f4e8:	2110 2121 2525 2921 2525 2525 2525 2525     .!!!%%!)%%%%%%%%
+d008f4f8:	2525 2525 2125 2525 2521 2121 2510 1021     %%%%%!%%!%!!.%!.
+	...
+d008f528:	1000 2121 2525 2521 2525 2525 2525 2525     ..!!%%!%%%%%%%%%
+d008f538:	2525 2525 2125 2125 2921 1021 2510 1021     %%%%%!%!!)!..%!.
+	...
+d008f568:	1000 2125 2125 2921 2525 2525 2525 2525     ..%!%!!)%%%%%%%%
+d008f578:	2525 2525 2525 2125 2521 1021 2129 0010     %%%%%%%!!%!.)!..
+	...
+d008f5a8:	2110 2125 2129 2521 2525 2525 2525 2525     .!%!)!!%%%%%%%%%
+d008f5b8:	2525 2525 2125 2125 2525 1021 2125 0010     %%%%%!%!%%!.%!..
+	...
+d008f5e8:	2110 2525 2125 2925 2525 2525 2525 2525     .!%%%!%)%%%%%%%%
+d008f5f8:	2525 2525 2125 2125 2529 2121 2121 0010     %%%%%!%!)%!!!!..
+	...
+d008f628:	1000 2521 2521 2529 2525 2525 2525 2525     ..!%!%)%%%%%%%%%
+d008f638:	2525 2925 2525 2525 2525 2121 2121 0010     %%%)%%%%%%!!!!..
+	...
+d008f668:	1000 2521 2521 2529 2525 2525 2525 2525     ..!%!%)%%%%%%%%%
+d008f678:	2525 2525 2525 2525 2525 2129 2121 0010     %%%%%%%%%%)!!!..
+	...
+d008f6a8:	1000 2521 2521 2529 2525 2525 2525 2525     ..!%!%)%%%%%%%%%
+d008f6b8:	2525 2525 2525 2525 2125 2121 1021 0000     %%%%%%%%%!!!!...
+	...
+d008f6e8:	2110 2121 2129 2925 2525 2525 2525 2525     .!!!)!%)%%%%%%%%
+d008f6f8:	2525 2525 2125 2525 2121 2121 2510 1021     %%%%%!%%!!!!.%!.
+	...
+d008f728:	1000 2121 2125 2525 2525 2525 2525 2525     ..!!%!%%%%%%%%%%
+d008f738:	2525 2525 2125 2125 2121 1021 2910 1021     %%%%%!%!!!!..)!.
+	...
+d008f768:	1000 2125 2125 2525 2525 2525 2525 2525     ..%!%!%%%%%%%%%%
+d008f778:	2525 2525 2125 2125 2121 1021 2129 0010     %%%%%!%!!!!.)!..
+	...
+d008f7a8:	2110 2129 2125 2525 2525 2525 2525 2525     .!)!%!%%%%%%%%%%
+d008f7b8:	2525 2525 2125 2125 2125 1021 2125 0010     %%%%%!%!%!!.%!..
+	...
+d008f7e8:	2110 2525 2125 2525 2525 2525 2525 2525     .!%%%!%%%%%%%%%%
+d008f7f8:	2525 2525 2125 2125 2529 2121 2121 0010     %%%%%!%!)%!!!!..
+	...
+d008f828:	1000 2521 2125 2525 2525 2525 2525 2525     ..!%%!%%%%%%%%%%
+d008f838:	2525 2525 2125 2525 2525 2121 2121 0010     %%%%%!%%%%!!!!..
+	...
+d008f868:	1000 2521 2125 2925 2525 2525 2525 2525     ..!%%!%)%%%%%%%%
+d008f878:	2525 2525 2521 2525 2521 2125 1021 0000     %%%%!%%%!%%!!...
+	...
+d008f8a8:	1000 2521 2129 2525 2525 2525 2525 2525     ..!%)!%%%%%%%%%%
+d008f8b8:	2525 2525 2521 2525 2521 2125 1021 0000     %%%%!%%%!%%!!...
+	...
+d008f8e8:	1000 2925 2529 2529 2525 2525 2525 2525     ..%))%)%%%%%%%%%
+d008f8f8:	2525 2525 2521 2529 2521 2129 2121 0010     %%%%!%)%!%)!!!..
+	...
+d008f928:	1000 2521 2525 2525 2525 2525 2525 2525     ..!%%%%%%%%%%%%%
+d008f938:	2525 2525 2521 2125 2525 2121 2121 0010     %%%%!%%!%%!!!!..
+	...
+d008f968:	2110 2521 2129 2525 2525 2525 2525 2525     .!!%)!%%%%%%%%%%
+d008f978:	2525 2525 2521 2125 2925 2121 2121 0010     %%%%!%%!%)!!!!..
+	...
+d008f9a8:	1000 2521 2125 2525 2525 2525 2525 2525     ..!%%!%%%%%%%%%%
+d008f9b8:	2529 2525 2521 2125 2525 2121 2121 0010     )%%%!%%!%%!!!!..
+	...
+d008f9e8:	1000 2521 2125 2529 2525 2525 2525 2525     ..!%%!)%%%%%%%%%
+d008f9f8:	2529 2525 2521 2125 2521 2121 2110 1021     )%%%!%%!!%!!.!!.
+	...
+d008fa28:	2110 2129 2125 2521 2525 2525 2525 2525     .!)!%!!%%%%%%%%%
+d008fa38:	2525 2525 2121 2125 2125 2525 2110 1021     %%%%!!%!%!%%.!!.
+	...
+d008fa68:	2110 2125 2125 2521 2525 2525 2525 2525     .!%!%!!%%%%%%%%%
+d008fa78:	2525 2525 2121 2125 2521 1025 2125 1021     %%%%!!%!!%%.%!!.
+	...
+d008faa8:	2110 2125 2125 2521 2525 2525 2525 2525     .!%!%!!%%%%%%%%%
+d008fab8:	2525 2525 2121 2525 2521 1010 2510 1021     %%%%!!%%!%...%!.
+	...
+d008fae8:	2110 2121 2525 2921 2525 2525 2525 2525     .!!!%%!)%%%%%%%%
+d008faf8:	2525 2525 2125 2525 2510 1010 2510 1021     %%%%%!%%.%...%!.
+	...
+d008fb28:	1000 2121 2525 2521 2525 2525 2525 2525     ..!!%%!%%%%%%%%%
+d008fb38:	2525 2525 2125 2125 2510 1029 2510 1025     %%%%%!%!.%)..%%.
+	...
+d008fb68:	1000 2125 2125 2921 2525 2525 2525 2525     ..%!%!!)%%%%%%%%
+d008fb78:	2525 2525 2525 2125 1021 2525 2110 0010     %%%%%%%!!.%%.!..
+	...
+d008fba8:	2110 2125 2129 2521 2525 2525 2525 2525     .!%!)!!%%%%%%%%%
+d008fbb8:	2525 2525 2125 2125 2125 1010 2121 0010     %%%%%!%!%!..!!..
+	...
+d008fbe8:	2110 2525 2125 2925 2525 2525 2525 2525     .!%%%!%)%%%%%%%%
+d008fbf8:	2525 2525 2125 2125 2125 1021 2121 0010     %%%%%!%!%!!.!!..
+	...
+d008fc28:	1000 2521 2521 2529 2525 2525 2525 2525     ..!%!%)%%%%%%%%%
+d008fc38:	2525 2925 2525 2525 2529 2121 2121 0010     %%%)%%%%)%!!!!..
+	...
+d008fc68:	1000 2521 2521 2529 2525 2525 2525 2525     ..!%!%)%%%%%%%%%
+d008fc78:	2525 2525 2525 2525 2525 2121 2121 0010     %%%%%%%%%%!!!!..
+	...
+d008fca8:	1000 2521 2521 2529 2525 2525 2525 2525     ..!%!%)%%%%%%%%%
+d008fcb8:	2525 2525 2525 2525 2125 2121 1021 0000     %%%%%%%%%!!!!...
 	...
 
-d009b528 <__sf_fake_stdout>:
+d008fcd8 <gfx_bubgutwut>:
 	...
+d008fd58:	0000 1100 0011 0000 0000 0000 0000 0000     ................
+	...
+d008fd70:	0000 3411 1030 1011 0000 0000 0000 0000     ...40...........
+d008fd80:	0000 2d70 f4f4 0070 0000 3410 3030 3434     ..p-..p....40044
+d008fd90:	1110 0000 0000 0000 7000 f42d 2d1d 2df4     .........p-..-.-
+d008fda0:	102d 3034 3030 3030 3434 0011 0000 0000     -.40000044......
+d008fdb0:	2d00 702d f470 1d2d 0af4 3411 3030 3430     .--pp.-....40004
+d008fdc0:	3430 1034 0000 0000 f400 0070 7074 7010     044.......p.tp.p
+d008fdd0:	7070 1170 3030 3430 3434 1134 0000 0000     ppp.0004444.....
+d008fde0:	2d00 0000 0070 1100 7011 1010 3030 3034     .-..p....p..0040
+d008fdf0:	1034 0011 0000 0000 0000 0000 0000 0000     4...............
+d008fe00:	8110 1111 3411 3430 3434 0010 0000 0000     .....40444......
+d008fe10:	0000 0000 0000 1000 1171 baf7 1110 1010     ........q.......
+d008fe20:	3430 0011 0000 0000 0000 0000 bf11 07be     04..............
+d008fe30:	1011 be1a 2d10 70f4 1010 1030 0000 0000     .....-.p..0.....
+d008fe40:	0000 0000 ba10 7d7d 1a7d 111a 74f4 5c58     ......}}}....tX\
+d008fe50:	7070 3010 0010 0000 0000 0000 0000 ba10     pp.0............
+d008fe60:	baba 10be 7070 7ef7 702d 1011 1030 0000     ....pp.~-p..0...
+d008fe70:	0000 0000 0711 7d07 ba07 797d 8110 816d     .......}..}y..m.
+d008fe80:	1d70 3411 3010 0010 0000 1000 7d6d 7d81     p..4.0......m}.}
+d008fe90:	7d7d 7d81 7d81 5c75 1058 1134 3434 1130     }}.}.}u\X.4.440.
+d008fea0:	0000 0000 1011 3434 6d71 817d 7179 5c10     ......44qm}.yq.\
+d008feb0:	105c 3411 3434 3034 0000 0000 0000 1010     \..44440........
+d008fec0:	7979 797d 106d 1111 0010 1000 1011 1110     yy}ym...........
+	...
+d008fed8:	7910 7579 1058 0011 0000 0000 0000 0000     .yyuX...........
+	...
+d008fef0:	1000 7579 0010 0000 0000 0000 0000 0000     ..yu............
+	...
+d008ff08:	1100 797d 0010 0000 0000 0000 0000 0000     ..}y............
+	...
+d008ff20:	7d12 797d 0011 0000 0000 0000 0000 0000     .}}y............
+	...
+d008ff38:	0710 757d 0010 0000 0000 0000 0000 0000     ..}u............
+	...
+d008ff50:	7512 7585 0010 0000 0000 0000 0000 0000     .u.u............
+	...
+d008ff68:	1000 757d 0011 0000 0000 0000 0000 0000     ..}u............
+	...
+d008ff80:	1000 7581 0010 0000 0000 0000 0000 0000     ...u............
+	...
+d008ff98:	7910 7981 0010 0000 0000 0000 0000 0000     .y.y............
+	...
+d008ffb0:	0710 7181 0010 0000 0000 0000 0000 0000     ...q............
+	...
+d008ffc8:	8111 797d 0011 0000 0000 0000 0000 0000     ..}y............
+d008ffd8:	0000 0000 0000 1000 817e 717d 0010 0000     ........~.}q....
+	...
+d008fff4:	0000 ba11 7d7d a611 0010 0000 0000 0000     ....}}..........
+	...
+d009000c:	1100 7d11 1081 a6a6 10a6 0000 0000 0000     ...}............
+	...
+d0090024:	1111 0471 107d 1022 a610 0010 0000 0000     ..q.}.".........
+	...
+d009003c:	1011 716d 1810 8211 101a 0010 0000 0000     ..mq............
+d009004c:	0000 0000 0000 1000 1818 1110 10ac 7d6d     ..............m}
+d009005c:	6dbf 1017 0000 0000 0000 0000 0000 1000     .m..............
+d009006c:	1818 1817 1118 7d71 8107 1118 0000 0000     ......q}........
+d009007c:	0000 0000 0000 1100 18a6 1817 5c11 817d     .............\}.
+d009008c:	7d1a 1071 0000 0000 0000 0000 0000 1810     .}q.............
+d009009c:	a6ac 1818 5811 7d7d 71ba 116d 0000 0000     .....X}}.qm.....
+d00900ac:	0000 0000 0000 ac10 1818 1818 1018 7971     ..............qy
+d00900bc:	5c1a 1071 0000 0000 0000 0000 0000 1810     .\q.............
+d00900cc:	1718 18a6 1018 815c 58ba 115c 0000 0000     ......\..X\.....
+d00900dc:	0000 0000 0000 1810 1818 17a6 1718 7d11     ...............}
+d00900ec:	10ba 1058 0011 0000 0000 0000 0000 ac10     ..X.............
+d00900fc:	1817 18a6 1818 8117 107d 1810 0010 0000     ........}.......
+d009010c:	0000 0000 0000 1010 1818 18ac 1817 7d18     ...............}
+d009011c:	117d 1818 0010 0000 0000 0000 0000 1011     }...............
+d009012c:	1710 1818 1818 7d11 107d 1818 0011 0000     .......}}.......
+d009013c:	0000 0000 0000 ac10 1818 1818 1718 8111     ................
+d009014c:	117d 1810 0010 0000 0000 0000 0000 ac11     }...............
+d009015c:	1817 1718 1717 8110 ba81 1071 0010 0000     ..........q.....
+d009016c:	0000 0000 0000 1811 1817 1817 1018 7ebf     ...............~
+d009017c:	8107 bfba 0011 0000 0000 0000 0000 ac10     ................
+d009018c:	1818 1817 1018 babf 8207 8107 0010 0000     ................
+d009019c:	0000 0000 0000 1810 1822 1717 1117 7975     ........".....uy
+d00901ac:	81ba 717d 0010 0000 0000 0000 0000 ac10     ..}q............
+d00901bc:	ac11 1822 1718 7110 7181 5875 0010 0000     .."....q.quX....
+d00901cc:	0000 0000 0000 ac11 1018 ac22 1718 1018     ..........".....
+d00901dc:	5c5c 1011 0010 0000 0000 0000 0000 a610     \\..............
+d00901ec:	1118 17a6 1818 1718 1010 1110 0025 0000     ............%...
+d00901fc:	0000 0000 0000 a610 1018 18a6 1818 1818     ................
+d009020c:	1717 1018 0000 0000 0000 0000 0000 1810     ................
+d009021c:	1018 18ac 1818 1818 1818 1117 0000 0000     ................
+d009022c:	0000 0000 0000 1811 1118 17ac 1818 1717     ................
+d009023c:	1817 1117 0000 0000 0000 0000 0000 ac10     ................
+d009024c:	1718 ac10 1818 1718 1718 1118 0000 0000     ................
+d009025c:	0000 0000 0000 1100 1818 ac11 1818 1817     ................
+d009026c:	1818 1018 0000 0000 0000 0000 0000 1000     ................
+d009027c:	1817 ac10 1818 1718 1818 1017 0000 0000     ................
+d009028c:	0000 0000 0000 1111 17ac ac10 1818 1818     ................
+d009029c:	1817 1018 0000 0000 0000 0000 1000 1010     ................
+d00902ac:	1011 ac18 1717 1718 1818 1818 0010 0000     ................
+d00902bc:	0000 0000 bf11 1086 1010 2211 1818 1817     ..........."....
+d00902cc:	1718 1817 0010 0000 0000 0000 7d10 bf11     .............}..
+d00902dc:	11ba 1110 1110 1010 1111 1010 0011 0000     ................
+d00902ec:	0000 0000 6d10 7911 7d7d 8282 ba7d 7d82     .....m.y}}..}..}
+d00902fc:	077d 7182 2510 0000 0000 0000 5811 6d10     }..q.%.......X.m
+d009030c:	7d6d 0781 82be ba07 7d81 817e 1379 0000     m}.......}~.y...
+d009031c:	0000 0000 1000 5c10 71be 6dbe 7911 7979     .......\.q.m.yyy
+d009032c:	7975 7579 1158 0000 0000 0000 0000 1100     uyyuX...........
+d009033c:	1010 1111 1000 1011 1010 1110 1010 0000     ................
+d009034c:	0000 0000                                   ....
+
+d0090350 <gfx_bubguy1>:
+	...
+d0090428:	0000 1010 0000 0000 0000 0000 0000 0000     ................
+	...
+d0090444:	1010 3010 1034 0000 0000 0000 0000 0000     ...04...........
+	...
+d009045c:	0000 1000 3411 3034 3430 0010 0000 2d70     .....44004....p-
+d009046c:	f4f4 006c 0000 0000 0000 0000 0000 1000     ..l.............
+d009047c:	3434 3030 3030 3430 f411 1d2d 2d2d 2d1d     44000004..-.--.-
+d009048c:	0070 0000 0000 0000 0000 1200 3434 3430     p...........4404
+d009049c:	3030 3430 7011 f42d f42d 6c70 1d2d 0000     0004.p-.-.pl-...
+	...
+d00904b4:	3410 3434 3034 3030 7010 706c 106c 7070     .4444000.plpl.pp
+d00904c4:	7000 00f4 0000 0000 0000 0000 0000 1010     .p..............
+d00904d4:	3034 3034 1030 6c11 1110 0000 0070 f400     40400..l....p...
+	...
+d00904ec:	0000 1000 3434 3034 1034 1010 117d 0000     ....44404...}...
+	...
+d009050c:	3410 1130 1010 ba10 101a 1071 0000 0000     .40.......q.....
+	...
+d0090528:	3010 1010 1d70 102d bf1a 1010 ba07 101a     .0..p.-.........
+	...
+d0090544:	3011 6c10 5870 7058 102d 1a1a 7d81 7e7d     .0.lpXXp-....}}~
+d0090554:	0011 0000 0000 0000 0000 0000 3010 1010     .............0..
+d0090564:	f470 ba82 6c70 0711 baba 107e 0000 0000     p...pl....~.....
+	...
+d009057c:	3010 3410 1d11 8170 8175 7d10 7e81 817e     .0.4..p.u..}.~~.
+d009058c:	0707 0010 0000 0000 0000 0000 3010 3434     .............044
+d009059c:	3411 5c10 6d58 7d81 7d81 8181 817d 6d81     .4.\Xm.}.}..}..m
+d00905ac:	0010 0000 0000 0000 3000 3434 3434 1010     .........04444..
+d00905bc:	585c 7110 7d79 7181 346d 1034 0011 0000     \X.qy}.qm44.....
+d00905cc:	0000 0000 0000 1110 1011 0011 1100 1110     ................
+d00905dc:	7110 8175 7575 1111 0000 0000 0000 0000     .qu.uu..........
+	...
+d00905f8:	1010 7534 7975 0010 0000 0000 0000 0000     ..4uuy..........
+	...
+d0090614:	0000 1000 7575 0010 0000 0000 0000 0000     ....uu..........
+	...
+d0090634:	7510 1081 0000 0000 0000 0000 0000 0000     .u..............
+	...
+d0090650:	1000 7d79 1081 0000 0000 0000 0000 0000     ..y}............
+	...
+d009066c:	0000 7511 0781 0010 0000 0000 0000 0000     ...u............
+	...
+d0090688:	0000 1000 8175 1175 0000 0000 0000 0000     ....u.u.........
+	...
+d00906a8:	7511 1081 0000 0000 0000 0000 0000 0000     .u..............
+	...
+d00906c4:	1000 7d79 0010 0000 0000 0000 0000 0000     ..y}............
+	...
+d00906e0:	0000 7510 757d 0010 0000 0000 0000 0000     ...u}u..........
+	...
+d00906fc:	0000 1000 8179 10ba 0000 0000 0000 0000     ....y...........
+	...
+d009071c:	7910 7d7d 0010 0000 0000 0000 0000 0000     .y}}............
+	...
+d0090738:	1000 7d71 7e7d 0012 0000 0000 0000 0000     ..q}}~..........
+	...
+d0090754:	0000 1110 8110 107d 0000 0000 0000 0000     ......}.........
+	...
+d0090770:	0000 a610 ac22 ba10 1171 0000 0000 0000     ...."...q.......
+	...
+d009078c:	0000 a610 7158 2271 7158 105c 0000 0000     ....Xqq"Xq\.....
+	...
+d00907a8:	0000 1100 7122 7e81 1107 7171 0010 0000     ...."q.~..qq....
+	...
+d00907c4:	0000 1000 ac17 826d 1a7d 1011 a66d 0010     ......m.}...m...
+	...
+d00907e4:	2210 815c 817d 077d ac10 1018 0000 0000     ."\.}.}.........
+	...
+d0090800:	1000 7122 717d 7d7d 1007 1818 0011 0000     .."q}q}}........
+	...
+d009081c:	0000 ac11 816d 5c58 077d 107e 1718 0010     ....m.X\}.~.....
+	...
+d0090838:	0000 1000 7118 717d 7110 077d 1710 1010     .....q}q.q}.....
+	...
+d0090858:	1711 7575 1079 8158 0781 1810 1010 0000     ..uuy.X.........
+	...
+d0090874:	1000 6d17 7575 105c 7d71 1007 1810 0010     ...muu\.q}......
+	...
+d0090890:	0000 1810 6d58 5c71 1117 7d75 1182 1010     ....Xmq\..u}....
+d00908a0:	1010 0000 0000 0000 0000 0000 0000 1000     ................
+d00908b0:	1018 5c5c 1811 5818 7d81 817d 7d07 1271     ..\\...X.}}..}q.
+	...
+d00908cc:	1810 1818 1717 1818 7510 8181 8107 7d07     .........u.....}
+d00908dc:	0010 0000 0000 0000 0000 0000 1000 1818     ................
+d00908ec:	1817 1717 1818 7d5c 7d81 1a07 1010 0000     ......\}.}......
+	...
+d0090904:	0000 1810 1817 1817 1718 1017 8175 bf7d     ............u.}.
+d0090914:	7d7e 0010 0000 0000 0000 0000 0000 1100     ~}..............
+d0090924:	1717 1818 1818 1818 7110 827d 6d1a 1271     .........q}..mq.
+	...
+d0090940:	1100 1718 1818 1717 1817 8111 6dba 106d     .............mm.
+	...
+d009095c:	0000 1810 1717 1818 1717 1018 716d 106d     ............mqm.
+d009096c:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+d009097c:	1010 1818 1818 1718 1018 1010 1018 0000     ................
+	...
+d0090998:	1100 1010 1710 1718 1818 1818 a618 0010     ................
+	...
+d00909b4:	0000 1010 1011 1810 1817 1817 22ac 10a6     ............."..
+	...
+d00909d4:	1810 1818 1818 1817 1817 2222 0010 0000     ..........""....
+	...
+d00909ec:	0000 1000 1710 1717 1718 1817 1717 ac18     ................
+d00909fc:	0010 0000 0000 0000 0000 0000 0000 1000     ................
+d0090a0c:	6d58 1810 1817 1818 1817 1818 1018 0000     Xm..............
+	...
+d0090a28:	6d10 7d81 1810 1818 1817 1718 1217 0000     .m.}............
+	...
+d0090a44:	1000 7d6d 7d81 1811 1718 1818 1010 0000     ..m}.}..........
+	...
+d0090a60:	0000 1000 8181 1a7d 1810 1818 1011 0000     ......}.........
+	...
+d0090a80:	6d10 7d81 7e1a 1810 1711 0010 0000 0000     .m.}.~..........
+	...
+d0090a9c:	1000 7d11 7d81 7df7 1111 1010 1100 0010     ...}.}.}........
+	...
+d0090ab8:	0000 1010 8171 7d81 107d 6d5c 1110 827d     ....q..}}.\m..}.
+d0090ac8:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+d0090ad8:	1010 7d7d 8181 107d 6d71 7d7d 7d81 0010     ..}}..}.qm}}.}..
+	...
+d0090af4:	1000 115c 7d71 7d7d 5c10 715c 7971 1175     ..\.q}}}.\\qqyu.
+	...
+d0090b10:	0000 1010 1058 1011 1110 1010 1010 1110     ....X...........
+d0090b20:	0000 0000                                   ....
+
+d0090b24 <gfx_bubguy2>:
+	...
+d0090be4:	0000 1100 0010 0000 0000 0000 0000 0000     ................
+	...
+d0090c08:	1010 3010 1034 0000 0000 0000 0000 0000     ...04...........
+	...
+d0090c28:	0000 1010 3434 3030 1034 0000 0000 0000     ....44004.......
+	...
+d0090c4c:	1100 3434 3030 3030 3430 f410 702d f42d     ..44000004..-p-.
+d0090c5c:	702d 0000 0000 0000 0000 0000 0000 0000     -p..............
+d0090c6c:	0000 0000 3410 3034 3034 3030 1134 f470     .....44040004.p.
+d0090c7c:	f4f4 2d2d 2df4 0070 0000 0000 0000 0000     ..--.-p.........
+	...
+d0090c94:	3410 3434 3034 3030 6c10 6c74 f46c 6c2d     .4444000.ltll.-l
+d0090ca4:	f474 00f4 0000 0000 0000 0000 0000 0000     t...............
+d0090cb4:	0000 0000 1000 3410 3430 3030 1110 106c     .......40400..l.
+d0090cc4:	1010 6c74 7000 002d 0000 0000 0000 0000     ..tl.p-.........
+	...
+d0090cdc:	1000 3434 3034 1034 1110 1081 0000 7000     ..44404........p
+d0090cec:	0000 00f4 0000 0000 0000 0000 0000 0000     ................
+d0090cfc:	0000 0000 1000 3034 1010 1010 1abe 6d10     ......40.......m
+d0090d0c:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d0090d24:	3010 1010 f470 102d 1abe 1010 beba 101a     .0..p.-.........
+	...
+d0090d44:	0000 1000 1130 6c70 5c58 f46c 1a10 7d1a     ....0.plX\l....}
+d0090d54:	7d7d 1007 0000 0000 0000 0000 0000 0000     }}..............
+d0090d64:	0000 0000 0000 3011 1010 2d6c 1a82 746c     .......0..l-..lt
+d0090d74:	0710 bebe 10ba 0000 0000 0000 0000 0000     ................
+	...
+d0090d8c:	1000 1030 1134 702d 757d 117d 817d baba     ..0.4.-p}u}.}...
+d0090d9c:	077d 1082 0000 0000 0000 0000 0000 0000     }...............
+d0090dac:	0000 0000 3011 3434 3410 5c10 6d5c 7d81     .....044.4.\\m.}
+d0090dbc:	7d81 7d7d 7d81 717d 0010 0000 0000 0000     .}}}.}}q........
+	...
+d0090dd4:	3430 3434 1034 5810 1058 796d 7d7d 756d     04444..XX.my}}mu
+d0090de4:	3434 1011 0000 0000 0000 0000 0000 0000     44..............
+d0090df4:	0000 0000 1010 1010 0010 1000 1010 7110     ...............q
+d0090e04:	7d79 7575 1010 0000 0000 0000 0000 0000     y}uu............
+	...
+d0090e24:	1100 3410 7575 1075 0000 0000 0000 0000     ...4uuu.........
+	...
+d0090e48:	0000 1100 7979 0010 0000 0000 0000 0000     ....yy..........
+	...
+d0090e6c:	0000 1000 8175 0010 0000 0000 0000 0000     ....u...........
+	...
+d0090e90:	0000 1000 7d79 1081 0000 0000 0000 0000     ....y}..........
+	...
+d0090eb4:	0000 1000 8175 107e 0000 0000 0000 0000     ....u.~.........
+	...
+d0090ed8:	0000 1100 7975 1079 0000 0000 0000 0000     ....uyy.........
+	...
+d0090efc:	0000 1000 8179 0010 0000 0000 0000 0000     ....y...........
+	...
+d0090f20:	0000 1100 7d75 0010 0000 0000 0000 0000     ....u}..........
+	...
+d0090f44:	0000 1000 7d75 1175 0000 0000 0000 0000     ....u}u.........
+	...
+d0090f68:	0000 1000 7d75 1007 0000 0000 0000 0000     ....u}..........
+	...
+d0090f8c:	0000 1000 7d75 1081 0000 0000 0000 0000     ....u}..........
+	...
+d0090fb0:	0000 1000 8171 ba7d 0011 0000 0000 0000     ....q.}.........
+	...
+d0090fd4:	0000 1100 1111 077d 0010 0000 0000 0000     ......}.........
+	...
+d0090ff8:	0000 1010 a6a6 8110 117d 0000 0000 0000     ........}.......
+	...
+d009101c:	0000 a610 ac10 10a6 116d 0000 0000 0000     ........m.......
+	...
+d0091040:	1000 7da6 1082 10a6 1071 0000 0000 0000     ...}....q.......
+	...
+d0091064:	1000 8281 0707 a610 7110 0010 0000 0000     .........q......
+	...
+d0091088:	1000 1a7d 07ba 1081 6da6 0010 0000 0000     ..}......m......
+	...
+d00910ac:	1810 1a81 6dba 7581 ac10 10ac 0000 0000     .....m.u........
+	...
+d00910d0:	1710 817d 6d7e 6d79 1710 1018 0000 0000     ..}.~mym........
+	...
+d00910f4:	1810 7d75 6dba 6d75 1811 1017 0000 0000     ..u}.mum........
+	...
+d0091118:	6d10 7d75 6dba 7158 1810 ac18 0011 0000     .mu}.mXq........
+	...
+d009113c:	6d10 815c 7582 6d5c ac10 1718 0010 0000     .m\..u\m........
+	...
+d0091160:	6d10 6d5c 7d07 7158 1710 1818 1010 0000     .m\m.}Xq........
+	...
+d0091184:	7110 5c6d 7d07 7158 1711 1718 1010 0000     .qm\.}Xq........
+	...
+d00911a8:	5811 1075 ba7e 1010 1718 1718 7111 0011     .Xu.~........q..
+	...
+d00911cc:	1110 1010 07ba 1011 2218 1818 1018 0010     ........."......
+	...
+d00911ec:	0000 1300 1717 1018 ba7e 1810 1817 1817     ........~.......
+d00911fc:	10ac 0010 0000 0000 0000 0000 0000 0000     ................
+d009120c:	0000 0000 0000 1000 1718 1017 0781 1810     ................
+d009121c:	1718 1817 18ac 1018 0010 0000 0000 0000     ................
+	...
+d0091234:	0000 1000 1817 0711 7d7d 117d 1817 1717     ........}}}.....
+d0091244:	a622 a6ac 10a6 0000 0000 0000 0000 0000     "...............
+d0091254:	0000 0000 0000 1000 1018 ba7d 7d7d 10ba     ..........}.}}..
+d0091264:	1817 1818 1817 22a6 a6a6 0010 0000 0000     ......."........
+	...
+d009127c:	0000 1000 1018 07ba 8107 077d 1810 1718     ..........}.....
+d009128c:	1818 a6ac a618 0010 0000 0000 0000 0000     ................
+d009129c:	0000 0000 0000 1000 1017 7e1a 7d7e 7d7d     ...........~~}}}
+d00912ac:	1810 1717 1817 1718 aca6 10a6 1000 0011     ................
+	...
+d00912c4:	0000 1100 1018 1a81 811a 816d 1710 1818     ..........m.....
+d00912d4:	1718 1818 a618 11ac 1a10 1081 0000 0000     ................
+d00912e4:	0000 0000 0000 1000 1017 7d6d 6dba 1158     ..........m}.mX.
+d00912f4:	1810 1818 1817 1718 1817 17ac 6d81 1158     .............mX.
+	...
+d009130c:	0000 1000 1818 1110 6d7d 1010 1010 1817     ........}m......
+d009131c:	1717 1718 1818 1018 ba7d 107d 0000 0000     ........}.}.....
+d009132c:	0000 0000 0000 1710 1718 1717 1010 1710     ................
+d009133c:	1111 1010 1810 1718 1717 1018 6d07 1071     .............mq.
+	...
+d0091354:	0000 1810 1818 1818 1818 1818 0010 0000     ................
+d0091364:	1010 1818 1818 7e17 07ba 1079 0000 0000     .......~..y.....
+d0091374:	0000 0000 0000 1810 1818 1817 1718 1017     ................
+d0091384:	0000 0000 1000 1817 1718 7d10 8182 1071     ...........}..q.
+	...
+d009139c:	1000 1817 1817 1718 1818 1018 0000 0000     ................
+d00913ac:	1000 1718 1018 7d7d 6d7d 1058 0000 0000     ......}}}mX.....
+d00913bc:	0000 0000 1000 1818 1718 1718 1718 0010     ................
+d00913cc:	0000 0000 1100 1018 8110 7d81 6d7d 0010     ...........}}m..
+	...
+d00913e4:	1100 1717 1718 1818 1817 0010 0000 0000     ................
+d00913f4:	0000 1010 7d7d 7d7d 106d 0000 0000 0000     ....}}}}m.......
+d0091404:	0000 1000 1011 1110 1710 1718 1018 0000     ................
+d0091414:	0000 0000 0000 8110 7d81 717d 0010 0000     .........}}q....
+d0091424:	0000 0000 0000 1000 7d81 5c81 105c 1011     .........}.\\...
+d0091434:	1011 0000 0000 0000 0000 6d10 6d81 106d     ...........m.mm.
+	...
+d009144c:	0000 7d10 817d 6d81 7d81 7d7d 0781 0011     ...}}..m.}}}....
+d009145c:	0000 0000 0000 5810 7171 105c 0000 0000     .......Xqq\.....
+d009146c:	0000 0000 1000 817d 7d7d 817d 7d7d 7d7d     ......}.}}}.}}}}
+d009147c:	7d81 107d 0000 0000 0000 1000 5c5c 0011     .}}.........\\..
+	...
+d0091494:	1000 7d79 6d71 5c71 5c5c 6d6d 7d75 107d     ..y}qmq\\\mmu}}.
+	...
+d00914ac:	1010 0000 0000 0000 0000 0000 1000 1010     ................
+d00914bc:	1010 1011 1010 1011 1010 0010 0000 0000     ................
+	...
+
+d00914d8 <gfx_bubguy3>:
+	...
+d00915e0:	0000 1000 0010 0000 0000 0000 0000 0000     ................
+	...
+d0091604:	1010 3010 1034 0000 0000 0000 0000 0000     ...04...........
+	...
+d0091624:	0000 1111 3434 3030 1034 0000 7000 f42d     ....44004....p-.
+d0091634:	70f4 0000 0000 0000 0000 0000 0000 0000     .p..............
+d0091644:	0000 0000 1000 3434 3030 3030 3430 f411     ......44000004..
+d0091654:	1d2d 2d2d 2d1d 0070 0000 0000 0000 0000     -.--.-p.........
+	...
+d009166c:	3411 3034 3034 3030 1134 2d70 2df4 70f4     .44040004.p-.-.p
+d009167c:	2d70 001d 0000 0000 0000 0000 0000 0000     p-..............
+d009168c:	0000 0000 3410 3434 3034 3030 7010 7070     .....4444000.ppp
+d009169c:	1070 7070 7000 00f4 0000 0000 0000 0000     p.pp.p..........
+	...
+d00916b4:	1000 3410 3430 3030 1110 1070 0011 7000     ...40400..p....p
+d00916c4:	0000 00f4 0000 0000 0000 0000 0000 0000     ................
+d00916d4:	0000 0000 1000 3434 3034 1034 1010 117d     ......44404...}.
+	...
+d00916fc:	1000 3034 1011 1010 1aba 7510 0010 0000     ..40.......u....
+	...
+d0091720:	3010 1010 1d70 102d bf1a 1010 1a07 11bf     .0..p.-.........
+	...
+d0091740:	0000 1100 1030 7070 5858 2d70 1a10 811a     ....0.ppXXp-....
+d0091750:	817d 117e 0000 0000 0000 0000 0000 0000     }.~.............
+d0091760:	0000 0000 0000 3010 1010 f470 babe 7070     .......0..p...pp
+d0091770:	0711 ba1a 107e 0000 0000 0000 0000 0000     ....~...........
+	...
+d0091788:	1000 1030 1134 701d 7181 107d 817d 7e7e     ..0.4..p.q}.}.~~
+d0091798:	0781 1007 0000 0000 0000 0000 0000 0000     ................
+d00917a8:	0000 0000 3010 3434 3411 5c10 6d58 7d7d     .....044.4.\Xm}}
+d00917b8:	7d81 7d81 7d7d 6d81 0010 0000 0000 0000     .}.}}}.m........
+	...
+d00917d0:	3430 3434 1034 5c10 1058 7971 817d 6d71     04444..\X.qy}.qm
+d00917e0:	3434 1110 0000 0000 0000 0000 0000 0000     44..............
+d00917f0:	0000 0000 1110 1111 0011 1100 1110 6d10     ...............m
+d0091800:	8179 7979 1111 0000 0000 0000 0000 0000     y.yy............
+	...
+d0091820:	1000 3410 7579 1079 0000 0000 0000 0000     ...4yuy.........
+	...
+d0091844:	0000 1000 7579 0010 0000 0000 0000 0000     ....yu..........
+	...
+d0091868:	0000 1000 7d79 0010 0000 0000 0000 0000     ....y}..........
+	...
+d009188c:	0000 1000 7d79 107d 0000 0000 0000 0000     ....y}}.........
+	...
+d00918b0:	0000 1100 8179 1007 0000 0000 0000 0000     ....y...........
+	...
+d00918d4:	0000 1000 8179 1179 0000 0000 0000 0000     ....y.y.........
+	...
+d00918f8:	0000 1000 8179 0010 0000 0000 0000 0000     ....y...........
+	...
+d009191c:	0000 1100 7d79 0010 0000 0000 0000 0000     ....y}..........
+	...
+d0091940:	0000 1000 7d79 1079 0000 0000 0000 0000     ....y}y.........
+	...
+d0091964:	0000 1000 7d79 1007 0000 0000 0000 0000     ....y}..........
+	...
+d0091988:	0000 1000 8171 107d 0000 0000 0000 0000     ....q.}.........
+	...
+d00919ac:	0000 1100 7d71 077d 0013 0000 0000 0000     ....q}}.........
+	...
+d00919d0:	0000 1100 7d71 8281 0010 0000 0000 0000     ....q}..........
+	...
+d00919f4:	0000 1110 8110 7d7d 0010 0000 0000 0000     ......}}........
+	...
+d0091a18:	0000 a610 10a6 7d7d 10ba 0000 0000 0000     ......}}........
+	...
+d0091a3c:	1000 115e a610 8110 1081 0010 0000 0000     ..^.............
+	...
+d0091a60:	1000 077e 11ba 7d10 7181 1111 0000 0000     ..~....}.q......
+	...
+d0091a84:	1000 fb7e 077d 11ac 6d71 1010 0000 0000     ..~.}...qm......
+	...
+d0091aa8:	1011 81f7 717d ac11 1010 1818 0011 0000     ....}q..........
+	...
+d0091acc:	8110 7d7e 717d 1710 1818 1818 0010 0000     ..~}}q..........
+	...
+d0091af0:	0710 7d07 6d5c 115c 1718 1718 0010 0000     ...}\m\.........
+	...
+d0091b10:	0000 1300 7e7d 797d 7d5c 1058 1818 2218     ....}~}y\}X...."
+d0091b20:	1118 0000 0000 0000 0000 0000 0000 0000     ................
+d0091b30:	0000 0000 0000 1000 ba7e 1079 7d7d 1710     ........~.y.}}..
+d0091b40:	ac18 18ac 1018 1011 587d 0000 0000 0000     ........}X......
+	...
+d0091b58:	0000 7d10 7dbe 5810 5c71 1810 1817 1718     ...}.}.Xq\......
+d0091b68:	1018 7d6d 077e 101a 0000 0000 0000 0000     ..m}~...........
+d0091b78:	0000 0000 0000 8211 797e 7910 1079 1718     ........~y.yy...
+d0091b88:	1818 1718 1018 1058 1010 117e 0000 0000     ......X...~.....
+d0091b98:	0000 0000 0000 1000 1010 7dba 1079 715c     ...........}y.\q
+d0091ba8:	1158 1817 2218 1817 1018 715c 7d11 10be     X...."....\q.}..
+d0091bb8:	0010 0000 0000 0000 0000 7d10 7d81 797d     ...........}.}}y
+d0091bc8:	1010 1010 1810 1817 1818 1818 1118 5810     ...............X
+d0091bd8:	1010 7e10 0010 0000 0000 0000 1000 7e81     ...~...........~
+d0091be8:	7e7e 107d 1811 1711 1818 1817 1717 1017     ~~}.............
+d0091bf8:	1010 5c10 1010 1071 0000 0000 0000 0000     ...\..q.........
+d0091c08:	1000 1a81 7e07 8182 1010 1718 1818 1718     .....~..........
+d0091c18:	1818 1818 1017 1011 6d5c 0010 0000 0000     ........\m......
+d0091c28:	0000 0000 1100 816d 071a 7510 1158 1717     ......m....uX...
+d0091c38:	1717 1718 1817 1818 1018 0000 1110 0000     ................
+	...
+d0091c50:	0000 7110 817d 5810 1010 1818 1718 1718     ...q}..X........
+d0091c60:	1817 1717 1818 0010 0000 0000 0000 0000     ................
+d0091c70:	0000 0000 0000 1000 7175 1058 1711 1818     ........uqX.....
+d0091c80:	1717 1818 1818 1718 1718 0010 0000 0000     ................
+	...
+d0091c9c:	5811 105c 1818 1718 1717 1717 1718 1818     .X\.............
+d0091cac:	ac18 11a6 0000 0000 0000 0000 0000 0000     ................
+d0091cbc:	0000 0000 0000 1811 1718 1817 1818 1717     ................
+d0091ccc:	1718 1717 1817 1722 0010 0000 1110 0000     ......".........
+	...
+d0091ce4:	1000 18ac 1718 1817 1018 1818 1817 1817     ................
+d0091cf4:	1818 a65e 0011 1000 7dfb 0010 0000 0000     ..^......}......
+d0091d04:	0000 0000 ac10 1718 1718 1717 1018 1710     ................
+d0091d14:	1718 1717 1718 a622 10a6 1100 6d7d 0011     ......".....}m..
+d0091d24:	0000 0000 0000 1011 ac22 1817 1817 1818     ........".......
+d0091d34:	1017 1010 1810 1818 1718 ac18 22a6 0710     ............."..
+d0091d44:	077d 1181 0000 0000 1000 7181 ac11 1718     }..........q....
+d0091d54:	1718 1817 1110 0000 1010 1718 1718 1818     ................
+d0091d64:	1817 7e11 7107 106d 0000 0000 1100 7d7d     ...~.qm.......}}
+d0091d74:	1058 1817 1717 1718 0010 0000 1000 1710     X...............
+d0091d84:	1817 1817 1817 8210 07be 107d 0000 0000     ..........}.....
+d0091d94:	1100 817d 5871 1810 1818 1018 0000 0000     ..}.qX..........
+d0091da4:	0000 1811 1717 1818 1118 be07 7d7e 1071     ............~}q.
+d0091db4:	0000 0000 1000 7d7d 5c81 1710 1817 0010     ......}}.\......
+d0091dc4:	0000 0000 0000 1000 1818 1718 1010 7ebe     ...............~
+d0091dd4:	757d 1158 0000 0000 1000 7d71 6d7d 105c     }uX.......q}}m\.
+d0091de4:	1011 0000 0000 0000 0000 0000 1710 1017     ................
+d0091df4:	7511 7d7e 5871 0011 0000 0000 1000 7d6d     .u~}qX........m}
+d0091e04:	8181 ba81 7d07 0011 0000 0000 0000 0000     .....}..........
+d0091e14:	1711 1811 8110 5871 105c 0000 0000 0000     ......qX\.......
+d0091e24:	1100 6d58 7d6d 7d7d 817d 116d 0000 0000     ..Xmm}}}}.m.....
+d0091e34:	0000 0000 1000 8110 6d81 5c58 0010 0000     .........mX\....
+d0091e44:	0000 0000 0000 5810 6d58 716d 716d 105c     .......XXmmqmq\.
+	...
+d0091e5c:	0000 5810 586d 115c 0000 0000 0000 0000     ...XmX\.........
+d0091e6c:	0000 1000 1010 1011 1111 0010 0000 0000     ................
+d0091e7c:	0000 0000 0000 1010 1010 0010 0000 0000     ................
+
+d0091e8c <gfx_bubguy4>:
+	...
+d0091fb8:	0000 1200 0010 0000 0000 0000 0000 0000     ................
+	...
+d0091fdc:	1010 3010 1034 0000 7000 2df4 70f4 0000     ...04....p.-.p..
+	...
+d0091ffc:	0000 1011 3434 3030 1034 0000 7070 1d2d     ....44004...pp-.
+d009200c:	1d2d 001d 0000 0000 0000 0000 0000 0000     -...............
+d009201c:	0000 0000 1100 3434 3030 3030 3430 f410     ......44000004..
+d009202c:	f41d 701d f470 002d 0000 0000 0000 0000     ...pp.-.........
+	...
+d0092044:	3410 3034 3034 3030 1034 bc70 1d2d 7070     .44040004.p.-.pp
+d0092054:	0000 001d 0000 0000 0000 0000 0000 0000     ................
+d0092064:	0000 0000 3410 3434 3034 3030 7010 7070     .....4444000.ppp
+d0092074:	1070 7000 0000 0000 0000 0000 0000 0000     p..p............
+	...
+d009208c:	1000 3410 3430 3030 1010 1070 0010 0000     ...40400..p.....
+	...
+d00920b0:	1000 3434 3034 1034 1010 107d 0000 0000     ..44404...}.....
+	...
+d00920d4:	1100 3034 1210 1110 1a1a 6d10 0011 0000     ..40.......m....
+	...
+d00920f8:	3010 1010 bc70 101d bf1a 1110 ba07 101a     .0..p...........
+	...
+d0092118:	0000 1100 1030 7070 5c58 1d70 1a10 7d1a     ....0.ppX\p....}
+d0092128:	817d 1007 0000 0000 0000 0000 0000 0000     }...............
+d0092138:	0000 0000 0000 3010 1010 bc70 1a07 7070     .......0..p...pp
+d0092148:	7e11 ba1a 1082 0000 0000 0000 0000 0000     .~..............
+	...
+d0092160:	1000 1030 1034 702d 7181 1081 817d 0707     ..0.4.-p.q..}...
+d0092170:	7e81 1107 0000 0000 0000 0000 0000 0000     .~..............
+d0092180:	0000 0000 3010 3434 3410 5c10 6d58 8181     .....044.4.\Xm..
+d0092190:	7d81 8181 7d81 6d81 0011 0000 0000 0000     .}...}.m........
+	...
+d00921a8:	3430 3434 1134 5811 105c 796d 817d 716d     04444..X\.my}.mq
+d00921b8:	3434 1210 0000 0000 0000 0000 0000 0000     44..............
+d00921c8:	0000 0000 1110 1110 0010 1000 1011 6d10     ...............m
+d00921d8:	7d79 7579 1210 0000 0000 0000 0000 0000     y}yu............
+	...
+d00921f8:	1100 3411 7575 1175 0000 0000 0000 0000     ...4uuu.........
+	...
+d009221c:	0000 1000 7579 0010 0000 0000 0000 0000     ....yu..........
+	...
+d0092240:	0000 1000 7d75 0010 0000 0000 0000 0000     ....u}..........
+	...
+d0092264:	0000 1000 8179 117d 0000 0000 0000 0000     ....y.}.........
+	...
+d0092288:	0000 1000 8179 1007 0000 0000 0000 0000     ....y...........
+	...
+d00922ac:	0000 1100 8179 1075 0000 0000 0000 0000     ....y.u.........
+	...
+d00922d0:	0000 1000 8179 0012 0000 0000 0000 0000     ....y...........
+	...
+d00922f4:	0000 1000 8175 0010 0000 0000 0000 0000     ....u...........
+	...
+d0092318:	0000 1000 8175 1075 0000 0000 0000 0000     ....u.u.........
+	...
+d009233c:	0000 1000 8179 1007 0000 0000 0000 0000     ....y...........
+	...
+d0092360:	0000 1100 8175 107d 0000 0000 0000 0000     ....u.}.........
+	...
+d0092384:	0000 1100 7d6d 0781 0011 0000 0000 0000     ....m}..........
+	...
+d00923a8:	0000 1000 8171 077d 0010 0000 0000 0000     ....q.}.........
+	...
+d00923cc:	0000 1010 8111 817d 0011 0000 0000 0000     ......}.........
+	...
+d00923f0:	0000 a612 11a6 817d 1007 0000 0000 0000     ......}.........
+	...
+d0092414:	1000 18ac a610 7d11 1281 0010 0000 0000     .......}........
+	...
+d0092438:	1000 821a 2281 8110 717d 1110 0000 0000     ....."..}q......
+	...
+d009245c:	1010 821a 107d 11ac 716d 1010 0000 0000     ....}...mq......
+	...
+d0092480:	ba10 817e 757d ac10 1110 1817 0011 0000     ..~.}u..........
+	...
+d00924a0:	0000 1100 8210 7d81 6d6d 1710 1718 1717     .......}mm......
+d00924b0:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+d00924c0:	0000 0000 0000 1000 8107 6d81 6d58 1158     ...........mXmX.
+d00924d0:	1718 1818 0011 0000 0000 0000 0000 0000     ................
+	...
+d00924e8:	0000 1110 7d7d 1071 7d58 1071 1817 2218     ....}}q.X}q...."
+d00924f8:	1022 0000 0000 0000 0000 0000 0000 0000     "...............
+d0092508:	0000 0000 0000 0711 7181 5810 7d75 115c     .........q.Xu}\.
+d0092518:	ac17 17ac 1118 1000 8110 0081 0000 0000     ................
+	...
+d0092530:	1100 7d82 1071 755c 7d81 1710 1718 1817     ...}q.\u.}......
+d0092540:	1017 6d11 817d 1a82 0011 0000 0000 0000     ...m}...........
+d0092550:	0000 1010 8110 6d81 1010 7958 5881 1810     .......m..Xy.X..
+d0092560:	1718 1818 1017 5c58 1011 817d 0010 0000     ......X\..}.....
+d0092570:	0000 0000 1100 7d7d 817d 1081 1111 5812     ......}}}......X
+d0092580:	105c 1818 ac18 1817 1018 585c 106d 817d     \.........\Xm.}.
+d0092590:	1011 0000 0000 0000 7d10 7e1a 8181 0011     .........}.~....
+d00925a0:	1810 1110 1810 1717 1818 18ac 1718 5c10     ...............\
+d00925b0:	7d10 1081 107d 0000 0000 0000 8111 bf82     .}..}...........
+d00925c0:	811a 1075 1710 1718 1718 1818 1718 1818     ..u.............
+d00925d0:	ac18 1010 105c 7510 0010 0000 0000 0000     ....\..u........
+d00925e0:	7510 ba7d 7d07 1081 1711 1717 1718 1818     .u}..}..........
+d00925f0:	1818 1717 acac 1010 5810 106d 0000 0000     .........Xm.....
+d0092600:	0000 0000 1000 816d 107d 1171 1810 1817     ......m.}.q.....
+d0092610:	1817 1718 1718 1717 a6ac 11a6 1000 0010     ................
+	...
+d0092628:	0000 6d10 7181 0010 1810 1718 1718 1818     ...m.q..........
+d0092638:	1817 1818 ac18 a6a6 0010 0000 0000 0000     ................
+d0092648:	0000 0000 0000 1000 1010 1000 1817 1717     ................
+d0092658:	1718 1818 1818 1817 1817 a6ac 10a6 0000     ................
+	...
+d0092670:	0000 0010 1000 ac11 1818 1017 1717 1717     ................
+d0092680:	1717 1718 1717 ac18 11a6 0000 0000 0000     ................
+d0092690:	0000 0000 1100 7d6d ac10 17ac 1817 1818     ......m}........
+d00926a0:	1012 1817 1817 1818 1718 ac17 a6a6 0010     ................
+	...
+d00926b8:	1000 8181 106d 1718 1717 1818 1017 1010     ....m...........
+d00926c8:	1818 1718 1717 1818 22ac 0011 0000 0000     ........."......
+d00926d8:	0000 0000 1000 7d81 1075 1817 1718 1818     .......}u.......
+d00926e8:	1017 1111 1010 1818 1818 1717 ac18 0011     ................
+	...
+d0092700:	1000 8181 107d 1718 1818 1817 1118 1010     ....}...........
+d0092710:	1010 1710 1717 1818 ac17 0010 0000 0000     ................
+d0092720:	0000 0000 1000 817d 6d7d 1810 1817 1717     ......}.}m......
+d0092730:	1010 0010 1000 1810 1817 1718 ac17 0011     ................
+	...
+d0092748:	1000 8179 7581 1710 1818 1012 0010 0000     ..y..u..........
+d0092758:	0000 1810 1817 1817 1818 0010 0000 0000     ................
+d0092768:	0000 0000 1000 816d 817d 1110 1010 0010     ......m.}.......
+d0092778:	0000 0000 1000 1718 1718 1817 1018 0010     ................
+d0092788:	1000 0010 0000 0000 1100 7d6d 8181 0010     ..........m}....
+	...
+d00927a0:	1000 1010 1010 1111 1011 1011 0710 101a     ................
+d00927b0:	0000 0000 1100 756d 7d81 0010 0000 0000     ......mu.}......
+d00927c0:	0000 0000 1000 076d 7dba 077d ba07 ba07     ......m..}}.....
+d00927d0:	817d 117d 0000 0000 1000 6d6d 7d79 1081     }.}.......mmy}..
+	...
+d00927e8:	7510 0781 7d7d ba82 8107 7d07 717d 1071     .u..}}.....}}qq.
+d00927f8:	0000 0000 0000 6d12 716d 106d 0000 0000     .......mmqm.....
+d0092808:	0000 0000 5c11 7979 7975 7575 ba81 ba71     .....\yyuyuu..q.
+d0092818:	1a6d 115c 0000 0000 0000 1000 1110 0011     m.\.............
+	...
+d0092830:	1010 1010 1010 1012 1010 1010 1010 0010     ................
+
+d0092840 <gfx_bubguy5>:
+	...
+d0092948:	0000 1000 0010 0000 0000 0000 0000 0000     ................
+	...
+d009296c:	1010 3010 1034 0000 0000 0000 0000 0000     ...04...........
+	...
+d009298c:	0000 1111 3434 3030 1034 0000 7000 f42d     ....44004....p-.
+d009299c:	6cf4 0000 0000 0000 0000 0000 0000 0000     .l..............
+d00929ac:	0000 0000 1000 3434 3030 3030 3430 f411     ......44000004..
+d00929bc:	1d2d 2d2d 2d1d 0070 0000 0000 0000 0000     -.--.-p.........
+	...
+d00929d4:	3411 3034 3034 3030 1134 2d70 2df4 70f4     .44040004.p-.-.p
+d00929e4:	2d6c 001d 0000 0000 0000 0000 0000 0000     l-..............
+d00929f4:	0000 0000 3410 3434 3034 3030 7011 706c     .....4444000.plp
+d0092a04:	106c 7070 7000 00f4 0000 0000 0000 0000     l.pp.p..........
+	...
+d0092a1c:	1000 3410 3430 3030 1110 106c 0011 7000     ...40400..l....p
+d0092a2c:	0000 00f4 0000 0000 0000 0000 0000 0000     ................
+d0092a3c:	0000 0000 1000 3434 3034 1034 1010 117d     ......44404...}.
+	...
+d0092a64:	1000 3034 1011 1010 1aba 7110 0010 0000     ..40.......q....
+	...
+d0092a88:	3010 1010 1d70 102d bf1a 1010 ba07 111a     .0..p.-.........
+	...
+d0092aa8:	0000 1100 1030 706c 5858 2d70 1a10 7d1a     ....0.lpXXp-...}
+d0092ab8:	7d7d 1182 0000 0000 0000 0000 0000 0000     }}..............
+d0092ac8:	0000 0000 0000 3010 1010 f470 1aba 6c70     .......0..p...pl
+d0092ad8:	0711 baba 1007 0000 0000 0000 0000 0000     ................
+	...
+d0092af0:	1000 1030 1134 701d 7181 107d 7d7d 827e     ..0.4..p.q}.}}~.
+d0092b00:	0781 1007 0000 0000 0000 0000 0000 0000     ................
+d0092b10:	0000 0000 3010 3434 3411 5c10 6d58 7d7d     .....044.4.\Xm}}
+d0092b20:	7d7d 7d7d 7d7d 6d81 0010 0000 0000 0000     }}}}}}.m........
+	...
+d0092b38:	3430 3434 1034 5c10 105c 7971 7d7d 6d71     04444..\\.qy}}qm
+d0092b48:	3434 1110 0000 0000 0000 0000 0000 0000     44..............
+d0092b58:	0000 0000 1110 1111 0011 1100 1110 6d10     ...............m
+d0092b68:	7d79 7975 1111 0000 0000 0000 0000 0000     y}uy............
+	...
+d0092b88:	1000 3410 7575 1079 0000 0000 0000 0000     ...4uuy.........
+	...
+d0092bac:	0000 1000 7579 0010 0000 0000 0000 0000     ....yu..........
+	...
+d0092bd0:	0000 1000 7d75 0010 0000 0000 0000 0000     ....u}..........
+	...
+d0092bf4:	0000 1000 7d79 107d 0000 0000 0000 0000     ....y}}.........
+	...
+d0092c18:	0000 1100 8175 1007 0000 0000 0000 0000     ....u...........
+	...
+d0092c3c:	0000 1000 7d75 1179 0000 0000 0000 0000     ....u}y.........
+	...
+d0092c60:	0000 1000 7d79 0010 0000 0000 0000 0000     ....y}..........
+	...
+d0092c84:	0000 1000 7d79 0010 0000 0000 0000 0000     ....y}..........
+	...
+d0092ca8:	0000 1000 8171 1075 0000 0000 0000 0000     ....q.u.........
+	...
+d0092ccc:	0000 1000 7d79 11ba 0000 0000 0000 0000     ....y}..........
+	...
+d0092cf0:	0000 1000 7d79 107d 0000 0000 0000 0000     ....y}}.........
+	...
+d0092d14:	0000 1100 7d6d 8281 0011 0000 0000 0000     ....m}..........
+	...
+d0092d38:	0000 1100 10a6 7d7d 107e 0000 0000 0000     ......}}~.......
+	...
+d0092d5c:	0000 a610 a6a6 7d10 107d 0011 0000 0000     .......}}.......
+	...
+d0092d80:	1000 11a6 ac10 7d10 6d7d 1011 0000 0000     .......}}m......
+	...
+d0092da4:	1000 1a10 1082 1122 6d71 1010 0000 0000     ......".qm......
+	...
+d0092dc8:	1010 1a6d 717d 2210 1010 1717 0010 0000     ..m.}q."........
+	...
+d0092dec:	5c11 077d 7181 1710 1717 1817 0011 0000     .\}..q..........
+	...
+d0092e10:	7110 1a81 7d7d 115c 1718 1818 0011 0000     .q..}}\.........
+	...
+d0092e34:	6d10 ba6d 7d7d 105c aa18 a6ac 10a6 0000     .mm.}}\.........
+	...
+d0092e58:	6d10 7e5c 717d 1711 1718 1718 1017 0000     .m\~}q..........
+	...
+d0092e7c:	5c10 7e5c 5c7d 1711 1717 1718 1017 0000     .\\~}\..........
+	...
+d0092ea0:	5c10 7e10 107d 1717 1817 1718 1117 0000     .\.~}...........
+	...
+d0092ec4:	1011 7d10 187d 1818 ac18 1817 1017 0000     ...}}...........
+	...
+d0092ee4:	0000 1000 1817 7d10 177d 1817 1817 1818     .......}}.......
+d0092ef4:	7d18 0000 0000 0000 0000 0000 0000 0000     .}..............
+d0092f04:	0000 0000 0000 1300 1718 8110 107d 1817     ............}...
+d0092f14:	1718 ac18 8218 10fb 0000 0000 0000 0000     ................
+	...
+d0092f2c:	0000 1100 1018 7d10 107d 1818 1718 2217     .......}}......"
+d0092f3c:	7d22 107d 0000 0000 0000 0000 0000 0000     "}}.............
+	...
+d0092f54:	7110 7d07 1081 1718 1817 1817 11ac 1010     .q.}............
+d0092f64:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+d0092f74:	0000 1100 821a 8281 fb7e 1810 1818 ac18     ........~.......
+d0092f84:	10ac 1117 0011 0000 0000 0000 0000 0000     ................
+d0092f94:	0000 0000 0000 1000 ba7d 077d 7e07 1810     ........}.}..~..
+d0092fa4:	1818 1817 17ac 1011 0000 0000 0000 0000     ................
+	...
+d0092fbc:	0000 1000 7d71 7d7d 6d81 1811 1818 1717     ....q}}}.m......
+d0092fcc:	2218 1010 0000 0000 0000 0000 0000 0000     ."..............
+	...
+d0092fe4:	6d11 816d 106d 1818 1817 1717 a618 1010     .mm.m...........
+	...
+d0093008:	1000 7171 1111 1718 1717 1718 a6ac 1010     ..qq............
+	...
+d009302c:	0000 1011 1710 1718 1717 1818 18ac 1011     ................
+	...
+d0093050:	1011 1711 1710 1818 1717 1717 ac18 1111     ................
+	...
+d0093070:	0000 1100 6d1a 105c 1810 1717 1818 1717     .....m\.........
+d0093080:	ac18 0010 0000 0000 0000 0000 0000 0000     ................
+d0093090:	0000 0000 0000 1000 7dba 1071 1710 1718     .........}q.....
+d00930a0:	1818 1817 1722 0010 0000 0000 0000 0000     ...."...........
+	...
+d00930bc:	8110 106d 1818 1718 1717 2218 1118 0000     ..m........"....
+	...
+d00930e0:	1000 107d 1818 1817 1717 ac18 0010 0000     ..}.............
+	...
+d0093104:	0000 1810 1718 1817 1718 1818 1010 0000     ................
+	...
+d0093128:	0000 1810 1817 1818 1717 1017 1110 0010     ................
+	...
+d009314c:	0000 1010 1110 1011 1110 1011 ba11 101a     ................
+	...
+d0093170:	1000 826d 7dba 077d 827e 0707 7d7d 107d     ..m..}}.~...}}}.
+	...
+d0093194:	7510 077d 7d7d 7eba 7d07 7d07 6d7d 1071     .u}.}}.~.}.}}mq.
+	...
+d00931b8:	5c10 7979 7575 7579 ba7d ba6d ba71 105c     .\yyuuyu}.m.q.\.
+	...
+d00931dc:	1011 1010 1011 1110 1010 1011 1010 0010     ................
+	...
+
+d00931f4 <gfx_bubguy6>:
+	...
+d00932b4:	0000 1100 0010 0000 0000 0000 0000 0000     ................
+	...
+d00932d8:	1010 3010 1034 0000 0000 0000 0000 0000     ...04...........
+	...
+d00932f8:	0000 1010 3434 3030 1034 0000 0000 0000     ....44004.......
+	...
+d009331c:	1100 3434 3030 3030 3430 f410 702d f42d     ..44000004..-p-.
+d009332c:	702d 0000 0000 0000 0000 0000 0000 0000     -p..............
+d009333c:	0000 0000 3411 3034 3034 3030 1134 f470     .....44040004.p.
+d009334c:	f4f4 2d2d 2df4 0070 0000 0000 0000 0000     ..--.-p.........
+	...
+d0093364:	3410 3434 3034 3030 6c10 7074 f470 6c2d     .4444000.ltpp.-l
+d0093374:	f474 00f4 0000 0000 0000 0000 0000 0000     t...............
+d0093384:	0000 0000 1000 3410 3430 3030 1110 106c     .......40400..l.
+d0093394:	1010 6c74 7000 002d 0000 0000 0000 0000     ..tl.p-.........
+	...
+d00933ac:	1000 3434 3034 1034 1110 107d 0000 7000     ..44404...}....p
+d00933bc:	0000 00f4 0000 0000 0000 0000 0000 0000     ................
+d00933cc:	0000 0000 1000 3034 1010 1010 fbba 6d10     ......40.......m
+d00933dc:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d00933f4:	3010 1010 f470 112d 1abe 1010 be82 10bf     .0..p.-.........
+	...
+d0093414:	0000 1000 1130 6c70 5c58 f46c bf10 7d1a     ....0.plX\l....}
+d0093424:	7d7d 1007 0000 0000 0000 0000 0000 0000     }}..............
+d0093434:	0000 0000 0000 3011 1010 2d6c 1a82 746c     .......0..l-..lt
+d0093444:	0710 beba 1007 0000 0000 0000 0000 0000     ................
+	...
+d009345c:	1000 1030 1134 702d 717d 117d 817d 7e7e     ..0.4.-p}q}.}.~~
+d009346c:	7e7d 1082 0000 0000 0000 0000 0000 0000     }~..............
+d009347c:	0000 0000 3011 3434 3410 5c10 6d5c 7d81     .....044.4.\\m.}
+d009348c:	7d81 7d7d 7d81 717d 0010 0000 0000 0000     .}}}.}}q........
+	...
+d00934a4:	3430 3434 1034 5810 1158 796d 7d7d 716d     04444..XX.my}}mq
+d00934b4:	3434 1011 0000 0000 0000 0000 0000 0000     44..............
+d00934c4:	0000 0000 1011 1010 0010 1000 1010 7510     ...............u
+d00934d4:	7d79 7579 1010 0000 0000 0000 0000 0000     y}yu............
+	...
+d00934f4:	1100 3410 7579 1079 0000 0000 0000 0000     ...4yuy.........
+	...
+d0093518:	0000 1100 7979 0010 0000 0000 0000 0000     ....yy..........
+	...
+d009353c:	0000 1000 8175 0010 0000 0000 0000 0000     ....u...........
+	...
+d0093560:	0000 1000 7d79 1081 0000 0000 0000 0000     ....y}..........
+	...
+d0093584:	0000 1000 8179 1007 0000 0000 0000 0000     ....y...........
+	...
+d00935a8:	0000 1000 7d79 1079 0000 0000 0000 0000     ....y}y.........
+	...
+d00935cc:	0000 1000 8179 0010 0000 0000 0000 0000     ....y...........
+	...
+d00935f0:	0000 1100 8179 0010 0000 0000 0000 0000     ....y...........
+	...
+d0093614:	0000 1000 8175 1175 0000 0000 0000 0000     ....u.u.........
+	...
+d0093638:	0000 1000 8179 1082 0000 0000 0000 0000     ....y...........
+	...
+d009365c:	0000 1000 7d79 107d 0000 0000 0000 0000     ....y}}.........
+	...
+d0093680:	0000 1000 816d 7e81 0011 0000 0000 0000     ....m..~........
+	...
+d00936a4:	0000 1000 816d 077d 0010 0000 0000 0000     ....m.}.........
+	...
+d00936c8:	0000 1000 1010 7e7d 117d 0000 0000 0000     ......}~}.......
+	...
+d00936ec:	0000 a611 a6a6 7d11 106d 0000 0000 0000     .......}m.......
+	...
+d0093710:	1000 aca6 1011 1018 7171 0011 0000 0000     ........qq......
+	...
+d0093734:	1000 10a6 7d7d a610 6d11 1010 0000 0000     ....}}...m......
+	...
+d0093758:	1100 1010 7e82 a611 1010 1117 0000 0000     .....~..........
+	...
+d009377c:	1810 8111 bf82 ac81 1710 1717 0011 0000     ................
+	...
+d00937a0:	1710 8158 077d ac1a 1811 18ac 0010 0000     ..X.}...........
+	...
+d00937c4:	1810 7d71 817d 7d1a 1710 1817 0010 0000     ..q}}..}........
+	...
+d00937e8:	1710 816d 7d71 fb82 187d 1718 1017 0000     ..m.q}..}.......
+	...
+d009380c:	1810 7d71 7111 827d 1007 1718 1018 0000     ..q}.q}.........
+	...
+d0093830:	1011 6d6d 116d 7d75 7d82 1710 1018 0000     ..mmm.u}.}......
+	...
+d0093854:	1010 6d5c 1020 7d10 7e81 1011 1018 0000     ..\m ..}.~......
+	...
+d0093878:	1710 1011 1710 1018 7d7d 117d 1011 0010     ........}}}.....
+	...
+d009389c:	1811 1817 1717 1718 7d10 817d 7d7d 1010     .........}}.}}..
+d00938ac:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+d00938bc:	0000 0000 1811 1718 1818 1817 1118 7d7d     ..............}}
+d00938cc:	8181 107d 1018 0000 0000 0000 0000 0000     ..}.............
+	...
+d00938e4:	1810 1717 1818 1818 1717 7d10 8181 8181     ...........}....
+d00938f4:	a610 0010 0000 0000 0000 0000 0000 0000     ................
+d0093904:	0000 0000 1710 1818 1817 1718 1118 7d81     ...............}
+d0093914:	7e7d bf07 1810 10a6 0000 0000 0000 0000     }~..............
+d0093924:	0000 0000 0000 1100 1717 1718 1718 1818     ................
+d0093934:	1018 8110 1a82 6d7e 1811 11a6 0000 0000     ......~m........
+	...
+d009394c:	0000 1000 1818 1817 1717 1718 1017 8158     ..............X.
+d009395c:	7d81 1175 1717 1018 0000 0000 0000 0000     .}u.............
+d009396c:	0000 0000 0000 1810 1818 1817 1818 1817     ................
+d009397c:	1718 5c10 5871 1810 1817 1017 0000 0000     ...\qX..........
+	...
+d0093994:	0000 1810 1818 1718 1718 1817 1818 1118     ................
+d00939a4:	1010 1711 1818 1118 1010 0010 0000 0000     ................
+d00939b4:	0000 0000 0000 1810 1817 1717 1818 1818     ................
+d00939c4:	1818 1818 1010 1718 1718 1118 7e1a 0011     .............~..
+	...
+d00939dc:	0000 1810 1718 1817 1818 1818 1018 1010     ................
+d00939ec:	1818 1818 1818 7110 8182 0011 0000 0000     .......q........
+d00939fc:	0000 0000 1000 1718 1818 1818 1718 1817     ................
+d0093a0c:	1017 1110 1810 1718 1017 7d6d 7d7d 0010     ..........m}}}..
+	...
+d0093a24:	1000 1818 1718 1818 1717 1818 0010 1100     ................
+d0093a34:	1810 1718 7110 8181 6d81 0010 0000 0000     .....q...m......
+d0093a44:	0000 0000 1710 1817 1717 1818 1817 1718     ................
+d0093a54:	0010 0000 1710 1818 7d10 7d7d 5c81 0010     .........}}}.\..
+	...
+d0093a6c:	1711 1818 1818 1818 1818 1117 0000 0000     ................
+d0093a7c:	1710 1118 7d81 717d 115c 0000 0000 0000     .....}}q\.......
+d0093a8c:	0000 0000 1711 1818 1818 1718 1017 0010     ................
+d0093a9c:	0000 0000 1810 7d10 7d7d 5871 0010 0000     .......}}}qX....
+d0093aac:	0000 0000 0000 1100 1718 1818 1717 1818     ................
+d0093abc:	1017 0000 0000 0000 1011 8171 717d 1071     ..........q.}qq.
+	...
+d0093ad4:	0000 1000 1718 1818 1817 1817 1011 1010     ................
+d0093ae4:	0000 0000 1100 7d81 6d81 0010 0000 0000     .......}.m......
+d0093af4:	0000 0000 0000 1010 1010 1010 1011 1010     ................
+d0093b04:	1010 1a82 0011 0000 1000 7d71 5c71 0011     ..........q}q\..
+	...
+d0093b1c:	0000 6d10 7e7e 7d81 827e 0782 7d82 7d81     ...m~~.}~....}.}
+d0093b2c:	0010 0000 1000 715c 1020 0000 0000 0000     ......\q .......
+d0093b3c:	0000 0000 1000 7d75 817e 077d 7e7e 0781     ......u}~.}.~~..
+d0093b4c:	817d 716d 0010 0000 0000 1011 0010 0000     }.mq............
+	...
+d0093b64:	1000 7958 7579 7579 7d79 71ba 6d1a 5cba     ..Xyyuyuy}.q.m.\
+d0093b74:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+d0093b84:	0000 0000 1000 1011 1010 1010 1110 1010     ................
+d0093b94:	1111 1011 0000 0000 0000 0000 0000 0000     ................
+d0093ba4:	0000 0000                                   ....
+
+d0093ba8 <gfx_bubguy7>:
+	...
+d0093cb0:	0000 1000 0010 0000 0000 0000 0000 0000     ................
+	...
+d0093cd4:	1010 3010 1034 0000 0000 0000 0000 0000     ...04...........
+	...
+d0093cf4:	0000 1111 3434 3030 1034 0000 7000 f42d     ....44004....p-.
+d0093d04:	6cf4 0000 0000 0000 0000 0000 0000 0000     .l..............
+d0093d14:	0000 0000 1000 3434 3030 3030 3430 f411     ......44000004..
+d0093d24:	1d2d 2d2d 2d1d 0070 0000 0000 0000 0000     -.--.-p.........
+	...
+d0093d3c:	3412 3034 3034 3030 1134 2d70 2df4 70f4     .44040004.p-.-.p
+d0093d4c:	2d6c 001d 0000 0000 0000 0000 0000 0000     l-..............
+d0093d5c:	0000 0000 3410 3434 3034 3030 7010 706c     .....4444000.plp
+d0093d6c:	106c 7070 7000 00f4 0000 0000 0000 0000     l.pp.p..........
+	...
+d0093d84:	1000 3410 3430 3030 1210 106c 0011 7000     ...40400..l....p
+d0093d94:	0000 00f4 0000 0000 0000 0000 0000 0000     ................
+d0093da4:	0000 0000 1000 3434 3034 1034 1010 117d     ......44404...}.
+	...
+d0093dcc:	1000 3034 1011 1010 1aba 7110 0010 0000     ..40.......q....
+	...
+d0093df0:	3010 1010 1d70 102d bf1a 1010 1aba 111a     .0..p.-.........
+	...
+d0093e10:	0000 1100 1030 706c 5858 2d70 1a10 811a     ....0.lpXXp-....
+d0093e20:	7d7d 1182 0000 0000 0000 0000 0000 0000     }}..............
+d0093e30:	0000 0000 0000 3010 1010 f470 baba 6c70     .......0..p...pl
+d0093e40:	0711 ba1a 10ba 0000 0000 0000 0000 0000     ................
+	...
+d0093e58:	1000 1030 1134 701d 7181 1081 817d 82ba     ..0.4..p.q..}...
+d0093e68:	0781 107e 0000 0000 0000 0000 0000 0000     ..~.............
+d0093e78:	0000 0000 3010 3434 3411 5c10 6d58 7d7d     .....044.4.\Xm}}
+d0093e88:	7d81 8181 7d7d 6d81 0010 0000 0000 0000     .}..}}.m........
+	...
+d0093ea0:	3430 3434 1034 5c10 105c 7971 7d7d 6d71     04444..\\.qy}}qm
+d0093eb0:	3434 1110 0000 0000 0000 0000 0000 0000     44..............
+d0093ec0:	0000 0000 1110 1111 0012 1100 1110 7110     ...............q
+d0093ed0:	8175 7579 1111 0000 0000 0000 0000 0000     u.yu............
+	...
+d0093ef0:	1000 3410 7575 1075 0000 0000 0000 0000     ...4uuu.........
+	...
+d0093f14:	0000 1000 7575 0010 0000 0000 0000 0000     ....uu..........
+	...
+d0093f38:	0000 1000 7d75 0010 0000 0000 0000 0000     ....u}..........
+	...
+d0093f5c:	0000 1000 7d79 107d 0000 0000 0000 0000     ....y}}.........
+	...
+d0093f80:	0000 1100 8175 117e 0000 0000 0000 0000     ....u.~.........
+	...
+d0093fa4:	0000 1000 8175 1175 0000 0000 0000 0000     ....u.u.........
+	...
+d0093fc8:	0000 1000 8175 0010 0000 0000 0000 0000     ....u...........
+	...
+d0093fec:	0000 1000 8175 0010 0000 0000 0000 0000     ....u...........
+	...
+d0094010:	0000 1000 7d79 1079 0000 0000 0000 0000     ....y}y.........
+	...
+d0094034:	0000 1000 7d75 1007 0000 0000 0000 0000     ....u}..........
+	...
+d0094058:	0000 1000 7d75 107d 0000 0000 0000 0000     ....u}}.........
+	...
+d009407c:	0000 1000 816d 7e7d 0012 0000 0000 0000     ....m.}~........
+	...
+d00940a0:	0000 1000 1010 0781 0010 0000 0000 0000     ................
+	...
+d00940c4:	0000 1110 a6a6 8110 126d 0000 0000 0000     ........m.......
+	...
+d00940e8:	0000 a610 1a71 10ac 1071 0000 0000 0000     ....q...q.......
+	...
+d009410c:	0000 5c10 ba7d ac1a 7110 0010 0000 0000     ...\}....q......
+	...
+d0094130:	1000 5ca6 7d81 bf82 7110 0010 0000 0000     ...\.}...q......
+	...
+d0094154:	1000 6dac 817d ba7d 101a 1110 0000 0000     ...m}.}.........
+	...
+d0094178:	2210 7d10 7d7d 7d81 ba07 1082 0000 0000     .".}}}.}........
+	...
+d009419c:	1810 8110 5881 816d 7d7d 0707 1110 0000     .....Xm.}}......
+	...
+d00941c0:	1810 7d10 817d 1058 7d6d 7d7d 7e82 1111     ...}}.X.m}}}.~..
+d00941d0:	1011 1211 0000 0000 0000 0000 0000 0000     ................
+d00941e0:	0000 0000 1811 7d10 7181 5c71 1010 7d71     .......}.qq\..q}
+d00941f0:	817d ba07 07ba 8207 0012 0000 0000 0000     }...............
+d0094200:	0000 0000 0000 1000 1710 7111 6d71 105c     ...........qqm\.
+d0094210:	1017 1110 7d71 7d81 8281 1aba 1007 0000     ....q}.}........
+	...
+d0094228:	0000 7d11 1810 5c11 5c71 1811 1718 1818     ...}...\q\......
+d0094238:	1010 7d6d ba81 bfba 817e 0011 0000 0000     ..m}....~.......
+d0094248:	0000 0000 1000 6d6d 1810 1018 1011 1718     ......mm........
+d0094258:	1817 1718 0011 7d10 8281 ba1a 7d7d 0010     .......}....}}..
+	...
+d0094270:	1000 5c71 1812 1817 1818 1718 1818 1717     ..q\............
+d0094280:	1118 1000 7d6d 7d82 6d7d 0010 0000 0000     ....m}.}}m......
+d0094290:	0000 0000 1000 5c71 1710 1818 1817 1818     ......q\........
+d00942a0:	1718 1818 1018 1000 7171 7d81 106d 0000     ........qq.}m...
+	...
+d00942b8:	1100 106d 1817 1818 1718 1818 1817 1718     ..m.............
+d00942c8:	1818 0010 7111 6d71 0010 0000 0000 0000     .....qqm........
+d00942d8:	0000 0000 0000 1010 1818 1818 1718 1818     ................
+d00942e8:	1818 1817 1718 0010 1000 1210 0000 0000     ................
+	...
+d0094300:	0000 1000 1817 1818 1818 1718 1718 1818     ................
+d0094310:	1718 10ac 0000 0000 0000 0000 0000 0000     ................
+d0094320:	0000 0000 0000 1000 1818 1818 1818 1718     ................
+d0094330:	1817 1817 1718 1122 0000 0000 0000 0000     ......".........
+	...
+d0094348:	0000 1100 1817 1718 1818 1818 1718 1817     ................
+d0094358:	1717 a618 0012 0000 0000 0000 0000 0000     ................
+d0094368:	0000 0000 0000 1011 1811 1817 1717 1818     ................
+d0094378:	1717 1818 1817 ac17 10a6 0000 0000 0000     ................
+	...
+d0094390:	1000 1111 1717 1817 1818 1818 1718 1817     ................
+d00943a0:	1717 ac18 11a6 0000 0000 0000 0000 0000     ................
+d00943b0:	0000 1000 a610 1722 1718 1718 1717 1718     ......".........
+d00943c0:	1810 1818 1718 1818 1022 0000 0000 0000     ........".......
+d00943d0:	0000 0000 0000 2210 17a6 1818 1717 1818     ......."........
+d00943e0:	1817 1818 1110 1717 1818 1818 10ac 0000     ................
+d00943f0:	1100 0010 0000 0000 0000 1811 1718 1718     ................
+d0094400:	1718 1718 1818 1017 1010 1818 1817 1818     ................
+d0094410:	1817 0010 1a10 1081 0000 0000 0000 1010     ................
+d0094420:	1817 1718 1718 1718 1717 0012 1012 1810     ................
+d0094430:	1818 1817 1817 0010 7d10 107d 0000 0000     .........}}.....
+d0094440:	1000 7d81 1810 1818 1817 1817 1017 0000     ...}............
+d0094450:	1000 1711 1818 1818 1718 1118 7d71 5c7d     ............q}}\
+d0094460:	0000 0000 1000 8181 1710 1718 1818 1018     ................
+d0094470:	0011 0000 0000 1810 1818 1817 1818 1018     ................
+d0094480:	8171 7181 0000 0000 1000 817d 107d 1818     q..q......}.}...
+d0094490:	1818 0010 0000 0000 0000 1010 1818 1818     ................
+d00944a0:	1818 7d10 7d7d 717d 0000 0000 1000 8181     ...}}}}q........
+d00944b0:	717d 1010 1010 1010 0000 0000 0000 1100     }q..............
+d00944c0:	1817 1818 1018 817d 817d 5c71 0000 0000     ......}.}.q\....
+d00944d0:	1000 7d81 817d 817d 8182 117d 0000 0000     ...}}.}...}.....
+d00944e0:	0000 1100 1810 1010 7d11 817d 717d 115c     .........}}.}q\.
+d00944f0:	0000 0000 0000 8110 7d81 7dba 717d 116d     .........}.}}qm.
+	...
+d0094508:	1010 5c11 7d7d 7d81 5871 0010 0000 0000     ...\}}.}qX......
+d0094518:	0000 5c10 7e81 076d 7e71 105c 0000 0000     ...\.~m.q~\.....
+d0094528:	0000 0000 0000 8110 8181 5c6d 1010 0000     ..........m\....
+d0094538:	0000 0000 0000 1000 105c 1010 1010 0010     ........\.......
+	...
+d0094550:	0000 1010 1010 1010 0000 0000               ............
+
+d009455c <gfx_bubguy8>:
+	...
+d0094688:	0000 1100 0010 0000 0000 0000 0000 0000     ................
+	...
+d00946ac:	1010 3010 1034 0000 7000 2df4 70f4 0000     ...04....p.-.p..
+	...
+d00946cc:	0000 1011 3434 3030 1034 0000 7070 1d2d     ....44004...pp-.
+d00946dc:	1d2d 001d 0000 0000 0000 0000 0000 0000     -...............
+d00946ec:	0000 0000 1100 3434 3030 3030 3430 f410     ......44000004..
+d00946fc:	f41d 701d f470 002d 0000 0000 0000 0000     ...pp.-.........
+	...
+d0094714:	3410 3034 3034 3030 1034 bc70 1d2d 7070     .44040004.p.-.pp
+d0094724:	0000 001d 0000 0000 0000 0000 0000 0000     ................
+d0094734:	0000 0000 3410 3434 3034 3030 7010 7070     .....4444000.ppp
+d0094744:	1070 7000 0000 0000 0000 0000 0000 0000     p..p............
+	...
+d009475c:	1000 3410 3430 3030 1010 1070 0010 0000     ...40400..p.....
+	...
+d0094780:	1000 3434 3034 1134 1010 107d 0000 0000     ..44404...}.....
+	...
+d00947a4:	1100 3034 1010 1110 1aba 6d10 0011 0000     ..40.......m....
+	...
+d00947c8:	3010 1010 bc70 101d 1aba 1110 ba07 101a     .0..p...........
+	...
+d00947e8:	0000 1100 1030 7070 5858 1d70 1a10 7d1a     ....0.ppXXp....}
+d00947f8:	817d 1007 0000 0000 0000 0000 0000 0000     }...............
+d0094808:	0000 0000 0000 3010 1010 bc70 1a07 7070     .......0..p...pp
+d0094818:	8210 ba1a 1082 0000 0000 0000 0000 0000     ................
+	...
+d0094830:	1000 1030 1034 702d 7181 1081 817d 0707     ..0.4.-p.q..}...
+d0094840:	7e81 1107 0000 0000 0000 0000 0000 0000     .~..............
+d0094850:	0000 0000 3010 3434 3410 5810 6d58 8181     .....044.4.XXm..
+d0094860:	7d81 7d81 7d7d 6d81 0011 0000 0000 0000     .}.}}}.m........
+	...
+d0094878:	3430 3434 1034 5811 105c 7971 817d 716d     04444..X\.qy}.mq
+d0094888:	3434 1110 0000 0000 0000 0000 0000 0000     44..............
+d0094898:	0000 0000 1110 1110 0010 1000 1011 6d10     ...............m
+d00948a8:	7d79 7979 1111 0000 0000 0000 0000 0000     y}yy............
+	...
+d00948c8:	1100 3411 7579 1175 0000 0000 0000 0000     ...4yuu.........
+	...
+d00948ec:	0000 1000 7979 0010 0000 0000 0000 0000     ....yy..........
+	...
+d0094910:	0000 1000 7d75 0010 0000 0000 0000 0000     ....u}..........
+	...
+d0094934:	0000 1000 8179 107d 0000 0000 0000 0000     ....y.}.........
+	...
+d0094958:	0000 1000 8179 1007 0000 0000 0000 0000     ....y...........
+	...
+d009497c:	0000 1000 7d79 1075 0000 0000 0000 0000     ....y}u.........
+	...
+d00949a0:	0000 1000 7d79 0010 0000 0000 0000 0000     ....y}..........
+	...
+d00949c4:	0000 1000 8175 0010 0000 0000 0000 0000     ....u...........
+	...
+d00949e8:	0000 1000 7d79 1075 0000 0000 0000 0000     ....y}u.........
+	...
+d0094a0c:	0000 1000 7d79 1107 0000 0000 0000 0000     ....y}..........
+	...
+d0094a30:	0000 1100 7d79 107d 0000 0000 0000 0000     ....y}}.........
+	...
+d0094a54:	0000 1000 816d ba7d 0010 0000 0000 0000     ....m.}.........
+	...
+d0094a78:	0000 1010 acac 8110 106d 0000 0000 0000     ........m.......
+	...
+d0094a9c:	0000 ac11 7d6d 1022 1071 0000 0000 0000     ....m}".q.......
+	...
+d0094ac0:	0000 5810 1aba 2211 7110 0010 0000 0000     ...X...".q......
+	...
+d0094ae4:	1000 5cac 077d 101a 1111 0010 0000 0000     ...\}...........
+	...
+d0094b08:	1000 7118 8181 bf07 1007 1010 0000 0000     ...q............
+	...
+d0094b2c:	1100 6d18 7d81 077d 07ba 1011 0000 0000     ...m.}}.........
+	...
+d0094b50:	ac10 7d10 5881 796d ba7d 7dba 1058 0011     ...}.Xmy}..}X...
+d0094b60:	0000 1010 1011 0000 0000 0000 0000 0000     ................
+d0094b70:	0000 0000 1810 7910 6d81 1158 7d71 7d81     .......y.mX.q}.}
+d0094b80:	0707 8207 ba82 8181 7d7d 0010 0000 0000     ........}}......
+	...
+d0094b98:	1810 8111 7d81 5875 1010 6d10 7d81 817d     .....}uX...m.}}.
+d0094ba8:	7d81 817d 1a1a 0010 0000 0000 0000 0000     .}}.............
+d0094bb8:	0000 1110 1810 6d11 7d7d 106d 1118 1018     .......m}}m.....
+d0094bc8:	1010 7d71 7d7d 0781 ba1a 1081 0000 0000     ..q}}}..........
+d0094bd8:	0000 0000 1000 6d7d 1810 6d10 6d75 115c     ......}m...mum\.
+d0094be8:	1818 1718 0010 1010 7110 ba7d 7d82 107d     .........q}..}}.
+	...
+d0094c00:	7110 7171 1810 5c10 585c 1711 1718 1817     .qqq...\\X......
+d0094c10:	1018 0000 1011 7d7d 7d81 1071 0000 0000     ......}}.}q.....
+d0094c20:	0000 0000 6d10 715c 1710 1017 1010 1817     .....m\q........
+d0094c30:	1817 1718 1018 0000 1000 816d 717d 0011     ..........m.}q..
+	...
+d0094c48:	7110 1058 1818 1817 1818 1718 1818 1818     .qX.............
+d0094c58:	1717 0011 1000 7158 1058 0000 0000 0000     ......XqX.......
+d0094c68:	0000 0000 6d11 1010 1718 1817 1718 1818     .....m..........
+d0094c78:	1717 1817 1718 10ac 0000 1010 0010 0000     ................
+	...
+d0094c90:	1000 1710 1717 1718 1717 1818 1718 1818     ................
+d0094ca0:	1817 11a6 0000 0000 0000 0000 0000 0000     ................
+d0094cb0:	0000 0000 0000 1811 1818 1818 1818 1717     ................
+d0094cc0:	1818 1817 1818 ac17 0011 0000 0000 0000     ................
+	...
+d0094cd8:	1000 1810 1818 1817 1817 1717 1818 1817     ................
+d0094ce8:	1818 ac17 0010 0000 0000 0000 0000 0000     ................
+d0094cf8:	0000 1000 a610 1818 1818 1818 1817 1818     ................
+d0094d08:	1017 1717 1817 ac17 11ac 0000 0000 0000     ................
+d0094d18:	0000 0000 0000 2210 18a6 1718 1718 1717     ......."........
+d0094d28:	1817 1817 1711 1818 1817 1818 10ac 0000     ................
+	...
+d0094d40:	1000 ac10 1818 1718 1817 1818 1817 1818     ................
+d0094d50:	1810 1818 1718 1717 11ac 0000 0000 0000     ................
+d0094d60:	0000 0000 6d10 107d 1817 1718 1717 1718     .....m}.........
+d0094d70:	1818 1017 1011 1717 1718 1717 1017 0000     ................
+	...
+d0094d88:	8110 10ba 1818 1818 1718 1718 1818 1010     ................
+d0094d98:	1010 1817 1817 1818 1010 0000 0000 0000     ................
+d0094da8:	0000 0000 0711 7d82 1710 1817 1818 1817     .......}........
+d0094db8:	1117 0000 1011 1818 1818 1818 0010 0000     ................
+	...
+d0094dd0:	0710 81ba 1810 1817 1817 1017 0010 0000     ................
+d0094de0:	1011 1718 1717 1817 0011 0000 0000 0000     ................
+d0094df0:	0000 0000 8110 7d81 1010 1818 1010 0011     .......}........
+d0094e00:	0000 0000 1000 1818 1717 1718 0010 0000     ................
+	...
+d0094e18:	8111 7d81 1010 1011 0011 0000 0000 0000     ...}............
+d0094e28:	1000 1717 1818 1818 0010 0000 0000 0000     ................
+d0094e38:	0000 0000 8110 817d 107d 0000 0000 0000     ......}.}.......
+d0094e48:	0000 0000 1810 1718 1817 1818 1011 1110     ................
+d0094e58:	0010 0000 0000 0000 8110 7d7d 107d 0000     ..........}}}...
+	...
+d0094e70:	1710 1117 1011 1010 1010 817d 1007 0000     ..........}.....
+d0094e80:	0000 0000 8110 7d7d 1181 0000 0000 0000     ......}}........
+d0094e90:	0000 0000 1010 7d10 7d81 7d7d 7d7d 817d     .......}.}}}}}}.
+d0094ea0:	106d 0000 0000 0000 6d10 817d 817d 0010     m........m}.}...
+	...
+d0094eb8:	7d11 8181 7d7d 7d81 7d81 6d7d 115c 0000     .}..}}.}.}}m\...
+d0094ec8:	0000 0000 1100 8171 7d81 0011 0000 0000     ......q..}......
+d0094ed8:	0000 0000 5810 817d 6d71 5858 716d 5c6d     .....X}.qmXXmqm\
+d0094ee8:	0010 0000 0000 0000 0000 1110 1110 0000     ................
+	...
+d0094f00:	1110 1110 1110 1010 1110 1010 0000 0000     ................
+
+d0094f10 <gradient_cols.9285>:
+d0094f10:	2020 2120 2221 2322 2423 2524 2625 2726        !!""##$$%%&&'
+d0094f20:	2727 0000                                   ''..
+
+d0094f24 <guywidthheight>:
+d0094f24:	4545 4545 4545 4545 0040 0000 0000 0000     EEEEEEEE@.......
+	...
+
+d0094f40 <guywidthwidth>:
+d0094f40:	241d 2424 2424 2424 0018 0000               .$$$$$$$....
+
+d0094f4c <scr_bub_floor>:
+	...
+d0094ff0:	1010 1010 1000 1010 1010 0000 0000 0000     ................
+	...
+d0095010:	1010 1010 1000 1010 1010 0000 0000 0000     ................
+	...
+d0095108:	0000 1000 6060 1060 1010 6060 6060 0010     ....```...````..
+d0095118:	0000 1000 1010 1010 0000 0000 0000 0000     ................
+d0095128:	0000 1000 6060 1060 1010 6060 6060 0010     ....```...````..
+d0095138:	0000 1000 1010 1010 0000 0000 0000 0000     ................
+	...
+d0095220:	0000 1010 0010 6010 6060 6060 6010 6060     .......`````.```
+d0095230:	6060 1060 0010 1010 6060 6060 0010 0000     ```.....````....
+d0095240:	0000 0000 0000 6010 6060 6060 6010 6060     .......`````.```
+d0095250:	6060 1060 0010 1010 6060 6060 0010 0000     ```.....````....
+	...
+d009530c:	1010 1010 0000 1010 1010 0010 0000 0000     ................
+	...
+d009533c:	1000 6060 1060 6010 6060 6060 6060 6060     ..```..`````````
+d009534c:	6060 6060 1010 6010 6060 6060 1060 0000     ````...``````...
+d009535c:	0000 0000 0000 6010 6060 6060 6060 6060     .......`````````
+d009536c:	6060 6060 1010 6010 6060 6060 1060 0000     ````...``````...
+	...
+d0095384:	1010 1010 0000 0000 0000 0000 0000 0000     ................
+	...
+d0095424:	0000 1000 6060 6060 1010 6060 6060 1010     ....````..````..
+	...
+d0095458:	6010 6060 1060 1010 6060 6060 6060 6060     .````...````````
+d0095468:	6060 1060 6060 6010 6060 6060 1060 0000     ```.``.``````...
+d0095478:	0000 0000 0000 1010 6060 6060 6060 6060     ........````````
+d0095488:	6060 1060 6060 6010 6060 6060 1060 0000     ```.``.``````...
+d0095498:	0000 0000 0000 1010 6060 6060 0010 0000     ........````....
+	...
+d0095540:	0000 6010 6060 6060 6060 6060 6060 1060     ...````````````.
+d0095550:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d0095570:	0000 1000 6010 6060 6060 6060 6010 6060     .....```````.```
+d0095580:	6060 6060 6060 6010 6060 6060 6060 6060     ``````.`````````
+d0095590:	6060 0010 1000 1010 1010 6060 6010 6060     ``........``.```
+d00955a0:	6060 6060 6060 6010 6060 6060 6060 6060     ``````.`````````
+d00955b0:	6060 0010 1000 1010 1010 6060 6060 6060     ``........``````
+d00955c0:	1060 0000 0000 0000 0000 0000 0000 0000     `...............
+	...
+d009565c:	0000 6010 6060 6060 6060 6060 6060 6060     ...`````````````
+d009566c:	1060 0000 0000 0000 0000 0000 0000 0000     `...............
+	...
+d009568c:	0000 6010 1060 6060 6060 6060 6060 6060     ...``.``````````
+d009569c:	6060 6060 6060 6010 6060 6060 6060 6060     ``````.`````````
+d00956ac:	6060 0010 6010 6060 6060 6060 6060 6060     ``...```````````
+d00956bc:	6060 6060 6060 6010 6060 6060 6060 6060     ``````.`````````
+d00956cc:	6060 0010 6010 6060 6060 6060 6060 6060     ``...```````````
+d00956dc:	1060 0000 0000 0000 0000 0000 0000 0000     `...............
+	...
+d0095778:	0000 6010 6060 6060 6060 6060 6060 6060     ...`````````````
+d0095788:	1060 0000 0000 0000 0000 0000 0000 0000     `...............
+	...
+d00957a8:	0000 6010 6060 6060 6060 6060 6060 6060     ...`````````````
+d00957b8:	6060 6060 6060 6010 6060 6060 6060 6060     ``````.`````````
+d00957c8:	6060 1010 6060 6060 6060 6060 6060 6060     ``..````````````
+d00957d8:	6060 6060 6060 6010 6060 6060 6060 6060     ``````.`````````
+d00957e8:	6060 1010 6060 6060 6060 6060 6060 6060     ``..````````````
+d00957f8:	1060 0000 0000 0000 0000 0000 0000 0000     `...............
+	...
+d0095894:	0000 6010 6060 6060 6060 6060 6060 6060     ...`````````````
+d00958a4:	1060 1000 1010 1010 0000 0000 0000 0000     `...............
+	...
+d00958c0:	1010 1010 0010 6010 6060 6060 6060 6060     .......`````````
+d00958d0:	6060 6060 6060 6060 6060 1060 6010 6060     ```````````..```
+d00958e0:	6060 6060 6060 1060 6060 6060 6060 6060     ```````.````````
+d00958f0:	6060 6060 6060 6060 6060 1060 6010 6060     ```````````..```
+d0095900:	6060 6060 6060 1060 6060 6060 6060 6060     ```````.````````
+d0095910:	6060 6060 1060 0000 0000 0000 0000 0000     `````...........
+	...
+d00959b0:	0000 6010 6060 6060 6060 6060 6060 6060     ...`````````````
+d00959c0:	1010 6010 6060 1060 0000 0000 0000 0000     ...````.........
+	...
+d00959dc:	6010 6060 1060 1010 6060 6060 6060 6060     .````...````````
+d00959ec:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00959fc:	6060 6060 6060 1010 6010 6060 6060 6060     ``````...```````
+d0095a0c:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095a1c:	6060 6060 6060 1010 6010 6060 6060 6060     ``````...```````
+d0095a2c:	6060 6060 1060 0000 0000 0000 0000 0000     `````...........
+	...
+d0095acc:	0000 6010 6060 6060 6060 6060 6060 6060     ...`````````````
+d0095adc:	6010 6060 6060 1060 0000 0000 0000 0000     .``````.........
+	...
+d0095af8:	6010 6060 6060 6060 6060 6060 6060 6060     .```````````````
+d0095b08:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095b18:	6060 6060 1060 6010 6060 6060 6060 6060     `````..`````````
+d0095b28:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095b38:	6060 6060 1060 6010 6060 6060 6060 6060     `````..`````````
+d0095b48:	6060 6060 1060 0000 0000 0000 0000 0000     `````...........
+	...
+d0095be4:	1000 1010 0010 4c10 6060 6060 6060 6060     .......L````````
+d0095bf4:	6060 6060 6060 6060 6060 1010 0000 0000     ``````````......
+	...
+d0095c14:	1010 6060 6060 6060 6060 6060 6060 6060     ..``````````````
+d0095c24:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095c34:	6060 6060 1060 6060 6060 6060 6060 6060     `````.``````````
+d0095c44:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095c54:	6060 6060 1060 6060 6060 6060 6060 6060     `````.``````````
+d0095c64:	6060 6060 104c 1000 1010 0010 0000 0000     ````L...........
+	...
+d0095d00:	6010 6060 1010 1010 1010 6060 6060 6060     .```......``````
+d0095d10:	6060 6060 6060 6060 6060 6060 0010 0000     ````````````....
+	...
+d0095d2c:	0000 1000 6060 6060 6060 6060 6060 6060     ....````````````
+d0095d3c:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095d4c:	6060 6060 6060 6060 6010 6060 6060 6060     ````````.```````
+d0095d5c:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095d6c:	6060 6060 6060 6060 6010 6060 6060 6060     ````````.```````
+d0095d7c:	6060 6060 6060 1060 1010 1010 6060 1060     ```````.....```.
+	...
+d0095e18:	0000 1000 6060 6060 6060 6060 1060 6060     ....`````````.``
+d0095e28:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095e38:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+d0095e48:	0000 1000 6060 6060 6060 6060 6060 6060     ....````````````
+d0095e58:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095e68:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095e78:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095e88:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095e98:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095ea8:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d0095f34:	0000 1000 6060 6060 6060 6060 6060 6060     ....````````````
+d0095f44:	6060 6060 6060 6060 6060 6060 6060 1060     ```````````````.
+	...
+d0095f68:	6010 6060 6060 6060 6060 6060 6060 6060     .```````````````
+d0095f78:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095f88:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095f98:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095fa8:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0095fb8:	6060 6060 6060 6060 6060 6060 0010 0000     ````````````....
+	...
+d0096054:	6010 6060 6060 6060 6060 6060 6060 6060     .```````````````
+d0096064:	6060 6060 1060 6060 6060 6060 0010 0000     `````.``````....
+	...
+d0096080:	0000 1000 6060 6060 6060 6060 6060 6060     ....````````````
+d0096090:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00960a0:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00960b0:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00960c0:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00960d0:	6060 6060 6060 6060 6060 6060 6060 1060     ```````````````.
+	...
+d009616c:	0000 1000 6010 6060 6060 6060 6010 6060     .....```````.```
+d009617c:	6060 1060 6060 6060 6060 6060 6060 1060     ```.```````````.
+d009618c:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+d009619c:	1010 1000 6010 6060 6060 6060 6060 6060     .....```````````
+d00961ac:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00961bc:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00961cc:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00961dc:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00961ec:	6060 6060 6060 6060 6060 6060 6060 1060     ```````````````.
+d00961fc:	0010 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d0096284:	0000 1010 1010 6010 1060 6060 6060 6060     .......``.``````
+d0096294:	6010 6060 6060 6060 6010 6060 6060 6060     .```````.```````
+d00962a4:	6060 6010 1060 0010 1010 0010 0000 0000     ``.``...........
+d00962b4:	0000 1000 6010 6010 1060 6060 6060 6060     .....`.``.``````
+d00962c4:	6060 6060 6060 6060 6060 4c60 6060 6060     ```````````L````
+d00962d4:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00962e4:	6060 6060 6060 6060 6060 4c60 6060 6060     ```````````L````
+d00962f4:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096304:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096314:	6060 6010 1060 1010 1010 0000 0000 0000     ``.``...........
+	...
+d00963a0:	1000 6060 6060 6010 6060 6060 6060 6060     ..````.`````````
+d00963b0:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00963c0:	6060 6060 1060 1010 6060 1060 0000 1010     `````...```.....
+d00963d0:	0010 6010 6060 6010 6060 6060 6060 6060     ...```.`````````
+d00963e0:	6060 6060 6060 6060 6060 4c60 604c 6060     ```````````LL```
+d00963f0:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096400:	6060 6060 6060 6060 6060 4c60 604c 6060     ```````````LL```
+d0096410:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096420:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096430:	6060 6060 1060 6060 6060 0010 0000 0000     `````.````......
+	...
+d00964b8:	0000 1010 6010 6060 6060 6010 6060 6060     .....`````.`````
+d00964c8:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00964d8:	6060 6060 6060 6060 1060 6060 6060 6060     `````````.``````
+d00964e8:	1010 6060 1060 6010 6060 6010 6060 6060     ..```..```.`````
+d00964f8:	6060 6060 6060 6060 6060 6060 6060 4c60     ```````````````L
+d0096508:	4c4c 6060 6060 6060 6060 6060 6060 4c60     LL`````````````L
+d0096518:	6060 6060 6060 6060 6060 6060 6060 4c60     ```````````````L
+d0096528:	4c4c 6060 6060 6060 6060 6060 6060 4c60     LL`````````````L
+d0096538:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096548:	6060 6060 6060 6060 1060 6060 6060 1060     `````````.`````.
+d0096558:	1010 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d00965d4:	1010 6060 6010 6060 6060 6060 6060 6060     ..``.```````````
+d00965e4:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00965f4:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096604:	6060 6060 6060 6010 6060 6060 6060 6060     ``````.`````````
+d0096614:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096624:	4c4c 604c 6060 6060 6060 6060 6060 4c4c     LLL```````````LL
+d0096634:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096644:	4c4c 604c 6060 6060 6060 6060 6060 4c4c     LLL```````````LL
+d0096654:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096664:	6060 6060 6060 6060 6060 6060 6060 1060     ```````````````.
+d0096674:	6060 1010 0000 0000 0000 0000 0000 0000     ``..............
+	...
+d00966ec:	0000 1000 6060 6060 6060 6060 6060 6060     ....````````````
+d00966fc:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d009670c:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d009671c:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d009672c:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d009673c:	6060 6060 4c4c 4c4c 604c 6060 6060 6060     ````LLLLL```````
+d009674c:	4c60 604c 6060 6060 6060 6060 6060 6060     `LL`````````````
+d009675c:	6060 6060 4c4c 4c4c 604c 6060 6060 6060     ````LLLLL```````
+d009676c:	4c60 604c 6060 6060 6060 6060 6060 6060     `LL`````````````
+d009677c:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d009678c:	6060 6060 6060 6060 0010 0000 0000 0000     ````````........
+	...
+d0096808:	0000 6010 6060 6060 6060 6060 6060 6060     ...`````````````
+d0096818:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096828:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096838:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096848:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096858:	6060 4c60 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     ```LLLLLLLLLLLLL
+d0096868:	4c4c 604c 6060 6060 6060 6060 6060 6060     LLL`````````````
+d0096878:	6060 4c60 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     ```LLLLLLLLLLLLL
+d0096888:	4c4c 604c 6060 6060 6060 6060 6060 6060     LLL`````````````
+d0096898:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00968a8:	6060 6060 6060 6060 1060 0000 0000 0000     `````````.......
+	...
+d0096924:	1010 4c10 6060 6060 6060 6060 6060 6060     ...L````````````
+d0096934:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096944:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096954:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096964:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096974:	6060 4c60 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     ```LLLLLLLLLLLLL
+d0096984:	4c4c 604c 6060 6060 6060 6060 6060 6060     LLL`````````````
+d0096994:	6060 4c60 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     ```LLLLLLLLLLLLL
+d00969a4:	4c4c 604c 6060 6060 6060 6060 6060 6060     LLL`````````````
+d00969b4:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d00969c4:	6060 6060 6060 6060 104c 1010 0000 0000     ````````L.......
+	...
+d0096a3c:	0000 1010 604c 6060 6060 6060 6060 6060     ....L```````````
+d0096a4c:	6060 6060 6060 6060 6060 6060 6060 4c60     ```````````````L
+d0096a5c:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096a6c:	6060 6060 6060 604c 6060 6060 6060 6060     ``````L`````````
+d0096a7c:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096a8c:	6060 6060 6060 4c4c 4c4c 4c4c 4c4c 4c4c     ``````LLLLLLLLLL
+d0096a9c:	4c4c 4c4c 4c4c 4c4c 604c 6060 6060 6060     LLLLLLLLL```````
+d0096aac:	6060 6060 6060 4c4c 4c4c 4c4c 4c4c 4c4c     ``````LLLLLLLLLL
+d0096abc:	4c4c 4c4c 4c4c 4c4c 604c 6060 6060 6060     LLLLLLLLL```````
+d0096acc:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096adc:	6060 6060 6060 6060 6060 1060 6060 4c60     ```````````.```L
+d0096aec:	1010 0000 0000 0000 0000 0000 0000 0000     ................
+	...
+d0096b58:	1000 604c 6060 6060 6060 6060 6060 6060     ..L`````````````
+d0096b68:	6060 6060 6060 6060 6060 6060 6060 4c60     ```````````````L
+d0096b78:	6060 6060 6060 4c60 4c4c 604c 6060 6060     ```````LLLL`````
+d0096b88:	6060 6060 6060 4c4c 604c 6060 6060 6060     ``````LLL```````
+d0096b98:	6060 6060 6060 6060 6060 6060 4c4c 6060     ````````````LL``
+d0096ba8:	6060 6060 4c60 4c4c 4c4c 4c4c 4c4c 4c4c     `````LLLLLLLLLLL
+d0096bb8:	4c4c 4c4c 4c4c 4c4c 4c4c 604c 6060 6060     LLLLLLLLLLL`````
+d0096bc8:	6060 6060 4c60 4c4c 4c4c 4c4c 4c4c 4c4c     `````LLLLLLLLLLL
+d0096bd8:	4c4c 4c4c 4c4c 4c4c 4c4c 604c 6060 6060     LLLLLLLLLLL`````
+d0096be8:	6060 6060 6060 4c4c 6060 6060 6060 6060     ``````LL````````
+d0096bf8:	6060 6060 6060 6060 6060 6010 6060 6060     ``````````.`````
+d0096c08:	104c 0000 0000 0000 0000 0000 0000 0000     L...............
+	...
+d0096c30:	1010 1010 1010 1010 0010 0000 0000 0000     ................
+	...
+d0096c74:	1000 6060 6060 6060 6060 6060 6060 6060     ..``````````````
+d0096c84:	6060 6060 6060 6060 6060 4c60 4c4c 4c4c     ```````````LLLLL
+d0096c94:	4c4c 4c4c 4c60 4c4c 4c4c 4c4c 604c 6060     LLLL`LLLLLLLL```
+d0096ca4:	6060 6060 6060 4c4c 4c4c 6060 6060 6060     ``````LLLL``````
+d0096cb4:	6060 6060 6060 6060 6060 4c60 4c4c 4c4c     ```````````LLLLL
+d0096cc4:	604c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     L`LLLLLLLLLLLLLL
+d0096cd4:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 6060     LLLLLLLLLLLLLL``
+d0096ce4:	6060 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     ``LLLLLLLLLLLLLL
+d0096cf4:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 6060     LLLLLLLLLLLLLL``
+d0096d04:	6060 4c60 4c4c 4c4c 604c 6060 6060 6060     ```LLLLLL```````
+d0096d14:	6060 6060 6060 6060 6060 6060 6060 6060     ````````````````
+d0096d24:	1060 0000 0000 0000 0000 0000 0000 0000     `...............
+	...
+d0096d48:	1000 1010 7070 7070 7070 7070 1070 1010     ....ppppppppp...
+	...
+d0096d90:	1000 6060 6060 6060 6060 6060 6060 6060     ..``````````````
+d0096da0:	6060 4c60 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     ```LLLLLLLLLLLLL
+d0096db0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d0096dc0:	604c 6060 4c4c 4c4c 4c4c 6060 6060 6060     L```LLLLLL``````
+d0096dd0:	6060 4c60 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     ```LLLLLLLLLLLLL
+d0096de0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d0096df0:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d0096e00:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d0096e10:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d0096e20:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d0096e30:	604c 6060 6060 6060 6060 6060 6060 6060     L```````````````
+d0096e40:	1060 0000 0000 0000 0000 0000 0000 0000     `...............
+	...
+d0096e64:	7010 7070 7070 7070 7070 7070 7070 7070     .ppppppppppppppp
+d0096e74:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0096e84:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0096e94:	1010 1010 0000 0000 0000 0000 0000 0000     ................
+d0096ea4:	0000 0000 1000 1010 6010 6060 6060 6060     .........```````
+d0096eb4:	6060 6060 6060 4c60 4c4c 4c4c 104c 4c10     ```````LLLLLL..L
+d0096ec4:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d0096ed4:	4c4c 4c4c 104c 4c10 4c4c 4c60 4c4c 4c4c     LLLLL..LLL`LLLLL
+d0096ee4:	4c4c 6060 4c60 604c 4c60 4c4c 104c 4c10     LL```LL``LLLL..L
+d0096ef4:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d0096f04:	4c4c 4c4c 4c4c 4c10 4c4c 4c4c 4c4c 4c4c     LLLLLL.LLLLLLLLL
+d0096f14:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d0096f24:	4c4c 4c4c 4c4c 4c10 4c4c 4c4c 4c4c 4c4c     LLLLLL.LLLLLLLLL
+d0096f34:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d0096f44:	4c4c 4c4c 104c 4c10 4c4c 4c4c 604c 6060     LLLLL..LLLLLL```
+d0096f54:	4c60 6060 6060 4c4c 104c 0000 0000 0000     `L````LLL.......
+	...
+d0096f78:	1010 1010 1010 1010 7070 7070 7070 7070     ........pppppppp
+d0096f88:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0096f98:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0096fa8:	7070 7070 7070 7070 7070 7070 1010 1010     pppppppppppp....
+d0096fb8:	1010 1010 1010 1010 1010 1010 7010 7070     .............ppp
+d0096fc8:	6010 6060 6060 6060 6060 6060 4c60 104c     .````````````LL.
+d0096fd8:	4c4c 4c4c 4c4c 1010 4c10 4c4c 4c4c 4c4c     LLLLLL...LLLLLLL
+d0096fe8:	104c 1010 1010 1010 4c4c 104c 1010 4c4c     L.......LLL...LL
+d0096ff8:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d0097008:	4c4c 4c4c 4c4c 1010 4c10 4c4c 4c4c 4c4c     LLLLLL...LLLLLLL
+d0097018:	4c4c 4c4c 4c4c 4c4c 4c4c 104c 1010 1020     LLLLLLLLLLL... .
+d0097028:	4c4c 4c4c 4c4c 4c4c 1010 4c4c 4c4c 4c4c     LLLLLLLL..LLLLLL
+d0097038:	4c4c 4c4c 4c4c 4c4c 4c4c 104c 1010 1020     LLLLLLLLLLL... .
+d0097048:	4c4c 4c4c 4c4c 4c4c 1010 4c4c 4c4c 4c4c     LLLLLLLL..LLLLLL
+d0097058:	4c4c 4c4c 4c4c 4c4c 4c4c 104c 1010 4c4c     LLLLLLLLLLL...LL
+d0097068:	4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c 4c4c     LLLLLLLLLLLLLLLL
+d0097078:	7010 1010 1010 1010 1010 1010 1010 1010     .p..............
+d0097088:	1010 1010 1010 1010 1010 1010 7070 7070     ............pppp
+d0097098:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00970a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00970b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00970c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00970d8:	7070 7070 7070 7070 7070 7070 1070 1010     ppppppppppppp...
+d00970e8:	4c4c 4c4c 4c4c 4c4c 4c4c 104c 4c4c 4c4c     LLLLLLLLLLL.LLLL
+d00970f8:	4c4c 104c 1010 1010 1010 1010 7010 7070     LLL..........ppp
+d0097108:	7070 7070 1010 1010 4c10 4c4c 4c4c 104c     pppp.....LLLLLL.
+d0097118:	4c10 4c4c 4c4c 4c4c 4c4c 1010 4c4c 4c4c     .LLLLLLLLL..LLLL
+d0097128:	4c4c 104c 1010 1010 4c4c 4c4c 4c4c 4c4c     LLL.....LLLLLLLL
+d0097138:	4c4c 4c4c 1010 1010 2810 2828 1010 4c4c     LLLL.....(((..LL
+d0097148:	4c4c 104c 1010 4c10 4c4c 4c4c 4c4c 4c4c     LLL....LLLLLLLLL
+d0097158:	4c4c 4c4c 1010 1010 2810 2828 1010 4c4c     LLLL.....(((..LL
+d0097168:	4c4c 104c 1010 4c10 4c4c 4c4c 4c4c 4c4c     LLL....LLLLLLLLL
+d0097178:	4c4c 4c4c 1010 1010 4c10 4c4c 4c4c 4c4c     LLLL.....LLLLLLL
+d0097188:	4c4c 1010 4c4c 4c4c 4c4c 104c 7070 7070     LL..LLLLLLL.pppp
+d0097198:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00971a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00971b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00971c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00971d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00971e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00971f8:	7070 7070 7070 7070 7070 7070 1010 1010     pppppppppppp....
+d0097208:	4c4c 1010 1010 1010 1010 1010 1010 1010     LL..............
+d0097218:	2810 7070 7070 7070 7070 7070 7070 7070     .(pppppppppppppp
+d0097228:	7070 1028 1010 1010 1010 7010 1070 1010     pp(........pp...
+d0097238:	1010 1010 1010 1070 1010 1010 1010 1010     ......p.........
+d0097248:	2810 1070 1010 1010 1010 1010 1010 1010     .(p.............
+d0097258:	2810 7028 7070 7070 1070 1010 1010 1010     .((pppppp.......
+d0097268:	7028 1020 1010 1010 1010 1010 1010 1010     (p .............
+d0097278:	2810 7028 7070 7070 1070 1010 1010 1010     .((pppppp.......
+d0097288:	7028 1020 1010 1010 1010 1010 1010 1010     (p .............
+d0097298:	7010 1028 1010 1010 1010 1010 1010 1010     .p(.............
+d00972a8:	1010 1010 1010 7010 7070 7070 7070 7070     .......ppppppppp
+d00972b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00972c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00972d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00972e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00972f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097308:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097318:	7070 7070 7070 7070 7070 7070 1010 7070     pppppppppppp..pp
+d0097328:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097338:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097348:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097358:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097368:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097378:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097388:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097398:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00973a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00973b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00973c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00973d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00973e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00973f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097408:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097418:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097428:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097438:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097448:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097458:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097468:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097478:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097488:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097498:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00974a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00974b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00974c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00974d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00974e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00974f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097508:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097518:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097528:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097538:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097548:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097558:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097568:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097578:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097588:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097598:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00975a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00975b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00975c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00975d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00975e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00975f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097608:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097618:	2870 7070 7070 7070 7070 7070 7070 7070     p(pppppppppppppp
+d0097628:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097638:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097648:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097658:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097668:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097678:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097688:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097698:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00976a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00976b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00976c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00976d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00976e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00976f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097708:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097718:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097728:	7070 7070 7070 7070 7070 7070 2028 7070     pppppppppppp( pp
+d0097738:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097748:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097758:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097768:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097778:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097788:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097798:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00977a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00977b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00977c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00977d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00977e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00977f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097808:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097818:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097828:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097838:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097848:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097858:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097868:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097878:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097888:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097898:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00978a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00978b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00978c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00978d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00978e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00978f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097908:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097918:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097928:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097938:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097948:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097958:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097968:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097978:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097988:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097998:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00979a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00979b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00979c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00979d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00979e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00979f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097a08:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097a18:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097a28:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097a38:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097a48:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097a58:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097a68:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097a78:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097a88:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097a98:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097aa8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097ab8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097ac8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097ad8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097ae8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097af8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097b08:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097b18:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097b28:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097b38:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097b48:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097b58:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097b68:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097b78:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097b88:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097b98:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097ba8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097bb8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097bc8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097bd8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097be8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097bf8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097c08:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097c18:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097c28:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097c38:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097c48:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097c58:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097c68:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097c78:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097c88:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097c98:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097ca8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097cb8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097cc8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097cd8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097ce8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097cf8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097d08:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097d18:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097d28:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097d38:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097d48:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097d58:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097d68:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097d78:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097d88:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097d98:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097da8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097db8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097dc8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097dd8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097de8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097df8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097e08:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097e18:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097e28:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097e38:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097e48:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097e58:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097e68:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097e78:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097e88:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097e98:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097ea8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097eb8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097ec8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097ed8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097ee8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097ef8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097f08:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097f18:	7070 7070 7070 7070 7070 7070 2870 7070     ppppppppppppp(pp
+d0097f28:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097f38:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097f48:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097f58:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097f68:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097f78:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097f88:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097f98:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097fa8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097fb8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097fc8:	7070 7070 7070 7070 7070 7070 2870 7070     ppppppppppppp(pp
+d0097fd8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0097fe8:	7070 7070 7070 7070 7070 7070 2870 7070     ppppppppppppp(pp
+d0097ff8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098008:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098018:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098028:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098038:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098048:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098058:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098068:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098078:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098088:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098098:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00980a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00980b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00980c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00980d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00980e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00980f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098108:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098118:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098128:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098138:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098148:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098158:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098168:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098178:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098188:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098198:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00981a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00981b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00981c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00981d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00981e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00981f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098208:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098218:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098228:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098238:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098248:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098258:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098268:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098278:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098288:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098298:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00982a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00982b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00982c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00982d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00982e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00982f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098308:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098318:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098328:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098338:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098348:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098358:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098368:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098378:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098388:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098398:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00983a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00983b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00983c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00983d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00983e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00983f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098408:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098418:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098428:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098438:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098448:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098458:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098468:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098478:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098488:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098498:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00984a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00984b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00984c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00984d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00984e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00984f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098508:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098518:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098528:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098538:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098548:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098558:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098568:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098578:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098588:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098598:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00985a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00985b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00985c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00985d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00985e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00985f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098608:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098618:	7070 7070 7070 7070 7070 7070 1010 1010     pppppppppppp....
+d0098628:	1010 1010 7010 7070 7070 7070 7070 7070     .....ppppppppppp
+d0098638:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098648:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098658:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098668:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098678:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098688:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098698:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00986a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00986b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00986c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00986d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00986e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00986f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098708:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098718:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098728:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098738:	7070 7070 7070 7070 1070 2010 2020 1020     ppppppppp..    .
+d0098748:	7070 7070 7070 1010 1010 1010 1010 1010     pppppp..........
+d0098758:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0098768:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0098778:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0098788:	1010 1010 1010 1010 1010 1010 7070 7070     ............pppp
+d0098798:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00987a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00987b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00987c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00987d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00987e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00987f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098808:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098818:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098828:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098838:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098848:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098858:	7070 7070 7070 2010 2020 1020 1010 1010     pppppp.    .....
+d0098868:	1010 2828 2828 2828 2828 2828 2828 2828     ..((((((((((((((
+d0098878:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098888:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098898:	2828 2828 2828 2828 2828 2828 2020 2020     ((((((((((((    
+d00988a8:	2020 1020 1010 7070 7070 7070 7070 7070        ...pppppppppp
+d00988b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00988c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00988d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00988e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00988f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098908:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098918:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098928:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098938:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098948:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098958:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098968:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098978:	7070 1070 2020 1020 2828 2828 2828 2828     ppp.   .((((((((
+d0098988:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098998:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00989a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00989b8:	2828 2828 2828 2828 2828 2820 2020 2020     (((((((((( (    
+d00989c8:	1020 1010 7010 7070 7070 7070 7070 7070      ....ppppppppppp
+d00989d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00989e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00989f8:	2070 7010 7070 7070 7070 7070 7070 7070     p .ppppppppppppp
+d0098a08:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098a18:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098a28:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098a38:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098a48:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098a58:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098a68:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098a78:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098a88:	7070 7070 7070 7070 7070 7070 1070 1010     ppppppppppppp...
+d0098a98:	2020 1020 2820 2828 2828 2828 2828 2828        . (((((((((((
+d0098aa8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098ab8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098ac8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098ad8:	2828 2828 2828 2028 2028 2028 2020 1010     ((((((( ( (   ..
+d0098ae8:	1010 1010 7070 7070 7070 7070 7070 7070     ....pppppppppppp
+d0098af8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098b08:	7070 7070 7070 7070 7070 7070 1010 7020     pppppppppppp.. p
+d0098b18:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098b28:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098b38:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098b48:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098b58:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098b68:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098b78:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098b88:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098b98:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098ba8:	7070 7070 7070 1010 2010 1020 2020 1020     pppppp...  .   .
+d0098bb8:	2820 2828 2828 2828 2828 2828 2828 2828      (((((((((((((((
+d0098bc8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098bd8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098be8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098bf8:	2828 2828 2028 2820 2820 1020 2010 2020     (((((  ( ( ..   
+d0098c08:	1010 1010 7070 7070 7070 7070 7070 7070     ....pppppppppppp
+d0098c18:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098c28:	7070 7070 7070 2070 2010 7070 7070 7070     ppppppp . pppppp
+d0098c38:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098c48:	7070 7070 7070 7070 7010 7070 7070 7070     pppppppp.ppppppp
+d0098c58:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098c68:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098c78:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098c88:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098c98:	7070 7070 7070 7070 7070 7070 7070 1070     ppppppppppppppp.
+d0098ca8:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0098cb8:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0098cc8:	1010 2820 2828 2010 2020 2020 2010 2828     .. (((.     . ((
+d0098cd8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098ce8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098cf8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098d08:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098d18:	2828 2028 2028 2028 2010 2820 2020 2020     ((( ( ( .  (    
+d0098d28:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0098d38:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0098d48:	1010 1020 2010 1010 1010 1010 1010 1010     .. .. ..........
+d0098d58:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0098d68:	1010 1010 1028 1010 7070 7070 7070 7070     ....(...pppppppp
+d0098d78:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098d88:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098d98:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098da8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098db8:	7070 7070 7070 1010 1010 2810 2828 2828     pppppp.....(((((
+d0098dc8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098dd8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098de8:	1028 7028 7070 7070 2010 2828 2828 2828     (.(ppppp. ((((((
+d0098df8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098e08:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098e18:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098e28:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098e38:	2828 2820 1020 2820 2028 2020 2020 2020     (( ( . ((       
+d0098e48:	2020 2820 2828 2828 2828 2828 2828 2828        (((((((((((((
+d0098e58:	2828 2828 2828 2828 2828 2828 2828 1020     (((((((((((((( .
+d0098e68:	2810 2828 2828 2828 2828 2828 2828 2828     .(((((((((((((((
+d0098e78:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098e88:	2028 2020 1010 1010 7010 7070 7070 7070     (   .....ppppppp
+d0098e98:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098ea8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098eb8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098ec8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098ed8:	1010 2010 2820 2828 2828 2828 2828 2828     ...  (((((((((((
+d0098ee8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098ef8:	2828 2828 2828 2828 2828 2828 1028 7070     (((((((((((((.pp
+d0098f08:	7070 2870 2020 2820 2828 2828 2828 2828     ppp(   (((((((((
+d0098f18:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098f28:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098f38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098f48:	2828 2828 2828 2828 2828 2828 2828 2028     ((((((((((((((( 
+d0098f58:	2028 2810 2828 2020 2028 2028 2028 2828     ( .(((  ( ( ( ((
+d0098f68:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098f78:	2828 2828 2828 2828 2828 2028 1010 2828     ((((((((((( ..((
+d0098f88:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0098f98:	2828 2828 2828 2828 2828 2828 2828 2020     ((((((((((((((  
+d0098fa8:	2020 2020 1020 7010 7070 7070 7070 7070          ..ppppppppp
+d0098fb8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098fc8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098fd8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0098fe8:	7070 7070 7070 7070 7070 1010 1020 2020     pppppppppp.. .  
+d0098ff8:	2820 2820 2828 2828 2828 2828 2828 2828      ( (((((((((((((
+d0099008:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099018:	2828 2828 2828 2828 1028 7070 7070 7070     (((((((((.pppppp
+d0099028:	7070 2070 2828 2828 2828 2828 2828 2828     ppp ((((((((((((
+d0099038:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099048:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099058:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099068:	2828 2828 2828 2828 2828 2828 2028 1020     (((((((((((((  .
+d0099078:	2828 2828 2820 2828 2820 2828 2828 2828     (((( ((( (((((((
+d0099088:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099098:	2828 2828 2828 2820 1020 2820 2828 2828     (((((( ( . (((((
+d00990a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00990b8:	2828 2828 2828 2828 2828 2828 2020 2020     ((((((((((((    
+d00990c8:	2020 7010 7070 7070 7070 7070 7070 7070       .ppppppppppppp
+d00990d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00990e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00990f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099108:	7070 7070 7070 1010 2010 2020 2020 2820     pppppp...      (
+d0099118:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099128:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099138:	2828 2828 1028 1010 7070 7070 7070 2020     (((((...pppppp  
+d0099148:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099158:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099168:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099178:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099188:	2828 2828 2828 2828 2828 2028 2820 2828     (((((((((((  (((
+d0099198:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00991a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00991b8:	2828 2828 1020 2828 2828 2828 2828 2828     (((( .((((((((((
+d00991c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00991d8:	2828 2828 2828 2828 2828 2028 2020 7010     (((((((((((   .p
+d00991e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00991f8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099208:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099218:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099228:	7070 7070 2010 2020 2020 2020 2820 2828     pppp.        (((
+d0099238:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099248:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099258:	2028 2020 2020 2020 2828 2810 2828 2828     (       ((.(((((
+d0099268:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099278:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099288:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099298:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00992a8:	2828 2828 2828 2828 2820 2828 2828 2828     (((((((( (((((((
+d00992b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00992c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00992d8:	2028 2820 2828 2828 2828 2828 2828 2828     (  (((((((((((((
+d00992e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00992f8:	2828 2828 2828 2028 1020 7070 7070 7070     (((((((  .pppppp
+d0099308:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099318:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099328:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099338:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099348:	7070 2010 2020 2020 2020 2028 2828 2828     pp.       ( ((((
+d0099358:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099368:	2828 2828 2828 2828 2828 2828 2028 2028     ((((((((((((( ( 
+d0099378:	2820 2828 1028 2820 2828 2828 2828 2828      ((((. (((((((((
+d0099388:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099398:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00993a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00993b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00993c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00993d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00993e8:	2828 2828 2828 2828 2828 2828 2028 2828     ((((((((((((( ((
+d00993f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099408:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099418:	2828 2028 7010 7070 7070 7070 7070 7070     ((( .ppppppppppp
+d0099428:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099438:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099448:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099458:	7070 7070 7070 7070 7070 7070 7070 1070     ppppppppppppppp.
+d0099468:	2010 2020 2020 2020 2820 2820 2828 2828     .        ( (((((
+d0099478:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099488:	2828 2828 2828 2828 2828 2820 2828 2828     (((((((((( (((((
+d0099498:	2010 2828 2828 2828 2828 2828 2828 2828     . ((((((((((((((
+d00994a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00994b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00994c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00994d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00994e8:	2028 2828 2828 2828 2828 2828 2828 2828     ( ((((((((((((((
+d00994f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099508:	2828 2828 2828 2828 2828 2820 2828 2828     (((((((((( (((((
+d0099518:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099528:	2828 2828 2828 2828 2828 2828 2828 1020     (((((((((((((( .
+d0099538:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099548:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099558:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099568:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099578:	7070 7070 7070 7070 7070 7070 1070 2010     ppppppppppppp.. 
+d0099588:	2020 2020 2020 2028 2028 2828 2828 2828           ( ( ((((((
+d0099598:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00995a8:	2828 2828 2828 2820 2828 2028 2820 2820     (((((( ((((  ( (
+d00995b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00995c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00995d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00995e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00995f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099608:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099618:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099628:	2828 2828 2828 2028 2828 2828 2828 2828     ((((((( ((((((((
+d0099638:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099648:	2828 2828 2828 2828 2028 1020 7070 7070     (((((((((  .pppp
+d0099658:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099668:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099678:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099688:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099698:	7070 7070 7070 7070 7070 1070 2010 2020     ppppppppppp..   
+d00996a8:	2020 2020 2020 2828 2828 2828 2828 2828           ((((((((((
+d00996b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00996c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00996d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00996e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00996f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099708:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099718:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099728:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099738:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099748:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099758:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099768:	2828 2828 2020 7010 7070 7070 7070 7070     ((((  .ppppppppp
+d0099778:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099788:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099798:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00997a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00997b8:	7070 7070 7070 7070 1070 1010 2020 2020     ppppppppp...    
+d00997c8:	2820 2828 2028 2020 2020 2828 2828 2020      ((((     ((((  
+d00997d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00997e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d00997f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099808:	2828 2828 2828 2828 2828 2828 2020 2820     ((((((((((((   (
+d0099818:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099828:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099838:	2828 2828 2828 2828 2828 2820 2828 2828     (((((((((( (((((
+d0099848:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099858:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099868:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099878:	2828 2828 2828 2828 2828 2828 2828 2028     ((((((((((((((( 
+d0099888:	1020 7070 7070 7070 7070 7070 7070 7070      .pppppppppppppp
+d0099898:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00998a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00998b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00998c8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00998d8:	7070 7070 7070 7070 1010 2820 2828 2828     pppppppp.. (((((
+d00998e8:	2028 2828 2828 2820 2828 2820 2820 2828     ( (((( ((( ( (((
+d00998f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099908:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099918:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099928:	2828 2828 2828 2028 2828 2028 2828 2828     ((((((( ((( ((((
+d0099938:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099948:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099958:	2828 2828 2828 2820 2828 2828 2828 2828     (((((( (((((((((
+d0099968:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099978:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099988:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099998:	2828 2828 2828 2828 2828 2028 7010 7070     ((((((((((( .ppp
+d00999a8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00999b8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00999c8:	7070 7070 7070 7070 7070 7070 7070 7020     pppppppppppppp p
+d00999d8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00999e8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d00999f8:	7070 7070 7070 1010 2828 2828 2828 2820     pppppp..(((((( (
+d0099a08:	2828 2820 2828 2028 2828 2828 2828 2828     (( (((( ((((((((
+d0099a18:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099a28:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099a38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099a48:	2828 2820 2828 2828 2820 2828 2828 2828     (( ((((( (((((((
+d0099a58:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099a68:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099a78:	2828 1028 2828 2828 2828 2828 2828 2828     (((.((((((((((((
+d0099a88:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099a98:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099aa8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099ab8:	2828 2828 2828 2020 7070 7070 7070 7070     ((((((  pppppppp
+d0099ac8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099ad8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099ae8:	7070 7070 7070 7070 7070 2010 7070 7070     pppppppppp. pppp
+d0099af8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099b08:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099b18:	7070 7070 2810 2828 2828 2820 2828 2028     pppp.((((( (((( 
+d0099b28:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099b38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099b48:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099b58:	2828 2828 2828 2828 2828 2828 2028 2828     ((((((((((((( ((
+d0099b68:	2828 2828 2820 2828 2828 2828 2828 2828     (((( (((((((((((
+d0099b78:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099b88:	2828 2828 2828 2828 2828 2828 2828 1028     (((((((((((((((.
+d0099b98:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099ba8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099bb8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099bc8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099bd8:	2828 7010 7070 7070 7070 7070 7070 7070     ((.ppppppppppppp
+d0099be8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099bf8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099c08:	7070 7070 7070 1020 1020 7070 7070 7070     pppppp . .pppppp
+d0099c18:	7070 7070 7070 7070 7070 7070 1070 1010     ppppppppppppp...
+d0099c28:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0099c38:	2810 2828 2028 2828 2828 2028 2828 2828     .(((( ((((( ((((
+d0099c48:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099c58:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099c68:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099c78:	2828 2828 2828 2828 2820 2828 2828 2828     (((((((( (((((((
+d0099c88:	2028 2828 2828 2828 2828 2828 2828 2828     ( ((((((((((((((
+d0099c98:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099ca8:	2828 2828 2828 2828 2828 2028 2810 2828     ((((((((((( .(((
+d0099cb8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099cc8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099cd8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099ce8:	2828 2828 2828 2828 2828 2828 1028 7070     (((((((((((((.pp
+d0099cf8:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099d08:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099d18:	7070 7070 7070 7070 7070 7070 7070 7070     pppppppppppppppp
+d0099d28:	7070 2070 2010 7010 7070 7070 7070 7070     ppp . .ppppppppp
+d0099d38:	7070 7070 7070 7070 7070 1070 1010 2010     ppppppppppp.... 
+d0099d48:	2020 2020 2020 2020 2020 1020 2828 2828                .((((
+d0099d58:	2820 2828 2828 2820 2828 2828 2828 2828      ((((( (((((((((
+d0099d68:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099d78:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099d88:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099d98:	2828 2028 2828 2828 2828 2828 2028 2828     ((( ((((((((( ((
+d0099da8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099db8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099dc8:	2828 2828 2828 2828 1010 2828 2828 2828     ((((((((..((((((
+d0099dd8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099de8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099df8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099e08:	2828 2828 2828 2828 1028 1010 1010 1010     (((((((((.......
+d0099e18:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0099e28:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0099e38:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0099e48:	1010 1010 1010 1010 1010 1010 1010 1010     ................
+d0099e58:	1010 1010 1010 1010 2020 2020 2020 2028     ........      ( 
+d0099e68:	2028 2820 2020 2810 2828 2828 2820 2828     (  (  .((((( (((
+d0099e78:	2028 2828 2828 2828 2828 2828 2828 2828     ( ((((((((((((((
+d0099e88:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099e98:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099ea8:	2828 2828 2828 2828 2828 2828 2828 2820     (((((((((((((( (
+d0099eb8:	2828 2828 2828 2828 2028 2828 2828 2828     ((((((((( ((((((
+d0099ec8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099ed8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099ee8:	2828 2828 1028 2820 2828 2828 2828 2828     (((((. (((((((((
+d0099ef8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099f08:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099f18:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099f28:	2828 2828 2828 2010 2820 2828 2828 2828     ((((((.  (((((((
+d0099f38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099f48:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099f58:	2828 2828 2828 2828 2828 2028 1010 2010     ((((((((((( ... 
+d0099f68:	2828 2828 2828 2828 2828 2828 2028 2820     (((((((((((((  (
+d0099f78:	2020 2010 2020 2020 2828 2820 2820 2828       .     (( ( (((
+d0099f88:	1020 2820 2828 2028 2828 2828 2820 2828      . (((( (((( (((
+d0099f98:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099fa8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099fb8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d0099fc8:	2828 2828 2828 2828 2828 2820 2828 2828     (((((((((( (((((
+d0099fd8:	2828 2828 2820 2828 2828 2828 2828 2028     (((( (((((((((( 
+d0099fe8:	2020 2828 2828 2828 2828 2828 2828 2828       ((((((((((((((
+d0099ff8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a008:	2828 2810 2828 2828 2828 2828 2828 2828     ((.(((((((((((((
+d009a018:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a028:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a038:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a048:	2828 2810 2828 2828 2828 2828 2828 2828     ((.(((((((((((((
+d009a058:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a068:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a078:	2828 2828 2828 2028 1010 2820 2828 2828     ((((((( .. (((((
+d009a088:	2828 2828 2828 2828 2828 2028 2028 2010     ((((((((((( ( . 
+d009a098:	2820 2828 2828 2828 2828 2028 2010 2828      (((((((((( . ((
+d009a0a8:	2828 2828 2020 2028 2828 2828 2828 2828     ((((  ( ((((((((
+d009a0b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a0c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a0d8:	2828 2828 2828 2828 2828 2828 2028 2820     (((((((((((((  (
+d009a0e8:	2828 2828 2828 2028 2828 2828 2828 2028     ((((((( ((((((( 
+d009a0f8:	2828 2828 2828 2828 2828 2028 2828 2020     ((((((((((( ((  
+d009a108:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a118:	2828 2828 2828 2828 2828 2828 2828 2820     (((((((((((((( (
+d009a128:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a138:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a148:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a158:	2828 2828 2828 2828 2828 2828 2828 2810     ((((((((((((((.(
+d009a168:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a178:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a188:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a198:	2828 1028 1010 2820 2828 2828 2828 2828     (((... (((((((((
+d009a1a8:	2828 2828 2828 2828 1020 2820 2828 2828     (((((((( . (((((
+d009a1b8:	2828 2828 2828 1020 2820 2828 2828 2828     (((((( . (((((((
+d009a1c8:	2828 2820 2828 2828 2828 2020 2828 2828     (( (((((((  ((((
+d009a1d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a1e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a1f8:	2828 2828 2828 2828 2820 2820 2828 2828     (((((((( ( (((((
+d009a208:	2828 2828 2820 2828 2828 2028 2828 2828     (((( (((((( ((((
+d009a218:	2828 2828 2828 2028 2828 2028 2828 2828     ((((((( ((( ((((
+d009a228:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a238:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a248:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a258:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a268:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a278:	2828 2828 2828 2828 2828 2028 2828 2828     ((((((((((( ((((
+d009a288:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a298:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a2a8:	2828 2828 2828 2828 2828 2828 2828 1028     (((((((((((((((.
+d009a2b8:	1010 2828 2828 2828 2828 2828 2828 2828     ..((((((((((((((
+d009a2c8:	2828 2828 2010 2828 2828 2828 2828 2828     ((((. ((((((((((
+d009a2d8:	2828 1020 2828 2828 2828 2828 2828 2828     (( .((((((((((((
+d009a2e8:	2828 2828 2028 2028 2828 2828 2828 2828     ((((( ( ((((((((
+d009a2f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a308:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a318:	2828 2028 2828 2028 2828 2828 2828 2828     ((( ((( ((((((((
+d009a328:	2028 2820 2028 2820 2828 2828 2828 2828     (  ((  (((((((((
+d009a338:	2828 2028 2828 2828 2820 2828 2828 2828     ((( (((( (((((((
+d009a348:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a358:	2828 2828 2828 2028 2828 2828 2828 2828     ((((((( ((((((((
+d009a368:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a378:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a388:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a398:	2828 2828 2828 2028 2828 2828 2828 2828     ((((((( ((((((((
+d009a3a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a3b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a3c8:	2828 2828 2828 2828 2828 1020 2010 2828     (((((((((( .. ((
+d009a3d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a3e8:	2810 2828 2828 2828 2828 2828 2828 2810     .(((((((((((((.(
+d009a3f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a408:	2820 2028 2828 2828 2828 2828 2828 2828      (( ((((((((((((
+d009a418:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a428:	2828 2828 2828 2828 2828 2828 2828 2028     ((((((((((((((( 
+d009a438:	2828 2028 2828 2828 2828 2828 2828 2028     ((( ((((((((((( 
+d009a448:	2820 2828 2828 2828 2828 2828 2828 2828      (((((((((((((((
+d009a458:	2020 2828 2820 2828 2828 2828 2828 2828       (( (((((((((((
+d009a468:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a478:	2828 2828 2820 2828 2828 2828 2828 2828     (((( (((((((((((
+d009a488:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a498:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a4a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a4b8:	2828 2828 2810 2828 2828 2828 2828 2828     ((((.(((((((((((
+d009a4c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a4d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a4e8:	2828 2828 2828 1028 2828 2828 2828 2828     (((((((.((((((((
+d009a4f8:	2828 2828 2828 2828 2828 2828 2820 2828     (((((((((((( (((
+d009a508:	2828 2828 2828 2828 2028 2828 2828 2828     ((((((((( ((((((
+d009a518:	2828 2828 2828 2828 2828 2828 2820 2828     (((((((((((( (((
+d009a528:	2820 2828 2828 2828 2828 2828 2828 2828      (((((((((((((((
+d009a538:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a548:	2828 2828 2828 2828 2828 2028 2828 2828     ((((((((((( ((((
+d009a558:	2820 2828 2828 2828 2828 2828 2828 2828      (((((((((((((((
+d009a568:	2828 2828 2828 2828 2828 2828 2828 2020     ((((((((((((((  
+d009a578:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a588:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a598:	2820 2828 2828 2828 2828 2828 2828 2828      (((((((((((((((
+d009a5a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a5b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a5c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a5d8:	2810 2828 2828 2828 2828 2828 2828 2828     .(((((((((((((((
+d009a5e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a5f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a608:	2828 2820 2828 2828 2828 2828 2828 2828     (( (((((((((((((
+d009a618:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a628:	2828 2828 2028 2828 2828 2828 2828 2828     ((((( ((((((((((
+d009a638:	2828 2828 2828 2028 2828 2028 2828 2828     ((((((( ((( ((((
+d009a648:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a658:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a668:	2828 2828 2828 2028 2828 2028 2828 2828     ((((((( ((( ((((
+d009a678:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a688:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a698:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a6a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a6b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a6c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a6d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a6e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a6f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a708:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a718:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a728:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a738:	2828 2028 2828 2828 2828 2828 2828 2828     ((( ((((((((((((
+d009a748:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a758:	2828 2828 2020 2820 2828 2828 2828 2828     ((((   (((((((((
+d009a768:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a778:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a788:	2828 2828 2020 2820 2828 2828 2828 2828     ((((   (((((((((
+d009a798:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a7a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a7b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a7c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a7d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a7e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a7f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a808:	2828 2828 2828 2828 2028 2828 2828 2828     ((((((((( ((((((
+d009a818:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a828:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a838:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a848:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a858:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a868:	2828 2828 2828 2828 2828 2020 2828 2828     ((((((((((  ((((
+d009a878:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a888:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a898:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a8a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a8b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a8c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a8d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a8e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a8f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a908:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a918:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a928:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a938:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a948:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a958:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a968:	2828 2828 2828 2828 2828 2028 2828 2828     ((((((((((( ((((
+d009a978:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a988:	2828 2828 2028 2028 2828 2828 2828 2828     ((((( ( ((((((((
+d009a998:	2828 2828 2828 2828 2028 2828 2828 2828     ((((((((( ((((((
+d009a9a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a9b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a9c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a9d8:	2828 2828 2028 2020 2020 2828 2828 2020     (((((     ((((  
+d009a9e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009a9f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aa08:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aa18:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aa28:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aa38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aa48:	1028 2828 2828 2828 2828 2828 2828 2828     (.((((((((((((((
+d009aa58:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aa68:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aa78:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aa88:	2828 2828 2828 2028 2828 2828 2828 2828     ((((((( ((((((((
+d009aa98:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aaa8:	2820 1028 1010 2810 2828 2828 2828 1010      ((....(((((((..
+d009aab8:	1010 2828 2028 2828 2828 2828 2828 2828     ..((( ((((((((((
+d009aac8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aad8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aae8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aaf8:	2028 2828 2828 2820 2828 2820 2820 2828     ( (((( ((( ( (((
+d009ab08:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ab18:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ab28:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ab38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ab48:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ab58:	2828 2828 2828 2828 2828 2828 2028 2828     ((((((((((((( ((
+d009ab68:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ab78:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ab88:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ab98:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aba8:	2828 2810 2828 2828 2828 2828 2828 2828     ((.(((((((((((((
+d009abb8:	2828 2828 2828 2828 1028 1010 2820 2028     (((((((((... (( 
+d009abc8:	4c10 2810 2828 2828 1010 4c4c 2810 2828     .L.(((((..LL.(((
+d009abd8:	2810 2828 2828 2828 2828 2828 2828 2828     .(((((((((((((((
+d009abe8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009abf8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ac08:	2828 2828 2828 2828 2828 2828 2828 2820     (((((((((((((( (
+d009ac18:	2828 2820 2828 2028 2828 2828 2828 2828     (( (((( ((((((((
+d009ac28:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ac38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ac48:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ac58:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ac68:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ac78:	2828 2828 2828 2828 2028 2828 2828 2828     ((((((((( ((((((
+d009ac88:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ac98:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aca8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009acb8:	2828 2828 2828 2828 2828 2828 2828 2810     ((((((((((((((.(
+d009acc8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009acd8:	2828 2828 1028 4c4c 1010 2810 4c10 104c     (((((.LL...(.LL.
+d009ace8:	2828 1010 4c4c 104c 2828 2828 2810 2828     ((..LLL.((((.(((
+d009acf8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ad08:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ad18:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ad28:	2828 2828 2828 2828 2828 2820 2828 2028     (((((((((( (((( 
+d009ad38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ad48:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ad58:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ad68:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ad78:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ad88:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ad98:	2828 2828 1028 2828 2828 2828 2828 2828     (((((.((((((((((
+d009ada8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009adb8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009adc8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009add8:	2828 2828 2828 2828 1028 2820 2828 2828     (((((((((. (((((
+d009ade8:	2828 2828 2828 2828 2828 1028 1010 2810     (((((((((((....(
+d009adf8:	2828 4c10 5858 104c 1010 1058 1010 584c     ((.LXXL...X...LX
+d009ae08:	4c4c 2810 2828 1028 2820 2828 2828 2828     LL.((((. (((((((
+d009ae18:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ae28:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ae38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ae48:	2828 2828 2028 2828 2828 2028 2828 2828     ((((( ((((( ((((
+d009ae58:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ae68:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ae78:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ae88:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ae98:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aea8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aeb8:	2028 2828 2828 2828 2828 2828 2828 2828     ( ((((((((((((((
+d009aec8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aed8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aee8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aef8:	2828 2828 1010 2828 2828 2828 2828 2828     ((((..((((((((((
+d009af08:	2828 2828 2828 1010 4c4c 104c 1010 1010     ((((((..LLL.....
+d009af18:	584c 4c58 104c 4c58 4c4c 5858 104c 2828     LXXLL.XLLLXXL.((
+d009af28:	2828 1010 2828 2828 2828 2828 2828 2828     ((..((((((((((((
+d009af38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009af48:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009af58:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009af68:	2820 2828 2828 2820 2828 2828 2828 2828      ((((( (((((((((
+d009af78:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009af88:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009af98:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009afa8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009afb8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009afc8:	2828 2828 2828 2828 2828 2828 2028 2820     (((((((((((((  (
+d009afd8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009afe8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009aff8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b008:	2828 2828 2828 2828 2828 2828 2828 2028     ((((((((((((((( 
+d009b018:	2810 2828 2828 2828 2828 2828 2828 2828     .(((((((((((((((
+d009b028:	2828 2828 1010 584c 4c58 1010 4c10 5858     ((((..LXXL...LXX
+d009b038:	4c58 5858 5858 4c58 104c 2828 2028 2810     XLXXXXXLL.((( .(
+d009b048:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b058:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b068:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b078:	2828 2828 2828 2828 2828 2828 2820 2828     (((((((((((( (((
+d009b088:	2028 2828 2828 2828 2828 2828 2828 2828     ( ((((((((((((((
+d009b098:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b0a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b0b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b0c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b0d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b0e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b0f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b108:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b118:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b128:	2828 2828 2828 2828 2828 1028 2828 2828     (((((((((((.((((
+d009b138:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b148:	2828 4c10 5858 5858 4c58 5858 5858 5858     ((.LXXXXXLXXXXXX
+d009b158:	5858 4c4c 2810 1028 1010 2828 2828 2828     XXLL.((...((((((
+d009b168:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b178:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b188:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b198:	2828 2828 2828 2028 2828 2828 2820 2828     ((((((( (((( (((
+d009b1a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b1b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b1c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b1d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b1e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b1f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b208:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b218:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b228:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b238:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b248:	2828 2828 2828 2028 2828 2828 2828 2828     ((((((( ((((((((
+d009b258:	2828 2828 2828 2828 2828 2828 2828 1010     ((((((((((((((..
+d009b268:	4c10 584c 5858 5858 5858 5858 5858 4c4c     .LLXXXXXXXXXXXLL
+d009b278:	1010 4c10 4c4c 2810 2828 2828 2828 2828     ...LLL.(((((((((
+d009b288:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b298:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b2a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b2b8:	2828 2828 2020 2028 2828 2828 2828 2828     ((((  ( ((((((((
+d009b2c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b2d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b2e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b2f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b308:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b318:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b328:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b338:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b348:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b358:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b368:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b378:	2828 2828 2828 1010 1010 4c10 104c 4c4c     ((((((.....LL.LL
+d009b388:	584c 5858 5858 5858 5858 5858 4c4c 4c4c     LXXXXXXXXXXXLLLL
+d009b398:	1010 2828 1010 1010 2828 2828 2828 1028     ..((....(((((((.
+d009b3a8:	1010 2810 2828 2828 2828 2828 2828 2828     ...(((((((((((((
+d009b3b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b3c8:	2828 1028 1010 2810 2828 2828 2828 1010     (((....(((((((..
+d009b3d8:	1010 2820 2828 2828 2828 2020 2828 2828     .. (((((((  ((((
+d009b3e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b3f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b408:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b418:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b428:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b438:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b448:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b458:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b468:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b478:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b488:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b498:	1028 4c4c 104c 584c 5858 584c 5858 5858     (.LLL.LXXXLXXXXX
+d009b4a8:	5858 5858 5858 4c4c 4c4c 1010 2820 2828     XXXXXXLLLL.. (((
+d009b4b8:	1028 4c4c 1010 2828 2828 1028 104c 2828     (.LL..(((((.L.((
+d009b4c8:	2828 1010 2810 2828 2828 2828 2828 2828     ((...(((((((((((
+d009b4d8:	2828 2828 2828 2828 1028 1010 2828 2828     (((((((((...((((
+d009b4e8:	4c10 2810 2828 2828 1010 4c4c 2810 2828     .L.(((((..LL.(((
+d009b4f8:	2828 2828 2028 2028 2828 2828 2828 2828     ((((( ( ((((((((
+d009b508:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b518:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b528:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b538:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b548:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b558:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b568:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b578:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b588:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b598:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b5a8:	2828 2828 2828 2828 2828 2828 4c10 1010     ((((((((((((.L..
+d009b5b8:	4c10 5858 5858 5858 5858 5858 5858 5858     .LXXXXXXXXXXXXXX
+d009b5c8:	584c 4c4c 1010 2028 2828 2828 2828 4c10     LXLL..( ((((((.L
+d009b5d8:	4c4c 1010 2828 4c10 104c 1028 1010 4c4c     LL..((.LL.(...LL
+d009b5e8:	2810 2828 2828 2828 2828 2828 2828 2828     .(((((((((((((((
+d009b5f8:	2828 2828 1028 4c4c 1010 2810 4c10 104c     (((((.LL...(.LL.
+d009b608:	2828 1010 4c4c 104c 2828 2828 2828 2828     ((..LLL.((((((((
+d009b618:	2820 2028 2828 2828 2828 2828 2828 2828      (( ((((((((((((
+d009b628:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b638:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b648:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b658:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b668:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b678:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b688:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b698:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b6a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b6b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b6c8:	2828 2828 2828 2828 1010 1028 584c 4c58     ((((((((..(.LXXL
+d009b6d8:	4c4c 4c4c 584c 5858 5858 5858 4c4c 104c     LLLLLXXXXXXXLLL.
+d009b6e8:	2810 2028 2828 2828 2828 1028 4c4c 4c58     .(( (((((((.LLXL
+d009b6f8:	1010 5810 1010 4c10 5858 104c 2828 1028     ...X...LXXL.(((.
+d009b708:	1010 2810 2828 2828 2828 1028 1010 2810     ...((((((((....(
+d009b718:	2828 4c10 5858 104c 1010 1058 1010 584c     ((.LXXL...X...LX
+d009b728:	4c4c 2810 2828 2828 2828 2828 2820 2828     LL.((((((((( (((
+d009b738:	2820 2828 2828 2828 2828 2828 2828 2828      (((((((((((((((
+d009b748:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b758:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b768:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b778:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b788:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b798:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b7a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b7b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b7c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b7d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b7e8:	2828 2828 2828 1028 5858 4c4c 104c 1010     (((((((.XXLLL...
+d009b7f8:	5858 4c4c 5858 4c58 4c4c 4c4c 104c 1010     XXLLXXXLLLLLL...
+d009b808:	2828 2828 2828 2828 4c10 5858 4c4c 584c     ((((((((.LXXLLLX
+d009b818:	4c10 584c 4c58 1010 1010 4c10 4c4c 1010     .LLXXL.....LLL..
+d009b828:	2828 2828 2828 1010 4c4c 104c 1010 1010     ((((((..LLL.....
+d009b838:	584c 4c58 104c 4c58 4c4c 5858 104c 2828     LXXLL.XLLLXXL.((
+d009b848:	2828 2828 2828 2028 2828 2028 2828 2828     ((((((( ((( ((((
+d009b858:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b868:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b878:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b888:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b898:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b8a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b8b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b8c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b8d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b8e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b8f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b908:	2828 4c10 4c58 104c 2810 4c10 4c58 4c4c     ((.LXLL..(.LXLLL
+d009b918:	5858 4c4c 4c4c 4c4c 4c4c 4c4c 2810 2828     XXLLLLLLLLLL.(((
+d009b928:	2828 2828 4c10 584c 5858 5858 584c 5858     ((((.LLXXXXXLXXX
+d009b938:	104c 1010 584c 4c58 1010 2828 2828 2828     L...LXXL..((((((
+d009b948:	2828 2828 1010 584c 4c58 1010 4c10 5858     ((((..LXXL...LXX
+d009b958:	4c58 5858 5858 4c58 104c 2828 2828 2828     XLXXXXXLL.((((((
+d009b968:	2828 2828 2020 2820 2828 2828 2828 2828     ((((   (((((((((
+d009b978:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b988:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b998:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b9a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b9b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b9c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b9d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b9e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009b9f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ba08:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ba18:	2828 2828 2828 2828 2828 2828 2828 4c10     ((((((((((((((.L
+d009ba28:	104c 2810 1028 4c4c 104c 1010 584c 4c4c     L..((.LLL...LXLL
+d009ba38:	4c4c 4c4c 1010 1010 2810 2828 1010 2810     LLLL.....(((...(
+d009ba48:	1028 4c4c 5858 5858 5858 5858 584c 5858     (.LLXXXXXXXXLXXX
+d009ba58:	5858 104c 2828 2828 2828 2828 2828 2828     XXL.((((((((((((
+d009ba68:	2828 4c10 5858 5858 4c58 5858 5858 5858     ((.LXXXXXLXXXXXX
+d009ba78:	5858 4c4c 2810 1028 1010 2828 2828 2828     XXLL.((...((((((
+d009ba88:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009ba98:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009baa8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bab8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bac8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bad8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bae8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009baf8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bb08:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bb18:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bb28:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bb38:	2828 2828 2828 2828 2828 4c10 2810 2828     ((((((((((.L.(((
+d009bb48:	4c10 4c4c 1010 1010 584c 4c10 4c4c 104c     .LLL....LX.LLLL.
+d009bb58:	1010 2828 2828 1028 4c4c 104c 1010 4c4c     ..(((((.LLL...LL
+d009bb68:	5858 5858 5858 5858 5858 4c58 104c 1010     XXXXXXXXXXXLL...
+d009bb78:	2828 2828 2828 2828 2828 2828 2828 1010     ((((((((((((((..
+d009bb88:	4c10 584c 5858 5858 5858 5858 5858 4c4c     .LLXXXXXXXXXXXLL
+d009bb98:	1010 4c10 4c4c 2810 2828 2828 2828 2828     ...LLL.(((((((((
+d009bba8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bbb8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bbc8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bbd8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bbe8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bbf8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bc08:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bc18:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bc28:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bc38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bc48:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bc58:	2828 2828 2828 2028 2028 2828 4c10 4c4c     ((((((( ( ((.LLL
+d009bc68:	2810 1028 4c4c 104c 104c 114c 1111 2810     .((.LLL.L.L....(
+d009bc78:	2828 2828 1010 4c4c 4c4c 5858 5858 5858     ((((..LLLLXXXXXX
+d009bc88:	5858 5858 4c58 4c4c 4c10 104c 1010 1010     XXXXXLLL.LL.....
+d009bc98:	2828 2828 2828 1010 1010 4c10 104c 4c4c     ((((((.....LL.LL
+d009bca8:	584c 5858 5858 5858 5858 5858 4c4c 4c4c     LXXXXXXXXXXXLLLL
+d009bcb8:	1010 2828 2828 2828 2828 2828 2828 2828     ..((((((((((((((
+d009bcc8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bcd8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bce8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bcf8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bd08:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bd18:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bd28:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bd38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bd48:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bd58:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bd68:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bd78:	2828 2028 2828 2820 4c10 4c4c 2810 1028     ((( (( (.LLL.((.
+d009bd88:	4c10 104c 104c 1010 2111 1011 2828 2828     .LL.L....!..((((
+d009bd98:	1028 1010 4c4c 4c4c 5858 5858 5858 5858     (...LLLLXXXXXXXX
+d009bda8:	5858 4c58 5858 4c58 4c10 4c4c 2810 2828     XXXLXXXL.LLL.(((
+d009bdb8:	1028 4c4c 104c 584c 5858 584c 5858 5858     (.LLL.LXXXLXXXXX
+d009bdc8:	5858 5858 5858 4c4c 4c4c 1010 2828 2828     XXXXXXLLLL..((((
+d009bdd8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bde8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bdf8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009be08:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009be18:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009be28:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009be38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009be48:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009be58:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009be68:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009be78:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009be88:	2828 2828 2828 2828 2828 2828 2828 2820     (((((((((((((( (
+d009be98:	2828 2820 1010 4c4c 2810 1028 4c10 1010     (( (..LL.((..L..
+d009bea8:	104c 2828 1110 1121 2810 1028 1010 2121     L.((..!..((...!!
+d009beb8:	1010 4c4c 4c58 5858 5858 5858 5858 5858     ..LLXLXXXXXXXXXX
+d009bec8:	5858 5858 104c 1010 104c 2828 4c10 1010     XXXXL...L.((.L..
+d009bed8:	4c10 5858 5858 5858 5858 5858 5858 5858     .LXXXXXXXXXXXXXX
+d009bee8:	584c 4c4c 1010 2828 2828 2828 2828 2828     LXLL..((((((((((
+d009bef8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bf08:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bf18:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bf28:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bf38:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bf48:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bf58:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bf68:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bf78:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bf88:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bf98:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009bfa8:	2828 2828 2828 2828 2828 2820 2828 2820     (((((((((( ((( (
+d009bfb8:	1028 4c10 2810 2828 4c10 2810 4c10 2810     (..L.(((.L.(.L.(
+d009bfc8:	1028 2111 1011 1010 2929 2121 1021 4c10     (..!....))!!!..L
+d009bfd8:	4c4c 5858 5858 5858 4c58 4c4c 4c4c 584c     LLXXXXXXXLLLLLLX
+d009bfe8:	4c58 2810 1010 2828 1010 1028 584c 4c58     XL.(..((..(.LXXL
+d009bff8:	4c4c 4c4c 584c 5858 5858 5858 4c4c 104c     LLLLLXXXXXXXLLL.
+d009c008:	2810 2828 2828 2828 2828 2828 2828 2828     .(((((((((((((((
+d009c018:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c028:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c038:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c048:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c058:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c068:	2828 2028 2828 2828 2828 2828 2828 2828     ((( ((((((((((((
+d009c078:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c088:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c098:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c0a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c0b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c0c8:	2828 2828 2828 2820 2828 2820 2828 1010     (((((( ((( (((..
+d009c0d8:	2810 2828 1010 2828 4c10 2810 1028 2111     .(((..((.L.((..!
+d009c0e8:	1021 2921 2129 1010 4c10 4c4c 4c4c 584c     !.!))!...LLLLLLX
+d009c0f8:	5858 4c4c 5858 1010 4c10 4c4c 5858 2810     XXLLXX...LLLXX.(
+d009c108:	2828 2828 2828 1028 5858 4c4c 104c 1010     (((((((.XXLLL...
+d009c118:	5858 4c4c 5858 4c58 4c4c 4c4c 104c 1010     XXLLXXXLLLLLL...
+d009c128:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c138:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c148:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c158:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c168:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c178:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c188:	2820 2828 2828 2828 2828 2828 2828 2828      (((((((((((((((
+d009c198:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c1a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c1b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c1c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c1d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c1e8:	2028 2828 2828 2820 2828 2828 2810 2828     ( (((( (((((.(((
+d009c1f8:	1010 2828 1028 2810 2828 2110 1029 2921     ..(((..(((.!).!)
+d009c208:	1021 4c4c 4c4c 4c4c 4c4c 4c4c 5858 4c4c     !.LLLLLLLLLLXXLL
+d009c218:	584c 104c 1028 4c10 584c 104c 2828 2828     LXL.(..LLXL.((((
+d009c228:	2828 4c10 4c58 104c 2810 4c10 4c58 4c4c     ((.LXLL..(.LXLLL
+d009c238:	5858 4c4c 4c4c 4c4c 4c4c 4c4c 2810 2828     XXLLLLLLLLLL.(((
+d009c248:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c258:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c268:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c278:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c288:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c298:	2828 2828 2828 2828 2828 2828 2820 2828     (((((((((((( (((
+d009c2a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c2b8:	2828 2828 2828 2828 2828 2828 2828 2028     ((((((((((((((( 
+d009c2c8:	2020 2828 2828 2828 2828 2828 2828 2828       ((((((((((((((
+d009c2d8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c2e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c2f8:	2828 2828 2828 2828 2828 2828 2028 2828     ((((((((((((( ((
+d009c308:	2028 2828 2828 2828 2828 2828 2810 2828     ( ((((((((((.(((
+d009c318:	2828 2810 2828 1110 2129 2110 1010 1010     ((.(((..)!.!....
+d009c328:	1010 4c4c 4c4c 4c4c 4c58 1010 4c10 4c58     ..LLLLLLXL...LXL
+d009c338:	2810 1028 4c10 104c 2828 2828 2828 4c10     .((..LL.((((((.L
+d009c348:	104c 2810 1028 4c4c 104c 1010 584c 4c4c     L..((.LLL...LXLL
+d009c358:	4c4c 4c4c 1010 1010 2810 2828 2828 2828     LLLL.....(((((((
+d009c368:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c378:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c388:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c398:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c3a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c3b8:	2828 2828 2828 2828 2820 2828 2828 2828     (((((((( (((((((
+d009c3c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c3d8:	2828 2828 2828 2828 2828 2028 2828 2020     ((((((((((( ((  
+d009c3e8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c3f8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c408:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c418:	2828 2828 2828 2828 2028 2828 2820 2828     ((((((((( (( (((
+d009c428:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c438:	2828 1010 2929 1021 1010 2828 1010 4c10     ((..))!...((...L
+d009c448:	4c4c 104c 4c58 1010 1010 5858 104c 2828     LLL.XL....XXL.((
+d009c458:	1028 104c 2828 2828 2828 4c10 2810 2828     (.L.((((((.L.(((
+d009c468:	4c10 4c4c 1010 1010 584c 4c10 4c4c 104c     .LLL....LX.LLLL.
+d009c478:	1010 2828 2828 2828 2828 2828 2828 2828     ..((((((((((((((
+d009c488:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c498:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c4a8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c4b8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c4c8:	2828 2828 2828 2828 2828 2828 2828 2828     ((((((((((((((((
+d009c4d8:	2828 2828 2828 2828 2828 2828               ((((((((((((
+
+d009c4e4 <sineLUT>:
+d009c4e4:	0100 0302 0304 0102 ff00 fdfe fdfc fffe     ................
+d009c4f4:	0100 0302 0304 0102 ff00 fdfe fdfc fffe     ................
+	...
+
+d009c520 <treewalkwidth>:
+d009c520:	3e40 4444                                   @>DD
+
+d009c524 <_global_impure_ptr>:
+d009c524:	c674 d009                                   t...
+
+d009c528 <__sf_fake_stderr>:
+	...
+
+d009c548 <__sf_fake_stdin>:
+	...
+
+d009c568 <__sf_fake_stdout>:
+	...
+d009c588:	2d23 2b30 0020 6c68 004c 6665 4567 4746     #-0+ .hlL.efgEFG
+d009c598:	3000 3231 3433 3635 3837 4139 4342 4544     .0123456789ABCDE
+d009c5a8:	0046 3130 3332 3534 3736 3938 6261 6463     F.0123456789abcd
+d009c5b8:	6665                                         ef.
 
 Disassembly of section .init:
 
-d009b548 <_init>:
-d009b548:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-d009b54a:	bf00      	nop
+d009c5bc <_init>:
+d009c5bc:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+d009c5be:	bf00      	nop
 
 Disassembly of section .fini:
 
-d009b54c <_fini>:
-d009b54c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-d009b54e:	bf00      	nop
+d009c5c0 <_fini>:
+d009c5c0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+d009c5c2:	bf00      	nop

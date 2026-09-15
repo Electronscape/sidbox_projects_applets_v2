@@ -95,13 +95,13 @@ typedef struct __attribute__((aligned(32))) {
     uint16_t    atlas_stride;   // usually the width of the whole sprite atlas
     uint16_t    atlas_height;   // height
 
-    uint16_t    width;          // sprite width
-    uint16_t    height;         // sprite height
+    uint16_t    width;          // sprite width (the cell width)
+    uint16_t    height;         // sprite height (the cell height)
 
-    int16_t     drawx;          // inteded draw location x
-    int16_t     drawy;          // inteded draw location y
+    int16_t     drawx;          // intended draw location x
+    int16_t     drawy;          // intended draw location y
 
-    uint16_t    scale;   // 100 = normal, 50 = half, 200 = double
+    uint16_t    scale;          // 100(default) = normal, 50 = half, 200 = double
     uint8_t     handle;
     uint8_t     index;          // cell index
     //uint8_t     _pad0;
