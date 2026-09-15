@@ -115,6 +115,9 @@ extern _largest_modfile;
 #include "gui/timers.h"
 #include "gui/menus.h"
 
+// hardware levels
+#include "touch/touch.h"
+
 
 
 // USING THIS YOU open up an area of 1MB of CACHED and BUFFERED memory (SPEED)
@@ -186,7 +189,10 @@ typedef struct {
     void     (*irq_uart_enable)  (void);
     void     (*irq_mdma_disable) (void);
     void     (*irq_mdma_enable)  (void);
-		} API_HW ;
+
+	void     (*rtc_gettime)      (uint8_t* hour, uint8_t* min, uint8_t* sec);
+    void     (*rtc_getdate)      (uint8_t* year, uint8_t* month, uint8_t* day, uint8_t* weekday);
+} API_HW ;
 
 
 
@@ -209,14 +215,6 @@ typedef struct {
 	const API_MUSIC *music;
 	const API_SOUND *sound;
 } API_AUDIO;
-
-typedef struct {
-    void     (*init)        (void);
-    uint8_t  (*ispressed)   (void);
-    uint8_t  (*getxy)       (int16_t *x, int16_t *y);
-    uint8_t  (*getrawxy)    (uint16_t *x, uint16_t *y);
-    uint16_t (*getpressure) (void);
-} API_TOUCH;
 
 
 
@@ -324,12 +322,18 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 #define get16k8mem()		(HWKERNAL->get16kmem8())
 
 // touch screen interfacing
-#define TOUCHBase           (API->touch)
-#define touch_init()        (TOUCHBase->init())
-#define touch_down()        (TOUCHBase->ispressed())
-#define touch_getxy(x, y)   (TOUCHBase->getxy(x,y))
-#define touch_getrawxy(x,y) (TOUCHBase->getrawxy(x,y))
-#define touch_pressure()    (TOUCHBase->getpressure())
+//#define TOUCHBase           (API->touch)
+//#define touch_init()        (TOUCHBase->init())
+//#define touch_down()        (TOUCHBase->ispressed())
+//#define touch_getxy(x, y)   (TOUCHBase->getxy(x,y))
+//#define touch_getrawxy(x,y) (TOUCHBase->getrawxy(x,y))
+//#define touch_pressure()    (TOUCHBase->getpressure())
+
+// system clock API
+//void     (*rtc_gettime)      (uint8_t* hour, uint8_t* min, uint8_t* sec);
+//void     (*rtc_getdate)      (uint8_t* year, uint8_t* month, uint8_t* day, uint8_t* weekday);
+#define API_GetTime(hour, min, sec)				(API->hwl->rtc_gettime(hour, min, sec))
+//#define API_GetDate(year, month, day, weekday)
 
 
 // dedicated 3D math

@@ -35,3 +35,44 @@ void gfx_createBitmap(gfx_bitmap_t *bitmap, int16_t w, int16_t h){
     bitmap->bitmap = malloc(w * h);//bitground;
 
 }
+
+
+
+const unsigned char bitMask[8] = {
+    0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
+};
+
+#define BB_INDEX(x, y) (((x) * 320) + (y))
+
+void gfx_draw1bit(signed short lx, signed short ly, unsigned short w, unsigned short h, unsigned char *image, unsigned char colour, uint8_t *destbitmap) {
+    signed short fx, fy;
+    signed short dx, dy;
+    unsigned short step, depth;
+
+    dx = w;
+    dy = h;
+    fx = 0;
+
+    for (fy = 0; fy != dy; fy++) {
+        do {
+            step = *image++;
+
+            for (depth = 0; depth < 8; depth++) {
+                if (fx >= dx) break;
+
+                if (bitMask[depth] & step) {
+                    signed short px = lx + fx;
+                    signed short py = ly + fy;
+
+                    // this was added: Strictly restrict Y to 0..319 so Y never leaks into adjacent X columns
+                    if (py >= 0 && py < 320 && px >= 0) {
+                        destbitmap[BB_INDEX(px, py)] = colour;
+                    }
+                }
+                fx++;
+            }
+
+        } while (fx < dx);
+        fx = 0;
+    }
+}
