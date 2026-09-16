@@ -1,0 +1,14 @@
+picojpeg.c:1492:13:upsampleCb	28	static
+picojpeg.c:1529:13:upsampleCbH	28	static
+picojpeg.c:1560:13:upsampleCbV	36	static
+picojpeg.c:1601:13:upsampleCr	24	static
+picojpeg.c:1638:13:upsampleCrH	24	static
+picojpeg.c:1669:13:upsampleCrV	32	static
+picojpeg.c:241:26:getChar	24	static
+picojpeg.c:282:15:getBits.constprop	24	static
+picojpeg.c:282:15:getBits.constprop	16	static
+picojpeg.c:762:14:processMarkers	72	static
+picojpeg.c:282:15:getBits.constprop	32	static
+picojpeg.c:282:15:getBits	40	static
+picojpeg.c:2262:15:pjpeg_decode_mcu	96	static
+picojpeg.c:2287:15:pjpeg_decode_init	64	static
