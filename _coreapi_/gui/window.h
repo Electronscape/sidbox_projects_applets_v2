@@ -126,6 +126,7 @@ typedef struct {
     void     (*to_front)      (CGWindow id);
     void     (*to_back)       (CGWindow id);
     void     (*set_focus)     (CGWindow id);
+    void     (*set_app_title) (CGWindow win, const char *newtext);
 } API_GUI_Windows;
 
 
@@ -140,6 +141,8 @@ typedef struct {
 #define SBOS_WindowToFront(id)  (GUICoderGirl->windows->to_front(id))
 #define SBOS_WindowToBack(id)   (GUICoderGirl->windows->to_back(id))
 #define SBOS_WindowSetFocus(id) (GUICoderGirl->windows->set_focus(id))
+#define SBOS_WindowSetApplicationTitle(win, text) (GUICoderGirl->windows->set_app_title(win, text))
+#define SetApplicationTitle(win, text)            SBOS_WindowSetApplicationTitle(win, text)
 
 
 #ifdef __cplusplus
