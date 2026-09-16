@@ -10,4 +10,4 @@ main.c:1757:13:render_view.constprop	40	static
 main.c:1071:12:decode_pjpeg_mcus_to_image.constprop	72	static
 main.c:241:13:free_image.constprop	8	static
 main.c:1734:13:draw_message.constprop	40	static
-main.c:1888:5:main	240	static
+main.c:1891:5:main	240	static

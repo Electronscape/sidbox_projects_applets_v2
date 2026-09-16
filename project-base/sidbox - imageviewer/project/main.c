@@ -1843,6 +1843,8 @@ static void view_image(const Image8 *img)
                 gfx_drawtext(20,20,"Release button to exit.");
                 flip_front_buffer();
                 gfx_displaynow();
+                //music_update();
+                music_update();
                 if(timeout-- < 0) timeout = 0;
                 if((timeout == 0) && (!(joy & BTN_FIRE2))) return;
             }
@@ -1876,6 +1878,7 @@ static void view_image(const Image8 *img)
         offx = clamp_int(offx, 0, maxx);
         offy = clamp_int(offy, 0, maxy);
 
+        music_update();
         if (redraw) {
             render_view(img, offx, offy);
             redraw = 0;

@@ -598,16 +598,13 @@ static void build_editor(void)
     SBOS_CreateWindow(&editor_win, EDITOR_WIN_X, EDITOR_WIN_Y, EDITOR_WIN_W,
                       EDITOR_WIN_H, TXTAPP_TITLE, WIN_DEFAULT);
     SBOS_SetWindowProc(editor_win, editor_proc);
+    SetApplicationTitle(editor_win, "Doing some random shapes!");
     setup_demo_menu();
 
-    btn_pause = SBOS_CreateButton(editor_win, BTN_PAUSE_X, BTN_Y, BTN_W,
-                                  BTN_H, "Pause", GAD_TOOL_DEFAULT);
-    btn_burst = SBOS_CreateButton(editor_win, BTN_BURST_X, BTN_Y, BTN_W,
-                                  BTN_H, "Burst", GAD_TOOL_DEFAULT);
-    btn_clear = SBOS_CreateButton(editor_win, BTN_CLEAR_X, BTN_Y, BTN_W,
-                                  BTN_H, "Clear", GAD_TOOL_DEFAULT);
-    btn_close = SBOS_CreateButton(editor_win, BTN_CLOSE_X, BTN_Y, BTN_W,
-                                  BTN_H, "Close", GAD_TOOL_DEFAULT);
+    btn_pause = SBOS_CreateButton(editor_win, BTN_PAUSE_X, BTN_Y, BTN_W, BTN_H, "Pause", GAD_TOOL_DEFAULT);
+    btn_burst = SBOS_CreateButton(editor_win, BTN_BURST_X, BTN_Y, BTN_W, BTN_H, "Burst", GAD_TOOL_DEFAULT);
+    btn_clear = SBOS_CreateButton(editor_win, BTN_CLEAR_X, BTN_Y, BTN_W, BTN_H, "Clear", GAD_TOOL_DEFAULT);
+    btn_close = SBOS_CreateButton(editor_win, BTN_CLOSE_X, BTN_Y, BTN_W, BTN_H, "Close", GAD_TOOL_DEFAULT);
 
     bitmapview_gad = SBOS_CreateBitmapView(editor_win, CANVAS_X, CANVAS_Y,
                                            CANVAS_W + 2, CANVAS_H + 2,
