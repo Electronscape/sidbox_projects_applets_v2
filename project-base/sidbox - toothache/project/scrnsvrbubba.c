@@ -207,10 +207,6 @@ static const int8_t sineLUT[32] = {
 static int8_t wavesteptmr = 0;
 
 void do_bubbastix_playdemo_screensaver(){
-	char timedate[64];
-	uint8_t th, tm, ts;
-	API_GetTime(&th, &tm, &ts);
-	sprintf(timedate, "%02u:%02u:%02u", th, tm, ts);
 	
 
 
@@ -340,7 +336,12 @@ void do_bubbastix_playdemo_screensaver(){
 
     gfx_drawbob(&bigtree);
 
-    gfx_drawtext(8,100, timedate);
+
+	//char timedate[64];
+	//uint8_t th, tm, ts;
+	//API_GetTime(&th, &tm, &ts);
+	//sprintf(timedate, "%02u:%02u:%02u", th, tm, ts);
+    //gfx_drawtext(8,100, timedate);
 
     
 }

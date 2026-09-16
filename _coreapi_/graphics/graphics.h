@@ -344,14 +344,4 @@ BOBS (Collision Testing:)
     gfx_bcollide(gfxbob_t a, gfxbob_t b); returns 1 when its a rectangle hit, returns 2 if the hit is pixel perfect (2 over rides 1)
 
 
-
-
-
-
-
-
-
-
-
-
 */
