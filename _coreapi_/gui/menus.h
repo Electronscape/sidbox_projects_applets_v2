@@ -18,6 +18,8 @@ typedef void (*SBOS_MenuCallback)(cg_menu_t menu, cg_menuitem_t item, void *user
 #define CG_MENU_BAR_H           22
 #define CG_MENUITEMF_SEPARATOR  0x02u
 #define CG_MENUITEMF_TICKED     0x04u
+#define CG_MENUITEMF_TICKABLE   0x08u
+#define CG_MENUITEMF_CHECKBOX   CG_MENUITEMF_TICKABLE
 #define CG_MENU_IMAGE_NONE      0xffu
 
 typedef struct API_GUI_MENUS {

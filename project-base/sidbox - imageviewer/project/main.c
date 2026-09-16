@@ -1323,7 +1323,7 @@ int main(int argc, char *argv[])
     const char *path;
     int rc = 0;
 
-    suspect_desktop();
+    suspend_desktop();
 
     configure_runmode(GAMEMODE_PROFILE_1);
     initMalloc();
@@ -1376,6 +1376,7 @@ done:
         free(backbitmap.bitmap);
         memset((void *)&backbitmap, 0, sizeof(backbitmap));
     }
+    printf("Image done!\n");
     restore_lcd_desktop_mode();
     HWKERNAL->exitgamemode();
     return rc;
