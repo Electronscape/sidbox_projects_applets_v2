@@ -619,6 +619,7 @@ int main(int argc, char *argv[])
     (void)argv;
 
     configure_runmode(GAMEMODE_PROFILE_0);
+    suspend_desktop();
     initMalloc();
     set_audio_dma(512);
     set_music_dma = 1;
@@ -670,8 +671,11 @@ int main(int argc, char *argv[])
     while (should_exit()) {
     }
 
-    printf("Cubey demo ended :) mod=%d\n", mod_play_result);
+    //printf("Cubey demo ended :)\n", mod_play_result);
     restore_lcd_desktop_mode();
+    //suspend_desktop();
+    music_stop();
+    restore_desktop();
     HWKERNAL->exitgamemode();
 
     return 0;
