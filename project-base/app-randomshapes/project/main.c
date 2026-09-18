@@ -580,10 +580,7 @@ static void setup_demo_menu(void)
 
     menu_pause = SBOS_CreateMenuItem(&demo_menu, 1, "Paused");
     SBOS_MenuCallBack(menu_pause, on_menu_pause, NULL);
-    if (paused) {
-        SBOS_MenuSetFlags(&menu_pause, 0, CG_MENUITEMF_TICKED);
-    }
-
+    SBOS_MenuSetFlags(&menu_pause, 0, CG_MENUITEMF_TICKABLE);
     //item = SBOS_CreateMenuItem(&demo_menu, 1, "");
     //SBOS_MenuSetFlags(&item, 0, CG_MENUITEMF_SEPARATOR);
 
