@@ -17,7 +17,7 @@ NM      := $(TOOLCHAIN)/arm-none-eabi-nm
 #switch off warnings
 WARNINGS := -w
 #INCLUDES := -I$(PROJECT_DIR)/../../../_coreapi_
-INCLUDES := -I/home/kbox/sidbox-applet-compiler/_coreapi_
+INCLUDES := -I$(CORE_DIR)
 # INCLUDES := 
 
 # Common flags

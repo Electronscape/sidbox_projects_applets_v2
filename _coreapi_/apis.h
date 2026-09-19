@@ -68,7 +68,8 @@ void urandomseed(long seed);
 // SIDBOX EXTERNAL RAM STARTS AT 0xD0000000
 #define RAMLOCATION		0xD0000000
 // Exported applet entry point function (must match ENTRY in ld script)
-extern _largest_modfile;
+extern const char _largest_modfile;
+void initMalloc(void);
 
 
 // ## MEMORY ALIGNMENT FOR DMA AND PERFORMANCE ##
@@ -113,6 +114,7 @@ extern _largest_modfile;
 #include "gui/gadgets.h"
 #include "gui/dialogs.h"
 #include "gui/timers.h"
+#include "sys/timers.h"
 #include "gui/menus.h"
 
 // hardware levels
@@ -192,6 +194,8 @@ typedef struct {
 
 	void     (*rtc_gettime)      (uint8_t* hour, uint8_t* min, uint8_t* sec);
     void     (*rtc_getdate)      (uint8_t* year, uint8_t* month, uint8_t* day, uint8_t* weekday);
+
+    const API_TIMERS *timers;
 } API_HW ;
 
 
@@ -230,6 +234,10 @@ typedef struct {
 } API_3D;
 
 
+typedef struct  {
+	void (*IRQ_LCD_VBL) (void (*isr)(void));
+} API_IRQ_BANK;
+
 
 
 
@@ -251,6 +259,7 @@ typedef struct __attribute__((aligned(4))) {
 	const API_AUDIO   	*audio;		// audio systems
 	const API_TOUCH     *touch;     // touch screen systems
 	const API_CRT       *crt;       // CRT RGBI output
+	const API_IRQ_BANK	*irq;		// interrupt call backs
 	
 } API_Root;
 
@@ -269,6 +278,9 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 #define HWKERNAL	(API->hwl)
 
 // conf and hardware setups
+#define IRQSERVICE  (API->irq)
+#define irq_lcd_vbl(isr)			(IRQSERVICE->IRQ_LCD_VBL(isr))	// the IRQ is internally cleared, so dont need to do this
+
 #define configure_runmode(profile)	(HWKERNAL->gamemode(profile))
 #define hw_disarm_lcd()				(HWKERNAL->lcd_disp_disable())
 #define hw_rearm_lcd()				(HWKERNAL->lcd_disp_enable())

@@ -39,12 +39,16 @@ typedef struct {
     uint8_t *musicdmaenable;
     void (*dmadisable) (void);
     void (*dmaenable)  (void);
+    uint8_t (*dmabufferview)(const uint16_t **left, const uint16_t **right, uint32_t *frames, uint32_t *play_cursor);
+    int (*midi_out)     (const uint8_t *buffer, uint16_t count);
 } API_AUDIO_HARDWARE;
 
 
 typedef struct  {
     void (*play)            (char *file, uint8_t subsong);
     void (*CallMusicRoutine)(void);     // call this every frame (or every other frame, but often enough to keep music playing)
+    int  (*modfromMem) (const uint8_t *src, uint32_t dataLen);
+    void (*stop)            (void);
     // some other functions like set sub track, rewind, set position, channel masking, 
 
 } API_MUSIC;
@@ -85,9 +89,15 @@ uint32_t LoadSFX(char *filename, uint8_t **snddata);
 #define audio_dma_enable()  (AUDIOBase->audhl->dmaenable())
 #define disable_audio_dma() audio_dma_disable()
 #define enable_audio_dma()  audio_dma_enable()
+#define audio_dma_buffer_view(left, right, frames, play_cursor)  (AUDIOBase->audhl->dmabufferview(left, right, frames, play_cursor))
+
+// MIDI INTERFACING //
+#define midi_out(packetBuffer, packetSize) (AUDIOBase->audhl->midi_out(packetBuffer, packetSize))
 
 // opens a music file and begins playing
 #define music_play(filename, subsong) (AUDIOMUSIC->play(filename, subsong))
+#define music_stop()                  (AUDIOMUSIC->stop())
+#define music_mod_from_ram_play(src, len) (AUDIOMUSIC->modfromMem(src, len))
 
 // update music routine and timers, recommend using this on each frame, or every other frame
 #define music_update() (AUDIOMUSIC->CallMusicRoutine())

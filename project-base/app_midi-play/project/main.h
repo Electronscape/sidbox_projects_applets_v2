@@ -32,6 +32,8 @@ typedef struct {
     uint32_t pending_us;
     uint32_t tick_remainder;
     uint32_t tempo_us;
+    uint64_t elapsed_us;
+    
     bool is_playing;
 } MidiPlayer;
 

@@ -1,14 +1,14 @@
 # Applet Makefile for SIDBOX
 
 # GIVE YOUR PROJECT A NAME (this name will be copied to the target drive)
-PROJECTNAME := MidiBlaster
+PROJECTNAME := midiplay
 
 # LOCATION of the compile output, can be safely deleted / cleaned after
 BUILD_DIR := compiled
 
 # the location of your project files (do not change this unless you know exactly what you're doing)
 PROJECT_DIR := project
-FINAL_COPY_PATH := /media/ben/16GDEM/applets/$(PROJECTNAME).app
+FINAL_COPY_PATH := /media/ben/16GDEM/applets/$(PROJECTNAME)
 
 # Locate the CoreAPI directory here
 CORE_DIR := ../../_coreapi_
@@ -25,7 +25,7 @@ OPT_APP := -Ofast
 # this is intended to scan directories and include what it finds automatically
 TARGET_ELF := $(BUILD_DIR)/applet.elf
 TARGET_BIN := applet.app
-TARGET_FINAL_BIN := $(PROJECTNAME).app
+TARGET_FINAL_BIN := $(PROJECTNAME)
 TARGET_ASM := applet.asm
 
 CORE_SRCS := $(wildcard $(CORE_DIR)/*.c)

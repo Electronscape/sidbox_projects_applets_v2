@@ -29,7 +29,10 @@ static uint32_t loaded_midi_size;
 #define MIDI_PSR84_NOTE_LIMIT 24u
 #define MIDI_TRACKED_NOTES    64u
 #define MIDI_PSR84_NOTE_MIN   36u
-#define MIDI_PSR84_NOTE_MAX   96u
+#define MIDI_PSR84_NOTE_MAX   (96+7)
+
+
+
 
 #define SONG_LABEL_MAX     56u
 
@@ -41,6 +44,13 @@ static uint32_t loaded_midi_size;
 #define VIS_KEY_Y         292
 #define VIS_KEY_H         18
 #define VIS_SPEED_PX      2u
+#define VIS_GRID_STEP     16u
+#define VIS_MAX_CATCHUP   8u
+#define VIS_BACK_H        (SCREEN_H * 2)
+
+
+#define VIS_GRID_FP_SHIFT 8u
+#define VIS_GRID_FP_ONE   (1u << VIS_GRID_FP_SHIFT)
 
 #define COL_BG            1u
 #define COL_GRID          2u
@@ -69,6 +79,12 @@ typedef struct {
     uint8_t velocity;
     bool active;
 } MidiActiveNote;
+
+
+
+static const uint8_t psr84_octive_remap[128] = {
+
+};
 
 static const uint8_t psr84_gm_program_map[128] = {
     // Piano
@@ -120,9 +136,11 @@ static uint16_t midi_tx_head;
 static uint16_t midi_tx_tail;
 static uint16_t midi_tx_count;
 static uint32_t midi_note_stamp;
-static char current_song_label[SONG_LABEL_MAX] = "song: (none)";
-
-static uint8_t db = 0;  // double buffering the front graphics array
+static char current_song_label[SONG_LABEL_MAX] = "(none)";
+static uint32_t visual_scroll_px;
+static uint16_t visual_scroll_y;
+static uint32_t visual_grid_step_fp;
+static volatile uint8_t visual_ticks_pending;
 
 static bool create_app_bitmap(volatile gfx_bitmap_t *bitmap, int16_t w, int16_t h)
 {
@@ -156,7 +174,7 @@ static const char *path_basename(const char *path)
 
 static void set_song_label(const char *path)
 {
-    static const char prefix[] = "song: ";
+    static const char prefix[] = "";
     const char *name = path_basename(path);
     uint32_t out = 0;
 
@@ -170,19 +188,6 @@ static void set_song_label(const char *path)
     }
 
     current_song_label[out] = '\0';
-}
-
-static gfx_bitmap_t *hidden_front_buffer(void)
-{
-    return db ? (gfx_bitmap_t *)front_a : (gfx_bitmap_t *)front_b;
-}
-
-static void flip_front_buffer(void)
-{
-    db = (uint8_t)(1u - db);
-    if (db) { gfx_dispfbuffer((gfx_bitmap_t *)front_a, (gfx_bitmap_t *)front_b);
-    } else {  gfx_dispfbuffer((gfx_bitmap_t *)front_b, (gfx_bitmap_t *)front_a);
-    }
 }
 
 static uint32_t argb(uint8_t r, uint8_t g, uint8_t b)
@@ -241,10 +246,43 @@ static bool note_is_black(uint8_t note)
     }
 }
 
+static uint32_t visualizer_grid_step_from_tempo(uint32_t tempo_us)
+{
+    if (tempo_us == 0) {
+        tempo_us = MIDI_DEFAULT_TEMPO_US;
+    }
+
+    uint32_t step = (uint32_t)((((uint64_t)tempo_us * VIS_SPEED_PX * VIS_GRID_FP_ONE) + (MIDI_FRAME_US / 2u)) / MIDI_FRAME_US);
+    if (step < (4u << VIS_GRID_FP_SHIFT)) step = (4u << VIS_GRID_FP_SHIFT);
+    if (step > (SCREEN_H << VIS_GRID_FP_SHIFT)) step = (SCREEN_H << VIS_GRID_FP_SHIFT);
+    return step;
+}
+
+static bool visualizer_grid_line_at_page_y(uint32_t page_y, uint32_t *beat_index)
+{
+    uint32_t step = visual_grid_step_fp ? visual_grid_step_fp : (VIS_GRID_STEP << VIS_GRID_FP_SHIFT);
+    uint64_t row_start = (uint64_t)page_y << VIS_GRID_FP_SHIFT;
+    uint64_t row_end = row_start + VIS_GRID_FP_ONE;
+    uint64_t index = (row_start + step - 1u) / step;
+    uint64_t line = index * step;
+
+    if (line >= row_end) {
+        return false;
+    }
+
+    *beat_index = (uint32_t)index;
+    return true;
+}
+
 static void visualizer_reset(void)
 {
     memset(visual_notes, 0, sizeof(visual_notes));
     visual_frame = 0;
+    visual_scroll_px = 0;
+    visual_scroll_y = 0;
+    visual_grid_step_fp = visualizer_grid_step_from_tempo(MIDI_DEFAULT_TEMPO_US);
+    visual_ticks_pending = 0;
+    gfx_scrollb(0, 0);
 }
 
 static VisualNote *visualizer_find_oldest_free(void)
@@ -288,10 +326,18 @@ static void visualizer_note_off(uint8_t channel, uint8_t note)
     }
 }
 
-static void visualizer_tick(void)
+static uint8_t visualizer_consume_ticks(void)
 {
-    visual_frame++;
+    if (visual_ticks_pending == 0) {
+        return 0;
+    }
 
+    visual_ticks_pending = 0;
+    return 1;
+}
+
+static void visualizer_retire_old_notes(void)
+{
     for (uint16_t i = 0; i < VIS_MAX_NOTES; i++) {
         VisualNote *n = &visual_notes[i];
         if (!n->used || n->active) continue;
@@ -303,73 +349,253 @@ static void visualizer_tick(void)
     }
 }
 
-static void draw_visualizer_grid(void)
+static void visualizer_clear_note_layer(void)
 {
-    gfx_setcolour(COL_BG);
-    gfx_rectf(0, 0, SCREEN_W, SCREEN_H);
+    if (!back_layer.bitmap) return;
 
-    gfx_setcolour(COL_TEXT);
-    gfx_drawtext(10, 7, "MidiBlaster V0.4");
-    gfx_setcolour(COL_TEXT_DIM);
-    gfx_drawtext(272, 7, "right click release exits");
-    
+    uint8_t *bm = back_layer.bitmap;
+    uint16_t stride = back_layer.stride;
 
+    for (int16_t x = 0; x < SCREEN_W; x++) {
+        uint8_t *col = bm + ((uint32_t)x * stride);
+        for (uint16_t y = 0; y < VIS_BACK_H; y++) {
+            col[y] = COL_BG;
+        }
+    }
+}
+
+static void visualizer_back_rect_raw(int16_t x, uint16_t y, int16_t w, uint16_t h, uint8_t colour)
+{
+    if (!back_layer.bitmap || w <= 0 || h == 0) return;
+
+    if (x < 0) {
+        w = (int16_t)(w + x);
+        x = 0;
+    }
+    if (x >= SCREEN_W || w <= 0 || y >= VIS_BACK_H) return;
+    if ((x + w) > SCREEN_W) {
+        w = (int16_t)(SCREEN_W - x);
+    }
+    if ((uint32_t)y + h > VIS_BACK_H) {
+        h = (uint16_t)(VIS_BACK_H - y);
+    }
+
+    uint8_t *bm = back_layer.bitmap;
+    uint16_t stride = back_layer.stride;
+
+    for (int16_t ix = 0; ix < w; ix++) {
+        uint8_t *col = bm + ((uint32_t)(x + ix) * stride) + y;
+        for (uint16_t iy = 0; iy < h; iy++) {
+            col[iy] = colour;
+        }
+    }
+}
+
+static void visualizer_back_rect_logical(int16_t x, uint16_t y, int16_t w, uint16_t h, uint8_t colour)
+{
+    while (h > 0) {
+        uint16_t segment = (uint16_t)(SCREEN_H - y);
+        if (segment > h) {
+            segment = h;
+        }
+
+        visualizer_back_rect_raw(x, y, w, segment, colour);
+        visualizer_back_rect_raw(x, (uint16_t)(y + SCREEN_H), w, segment, colour);
+
+        h = (uint16_t)(h - segment);
+        y = 0;
+    }
+}
+
+static uint16_t visualizer_screen_to_logical_y_at(uint16_t scroll_y, int16_t screen_y)
+{
+    int32_t y = (int32_t)scroll_y + screen_y;
+    while (y >= SCREEN_H) {
+        y -= SCREEN_H;
+    }
+    while (y < 0) {
+        y += SCREEN_H;
+    }
+    return (uint16_t)y;
+}
+
+static void visualizer_back_rect_screen_at(uint16_t scroll_y, int16_t x, int16_t y, int16_t w, uint16_t h, uint8_t colour)
+{
+    visualizer_back_rect_logical(x, visualizer_screen_to_logical_y_at(scroll_y, y), w, h, colour);
+}
+
+static void visualizer_draw_vertical_grid_strip(uint16_t scroll_y, int16_t screen_y, uint8_t pixels)
+{
     for (uint8_t note = 0; note < 128; note += 12) {
-        int16_t x = note_to_x(note);
-        gfx_setcolour(COL_GRID_BEAT);
-        gfx_rectf(x, VIS_TOP, 1, VIS_H);
+        visualizer_back_rect_screen_at(scroll_y, note_to_x(note), screen_y, 1, pixels, COL_GRID_BEAT);
     }
 
     for (uint8_t note = 0; note < 128; note++) {
         if (!note_is_black(note)) continue;
-        int16_t x = note_to_x(note);
-        gfx_setcolour(COL_GRID);
-        gfx_rectf(x, VIS_TOP, 1, VIS_H);
+        visualizer_back_rect_screen_at(scroll_y, note_to_x(note), screen_y, 1, pixels, COL_GRID);
     }
-
-    for (int16_t y = VIS_TOP; y < VIS_TOP + VIS_H; y += 32) {
-        gfx_setcolour((y & 64) ? COL_GRID : COL_GRID_BEAT);
-        gfx_rectf(VIS_LEFT, y, VIS_W, 1);
-    }
-
-    gfx_setcolour(COL_NOW_LINE);
-    gfx_rectf(VIS_LEFT, VIS_KEY_Y - 2, VIS_W, 2);
-
-    gfx_drawtext(10, 34, current_song_label);
 }
 
-static void draw_visualizer_notes(void)
+
+volatile static char barnum[8];
+volatile static uint32_t tbg;
+
+static void visualizer_draw_grid_strip(uint16_t scroll_y, uint8_t pixels, uint32_t page_y_base)
 {
+    if (pixels == 0) return;
+
+    int16_t y0 = (int16_t)(VIS_KEY_Y - pixels);
+
+    visualizer_draw_vertical_grid_strip(scroll_y, y0, pixels);
+
+    for (uint8_t i = 0; i < pixels; i++) {
+        uint32_t page_y = page_y_base + i;
+        uint32_t beat_index = 0;
+        if (!visualizer_grid_line_at_page_y(page_y, &beat_index)) continue;
+
+        
+        visualizer_back_rect_screen_at(
+            scroll_y,
+            VIS_LEFT,
+            (int16_t)(y0 + i),
+            VIS_W,
+            1,
+            (uint8_t)((beat_index & 1u) ? COL_GRID : COL_GRID_BEAT));
+        
+        if((beat_index % 4) == 0){
+            sprintf(barnum, "%u", (beat_index / 4));
+            
+            visualizer_back_rect_screen_at(
+                scroll_y,
+                VIS_LEFT,
+                (int16_t)(y0 + i),
+                VIS_W,
+                5,
+                COL_GRID_BEAT);
+            
+            int16_t screen_y = (int16_t)(y0 + i);
+            uint16_t target_y = visualizer_screen_to_logical_y_at(scroll_y, screen_y);
+            uint32_t tbg = gfx_getdrawbuffer();
+            gfx_usebuffer(&back_layer);
+            
+            // Draw text to active region
+            gfx_setcolour(6);
+            gfx_drawtextf(VIS_LEFT, target_y-14, barnum, 1, 2);
+            gfx_drawtextf(VIS_LEFT, (int16_t)(target_y + (SCREEN_H-14)), barnum, 1, 2);
+
+            gfx_usebuffer(tbg);
+        }          
+
+    }
+}
+
+
+static void visualizer_draw_active_note_strip(uint16_t scroll_y, uint8_t pixels)
+{
+    if (pixels == 0) return;
+
+    int16_t y = (int16_t)(VIS_KEY_Y - pixels);
+
     for (uint16_t i = 0; i < VIS_MAX_NOTES; i++) {
         VisualNote *n = &visual_notes[i];
-        if (!n->used) continue;
-
-        uint32_t start_age = visual_frame - n->start_frame;
-        uint32_t end_age = n->active ? 0u : (visual_frame - n->end_frame);
-        int32_t y_top_32 = (int32_t)VIS_KEY_Y - (int32_t)(start_age * VIS_SPEED_PX);
-        int32_t y_bottom_32 = (int32_t)VIS_KEY_Y - (int32_t)(end_age * VIS_SPEED_PX);
-
-        if (y_bottom_32 < VIS_TOP || y_top_32 > VIS_KEY_Y) continue;
-        if (y_top_32 < VIS_TOP) y_top_32 = VIS_TOP;
-        if (y_bottom_32 > VIS_KEY_Y) y_bottom_32 = VIS_KEY_Y;
-
-        int16_t y_top = (int16_t)y_top_32;
-        int16_t y_bottom = (int16_t)y_bottom_32;
-        int16_t h = (int16_t)(y_bottom - y_top);
-        if (h < 3) h = 3;
+        if (!n->used || !n->active) continue;
 
         int16_t x = note_to_x(n->note);
         int16_t w = (VIS_W / 128) + 1;
         if (w < 3) w = 3;
 
-        gfx_setcolour((uint8_t)(COL_CHANNEL_BASE + n->channel));
-        gfx_rectf(x, y_top, w, h);
+        visualizer_back_rect_screen_at(scroll_y, x, y, w, pixels, (uint8_t)(COL_CHANNEL_BASE + n->channel));
 
         if (n->velocity > 100) {
-            gfx_setcolour(COL_TEXT);
-            gfx_rectf(x, y_top, w, 1);
+            //visualizer_back_rect_screen_at(scroll_y, x, y, w, 1, COL_TEXT);
         }
     }
+}
+
+static void visualizer_draw_grid_full(void)
+{
+    for (uint8_t note = 0; note < 128; note += 12) {
+        visualizer_back_rect_logical(note_to_x(note), 0, 1, SCREEN_H, COL_GRID_BEAT);
+    }
+
+    for (uint8_t note = 0; note < 128; note++) {
+        if (!note_is_black(note)) continue;
+        visualizer_back_rect_logical(note_to_x(note), 0, 1, SCREEN_H, COL_GRID);
+    }
+
+    for (int16_t y = 0; y < SCREEN_H; y++) {
+        uint32_t page_y = (uint32_t)(SCREEN_H - 1 - y);
+        uint32_t beat_index = 0;
+        if (!visualizer_grid_line_at_page_y(page_y, &beat_index)) continue;
+
+        visualizer_back_rect_logical(
+            VIS_LEFT,
+            (uint16_t)y,
+            VIS_W,
+            1,
+            (uint8_t)((beat_index & 3u) ? COL_GRID : COL_GRID_BEAT));
+    }
+}
+
+static void visualizer_render_steps(uint8_t steps)
+{
+    while (steps--) {
+        uint8_t pixels = VIS_SPEED_PX;
+        uint32_t page_y_base = visual_scroll_px;
+        uint16_t next_scroll_y = (uint16_t)((visual_scroll_y + pixels) % SCREEN_H);
+
+        visualizer_back_rect_screen_at(next_scroll_y, VIS_LEFT, (int16_t)(VIS_KEY_Y - pixels), VIS_W, pixels, COL_BG);
+        visualizer_draw_grid_strip(next_scroll_y, pixels, page_y_base);
+        visualizer_draw_active_note_strip(next_scroll_y, pixels);
+        visual_scroll_y = next_scroll_y;
+        gfx_scrollb(0, visual_scroll_y);
+
+        visual_frame++;
+        visual_scroll_px += pixels;
+        visualizer_retire_old_notes();
+    }
+}
+
+static void visualizer_draw_back_delta(uint16_t scroll_y)
+{
+    uint8_t pixels = VIS_SPEED_PX;
+    uint32_t page_y_base = visual_scroll_px;
+
+    visualizer_back_rect_screen_at(scroll_y, VIS_LEFT, (int16_t)(VIS_KEY_Y - pixels), VIS_W, pixels, COL_BG);
+    visualizer_draw_grid_strip(scroll_y, pixels, page_y_base);
+    visualizer_draw_active_note_strip(scroll_y, pixels);
+
+    visual_scroll_y = scroll_y;
+    visual_frame++;
+    visual_scroll_px += pixels;
+    visualizer_retire_old_notes();
+}
+
+static void draw_visualizer_grid(void)
+{
+    gfx_cls();
+
+    gfx_setcolour(COL_BG);
+    gfx_rectf(0, 0, SCREEN_W, VIS_TOP);
+    gfx_rectf(0, VIS_KEY_Y, SCREEN_W, (int16_t)(SCREEN_H - VIS_KEY_Y));
+
+    gfx_setcolour(COL_TEXT);
+    gfx_drawtext(10, 7, "MidiBlaster V0.59");
+    gfx_setcolour(COL_TEXT_DIM);
+    gfx_drawtext(272, 7, "right click release exits");
+    
+
+    gfx_setcolour(COL_NOW_LINE);
+    gfx_rectf(VIS_LEFT, VIS_KEY_Y - 2, VIS_W, 2);
+
+    gfx_setcolour(1);
+    gfx_drawtext(8, 34, current_song_label);
+    gfx_drawtext(12, 34, current_song_label);
+    gfx_drawtext(10, 32, current_song_label);
+    gfx_drawtext(10, 36, current_song_label);
+
+    gfx_setcolour(COL_NOW_LINE);
+    gfx_drawtext(10, 34, current_song_label);
 }
 
 static void draw_visualizer_keyboard(void)
@@ -398,6 +624,30 @@ static void draw_visualizer_background(void)
     draw_visualizer_grid();
     draw_visualizer_keyboard();
 }
+
+static void draw_visualizer_status(const char *text)
+{
+    if (!text) return;
+
+    gfx_setcolour(0);
+    gfx_rectf(8, 52, 240, 16);
+    gfx_setcolour(COL_TEXT);
+    gfx_drawtext(10, 54, text);
+}
+
+static void draw_visualizer_front_base(gfx_bitmap_t *front)
+{
+    gfx_usebuffer(front);
+    draw_visualizer_background();
+}
+
+static void draw_visualizer_prepare_front_buffers(void)
+{
+    draw_visualizer_front_base((gfx_bitmap_t *)front_a);
+    draw_visualizer_front_base((gfx_bitmap_t *)front_b);
+    gfx_showfbuffer((gfx_bitmap_t *)front_a);
+}
+
 
 static bool string_ends_with_mid(const char *text)
 {
@@ -894,6 +1144,8 @@ static uint8_t midi_translate_note_psr84(uint8_t channel, uint8_t note)
         return note;
     }
 
+    note += (1 * 12);
+
     while (note < MIDI_PSR84_NOTE_MIN) {
         note = (uint8_t)(note + 12u);
     }
@@ -1130,6 +1382,192 @@ static void midi_process_track_event(MidiPlayer *player, MidiTrack *track)
     midi_track_finish_event(track);
 }
 
+static bool read_vlq_buf(const uint8_t **buf, const uint8_t *end, uint32_t *out)
+{
+    uint32_t value = 0;
+    for (uint8_t i = 0; i < 4; i++) {
+        if (*buf >= end) return false;
+        uint8_t byte = *(*buf)++;
+        value = (value << 7) | (byte & 0x7F);
+        if ((byte & 0x80) == 0) {
+            *out = value;
+            return true;
+        }
+    }
+    return false;
+}
+
+
+uint32_t midi_player_get_duration_ms(const uint8_t *midi_data, uint32_t size)
+{
+    if (size < 14 || memcmp(midi_data, "MThd", 4) != 0) {
+        return 0;
+    }
+
+    uint32_t header_len = read_be32(&midi_data[4]);
+    if (header_len < 6 || size < 8 + header_len) {
+        return 0;
+    }
+
+    uint16_t division = read_be16(&midi_data[12]);
+    if ((division & 0x8000) != 0 || division == 0) {
+        return 0;
+    }
+
+    uint32_t offset = 8 + header_len;
+    uint16_t declared_tracks = read_be16(&midi_data[10]);
+    uint32_t max_total_ticks = 0;
+    
+    while (offset + 8 <= size && declared_tracks > 0) {
+        uint32_t chunk_len = read_be32(&midi_data[offset + 4]);
+        uint32_t chunk_data = offset + 8;
+
+        if (chunk_data > size || chunk_len > size - chunk_data) {
+            break;
+        }
+
+        if (memcmp(&midi_data[offset], "MTrk", 4) == 0) {
+            const uint8_t *ptr = &midi_data[chunk_data];
+            const uint8_t *end = ptr + chunk_len;
+            uint32_t track_ticks = 0;
+            uint8_t running_status = 0;
+
+            while (ptr < end) {
+                uint32_t delta = 0;
+                if (!read_vlq_buf(&ptr, end, &delta)) break;
+                track_ticks += delta;
+                if (ptr >= end) break;
+
+                uint8_t status = *ptr;
+                if (status & 0x80) {
+                    running_status = status;
+                    ptr++;
+                } else {
+                    status = running_status;
+                }
+
+                if (status == 0xFF) {
+                    if (ptr >= end) break;
+                    uint8_t meta_type = *ptr++;
+                    uint32_t len = 0;
+                    if (!read_vlq_buf(&ptr, end, &len)) break;
+                    
+                    if (meta_type == 0x2F) {
+                        break;
+                    }
+                    ptr += len;
+                } else if ((status & 0xF0) == 0xF0) {
+                    uint32_t len = 0;
+                    if (!read_vlq_buf(&ptr, end, &len)) break;
+                    ptr += len;
+                } else {
+                    uint8_t type = status & 0xF0;
+                    if (type == 0xC0 || type == 0xD0) {
+                        ptr += 1;
+                    } else {
+                        ptr += 2;
+                    }
+                }
+            }
+
+            if (track_ticks > max_total_ticks) {
+                max_total_ticks = track_ticks;
+            }
+            declared_tracks--;
+        }
+
+        offset = chunk_data + chunk_len;
+    }
+
+    // (ticks * 500ms) / division fits well inside uint32_t
+    return (max_total_ticks * (MIDI_DEFAULT_TEMPO_US / 1000u)) / division;
+}
+
+uint64_t midi_player_get_duration_us(const uint8_t *midi_data, uint32_t size)
+{
+    if (size < 14 || memcmp(midi_data, "MThd", 4) != 0) {
+        return 0;
+    }
+
+    uint32_t header_len = read_be32(&midi_data[4]);
+    if (header_len < 6 || size < 8 + header_len) {
+        return 0;
+    }
+
+    uint16_t division = read_be16(&midi_data[12]);
+    if ((division & 0x8000) != 0 || division == 0) {
+        return 0;
+    }
+
+    uint32_t offset = 8 + header_len;
+    uint16_t declared_tracks = read_be16(&midi_data[10]);
+    uint64_t max_total_ticks = 0;
+    
+    while (offset + 8 <= size && declared_tracks > 0) {
+        uint32_t chunk_len = read_be32(&midi_data[offset + 4]);
+        uint32_t chunk_data = offset + 8;
+
+        if (chunk_data > size || chunk_len > size - chunk_data) {
+            break;
+        }
+
+        if (memcmp(&midi_data[offset], "MTrk", 4) == 0) {
+            const uint8_t *ptr = &midi_data[chunk_data];
+            const uint8_t *end = ptr + chunk_len;
+            uint64_t track_ticks = 0;
+            uint8_t running_status = 0;
+
+            while (ptr < end) {
+                uint32_t delta = 0;
+                if (!read_vlq_buf(&ptr, end, &delta)) break;
+                track_ticks += delta;
+                if (ptr >= end) break;
+
+                uint8_t status = *ptr;
+                if (status & 0x80) {
+                    running_status = status;
+                    ptr++;
+                } else {
+                    status = running_status;
+                }
+
+                if (status == 0xFF) {
+                    if (ptr >= end) break;
+                    uint8_t meta_type = *ptr++;
+                    uint32_t len = 0;
+                    if (!read_vlq_buf(&ptr, end, &len)) break;
+                    
+                    if (meta_type == 0x2F) {
+                        break;
+                    }
+                    ptr += len;
+                } else if ((status & 0xF0) == 0xF0) {
+                    uint32_t len = 0;
+                    if (!read_vlq_buf(&ptr, end, &len)) break;
+                    ptr += len;
+                } else {
+                    uint8_t type = status & 0xF0;
+                    if (type == 0xC0 || type == 0xD0) {
+                        ptr += 1;
+                    } else {
+                        ptr += 2;
+                    }
+                }
+            }
+
+            if (track_ticks > max_total_ticks) {
+                max_total_ticks = track_ticks;
+            }
+            declared_tracks--;
+        }
+
+        offset = chunk_data + chunk_len;
+    }
+
+    return (max_total_ticks * MIDI_DEFAULT_TEMPO_US) / division;
+}
+
+
 void midi_player_init(MidiPlayer *player, const uint8_t *midi_data, uint32_t size)
 {
     memset(player, 0, sizeof(MidiPlayer));
@@ -1192,6 +1630,7 @@ void midi_player_update_us(MidiPlayer *player, uint32_t elapsed_us)
 {
     if (!player->is_playing) return;
 
+    player->elapsed_us += elapsed_us; // <--- added to accumulate playback time
     player->pending_us += elapsed_us;
 
     uint32_t events_this_update = 0;
@@ -1244,6 +1683,9 @@ MidiPlayer player;
 static void app_shutdown(void)
 {
     midi_send_channel_panic();
+    // reset background and size for desktop
+    gfx_mode(SCREEN_W, SCREEN_H, SCREEN_W, SCREEN_H, DISPFLAG_DUALLAYER | DISPFLAG_NOSCROLLABLE);
+    gfx_scrollb(0,0);
     restore_desktop();
     HWKERNAL->exitgamemode();
 }
@@ -1261,6 +1703,51 @@ void vbl_interrupt_handler(void) {
 }
 
 
+uint32_t elapsed_ms = 0;
+uint32_t progress_pct = 0;
+uint32_t cur_sec = 0;
+uint32_t lst_sec = 0;
+uint32_t dur_sec = 0;
+
+uint32_t cur_m = 0;
+uint32_t cur_s = 0;
+uint32_t dur_m = 0;
+uint32_t dur_s = 0;
+
+
+void vbl_counter(){
+    vbl_interrupt_handler();
+    midi_tx_flush_frame();
+    if (visual_ticks_pending < VIS_MAX_CATCHUP) {
+        visual_ticks_pending++;
+    }
+}
+
+
+static volatile uint16_t clocksecond = 0;
+void tmr1test(){
+    clocksecond ++;
+    if(clocksecond>10){
+        clocksecond = 0;
+    }
+    //vbl_counter();
+}
+
+
+
+static uint8_t db;
+static void flip_front_buffer(void)
+{
+    db = (uint8_t)(1u - db);
+
+    if (db) {
+        gfx_dispfbuffer((gfx_bitmap_t *)front_a, (gfx_bitmap_t *)front_b);
+    } else {
+        gfx_dispfbuffer((gfx_bitmap_t *)front_b, (gfx_bitmap_t *)front_a);
+    }
+}
+
+
 int main(int argc, char *argv[])
 {
     configure_runmode(GAMEMODE_PROFILE_0);
@@ -1271,13 +1758,15 @@ int main(int argc, char *argv[])
     //set_audio_dma(512);
     //set_music_dma = 0;
 
+    
+
     // display set up
     gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_50);
-    gfx_mode(SCREEN_W, SCREEN_H, SCREEN_W, SCREEN_H, DISPFLAG_DUALLAYER | DISPFLAG_NOSCROLLABLE);
+    gfx_mode(SCREEN_W, SCREEN_H, SCREEN_W, VIS_BACK_H, DISPFLAG_DUALLAYER | DISPFLAG_SCROLLABLE);
 
-    front_a = gfx_getdrawbuffer(); 
-    front_b = gfx_getshowbuffer();
-    if (!create_app_bitmap(&back_layer, SCREEN_W, SCREEN_H)) {
+    front_a = gfx_getfbuffer1();
+    front_b = gfx_getfbuffer2();
+    if (!create_app_bitmap(&back_layer, SCREEN_W, VIS_BACK_H)) {
         printf("Could not allocate visualizer background\n");
         app_shutdown();
         return 1;
@@ -1287,16 +1776,14 @@ int main(int argc, char *argv[])
     gfx_usefpalette(app_palette);
     gfx_usebpalette(app_palette);
 
-    gfx_usebuffer((gfx_bitmap_t *)&back_layer);
-    draw_visualizer_background();
+    draw_visualizer_prepare_front_buffers();
     gfx_showbbuffer((gfx_bitmap_t *)&back_layer);
+    visualizer_clear_note_layer();
+    visualizer_draw_grid_full();
 
-    gfx_usebuffer((gfx_bitmap_t *)front_a);
-    gfx_cls();
-    gfx_usebuffer((gfx_bitmap_t *)front_b);
-    gfx_cls();
-    gfx_showfbuffer((gfx_bitmap_t *)front_a);
-    gfx_usebuffer((gfx_bitmap_t *)front_b);
+    visualizer_reset();
+    visualizer_clear_note_layer();
+    visualizer_draw_grid_full();
 
     const char *midi_arg = find_midi_arg(argc, argv);
     MidiTranslatorProfile translator = find_translator_arg(argc, argv);
@@ -1308,9 +1795,7 @@ int main(int argc, char *argv[])
     }
 
     set_song_label(midi_arg);
-    gfx_usebuffer((gfx_bitmap_t *)&back_layer);
-    draw_visualizer_background();
-    gfx_showbbuffer((gfx_bitmap_t *)&back_layer);
+    draw_visualizer_prepare_front_buffers();
 
     if (!load_midi_from_file(midi_arg)) {
         printf("Could not load MIDI: %s\n", midi_arg);
@@ -1319,29 +1804,46 @@ int main(int argc, char *argv[])
     }
 
     setup(loaded_midi_buffer, loaded_midi_size, translator);
+    visual_grid_step_fp = visualizer_grid_step_from_tempo(player.tempo_us);
+    visualizer_clear_note_layer();
+    visualizer_draw_grid_full();
     if (!player.is_playing) {
         printf("Unsupported MIDI: %s\n", midi_arg);
         app_shutdown();
         return 1;
     }
 
+    uint32_t duration_ms = midi_player_get_duration_ms(loaded_midi_buffer, loaded_midi_size);
+    //float duration_seconds = (float)duration_us / 1000000.0f;
+
     uint8_t right_button_was_down = 0;
     dbug("Midi blaster started\n");
+
+
+    //irq_lcd_vbl(vbl_counter);  // attach the isr
+
+    timer1isr(tmr1test);
+    //timer1duty(0xffff, 239);
+    timer1duty(19999, 239);
+    timer1ctrl(API_TIMER_CTRL_RESET | API_TIMER_CTRL_ENABLE | API_TIMER_CTRL_IRQ_ENABLE);
+
+    gfx_showbbuffer(&back_layer);
+    gfx_showfbuffer(front_a);
+    gfx_usebuffer(front_b);
+
+    uint16_t scrolly_roller = 0;
+    
     
     while (1) {
-        gfx_bitmap_t *draw = hidden_front_buffer();
-
-        gfx_lcdwait();
-        gfx_usebuffer(draw);
-        gfx_cls();
-
-        draw_visualizer_notes();
-        vbl_interrupt_handler();
-        midi_tx_flush_frame();
-        visualizer_tick();
+        
+        //visualizer_render_steps(visualizer_consume_ticks());
 
         if (!player.is_playing) {
             setup(loaded_midi_buffer, loaded_midi_size, translator);
+            visual_grid_step_fp = visualizer_grid_step_from_tempo(player.tempo_us);
+            visualizer_clear_note_layer();
+            visualizer_draw_grid_full();
+            scrolly_roller = 0;
         }
 
         uint8_t joy = getjoyport();
@@ -1351,11 +1853,71 @@ int main(int argc, char *argv[])
         }
         right_button_was_down = right_button_down;
 
-        flip_front_buffer();
+
+        elapsed_ms = player.elapsed_us / 1000u;
+
+        progress_pct = 0;
+        if (duration_ms > 0) {
+            progress_pct = (elapsed_ms * 100u) / duration_ms;
+            if (progress_pct > 100) progress_pct = 100;
+        }
+
+        cur_sec = elapsed_ms / 1000u;
+        if(lst_sec != cur_sec){
+            lst_sec = cur_sec;
+            dur_sec = duration_ms / 1000u;
+
+            cur_m = cur_sec / 60u;
+            cur_s = cur_sec % 60u;
+            dur_m = dur_sec / 60u;
+            dur_s = dur_sec % 60u;
+        }
+
+        char txtbuff[64];
+        sprintf(txtbuff, "%02u:%02u/%02u:%02u", cur_m, cur_s, dur_m, dur_s);
+
+
+        // graphics update parts
+        vbl_counter();
+        visual_grid_step_fp = visualizer_grid_step_from_tempo(player.tempo_us);
+        uint8_t visual_steps = visualizer_consume_ticks();
+        gfx_lcdwait();  // here if the lcd hasnt finished rendering to the screen    
+
+
+
+
+        // clear front field
+        db = 1 - db;
+        if(db) gfx_dispfbuffer(front_a, front_b);
+        else    gfx_dispfbuffer(front_b, front_a);
+        //gfx_cls(); <-- this would normally be used 
+        
+        // draw your shit here
+        gfx_setcolour(0);
+        gfx_rectf(378, 34, (8 * 12), 16);
+        gfx_setcolour(COL_TEXT);
+        gfx_drawtextf(386, 34, txtbuff, 1,2);
+
+        
+        // do the drawing of the grid/bars here
+        while (visual_steps--) {
+            visualizer_draw_back_delta(scrolly_roller);
+        }
+
+        gfx_scrollb(0, scrolly_roller);
+
+        // this part will be delta'd and drawn
+        scrolly_roller += VIS_SPEED_PX;
+        if(scrolly_roller>319)scrolly_roller=0;
+
         gfx_displaynow();
     }
 
     app_shutdown();
+
+    timer1ctrl(0);  // turn this off to prevent OS crash!!
+    timer1isr(NULL);
+    irq_lcd_vbl(NULL);  // attach the isr
     if (loaded_midi_buffer) {
         free(loaded_midi_buffer);
         loaded_midi_buffer = NULL;
