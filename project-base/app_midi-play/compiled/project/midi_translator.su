@@ -1,0 +1,11 @@
+midi_translator.c:222:13:midi_limiter_steal_note	32	static
+midi_translator.c:100:6:midi_translator_profile_for_soundfont_index	0	static
+midi_translator.c:110:6:midi_translator_profile_soundfont_index	0	static
+midi_translator.c:120:13:midi_translator_profile_name	0	static
+midi_translator.c:152:6:midi_translator_reset_state	8	static
+midi_translator.c:458:6:midi_translator_translate_voice_packet	12	static
+midi_translator.c:497:6:midi_translator_send_voice_packet	48	static
+midi_translator.c:541:6:midi_translator_accepts_sysex	8	static
+midi_translator.c:561:6:midi_translator_uses_soundfont	0	static
+midi_translator.c:631:6:midi_translator_send_setup_burst	88	static
+midi_translator.c:693:6:midi_translator_send_post_load_burst	64	static

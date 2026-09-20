@@ -4,14 +4,10 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "apis.h"
+#include "midi_translator.h"
 
 
 #define MAX_MIDI_TRACKS 16
-
-typedef enum {
-    MIDI_TRANSLATOR_RAW = 0,
-    MIDI_TRANSLATOR_PSR84
-} MidiTranslatorProfile;
 
 typedef struct {
     const uint8_t *ptr;

@@ -16,6 +16,7 @@
 
 static uint8_t *loaded_midi_buffer;
 static uint32_t loaded_midi_size;
+static bool loaded_midi_owns_buffer;
 
 #define SCREEN_W 480
 #define SCREEN_H 320
@@ -26,10 +27,10 @@ static uint32_t loaded_midi_size;
 #define MIDI_SYSEX_CHUNK      64u
 #define MIDI_TX_QUEUE_SIZE    1024u
 #define MIDI_TX_FRAME_BUDGET  60u
-#define MIDI_PSR84_NOTE_LIMIT 24u
-#define MIDI_TRACKED_NOTES    64u
-#define MIDI_PSR84_NOTE_MIN   36u
-#define MIDI_PSR84_NOTE_MAX   (96+7)
+#define MIDI_SOUNDFONT_LOAD_WAIT_FRAMES 500u
+
+#define MIDIPLAY_CONFIG_PATH "SDCARD:/sidbox/env/midiplay.cnf"
+#define MIDIPLAY_CONFIG_ENV_PATH "/sidbox/env/midiplay.cnf"
 
 
 
@@ -72,55 +73,6 @@ typedef struct {
     bool used;
 } VisualNote;
 
-typedef struct {
-    uint32_t started_at;
-    uint8_t channel;
-    uint8_t note;
-    uint8_t velocity;
-    bool active;
-} MidiActiveNote;
-
-
-
-static const uint8_t psr84_octive_remap[128] = {
-
-};
-
-static const uint8_t psr84_gm_program_map[128] = {
-    // Piano
-    0, 0, 0, 2, 3, 3, 6, 7,
-    // Chromatic percussion
-    9, 40, 41, 41, 40, 41, 42, 38,
-    // Organ/accordion
-    10, 10, 12, 12, 10, 15, 67, 17,
-    // Guitar
-    31, 29, 24, 24, 18, 18, 26, 23,
-    // Bass
-    82, 83, 82, 84, 85, 87, 90, 93,
-    // Strings
-    32, 33, 34, 93, 35, 36, 72, 38,
-    // Ensemble
-    35, 36, 75, 75, 72, 72, 69, 37,
-    // Brass
-    43, 47, 49, 44, 50, 51, 52, 74,
-    // Reed
-    60, 61, 62, 63, 57, 58, 59, 55,
-    // Pipe
-    53, 54, 66, 65, 64, 65, 68, 65,
-    // Synth lead
-    73, 73, 74, 73, 76, 74, 73, 76,
-    // Synth pad
-    81, 80, 75, 75, 72, 78, 79, 81,
-    // Synth effects
-    77, 78, 79, 77, 81, 77, 78, 79,
-    // Ethnic
-    39, 39, 31, 38, 41, 65, 32, 57,
-    // Percussive
-    9, 97, 42, 76, 96, 96, 76, 99,
-    // Sound effects
-    26, 65, 77, 68, 9, 76, 99, 95,
-};
-
 MEMALIGN32 static uint32_t app_palette[256];
 MEMALIGN32 static volatile gfx_bitmap_t *front_a;
 MEMALIGN32 static volatile gfx_bitmap_t *front_b;
@@ -130,17 +82,19 @@ MEMALIGN32 static volatile gfx_bitmap_t back_layer;
 
 static VisualNote visual_notes[VIS_MAX_NOTES];
 static uint32_t visual_frame;
-static MidiActiveNote midi_active_notes[MIDI_TRACKED_NOTES];
 static uint8_t midi_tx_queue[MIDI_TX_QUEUE_SIZE];
 static uint16_t midi_tx_head;
 static uint16_t midi_tx_tail;
 static uint16_t midi_tx_count;
-static uint32_t midi_note_stamp;
 static char current_song_label[SONG_LABEL_MAX] = "(none)";
 static uint32_t visual_scroll_px;
 static uint16_t visual_scroll_y;
 static uint32_t visual_grid_step_fp;
 static volatile uint8_t visual_ticks_pending;
+static bool app_graphics_active;
+MidiPlayer player;
+
+static bool midi_player_find_next_tick(MidiPlayer *player, uint32_t *next_tick);
 
 static bool create_app_bitmap(volatile gfx_bitmap_t *bitmap, int16_t w, int16_t h)
 {
@@ -665,33 +619,322 @@ static bool string_ends_with_mid(const char *text)
 
 static const char *find_midi_arg(int argc, char *argv[])
 {
-    for (int i = 1; i < argc; i++) {
+    for (int i = 0; i < argc; i++) {
         if (string_ends_with_mid(argv[i])) {
             return argv[i];
         }
     }
 
-    if (argc == 1 && string_ends_with_mid(argv[0])) {
-        return argv[0];
-    }
-
     return NULL;
 }
 
-static MidiTranslatorProfile find_translator_arg(int argc, char *argv[])
+static bool find_arg(int argc, char *argv[], const char *needle)
 {
-    for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "--raw") == 0 ||
-            strcmp(argv[i], "--gm") == 0 ||
-            strcmp(argv[i], "--no-psr84") == 0) {
-            return MIDI_TRANSLATOR_RAW;
-        }
-        if (strcmp(argv[i], "--psr84") == 0) {
-            return MIDI_TRANSLATOR_PSR84;
+    if (!needle) {
+        return false;
+    }
+
+    for (int i = 0; i < argc; i++) {
+        if (argv[i] && strcmp(argv[i], needle) == 0) {
+            return true;
         }
     }
 
-    return MIDI_TRANSLATOR_PSR84;
+    return false;
+}
+
+static bool find_ram_arg(int argc, char *argv[])
+{
+    for (int i = 0; i < argc; i++) {
+        const char *arg = argv[i];
+        if (!arg) continue;
+
+        if (strcmp(arg, "--ram") == 0 ||
+            strcmp(arg, "--RAM") == 0 ||
+            strcmp(arg, "ram") == 0 ||
+            strcmp(arg, "RAM") == 0) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+static bool parse_translator_switch(const char *text, MidiTranslatorProfile *translator)
+{
+    if (!text || !translator) {
+        return false;
+    }
+
+    if (strncmp(text, "mode=", 5) == 0 ||
+        strncmp(text, "MODE=", 5) == 0) {
+        text += 5;
+    }
+
+    if ((text[0] == '-' && text[1] == '-' && (text[2] == 's' || text[2] == 'S') && (text[3] == 'f' || text[3] == 'F')) ||
+        ((text[0] == 's' || text[0] == 'S') && (text[1] == 'f' || text[1] == 'F'))) {
+        const char *num_text = (text[0] == '-') ? text + 4 : text + 2;
+        uint16_t index = 0;
+
+        if (*num_text < '0' || *num_text > '9') {
+            return false;
+        }
+
+        while (*num_text >= '0' && *num_text <= '9') {
+            index = (uint16_t)((index * 10u) + (uint16_t)(*num_text - '0'));
+            if (index > 15u) {
+                return false;
+            }
+            num_text++;
+        }
+
+        if (*num_text == '\0') {
+            return midi_translator_profile_for_soundfont_index((uint8_t)index, translator);
+        }
+
+        return false;
+    }
+
+    if (strcmp(text, "--raw") == 0 ||
+        strcmp(text, "--no-psr84") == 0 ||
+        strcmp(text, "raw") == 0 ||
+        strcmp(text, "RAW") == 0) {
+        *translator = MIDI_TRANSLATOR_RAW;
+        return true;
+    }
+
+    if (strcmp(text, "--mt32std") == 0 ||
+        strcmp(text, "--MT32STD") == 0 ||
+        strcmp(text, "--mt32-standard") == 0 ||
+        strcmp(text, "--MT32-STANDARD") == 0 ||
+        strcmp(text, "--mt32-standard-channels") == 0 ||
+        strcmp(text, "mt32std") == 0 ||
+        strcmp(text, "MT32STD") == 0 ||
+        strcmp(text, "mt32-standard") == 0 ||
+        strcmp(text, "MT32-STANDARD") == 0 ||
+        strcmp(text, "mt32-standard-channels") == 0) {
+        *translator = MIDI_TRANSLATOR_MT32_STD;
+        return true;
+    }
+
+    if (strcmp(text, "--mt32") == 0 ||
+        strcmp(text, "--MT32") == 0 ||
+        strcmp(text, "--mt32alt") == 0 ||
+        strcmp(text, "--MT32ALT") == 0 ||
+        strcmp(text, "--mt32-alternate") == 0 ||
+        strcmp(text, "--MT32-ALTERNATE") == 0 ||
+        strcmp(text, "mt32") == 0 ||
+        strcmp(text, "MT32") == 0 ||
+        strcmp(text, "MT-32") == 0 ||
+        strcmp(text, "mt32alt") == 0 ||
+        strcmp(text, "MT32ALT") == 0 ||
+        strcmp(text, "mt32-alternate") == 0 ||
+        strcmp(text, "MT32-ALTERNATE") == 0) {
+        *translator = MIDI_TRANSLATOR_MT32;
+        return true;
+    }
+
+    if (strcmp(text, "--gm") == 0 ||
+        strcmp(text, "--GM") == 0 ||
+        strcmp(text, "gm") == 0 ||
+        strcmp(text, "GM") == 0) {
+        *translator = MIDI_TRANSLATOR_GM;
+        return true;
+    }
+
+    if (strcmp(text, "--awe32") == 0 ||
+        strcmp(text, "--AWE32") == 0 ||
+        strcmp(text, "awe32") == 0 ||
+        strcmp(text, "AWE32") == 0) {
+        *translator = MIDI_TRANSLATOR_AWE32;
+        return true;
+    }
+
+    if (strcmp(text, "--awe64") == 0 ||
+        strcmp(text, "--AWE64") == 0 ||
+        strcmp(text, "awe64") == 0 ||
+        strcmp(text, "AWE64") == 0) {
+        *translator = MIDI_TRANSLATOR_AWE64;
+        return true;
+    }
+
+    if (strcmp(text, "--sc55") == 0 ||
+        strcmp(text, "--SC55") == 0 ||
+        strcmp(text, "--sc-55") == 0 ||
+        strcmp(text, "--SC-55") == 0 ||
+        strcmp(text, "sc55") == 0 ||
+        strcmp(text, "SC55") == 0 ||
+        strcmp(text, "SC-55") == 0) {
+        *translator = MIDI_TRANSLATOR_SC55;
+        return true;
+    }
+
+    if (strcmp(text, "--opl3") == 0 ||
+        strcmp(text, "--OPL3") == 0 ||
+        strcmp(text, "--opl-3") == 0 ||
+        strcmp(text, "--OPL-3") == 0 ||
+        strcmp(text, "opl3") == 0 ||
+        strcmp(text, "OPL3") == 0 ||
+        strcmp(text, "OPL-3") == 0) {
+        *translator = MIDI_TRANSLATOR_OPL3;
+        return true;
+    }
+
+    if (strcmp(text, "--psr84") == 0 ||
+        strcmp(text, "--PSR84") == 0 ||
+        strcmp(text, "psr84") == 0 ||
+        strcmp(text, "PSR84") == 0) {
+        *translator = MIDI_TRANSLATOR_PSR84;
+        return true;
+    }
+
+    return false;
+}
+
+static bool find_translator_arg(int argc, char *argv[], MidiTranslatorProfile *translator)
+{
+    for (int i = 0; i < argc; i++) {
+        if (parse_translator_switch(argv[i], translator)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+static const char *translator_config_switch(MidiTranslatorProfile translator)
+{
+    static char sf_switch[8];
+    uint8_t sf_index = 0;
+
+    if (midi_translator_profile_soundfont_index(translator, &sf_index)) {
+        sprintf(sf_switch, "--sf%u\n", sf_index);
+        return sf_switch;
+    }
+
+    switch (translator) {
+        case MIDI_TRANSLATOR_MT32:  return "--mt32\n";
+        case MIDI_TRANSLATOR_MT32_STD: return "--mt32std\n";
+        case MIDI_TRANSLATOR_GM:    return "--gm\n";
+        case MIDI_TRANSLATOR_AWE32: return "--awe32\n";
+        case MIDI_TRANSLATOR_AWE64: return "--awe64\n";
+        case MIDI_TRANSLATOR_SC55:  return "--sc55\n";
+        case MIDI_TRANSLATOR_OPL3:  return "--opl3\n";
+        case MIDI_TRANSLATOR_PSR84: return "--psr84\n";
+        case MIDI_TRANSLATOR_RAW:
+        default:                   return "--raw\n";
+    }
+}
+
+static bool read_translator_config_path(const char *path, MidiTranslatorProfile *translator, FRESULT *out_res)
+{
+    char buffer[32];
+    uint32_t bytes_read = 0;
+
+    FRESULT open_res = sfopen(1, (char *)path, SD_READ);
+    if (out_res) {
+        *out_res = open_res;
+    }
+    if (open_res != FR_OK) {
+        return false;
+    }
+
+    uint32_t size = SYSFileSystem->sbfilelen(1);
+    if (size >= sizeof(buffer)) {
+        size = sizeof(buffer) - 1u;
+    }
+
+    FRESULT res = sfread(1, buffer, size, &bytes_read);
+    sfclose(1);
+
+    if (res != FR_OK || bytes_read == 0) {
+        return false;
+    }
+
+    buffer[bytes_read] = '\0';
+
+    char token[16];
+    uint8_t out = 0;
+    for (uint8_t i = 0; buffer[i] != '\0' && out < (sizeof(token) - 1u); i++) {
+        char c = buffer[i];
+        if (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
+            if (out > 0) break;
+            continue;
+        }
+        token[out++] = c;
+    }
+    token[out] = '\0';
+
+    return parse_translator_switch(token, translator);
+}
+
+static bool read_translator_config(MidiTranslatorProfile *translator, FRESULT *out_res)
+{
+    FRESULT res = FR_OK;
+
+    if (read_translator_config_path(MIDIPLAY_CONFIG_PATH, translator, &res)) {
+        if (out_res) *out_res = FR_OK;
+        return true;
+    }
+
+    if (read_translator_config_path(MIDIPLAY_CONFIG_ENV_PATH, translator, &res)) {
+        if (out_res) *out_res = FR_OK;
+        return true;
+    }
+
+    if (out_res) *out_res = res;
+    return false;
+}
+
+static bool write_translator_config(MidiTranslatorProfile translator, FRESULT *out_res)
+{
+    const char *text = translator_config_switch(translator);
+    uint32_t len = (uint32_t)strlen(text);
+    uint32_t bytes_written = 0;
+
+    FRESULT res = sfopen(1, MIDIPLAY_CONFIG_PATH, SD_WRITE | SD_CREATE_ALWAYS);
+    if (out_res) {
+        *out_res = res;
+    }
+    if (res != FR_OK) {
+        return false;
+    }
+
+    res = sfwrite(1, text, len, &bytes_written);
+    sfclose(1);
+    if (out_res) {
+        *out_res = res;
+    }
+
+    return res == FR_OK && bytes_written == len;
+}
+
+static MidiTranslatorProfile resolve_translator_mode(int argc, char *argv[])
+{
+    MidiTranslatorProfile config_translator = MIDI_TRANSLATOR_RAW;
+    FRESULT config_res = FR_OK;
+    bool have_config = read_translator_config(&config_translator, &config_res);
+
+    MidiTranslatorProfile arg_translator = MIDI_TRANSLATOR_RAW;
+    if (find_translator_arg(argc, argv, &arg_translator)) {
+        if (!have_config || config_translator != arg_translator) {
+            FRESULT write_res = FR_OK;
+            if (!write_translator_config(arg_translator, &write_res)) {
+                printf("midiplay.cnf save failed: %u\n", (unsigned)write_res);
+            }
+        }
+        return arg_translator;
+    }
+
+    if (!have_config) {
+        FRESULT write_res = FR_OK;
+        if (!write_translator_config(MIDI_TRANSLATOR_RAW, &write_res)) {
+            printf("midiplay.cnf create failed: %u read:%u\n", (unsigned)write_res, (unsigned)config_res);
+        }
+        return MIDI_TRANSLATOR_RAW;
+    }
+
+    return config_translator;
 }
 
 static bool midi_header_looks_valid(const uint8_t *data, uint32_t size)
@@ -701,6 +944,52 @@ static bool midi_header_looks_valid(const uint8_t *data, uint32_t size)
            data[1] == 'T' &&
            data[2] == 'h' &&
            data[3] == 'd';
+}
+
+static bool midi_size_from_memory(const uint8_t *data, uint32_t max_size, uint32_t *out_size)
+{
+    if (!data || !out_size || max_size < 14 || !midi_header_looks_valid(data, max_size)) {
+        return false;
+    }
+
+    uint32_t header_len = ((uint32_t)data[4] << 24) |
+                          ((uint32_t)data[5] << 16) |
+                          ((uint32_t)data[6] << 8) |
+                          data[7];
+    if (header_len < 6 || header_len > max_size - 8u) {
+        return false;
+    }
+
+    uint16_t declared_tracks = (uint16_t)(((uint16_t)data[10] << 8) | data[11]);
+    uint32_t offset = 8u + header_len;
+    uint16_t found_tracks = 0;
+
+    while (offset + 8u <= max_size && found_tracks < declared_tracks) {
+        uint32_t chunk_len = ((uint32_t)data[offset + 4u] << 24) |
+                             ((uint32_t)data[offset + 5u] << 16) |
+                             ((uint32_t)data[offset + 6u] << 8) |
+                             data[offset + 7u];
+        uint32_t chunk_end = offset + 8u + chunk_len;
+        if (chunk_end < offset || chunk_end > max_size) {
+            return false;
+        }
+
+        if (data[offset] == 'M' &&
+            data[offset + 1u] == 'T' &&
+            data[offset + 2u] == 'r' &&
+            data[offset + 3u] == 'k') {
+            found_tracks++;
+        }
+
+        offset = chunk_end;
+    }
+
+    if (declared_tracks == 0 || found_tracks != declared_tracks) {
+        return false;
+    }
+
+    *out_size = offset;
+    return true;
 }
 
 static bool load_midi_from_file(const char *filename)
@@ -731,12 +1020,33 @@ static bool load_midi_from_file(const char *filename)
         return false;
     }
 
-    if (loaded_midi_buffer) {
+    if (loaded_midi_buffer && loaded_midi_owns_buffer) {
         free(loaded_midi_buffer);
     }
 
     loaded_midi_buffer = buffer;
     loaded_midi_size = size;
+    loaded_midi_owns_buffer = true;
+    return true;
+}
+
+static bool load_midi_from_ram(void)
+{
+    const uint8_t *ram_data = (const uint8_t *)RAMLOCATION;
+    uint32_t max_size = (uint32_t)(uintptr_t)&_largest_modfile;
+    uint32_t midi_size = 0;
+
+    if (!midi_size_from_memory(ram_data, max_size, &midi_size)) {
+        return false;
+    }
+
+    if (loaded_midi_buffer && loaded_midi_owns_buffer) {
+        free(loaded_midi_buffer);
+    }
+
+    loaded_midi_buffer = (uint8_t *)ram_data;
+    loaded_midi_size = midi_size;
+    loaded_midi_owns_buffer = false;
     return true;
 }
 
@@ -819,210 +1129,39 @@ static void midi_tx_flush_frame(void)
     }
 }
 
-static void midi_limiter_reset(void)
+static bool midi_translator_send_queued(const uint8_t *data, uint8_t len, bool urgent, void *user)
 {
-    memset(midi_active_notes, 0, sizeof(midi_active_notes));
-    midi_note_stamp = 0;
+    (void)user;
+    return urgent ? midi_tx_enqueue_urgent_bytes(data, len) : midi_tx_enqueue_bytes(data, len);
 }
 
-static int16_t midi_limiter_find(uint8_t channel, uint8_t note)
+static bool midi_translator_send_direct(const uint8_t *data, uint8_t len, bool urgent, void *user)
 {
-    for (uint16_t i = 0; i < MIDI_TRACKED_NOTES; i++) {
-        MidiActiveNote *active = &midi_active_notes[i];
-        if (active->active && active->channel == channel && active->note == note) {
-            return (int16_t)i;
-        }
-    }
-
-    return -1;
-}
-
-static uint8_t midi_limiter_active_count(void)
-{
-    uint8_t count = 0;
-
-    for (uint16_t i = 0; i < MIDI_TRACKED_NOTES; i++) {
-        if (midi_active_notes[i].active) {
-            count++;
-        }
-    }
-
-    return count;
-}
-
-static int16_t midi_limiter_find_slot(void)
-{
-    for (uint16_t i = 0; i < MIDI_TRACKED_NOTES; i++) {
-        if (!midi_active_notes[i].active) {
-            return (int16_t)i;
-        }
-    }
-
-    return -1;
-}
-
-static int16_t midi_limiter_find_steal_candidate(void)
-{
-    int16_t best = -1;
-
-    for (uint16_t i = 0; i < MIDI_TRACKED_NOTES; i++) {
-        MidiActiveNote *active = &midi_active_notes[i];
-        if (!active->active) continue;
-
-        if (best < 0) {
-            best = (int16_t)i;
-            continue;
-        }
-
-        MidiActiveNote *current_best = &midi_active_notes[best];
-        bool active_is_drum = (active->channel == 9);
-        bool best_is_drum = (current_best->channel == 9);
-
-        if (best_is_drum && !active_is_drum) {
-            best = (int16_t)i;
-        } else if (best_is_drum == active_is_drum &&
-                   active->started_at < current_best->started_at) {
-            best = (int16_t)i;
-        }
-    }
-
-    return best;
-}
-
-static bool midi_limiter_steal_note(void)
-{
-    int16_t victim_index = midi_limiter_find_steal_candidate();
-    if (victim_index < 0) return false;
-
-    MidiActiveNote *victim = &midi_active_notes[victim_index];
-    uint8_t note_off[3] = {
-        (uint8_t)(0x80 | (victim->channel & 0x0F)),
-        victim->note,
-        0x00
-    };
-
-    if (!midi_tx_enqueue_urgent_bytes(note_off, sizeof(note_off))) {
-        return false;
-    }
-
-    victim->active = false;
+    (void)urgent;
+    (void)user;
+    midi_out(data, len);
     return true;
-}
-
-static void midi_limiter_note_off(uint8_t channel, uint8_t note)
-{
-    int16_t index = midi_limiter_find((uint8_t)(channel & 0x0F), (uint8_t)(note & 0x7F));
-    if (index >= 0) {
-        midi_active_notes[index].active = false;
-    }
-}
-
-static bool midi_limiter_note_on(uint8_t channel, uint8_t note, uint8_t velocity)
-{
-    channel &= 0x0F;
-    note &= 0x7F;
-
-    int16_t existing = midi_limiter_find(channel, note);
-    if (existing >= 0) {
-        midi_active_notes[existing].started_at = ++midi_note_stamp;
-        midi_active_notes[existing].velocity = velocity;
-        return true;
-    }
-
-    while (midi_limiter_active_count() >= MIDI_PSR84_NOTE_LIMIT) {
-        if (!midi_limiter_steal_note()) {
-            return false;
-        }
-    }
-
-    int16_t slot = midi_limiter_find_slot();
-    if (slot < 0) {
-        if (!midi_limiter_steal_note()) {
-            return false;
-        }
-        slot = midi_limiter_find_slot();
-        if (slot < 0) return false;
-    }
-
-    midi_active_notes[slot].active = true;
-    midi_active_notes[slot].channel = channel;
-    midi_active_notes[slot].note = note;
-    midi_active_notes[slot].velocity = velocity;
-    midi_active_notes[slot].started_at = ++midi_note_stamp;
-    return true;
-}
-
-static void midi_limiter_all_notes_off(uint8_t channel)
-{
-    channel &= 0x0F;
-
-    for (uint16_t i = 0; i < MIDI_TRACKED_NOTES; i++) {
-        if (midi_active_notes[i].active && midi_active_notes[i].channel == channel) {
-            midi_active_notes[i].active = false;
-        }
-    }
-}
-
-static bool midi_send_psr84_voice_packet(const uint8_t *packet, uint8_t packet_len)
-{
-    if (!packet || packet_len == 0) return false;
-
-    uint8_t message = packet[0] & 0xF0;
-    uint8_t channel = packet[0] & 0x0F;
-
-    if (message == 0x90 && packet_len >= 3 && packet[2] != 0) {
-        if (!midi_limiter_note_on(channel, packet[1], packet[2])) {
-            return false;
-        }
-        if (!midi_tx_enqueue_bytes(packet, packet_len)) {
-            midi_limiter_note_off(channel, packet[1]);
-            return false;
-        }
-        return true;
-    }
-
-    if ((message == 0x80 && packet_len >= 3) ||
-        (message == 0x90 && packet_len >= 3 && packet[2] == 0)) {
-        if (!midi_tx_enqueue_urgent_bytes(packet, packet_len)) {
-            return false;
-        }
-        midi_limiter_note_off(channel, packet[1]);
-        return true;
-    }
-
-    if (message == 0xB0 && packet_len >= 3) {
-        if (packet[1] == 0x78 || packet[1] == 0x7B) {
-            if (!midi_tx_enqueue_urgent_bytes(packet, packet_len)) {
-                return false;
-            }
-            midi_limiter_all_notes_off(channel);
-            return true;
-        } else if (packet[1] == 0x79) {
-            if (!midi_tx_enqueue_urgent_bytes(packet, packet_len)) {
-                return false;
-            }
-            midi_limiter_all_notes_off(channel);
-            return true;
-        }
-    }
-
-    return midi_tx_enqueue_bytes(packet, packet_len);
 }
 
 static void midi_send_voice_packet(const MidiPlayer *player, const uint8_t *packet, uint8_t packet_len)
 {
-    if (player->translator == MIDI_TRANSLATOR_PSR84) {
-        (void)midi_send_psr84_voice_packet(packet, packet_len);
+    if (player->translator != MIDI_TRANSLATOR_PSR84) {
+        midi_out(packet, packet_len);
         return;
     }
 
-    midi_out(packet, packet_len);
+    (void)midi_translator_send_voice_packet(
+        player->translator,
+        packet,
+        packet_len,
+        midi_translator_send_queued,
+        NULL);
 }
 
 static void midi_send_channel_panic(void)
 {
     midi_tx_reset();
-    midi_limiter_reset();
+    midi_translator_reset_state();
 
     for (uint8_t ch = 0; ch < 16; ch++) {
         uint8_t all_sound_off[3] = { (uint8_t)(0xB0 | ch), 0x78, 0x00 };
@@ -1031,32 +1170,6 @@ static void midi_send_channel_panic(void)
         midi_out(all_sound_off, 3);
         midi_out(reset_ctrls, 3);
         midi_out(all_notes_off, 3);
-    }
-}
-
-static void midi_send_psr84_setup_burst(void)
-{
-    for (uint8_t ch = 0; ch < 16; ch++) {
-        uint8_t reset_ctrls[3]   = { (uint8_t)(0xB0 | ch), 0x79, 0x00 };
-        uint8_t vibrato_off[3]   = { (uint8_t)(0xB0 | ch), 0x01, 0x00 };
-        uint8_t volume_default[3]= { (uint8_t)(0xB0 | ch), 0x07, 0x6F };
-        uint8_t pan_center[3]    = { (uint8_t)(0xB0 | ch), 0x0A, 0x40 };
-        uint8_t sustain_off[3]   = { (uint8_t)(0xB0 | ch), 0x40, 0x00 };
-        uint8_t all_notes_off[3] = { (uint8_t)(0xB0 | ch), 0x7B, 0x00 };
-
-        midi_tx_enqueue_bytes(reset_ctrls, 3);
-        midi_tx_enqueue_bytes(vibrato_off, 3);
-        midi_tx_enqueue_bytes(volume_default, 3);
-        midi_tx_enqueue_bytes(pan_center, 3);
-        midi_tx_enqueue_bytes(sustain_off, 3);
-        midi_tx_enqueue_bytes(all_notes_off, 3);
-    }
-
-    {
-        uint8_t drum_program[2] = { 0xC9, 99 };
-        uint8_t drum_pan_center[3] = { 0xB9, 0x0A, 0x40 };
-        midi_tx_enqueue_bytes(drum_program, 2);
-        midi_tx_enqueue_bytes(drum_pan_center, 3);
     }
 }
 
@@ -1075,10 +1188,87 @@ static void midi_send_player_reset(const MidiPlayer *player)
     }
 
     midi_send_channel_panic();
+    midi_translator_send_setup_burst(
+        player->translator,
+        (player->translator == MIDI_TRANSLATOR_PSR84) ? midi_translator_send_queued : midi_translator_send_direct,
+        NULL);
+}
 
-    if (player->translator == MIDI_TRANSLATOR_PSR84) {
-        midi_send_psr84_setup_burst();
+static void midi_wait_for_synth_ready(MidiTranslatorProfile translator)
+{
+    if (!midi_translator_uses_soundfont(translator)) {
+        return;
     }
+
+    for (uint16_t frame = 0; frame < MIDI_SOUNDFONT_LOAD_WAIT_FRAMES; frame++) {
+        crt_waitframe();
+    }
+}
+
+static void midi_wait_for_startup_bytes(MidiTranslatorProfile translator)
+{
+    uint32_t next_tick = 0;
+
+    if (!midi_player_find_next_tick(&player, &next_tick) || next_tick != 0) {
+        return;
+    }
+
+    uint8_t frames = midi_translator_uses_soundfont(translator) ? 3u : 7u;
+    for (uint8_t frame = 0; frame < frames; frame++) {
+        crt_waitframe();
+    }
+}
+
+static void midi_start_tick_zero_events(MidiTranslatorProfile translator)
+{
+    midi_wait_for_startup_bytes(translator);
+    midi_player_update_us(&player, 0);
+}
+
+static void midi_send_translator_mode_setup(MidiTranslatorProfile translator)
+{
+    if (translator == MIDI_TRANSLATOR_RAW) {
+        midi_send_gm_reset();
+        return;
+    }
+
+    midi_send_channel_panic();
+    midi_translator_send_setup_burst(translator, midi_translator_send_direct, NULL);
+
+    if (midi_translator_uses_soundfont(translator)) {
+        midi_wait_for_synth_ready(translator);
+        midi_translator_send_post_load_burst(translator, midi_translator_send_direct, NULL);
+    }
+}
+
+static void midi_send_soundfont_probe(MidiTranslatorProfile translator)
+{
+    if (!midi_translator_uses_soundfont(translator)) {
+        translator = MIDI_TRANSLATOR_GM;
+    }
+
+    midi_send_channel_panic();
+    midi_translator_send_setup_burst(translator, midi_translator_send_direct, NULL);
+    midi_wait_for_synth_ready(translator);
+    midi_translator_send_post_load_burst(translator, midi_translator_send_direct, NULL);
+
+    const uint8_t program_piano[2] = { 0xC0, 0x00 };
+    const uint8_t volume_full[3] = { 0xB0, 0x07, 0x7F };
+    const uint8_t expression_full[3] = { 0xB0, 0x0B, 0x7F };
+    const uint8_t note_on[3] = { 0x90, 0x3C, 0x7F };
+    const uint8_t note_off[3] = { 0x80, 0x3C, 0x00 };
+
+    midi_out(program_piano, sizeof(program_piano));
+    midi_out(volume_full, sizeof(volume_full));
+    midi_out(expression_full, sizeof(expression_full));
+    midi_out(note_on, sizeof(note_on));
+
+    for (uint8_t frame = 0; frame < 50; frame++) {
+        crt_waitframe();
+    }
+
+    midi_out(note_off, sizeof(note_off));
+    midi_send_channel_panic();
 }
 
 static bool read_vlq_track(MidiTrack *track, uint32_t *out)
@@ -1127,90 +1317,6 @@ static uint8_t midi_system_data_len(uint8_t status)
     }
 }
 
-static uint8_t midi_translate_program_psr84(uint8_t channel, uint8_t program)
-{
-    if (channel == 9) {
-        return 99;
-    }
-
-    return psr84_gm_program_map[program & 0x7F];
-}
-
-static uint8_t midi_translate_note_psr84(uint8_t channel, uint8_t note)
-{
-    note &= 0x7F;
-
-    if (channel == 9) {
-        return note;
-    }
-
-    note += (1 * 12);
-
-    while (note < MIDI_PSR84_NOTE_MIN) {
-        note = (uint8_t)(note + 12u);
-    }
-
-    while (note > MIDI_PSR84_NOTE_MAX) {
-        note = (uint8_t)(note - 12u);
-    }
-
-    return note;
-}
-
-static bool midi_psr84_accepts_cc(uint8_t control)
-{
-    switch (control) {
-        case 0x01: // Vibrato
-        case 0x07: // Volume
-        case 0x40: // Sustain
-        case 0x5B: // Reverb depth, ignored on PSR-84 but valid on PSR-85
-        case 0x78: // All Sound Off
-        case 0x79: // Reset Controllers
-        case 0x7B: // All Notes Off
-            return true;
-        default:
-            return false;
-    }
-}
-
-static bool midi_translate_voice_packet(MidiPlayer *player, uint8_t *packet, uint8_t *packet_len)
-{
-    if (player->translator == MIDI_TRANSLATOR_RAW) {
-        return true;
-    }
-
-    if (player->translator != MIDI_TRANSLATOR_PSR84) {
-        return true;
-    }
-
-    uint8_t message = packet[0] & 0xF0;
-    uint8_t channel = packet[0] & 0x0F;
-
-    if (message == 0xC0) {
-        packet[1] = midi_translate_program_psr84(channel, packet[1]);
-        return true;
-    }
-
-    if (message == 0xB0) {
-        if (packet[1] == 0x0A) {
-            return false;
-        }
-        return midi_psr84_accepts_cc(packet[1]);
-    }
-
-    if ((message == 0x80 || message == 0x90) && *packet_len >= 3) {
-        packet[1] = midi_translate_note_psr84(channel, packet[1]);
-        return true;
-    }
-
-    if (message == 0xA0 || message == 0xD0) {
-        return false;
-    }
-
-    (void)packet_len;
-    return true;
-}
-
 static void midi_visualize_voice_packet(const uint8_t *packet, uint8_t packet_len)
 {
     if (packet_len < 3) return;
@@ -1227,11 +1333,6 @@ static void midi_visualize_voice_packet(const uint8_t *packet, uint8_t packet_le
     } else if (message == 0x80) {
         visualizer_note_off(channel, packet[1]);
     }
-}
-
-static bool midi_translator_accepts_sysex(const MidiPlayer *player)
-{
-    return player->translator == MIDI_TRANSLATOR_RAW;
 }
 
 static bool midi_range_ok(const MidiTrack *track, uint32_t len)
@@ -1338,7 +1439,7 @@ static void midi_process_track_event(MidiPlayer *player, MidiTrack *track)
             return;
         }
 
-        if (midi_translator_accepts_sysex(player)) {
+        if (midi_translator_accepts_sysex(player->translator, status, track->ptr, len)) {
             midi_send_sysex_event(status, track->ptr, len);
         }
         track->ptr += len;
@@ -1360,7 +1461,7 @@ static void midi_process_track_event(MidiPlayer *player, MidiTrack *track)
         }
         uint8_t packet_len = data_len + 1;
         midi_visualize_voice_packet(packet, packet_len);
-        if (midi_translate_voice_packet(player, packet, &packet_len)) {
+        if (midi_translator_translate_voice_packet(player->translator, packet, &packet_len)) {
             midi_send_voice_packet(player, packet, packet_len);
         }
         midi_track_finish_event(track);
@@ -1571,7 +1672,7 @@ uint64_t midi_player_get_duration_us(const uint8_t *midi_data, uint32_t size)
 void midi_player_init(MidiPlayer *player, const uint8_t *midi_data, uint32_t size)
 {
     memset(player, 0, sizeof(MidiPlayer));
-    player->translator = MIDI_TRANSLATOR_PSR84;
+    player->translator = MIDI_TRANSLATOR_RAW;
     player->tempo_us = MIDI_DEFAULT_TEMPO_US;
 
     if (size < 14 || memcmp(midi_data, "MThd", 4) != 0) {
@@ -1677,17 +1778,50 @@ void midi_player_update_50hz(MidiPlayer *player)
 }
 
 
-MidiPlayer player;
-
-
 static void app_shutdown(void)
 {
     midi_send_channel_panic();
+
+    if (!app_graphics_active) {
+        return;
+    }
+
     // reset background and size for desktop
     gfx_mode(SCREEN_W, SCREEN_H, SCREEN_W, SCREEN_H, DISPFLAG_DUALLAYER | DISPFLAG_NOSCROLLABLE);
     gfx_scrollb(0,0);
     restore_desktop();
     HWKERNAL->exitgamemode();
+    app_graphics_active = false;
+}
+
+static bool app_enter_graphics(void)
+{
+    configure_runmode(GAMEMODE_PROFILE_0);
+    suspend_desktop();
+    app_graphics_active = true;
+
+    // display set up
+    gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_50);
+    gfx_mode(SCREEN_W, SCREEN_H, SCREEN_W, VIS_BACK_H, DISPFLAG_DUALLAYER | DISPFLAG_SCROLLABLE);
+
+    front_a = gfx_getfbuffer1();
+    front_b = gfx_getfbuffer2();
+    if (!create_app_bitmap(&back_layer, SCREEN_W, VIS_BACK_H)) {
+        printf("Could not allocate visualizer background\n");
+        app_shutdown();
+        return false;
+    }
+
+    build_palette();
+    gfx_usefpalette(app_palette);
+    gfx_usebpalette(app_palette);
+
+    draw_visualizer_prepare_front_buffers();
+    gfx_showbbuffer((gfx_bitmap_t *)&back_layer);
+    visualizer_clear_note_layer();
+    visualizer_draw_grid_full();
+
+    return true;
 }
 
 void setup(const uint8_t *midi_data, uint32_t midi_size, MidiTranslatorProfile translator) {
@@ -1695,7 +1829,7 @@ void setup(const uint8_t *midi_data, uint32_t midi_size, MidiTranslatorProfile t
     midi_player_init(&player, midi_data, midi_size);
     midi_player_set_translator(&player, translator);
     midi_send_player_reset(&player);
-    midi_player_update_us(&player, 0);
+    midi_translator_send_post_load_burst(translator, midi_translator_send_direct, NULL);
 }
 // Called every 50Hz VBL interrupt / frame tick
 void vbl_interrupt_handler(void) {
@@ -1750,74 +1884,93 @@ static void flip_front_buffer(void)
 
 int main(int argc, char *argv[])
 {
-    configure_runmode(GAMEMODE_PROFILE_0);
-    suspend_desktop();
     initMalloc();
 
     // sound options// no sound needed turn off the dma
     //set_audio_dma(512);
     //set_music_dma = 0;
 
-    
-
-    // display set up
-    gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_50);
-    gfx_mode(SCREEN_W, SCREEN_H, SCREEN_W, VIS_BACK_H, DISPFLAG_DUALLAYER | DISPFLAG_SCROLLABLE);
-
-    front_a = gfx_getfbuffer1();
-    front_b = gfx_getfbuffer2();
-    if (!create_app_bitmap(&back_layer, SCREEN_W, VIS_BACK_H)) {
-        printf("Could not allocate visualizer background\n");
-        app_shutdown();
-        return 1;
-    }
-
-    build_palette();
-    gfx_usefpalette(app_palette);
-    gfx_usebpalette(app_palette);
-
-    draw_visualizer_prepare_front_buffers();
-    gfx_showbbuffer((gfx_bitmap_t *)&back_layer);
-    visualizer_clear_note_layer();
-    visualizer_draw_grid_full();
-
-    visualizer_reset();
-    visualizer_clear_note_layer();
-    visualizer_draw_grid_full();
-
     const char *midi_arg = find_midi_arg(argc, argv);
-    MidiTranslatorProfile translator = find_translator_arg(argc, argv);
+    MidiTranslatorProfile requested_translator = MIDI_TRANSLATOR_RAW;
+    bool translator_requested = find_translator_arg(argc, argv, &requested_translator);
+    bool soundfont_test = find_arg(argc, argv, "--sftest");
+    bool ram_requested = find_ram_arg(argc, argv);
 
-    if (!midi_arg) {
-        printf("midiblaster.app <file.mid> [--psr84|--raw]\n");
-        app_shutdown();
+    if (!midi_arg && !ram_requested && !translator_requested && !soundfont_test) {
+        printf("midiblaster.app <file.mid>|--ram [--mt32|--mt32std|--gm|--awe32|--awe64|--sc55|--opl3|--sf0..15|--psr84|--raw] [--sftest]\n");
+        dbug("midiblaster.app <file.mid>|--ram [mode] [--sftest]\n");
         return 1;
     }
 
-    set_song_label(midi_arg);
-    draw_visualizer_prepare_front_buffers();
+    MidiTranslatorProfile translator = resolve_translator_mode(argc, argv);
 
-    if (!load_midi_from_file(midi_arg)) {
+    if (soundfont_test) {
+        printf("MidiBlaster SoundFont test: %s\n", midi_translator_profile_name(translator));
+        midi_send_soundfont_probe(translator);
+        return 0;
+    }
+
+    if (!midi_arg && !ram_requested) {
+        if (translator_requested) {
+            midi_send_translator_mode_setup(translator);
+            printf("MidiBlaster mode saved: %s\n", midi_translator_profile_name(translator));
+            dbug("MidiBlaster mode saved\n");
+            return 0;
+        }
+
+        printf("midiblaster.app <file.mid>|--ram [--mt32|--mt32std|--gm|--awe32|--awe64|--sc55|--opl3|--sf0..15|--psr84|--raw] [--sftest]\n");
+        dbug("midiblaster.app <file.mid>|--ram [mode] [--sftest]\n");
+        return 1;
+    }
+
+    set_song_label(ram_requested ? "RAM:0xD0000000" : midi_arg);
+
+    if (ram_requested) {
+        if (!load_midi_from_ram()) {
+            printf("Could not load MIDI from RAM: 0x%08X\n", (unsigned)RAMLOCATION);
+            dbug("Could not load MIDI from RAM\n");
+            return 1;
+        }
+    } else if (!load_midi_from_file(midi_arg)) {
         printf("Could not load MIDI: %s\n", midi_arg);
-        app_shutdown();
+        dbug("Could not load MIDI\n");
         return 1;
     }
 
     setup(loaded_midi_buffer, loaded_midi_size, translator);
     visual_grid_step_fp = visualizer_grid_step_from_tempo(player.tempo_us);
-    visualizer_clear_note_layer();
-    visualizer_draw_grid_full();
     if (!player.is_playing) {
-        printf("Unsupported MIDI: %s\n", midi_arg);
-        app_shutdown();
+        if (ram_requested) {
+            printf("Unsupported MIDI in RAM\n");
+        } else {
+            printf("Unsupported MIDI: %s\n", midi_arg);
+        }
+        dbug("Unsupported MIDI!:\n");
+        midi_send_channel_panic();
+        if (loaded_midi_buffer && loaded_midi_owns_buffer) {
+            free(loaded_midi_buffer);
+        }
+        loaded_midi_buffer = NULL;
+        loaded_midi_owns_buffer = false;
         return 1;
     }
+
+    if (!app_enter_graphics()) {
+        return 1;
+    }
+
+    visualizer_reset();
+    visual_grid_step_fp = visualizer_grid_step_from_tempo(player.tempo_us);
+    visualizer_clear_note_layer();
+    visualizer_draw_grid_full();
+    midi_start_tick_zero_events(translator);
 
     uint32_t duration_ms = midi_player_get_duration_ms(loaded_midi_buffer, loaded_midi_size);
     //float duration_seconds = (float)duration_us / 1000000.0f;
 
     uint8_t right_button_was_down = 0;
     dbug("Midi blaster started\n");
+    //printf("MidiBlaster system: %s\n", midi_translator_profile_name(translator));
 
 
     //irq_lcd_vbl(vbl_counter);  // attach the isr
@@ -1831,6 +1984,7 @@ int main(int argc, char *argv[])
     gfx_showfbuffer(front_a);
     gfx_usebuffer(front_b);
 
+    const char *system_label = midi_translator_profile_name(translator);
     uint16_t scrolly_roller = 0;
     
     
@@ -1844,6 +1998,7 @@ int main(int argc, char *argv[])
             visualizer_clear_note_layer();
             visualizer_draw_grid_full();
             scrolly_roller = 0;
+            midi_start_tick_zero_events(translator);
         }
 
         uint8_t joy = getjoyport();
@@ -1894,11 +2049,13 @@ int main(int argc, char *argv[])
         
         // draw your shit here
         gfx_setcolour(0);
-        gfx_rectf(378, 34, (8 * 12), 16);
+        gfx_rectf(378, 34, (8 * 12), 32);
         gfx_setcolour(COL_TEXT);
         gfx_drawtextf(386, 34, txtbuff, 1,2);
+        gfx_setcolour(COL_TEXT_DIM);
+        gfx_drawtextf(386, 50, system_label, 1,2);
 
-        
+
         // do the drawing of the grid/bars here
         while (visual_steps--) {
             visualizer_draw_back_delta(scrolly_roller);
@@ -1918,10 +2075,11 @@ int main(int argc, char *argv[])
     timer1ctrl(0);  // turn this off to prevent OS crash!!
     timer1isr(NULL);
     irq_lcd_vbl(NULL);  // attach the isr
-    if (loaded_midi_buffer) {
+    if (loaded_midi_buffer && loaded_midi_owns_buffer) {
         free(loaded_midi_buffer);
-        loaded_midi_buffer = NULL;
     }
+    loaded_midi_buffer = NULL;
+    loaded_midi_owns_buffer = false;
 
     return 0x00;
 }
