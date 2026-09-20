@@ -534,7 +534,7 @@ static void draw_visualizer_grid(void)
     gfx_rectf(0, VIS_KEY_Y, SCREEN_W, (int16_t)(SCREEN_H - VIS_KEY_Y));
 
     gfx_setcolour(COL_TEXT);
-    gfx_drawtext(10, 7, "MidiBlaster V0.59");
+    gfx_drawtext(10, 7, "MidiBlaster V0.76");
     gfx_setcolour(COL_TEXT_DIM);
     gfx_drawtext(272, 7, "right click release exits");
     
@@ -1895,10 +1895,25 @@ int main(int argc, char *argv[])
     bool translator_requested = find_translator_arg(argc, argv, &requested_translator);
     bool soundfont_test = find_arg(argc, argv, "--sftest");
     bool ram_requested = find_ram_arg(argc, argv);
+    bool osisr_requested = find_arg(argc, argv, "--osisr");
+    bool osisroff_requested = find_arg(argc, argv, "--osisroff");
+
+    if (osisroff_requested) {
+        timer1ctrl(0);
+        timer1isr(NULL);
+        midi_send_channel_panic();
+        printf("MidiBlaster OS ISR stopped\n");
+        dbug("MidiBlaster OS ISR stopped\n");
+        return 0;
+    }
+
+    if (osisr_requested && !midi_arg) {
+        ram_requested = true;
+    }
 
     if (!midi_arg && !ram_requested && !translator_requested && !soundfont_test) {
-        printf("midiblaster.app <file.mid>|--ram [--mt32|--mt32std|--gm|--awe32|--awe64|--sc55|--opl3|--sf0..15|--psr84|--raw] [--sftest]\n");
-        dbug("midiblaster.app <file.mid>|--ram [mode] [--sftest]\n");
+        printf("midiblaster.app <file.mid>|--ram [--mt32|--mt32std|--gm|--awe32|--awe64|--sc55|--opl3|--sf0..15|--psr84|--raw] [--sftest] [--osisr|--osisroff]\n");
+        dbug("midiblaster.app <file.mid>|--ram [mode] [--sftest] [--osisr]\n");
         return 1;
     }
 
@@ -1918,8 +1933,8 @@ int main(int argc, char *argv[])
             return 0;
         }
 
-        printf("midiblaster.app <file.mid>|--ram [--mt32|--mt32std|--gm|--awe32|--awe64|--sc55|--opl3|--sf0..15|--psr84|--raw] [--sftest]\n");
-        dbug("midiblaster.app <file.mid>|--ram [mode] [--sftest]\n");
+        printf("midiblaster.app <file.mid>|--ram [--mt32|--mt32std|--gm|--awe32|--awe64|--sc55|--opl3|--sf0..15|--psr84|--raw] [--sftest] [--osisr|--osisroff]\n");
+        dbug("midiblaster.app <file.mid>|--ram [mode] [--sftest] [--osisr]\n");
         return 1;
     }
 
@@ -1953,6 +1968,16 @@ int main(int argc, char *argv[])
         loaded_midi_buffer = NULL;
         loaded_midi_owns_buffer = false;
         return 1;
+    }
+
+    if (osisr_requested) {
+        midi_start_tick_zero_events(translator);
+        timer1isr(vbl_counter);
+        timer1duty(19999, 239);
+        timer1ctrl(API_TIMER_CTRL_RESET | API_TIMER_CTRL_ENABLE | API_TIMER_CTRL_IRQ_ENABLE);
+        printf("MidiBlaster OS ISR started: %s\n", midi_translator_profile_name(translator));
+        dbug("MidiBlaster OS ISR started\n");
+        return 0;
     }
 
     if (!app_enter_graphics()) {
