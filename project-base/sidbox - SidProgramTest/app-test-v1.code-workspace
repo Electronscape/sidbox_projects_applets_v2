@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../_coreapi_"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"main.h": "c",
+			"stat.h": "c",
+			"game.h": "c"
+		}
+		
+	}
+}
