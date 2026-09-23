@@ -4,60 +4,158 @@
 
 #include "main.h"
 #include "apis.h"
-/*
 
-    This is a shell starter for programs that dont use the GUI
-    Change the name of the app in the Makefile
+#define APP_INVALID_WINDOW ((CGWindow)0xFF)
 
-*/
+#define TXTAPP_TITLE    "GUI Test App"
+#define TESTAPP_WIN_X    24
+#define TESTAPP_WIN_Y    20
+#define TESTAPP_WIN_W    300
+#define TESTAPP_WIN_H    200
 
-#define TXTAPP_TITLE    "BLANK PROGRAM - GUI"
+#define SHAPES_PER_TICK 6
 
-static CGTimer my_loop_tmr = 0;
+#define WIN_DEFAULT     (SBX_WF_VISIBLE    |\
+                         SBX_WF_CLOSE      |\
+                         SBX_WF_TITLE_BAR  |\
+                         SBX_WF_ZORDER     |\
+                         SBX_WF_MINIMISE   |\
+                         SBX_WF_MOVEABLE   |\
+                         SBX_WF_SCREENBOUND)
 
-// timer for your APP loop
-void app_loop_os(void *user){
 
-    printf("This did something in a timer!!\n");
+static CGWindow testapp_win;
+static CGTimer draw_timer = CGTIMER_INVALID;
+static cg_menu_t demo_menu = CG_MENU_INVALID;
+static cg_menuitem_t menu_exit  = CG_MENUITEM_INVALID;
 
-    SBOS_FreeTimer(my_loop_tmr);    // must be done when you're finished with your program!
+static volatile uint8_t app_running;
+
+static CGWindowProcRes testapp_proc(CGWindow win, const CGMessage_t *m);
+
+static void app_shutdown(void)
+{
+    if (!app_running) {
+        return;
+    }
+
+    app_running = 0;
+
+    if (draw_timer != CGTIMER_INVALID) {
+        SBOS_FreeTimer(draw_timer);
+        draw_timer = CGTIMER_INVALID;
+    }
+
+    if (testapp_win) {
+        SBOS_CloseWindow(testapp_win);
+        testapp_win = 0;
+    }
+
+    if (demo_menu != CG_MENU_INVALID) {
+        SBOS_DestroyMenu(&demo_menu);
+        menu_exit  = CG_MENUITEM_INVALID;
+    }
+
+    //printf(TXTAPP_TITLE ": closing\n");
+}
+
+static void on_timer_tick(void *user)
+{
+    (void)user;
+
+    if (!app_running) {
+        return;
+    }
+
+    //draw_demo_frame(SHAPES_PER_TICK);
+    printf("doing something\n");
+}
+
+static CGWindowProcRes testapp_proc(CGWindow win, const CGMessage_t *m)
+{
+    (void)win;
+
+    if (!m) {
+        return CGPROC_DEFAULT;
+    }
+
+    if (m->mtype == CGMSG_WINDOW) {
+        switch (m->eventClass) {
+        case CGEVT_WIN_CLOSE_REQUEST:
+            app_shutdown();
+            return CGPROC_HANDLED;
+
+        case CGEVT_SYS_REPAINT:
+            //repaint_bitmapview();
+            //set_status();
+            return CGPROC_HANDLED;
+
+        default:
+            break;
+        }
+    }
+
+    if (m->mtype == CGMSG_MENU && m->eventClass == CGEVT_MENU_SELECTED) {
+        if ((cg_menu_t)m->a != demo_menu) {
+            return CGPROC_DEFAULT;
+        }
+
+        if ((cg_menuitem_t)m->b == menu_exit) {
+            app_shutdown();
+            return CGPROC_HANDLED;
+        }
+    }
+
+    return CGPROC_DEFAULT;
+}
+
+static void setup_demo_menu(void)
+{
+    cg_menuitem_t item;
+
+    if (demo_menu != CG_MENU_INVALID) {
+        return;
+    }
+
+    demo_menu = SBOS_CreateMenuTitle("Test app|Options|About");
+    if (demo_menu == CG_MENU_INVALID) {
+        return;
+    }
+
+    menu_exit = SBOS_CreateMenuItem(&demo_menu, 0, "Exit"); // handled by CGMSG_MENU in editor_proc()
+
+    //menu_about = SBOS_CreateMenuItem(&demo_menu, 2, "for calling back on menu hit");
+    //SBOS_MenuCallBack(menu_about, on_menu_about, NULL);
+
+    SBOS_AttachMenuToWindow(demo_menu, testapp_win);
+}
+
+static void build_testapp(void)
+{
+    SBOS_CreateWindow(&testapp_win, TESTAPP_WIN_X, TESTAPP_WIN_Y, TESTAPP_WIN_W, TESTAPP_WIN_H, TXTAPP_TITLE, WIN_DEFAULT);
+    SBOS_SetWindowProc(testapp_win, testapp_proc);
+    SetApplicationTitle(testapp_win, "Test blank app!");
+    setup_demo_menu();
+
+    draw_timer = SBOS_CreateTimer();
+    if (draw_timer != CGTIMER_INVALID) {
+        if (SBOS_TimerSet(draw_timer, 1000, 1000, on_timer_tick, NULL) != 0) {
+            SBOS_FreeTimer(draw_timer);
+            draw_timer = CGTIMER_INVALID;
+        }
+    }
+
+    SBOS_WindowToFront(testapp_win);
+    SBOS_WindowSetFocus(testapp_win);
 }
 
 int main(int argc, char *argv[])
 {
     (void)argc;
     (void)argv;
-    configure_runmode(GAMEMODE_PROFILE_0);
-    initMalloc();
-    // sound options if we're using sound
-    //set_audio_dma(512); // shouldn't need to alter these
-    //set_music_dma = 1;
-    //enable_audio_dma(); // use this if you want music to be playing without having to watch dog the music routing
-    //////////////////////////////////////
 
-    // display set up
+    app_running = 1;
+    build_testapp();
 
-    
-    my_loop_tmr = SBOS_CreateTimer();   // don't forget to free the time when your app ends, otherwise your program will keep running
-    SBOS_TimerSet(my_loop_tmr, 0, 1000, app_loop_os, NULL); // creating a timer starts it immediately!
-    
-    
-    //while (1) 
-    {
-
-        {
-            // your graphics and content on screen
-        }
-
-        
-        music_update(); // dma watch dog not switched on so will need this
-        sysevents();    // this will only do the basics, to really have multi-tasking you need to run in a timer for your loops
-
-    }
-
-    // this example this will compile but wont do anything
-    //SBOS_FreeTimer(my_loop_tmr);    // must be done when you're finished with your program!
-
-
-    return 0x00;    
+    return 0x00;
 }

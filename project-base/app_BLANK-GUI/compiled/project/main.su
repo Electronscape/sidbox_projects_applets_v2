@@ -1,2 +1,4 @@
-main.c:19:6:app_loop_os	8	static
-main.c:26:5:main	32	static
+main.c:62:13:on_timer_tick	0	static
+main.c:36:13:app_shutdown	16	static
+main.c:74:24:testapp_proc	8	static
+main.c:152:5:main	40	static
