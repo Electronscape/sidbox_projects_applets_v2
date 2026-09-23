@@ -10,20 +10,14 @@ Archive member included to satisfy reference by file (symbol)
                               /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o (__libc_init_array)
 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-memset.o)
                               /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o (memset)
-/home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-puts.o)
-                              compiled/project/main.o (puts)
 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setbuf.o)
                               compiled/syscalls.o (setbuf)
 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setvbuf.o)
                               /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setbuf.o) (setvbuf)
-/home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wbuf.o)
-                              /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-puts.o) (__swbuf_r)
-/home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wsetup.o)
-                              /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-puts.o) (__swsetup_r)
 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fflush.o)
                               /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setvbuf.o) (_fflush_r)
 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
-                              /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-puts.o) (__sinit)
+                              /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setvbuf.o) (__sinit)
 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fwalk.o)
                               /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o) (_fwalk)
 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lock.o)
@@ -128,8 +122,11 @@ Discarded input sections
                 0x0000000000000000        0xf compiled/syscalls.o
  .text.doWriteTest
                 0x0000000000000000       0x30 compiled/syscalls.o
+ .text.initMalloc
+                0x0000000000000000       0x18 compiled/syscalls.o
  .text._write   0x0000000000000000       0x5c compiled/syscalls.o
  .text._sbrk    0x0000000000000000       0x40 compiled/syscalls.o
+ .text._isatty  0x0000000000000000        0x4 compiled/syscalls.o
  .text._exit    0x0000000000000000        0x4 compiled/syscalls.o
  .text._getpid  0x0000000000000000        0x4 compiled/syscalls.o
  .text._kill    0x0000000000000000        0x8 compiled/syscalls.o
@@ -138,6 +135,7 @@ Discarded input sections
  .data.heap_base
                 0x0000000000000000        0x4 compiled/syscalls.o
  .thestart      0x0000000000000000        0x4 compiled/syscalls.o
+ COMMON         0x0000000000000000        0x4 compiled/syscalls.o
  .text          0x0000000000000000        0x0 compiled/project/sid_midi_programs.o
  .data          0x0000000000000000        0x0 compiled/project/sid_midi_programs.o
  .bss           0x0000000000000000        0x0 compiled/project/sid_midi_programs.o
@@ -200,22 +198,12 @@ Discarded input sections
  .text          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-memset.o)
  .data          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-memset.o)
  .bss           0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-memset.o)
- .text          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-puts.o)
- .data          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-puts.o)
- .bss           0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-puts.o)
  .text          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setbuf.o)
  .data          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setbuf.o)
  .bss           0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setbuf.o)
  .text          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setvbuf.o)
  .data          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setvbuf.o)
  .bss           0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setvbuf.o)
- .text          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wbuf.o)
- .data          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wbuf.o)
- .bss           0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wbuf.o)
- .text.__swbuf  0x0000000000000000       0x10 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wbuf.o)
- .text          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wsetup.o)
- .data          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wsetup.o)
- .bss           0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wsetup.o)
  .text          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fflush.o)
  .data          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fflush.o)
  .bss           0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fflush.o)
@@ -257,6 +245,8 @@ Discarded input sections
  .text          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-makebuf.o)
  .data          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-makebuf.o)
  .bss           0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-makebuf.o)
+ .text.__smakebuf_r
+                0x0000000000000000       0x80 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-makebuf.o)
  .text          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-malloc.o)
  .data          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-malloc.o)
  .bss           0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-malloc.o)
@@ -281,6 +271,11 @@ Discarded input sections
  .text          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-isattyr.o)
  .data          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-isattyr.o)
  .bss           0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-isattyr.o)
+ .text._isatty_r
+                0x0000000000000000       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-isattyr.o)
+ .debug_frame   0x0000000000000000       0x2c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-isattyr.o)
+ .ARM.attributes
+                0x0000000000000000       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-isattyr.o)
  .text          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lseekr.o)
  .data          0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lseekr.o)
  .bss           0x0000000000000000        0x0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lseekr.o)
@@ -379,244 +374,231 @@ LOAD /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/
                 0x00000000d03e0000                sdex_header
                 0x00000000d03e0008                . = ALIGN (0x4)
                 0x00000000d03e0008        0x4 LONG 0xd03e0000 _appstart
-                0x00000000d03e000c        0x4 LONG 0x2e18 (__stack_end__ - _appstart)
+                0x00000000d03e000c        0x4 LONG 0x2e30 (__stack_end__ - _appstart)
 
-.text           0x00000000d03e0010      0xd74
+.text           0x00000000d03e0010      0xd84
                 0x00000000d03e0010                . = ALIGN (0x4)
  *(.text.applet_entry)
  .text.applet_entry
                 0x00000000d03e0010       0x2c compiled/syscalls.o
                 0x00000000d03e0010                applet_entry
  *(.text*)
- .text.initMalloc
-                0x00000000d03e003c       0x18 compiled/syscalls.o
-                0x00000000d03e003c                initMalloc
  .text._write_r
-                0x00000000d03e0054       0x60 compiled/syscalls.o
-                0x00000000d03e0054                _write_r
- .text._read    0x00000000d03e00b4       0x14 compiled/syscalls.o
-                0x00000000d03e00b4                _read
- .text._close   0x00000000d03e00c8        0x8 compiled/syscalls.o
-                0x00000000d03e00c8                _close
- .text._fstat   0x00000000d03e00d0        0xc compiled/syscalls.o
-                0x00000000d03e00d0                _fstat
- .text._lseek   0x00000000d03e00dc        0x4 compiled/syscalls.o
-                0x00000000d03e00dc                _lseek
- .text._sbrk_r  0x00000000d03e00e0       0x40 compiled/syscalls.o
-                0x00000000d03e00e0                _sbrk_r
- .text._isatty  0x00000000d03e0120        0x4 compiled/syscalls.o
-                0x00000000d03e0120                _isatty
- .text.app_loop_os
-                0x00000000d03e0124        0xc compiled/project/main.o
+                0x00000000d03e003c       0x60 compiled/syscalls.o
+                0x00000000d03e003c                _write_r
+ .text._read    0x00000000d03e009c       0x14 compiled/syscalls.o
+                0x00000000d03e009c                _read
+ .text._close   0x00000000d03e00b0        0x8 compiled/syscalls.o
+                0x00000000d03e00b0                _close
+ .text._fstat   0x00000000d03e00b8        0xc compiled/syscalls.o
+                0x00000000d03e00b8                _fstat
+ .text._lseek   0x00000000d03e00c4        0x4 compiled/syscalls.o
+                0x00000000d03e00c4                _lseek
+ .text._sbrk_r  0x00000000d03e00c8       0x40 compiled/syscalls.o
+                0x00000000d03e00c8                _sbrk_r
+ .text.on_timer_tick
+                0x00000000d03e0108       0x4c compiled/project/main.o
+ .text.testapp_proc
+                0x00000000d03e0154       0xd8 compiled/project/main.o
  .text.startup.main
-                0x00000000d03e0130       0xac compiled/project/main.o
-                0x00000000d03e0130                main
- .text.__errno  0x00000000d03e01dc        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-errno.o)
-                0x00000000d03e01dc                __errno
- .text.memset   0x00000000d03e01e8       0x10 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-memset.o)
-                0x00000000d03e01e8                memset
- .text._puts_r  0x00000000d03e01f8       0xdc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-puts.o)
-                0x00000000d03e01f8                _puts_r
- .text.puts     0x00000000d03e02d4       0x10 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-puts.o)
-                0x00000000d03e02d4                puts
- .text.setbuf   0x00000000d03e02e4       0x10 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setbuf.o)
-                0x00000000d03e02e4                setbuf
- .text.setvbuf  0x00000000d03e02f4      0x18c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setvbuf.o)
-                0x00000000d03e02f4                setvbuf
- .text.__swbuf_r
-                0x00000000d03e0480       0xa4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wbuf.o)
-                0x00000000d03e0480                __swbuf_r
- .text.__swsetup_r
-                0x00000000d03e0524       0xdc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wsetup.o)
-                0x00000000d03e0524                __swsetup_r
+                0x00000000d03e022c      0x2e8 compiled/project/main.o
+                0x00000000d03e022c                main
+ .text.__errno  0x00000000d03e0514        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-errno.o)
+                0x00000000d03e0514                __errno
+ .text.memset   0x00000000d03e0520       0x10 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-memset.o)
+                0x00000000d03e0520                memset
+ .text.setbuf   0x00000000d03e0530       0x10 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setbuf.o)
+                0x00000000d03e0530                setbuf
+ .text.setvbuf  0x00000000d03e0540      0x18c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setvbuf.o)
+                0x00000000d03e0540                setvbuf
  .text.__sflush_r
-                0x00000000d03e0600      0x10c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fflush.o)
-                0x00000000d03e0600                __sflush_r
+                0x00000000d03e06cc      0x10c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fflush.o)
+                0x00000000d03e06cc                __sflush_r
  .text._fflush_r
-                0x00000000d03e070c       0x78 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fflush.o)
-                0x00000000d03e070c                _fflush_r
- .text.std      0x00000000d03e0784       0x48 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+                0x00000000d03e07d8       0x78 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fflush.o)
+                0x00000000d03e07d8                _fflush_r
+ .text.std      0x00000000d03e0850       0x48 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
  .text._cleanup_r
-                0x00000000d03e07cc        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
-                0x00000000d03e07cc                _cleanup_r
+                0x00000000d03e0898        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+                0x00000000d03e0898                _cleanup_r
  .text.__sfmoreglue
-                0x00000000d03e07d8       0x2c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
-                0x00000000d03e07d8                __sfmoreglue
+                0x00000000d03e08a4       0x2c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+                0x00000000d03e08a4                __sfmoreglue
  .text.__sfp_lock_acquire
-                0x00000000d03e0804        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
-                0x00000000d03e0804                __sfp_lock_acquire
+                0x00000000d03e08d0        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+                0x00000000d03e08d0                __sfp_lock_acquire
  .text.__sfp_lock_release
-                0x00000000d03e0810        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
-                0x00000000d03e0810                __sfp_lock_release
+                0x00000000d03e08dc        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+                0x00000000d03e08dc                __sfp_lock_release
  .text.__sinit_lock_acquire
-                0x00000000d03e081c        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
-                0x00000000d03e081c                __sinit_lock_acquire
+                0x00000000d03e08e8        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+                0x00000000d03e08e8                __sinit_lock_acquire
  .text.__sinit_lock_release
-                0x00000000d03e0828        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
-                0x00000000d03e0828                __sinit_lock_release
- .text.__sinit  0x00000000d03e0834       0x70 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
-                0x00000000d03e0834                __sinit
- .text.__sfp    0x00000000d03e08a4       0x8c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
-                0x00000000d03e08a4                __sfp
+                0x00000000d03e08f4        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+                0x00000000d03e08f4                __sinit_lock_release
+ .text.__sinit  0x00000000d03e0900       0x70 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+                0x00000000d03e0900                __sinit
+ .text.__sfp    0x00000000d03e0970       0x8c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+                0x00000000d03e0970                __sfp
  .text._fwalk_reent
-                0x00000000d03e0930       0x3e /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fwalk.o)
-                0x00000000d03e0930                _fwalk_reent
+                0x00000000d03e09fc       0x3e /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fwalk.o)
+                0x00000000d03e09fc                _fwalk_reent
  .text.__retarget_lock_init_recursive
-                0x00000000d03e096e        0x2 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lock.o)
-                0x00000000d03e096e                __retarget_lock_init_recursive
+                0x00000000d03e0a3a        0x2 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lock.o)
+                0x00000000d03e0a3a                __retarget_lock_init_recursive
  .text.__retarget_lock_acquire_recursive
-                0x00000000d03e0970        0x2 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lock.o)
-                0x00000000d03e0970                __retarget_lock_acquire_recursive
+                0x00000000d03e0a3c        0x2 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lock.o)
+                0x00000000d03e0a3c                __retarget_lock_acquire_recursive
  .text.__retarget_lock_release_recursive
-                0x00000000d03e0972        0x2 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lock.o)
-                0x00000000d03e0972                __retarget_lock_release_recursive
+                0x00000000d03e0a3e        0x2 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lock.o)
+                0x00000000d03e0a3e                __retarget_lock_release_recursive
  .text.__swhatbuf_r
-                0x00000000d03e0974       0x48 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-makebuf.o)
-                0x00000000d03e0974                __swhatbuf_r
- .text.__smakebuf_r
-                0x00000000d03e09bc       0x80 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-makebuf.o)
-                0x00000000d03e09bc                __smakebuf_r
- .text.malloc   0x00000000d03e0a3c       0x10 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-malloc.o)
-                0x00000000d03e0a3c                malloc
- .text._free_r  0x00000000d03e0a4c       0xa0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-freer.o)
-                0x00000000d03e0a4c                _free_r
+                0x00000000d03e0a40       0x48 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-makebuf.o)
+                0x00000000d03e0a40                __swhatbuf_r
+ .text.malloc   0x00000000d03e0a88       0x10 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-malloc.o)
+                0x00000000d03e0a88                malloc
+ .text._free_r  0x00000000d03e0a98       0xa0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-freer.o)
+                0x00000000d03e0a98                _free_r
  .text._malloc_r
-                0x00000000d03e0aec       0xb4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-mallocr.o)
-                0x00000000d03e0aec                _malloc_r
- .text.__sread  0x00000000d03e0ba0       0x22 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-stdio.o)
-                0x00000000d03e0ba0                __sread
+                0x00000000d03e0b38       0xb4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-mallocr.o)
+                0x00000000d03e0b38                _malloc_r
+ .text.__sread  0x00000000d03e0bec       0x22 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-stdio.o)
+                0x00000000d03e0bec                __sread
  .text.__swrite
-                0x00000000d03e0bc2       0x38 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-stdio.o)
-                0x00000000d03e0bc2                __swrite
- .text.__sseek  0x00000000d03e0bfa       0x24 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-stdio.o)
-                0x00000000d03e0bfa                __sseek
+                0x00000000d03e0c0e       0x38 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-stdio.o)
+                0x00000000d03e0c0e                __swrite
+ .text.__sseek  0x00000000d03e0c46       0x24 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-stdio.o)
+                0x00000000d03e0c46                __sseek
  .text.__sclose
-                0x00000000d03e0c1e        0x8 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-stdio.o)
-                0x00000000d03e0c1e                __sclose
- *fill*         0x00000000d03e0c26        0x2 
+                0x00000000d03e0c6a        0x8 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-stdio.o)
+                0x00000000d03e0c6a                __sclose
+ *fill*         0x00000000d03e0c72        0x2 
  .text._close_r
-                0x00000000d03e0c28       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-closer.o)
-                0x00000000d03e0c28                _close_r
+                0x00000000d03e0c74       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-closer.o)
+                0x00000000d03e0c74                _close_r
  .text._fstat_r
-                0x00000000d03e0c48       0x24 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fstatr.o)
-                0x00000000d03e0c48                _fstat_r
- .text._isatty_r
-                0x00000000d03e0c6c       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-isattyr.o)
-                0x00000000d03e0c6c                _isatty_r
+                0x00000000d03e0c94       0x24 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fstatr.o)
+                0x00000000d03e0c94                _fstat_r
  .text._lseek_r
-                0x00000000d03e0c8c       0x24 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lseekr.o)
-                0x00000000d03e0c8c                _lseek_r
+                0x00000000d03e0cb8       0x24 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lseekr.o)
+                0x00000000d03e0cb8                _lseek_r
  .text.__malloc_lock
-                0x00000000d03e0cb0        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-mlock.o)
-                0x00000000d03e0cb0                __malloc_lock
+                0x00000000d03e0cdc        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-mlock.o)
+                0x00000000d03e0cdc                __malloc_lock
  .text.__malloc_unlock
-                0x00000000d03e0cbc        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-mlock.o)
-                0x00000000d03e0cbc                __malloc_unlock
- .text._read_r  0x00000000d03e0cc8       0x24 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-readr.o)
-                0x00000000d03e0cc8                _read_r
+                0x00000000d03e0ce8        0xc /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-mlock.o)
+                0x00000000d03e0ce8                __malloc_unlock
+ .text._read_r  0x00000000d03e0cf4       0x24 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-readr.o)
+                0x00000000d03e0cf4                _read_r
  *(.rodata*)
- .rodata.app_loop_os.str1.4
-                0x00000000d03e0cec       0x20 compiled/project/main.o
  .rodata.main.str1.4
-                0x00000000d03e0d0c       0x14 compiled/project/main.o
+                0x00000000d03e0d18       0x16 compiled/project/main.o
+ *fill*         0x00000000d03e0d2e        0x2 
  .rodata._global_impure_ptr
-                0x00000000d03e0d20        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-impure.o)
-                0x00000000d03e0d20                _global_impure_ptr
+                0x00000000d03e0d30        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-impure.o)
+                0x00000000d03e0d30                _global_impure_ptr
  .rodata.__sf_fake_stderr
-                0x00000000d03e0d24       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
-                0x00000000d03e0d24                __sf_fake_stderr
+                0x00000000d03e0d34       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+                0x00000000d03e0d34                __sf_fake_stderr
  .rodata.__sf_fake_stdin
-                0x00000000d03e0d44       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
-                0x00000000d03e0d44                __sf_fake_stdin
+                0x00000000d03e0d54       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+                0x00000000d03e0d54                __sf_fake_stdin
  .rodata.__sf_fake_stdout
-                0x00000000d03e0d64       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
-                0x00000000d03e0d64                __sf_fake_stdout
+                0x00000000d03e0d74       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+                0x00000000d03e0d74                __sf_fake_stdout
 
-.glue_7         0x00000000d03e0d84        0x0
- .glue_7        0x00000000d03e0d84        0x0 linker stubs
+.glue_7         0x00000000d03e0d94        0x0
+ .glue_7        0x00000000d03e0d94        0x0 linker stubs
 
-.glue_7t        0x00000000d03e0d84        0x0
- .glue_7t       0x00000000d03e0d84        0x0 linker stubs
+.glue_7t        0x00000000d03e0d94        0x0
+ .glue_7t       0x00000000d03e0d94        0x0 linker stubs
 
-.vfp11_veneer   0x00000000d03e0d84        0x0
- .vfp11_veneer  0x00000000d03e0d84        0x0 linker stubs
+.vfp11_veneer   0x00000000d03e0d94        0x0
+ .vfp11_veneer  0x00000000d03e0d94        0x0 linker stubs
 
-.v4_bx          0x00000000d03e0d84        0x0
- .v4_bx         0x00000000d03e0d84        0x0 linker stubs
+.v4_bx          0x00000000d03e0d94        0x0
+ .v4_bx         0x00000000d03e0d94        0x0 linker stubs
 
-.init           0x00000000d03e0d84        0x4
- .init          0x00000000d03e0d84        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crti.o
-                0x00000000d03e0d84                _init
+.init           0x00000000d03e0d94        0x4
+ .init          0x00000000d03e0d94        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crti.o
+                0x00000000d03e0d94                _init
 
-.fini           0x00000000d03e0d88        0x4
- .fini          0x00000000d03e0d88        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crti.o
-                0x00000000d03e0d88                _fini
+.fini           0x00000000d03e0d98        0x4
+ .fini          0x00000000d03e0d98        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/thumb/v7e-m+dp/hard/crti.o
+                0x00000000d03e0d98                _fini
 
-.iplt           0x00000000d03e0d8c        0x0
- .iplt          0x00000000d03e0d8c        0x0 compiled/syscalls.o
+.iplt           0x00000000d03e0d9c        0x0
+ .iplt          0x00000000d03e0d9c        0x0 compiled/syscalls.o
 
-.rel.dyn        0x00000000d03e0d8c        0x0
- .rel.iplt      0x00000000d03e0d8c        0x0 compiled/syscalls.o
+.rel.dyn        0x00000000d03e0d9c        0x0
+ .rel.iplt      0x00000000d03e0d9c        0x0 compiled/syscalls.o
 
-.data           0x00000000d03e0d8c       0x64
-                0x00000000d03e0d8c                . = ALIGN (0x4)
+.data           0x00000000d03e0d9c       0x68
+                0x00000000d03e0d9c                . = ALIGN (0x4)
  *(.data*)
+ .data.draw_timer
+                0x00000000d03e0d9c        0x1 compiled/project/main.o
+ *fill*         0x00000000d03e0d9d        0x3 
  .data._impure_ptr
-                0x00000000d03e0d8c        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-impure.o)
-                0x00000000d03e0d8c                _impure_ptr
+                0x00000000d03e0da0        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-impure.o)
+                0x00000000d03e0da0                _impure_ptr
  .data.impure_data
-                0x00000000d03e0d90       0x60 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-impure.o)
+                0x00000000d03e0da4       0x60 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-impure.o)
 
-.igot.plt       0x00000000d03e0df0        0x0
- .igot.plt      0x00000000d03e0df0        0x0 compiled/syscalls.o
+.igot.plt       0x00000000d03e0e04        0x0
+ .igot.plt      0x00000000d03e0e04        0x0 compiled/syscalls.o
 
-.bss            0x00000000d03e0df0       0x28
-                0x00000000d03e0df0                . = ALIGN (0x4)
-                0x00000000d03e0df0                __bss_start__ = .
+.bss            0x00000000d03e0e04       0x2c
+                0x00000000d03e0e04                . = ALIGN (0x4)
+                0x00000000d03e0e04                __bss_start__ = .
  *(.bss*)
  .bss.heap_end_u
-                0x00000000d03e0df0        0x4 compiled/syscalls.o
- .bss.in_write.8140
-                0x00000000d03e0df4        0x4 compiled/syscalls.o
- .bss.editor_win
-                0x00000000d03e0df8        0x1 compiled/project/main.o
- *fill*         0x00000000d03e0df9        0x3 
+                0x00000000d03e0e04        0x4 compiled/syscalls.o
+ .bss.in_write.8202
+                0x00000000d03e0e08        0x4 compiled/syscalls.o
+ .bss.app_running
+                0x00000000d03e0e0c        0x1 compiled/project/main.o
+ *fill*         0x00000000d03e0e0d        0x3 
+ .bss.demo_menu
+                0x00000000d03e0e10        0x4 compiled/project/main.o
+ .bss.freq      0x00000000d03e0e14        0x1 compiled/project/main.o
+ .bss.testapp_win
+                0x00000000d03e0e15        0x1 compiled/project/main.o
+ *fill*         0x00000000d03e0e16        0x2 
  .bss.__malloc_free_list
-                0x00000000d03e0dfc        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-mallocr.o)
-                0x00000000d03e0dfc                __malloc_free_list
+                0x00000000d03e0e18        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-mallocr.o)
+                0x00000000d03e0e18                __malloc_free_list
  .bss.__malloc_sbrk_start
-                0x00000000d03e0e00        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-mallocr.o)
-                0x00000000d03e0e00                __malloc_sbrk_start
+                0x00000000d03e0e1c        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-mallocr.o)
+                0x00000000d03e0e1c                __malloc_sbrk_start
  *(COMMON)
- COMMON         0x00000000d03e0e04        0x4 compiled/syscalls.o
-                0x00000000d03e0e04                heap_size
- COMMON         0x00000000d03e0e08        0x9 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lock.o)
-                0x00000000d03e0e08                __lock___atexit_recursive_mutex
-                0x00000000d03e0e09                __lock___arc4random_mutex
-                0x00000000d03e0e0a                __lock___env_recursive_mutex
-                0x00000000d03e0e0b                __lock___sinit_recursive_mutex
-                0x00000000d03e0e0c                __lock___malloc_recursive_mutex
-                0x00000000d03e0e0d                __lock___at_quick_exit_mutex
-                0x00000000d03e0e0e                __lock___dd_hash_mutex
-                0x00000000d03e0e0f                __lock___tz_mutex
-                0x00000000d03e0e10                __lock___sfp_recursive_mutex
- *fill*         0x00000000d03e0e11        0x3 
- COMMON         0x00000000d03e0e14        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-reent.o)
-                0x00000000d03e0e14                errno
-                0x00000000d03e0e18                . = ALIGN (0x4)
-                0x00000000d03e0e18                __bss_end__ = .
+ COMMON         0x00000000d03e0e20        0x9 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lock.o)
+                0x00000000d03e0e20                __lock___atexit_recursive_mutex
+                0x00000000d03e0e21                __lock___arc4random_mutex
+                0x00000000d03e0e22                __lock___env_recursive_mutex
+                0x00000000d03e0e23                __lock___sinit_recursive_mutex
+                0x00000000d03e0e24                __lock___malloc_recursive_mutex
+                0x00000000d03e0e25                __lock___at_quick_exit_mutex
+                0x00000000d03e0e26                __lock___dd_hash_mutex
+                0x00000000d03e0e27                __lock___tz_mutex
+                0x00000000d03e0e28                __lock___sfp_recursive_mutex
+ *fill*         0x00000000d03e0e29        0x3 
+ COMMON         0x00000000d03e0e2c        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-reent.o)
+                0x00000000d03e0e2c                errno
+                0x00000000d03e0e30                . = ALIGN (0x4)
+                0x00000000d03e0e30                __bss_end__ = .
 
-.stack          0x00000000d03e0e18     0x2000
-                0x00000000d03e0e18                . = ALIGN (0x8)
-                0x00000000d03e0e18                __stack_start__ = .
-                0x00000000d03e2e18                . = (. + _stack_size)
- *fill*         0x00000000d03e0e18     0x2000 
-                0x00000000d03e2e18                . = ALIGN (0x8)
-                0x00000000d03e2e18                __stack_end__ = .
+.stack          0x00000000d03e0e30     0x2000
+                0x00000000d03e0e30                . = ALIGN (0x8)
+                0x00000000d03e0e30                __stack_start__ = .
+                0x00000000d03e2e30                . = (. + _stack_size)
+ *fill*         0x00000000d03e0e30     0x2000 
+                0x00000000d03e2e30                . = ALIGN (0x8)
+                0x00000000d03e2e30                __stack_end__ = .
                 [!provide]                        PROVIDE (__app_end_clear = __stack_end__)
                 [!provide]                        PROVIDE (_estack = __stack_end__)
-                0x00000000d03e2e18                _end = .
-                0x00000000d03e2e18                __app_end = .
+                0x00000000d03e2e30                _end = .
+                0x00000000d03e2e30                __app_end = .
                 0x0000000000000001                ASSERT ((__stack_end__ <= (_appstart + LENGTH (APPLET))), Applet image exceeds selected app size!)
                 0x0000000000000001                ASSERT ((__stack_end__ <= _sdram_end), Applet image exceeds SDRAM end!)
                 0x0000000000000001                ASSERT ((__stack_end__ <= _ramdisk_origin), Applet image overlaps RAM disk!)
@@ -638,74 +620,62 @@ LOAD linker stubs
  .ARM.attributes
                 0x00000000000000d8       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-memset.o)
  .ARM.attributes
-                0x000000000000010a       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-puts.o)
+                0x000000000000010a       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setbuf.o)
  .ARM.attributes
-                0x000000000000013c       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setbuf.o)
+                0x000000000000013c       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setvbuf.o)
  .ARM.attributes
-                0x000000000000016e       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setvbuf.o)
+                0x000000000000016e       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fflush.o)
  .ARM.attributes
-                0x00000000000001a0       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wbuf.o)
+                0x00000000000001a0       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
  .ARM.attributes
-                0x00000000000001d2       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wsetup.o)
+                0x00000000000001d2       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fwalk.o)
  .ARM.attributes
-                0x0000000000000204       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fflush.o)
+                0x0000000000000204       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lock.o)
  .ARM.attributes
-                0x0000000000000236       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+                0x0000000000000236       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-makebuf.o)
  .ARM.attributes
-                0x0000000000000268       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fwalk.o)
+                0x0000000000000268       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-malloc.o)
  .ARM.attributes
-                0x000000000000029a       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lock.o)
+                0x000000000000029a       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-freer.o)
  .ARM.attributes
-                0x00000000000002cc       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-makebuf.o)
+                0x00000000000002cc       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-mallocr.o)
  .ARM.attributes
-                0x00000000000002fe       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-malloc.o)
+                0x00000000000002fe       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-stdio.o)
  .ARM.attributes
-                0x0000000000000330       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-freer.o)
+                0x0000000000000330       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-closer.o)
  .ARM.attributes
-                0x0000000000000362       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-mallocr.o)
+                0x0000000000000362       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fstatr.o)
  .ARM.attributes
-                0x0000000000000394       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-stdio.o)
+                0x0000000000000394       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lseekr.o)
  .ARM.attributes
-                0x00000000000003c6       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-closer.o)
+                0x00000000000003c6       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-mlock.o)
  .ARM.attributes
-                0x00000000000003f8       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fstatr.o)
+                0x00000000000003f8       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-readr.o)
  .ARM.attributes
-                0x000000000000042a       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-isattyr.o)
- .ARM.attributes
-                0x000000000000045c       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lseekr.o)
- .ARM.attributes
-                0x000000000000048e       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-mlock.o)
- .ARM.attributes
-                0x00000000000004c0       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-readr.o)
- .ARM.attributes
-                0x00000000000004f2       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-reent.o)
+                0x000000000000042a       0x32 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-reent.o)
 
 .comment        0x0000000000000000       0x53
  .comment       0x0000000000000000       0x53 compiled/syscalls.o
                                          0x54 (size before relaxing)
  .comment       0x0000000000000053       0x54 compiled/project/main.o
 
-.debug_frame    0x0000000000000000      0x6cc
+.debug_frame    0x0000000000000000      0x5f8
  .debug_frame   0x0000000000000000       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-errno.o)
  .debug_frame   0x0000000000000020       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-memset.o)
- .debug_frame   0x0000000000000040       0x3c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-puts.o)
- .debug_frame   0x000000000000007c       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setbuf.o)
- .debug_frame   0x000000000000009c       0x38 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setvbuf.o)
- .debug_frame   0x00000000000000d4       0x40 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wbuf.o)
- .debug_frame   0x0000000000000114       0x2c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-wsetup.o)
- .debug_frame   0x0000000000000140       0x5c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fflush.o)
- .debug_frame   0x000000000000019c      0x14c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
- .debug_frame   0x00000000000002e8       0x54 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fwalk.o)
- .debug_frame   0x000000000000033c       0xb0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lock.o)
- .debug_frame   0x00000000000003ec       0x58 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-makebuf.o)
- .debug_frame   0x0000000000000444       0x30 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-malloc.o)
- .debug_frame   0x0000000000000474       0x38 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-freer.o)
- .debug_frame   0x00000000000004ac       0x30 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-mallocr.o)
- .debug_frame   0x00000000000004dc       0x88 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-stdio.o)
- .debug_frame   0x0000000000000564       0x2c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-closer.o)
- .debug_frame   0x0000000000000590       0x2c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fstatr.o)
- .debug_frame   0x00000000000005bc       0x2c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-isattyr.o)
- .debug_frame   0x00000000000005e8       0x2c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lseekr.o)
- .debug_frame   0x0000000000000614       0x30 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-mlock.o)
- .debug_frame   0x0000000000000644       0x2c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-readr.o)
- .debug_frame   0x0000000000000670       0x5c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-reent.o)
+ .debug_frame   0x0000000000000040       0x20 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setbuf.o)
+ .debug_frame   0x0000000000000060       0x38 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-setvbuf.o)
+ .debug_frame   0x0000000000000098       0x5c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fflush.o)
+ .debug_frame   0x00000000000000f4      0x14c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-findfp.o)
+ .debug_frame   0x0000000000000240       0x54 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fwalk.o)
+ .debug_frame   0x0000000000000294       0xb0 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lock.o)
+ .debug_frame   0x0000000000000344       0x58 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-makebuf.o)
+ .debug_frame   0x000000000000039c       0x30 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-malloc.o)
+ .debug_frame   0x00000000000003cc       0x38 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x0000000000000404       0x30 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x0000000000000434       0x88 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-stdio.o)
+ .debug_frame   0x00000000000004bc       0x2c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-closer.o)
+ .debug_frame   0x00000000000004e8       0x2c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-fstatr.o)
+ .debug_frame   0x0000000000000514       0x2c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-lseekr.o)
+ .debug_frame   0x0000000000000540       0x30 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-mlock.o)
+ .debug_frame   0x0000000000000570       0x2c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-readr.o)
+ .debug_frame   0x000000000000059c       0x5c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-reent.o)

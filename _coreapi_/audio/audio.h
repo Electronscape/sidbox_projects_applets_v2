@@ -41,6 +41,10 @@ typedef struct {
     void (*dmaenable)  (void);
     uint8_t (*dmabufferview)(const uint16_t **left, const uint16_t **right, uint32_t *frames, uint32_t *play_cursor);
     int (*midi_out)     (const uint8_t *buffer, uint16_t count);
+
+    // Live Sid Interface
+    void (*startsidlive) (void);
+    void (*sidpoke)    (uint8_t chip, uint8_t reg, uint8_t v);
 } API_AUDIO_HARDWARE;
 
 
@@ -69,6 +73,28 @@ typedef struct {
     void (*setsampleloop) (uint8_t channel, uint32_t from, uint32_t length);
     void (*setloopenable) (uint8_t channel, uint8_t enable);
 } API_SOUND;
+
+
+typedef struct  {
+    int      (*start)              (uint8_t route_mask);
+    uint8_t  (*isready)            (void);
+    void     (*set_routes)         (uint8_t route_mask);
+    void     (*set_input_channel)  (uint8_t channel);
+    void     (*set_voice)          (uint8_t voice);
+    void     (*set_percussion_ch)  (uint8_t channel);
+    void     (*note_on)            (uint8_t route_mask, uint8_t channel, uint8_t note, uint8_t velocity);
+    void     (*note_off)           (uint8_t route_mask, uint8_t channel, uint8_t note, uint8_t velocity);
+    void     (*control)            (uint8_t route_mask, uint8_t channel, uint8_t controller, uint8_t value);
+    void     (*program)            (uint8_t route_mask, uint8_t channel, uint8_t program);
+    void     (*pitch_bend)         (uint8_t route_mask, uint8_t channel, int16_t bend);
+    void     (*all_notes_off)      (uint8_t route_mask);
+    
+    void     (*sid_voice_reset)    (void);
+    uint8_t  (*sid_voice_get)      (uint8_t program, uint8_t *wave, uint8_t *ad, uint8_t *sr, uint16_t *pulse, int16_t *tune_cents);
+    uint8_t  (*sid_voice_set)      (uint8_t program, uint8_t wave, uint8_t ad, uint8_t sr, uint16_t pulse, int16_t tune_cents);
+} API_AUDIO_MIDI;
+
+
 
 
 uint32_t LoadSFX(char *filename, uint8_t **snddata);
@@ -111,6 +137,14 @@ uint32_t LoadSFX(char *filename, uint8_t **snddata);
 #define sound_setpanning(chan, pan)   (AUDIOSound->setsamplepan  (chan, pan))  // -127 to 127
 #define sound_setloop(chan, from, to) (AUDIOSound->setsampleloop (chan, from, to))   // set both to 0 to stop loop
 #define sound_enableloop(chan, en)    (AUDIOSound->setloopenable (chan, en))
+
+
+
+// direct sid interface
+#define audio_livesid()               (AUDIOBase->audhl->startsidlive())
+#define audio_sidpoke(chip, reg, val) (AUDIOBase->audhl->sidpoke(chip, reg, val))
+
+
 
 
 #ifdef __cplusplus

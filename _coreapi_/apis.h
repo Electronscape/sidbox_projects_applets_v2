@@ -175,7 +175,7 @@ typedef struct {
 	uint16_t *(*get32kmem)       (void);  // 16 bit memory specific
     uint8_t  *(*get16kmem8)      (void);  // 8 bit memory specific
 
-
+	// internal IRQ's - use these to turn everything off from the OS
 	void     (*lcd_disp_disable) (void);    // to disarm the LCD
     void     (*lcd_disp_enable)  (void);    // to re-enable the LCD
 
@@ -191,11 +191,13 @@ typedef struct {
     void     (*irq_uart_enable)  (void);
     void     (*irq_mdma_disable) (void);
     void     (*irq_mdma_enable)  (void);
+	/* ------------------------------------------------------------*/
 
 	void     (*rtc_gettime)      (uint8_t* hour, uint8_t* min, uint8_t* sec);
     void     (*rtc_getdate)      (uint8_t* year, uint8_t* month, uint8_t* day, uint8_t* weekday);
 
     const API_TIMERS *timers;
+	
 } API_HW ;
 
 
@@ -216,8 +218,10 @@ typedef struct  {
 
 typedef struct {
 	const API_AUDIO_HARDWARE *audhl;
-	const API_MUSIC *music;
-	const API_SOUND *sound;
+	const API_MUSIC 		 *music;
+	const API_SOUND 		 *sound;
+
+	const API_AUDIO_MIDI     *midi;
 } API_AUDIO;
 
 
@@ -234,14 +238,12 @@ typedef struct {
 } API_3D;
 
 
+
+
+
 typedef struct  {
 	void (*IRQ_LCD_VBL) (void (*isr)(void));
 } API_IRQ_BANK;
-
-
-
-
-
 
 
 #include "sys/sys.h"
