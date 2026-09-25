@@ -81,13 +81,13 @@ Simple pulse pluck with key hold:
 
 ```c
 static const sid_instr_t prg_simple_pluck[] = {
-    { SID_OP_ADSR,  0, 0x0342 },
-    { SID_OP_PULSE, 0, 0x0900 },
-    { SID_OP_WAVE,  0, 0x41 },
-    { SID_OP_WAIT,  0, 1 },
-    { SID_OP_PULSE, 0, 0x0300 },
-    { SID_OP_HOLD,  0, 0 },
-    { SID_OP_END,   0, 0 }
+    { SID_OP_ADSR,  0, 0x0342 }, // quick attack/decay, medium sustain, short release
+    { SID_OP_PULSE, 0, 0x0900 }, // start with a wide pulse
+    { SID_OP_WAVE,  0, 0x41 },   // pulse waveform + gate on
+    { SID_OP_WAIT,  0, 1 },      // let the transient speak for one tick
+    { SID_OP_PULSE, 0, 0x0300 }, // snap to a narrower pulse for the body
+    { SID_OP_HOLD,  0, 0 },      // stay here while the key is held
+    { SID_OP_END,   0, 0 }       // on key-off, allow release cleanup
 };
 ```
 
@@ -95,17 +95,17 @@ PWM loop while the key is held:
 
 ```c
 static const sid_instr_t prg_pwm_hold[] = {
-    { SID_OP_ADSR,   0, 0x00F4 },
-    { SID_OP_PULSE,  0, 0x0180 },
-    { SID_OP_WAVE,   0, 0x41 },
-    { SID_OP_ADDPWM, 0, 0x0060 },
-    { SID_OP_WAIT,   0, 1 },
-    { SID_OP_LOOP,   32, 2 },
-    { SID_OP_DECPWM, 0, 0x0060 },
-    { SID_OP_WAIT,   0, 1 },
-    { SID_OP_LOOP,   32, 2 },
-    { SID_OP_HOLD,   0, 6 },
-    { SID_OP_END,    0, 0 }
+    { SID_OP_ADSR,   0, 0x00F4 }, // instant attack, high sustain, medium release
+    { SID_OP_PULSE,  0, 0x0180 }, // begin with a narrow pulse
+    { SID_OP_WAVE,   0, 0x41 },   // pulse waveform + gate on
+    { SID_OP_ADDPWM, 0, 0x0060 }, // widen the pulse
+    { SID_OP_WAIT,   0, 1 },      // wait one tick between PWM steps
+    { SID_OP_LOOP,   32, 2 },     // repeat the widen+wait pair 32 times
+    { SID_OP_DECPWM, 0, 0x0060 }, // narrow the pulse again
+    { SID_OP_WAIT,   0, 1 },      // wait one tick between PWM steps
+    { SID_OP_LOOP,   32, 2 },     // repeat the narrow+wait pair 32 times
+    { SID_OP_HOLD,   0, 6 },      // while held, jump back to the PWM section
+    { SID_OP_END,    0, 0 }       // on key-off, release and stop
 };
 ```
 
@@ -113,22 +113,22 @@ Conditional-loop demo:
 
 ```c
 static const sid_instr_t prg_conditional_loop_demo[] = {
-    { SID_OP_ADSR,       0, 0x00FF },
-    { SID_OP_PULSE,      0, 0x0200 },
-    { SID_OP_WAVE,       0, 0x41 },
-    { SID_OP_SETVAR,     0, 10 },
-    { SID_OP_WHILE_GT,   0, 0x0405 },
-    { SID_OP_ADDPWM,     0, 0x0100 },
-    { SID_OP_WAIT,       0, 1 },
-    { SID_OP_ADDVAR,     0, (uint16_t)-1 },
-    { SID_OP_END_WHILE,  0, 4 },
-    { SID_OP_WHILE_NOTE, 0, 13 },
-    { SID_OP_ADDPWM,     0, 0x0040 },
-    { SID_OP_WAIT,       0, 1 },
-    { SID_OP_DECPWM,     0, 0x0040 },
-    { SID_OP_WAIT,       0, 1 },
-    { SID_OP_END_WHILE,  0, 5 },
-    { SID_OP_END,        0, 0 }
+    { SID_OP_ADSR,       0, 0x00FF },        // instant attack, full sustain, long release
+    { SID_OP_PULSE,      0, 0x0200 },        // start with a narrow pulse
+    { SID_OP_WAVE,       0, 0x41 },          // pulse waveform + gate on
+    { SID_OP_SETVAR,     0, 10 },            // var0 = 10
+    { SID_OP_WHILE_GT,   0, 0x0405 },        // while var0 > 4, run the counted PWM rise
+    { SID_OP_ADDPWM,     0, 0x0100 },        // widen pulse
+    { SID_OP_WAIT,       0, 1 },             // wait one tick
+    { SID_OP_ADDVAR,     0, (uint16_t)-1 },  // var0--
+    { SID_OP_END_WHILE,  0, 4 },             // jump back to WHILE_GT
+    { SID_OP_WHILE_NOTE, 0, 13 },            // while note is held, run the PWM wiggle
+    { SID_OP_ADDPWM,     0, 0x0040 },        // widen pulse a little
+    { SID_OP_WAIT,       0, 1 },             // wait one tick
+    { SID_OP_DECPWM,     0, 0x0040 },        // narrow pulse back down
+    { SID_OP_WAIT,       0, 1 },             // wait one tick
+    { SID_OP_END_WHILE,  0, 5 },             // jump back to WHILE_NOTE
+    { SID_OP_END,        0, 0 }              // on key-off, release and stop
 };
 ```
 
