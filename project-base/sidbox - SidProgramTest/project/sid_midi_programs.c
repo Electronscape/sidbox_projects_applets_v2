@@ -400,7 +400,7 @@ static const sid_instr_t prg_crystal_fx[] = {
 
 // Program 126: conditional-loop VM demo. Counted PWM rise, then while-note-on PWM wiggle.
 static const sid_instr_t prg_conditional_loop_demo[] = {
-    { SID_OP_ADSR,       0, 0x00FF },
+    { SID_OP_ADSR,       0, 0x00Fc },
     { SID_OP_PULSE,      0, 0x0200 },
     { SID_OP_WAVE,       0, 0x41 },
     { SID_OP_SETVAR,     0, 10 },

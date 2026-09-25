@@ -36,8 +36,38 @@
 #define UI_FONT_W 8
 #define UI_FONT_H 16
 #define UI_PAGE_COUNT 5u
-#define UI_VM_ROWS 7u
+#define UI_TAB_X0 10
+#define UI_TAB_Y 32
+#define UI_TAB_W 82
+#define UI_TAB_H 28
+#define UI_TAB_STEP 92
+#define UI_VM_ROWS 6u
 #define UI_VM_SCAN_LIMIT 96u
+#define UI_VM_EDIT_PROGRAM_NONE 0xFFu
+#define UI_VM_EDIT_FIELD_OPCODE 0u
+#define UI_VM_EDIT_FIELD_PARAM 1u
+#define UI_VM_EDIT_FIELD_VALUE 2u
+#define UI_VM_EDIT_FIELD_COUNT 3u
+#define UI_VM_PANEL_Y 66
+#define UI_VM_PANEL_H 206
+#define UI_VM_INFO_Y 86
+#define UI_VM_HEADER_Y 106
+#define UI_VM_ROW_Y0 124
+#define UI_VM_SIDE_BUTTON_X 418
+#define UI_VM_SIDE_BUTTON_W 34
+#define UI_VM_SCROLL_BUTTON_H 22
+#define UI_VM_UP_BUTTON_Y 106
+#define UI_VM_EDIT_BUTTON_Y 130
+#define UI_VM_EDIT_BUTTON_HEIGHT 80
+#define UI_VM_DOWN_BUTTON_Y (UI_VM_EDIT_BUTTON_Y + UI_VM_EDIT_BUTTON_HEIGHT + 8)
+#define UI_VM_RESTORE_BUTTON_X 70
+#define UI_VM_RESTORE_BUTTON_Y 226
+#define UI_VM_RESTORE_BUTTON_W 66
+#define UI_VM_RESTORE_BUTTON_H 20
+#define UI_POINTER_REPEAT_DELAY_TICKS 15u
+#define UI_VM_FIELD_BLINK_TICKS 15u
+#define UI_CONFIRM_NONE 0u
+#define UI_CONFIRM_RESTORE_VM 1u
 #define UI_MOUSE_LEFT BTN_FIRE
 #define UI_MOUSE_RIGHT BTN_FIRE2
 
@@ -97,22 +127,22 @@ static uint32_t sid_ui_palette[256] = {
     [13] = 0xFFEF4444,
     [14] = 0xFF38BDF8,
     [15] = 0xFFFFFFFF,
-    [16] = 0xFF090D14,
-    [17] = 0xFF0E1520,
-    [18] = 0xFF121C2A,
-    [19] = 0xFF172638,
-    [20] = 0xFF20334A,
-    [21] = 0xFF2B405A,
-    [22] = 0xFF3C536C,
-    [23] = 0xFF5B7188,
-    [24] = 0xFF7F93A8,
-    [25] = 0xFFB8C7D6,
+    [16] = 0xFF080B12,
+    [17] = 0xFF0C121A,
+    [18] = 0xFF111A24,
+    [19] = 0xFF182638,
+    [20] = 0xFF21364E,
+    [21] = 0xFF314A63,
+    [22] = 0xFF46617C,
+    [23] = 0xFF668098,
+    [24] = 0xFF90A3B6,
+    [25] = 0xFFC9D6E2,
     [26] = 0xFF05080D,
-    [27] = 0xFF1A2431,
-    [28] = 0xFF344860,
-    [29] = 0xFF6F8AA5,
-    [30] = 0xFFD4E1EE,
-    [31] = 0xFF101721
+    [27] = 0xFF182232,
+    [28] = 0xFF2E536C,
+    [29] = 0xFF62A6C8,
+    [30] = 0xFFE1ECF5,
+    [31] = 0xFF0D1621
 };
 
 #define WIN_DEFAULT     (SBX_WF_VISIBLE    |\
@@ -173,6 +203,7 @@ static uint8_t midi_drum_enabled;
 static int16_t midi_channel_bend[MIDI_CHANNEL_COUNT];
 static uint8_t sid_next_voice;
 static uint8_t ui_selected_channel;
+static uint8_t ui_recent_channels[4];
 static uint8_t ui_page;
 static uint8_t ui_channel_bank;
 static uint8_t ui_vm_scroll;
@@ -181,6 +212,8 @@ static uint8_t ui_last_joy;
 static uint8_t ui_repeat_delay;
 static uint8_t ui_last_pointer_down;
 static uint8_t ui_last_pointer_buttons;
+static uint8_t ui_pointer_repeat_down;
+static uint8_t ui_pointer_repeat_ticks;
 static int16_t ui_pointer_x;
 static int16_t ui_pointer_y;
 static char ui_status_message[40];
@@ -201,6 +234,15 @@ static uint8_t ui_vm_follow_saved_scroll;
 static uint8_t ui_vm_live_pc_valid;
 static uint8_t ui_vm_live_pc;
 static uint8_t ui_vm_live_voice;
+static uint8_t ui_vm_edit_mode;
+static uint8_t ui_vm_edit_program;
+static uint8_t ui_vm_edit_row;
+static uint8_t ui_vm_edit_field;
+static volatile uint8_t ui_vm_field_blink_ticks;
+static volatile uint8_t ui_vm_field_blink_on;
+static uint8_t ui_confirm_action;
+static const sid_instr_t *ui_vm_edit_original;
+static sid_instr_t ui_vm_edit_buffer[UI_VM_SCAN_LIMIT];
 
 static uint8_t midi_running_status;
 static uint8_t midi_msg_status;
@@ -415,6 +457,24 @@ static void midi_update_all_active_volume(void)
     }
 }
 
+static void ui_note_channel_used(uint8_t channel)
+{
+    if (channel >= MIDI_CHANNEL_COUNT) {
+        return;
+    }
+
+    for (uint8_t i = 0; i < 4; i++) {
+        if (ui_recent_channels[i] == channel) {
+            return;
+        }
+    }
+
+    for (uint8_t i = 3; i > 0; i--) {
+        ui_recent_channels[i] = ui_recent_channels[i - 1u];
+    }
+    ui_recent_channels[0] = channel;
+}
+
 static void sid_midi_note_on_event(uint8_t channel, uint8_t note, uint8_t velocity)
 {
     uint8_t voice = sid_find_voice(channel, note);
@@ -422,6 +482,8 @@ static void sid_midi_note_on_event(uint8_t channel, uint8_t note, uint8_t veloci
     if (channel == MIDI_DRUM_CHANNEL && !midi_drum_enabled) {
         return;
     }
+
+    ui_note_channel_used(channel);
 
     if (voice == 0xFFu) {
         voice = sid_alloc_voice();
@@ -491,6 +553,7 @@ static void sid_midi_pitch_bend_event(uint8_t channel, uint8_t lsb, uint8_t msb)
 {
     int16_t bend = (int16_t)((((uint16_t)msb & 0x7Fu) << 7) | ((uint16_t)lsb & 0x7Fu));
     bend = (int16_t)(bend - 8192);
+    ui_note_channel_used(channel);
     midi_channel_bend[channel] = bend;
 
     if (channel == MIDI_DRUM_CHANNEL) {
@@ -506,6 +569,8 @@ static void sid_midi_pitch_bend_event(uint8_t channel, uint8_t lsb, uint8_t msb)
 
 static void sid_midi_control_event(uint8_t channel, uint8_t controller, uint8_t value)
 {
+    ui_note_channel_used(channel);
+
     switch (controller) {
     case 7:
         midi_channel_volume[channel] = value & 0x7Fu;
@@ -571,6 +636,7 @@ static void midi_process_events(void)
 
         case MIDI_APP_EVENT_PROGRAM:
             if (ev.channel != MIDI_DRUM_CHANNEL) {
+                ui_note_channel_used(ev.channel);
                 midi_channel_program[ev.channel] = ev.a & 0x7Fu;
             }
             break;
@@ -631,6 +697,9 @@ static void midi_synth_init(void)
     midi_msg_expected = 0;
     midi_in_sysex = 0;
     ui_selected_channel = 0;
+    for (uint8_t i = 0; i < 4; i++) {
+        ui_recent_channels[i] = i;
+    }
     ui_page = UI_PAGE_HOME;
     ui_channel_bank = 0;
     ui_vm_scroll = 0;
@@ -639,6 +708,8 @@ static void midi_synth_init(void)
     ui_repeat_delay = 0;
     ui_last_pointer_down = 0;
     ui_last_pointer_buttons = 0;
+    ui_pointer_repeat_down = 0;
+    ui_pointer_repeat_ticks = 0;
     ui_pointer_x = UI_SCREEN_W / 2;
     ui_pointer_y = UI_SCREEN_H / 2;
     ui_status_message[0] = 0;
@@ -650,6 +721,15 @@ static void midi_synth_init(void)
     ui_vm_live_pc_valid = 0;
     ui_vm_live_pc = 0;
     ui_vm_live_voice = 0;
+    ui_vm_edit_mode = 0;
+    ui_vm_edit_program = UI_VM_EDIT_PROGRAM_NONE;
+    ui_vm_edit_row = 0;
+    ui_vm_edit_field = UI_VM_EDIT_FIELD_OPCODE;
+    ui_vm_field_blink_ticks = 0;
+    ui_vm_field_blink_on = 1;
+    ui_confirm_action = UI_CONFIRM_NONE;
+    ui_vm_edit_original = NULL;
+    memset(ui_vm_edit_buffer, 0, sizeof(ui_vm_edit_buffer));
     midi_note_on_count = 0;
     midi_note_off_count = 0;
     midi_dropped_event_count = 0;
@@ -856,6 +936,40 @@ static void ui_button_draw(int16_t x, int16_t y, int16_t w, int16_t h, const cha
     gfx_drawtext(text_x, text_y, label);
 }
 
+static void ui_button_draw_vertical(int16_t x, int16_t y, int16_t w, int16_t h, const char *label, uint8_t active)
+{
+    uint8_t pressed = (uint8_t)((ui_last_pointer_buttons & UI_MOUSE_LEFT) &&
+                                ui_point_in(ui_pointer_x, ui_pointer_y, x, y, w, h));
+    uint8_t fill = pressed ? 20u : (active ? 28u : 27u);
+    uint8_t text = active ? 15u : 25u;
+    uint8_t len = (uint8_t)strlen(label);
+    int16_t text_x = (int16_t)(x + ((w - UI_FONT_W) / 2));
+    int16_t text_y = (int16_t)(y + ((h - (len * UI_FONT_H)) / 2));
+    char one[2] = { 0, 0 };
+
+    ui_box(x, y, w, h, 26, fill);
+    gfx_setcolour(pressed ? 16u : (active ? 29u : 21u));
+    gfx_rectf((int16_t)(x + 1), (int16_t)(y + 1), (int16_t)(w - 2), 2);
+    gfx_rectf((int16_t)(x + 1), (int16_t)(y + 1), 2, (int16_t)(h - 2));
+    gfx_setcolour(pressed ? 29u : 16u);
+    gfx_rectf((int16_t)(x + 1), (int16_t)(y + h - 3), (int16_t)(w - 2), 2);
+    gfx_rectf((int16_t)(x + w - 3), (int16_t)(y + 1), 2, (int16_t)(h - 2));
+
+    if (text_y < y + 2) {
+        text_y = (int16_t)(y + 2);
+    }
+    if (pressed) {
+        text_x++;
+        text_y++;
+    }
+
+    gfx_setcolour(text);
+    for (uint8_t i = 0; i < len; i++) {
+        one[0] = label[i];
+        gfx_drawtext(text_x, (int16_t)(text_y + (i * UI_FONT_H)), one);
+    }
+}
+
 static void ui_panel(int16_t x, int16_t y, int16_t w, int16_t h, const char *title)
 {
     ui_box(x, y, w, h, 26, 31);
@@ -892,7 +1006,7 @@ static void ui_draw_background(void)
     gfx_setcolour(21);
     gfx_rectf(0, 0, UI_SCREEN_W, 2);
     gfx_setcolour(26);
-    gfx_rectf(0, 39, UI_SCREEN_W, 1);
+    gfx_rectf(0, (int16_t)(UI_TAB_Y + UI_TAB_H + 3), UI_SCREEN_W, 1);
 }
 
 static const char *ui_page_name(uint8_t page)
@@ -987,6 +1101,206 @@ static void ui_scroll_vm(int8_t delta)
     ui_vm_scroll = (uint8_t)scroll;
 }
 
+static void ui_vm_editor_clamp_selection(void)
+{
+    uint8_t program = midi_channel_program[ui_selected_channel];
+    uint8_t len = vm_program_length(program);
+
+    if (len == 0) {
+        ui_vm_edit_row = 0;
+        ui_vm_scroll = 0;
+        return;
+    }
+
+    if (ui_vm_edit_row >= len) {
+        ui_vm_edit_row = (uint8_t)(len - 1u);
+    }
+
+    if (ui_vm_edit_field >= UI_VM_EDIT_FIELD_COUNT) {
+        ui_vm_edit_field = UI_VM_EDIT_FIELD_OPCODE;
+    }
+
+    if (ui_vm_edit_row < ui_vm_scroll) {
+        ui_vm_scroll = ui_vm_edit_row;
+    } else if (ui_vm_edit_row >= (uint8_t)(ui_vm_scroll + UI_VM_ROWS)) {
+        ui_vm_scroll = (uint8_t)(ui_vm_edit_row - UI_VM_ROWS + 1u);
+    }
+
+    ui_clamp_vm_scroll();
+}
+
+static uint8_t ui_vm_editor_open(uint8_t program)
+{
+    const sid_instr_t *src;
+    uint8_t len;
+
+    if (program >= 128u) {
+        ui_set_status("Percussion router has no VM edit");
+        return 0;
+    }
+
+    src = sid_soundfont_bank[program];
+    if (!src) {
+        ui_set_status("No VM program to edit");
+        return 0;
+    }
+
+    if (ui_vm_edit_program != program) {
+        if (ui_vm_edit_program != UI_VM_EDIT_PROGRAM_NONE &&
+                sid_soundfont_bank[ui_vm_edit_program] == ui_vm_edit_buffer) {
+            sid_soundfont_bank[ui_vm_edit_program] = ui_vm_edit_original;
+        }
+
+        ui_vm_edit_original = src;
+        len = vm_program_length(program);
+        if (len == 0 || len > UI_VM_SCAN_LIMIT) {
+            len = UI_VM_SCAN_LIMIT;
+        }
+
+        memset(ui_vm_edit_buffer, 0, sizeof(ui_vm_edit_buffer));
+        for (uint8_t i = 0; i < len; i++) {
+            ui_vm_edit_buffer[i] = src[i];
+        }
+        ui_vm_edit_buffer[UI_VM_SCAN_LIMIT - 1u].opcode = SID_OP_END;
+        ui_vm_edit_program = program;
+        sid_soundfont_bank[program] = ui_vm_edit_buffer;
+        ui_vm_edit_row = 0;
+        ui_vm_edit_field = UI_VM_EDIT_FIELD_OPCODE;
+        ui_vm_scroll = 0;
+    }
+
+    ui_vm_edit_mode = 1;
+    ui_vm_field_blink_ticks = 0;
+    ui_vm_field_blink_on = 1;
+    ui_vm_editor_clamp_selection();
+    ui_set_status("VM editor uses RAM patch");
+    return 1;
+}
+
+static void ui_vm_editor_toggle(void)
+{
+    uint8_t program = midi_channel_program[ui_selected_channel];
+
+    if (ui_vm_edit_mode && ui_vm_edit_program == program) {
+        ui_vm_edit_mode = 0;
+        ui_set_status("VM edit view closed");
+        return;
+    }
+
+    (void)ui_vm_editor_open(program);
+}
+
+static void ui_vm_editor_select_row(uint8_t row)
+{
+    ui_vm_edit_row = row;
+    ui_vm_field_blink_ticks = 0;
+    ui_vm_field_blink_on = 1;
+    ui_vm_editor_clamp_selection();
+}
+
+static void ui_vm_editor_select_delta(int8_t delta)
+{
+    int16_t row = (int16_t)ui_vm_edit_row + delta;
+
+    if (row < 0) {
+        row = 0;
+    }
+
+    ui_vm_edit_row = (uint8_t)row;
+    ui_vm_field_blink_ticks = 0;
+    ui_vm_field_blink_on = 1;
+    ui_vm_editor_clamp_selection();
+}
+
+static void ui_vm_editor_field_delta(int8_t delta)
+{
+    int8_t field = (int8_t)ui_vm_edit_field + delta;
+
+    if (field < 0) {
+        field = (int8_t)(UI_VM_EDIT_FIELD_COUNT - 1u);
+    } else if (field >= (int8_t)UI_VM_EDIT_FIELD_COUNT) {
+        field = 0;
+    }
+
+    ui_vm_edit_field = (uint8_t)field;
+    ui_vm_field_blink_ticks = 0;
+    ui_vm_field_blink_on = 1;
+}
+
+static void ui_vm_editor_adjust(int16_t delta)
+{
+    sid_instr_t *instr;
+    int32_t value;
+
+    if (!ui_vm_edit_mode || ui_vm_edit_program == UI_VM_EDIT_PROGRAM_NONE ||
+            ui_vm_edit_program != midi_channel_program[ui_selected_channel]) {
+        return;
+    }
+
+    ui_vm_editor_clamp_selection();
+    instr = &ui_vm_edit_buffer[ui_vm_edit_row];
+
+    switch (ui_vm_edit_field) {
+    case UI_VM_EDIT_FIELD_OPCODE:
+        value = (int32_t)instr->opcode + delta;
+        if (value < SID_OP_END) value = SID_OP_END;
+        if (value > SID_OP_LOOP_BACK) value = SID_OP_LOOP_BACK;
+        instr->opcode = (uint8_t)value;
+        break;
+    case UI_VM_EDIT_FIELD_PARAM:
+        value = (int32_t)instr->param8 + delta;
+        if (value < 0) value = 0;
+        if (value > 0xFF) value = 0xFF;
+        instr->param8 = (uint8_t)value;
+        break;
+    case UI_VM_EDIT_FIELD_VALUE:
+        value = (int32_t)instr->value + delta;
+        if (value < 0) value = 0;
+        if (value > 0xFFFF) value = 0xFFFF;
+        instr->value = (uint16_t)value;
+        break;
+    default:
+        break;
+    }
+
+    ui_vm_edit_buffer[UI_VM_SCAN_LIMIT - 1u].opcode = SID_OP_END;
+    ui_back_dirty = 1;
+}
+
+static void ui_vm_editor_restore_default(void)
+{
+    uint8_t len = 0;
+    uint8_t program = ui_vm_edit_program;
+    const sid_instr_t *src = ui_vm_edit_original;
+
+    if (program == UI_VM_EDIT_PROGRAM_NONE || program >= 128u || !src) {
+        ui_set_status("No VM default to restore");
+        return;
+    }
+
+    for (uint8_t i = 0; i < UI_VM_SCAN_LIMIT; i++) {
+        len = (uint8_t)(i + 1u);
+        if (src[i].opcode == SID_OP_END) {
+            break;
+        }
+    }
+
+    memset(ui_vm_edit_buffer, 0, sizeof(ui_vm_edit_buffer));
+    for (uint8_t i = 0; i < len; i++) {
+        ui_vm_edit_buffer[i] = src[i];
+    }
+
+    ui_vm_edit_buffer[UI_VM_SCAN_LIMIT - 1u].opcode = SID_OP_END;
+    sid_soundfont_bank[program] = ui_vm_edit_buffer;
+    ui_vm_edit_row = 0;
+    ui_vm_edit_field = UI_VM_EDIT_FIELD_OPCODE;
+    ui_vm_scroll = 0;
+    ui_vm_edit_mode = 1;
+    sid_midi_all_notes_off();
+    ui_set_status("VM restored from preset");
+    ui_back_dirty = 1;
+}
+
 static uint8_t ui_find_live_vm_voice(uint8_t channel, uint8_t program)
 {
     for (uint8_t i = 0; i < SID_MIDI_VOICES; i++) {
@@ -1011,6 +1325,15 @@ static void ui_update_vm_live_follow(void)
     ui_vm_live_pc_valid = 0;
 
     if (ui_page != UI_PAGE_VM || program >= 128u || len == 0) {
+        if (ui_vm_follow_active) {
+            ui_vm_scroll = ui_vm_follow_saved_scroll;
+            ui_clamp_vm_scroll();
+            ui_vm_follow_active = 0;
+        }
+        return;
+    }
+
+    if (ui_vm_edit_mode && ui_vm_edit_program == program) {
         if (ui_vm_follow_active) {
             ui_vm_scroll = ui_vm_follow_saved_scroll;
             ui_clamp_vm_scroll();
@@ -1056,6 +1379,8 @@ static ui_pointer_t ui_read_pointer(uint8_t joy)
     ui_pointer_t p;
     int16_t x = ui_pointer_x;
     int16_t y = ui_pointer_y;
+    int16_t tx = x;
+    int16_t ty = y;
     int16_t mx = x;
     int16_t my = y;
     int32_t dx = 0;
@@ -1063,11 +1388,17 @@ static ui_pointer_t ui_read_pointer(uint8_t joy)
     uint8_t down = 0;
     uint8_t buttons = 0;
     uint8_t mouse_buttons;
+    uint8_t touch_pressure;
+    uint8_t touch_active;
 
-    if (touch_down() && touch_getxy(&x, &y)) {
+    touch_active = apiTouchDown();
+    touch_pressure = apiTouchGetXY(&tx, &ty);
+    if (touch_pressure != 0u) {
+        x = tx;
+        y = ty;
         buttons = UI_MOUSE_LEFT;
         down = 1;
-    } else {
+    } else if (!touch_active) {
         mouse_buttons = getmousepos(&mx, &my);
         getmousedelta(&dx, &dy);
         clrmousedelta();
@@ -1135,6 +1466,10 @@ static void ui_select_program_delta(uint8_t channel, int16_t delta)
 
 static void ui_process_pointer(ui_pointer_t p)
 {
+    uint8_t click = p.left_pressed;
+    uint8_t held = (uint8_t)((p.buttons & UI_MOUSE_LEFT) && !p.left_pressed);
+    uint8_t fire = click;
+
     if ((p.buttons & (UI_MOUSE_LEFT | UI_MOUSE_RIGHT)) == (UI_MOUSE_LEFT | UI_MOUSE_RIGHT)) {
         ui_exit_requested = 1;
         return;
@@ -1143,33 +1478,74 @@ static void ui_process_pointer(ui_pointer_t p)
     if (p.right_pressed) {
         sid_midi_all_notes_off();
         ui_set_status("Right click panic");
+        ui_confirm_action = UI_CONFIRM_NONE;
         return;
     }
 
-    if (!p.left_pressed) {
-        return;
-    }
-
-    for (uint8_t i = 0; i < UI_PAGE_COUNT; i++) {
-        int16_t x = (int16_t)(10 + (i * 92));
-        if (ui_point_in(p.x, p.y, x, 43, 82, 24)) {
-            ui_page = i;
+    if (ui_confirm_action != UI_CONFIRM_NONE) {
+        ui_pointer_repeat_down = 0;
+        ui_pointer_repeat_ticks = 0;
+        if (!click) {
             return;
         }
+
+        if (ui_point_in(p.x, p.y, 132, 178, 92, 28)) {
+            if (ui_confirm_action == UI_CONFIRM_RESTORE_VM) {
+                ui_vm_editor_restore_default();
+            }
+            ui_confirm_action = UI_CONFIRM_NONE;
+            return;
+        }
+
+        if (ui_point_in(p.x, p.y, 256, 178, 92, 28) ||
+                !ui_point_in(p.x, p.y, 96, 112, 288, 108)) {
+            ui_confirm_action = UI_CONFIRM_NONE;
+            ui_set_status("Restore cancelled");
+            return;
+        }
+
+        return;
     }
 
-    if (ui_point_in(p.x, p.y, 332, 284, 54, 24)) {
-        ui_set_status("Save browser reserved");
+    ui_pointer_repeat_down = held;
+    if (click) {
+        ui_pointer_repeat_ticks = 0;
+    } else if (held) {
+        if (ui_pointer_repeat_ticks < UI_POINTER_REPEAT_DELAY_TICKS) {
+            ui_pointer_repeat_ticks++;
+        } else {
+            fire = 1;
+        }
+    } else {
+        ui_pointer_repeat_ticks = 0;
+    }
+
+    if (!fire) {
         return;
     }
-    if (ui_point_in(p.x, p.y, 392, 284, 54, 24)) {
-        ui_set_status("Load browser reserved");
-        return;
-    }
-    if (ui_point_in(p.x, p.y, 8, 284, 70, 24)) {
-        sid_midi_all_notes_off();
-        ui_set_status("Panic: all notes killed");
-        return;
+
+    if (click) {
+        for (uint8_t i = 0; i < UI_PAGE_COUNT; i++) {
+            int16_t x = (int16_t)(UI_TAB_X0 + (i * UI_TAB_STEP));
+            if (ui_point_in(p.x, p.y, x, UI_TAB_Y, UI_TAB_W, UI_TAB_H)) {
+                ui_page = i;
+                return;
+            }
+        }
+
+        if (ui_point_in(p.x, p.y, 332, 284, 54, 24)) {
+            ui_set_status("Save browser reserved");
+            return;
+        }
+        if (ui_point_in(p.x, p.y, 392, 284, 54, 24)) {
+            ui_set_status("Load browser reserved");
+            return;
+        }
+        if (ui_point_in(p.x, p.y, 8, 284, 70, 24)) {
+            sid_midi_all_notes_off();
+            ui_set_status("Panic: all notes killed");
+            return;
+        }
     }
 
     switch (ui_page) {
@@ -1186,11 +1562,13 @@ static void ui_process_pointer(ui_pointer_t p)
         break;
 
     case UI_PAGE_CHANNELS:
-        for (uint8_t bank = 0; bank < 4; bank++) {
-            int16_t x = (int16_t)(26 + (bank * 104));
-            if (ui_point_in(p.x, p.y, x, 88, 96, 26)) {
-                ui_channel_bank = bank;
-                return;
+        if (click) {
+            for (uint8_t bank = 0; bank < 4; bank++) {
+                int16_t x = (int16_t)(26 + (bank * 104));
+                if (ui_point_in(p.x, p.y, x, 88, 96, 26)) {
+                    ui_channel_bank = bank;
+                    return;
+                }
             }
         }
 
@@ -1238,16 +1616,60 @@ static void ui_process_pointer(ui_pointer_t p)
         break;
 
     case UI_PAGE_VM:
-        if (ui_point_in(p.x, p.y, 350, 78, 34, 22)) {
+        if (ui_point_in(p.x, p.y, 350, (int16_t)(UI_VM_PANEL_Y + 2), 34, 22)) {
             ui_select_program_delta(ui_selected_channel, -1);
+            ui_vm_edit_mode = 0;
             ui_clamp_vm_scroll();
-        } else if (ui_point_in(p.x, p.y, 388, 78, 34, 22)) {
+        } else if (ui_point_in(p.x, p.y, 388, (int16_t)(UI_VM_PANEL_Y + 2), 34, 22)) {
             ui_select_program_delta(ui_selected_channel, 1);
+            ui_vm_edit_mode = 0;
             ui_clamp_vm_scroll();
-        } else if (ui_point_in(p.x, p.y, 418, 124, 34, 22)) {
+        } else if (ui_point_in(p.x, p.y, UI_VM_SIDE_BUTTON_X, UI_VM_UP_BUTTON_Y,
+                               UI_VM_SIDE_BUTTON_W, UI_VM_SCROLL_BUTTON_H)) {
             ui_scroll_vm(-1);
-        } else if (ui_point_in(p.x, p.y, 418, 224, 34, 22)) {
+        } else if (click && ui_point_in(p.x, p.y, UI_VM_SIDE_BUTTON_X, UI_VM_EDIT_BUTTON_Y,
+                                        UI_VM_SIDE_BUTTON_W, UI_VM_EDIT_BUTTON_HEIGHT)) {
+            ui_vm_editor_toggle();
+            } else if (ui_point_in(p.x, p.y, UI_VM_SIDE_BUTTON_X, UI_VM_DOWN_BUTTON_Y,
+                               UI_VM_SIDE_BUTTON_W, UI_VM_SCROLL_BUTTON_H)) {
             ui_scroll_vm(1);
+        } else if (ui_vm_edit_mode && ui_vm_edit_program == midi_channel_program[ui_selected_channel]) {
+            if (click && ui_point_in(p.x, p.y, UI_VM_RESTORE_BUTTON_X, UI_VM_RESTORE_BUTTON_Y,
+                                     UI_VM_RESTORE_BUTTON_W, UI_VM_RESTORE_BUTTON_H)) {
+                ui_confirm_action = UI_CONFIRM_RESTORE_VM;
+            } else if (click && ui_point_in(p.x, p.y, 70, 246, 46, 22)) {
+                ui_vm_editor_field_delta(1);
+            } else if (ui_point_in(p.x, p.y, 184, 226, 46, 20)) {
+                ui_vm_editor_adjust(-0x1000);
+            } else if (ui_point_in(p.x, p.y, 234, 226, 34, 20)) {
+                ui_vm_editor_adjust(-0x0100);
+            } else if (ui_point_in(p.x, p.y, 272, 226, 34, 20)) {
+                ui_vm_editor_adjust(0x0100);
+            } else if (ui_point_in(p.x, p.y, 310, 226, 46, 20)) {
+                ui_vm_editor_adjust(0x1000);
+            } else if (ui_point_in(p.x, p.y, 184, 250, 46, 20)) {
+                ui_vm_editor_adjust(-16);
+            } else if (ui_point_in(p.x, p.y, 234, 250, 34, 20)) {
+                ui_vm_editor_adjust(-1);
+            } else if (ui_point_in(p.x, p.y, 272, 250, 34, 20)) {
+                ui_vm_editor_adjust(1);
+            } else if (ui_point_in(p.x, p.y, 310, 250, 46, 20)) {
+                ui_vm_editor_adjust(16);
+            } else if (click && ui_point_in(p.x, p.y, 30, UI_VM_ROW_Y0, 382, (int16_t)(UI_VM_ROWS * UI_FONT_H))) {
+                uint8_t row = (uint8_t)(ui_vm_scroll + ((p.y - UI_VM_ROW_Y0) / UI_FONT_H));
+                uint8_t len = vm_program_length(midi_channel_program[ui_selected_channel]);
+
+                if (row < len) {
+                    ui_vm_editor_select_row(row);
+                    if (p.x >= 158) {
+                        ui_vm_edit_field = UI_VM_EDIT_FIELD_VALUE;
+                    } else if (p.x >= 134) {
+                        ui_vm_edit_field = UI_VM_EDIT_FIELD_PARAM;
+                    } else if (p.x >= 62) {
+                        ui_vm_edit_field = UI_VM_EDIT_FIELD_OPCODE;
+                    }
+                }
+            }
         }
         break;
 
@@ -1292,7 +1714,33 @@ static void ui_handle_input(uint8_t joy)
         ui_exit_requested = 1;
     }
 
-    if (ui_page == UI_PAGE_VM && !fire_down && (actions & (BTN_UP | BTN_DOWN))) {
+    if (ui_confirm_action != UI_CONFIRM_NONE) {
+        ui_last_joy = joy;
+        return;
+    }
+
+    if (ui_page == UI_PAGE_VM && ui_vm_edit_mode &&
+            ui_vm_edit_program == midi_channel_program[ui_selected_channel]) {
+        if (actions & BTN_UP) {
+            ui_vm_editor_select_delta(-1);
+        } else if (actions & BTN_DOWN) {
+            ui_vm_editor_select_delta(1);
+        }
+
+        if (actions & BTN_LEFT) {
+            if (fire_down) {
+                ui_vm_editor_adjust(ui_vm_edit_field == UI_VM_EDIT_FIELD_VALUE ? -16 : -1);
+            } else {
+                ui_vm_editor_field_delta(-1);
+            }
+        } else if (actions & BTN_RIGHT) {
+            if (fire_down) {
+                ui_vm_editor_adjust(ui_vm_edit_field == UI_VM_EDIT_FIELD_VALUE ? 16 : 1);
+            } else {
+                ui_vm_editor_field_delta(1);
+            }
+        }
+    } else if (ui_page == UI_PAGE_VM && !fire_down && (actions & (BTN_UP | BTN_DOWN))) {
         if (actions & BTN_UP) {
             ui_scroll_vm(-1);
         } else if (actions & BTN_DOWN) {
@@ -1331,7 +1779,8 @@ static void ui_handle_input(uint8_t joy)
         delta = 1;
     }
 
-    if (delta != 0) {
+    if (delta != 0 && !(ui_page == UI_PAGE_VM && ui_vm_edit_mode &&
+            ui_vm_edit_program == midi_channel_program[ui_selected_channel])) {
         int16_t step = (joy & BTN_FIRE) ? MIDI_UI_PROGRAM_STEP_FAST : 1;
         ui_select_program_delta(ui_selected_channel, (int16_t)delta * step);
         ui_clamp_vm_scroll();
@@ -1352,21 +1801,21 @@ static void ui_draw_header(void)
     ui_draw_background();
 
     gfx_setcolour(30);
-    gfx_drawtextf(12, 8, "SIDBOX MIDI SID", 2, 2);
+    gfx_drawtext(12, 8, "SIDBOX MIDI SID V0.9");
     gfx_setcolour(24);
     gfx_drawtext(270, 8, "LIVE SYNTH CONTROL");
 
     for (uint8_t i = 0; i < UI_PAGE_COUNT; i++) {
-        int16_t x = (int16_t)(10 + (i * 92));
-        ui_button_draw(x, 43, 82, 24, ui_page_name(i), (uint8_t)(ui_page == i));
+        int16_t x = (int16_t)(UI_TAB_X0 + (i * UI_TAB_STEP));
+        ui_button_draw(x, UI_TAB_Y, UI_TAB_W, UI_TAB_H, ui_page_name(i), (uint8_t)(ui_page == i));
     }
 }
 
 static void ui_draw_footer(void)
 {
-    ui_button_draw(8, 284, 70, 24, "PANIC", 0);
-    ui_button_draw(332, 284, 54, 24, "SAVE", 0);
-    ui_button_draw(392, 284, 54, 24, "LOAD", 0);
+    ui_button_draw(8, 284, 70, 32, "PANIC", 0);
+    ui_button_draw(352, 284, 54, 32, "SAVE", 0);
+    ui_button_draw(412, 284, 54, 32, "LOAD", 0);
 }
 
 static void ui_draw_home(void)
@@ -1374,35 +1823,36 @@ static void ui_draw_home(void)
     uint8_t ch = ui_selected_channel;
     uint8_t program = midi_channel_program[ch];
 
-    ui_panel(10, 76, 150, 86, "PERFORMANCE");
+    ui_panel(10, 70, 200, 96, "PERFORMANCE");
+    ui_panel(220, 70, 250, 96, "SELECTED CHANNEL");
 
-    ui_panel(170, 76, 292, 86, "SELECTED CHANNEL");
+
     char line[96];
-    snprintf(line, sizeof(line), "CH%02u P%03u %.18s", (unsigned)(ch + 1u),
-             (unsigned)program, midi_program_name(program));
-    gfx_setcolour(30);
-    gfx_drawtext(184, 96, line);
-    ui_button_draw(300, 134, 34, 22, "-P", 0);
-    ui_button_draw(338, 134, 34, 22, "+P", 0);
-    ui_button_draw(382, 134, 34, 22, "-G", 0);
-    ui_button_draw(420, 134, 34, 22, "+G", 0);
+    snprintf(line, sizeof(line), "CH%02u P%03u %.18s", (unsigned)(ch + 1u), (unsigned)program, midi_program_name(program));
 
-    ui_panel(10, 172, 222, 92, "ROUTING");
+    gfx_setcolour(30);
+    gfx_drawtext(230, 96, line);
+    ui_button_draw(230, 134, 48, 32, "-P", 0);
+    ui_button_draw(282, 134, 48, 32, "+P", 0);
+    ui_button_draw(342, 134, 48, 32, "-G", 0);
+    ui_button_draw(394, 134, 48, 32, "+G", 0);
+
+    ui_panel(10, 172, 222, 98, "RECENT ROUTING");
     for (uint8_t i = 0; i < 4; i++) {
-        uint8_t row_ch = (uint8_t)((ui_selected_channel + i) % MIDI_CHANNEL_COUNT);
+        uint8_t row_ch = ui_recent_channels[i];
         snprintf(line, sizeof(line), "CH%02u P%03u %-10.10s",
                  (unsigned)(row_ch + 1u),
                  (unsigned)midi_channel_program[row_ch],
                  midi_program_name(midi_channel_program[row_ch]));
         gfx_setcolour(row_ch == ui_selected_channel ? 30u : 24u);
-        gfx_drawtext(24, (int16_t)(194 + (i * 16)), line);
+        gfx_drawtext(24, (int16_t)(200 + (i * 16)), line);
     }
 
     ui_panel(242, 172, 220, 92, "PROJECT");
     gfx_setcolour(24);
-    gfx_drawtext(256, 194, "Save/load hooks ready.");
-    gfx_drawtext(256, 210, "Patch banks later.");
-    gfx_drawtext(256, 232, "Buttons are clickable.");
+    gfx_drawtext(256, 200, "Save/load hooks ready.");
+    gfx_drawtext(256, 216, "Patch banks later.");
+    gfx_drawtext(256, 236, "Buttons are clickable.");
 }
 
 static void ui_draw_channels(void)
@@ -1506,25 +1956,26 @@ static void ui_draw_vm(void)
     uint8_t ch = ui_selected_channel;
     uint8_t program = midi_channel_program[ch];
     uint8_t len;
+    uint8_t edit_active = (uint8_t)(ui_vm_edit_mode && ui_vm_edit_program == program);
 
-    ui_panel(16, 76, 446, 196, "VM CODE VIEWER");
+    ui_panel(16, UI_VM_PANEL_Y, 446, UI_VM_PANEL_H, edit_active ? "VM RAM EDITOR" : "VM CODE VIEWER");
     snprintf(line, sizeof(line), "CH%02u P%03u %.24s",
              (unsigned)(ch + 1u), (unsigned)program, midi_program_name(program));
     gfx_setcolour(30);
-    gfx_drawtext(30, 96, line);
-    ui_button_draw(350, 78, 34, 22, "-P", 0);
-    ui_button_draw(388, 78, 34, 22, "+P", 0);
+    gfx_drawtext(30, UI_VM_INFO_Y, line);
+    ui_button_draw(350, (int16_t)(UI_VM_PANEL_Y + 2), 34, 22, "-P", 0);
+    ui_button_draw(388, (int16_t)(UI_VM_PANEL_Y + 2), 34, 22, "+P", 0);
 
     if (program >= 128u) {
         gfx_setcolour(24);
-        gfx_drawtext(30, 126, "GM drums use percussion router.");
+        gfx_drawtext(30, UI_VM_ROW_Y0, "GM drums use percussion router.");
         return;
     }
 
     const sid_instr_t *prog = sid_soundfont_bank[program];
     if (!prog) {
         gfx_setcolour(13);
-        gfx_drawtext(30, 126, "No VM program assigned.");
+        gfx_drawtext(30, UI_VM_ROW_Y0, "No VM program assigned.");
         return;
     }
 
@@ -1532,12 +1983,28 @@ static void ui_draw_vm(void)
     len = vm_program_length(program);
 
     gfx_setcolour(29);
-    gfx_drawtext(30, 116, "IDX OPCODE   P  VALUE");
+    gfx_drawtext(30, UI_VM_HEADER_Y, "IDX OPCODE   P  VALUE");
     for (uint8_t row = 0; row < UI_VM_ROWS; row++) {
         uint8_t i = (uint8_t)(ui_vm_scroll + row);
+        int16_t y = (int16_t)(UI_VM_ROW_Y0 + (row * UI_FONT_H));
 
         if (i >= len) {
             break;
+        }
+
+        if (edit_active && i == ui_vm_edit_row) {
+            gfx_setcolour(28);
+            gfx_rectf(28, (int16_t)(y - 1), 384, 16);
+            if (ui_vm_field_blink_on) {
+                gfx_setcolour(29);
+                if (ui_vm_edit_field == UI_VM_EDIT_FIELD_OPCODE) {
+                    gfx_rectf(62, (int16_t)(y - 1), 64, 16);
+                } else if (ui_vm_edit_field == UI_VM_EDIT_FIELD_PARAM) {
+                    gfx_rectf(134, (int16_t)(y - 1), 18, 16);
+                } else {
+                    gfx_rectf(158, (int16_t)(y - 1), 40, 16);
+                }
+            }
         }
 
         snprintf(line, sizeof(line), "%02u  %-8s %02X %04X",
@@ -1545,18 +2012,72 @@ static void ui_draw_vm(void)
                  vm_opcode_name(prog[i].opcode),
                  (unsigned)prog[i].param8,
                  (unsigned)prog[i].value);
-        gfx_setcolour(prog[i].opcode == SID_OP_END ? 14u : 25u);
-        gfx_drawtext(30, (int16_t)(134 + (row * 16)), line);
+        gfx_setcolour(edit_active && i == ui_vm_edit_row ? 15u :
+                      (prog[i].opcode == SID_OP_END ? 14u : 25u));
+        gfx_drawtext(30, y, line);
         if (prog[i].opcode == SID_OP_END) {
             break;
         }
     }
 
-    ui_button_draw(418, 124, 34, 22, "UP", 0);
-    ui_button_draw(418, 224, 34, 22, "DN", 0);
-    snprintf(line, sizeof(line), "%02u/%02u", (unsigned)ui_vm_scroll, (unsigned)len);
-    gfx_setcolour(24);
-    gfx_drawtext(360, 250, line);
+    ui_button_draw(UI_VM_SIDE_BUTTON_X, UI_VM_UP_BUTTON_Y, UI_VM_SIDE_BUTTON_W,
+                   UI_VM_SCROLL_BUTTON_H, "UP", 0);
+    ui_button_draw_vertical(UI_VM_SIDE_BUTTON_X, UI_VM_EDIT_BUTTON_Y, UI_VM_SIDE_BUTTON_W,
+                            UI_VM_EDIT_BUTTON_HEIGHT, edit_active ? "VIEW" : "EDIT", edit_active);
+    ui_button_draw(UI_VM_SIDE_BUTTON_X, UI_VM_DOWN_BUTTON_Y, UI_VM_SIDE_BUTTON_W,
+                   UI_VM_SCROLL_BUTTON_H, "DN", 0);
+
+    if (edit_active) {
+        const char *field = "OPC";
+        if (ui_vm_edit_field == UI_VM_EDIT_FIELD_PARAM) {
+            field = "PAR";
+        } else if (ui_vm_edit_field == UI_VM_EDIT_FIELD_VALUE) {
+            field = "VAL";
+        }
+        snprintf(line, sizeof(line), "ROW%02u %s", (unsigned)ui_vm_edit_row, field);
+        gfx_setcolour(24);
+        gfx_drawtext(30, 230, line);
+        ui_button_draw(UI_VM_RESTORE_BUTTON_X, UI_VM_RESTORE_BUTTON_Y,
+                       UI_VM_RESTORE_BUTTON_W, UI_VM_RESTORE_BUTTON_H, "REST", 0);
+        gfx_drawtext(154, 228, "HI");
+        ui_button_draw(184, 226, 46, 20, "-16", 0);
+        ui_button_draw(234, 226, 34, 20, "-", 0);
+        ui_button_draw(272, 226, 34, 20, "+", 0);
+        ui_button_draw(310, 226, 46, 20, "+16", 0);
+        ui_button_draw(70, 250, 46, 20, "FLD", 0);
+        gfx_setcolour(24);
+        gfx_drawtext(154, 252, "LO");
+        ui_button_draw(184, 250, 46, 20, "-16", 0);
+        ui_button_draw(234, 250, 34, 20, "-", 0);
+        ui_button_draw(272, 250, 34, 20, "+", 0);
+        ui_button_draw(310, 250, 46, 20, "+16", 0);
+    } else {
+        snprintf(line, sizeof(line), "%02u/%02u", (unsigned)ui_vm_scroll, (unsigned)len);
+        gfx_setcolour(24);
+        gfx_drawtext(360, 250, line);
+    }
+}
+
+static void ui_draw_confirm_modal(void)
+{
+    if (ui_confirm_action == UI_CONFIRM_NONE) {
+        return;
+    }
+
+    ui_box(96, 112, 288, 108, 26, 31);
+    gfx_setcolour(20);
+    gfx_rectf(97, 113, 286, 20);
+    gfx_setcolour(30);
+    gfx_drawtext(110, 117, "CONFIRM ACTION");
+
+    gfx_setcolour(25);
+    if (ui_confirm_action == UI_CONFIRM_RESTORE_VM) {
+        gfx_drawtext(116, 146, "Restore selected VM program");
+        gfx_drawtext(116, 162, "from its preset default?");
+    }
+
+    ui_button_draw(132, 178, 92, 28, "RESTORE", 0);
+    ui_button_draw(256, 178, 92, 28, "CANCEL", 0);
 }
 
 static void ui_draw(void)
@@ -1586,6 +2107,7 @@ static void ui_draw(void)
     }
 
     ui_draw_footer();
+    ui_draw_confirm_modal();
 }
 
 static uint32_t ui_hash_step(uint32_t hash, uint32_t value)
@@ -1601,10 +2123,32 @@ static uint32_t ui_static_hash(void)
     hash = ui_hash_step(hash, ui_page);
     hash = ui_hash_step(hash, ui_selected_channel);
     hash = ui_hash_step(hash, ui_channel_bank);
+    for (uint8_t i = 0; i < 4; i++) {
+        hash = ui_hash_step(hash, ui_recent_channels[i]);
+    }
     hash = ui_hash_step(hash, ui_vm_scroll);
+    hash = ui_hash_step(hash, ui_vm_edit_mode);
+    hash = ui_hash_step(hash, ui_vm_edit_program);
+    hash = ui_hash_step(hash, ui_vm_edit_row);
+    hash = ui_hash_step(hash, ui_vm_edit_field);
+    hash = ui_hash_step(hash, (ui_page == UI_PAGE_VM && ui_vm_edit_mode) ? ui_vm_field_blink_on : 0u);
+    hash = ui_hash_step(hash, ui_confirm_action);
+    hash = ui_hash_step(hash, ui_pointer_repeat_down);
     hash = ui_hash_step(hash, midi_global_gain_percent);
     hash = ui_hash_step(hash, midi_drum_gain_percent);
     hash = ui_hash_step(hash, midi_drum_enabled);
+
+    if (ui_vm_edit_program != UI_VM_EDIT_PROGRAM_NONE) {
+        for (uint8_t i = 0; i < UI_VM_ROWS; i++) {
+            uint8_t row = (uint8_t)(ui_vm_scroll + i);
+            if (row >= UI_VM_SCAN_LIMIT) {
+                break;
+            }
+            hash = ui_hash_step(hash, ui_vm_edit_buffer[row].opcode);
+            hash = ui_hash_step(hash, ui_vm_edit_buffer[row].param8);
+            hash = ui_hash_step(hash, ui_vm_edit_buffer[row].value);
+        }
+    }
 
     for (uint8_t ch = 0; ch < MIDI_CHANNEL_COUNT; ch++) {
         hash = ui_hash_step(hash, midi_channel_program[ch]);
@@ -1635,21 +2179,21 @@ static void ui_draw_home_overlay(void)
 
     snprintf(line, sizeof(line), "%u/%u voices", midi_total_active_count(), SID_MIDI_VOICES);
     gfx_setcolour(30);
-    gfx_drawtext(24, 100, line);
+    gfx_drawtext(24, 96, line);
     snprintf(line, sizeof(line), "panic %lu  tmo %lu", (unsigned long)midi_panic_count,
              (unsigned long)midi_timeout_note_off_count);
     gfx_setcolour(24);
-    gfx_drawtext(24, 118, line);
+    gfx_drawtext(24, 116, line);
     snprintf(line, sizeof(line), "gain %u%%  drums %u%%", (unsigned)midi_global_gain_percent,
              (unsigned)midi_drum_gain_percent);
-    gfx_drawtext(24, 136, line);
+    gfx_drawtext(24, 134, line);
 
-    snprintf(line, sizeof(line), "VOL %03u   EXP %03u   BEND %d", (unsigned)midi_channel_volume[ch],
+    snprintf(line, sizeof(line), "VOL %03u  EXP %03u  BEND %d", (unsigned)midi_channel_volume[ch],
              (unsigned)midi_channel_expression[ch], (int)midi_channel_bend[ch]);
-    gfx_drawtext(184, 116, line);
+    gfx_drawtext(230, 116, line);
 
     for (uint8_t i = 0; i < 4; i++) {
-        uint8_t row_ch = (uint8_t)((ui_selected_channel + i) % MIDI_CHANNEL_COUNT);
+        uint8_t row_ch = ui_recent_channels[i];
         uint8_t active = midi_channel_active_count(row_ch);
 
         if (active == 0) {
@@ -1658,7 +2202,7 @@ static void ui_draw_home_overlay(void)
 
         snprintf(line, sizeof(line), "%u", (unsigned)active);
         gfx_setcolour(14);
-        gfx_drawtext(204, (int16_t)(194 + (i * 16)), line);
+        gfx_drawtext(204, (int16_t)(200 + (i * 16)), line);
     }
 }
 
@@ -1692,7 +2236,7 @@ static void ui_draw_vm_live_overlay(void)
 
     if (ui_vm_live_pc >= ui_vm_scroll &&
             ui_vm_live_pc < (uint8_t)(ui_vm_scroll + UI_VM_ROWS)) {
-        int16_t y = (int16_t)(134 + ((ui_vm_live_pc - ui_vm_scroll) * 16));
+        int16_t y = (int16_t)(UI_VM_ROW_Y0 + ((ui_vm_live_pc - ui_vm_scroll) * UI_FONT_H));
 
         gfx_setcolour(14);
         gfx_drawtext(20, y, ">");
@@ -1705,16 +2249,6 @@ static void ui_draw_vm_live_overlay(void)
 
 static void ui_draw_dynamic_overlay(void)
 {
-    char line[96];
-
-    snprintf(line, sizeof(line), "V%u/%u ON%lu OFF%lu D%lu",
-             midi_total_active_count(), SID_MIDI_VOICES,
-             (unsigned long)midi_note_on_count,
-             (unsigned long)midi_note_off_count,
-             (unsigned long)midi_dropped_event_count);
-    gfx_setcolour(25);
-    gfx_drawtext(270, 24, line);
-
     gfx_setcolour(24);
     if (ui_status_message[0]) {
         gfx_drawtext(88, 292, ui_status_message);
@@ -1758,6 +2292,10 @@ void sid_midi_isr(void);
 static void the50hzISR(){
     sid_midi_isr();
     sid_midi_age_active_voices();
+    if (++ui_vm_field_blink_ticks >= UI_VM_FIELD_BLINK_TICKS) {
+        ui_vm_field_blink_ticks = 0;
+        ui_vm_field_blink_on = (uint8_t)!ui_vm_field_blink_on;
+    }
 }
 
 
@@ -1804,7 +2342,7 @@ int main(int argc, char *argv[])
     gfx_showfbuffer(front_a);
     gfx_usebuffer(front_b);
     draw_side = 0;
-    touch_init();
+    apiTouchInit();
 
 
 

@@ -338,12 +338,21 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 #define get16k8mem()		(HWKERNAL->get16kmem8())
 
 // touch screen interfacing
-//#define TOUCHBase           (API->touch)
-//#define touch_init()        (TOUCHBase->init())
-//#define touch_down()        (TOUCHBase->ispressed())
-//#define touch_getxy(x, y)   (TOUCHBase->getxy(x,y))
-//#define touch_getrawxy(x,y) (TOUCHBase->getrawxy(x,y))
-//#define touch_pressure()    (TOUCHBase->getpressure())
+#ifndef apiTouchInit
+#define apiTouchInit()      (API->touch->init())
+#endif
+#ifndef apiTouchDown
+#define apiTouchDown()      (API->touch->ispressed())
+#endif
+#ifndef apiTouchGetXY
+#define apiTouchGetXY(x, y) (API->touch->getxy(x,y))
+#endif
+#ifndef apiTouchGetRawXY
+#define apiTouchGetRawXY(x,y) (API->touch->getrawxy(x,y))
+#endif
+#ifndef apiTouchPressure
+#define apiTouchPressure()  (API->touch->getpressure())
+#endif
 
 // system clock API
 //void     (*rtc_gettime)      (uint8_t* hour, uint8_t* min, uint8_t* sec);
