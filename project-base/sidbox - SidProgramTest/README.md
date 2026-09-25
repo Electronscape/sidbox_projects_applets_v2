@@ -47,9 +47,9 @@ Every program should end with:
 | `0x12` | `SID_OP_ADDVAR` | var index | signed 16-bit delta | Adds to one of four per-voice variables. |
 | `0x13` | `SID_OP_WHILE_NOTE` | unused | skip amount | If note is released, skips forward by `value`; otherwise enters/continues the loop body. |
 | `0x14` | `SID_OP_WHILE_GT` | var index | high=threshold, low=skip | If `vars[param8 & 3] > signed threshold`, continues; otherwise skips forward by low byte. |
-| `0x15` | `SID_OP_END_WHILE` | unused | jump-back amount | Jumps back by `value` instructions to the matching while/test area. |
+| `0x15` | `SID_OP_LOOP_BACK` | unused | jump-back amount | Jumps back by `value` instructions to re-test the current loop. `SID_OP_END_WHILE` still exists as a compatibility alias. |
 
-Loop offsets are counted in VM instruction rows, not bytes. For example, if row 8 is `{ SID_OP_END_WHILE, 0, 4 }`, the VM jumps back four rows to row 4.
+Loop offsets are counted in VM instruction rows, not bytes. For example, if row 8 is `{ SID_OP_LOOP_BACK, 0, 4 }`, the VM jumps back four rows to row 4.
 
 ## SID Control Byte Quick Reference
 
@@ -123,13 +123,13 @@ static const sid_instr_t prg_conditional_loop_demo[] = {
     { SID_OP_ADDPWM,     0, 0x0100 },        // 05: widen pulse
     { SID_OP_WAIT,       0, 1 },             // 06: wait one tick
     { SID_OP_ADDVAR,     0, (uint16_t)-1 },  // 07: var0--
-    { SID_OP_END_WHILE,  0, 4 },             // 08: jump back 4 rows to row 04
+    { SID_OP_LOOP_BACK,  0, 4 },             // 08: jump back 4 rows to row 04
     { SID_OP_WHILE_NOTE, 0, 6 },             // 09: if key is released, skip 6 rows to row 15
     { SID_OP_ADDPWM,     0, 0x0040 },        // 10: widen pulse a little
     { SID_OP_WAIT,       0, 1 },             // 11: wait one tick
     { SID_OP_DECPWM,     0, 0x0040 },        // 12: narrow pulse back down
     { SID_OP_WAIT,       0, 1 },             // 13: wait one tick
-    { SID_OP_END_WHILE,  0, 5 },             // 14: jump back 5 rows to row 09
+    { SID_OP_LOOP_BACK,  0, 5 },             // 14: jump back 5 rows to row 09
     { SID_OP_END,        0, 0 }              // 15: on key-off, release and stop
 };
 ```
@@ -153,11 +153,11 @@ static const sid_instr_t prg_two_var_loop_demo[] = {
     { SID_OP_DECPWM,     0, 0x0080 },        // 10: narrow pulse
     { SID_OP_WAIT,       0, 1 },             // 11: wait one tick
     { SID_OP_ADDVAR,     0, (uint16_t)-1 },  // 12: var0--, one wiggle finished
-    { SID_OP_END_WHILE,  0, 6 },             // 13: jump back 6 rows to row 07
+    { SID_OP_LOOP_BACK,  0, 6 },             // 13: jump back 6 rows to row 07
     { SID_OP_ADDVAR,     1, (uint16_t)-1 },  // 14: var1--, one group finished
-    { SID_OP_END_WHILE,  0, 10 },            // 15: jump back 10 rows to row 05
+    { SID_OP_LOOP_BACK,  0, 10 },            // 15: jump back 10 rows to row 05
     { SID_OP_SETVAR,     1, 4 },             // 16: reset var1 after four groups
-    { SID_OP_END_WHILE,  0, 13 },            // 17: jump back 13 rows to row 04
+    { SID_OP_LOOP_BACK,  0, 13 },            // 17: jump back 13 rows to row 04
     { SID_OP_END,        0, 0 }              // 18: on key-off, release and stop
 };
 ```

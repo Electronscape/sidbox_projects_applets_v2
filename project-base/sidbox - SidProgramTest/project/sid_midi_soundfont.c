@@ -473,7 +473,7 @@ static void sid_vm_process_voice(uint8_t voice_index) {
                 break;
             }
 
-            case SID_OP_END_WHILE:
+            case SID_OP_LOOP_BACK:
                 sid_vm_jump_back(v, instr.value);
                 break;
 

@@ -408,13 +408,13 @@ static const sid_instr_t prg_conditional_loop_demo[] = {
     { SID_OP_ADDPWM,     0, 0x0100 },
     { SID_OP_WAIT,       0, 1 },
     { SID_OP_ADDVAR,     0, (uint16_t)-1 }, // var0--
-    { SID_OP_END_WHILE,  0, 4 },
+    { SID_OP_LOOP_BACK,  0, 4 },
     { SID_OP_WHILE_NOTE, 0, 13 },            // while note is held, skip 6 instrs when false
     { SID_OP_ADDPWM,     0, 0x0040 },
     { SID_OP_WAIT,       0, 1 },
     { SID_OP_DECPWM,     0, 0x0040 },
     { SID_OP_WAIT,       0, 1 },
-    { SID_OP_END_WHILE,  0, 5 },
+    { SID_OP_LOOP_BACK,  0, 5 },
     { SID_OP_END,        0, 0 }
 };
 

@@ -715,7 +715,7 @@ LOAD /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/
                 0x00000000d03e8564       0x14 compiled/project/main.o
  .rodata.CSWTCH.459
                 0x00000000d03e8578       0x58 compiled/project/main.o
- .rodata.bands.9791
+ .rodata.bands.9792
                 0x00000000d03e85d0        0x8 compiled/project/main.o
  .rodata._global_impure_ptr
                 0x00000000d03e85d8        0x4 /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-impure.o)

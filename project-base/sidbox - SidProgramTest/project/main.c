@@ -931,7 +931,7 @@ static const char *vm_opcode_name(uint8_t opcode)
     case SID_OP_ADDVAR: return "ADDVAR";
     case SID_OP_WHILE_NOTE: return "WHNOTE";
     case SID_OP_WHILE_GT: return "WHGT";
-    case SID_OP_END_WHILE: return "ENDWH";
+    case SID_OP_LOOP_BACK: return "LOOPBK";
     default: return "???";
     }
 }

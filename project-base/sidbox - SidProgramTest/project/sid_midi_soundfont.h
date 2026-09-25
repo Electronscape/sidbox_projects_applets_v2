@@ -34,7 +34,8 @@ typedef enum {
     SID_OP_ADDVAR     = 0x12, // var[param8 & 3] += signed value
     SID_OP_WHILE_NOTE = 0x13, // If note is off skip forward value instructions, else enter loop body
     SID_OP_WHILE_GT   = 0x14, // If var[param8 & 3] <= signed value hi skip forward value lo instructions
-    SID_OP_END_WHILE  = 0x15  // Jump back value instructions to matching WHILE
+    SID_OP_LOOP_BACK  = 0x15, // Jump back value instructions to re-test the current loop
+    SID_OP_END_WHILE  = SID_OP_LOOP_BACK // Compatibility alias for older programs/docs
 } sid_opcode_t;
 
 typedef struct {
