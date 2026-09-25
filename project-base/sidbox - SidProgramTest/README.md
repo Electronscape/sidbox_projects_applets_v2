@@ -134,9 +134,38 @@ static const sid_instr_t prg_conditional_loop_demo[] = {
 };
 ```
 
+Two-variable conditional-loop demo:
+
+This one uses `var0` as an inner PWM wiggle counter and `var1` as an outer group counter. The note-held loop runs four groups of three PWM wiggles, resets `var1`, then keeps going until key-off.
+
+```c
+static const sid_instr_t prg_two_var_loop_demo[] = {
+    { SID_OP_ADSR,       0, 0x00F4 },        // 00: instant attack, high sustain, medium release
+    { SID_OP_PULSE,      0, 0x0200 },        // 01: start with a narrow pulse
+    { SID_OP_WAVE,       0, 0x41 },          // 02: pulse waveform + gate on
+    { SID_OP_SETVAR,     1, 4 },             // 03: var1 = 4, outer group counter
+    { SID_OP_WHILE_NOTE, 0, 14 },            // 04: if key is released, skip 14 rows to row 18
+    { SID_OP_WHILE_GT,   1, 0x000B },        // 05: if var1 <= 0, skip 11 rows to row 16
+    { SID_OP_SETVAR,     0, 3 },             // 06: var0 = 3, inner wiggle counter
+    { SID_OP_WHILE_GT,   0, 0x0007 },        // 07: if var0 <= 0, skip 7 rows to row 14
+    { SID_OP_ADDPWM,     0, 0x0080 },        // 08: widen pulse
+    { SID_OP_WAIT,       0, 1 },             // 09: wait one tick
+    { SID_OP_DECPWM,     0, 0x0080 },        // 10: narrow pulse
+    { SID_OP_WAIT,       0, 1 },             // 11: wait one tick
+    { SID_OP_ADDVAR,     0, (uint16_t)-1 },  // 12: var0--, one wiggle finished
+    { SID_OP_END_WHILE,  0, 6 },             // 13: jump back 6 rows to row 07
+    { SID_OP_ADDVAR,     1, (uint16_t)-1 },  // 14: var1--, one group finished
+    { SID_OP_END_WHILE,  0, 10 },            // 15: jump back 10 rows to row 05
+    { SID_OP_SETVAR,     1, 4 },             // 16: reset var1 after four groups
+    { SID_OP_END_WHILE,  0, 13 },            // 17: jump back 13 rows to row 04
+    { SID_OP_END,        0, 0 }              // 18: on key-off, release and stop
+};
+```
+
 ## Notes And Gotchas
 
 - `SID_OP_HOLD` and `SID_OP_WHILE_NOTE` make key-off behavior nicer. Without one of these, note-off goes straight into SID release cleanup.
+- `SID_OP_SETVAR` and `SID_OP_ADDVAR` use `param8 & 3`, so only variables `0..3` exist. `value` is treated as signed when adding/comparing.
 - `SID_OP_ADSR` release nibble controls the cleanup delay. Very long release values will remain audible longer.
 - Velocity scales the sustain nibble, not the SID chip volume register.
 - Pitch bend is handled outside the program by the voice engine.
