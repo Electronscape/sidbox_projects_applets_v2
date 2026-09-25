@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
     initMalloc();
 
     gfx_setlcd(DEFAULT_RENDER_ORDER, FPS_50);
-    gfx_mode(SCREEN_W, SCREEN_H, SCREEN_W, SCREEN_H, DISPFLAG_DUALLAYER);
+    gfx_mode(SCREEN_W, SCREEN_H * 2, SCREEN_W, SCREEN_H * 2, DISPFLAG_DUALLAYER);
     //set_audio_dma(512); // a few ms about 7ms enough for a full frame.
     //set_music_dma = 1;
 

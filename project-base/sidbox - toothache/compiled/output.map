@@ -151,6 +151,12 @@ Discarded input sections
  .text.LoadPPB  0x0000000000000000       0xa8 compiled/graphics/graphics.o
  .rodata.bitMask
                 0x0000000000000000        0x8 compiled/graphics/graphics.o
+ .text          0x0000000000000000        0x0 compiled/touch/touch.o
+ .data          0x0000000000000000        0x0 compiled/touch/touch.o
+ .bss           0x0000000000000000        0x0 compiled/touch/touch.o
+ .comment       0x0000000000000000       0x54 compiled/touch/touch.o
+ .ARM.attributes
+                0x0000000000000000       0x31 compiled/touch/touch.o
  .text          0x0000000000000000        0x0 compiled/apis.o
  .data          0x0000000000000000        0x0 compiled/apis.o
  .bss           0x0000000000000000        0x0 compiled/apis.o
@@ -193,12 +199,6 @@ Discarded input sections
  .data.heap_base
                 0x0000000000000000        0x4 compiled/syscalls.o
  .thestart      0x0000000000000000        0x4 compiled/syscalls.o
- .text          0x0000000000000000        0x0 compiled/touch/touch.o
- .data          0x0000000000000000        0x0 compiled/touch/touch.o
- .bss           0x0000000000000000        0x0 compiled/touch/touch.o
- .comment       0x0000000000000000       0x54 compiled/touch/touch.o
- .ARM.attributes
-                0x0000000000000000       0x31 compiled/touch/touch.o
  .text          0x0000000000000000        0x0 compiled/project/resources.o
  .data          0x0000000000000000        0x0 compiled/project/resources.o
  .bss           0x0000000000000000        0x0 compiled/project/resources.o
@@ -222,37 +222,37 @@ Discarded input sections
                 0x0000000000000000       0x74 compiled/project/scrnsvrprojx.o
  .text.do_projectx_playdemo_screensaver
                 0x0000000000000000     0x1ef4 compiled/project/scrnsvrprojx.o
- .bss.demo_frame.9279
+ .bss.demo_frame.9393
                 0x0000000000000000        0x2 compiled/project/scrnsvrprojx.o
- .bss.enemies.9286
+ .bss.enemies.9400
                 0x0000000000000000       0x3c compiled/project/scrnsvrprojx.o
- .bss.enemy_shots.9288
+ .bss.enemy_shots.9402
                 0x0000000000000000       0x78 compiled/project/scrnsvrprojx.o
- .bss.explosions.9289
+ .bss.explosions.9403
                 0x0000000000000000       0x40 compiled/project/scrnsvrprojx.o
- .bss.initialised.9278
+ .bss.initialised.9392
                 0x0000000000000000        0x1 compiled/project/scrnsvrprojx.o
- .bss.player_shots.9287
+ .bss.player_shots.9401
                 0x0000000000000000       0x30 compiled/project/scrnsvrprojx.o
  .bss.projectx_deaths
                 0x0000000000000000        0x2 compiled/project/scrnsvrprojx.o
  .bss.projectx_score
                 0x0000000000000000        0x4 compiled/project/scrnsvrprojx.o
- .bss.ship_invuln.9283
+ .bss.ship_invuln.9397
                 0x0000000000000000        0x1 compiled/project/scrnsvrprojx.o
- .bss.ship_respawn_wait.9284
+ .bss.ship_respawn_wait.9398
                 0x0000000000000000        0x1 compiled/project/scrnsvrprojx.o
- .data.player_fire_wait.9285
+ .data.player_fire_wait.9399
                 0x0000000000000000        0x1 compiled/project/scrnsvrprojx.o
- .data.ship_target_y.9282
+ .data.ship_target_y.9396
                 0x0000000000000000        0x2 compiled/project/scrnsvrprojx.o
- .data.ship_x.9280
+ .data.ship_x.9394
                 0x0000000000000000        0x2 compiled/project/scrnsvrprojx.o
- .data.ship_y.9281
+ .data.ship_y.9395
                 0x0000000000000000        0x2 compiled/project/scrnsvrprojx.o
  .data.space_station_x
                 0x0000000000000000        0x2 compiled/project/scrnsvrprojx.o
- .rodata.wave.9277
+ .rodata.wave.9391
                 0x0000000000000000       0x40 compiled/project/scrnsvrprojx.o
  .comment       0x0000000000000000       0x54 compiled/project/scrnsvrprojx.o
  .ARM.attributes
@@ -514,9 +514,9 @@ LOAD /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/
 LOAD compiled/audio/audio.o
 LOAD compiled/crt/crt.o
 LOAD compiled/graphics/graphics.o
+LOAD compiled/touch/touch.o
 LOAD compiled/apis.o
 LOAD compiled/syscalls.o
-LOAD compiled/touch/touch.o
 LOAD compiled/project/resources.o
 LOAD compiled/project/main.o
 LOAD compiled/project/scrnsvrprojx.o
@@ -799,7 +799,7 @@ LOAD /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/
  .rodata.gfx_bubguy8
                 0x00000000d0093d4c      0x9b4 compiled/project/scrnsvrbubba.o
                 0x00000000d0093d4c                gfx_bubguy8
- .rodata.gradient_cols.9285
+ .rodata.gradient_cols.9399
                 0x00000000d0094700       0x12 compiled/project/scrnsvrbubba.o
  *fill*         0x00000000d0094712        0x2 
  .rodata.guywidthheight
@@ -889,7 +889,7 @@ LOAD /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/
  *(.bss*)
  .bss.heap_end_u
                 0x00000000d009be80        0x4 compiled/syscalls.o
- .bss.in_write.8091
+ .bss.in_write.8205
                 0x00000000d009be84        0x4 compiled/syscalls.o
  .bss.db        0x00000000d009be88        0x1 compiled/project/main.o
  *fill*         0x00000000d009be89        0x3 

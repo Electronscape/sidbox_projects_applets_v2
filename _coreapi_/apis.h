@@ -243,6 +243,7 @@ typedef struct {
 
 typedef struct  {
 	void (*IRQ_LCD_VBL) (void (*isr)(void));
+	void (*IRQ_MIDI_RX) (void (*isr)(uint8_t byte));
 } API_IRQ_BANK;
 
 
@@ -282,6 +283,7 @@ extern const char __sidbox_api_location;   // const char is the classic “linke
 // conf and hardware setups
 #define IRQSERVICE  (API->irq)
 #define irq_lcd_vbl(isr)			(IRQSERVICE->IRQ_LCD_VBL(isr))	// the IRQ is internally cleared, so dont need to do this
+#define irq_midi(isr)				(IRQSERVICE->IRQ_MIDI_RX(isr))	// pass 0 to remove the MIDI byte callback
 
 #define configure_runmode(profile)	(HWKERNAL->gamemode(profile))
 #define hw_disarm_lcd()				(HWKERNAL->lcd_disp_disable())

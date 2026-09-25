@@ -9,3 +9,4 @@ base_tests/sturdust/Archive.zip
 base_tests/sturdust/Archive.zip
 *.zip
 *.zip
+*.gz

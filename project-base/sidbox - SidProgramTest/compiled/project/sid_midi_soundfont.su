@@ -1,1 +1,14 @@
-sid_midi_soundfont.c:156:6:sid_midi_isr	16	static
+sid_midi_soundfont.c:105:13:sid_voice_write_scaled_sr	16	static
+sid_midi_soundfont.c:177:13:sid_voice_apply_note_offset	24	static
+sid_midi_soundfont.c:192:13:sid_voice_hard_silence	24	static
+sid_midi_soundfont.c:533:6:sid_voice_set_program.part.0	40	static
+sid_midi_soundfont.c:223:6:get_voice_target	4	static
+sid_midi_soundfont.c:533:6:sid_voice_set_program	0	static
+sid_midi_soundfont.c:586:6:sid_voice_note_on	24	static
+sid_midi_soundfont.c:604:6:sid_voice_note_off	24	static
+sid_midi_soundfont.c:620:6:sid_voice_note_kill	8	static
+sid_midi_soundfont.c:639:6:sid_voice_pitch_bend	40	static
+sid_midi_soundfont.c:652:6:sid_voice_set_velocity	24	static
+sid_midi_soundfont.c:665:9:sid_voice_get_vm_debug	8	static
+sid_midi_soundfont.c:682:6:sid_soundfont_init	24	static
+sid_midi_soundfont.c:692:6:sid_midi_isr	56	static
