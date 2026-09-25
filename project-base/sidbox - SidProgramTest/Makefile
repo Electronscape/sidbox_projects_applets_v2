@@ -20,7 +20,7 @@ include $(CORE_DIR)/toolchain.mk  # OPEN THIS TO ALTER THE TOOLCHAIN LOCATIONS
 
 # OPTIMISATION FLAGS | these are great for speedy programs
 OPT_CORE := -Ofast
-OPT_APP := -Ofast
+OPT_APP := -Os
 
 # PLEASE DO NOT EDIT THE FOLLOWING BELOW - AGAIN unless you know what you're doing
 # this is intended to scan directories and include what it finds automatically
