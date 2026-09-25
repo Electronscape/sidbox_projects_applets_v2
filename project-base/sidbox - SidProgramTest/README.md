@@ -49,6 +49,8 @@ Every program should end with:
 | `0x14` | `SID_OP_WHILE_GT` | var index | high=threshold, low=skip | If `vars[param8 & 3] > signed threshold`, continues; otherwise skips forward by low byte. |
 | `0x15` | `SID_OP_END_WHILE` | unused | jump-back amount | Jumps back by `value` instructions to the matching while/test area. |
 
+Loop offsets are counted in VM instruction rows, not bytes. For example, if row 8 is `{ SID_OP_END_WHILE, 0, 4 }`, the VM jumps back four rows to row 4.
+
 ## SID Control Byte Quick Reference
 
 For `SID_OP_WAVE`, `value` is written directly to the SID control register:
@@ -113,22 +115,22 @@ Conditional-loop demo:
 
 ```c
 static const sid_instr_t prg_conditional_loop_demo[] = {
-    { SID_OP_ADSR,       0, 0x00FF },        // instant attack, full sustain, long release
-    { SID_OP_PULSE,      0, 0x0200 },        // start with a narrow pulse
-    { SID_OP_WAVE,       0, 0x41 },          // pulse waveform + gate on
-    { SID_OP_SETVAR,     0, 10 },            // var0 = 10
-    { SID_OP_WHILE_GT,   0, 0x0405 },        // while var0 > 4, run the counted PWM rise
-    { SID_OP_ADDPWM,     0, 0x0100 },        // widen pulse
-    { SID_OP_WAIT,       0, 1 },             // wait one tick
-    { SID_OP_ADDVAR,     0, (uint16_t)-1 },  // var0--
-    { SID_OP_END_WHILE,  0, 4 },             // jump back to WHILE_GT
-    { SID_OP_WHILE_NOTE, 0, 13 },            // while note is held, run the PWM wiggle
-    { SID_OP_ADDPWM,     0, 0x0040 },        // widen pulse a little
-    { SID_OP_WAIT,       0, 1 },             // wait one tick
-    { SID_OP_DECPWM,     0, 0x0040 },        // narrow pulse back down
-    { SID_OP_WAIT,       0, 1 },             // wait one tick
-    { SID_OP_END_WHILE,  0, 5 },             // jump back to WHILE_NOTE
-    { SID_OP_END,        0, 0 }              // on key-off, release and stop
+    { SID_OP_ADSR,       0, 0x00FF },        // 00: instant attack, full sustain, long release
+    { SID_OP_PULSE,      0, 0x0200 },        // 01: start with a narrow pulse
+    { SID_OP_WAVE,       0, 0x41 },          // 02: pulse waveform + gate on
+    { SID_OP_SETVAR,     0, 10 },            // 03: var0 = 10
+    { SID_OP_WHILE_GT,   0, 0x0405 },        // 04: if var0 <= 4, skip 5 rows to row 09
+    { SID_OP_ADDPWM,     0, 0x0100 },        // 05: widen pulse
+    { SID_OP_WAIT,       0, 1 },             // 06: wait one tick
+    { SID_OP_ADDVAR,     0, (uint16_t)-1 },  // 07: var0--
+    { SID_OP_END_WHILE,  0, 4 },             // 08: jump back 4 rows to row 04
+    { SID_OP_WHILE_NOTE, 0, 6 },             // 09: if key is released, skip 6 rows to row 15
+    { SID_OP_ADDPWM,     0, 0x0040 },        // 10: widen pulse a little
+    { SID_OP_WAIT,       0, 1 },             // 11: wait one tick
+    { SID_OP_DECPWM,     0, 0x0040 },        // 12: narrow pulse back down
+    { SID_OP_WAIT,       0, 1 },             // 13: wait one tick
+    { SID_OP_END_WHILE,  0, 5 },             // 14: jump back 5 rows to row 09
+    { SID_OP_END,        0, 0 }              // 15: on key-off, release and stop
 };
 ```
 
