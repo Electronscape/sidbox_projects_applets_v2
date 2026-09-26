@@ -1,0 +1,40 @@
+things to get right:
+
+will need a way to add a line or remove one in the VM editor mode.
+
+
+
+the sequencer:
+even though im changing the channels and its program, the notes some how still send the original channel program.
+this is apparent when importing MIDI. 
+need a way to set the channel or notes to a set program.
+SINCE normal sequencer software, i believe, allow channels to be re-programmed per note. 
+   SO might be worth having the midi importer look at the channels, and notes, and re-group the notes into a their own channels
+   this is a restriction though so 16 channels means that a total of 16 instruments at the same time.
+   THIS IS a mini sequencer after all and is meant for the sid chip sound anyway.
+   BUT the ability to change the channel the notes sit 
+
+For our sequencer:
+   technically each channel has an assigned instrument, so this makes it obvious to the keyboardist that a channel is related to an instrument
+   instruments being "the program"
+
+   THIS allows us to change the instruments for all notes using that channel.
+
+The importer:
+    since midi notes carry information about the channel they're using AND the program, it appears that 
+        eg. CHANNEL 1 can be ANY instrument that note wants. 
+    
+    The importer needs to group these into their own channels.
+        eg. channel 1 and channel 2 might have notes that use the same program... may as well group them to their own dedicated channel
+
+The VM editor:
+    this is already pretty powerful, but we might need a few new opcodes~
+        - octive and transposition
+            this allows for notes that got imported in a too high range, we can use the VM to change the octive of the program 
+            this would be a zero VM time thing, so preps the octive/semi tone/transpostion then does the next program tick (PC++)
+    
+        - add/remove a programming line, 
+            eg. the ability to insert a new OP code in the program, or remove one.
+            removing should come with a confirm box.
+
+        

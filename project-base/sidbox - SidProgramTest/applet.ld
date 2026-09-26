@@ -7,9 +7,9 @@
     Usable SDRAM: 6 MB / 0x600000
     RAM disk reserve: 2 MB / 0x200000
     RAM disk starts: 0xD0400000
-    Reserved before applet: 3968 KB / 0x3E0000
-    Applet origin: 0xD03E0000
-    Applet allowance: 64 KB / 0x10000
+    Reserved before applet: 3840 KB / 0x3C0000
+    Applet origin: 0xD03C0000
+    Applet allowance: 128 KB / 0x20000
 */
 
 /* Base and limits */
@@ -21,7 +21,7 @@ _ramdisk_size      = 0x200000;
 /* Wizard choices, all in bytes. Do not multiply these by 1024 again. :) */
 _profile_is_desktop = 1;
 _desktop_slot       = 1;
-_requested_app_size = 0x10000;
+_requested_app_size = 0x20000;
 _largest_modfile    = 0x3E0000;
 _largest_resource   = 0x0;
 _applet_ram_top     = _maxramavail - _ramdisk_size;

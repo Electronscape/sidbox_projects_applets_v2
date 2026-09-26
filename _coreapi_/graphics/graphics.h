@@ -199,6 +199,7 @@ typedef struct  {
     void  (*drawtextfc)   (long x, long y, const char *textptr, uint8_t sizex, uint8_t sizey, uint8_t colstart, uint8_t colend, uint8_t step);
     void  (*circle)       (int16_t cx, int16_t cy, int16_t r);
     void  (*circlef)      (int16_t cx, int16_t cy, int16_t r);
+    void  (*drawline)     (int16_t x0, int16_t y0, int16_t x1, int16_t y1);
 } API_GFX_PRIMATIVES;
 
 typedef struct  {
@@ -282,6 +283,7 @@ typedef struct  {
 #define gfx_drawtext(x,y,text)  (GFXP->drawtext(x,y,text))
 #define gfx_drawtextf(x,y,text,sizex,sizey)  (GFXP->drawtextf(x,y,text,sizex,sizey))
 #define gfx_drawtextfc(x,y,text,sizex,sizey,colstart,colend,step)  (GFXP->drawtextfc(x,y,text,sizex,sizey,colstart,colend,step))
+#define gfx_drawline(x0, y0, x1, y1) (GFXP->drawline(x0, y0, x1, y1))
 
 // set the current draw colour
 #define gfx_setcolour(c)        (GFXP->setcolour((c)))
