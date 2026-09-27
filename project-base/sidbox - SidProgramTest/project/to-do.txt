@@ -2,6 +2,10 @@ things to get right:
 
 will need a way to add a line or remove one in the VM editor mode.
 
+[CHECKS]
+    - make sure that the sequencer renderer isn't blocking for critical recording, and play back notes.
+    - channels and instruments assignment systems.
+
 
 
 the sequencer:

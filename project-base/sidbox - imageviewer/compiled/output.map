@@ -928,9 +928,9 @@ LOAD /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/
  *fill*         0x00000000d000dd69        0x3 
  .rodata.main.str1.4
                 0x00000000d000dd6c      0x698 compiled/project/main.o
- .rodata.starts.10018
+ .rodata.starts.10155
                 0x00000000d000e404        0x4 compiled/project/main.o
- .rodata.steps.10019
+ .rodata.steps.10156
                 0x00000000d000e408        0x4 compiled/project/main.o
  .rodata.__assert_func.str1.1
                 0x00000000d000e40c       0x3c /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/libc_nano.a(lib_a-assert.o)
@@ -999,7 +999,7 @@ LOAD /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/
  *(.bss*)
  .bss.heap_end_u
                 0x00000000d000e560        0x4 compiled/syscalls.o
- .bss.in_write.8093
+ .bss.in_write.8230
                 0x00000000d000e564        0x4 compiled/syscalls.o
  .bss.stbi__g_failure_reason
                 0x00000000d000e568        0x4 compiled/project/stb_jpeg.o

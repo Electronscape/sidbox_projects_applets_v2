@@ -1,3 +1,5 @@
+static uint8_t edit_active = 0;
+
 static void ui_draw_confirm_modal(void);
 static void ui_draw_dialog(void);
 static void ui_draw_seq_overlay(void);
@@ -13,8 +15,7 @@ static void ui_draw_header(void)
 
     for (uint8_t i = 0; i < UI_PAGE_COUNT; i++) {
         int16_t x = (int16_t)(UI_TAB_X0 + (i * UI_TAB_STEP));
-        ui_create_button((uint16_t)(UI_BUTTON_TAB_HOME + i), x, UI_TAB_Y, UI_TAB_W, UI_TAB_H,
-                         ui_page_name(i), (uint8_t)(ui_page == i), 0);
+        ui_create_button((uint16_t)(UI_BUTTON_TAB_HOME + i), x, UI_TAB_Y, UI_TAB_W, UI_TAB_H, ui_page_name(i), (uint8_t)(ui_page == i), 0);
     }
 }
 
@@ -163,7 +164,7 @@ static void ui_draw_vm(void)
     uint8_t ch = ui_selected_channel;
     uint8_t program = midi_channel_program[ch];
     uint8_t len;
-    uint8_t edit_active = (uint8_t)(ui_vm_edit_mode && ui_vm_edit_program == program);
+    edit_active = (uint8_t)(ui_vm_edit_mode && ui_vm_edit_program == program);
 
     ui_panel(16, UI_VM_PANEL_Y, 446, UI_VM_PANEL_H, edit_active ? "VM RAM EDITOR" : "VM CODE VIEWER");
 
@@ -243,8 +244,14 @@ static void ui_draw_vm(void)
             field = "VAL";
         }
 
-        ui_create_button(UI_BUTTON_VM_RESTORE, 260, UI_VM_PANEL_Y, 72, 30, "RESTORE", 0, 0);
-        ui_create_button(UI_BUTTON_VM_FIELD,   338, UI_VM_PANEL_Y, 72, 30, "FIELD", 0, 0);
+
+        ui_create_button(UI_BUTTON_VM_RESTORE,  90, 284, 72, 32, "RESTORE", 0, 0);
+        ui_create_button(UI_BUTTON_VM_FIELD,   160, 284, 72, 32, "FIELD", 0, 0);
+
+        ui_create_button(UI_BUTTON_VM_INSERT,  236, 284, 56, 32, "INS", 0, 0);
+        ui_create_button(UI_BUTTON_VM_DELETE,  290, 284, 56, 32, "DEL", 0, 0);
+
+
 
         snprintf(line, sizeof(line), "ROW%02u %s", (unsigned)ui_vm_edit_row, field);
         gfx_setcolour(24);
@@ -276,21 +283,17 @@ static void ui_draw_seq(void)
     char line[96];
     const char *state = "STOP";
 
-    if (seq_count_in_active) {
-        state = "COUNT";
-    } else if (seq_recording) {
-        state = "REC";
-    } else if (seq_record_armed) {
-        state = "ARM";
-    } else if (seq_playing) {
-        state = "PLAY";
+    if (seq_count_in_active) {     state = "COUNT";
+    } else if (seq_recording) {    state = "REC";
+    } else if (seq_record_armed) { state = "ARM";
+    } else if (seq_playing) {      state = "PLAY";
     }
 
     gfx_setcolour(26);
     gfx_rectf(SEQ_VIEW_X, SEQ_VIEW_Y, SEQ_VIEW_W, 1);
     gfx_rectf(SEQ_VIEW_X, (int16_t)(SEQ_VIEW_Y + SEQ_VIEW_H - 1), SEQ_VIEW_W, 1);
-    gfx_rectf(SEQ_VIEW_X, SEQ_VIEW_Y, 1, SEQ_VIEW_H);
-    gfx_rectf((int16_t)(SEQ_VIEW_X + SEQ_VIEW_W - 1), SEQ_VIEW_Y, 1, SEQ_VIEW_H);
+    //gfx_rectf(SEQ_VIEW_X, SEQ_VIEW_Y, 1, SEQ_VIEW_H);
+    //gfx_rectf((int16_t)(SEQ_VIEW_X + SEQ_VIEW_W - 1), SEQ_VIEW_Y, 1, SEQ_VIEW_H);
 
     if (seq_count_in_active) {
         snprintf(line, sizeof(line), "BPM %03u  %s %u  SNAP %s 1/%u  OUT %s  NOTES %lu",
@@ -825,15 +828,14 @@ static void ui_draw_seq_canvas(int32_t origin_tick)
 {
     uint16_t grid = seq_grid_ticks();
     int64_t left_tick_i = origin_tick;
-    int64_t right_tick_i = (int64_t)origin_tick +
-        ((int64_t)SEQ_BACK_W * (int64_t)SEQ_TICKS_PER_PIXEL);
+    int64_t right_tick_i = (int64_t)origin_tick + ((int64_t)SEQ_BACK_W * (int64_t)SEQ_TICKS_PER_PIXEL);
     uint32_t left_tick = left_tick_i > 0 ? (uint32_t)left_tick_i : 0u;
     uint32_t right_tick = right_tick_i > 0 ? (uint32_t)right_tick_i : 0u;
 
     gfx_setcolour(0);
     gfx_rectf(0, 0, SEQ_BACK_W, UI_SCREEN_H);
 
-    gfx_setcolour(20);
+    gfx_setcolour(COLOUR_SHADOW);
     gfx_rectf(0, SEQ_VIEW_Y, SEQ_BACK_W, SEQ_VIEW_H);
 
     gfx_setcolour(21);
@@ -917,8 +919,8 @@ static void ui_seq_back_prepare(void)
     if (!ui_seq_back_valid ||
             cursor_src_x < (SEQ_CURSOR_X + SEQ_BACK_SCROLL_MARGIN) ||
             cursor_src_x > (SEQ_CURSOR_X + UI_SCREEN_W - SEQ_BACK_SCROLL_MARGIN)) {
-        ui_seq_back_origin_tick = (int32_t)seq_position_ticks -
-            (int32_t)(SEQ_BACK_CENTER_X * SEQ_TICKS_PER_PIXEL);
+
+        ui_seq_back_origin_tick = (int32_t)seq_position_ticks - (int32_t)(SEQ_BACK_CENTER_X * SEQ_TICKS_PER_PIXEL);
         cursor_src_x = SEQ_BACK_CENTER_X;
         ui_seq_back_dirty = 1u;
     }
@@ -952,7 +954,7 @@ static void ui_draw_seq_overlay(void)
         int16_t y;
 
         if (!sid_midi_voice_alloc[i].active ||
-                sid_midi_voice_alloc[i].source != MIDI_VOICE_SOURCE_SEQ) {
+             sid_midi_voice_alloc[i].source != MIDI_VOICE_SOURCE_SEQ) {
             continue;
         }
 
@@ -965,7 +967,9 @@ static void ui_draw_seq_overlay(void)
         snprintf(line, sizeof(line), "N%03u CH%02u",
                  (unsigned)sid_midi_voice_alloc[i].note,
                  (unsigned)(sid_midi_voice_alloc[i].channel + 1u));
-        gfx_setcolour(COLOUR_WHITE);
+
+        //seq_notes[i].colour
+        //gfx_setcolour(seq_notes[i].colour);
         gfx_drawtext(380, (int16_t)(SEQ_VIEW_Y + 8 + activenotes), line);
         activenotes += 16;
     }
@@ -1000,9 +1004,15 @@ static void ui_draw_dynamic_overlay(void)
 
     gfx_setcolour(24);
     if (ui_status_message[0]) {
+        if(edit_active){
+            gfx_setcolour(COLOUR_BACKGROUND);
+            gfx_rectf(80, 284, 270, 40);
+            gfx_setcolour(24);
+        }
         gfx_drawtext(88, 292, ui_status_message);
     } else {
-        gfx_drawtext(88, 292, "Right click panic  L+R exits");
+        if(!edit_active)
+            gfx_drawtext(88, 292, "Right click panic  L+R exits");
     }
 
     switch (ui_page) {

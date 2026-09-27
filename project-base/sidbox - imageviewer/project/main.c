@@ -1894,6 +1894,7 @@ int main(int argc, char *argv[])
     int rc = 0;
 
     suspend_desktop();
+    //set_music_dma = 1;
 
     configure_runmode(GAMEMODE_PROFILE_1);
     initMalloc();
@@ -1948,6 +1949,7 @@ done:
         memset((void *)&backbitmap, 0, sizeof(backbitmap));
     }
     restore_lcd_desktop_mode();
+    //set_music_dma=  0 ;
     HWKERNAL->exitgamemode();
     return rc;
 }

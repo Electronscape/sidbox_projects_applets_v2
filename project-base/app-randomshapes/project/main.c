@@ -4,6 +4,7 @@
 
 #include "main.h"
 #include "apis.h"
+#include "gui/window.h"
 
 #define APP_INVALID_WINDOW ((CGWindow)0xFF)
 
@@ -647,7 +648,9 @@ int main(int argc, char *argv[])
 
     app_running = 1;
     //printf(TXTAPP_TITLE ": starting\n");
+    SetMouseBusy();
     build_editor();
+    SetMouseNormal();
 
     return 0x00;
 }
