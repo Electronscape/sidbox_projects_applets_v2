@@ -423,6 +423,8 @@ static void app_shutdown(void)
         menu_exit  = CG_MENUITEM_INVALID;
     }
 
+    //SetMouseNormal();
+    WindowMouseBusy(editor_win, 0);
     //printf(TXTAPP_TITLE ": closing\n");
 }
 
@@ -593,12 +595,12 @@ static void setup_demo_menu(void)
 
 static void build_editor(void)
 {
-    SBOS_CreateWindow(&editor_win, EDITOR_WIN_X, EDITOR_WIN_Y, EDITOR_WIN_W,
-                      EDITOR_WIN_H, TXTAPP_TITLE, WIN_DEFAULT);
+    SBOS_CreateWindow(&editor_win, EDITOR_WIN_X, EDITOR_WIN_Y, EDITOR_WIN_W, EDITOR_WIN_H, TXTAPP_TITLE, WIN_DEFAULT);
     SBOS_SetWindowProc(editor_win, editor_proc);
     SetApplicationTitle(editor_win, "Doing some random shapes!");
     setup_demo_menu();
 
+    WindowMouseBusy(editor_win, 1);
     btn_pause = SBOS_CreateButton(editor_win, BTN_PAUSE_X, BTN_Y, BTN_W, BTN_H, "Pause", GAD_TOOL_DEFAULT);
     btn_burst = SBOS_CreateButton(editor_win, BTN_BURST_X, BTN_Y, BTN_W, BTN_H, "Burst", GAD_TOOL_DEFAULT);
     btn_clear = SBOS_CreateButton(editor_win, BTN_CLEAR_X, BTN_Y, BTN_W, BTN_H, "Clear", GAD_TOOL_DEFAULT);
@@ -648,9 +650,8 @@ int main(int argc, char *argv[])
 
     app_running = 1;
     //printf(TXTAPP_TITLE ": starting\n");
-    SetMouseBusy();
     build_editor();
-    SetMouseNormal();
+    //SetMouseNormal();
 
     return 0x00;
 }
