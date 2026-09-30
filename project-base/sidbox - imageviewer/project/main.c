@@ -8,10 +8,12 @@
 #define LCD_H           320
 #define FILE_HANDLE     0
 #define MAX_PALETTE     256
+#define ZOOM_ONE        256
+#define ZOOM_TOUCH_SIZE  56
 
-#ifndef SIDBOX_ENABLE_HW_JPEG
-#define SIDBOX_ENABLE_HW_JPEG 0
-#endif
+//#ifndef SIDBOX_ENABLE_HW_JPEG
+#define SIDBOX_ENABLE_HW_JPEG 1
+//#endif
 
 #define IFF_ID(a,b,c,d) (((uint32_t)(a) << 24) | ((uint32_t)(b) << 16) | \
                          ((uint32_t)(c) << 8)  |  (uint32_t)(d))
@@ -23,6 +25,7 @@ typedef struct {
     uint16_t width;
     uint16_t height;
     uint8_t *pixels;
+    uint8_t borrowed_pixels;
     uint32_t palette[MAX_PALETTE];
 } Image8;
 
@@ -244,7 +247,7 @@ static uint8_t *load_file(const char *path, uint32_t *out_len)
 
 static void free_image(Image8 *img)
 {
-    if (img->pixels) {
+    if (img->pixels && !img->borrowed_pixels) {
         free(img->pixels);
     }
 
@@ -285,22 +288,16 @@ static int load_hw_jpeg_from_memory(const uint8_t *data, uint32_t len, Image8 *i
     memset(&hwimg, 0, sizeof(hwimg));
     status = API->media->jpeg->decode_rgb332(data, len, &hwimg);
     if (status != API_JPEG_OK || !hwimg.pixels) {
-        snprintf(g_status, sizeof(g_status), "HW JPEG unavailable (%d)", status);
-        set_status(g_status);
+        snprintf(g_status, sizeof(g_status), "HW JPEG skipped (%d)", status);
+        dbug(g_status);
+        dbug("\n");
         return 0;
     }
 
     img->width = hwimg.width;
     img->height = hwimg.height;
-    img->pixels = (uint8_t *)malloc((uint32_t)img->width * img->height);
-    if (!img->pixels) {
-        API->media->jpeg->free_image(&hwimg);
-        set_status("Not enough memory for HW JPEG pixels");
-        return 0;
-    }
-
-    memcpy(img->pixels, hwimg.pixels, (uint32_t)img->width * img->height);
-    API->media->jpeg->free_image(&hwimg);
+    img->pixels = hwimg.pixels;
+    img->borrowed_pixels = 1;
     init_rgb332_palette(img->palette);
     return 1;
 #else
@@ -1200,11 +1197,8 @@ static int load_jpeg_from_memory(const uint8_t *data, uint32_t len, Image8 *img)
 
     status = pjpeg_decode_init(&info, jpeg_need_bytes, &input, 0);
     if (status) {
-        if (status == PJPG_UNSUPPORTED_MODE) {
-            if (load_stb_jpeg_from_memory(data, len, img)) {
-                return 1;
-            }
-            return 0;
+        if (load_stb_jpeg_from_memory(data, len, img)) {
+            return 1;
         }
 
         snprintf(g_status, sizeof(g_status), "%s (%u)",
@@ -1213,7 +1207,12 @@ static int load_jpeg_from_memory(const uint8_t *data, uint32_t len, Image8 *img)
         return 0;
     }
 
-    return decode_pjpeg_mcus_to_image(&info, img);
+    if (decode_pjpeg_mcus_to_image(&info, img)) {
+        return 1;
+    }
+
+    free_image(img);
+    return load_stb_jpeg_from_memory(data, len, img);
 }
 
 static int load_jpeg_from_file(const char *path, Image8 *img)
@@ -1255,24 +1254,23 @@ static int load_jpeg_from_file(const char *path, Image8 *img)
 
     status = pjpeg_decode_init(&info, jpeg_need_file_bytes, &input, 0);
     if (status) {
-        int ok;
-
-        if (status != PJPG_UNSUPPORTED_MODE) {
+        int ok = load_stb_jpeg_from_file(&input, img);
+        if (!ok) {
             snprintf(g_status, sizeof(g_status), "%s (%u)",
                      jpeg_status_name(status), (unsigned)status);
             set_status(g_status);
-            sfclose(FILE_HANDLE);
-            return 0;
         }
-
-        ok = load_stb_jpeg_from_file(&input, img);
         sfclose(FILE_HANDLE);
         return ok;
     }
 
     if (!decode_pjpeg_mcus_to_image(&info, img)) {
+        int ok;
+
+        free_image(img);
+        ok = load_stb_jpeg_from_file(&input, img);
         sfclose(FILE_HANDLE);
-        return 0;
+        return ok;
     }
 
     sfclose(FILE_HANDLE);
@@ -1768,25 +1766,89 @@ static int clamp_int(int v, int lo, int hi)
     return v;
 }
 
-static void draw_image_to_current_buffer(const Image8 *img,
-                                         int src_x, int src_y,
-                                         int dst_x, int dst_y,
-                                         int blit_w, int blit_h)
+static uint16_t fit_zoom_for_image(const Image8 *img)
+{
+    uint32_t zx;
+    uint32_t zy;
+    uint32_t z;
+
+    if (!img || img->width == 0u || img->height == 0u) {
+        return ZOOM_ONE;
+    }
+
+    zx = ((uint32_t)LCD_W * ZOOM_ONE) / img->width;
+    zy = ((uint32_t)LCD_H * ZOOM_ONE) / img->height;
+    z = (zx < zy) ? zx : zy;
+
+    if (z == 0u) {
+        z = 1u;
+    }
+    if (z > ZOOM_ONE) {
+        z = ZOOM_ONE;
+    }
+
+    return (uint16_t)z;
+}
+
+static int view_span_for_zoom(int screen_span, uint16_t zoom)
+{
+    if (zoom == 0u) {
+        return screen_span;
+    }
+
+    return (int)(((uint32_t)screen_span * ZOOM_ONE + zoom - 1u) / zoom);
+}
+
+static void draw_scaled_image_to_current_buffer(const Image8 *img,
+                                                int offx, int offy,
+                                                uint16_t zoom)
 {
     gfx_bitmap_t *draw = gfx_getdrawbuffer();
+    int dst_w;
+    int dst_h;
+    int dst_x = 0;
+    int dst_y = 0;
 
-    if (!draw || !draw->bitmap) {
+    if (!draw || !draw->bitmap || !img || !img->pixels || zoom == 0u) {
         return;
     }
 
-    for (int x = 0; x < blit_w; ++x) {
-        uint8_t *dst_col = &draw->bitmap[((uint32_t)(dst_x + x) * SCREEN_H) +
-                                         (uint32_t)dst_y];
-        const uint8_t *src_px = &img->pixels[((uint32_t)src_y * img->width) +
-                                             (uint32_t)(src_x + x)];
+    dst_w = (int)(((uint32_t)img->width * zoom + ZOOM_ONE - 1u) / ZOOM_ONE);
+    dst_h = (int)(((uint32_t)img->height * zoom + ZOOM_ONE - 1u) / ZOOM_ONE);
 
-        for (int y = 0; y < blit_h; ++y) {
-            dst_col[y] = src_px[(uint32_t)y * img->width];
+    if (dst_w > LCD_W) {
+        dst_w = LCD_W;
+    } else {
+        dst_x = (LCD_W - dst_w) / 2;
+        offx = 0;
+    }
+
+    if (dst_h > LCD_H) {
+        dst_h = LCD_H;
+    } else {
+        dst_y = (LCD_H - dst_h) / 2;
+        offy = 0;
+    }
+
+    for (int x = 0; x < dst_w; ++x) {
+        uint32_t sx = (uint32_t)offx + ((uint32_t)x * ZOOM_ONE) / zoom;
+        uint8_t *dst_col;
+
+        if (sx >= img->width) {
+            sx = img->width - 1u;
+        }
+
+        dst_col = &draw->bitmap[((uint32_t)(dst_x + x) * SCREEN_H) +
+                                (uint32_t)dst_y];
+
+        for (int y = 0; y < dst_h; ++y) {
+            uint32_t sy = (uint32_t)offy + ((uint32_t)y * ZOOM_ONE) / zoom;
+
+            if (sy >= img->height) {
+                sy = img->height - 1u;
+            }
+
+            dst_col[y] = img->pixels[sy * img->width + sx];
         }
     }
 }
@@ -1814,31 +1876,24 @@ static void draw_message(const char *line1, const char *line2)
     gfx_lcdwait();
 }
 
-static void render_view(const Image8 *img, int offx, int offy)
+static void draw_zoom_controls(void)
 {
-    int src_x = 0;
-    int src_y = 0;
-    int dst_x = 0;
-    int dst_y = 0;
-    int blit_w = img->width;
-    int blit_h = img->height;
-    if (img->width < LCD_W) {
-        dst_x = (LCD_W - img->width) / 2;
-    } else {
-        src_x = offx;
-        blit_w = LCD_W;
-    }
+    gfx_setcolour(0);
+    gfx_rectf(LCD_W - ZOOM_TOUCH_SIZE, 0, ZOOM_TOUCH_SIZE, ZOOM_TOUCH_SIZE);
+    gfx_rectf(LCD_W - ZOOM_TOUCH_SIZE, LCD_H - ZOOM_TOUCH_SIZE,
+              ZOOM_TOUCH_SIZE, ZOOM_TOUCH_SIZE);
 
-    if (img->height < LCD_H) {
-        dst_y = (LCD_H - img->height) / 2;
-    } else {
-        src_y = offy;
-        blit_h = LCD_H;
-    }
+    gfx_setcolour(255);
+    gfx_drawtext(LCD_W - 42, 18, "1:1");
+    gfx_drawtext(LCD_W - 42, LCD_H - 38, "FIT");
+}
 
+static void render_view(const Image8 *img, int offx, int offy, uint16_t zoom)
+{
     gfx_lcdwait();
     gfx_cls();
-    draw_image_to_current_buffer(img, src_x, src_y, dst_x, dst_y, blit_w, blit_h);
+    draw_scaled_image_to_current_buffer(img, offx, offy, zoom);
+    //draw_zoom_controls();
     flip_front_buffer();
     gfx_displaynow();
 }
@@ -1858,13 +1913,26 @@ static void wait_for_exit_combo(void)
     }
 }
 
+static uint8_t touch_zoom_one(int16_t x, int16_t y)
+{
+    return (x >= (LCD_W - ZOOM_TOUCH_SIZE) && y >= 0 && y < ZOOM_TOUCH_SIZE) ? 1u : 0u;
+}
+
+static uint8_t touch_zoom_fit(int16_t x, int16_t y)
+{
+    return (x >= (LCD_W - ZOOM_TOUCH_SIZE) &&
+            y >= (LCD_H - ZOOM_TOUCH_SIZE) && y < LCD_H) ? 1u : 0u;
+}
+
 volatile uint8_t joy;
 static void view_image(const Image8 *img)
 {
+    uint16_t fit_zoom = fit_zoom_for_image(img);
+    uint16_t zoom = (img->width > LCD_W || img->height > LCD_H) ? fit_zoom : ZOOM_ONE;
     int offx = 0;
     int offy = 0;
-    int maxx = MAX(0, (int)img->width - LCD_W);
-    int maxy = MAX(0, (int)img->height - LCD_H);
+    int maxx = MAX(0, (int)img->width - view_span_for_zoom(LCD_W, zoom));
+    int maxy = MAX(0, (int)img->height - view_span_for_zoom(LCD_H, zoom));
     uint8_t redraw = 0;
     uint8_t last_mouse_down = 0;
     int16_t last_mouse_x = 0;
@@ -1875,7 +1943,17 @@ static void view_image(const Image8 *img)
 
     gfx_usefpalette((uint32_t *)img->palette);
     clrmousedelta();
-    render_view(img, offx, offy);
+    render_view(img, offx, offy, zoom);
+
+    int center_x = offx + view_span_for_zoom(LCD_W, zoom) / 2;
+    int center_y = offy + view_span_for_zoom(LCD_H, zoom) / 2;
+
+    zoom = fit_zoom;//ZOOM_ONE;
+    maxx = MAX(0, (int)img->width - view_span_for_zoom(LCD_W, zoom));
+    maxy = MAX(0, (int)img->height - view_span_for_zoom(LCD_H, zoom));
+    offx = center_x - view_span_for_zoom(LCD_W, zoom) / 2;
+    offy = center_y - view_span_for_zoom(LCD_H, zoom) / 2;
+    redraw = 1;
 
     while (1) {
         int16_t mx = 0;
@@ -1884,37 +1962,49 @@ static void view_image(const Image8 *img)
         int16_t ty = 0;
         uint8_t mouse_left;
         uint8_t touch_pressed;
-        
+        int32_t mdx = 0;
+        int32_t mdy = 0;
 
         (void)getmousepos(&mx, &my);
+        getmousedelta(&mdx, &mdy);
         touch_pressed = touch_getxy(&tx, &ty);
 
         joy = getjoyport();
         mouse_left = (uint8_t)(joy & BTN_FIRE);
-        if(!!(joy & BTN_FIRE2)) {
-            //while(!!(joy = getjoyport() & BTN_FIRE2))
-            int32_t timeout = 10;
-            gfx_usefpalette(g_default_palette);
-            while(joy = getjoyport()){
-                gfx_lcdwait();
-                gfx_setcolour(0);
-                gfx_cls();
-                gfx_setcolour(1);
-                gfx_drawtext(20,20,"Release button to exit.");
-                flip_front_buffer();
-                gfx_displaynow();
-                //music_update();
-                music_update();
-                if(timeout-- < 0) timeout = 0;
-                if((timeout == 0) && (!(joy & BTN_FIRE2))) return;
-            }
-            //return;
+
+        if ((joy & BTN_FIRE2) != 0u) {
+            return;
+        }
+
+        if (touch_pressed && !last_touch_down && touch_zoom_one(tx, ty)) {
+            int center_x = offx + view_span_for_zoom(LCD_W, zoom) / 2;
+            int center_y = offy + view_span_for_zoom(LCD_H, zoom) / 2;
+
+            zoom = ZOOM_ONE;
+            maxx = MAX(0, (int)img->width - view_span_for_zoom(LCD_W, zoom));
+            maxy = MAX(0, (int)img->height - view_span_for_zoom(LCD_H, zoom));
+            offx = center_x - view_span_for_zoom(LCD_W, zoom) / 2;
+            offy = center_y - view_span_for_zoom(LCD_H, zoom) / 2;
+            last_touch_down = 0;
+            redraw = 1;
+            goto view_loop_finish;
+        }
+
+        if (touch_pressed && !last_touch_down && touch_zoom_fit(tx, ty)) {
+            zoom = fit_zoom;
+            maxx = MAX(0, (int)img->width - view_span_for_zoom(LCD_W, zoom));
+            maxy = MAX(0, (int)img->height - view_span_for_zoom(LCD_H, zoom));
+            offx = maxx / 2;
+            offy = maxy / 2;
+            last_touch_down = 0;
+            redraw = 1;
+            goto view_loop_finish;
         }
 
         if (mouse_left) {
             if (last_mouse_down) {
-                offx -= (int)(mx - last_mouse_x);
-                offy -= (int)(my - last_mouse_y);
+                offx -= ((int)(mx - last_mouse_x) * ZOOM_ONE) / zoom;
+                offy -= ((int)(my - last_mouse_y) * ZOOM_ONE) / zoom;
                 redraw = 1;
             }
 
@@ -1925,8 +2015,8 @@ static void view_image(const Image8 *img)
 
         if (touch_pressed) {
             if (last_touch_down) {
-                offx -= (int)(tx - last_touch_x);
-                offy -= (int)(ty - last_touch_y);
+                offx -= ((int)(tx - last_touch_x) * ZOOM_ONE) / zoom;
+                offy -= ((int)(ty - last_touch_y) * ZOOM_ONE) / zoom;
                 redraw = 1;
             }
 
@@ -1935,16 +2025,20 @@ static void view_image(const Image8 *img)
         }
         last_touch_down = touch_pressed;
 
+view_loop_finish:
+        clrmousedelta();
+
         offx = clamp_int(offx, 0, maxx);
         offy = clamp_int(offy, 0, maxy);
 
         music_update();
         if (redraw) {
-            render_view(img, offx, offy);
+            render_view(img, offx, offy, zoom);
             redraw = 0;
         }
     }
 }
+
 
 
 

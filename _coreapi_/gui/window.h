@@ -127,6 +127,10 @@ typedef struct {
     void     (*to_back)       (CGWindow id);
     void     (*set_focus)     (CGWindow id);
     void     (*set_app_title) (CGWindow win, const char *newtext);
+    void     (*busymouse)            (void);
+    void     (*normalmouse)          (void);
+    void     (*window_mouse_busy)    (CGWindow win, uint8_t busy);
+    uint8_t  (*window_mouse_is_busy) (CGWindow win);
 } API_GUI_Windows;
 
 
@@ -143,6 +147,10 @@ typedef struct {
 #define SBOS_WindowSetFocus(id) (GUICoderGirl->windows->set_focus(id))
 #define SBOS_WindowSetApplicationTitle(win, text) (GUICoderGirl->windows->set_app_title(win, text))
 #define SetApplicationTitle(win, text)            SBOS_WindowSetApplicationTitle(win, text)
+#define SetMouseBusy()          (GUICoderGirl->windows->busymouse())
+#define SetMouseNormal()        (GUICoderGirl->windows->normalmouse())
+#define WindowMouseBusy(win, busy)   (GUICoderGirl->windows->window_mouse_busy((win), (busy)))
+#define WindowMouseIsBusy(win)       (GUICoderGirl->windows->window_mouse_is_busy(win))
 
 
 #ifdef __cplusplus

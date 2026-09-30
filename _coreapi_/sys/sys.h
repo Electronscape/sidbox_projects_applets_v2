@@ -52,7 +52,14 @@ typedef struct {
     FRESULT (*sbchdir)    (char *path);
     FRESULT (*sbgetcwd)   (char *buffer, uint32_t length);
     FRESULT (*sbcopy)     (char *source, char *dest);
+    FRESULT (*sbmkdir)    (char *path);
+    FRESULT (*sbstat)     (char *path, uint32_t *flags, uint32_t *size);
+    void    *(*sbopendir) (char *path);
+    int32_t (*sbreaddir)  (void *handle, char *name, uint32_t name_len, uint32_t *flags, uint32_t *size);
+    void    (*sbclosedir) (void *handle);
 } API_FILEIO;
+
+
 
 
 typedef struct  {
@@ -67,6 +74,9 @@ typedef struct  {
 // system defines
 #define restore_desktop()                                  (SYSBase->desktop_restore())
 #define suspend_desktop()                                  (SYSBase->desktop_suspend())
+
+
+
 //#define suspect_desktop()                                  suspend_desktop()
 #define sfopen(u8_filenum, s_filename, u8_filemode)       (SYSFileSystem->sbopen(u8_filenum, s_filename, u8_filemode))
 #define sfread(u8_filenum, ptr_buffer, u32_len, u32_retb) (SYSFileSystem->sbread(u8_filenum, ptr_buffer, u32_len, u32_retb))
@@ -76,6 +86,12 @@ typedef struct  {
 #define sfchdir(s_path)                                   (SYSFileSystem->sbchdir(s_path))
 #define sfgetcwd(ptr_buffer, u32_len)                     (SYSFileSystem->sbgetcwd(ptr_buffer, u32_len))
 #define sfcopy(s_source, s_dest)                          (SYSFileSystem->sbcopy(s_source, s_dest))
+#define sfmkdir(s_path)                                   (SYSFileSystem->sbmkdir(s_path))
+#define sfstat(s_path, ptr_flags, ptr_size)               (SYSFileSystem->sbstat(s_path, ptr_flags, ptr_size))
+#define sfopendir(s_path)                                 (SYSFileSystem->sbopendir(s_path))
+#define sfreaddir(ptr_handle, ptr_name, u32_name_len, ptr_flags, ptr_size) \
+    (SYSFileSystem->sbreaddir(ptr_handle, ptr_name, u32_name_len, ptr_flags, ptr_size))
+#define sfclosedir(ptr_handle)                            (SYSFileSystem->sbclosedir(ptr_handle))
 
 
 

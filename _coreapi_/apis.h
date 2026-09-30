@@ -246,6 +246,36 @@ typedef struct  {
 	void (*IRQ_MIDI_RX) (void (*isr)(uint8_t byte));
 } API_IRQ_BANK;
 
+#define API_JPEG_OK             0
+#define API_JPEG_ERR_ARG       -1
+#define API_JPEG_ERR_FORMAT    -2
+#define API_JPEG_ERR_UNSUP     -3
+#define API_JPEG_ERR_NOMEM     -4
+#define API_JPEG_ERR_HW        -5
+
+typedef struct {
+    uint16_t width;
+    uint16_t height;
+    uint8_t components;
+    uint8_t subsampling;
+} API_JPEG_INFO;
+
+typedef struct {
+    uint16_t width;
+    uint16_t height;
+    uint8_t *pixels;
+} API_JPEG_IMAGE8;
+
+typedef struct {
+    int  (*info)          (const uint8_t *jpeg, uint32_t len, API_JPEG_INFO *info);
+    int  (*decode_rgb332) (const uint8_t *jpeg, uint32_t len, API_JPEG_IMAGE8 *image);
+    void (*free_image)    (API_JPEG_IMAGE8 *image);
+} API_JPEG;
+
+typedef struct {
+    const API_JPEG *jpeg;
+} API_MEDIA;
+
 
 #include "sys/sys.h"
 
@@ -263,6 +293,7 @@ typedef struct __attribute__((aligned(4))) {
 	const API_TOUCH     *touch;     // touch screen systems
 	const API_CRT       *crt;       // CRT RGBI output
 	const API_IRQ_BANK	*irq;		// interrupt call backs
+	const API_MEDIA     *media;     // image/media helpers
 	
 } API_Root;
 
