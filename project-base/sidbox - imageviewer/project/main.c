@@ -9,6 +9,10 @@
 #define FILE_HANDLE     0
 #define MAX_PALETTE     256
 
+#ifndef SIDBOX_ENABLE_HW_JPEG
+#define SIDBOX_ENABLE_HW_JPEG 0
+#endif
+
 #define IFF_ID(a,b,c,d) (((uint32_t)(a) << 24) | ((uint32_t)(b) << 16) | \
                          ((uint32_t)(c) << 8)  |  (uint32_t)(d))
 
@@ -266,6 +270,45 @@ static void init_rgb332_palette(uint32_t *palette)
             }
         }
     }
+}
+
+static int load_hw_jpeg_from_memory(const uint8_t *data, uint32_t len, Image8 *img)
+{
+#if SIDBOX_ENABLE_HW_JPEG
+    API_JPEG_IMAGE8 hwimg;
+    int status;
+
+    if (!API->media || !API->media->jpeg || !API->media->jpeg->decode_rgb332) {
+        return 0;
+    }
+
+    memset(&hwimg, 0, sizeof(hwimg));
+    status = API->media->jpeg->decode_rgb332(data, len, &hwimg);
+    if (status != API_JPEG_OK || !hwimg.pixels) {
+        snprintf(g_status, sizeof(g_status), "HW JPEG unavailable (%d)", status);
+        set_status(g_status);
+        return 0;
+    }
+
+    img->width = hwimg.width;
+    img->height = hwimg.height;
+    img->pixels = (uint8_t *)malloc((uint32_t)img->width * img->height);
+    if (!img->pixels) {
+        API->media->jpeg->free_image(&hwimg);
+        set_status("Not enough memory for HW JPEG pixels");
+        return 0;
+    }
+
+    memcpy(img->pixels, hwimg.pixels, (uint32_t)img->width * img->height);
+    API->media->jpeg->free_image(&hwimg);
+    init_rgb332_palette(img->palette);
+    return 1;
+#else
+    (void)data;
+    (void)len;
+    (void)img;
+    return 0;
+#endif
 }
 
 static const char *jpeg_status_name(uint8_t status)
@@ -1146,6 +1189,11 @@ static int load_jpeg_from_memory(const uint8_t *data, uint32_t len, Image8 *img)
         return 0;
     }
 
+    if (load_hw_jpeg_from_memory(data, len, img)) {
+        return 1;
+    }
+
+
     input.data = data;
     input.len = len;
     input.pos = 0;
@@ -1170,6 +1218,18 @@ static int load_jpeg_from_memory(const uint8_t *data, uint32_t len, Image8 *img)
 
 static int load_jpeg_from_file(const char *path, Image8 *img)
 {
+    uint32_t hw_len = 0;
+    uint8_t *hw_data = load_file(path, &hw_len);
+
+    if (hw_data) {
+        int hw_ok = load_hw_jpeg_from_memory(hw_data, hw_len, img);
+        free(hw_data);
+        if (hw_ok) {
+            return 1;
+        }
+        free_image(img);
+    }
+
     JpegFileInput input;
     pjpeg_image_info_t info;
     uint8_t status;
