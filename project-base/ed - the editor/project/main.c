@@ -9,9 +9,9 @@
 #define DOCUMENT_CAP       2048u
 
 #define TXTAPP_TITLE    "Edit V1.0"
-#define EDITOR_WIN_X    24
+#define EDITOR_WIN_X    0
 #define EDITOR_WIN_Y    20
-#define EDITOR_WIN_W    432
+#define EDITOR_WIN_W    480
 #define EDITOR_WIN_H    278
 #define DRAG_ICON_W     68
 #define DRAG_ICON_H     22
@@ -191,9 +191,20 @@ static void set_status(const char *text)
         SBOS_DestroyGadget(status_label);
     }
 
-    status_label = SBOS_CreateLabel(editor_win, 12, 218, 396, 16, text,
-                                    GAD_TOOL_DEFAULT | GAD_TOOL_NOBORDER);
+    status_label = SBOS_CreateLabel(editor_win, 12, 232, 396, 16, text, GAD_TOOL_DEFAULT | GAD_TOOL_NOBORDER);
     SBOS_GadgetRepaint(status_label);
+}
+
+static void set_document(const char *text)
+{
+    if (text_area) {
+        SBOS_DestroyGadget(text_area);
+    }
+
+    text_area = SBOS_CreateTextArea(editor_win, 6, 36, EDITOR_WIN_W - 20, 190, text, 0, GAD_TOOL_DEFAULT | GAD_TOOL_INSET);
+    SBOS_GadgetSetCallBack(text_area, NULL, on_text_changed);
+    SBOS_GadgetSetFocus(text_area);
+    SBOS_GadgetRepaint(text_area);
 }
 
 static void set_statusf(const char *fmt, const char *text)
@@ -211,23 +222,11 @@ static void set_timer_label(void)
         SBOS_DestroyGadget(timer_label);
     }
 
-    timer_label = SBOS_CreateLabel(editor_win, 12, 236, 180, 16, timer_buffer,
-                                   GAD_TOOL_DEFAULT | GAD_TOOL_NOBORDER);
+    timer_label = SBOS_CreateLabel(editor_win, 12, 280, 180, 16, timer_buffer, GAD_TOOL_DEFAULT | GAD_TOOL_NOBORDER);
     SBOS_GadgetRepaint(timer_label);
 }
 
-static void set_document(const char *text)
-{
-    if (text_area) {
-        SBOS_DestroyGadget(text_area);
-    }
 
-    text_area = SBOS_CreateTextArea(editor_win, 12, 44, 396, 168, text, 0,
-                                    GAD_TOOL_DEFAULT | GAD_TOOL_INSET);
-    SBOS_GadgetSetCallBack(text_area, NULL, on_text_changed);
-    SBOS_GadgetSetFocus(text_area);
-    SBOS_GadgetRepaint(text_area);
-}
 
 static void remember_file_dir(const char *path)
 {
@@ -660,16 +659,18 @@ static void build_editor(void)
     SBOS_SetWindowProc(editor_win, editor_proc);
 
         // !!  this turned in to a draggable button??? NICE!! !!! - but not needed for the EDIT v1.0 right now but THIS IS COOL!
+    /*
     drag_icon = SBOS_CreateButton(editor_win, drag_x, drag_y, DRAG_ICON_W,
                                   DRAG_ICON_H, "note.txt",
                                   GAD_TOOL_DEFAULT | GAD_TOOL_MOUSEMOVE);
-
-    btn_new = SBOS_CreateButton(editor_win, 88, 10, 42, 22, "New", GAD_TOOL_DEFAULT);
-    btn_load = SBOS_CreateButton(editor_win, 134, 10, 46, 22, "Load", GAD_TOOL_DEFAULT);
-    btn_sample = SBOS_CreateButton(editor_win, 184, 10, 58, 22, "Sample", GAD_TOOL_DEFAULT);
-    btn_save = SBOS_CreateButton(editor_win, 246, 10, 44, 22, "Save", GAD_TOOL_DEFAULT);
+    */
+   
+    btn_new = SBOS_CreateButton(editor_win, 12, 6, 42, 22, "New", GAD_TOOL_DEFAULT);
+    btn_load = SBOS_CreateButton(editor_win, 58, 6, 46, 22, "Load", GAD_TOOL_DEFAULT);
+    btn_sample = SBOS_CreateButton(editor_win, 108, 6, 58, 22, "Sample", GAD_TOOL_DEFAULT);
+    btn_save = SBOS_CreateButton(editor_win, 170, 6, 44, 22, "Save", GAD_TOOL_DEFAULT);
     //btn_msg = SBOS_CreateButton(editor_win, 294, 10, 42, 22, "Msg", GAD_TOOL_DEFAULT);
-    btn_close = SBOS_CreateButton(editor_win, 340, 10, 54, 22, "Close", GAD_TOOL_DEFAULT);
+    btn_close = SBOS_CreateButton(editor_win, 406, 6, 54, 22, "Close", GAD_TOOL_DEFAULT);
 
     SBOS_GadgetSetCallBack(drag_icon, on_icon_active, on_icon_changed);
     SBOS_GadgetSetCallBack(btn_new, on_new_clicked, NULL);
