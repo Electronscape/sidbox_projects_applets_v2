@@ -1,0 +1,18 @@
+{
+    "[ld]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
+        "editor.wordBasedSuggestions": "off"
+    },
+
+    "files.associations": {
+        "main.h": "c",
+        "stat.h": "c",
+        "game.h": "c",
+        "*.ld": "ld"
+    },
+    
+    "C_Cpp.errorSquiggles": "disabled",
+    "terminal.integrated.closeOnExit": "always"
+}
