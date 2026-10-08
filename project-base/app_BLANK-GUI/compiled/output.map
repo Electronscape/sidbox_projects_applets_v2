@@ -547,7 +547,7 @@ LOAD /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/
  *(.bss*)
  .bss.heap_end_u
                 0x00000000d05a1028        0x4 compiled/syscalls.o
- .bss.in_write.8140
+ .bss.in_write.8262
                 0x00000000d05a102c        0x4 compiled/syscalls.o
  .bss.app_running
                 0x00000000d05a1030        0x1 compiled/project/main.o

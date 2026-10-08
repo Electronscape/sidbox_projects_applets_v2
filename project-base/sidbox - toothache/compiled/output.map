@@ -222,37 +222,37 @@ Discarded input sections
                 0x0000000000000000       0x74 compiled/project/scrnsvrprojx.o
  .text.do_projectx_playdemo_screensaver
                 0x0000000000000000     0x1ef4 compiled/project/scrnsvrprojx.o
- .bss.demo_frame.9393
+ .bss.demo_frame.9450
                 0x0000000000000000        0x2 compiled/project/scrnsvrprojx.o
- .bss.enemies.9400
+ .bss.enemies.9457
                 0x0000000000000000       0x3c compiled/project/scrnsvrprojx.o
- .bss.enemy_shots.9402
+ .bss.enemy_shots.9459
                 0x0000000000000000       0x78 compiled/project/scrnsvrprojx.o
- .bss.explosions.9403
+ .bss.explosions.9460
                 0x0000000000000000       0x40 compiled/project/scrnsvrprojx.o
- .bss.initialised.9392
+ .bss.initialised.9449
                 0x0000000000000000        0x1 compiled/project/scrnsvrprojx.o
- .bss.player_shots.9401
+ .bss.player_shots.9458
                 0x0000000000000000       0x30 compiled/project/scrnsvrprojx.o
  .bss.projectx_deaths
                 0x0000000000000000        0x2 compiled/project/scrnsvrprojx.o
  .bss.projectx_score
                 0x0000000000000000        0x4 compiled/project/scrnsvrprojx.o
- .bss.ship_invuln.9397
+ .bss.ship_invuln.9454
                 0x0000000000000000        0x1 compiled/project/scrnsvrprojx.o
- .bss.ship_respawn_wait.9398
+ .bss.ship_respawn_wait.9455
                 0x0000000000000000        0x1 compiled/project/scrnsvrprojx.o
- .data.player_fire_wait.9399
+ .data.player_fire_wait.9456
                 0x0000000000000000        0x1 compiled/project/scrnsvrprojx.o
- .data.ship_target_y.9396
+ .data.ship_target_y.9453
                 0x0000000000000000        0x2 compiled/project/scrnsvrprojx.o
- .data.ship_x.9394
+ .data.ship_x.9451
                 0x0000000000000000        0x2 compiled/project/scrnsvrprojx.o
- .data.ship_y.9395
+ .data.ship_y.9452
                 0x0000000000000000        0x2 compiled/project/scrnsvrprojx.o
  .data.space_station_x
                 0x0000000000000000        0x2 compiled/project/scrnsvrprojx.o
- .rodata.wave.9391
+ .rodata.wave.9448
                 0x0000000000000000       0x40 compiled/project/scrnsvrprojx.o
  .comment       0x0000000000000000       0x54 compiled/project/scrnsvrprojx.o
  .ARM.attributes
@@ -799,7 +799,7 @@ LOAD /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/
  .rodata.gfx_bubguy8
                 0x00000000d0093d4c      0x9b4 compiled/project/scrnsvrbubba.o
                 0x00000000d0093d4c                gfx_bubguy8
- .rodata.gradient_cols.9399
+ .rodata.gradient_cols.9456
                 0x00000000d0094700       0x12 compiled/project/scrnsvrbubba.o
  *fill*         0x00000000d0094712        0x2 
  .rodata.guywidthheight
@@ -889,7 +889,7 @@ LOAD /home/kbox/sidbox-applet-compiler/tools/bin/../lib/gcc/arm-none-eabi/9.3.1/
  *(.bss*)
  .bss.heap_end_u
                 0x00000000d009be80        0x4 compiled/syscalls.o
- .bss.in_write.8205
+ .bss.in_write.8262
                 0x00000000d009be84        0x4 compiled/syscalls.o
  .bss.db        0x00000000d009be88        0x1 compiled/project/main.o
  *fill*         0x00000000d009be89        0x3 
